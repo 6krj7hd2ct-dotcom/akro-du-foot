@@ -217,7 +217,7 @@ def _page(data: dict[str, Any]) -> str:
     .action-button {{ appearance: none; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; background: rgba(255,255,255,0.10); color: var(--ink); padding: 9px 12px; font: inherit; font-size: 13px; font-weight: 900; cursor: pointer; text-decoration: none; }}
     .action-button:hover, .action-button:focus-visible {{ background: rgba(255,255,255,0.17); outline: 1px solid rgba(255,255,255,0.28); }}
     .today-strip, .leaders, .news, .grid, .matches, .calendar-days {{ display: grid; gap: 16px; }}
-    .today-strip {{ grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 18px; }}
+    .today-strip {{ grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }}
     .leaders {{ grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }}
     .news {{ grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }}
     .grid {{ grid-template-columns: repeat(auto-fit, minmax(286px, 1fr)); }}
@@ -225,6 +225,7 @@ def _page(data: dict[str, Any]) -> str:
     .calendar-days {{ grid-template-columns: 1fr; }}
     .today-tile, .card, .notice {{ background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.055)); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 14px 36px rgba(0,0,0,0.20); backdrop-filter: blur(14px); overflow: hidden; }}
     .today-tile {{ padding: 16px; min-height: 104px; position: relative; }}
+    .today-meta {{ text-align: center; margin: 0 0 10px; font-weight: 850; }}
     .today-tile::after {{ content: ""; position: absolute; inset: auto 14px 12px 14px; height: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--white), var(--red)); opacity: 0.72; }}
     .subtle {{ color: var(--muted); font-size: 12px; }}
     .card h3 {{ padding: 16px 16px 0; font-size: 17px; }}
@@ -479,6 +480,7 @@ def _page(data: dict[str, Any]) -> str:
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
       .section-head {{ align-items: start; flex-direction: column; }}
       .section-note {{ text-align: left; }}
+      .today-strip {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
       .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }}
       .match-meta {{ grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }}
@@ -759,25 +761,45 @@ def _today_matches(
     group_matches: list[dict[str, Any]] | None = None,
     knockout: list[dict[str, Any]] | None = None,
 ) -> str:
-    visible = matches if matches else _upcoming_matches(group_matches or [], knockout or [], limit=5)
+    visible = _matches_for_display_day(matches, group_matches or [], knockout or [])
     if not visible:
         return '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong><div class="subtle">Les cartes se rempliront automatiquement dès publication du calendrier.</div></article>'
     return "".join(f'<article class="today-tile">{_today_match(match)}</article>' for match in visible)
 
 
-def _upcoming_matches(group_matches: list[dict[str, Any]], knockout: list[dict[str, Any]], limit: int = 5) -> list[dict[str, Any]]:
-    now = datetime.now(PARIS)
+def _matches_for_display_day(
+    today_matches: list[dict[str, Any]],
+    group_matches: list[dict[str, Any]],
+    knockout: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
     items = []
     for group in group_matches:
         items.extend(group.get("matches", []))
     for round_data in knockout:
         items.extend(round_data.get("matches", []))
+    if not items:
+        items = list(today_matches)
 
-    def key(match: dict[str, Any]) -> datetime:
-        return _parse_match_datetime(match.get("date", "")) or datetime.max.replace(tzinfo=PARIS)
+    today_key = datetime.now(PARIS).date().isoformat()
+    same_day = [match for match in items if _match_day_key(match) == today_key]
+    if same_day:
+        return sorted(same_day, key=_match_sort_key)
 
-    upcoming = [match for match in items if not match.get("completed") and key(match) >= now]
-    return sorted(upcoming, key=key)[:limit]
+    now = datetime.now(PARIS)
+    upcoming = [match for match in items if not match.get("completed") and _match_sort_key(match) >= now]
+    if not upcoming:
+        return []
+    next_day = _match_day_key(min(upcoming, key=_match_sort_key))
+    return sorted([match for match in items if _match_day_key(match) == next_day], key=_match_sort_key)
+
+
+def _match_sort_key(match: dict[str, Any]) -> datetime:
+    return _parse_match_datetime(match.get("date", "")) or datetime.max.replace(tzinfo=PARIS)
+
+
+def _match_day_key(match: dict[str, Any]) -> str:
+    parsed = _parse_match_datetime(match.get("date", ""))
+    return parsed.date().isoformat() if parsed else ""
 
 
 def _parse_match_datetime(value: str) -> datetime | None:
@@ -796,7 +818,11 @@ def _today_match(match: dict[str, Any]) -> str:
     center = _score_text(match)
     if center == "vs":
         center = _format_time(match.get("date", "")) or "vs"
+    date_label = _format_datetime(match.get("date", ""), with_time=False)
+    time_label = _format_time(match.get("date", ""))
+    meta = " · ".join(part for part in [date_label, time_label] if part)
     return (
+        f'<div class="subtle today-meta">{escape(meta)}</div>'
         f'<div class="today-teams"><div class="today-team">{_team_button(match.get("home_team", "À déterminer"), match.get("home_flag_url", ""))}</div>'
         f'<div class="today-score">{escape(center)}<br><span class="{_status_class(match)}">{escape(match.get("status", ""))}</span></div>'
         f'<div class="today-team">{_team_button(match.get("away_team", "À déterminer"), match.get("away_flag_url", ""))}</div></div>'
