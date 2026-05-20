@@ -246,7 +246,13 @@ def _page(data: dict[str, Any]) -> str:
     .player-card {{ padding: 16px; display: grid; grid-template-columns: 62px 1fr; gap: 14px; align-items: center; }}
     .avatar-wrap {{ position: relative; width: 62px; height: 62px; }}
     .avatar {{ width: 62px; height: 62px; border-radius: 50%; object-fit: cover; background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); border: 2px solid rgba(255,255,255,0.16); }}
-    .avatar.placeholder {{ display: grid; place-items: center; font-size: 25px; font-weight: 900; color: #07111f; }}
+    .avatar.placeholder {{ display: grid; place-items: center; color: #07111f; }}
+    .avatar.placeholder::before {{ content: ""; width: 30px; height: 36px; border-radius: 9px 9px 12px 12px; background: linear-gradient(180deg, #ffffff, #9fb0c2); box-shadow: inset 0 -10px 0 rgba(7,17,31,0.15); }}
+    .club-line {{ display: inline-flex; align-items: center; gap: 7px; min-width: 0; max-width: 100%; }}
+    .club-logo {{ width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; padding: 2px; background: rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.18); }}
+    .club-logo.placeholder {{ display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }}
+    .club-logo.placeholder::before {{ content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }}
+    .club-name {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
     .player-country-flag {{ position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(7,17,31,0.92); background: rgba(255,255,255,0.14); }}
     .player-stat {{ color: var(--gold); font-size: 28px; font-weight: 950; line-height: 1; margin-top: 8px; }}
     .rank-note {{ color: #b7c6d7; font-size: 12px; margin-top: 5px; }}
@@ -864,11 +870,11 @@ def _community_section() -> str:
               <select id="predictionMatch"></select>
             </div>
             <div class="prediction-scoreboard" id="predictionTeams">
-              <div class="prediction-team home"><span class="prediction-team-name" id="predictionHomeName">Équipe A</span><span id="predictionHomeFlag" class="flag placeholder">?</span></div>
+              <div class="prediction-team home"><span class="prediction-team-name" id="predictionHomeName">Équipe A</span><span id="predictionHomeFlag" class="flag placeholder" aria-hidden="true"></span></div>
               <input id="homePrediction" type="number" min="0" max="99" value="0" aria-label="Score équipe A">
               <div class="prediction-separator">-</div>
               <input id="awayPrediction" type="number" min="0" max="99" value="0" aria-label="Score équipe B">
-              <div class="prediction-team away"><span id="predictionAwayFlag" class="flag placeholder">?</span><span class="prediction-team-name" id="predictionAwayName">Équipe B</span></div>
+              <div class="prediction-team away"><span id="predictionAwayFlag" class="flag placeholder" aria-hidden="true"></span><span class="prediction-team-name" id="predictionAwayName">Équipe B</span></div>
             </div>
             <div class="match-context" id="predictionContext"></div>
             <button class="action-button" type="submit">Valider le pronostic</button>
@@ -892,19 +898,50 @@ def _player_cards(players: list[dict[str, Any]], label: str, prefer_country_flag
 
 def _player_card(player: dict[str, Any], label: str, prefer_country_flag: bool = False) -> str:
     country_flag = player.get("country_flag_url", "")
-    real_photo = player.get("photo_url", "")
-    photo = country_flag if prefer_country_flag else real_photo or country_flag
-    avatar = f'<img class="avatar" src="{escape(photo)}" alt="">' if photo else '<div class="avatar placeholder">?</div>'
-    flag_badge = f'<img class="player-country-flag" src="{escape(country_flag)}" alt="">' if country_flag and real_photo and not prefer_country_flag else ""
+    avatar = f'<img class="avatar" src="{escape(country_flag)}" alt="">' if country_flag else '<div class="avatar placeholder" aria-hidden="true"></div>'
+    team_name = str(player.get("team", ""))
+    club_logo = _player_team_logo(player)
+    club_logo_html = f'<img class="club-logo" src="{escape(club_logo)}" alt="">' if club_logo else '<span class="club-logo placeholder" aria-hidden="true"></span>'
     all_time = player.get("all_time_rank", "")
     all_time_html = f'<div class="rank-note">({escape(str(all_time))})</div>' if all_time else ""
     return (
         '<article class="card player-card">'
-        f'<div class="avatar-wrap">{avatar}{flag_badge}</div><div><div class="team">{escape(str(player.get("name", "")))}</div>'
-        f'<div class="subtle">{_flag(player.get("flag_url", ""))}{escape(str(player.get("team", "")))}</div>'
+        f'<div class="avatar-wrap">{avatar}</div><div><div class="team">{escape(str(player.get("name", "")))}</div>'
+        f'<div class="subtle club-line">{club_logo_html}<span class="club-name">{escape(team_name)}</span></div>'
         f'<div class="player-stat">{escape(str(player.get("value", "0")))} <span class="subtle">{escape(label)}</span></div>{all_time_html}</div>'
         "</article>"
     )
+
+
+def _player_team_logo(player: dict[str, Any]) -> str:
+    direct = player.get("team_logo_url") or player.get("club_logo_url") or player.get("flag_url")
+    if direct:
+        return str(direct)
+    team_id = str(player.get("team_id") or "").strip()
+    if team_id:
+        return f"https://images.fotmob.com/image_resources/logo/teamlogo/{escape(team_id)}.png"
+    return _known_club_logo(str(player.get("team", "")))
+
+
+def _known_club_logo(team: str) -> str:
+    key = _normalize_team_label(team)
+    logos = {
+        "arsenal": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
+        "atletico madrid": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png",
+        "bayern munich": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
+        "bayern munchen": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
+        "newcastle united": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png",
+        "paris saint germain": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
+        "psg": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
+        "real madrid": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+    }
+    return logos.get(key, "")
+
+
+def _normalize_team_label(value: str) -> str:
+    replacements = str.maketrans({"é": "e", "è": "e", "ê": "e", "ë": "e", "á": "a", "à": "a", "ä": "a", "ã": "a", "í": "i", "ï": "i", "ó": "o", "ö": "o", "ú": "u", "ü": "u", "ç": "c"})
+    clean = str(value or "").casefold().translate(replacements)
+    return " ".join(clean.replace("-", " ").split())
 
 
 def _group_card(group: dict[str, Any]) -> str:
@@ -1285,11 +1322,11 @@ def _team_script(teams_details: dict[str, Any]) -> str:
     }}
 
     function flagHtml(url) {{
-      return url ? `<img class="team-modal-flag" src="${{escapeHtml(url)}}" alt="">` : '<div class="team-modal-flag flag placeholder">?</div>';
+      return url ? `<img class="team-modal-flag" src="${{escapeHtml(url)}}" alt="">` : '<div class="team-modal-flag flag placeholder" aria-hidden="true"></div>';
     }}
 
     function playerCard(player) {{
-      const photo = player.photo_url ? `<img class="mini-avatar" src="${{escapeHtml(player.photo_url)}}" alt="">` : '<div class="mini-avatar placeholder">?</div>';
+      const photo = player.photo_url ? `<img class="mini-avatar" src="${{escapeHtml(player.photo_url)}}" alt="">` : '<div class="mini-avatar placeholder" aria-hidden="true"></div>';
       const position = player.position ? `<div class="subtle">${{escapeHtml(player.position)}}</div>` : '';
       return `<article class="mini-player">${{photo}}<div><strong>${{escapeHtml(player.name || 'Joueur')}}</strong>${{position}}</div></article>`;
     }}
@@ -1364,7 +1401,7 @@ def _all_time_script(worldcup_scorers: list[dict[str, Any]], champions_scorers: 
     function allTimeAvatar(player) {{
       return player.flag_url
         ? `<img class="mini-avatar" src="${{escapeHtml(player.flag_url)}}" alt="">`
-        : '<div class="mini-avatar placeholder">?</div>';
+        : '<div class="mini-avatar placeholder" aria-hidden="true"></div>';
     }}
 
     function allTimeRow(player, label) {{
@@ -1597,7 +1634,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     }}
 
     function flagMarkup(url) {{
-      return url ? `<img class="flag" src="${{escapeHtml(url)}}" alt="">` : '<span class="flag placeholder">?</span>';
+      return url ? `<img class="flag" src="${{escapeHtml(url)}}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
     }}
 
     function updatePredictionTeams() {{
@@ -1605,8 +1642,8 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       if (!match) {{
         predictionHomeName.textContent = 'Aucun match';
         predictionAwayName.textContent = 'disponible';
-        predictionHomeFlag.innerHTML = '<span class="flag placeholder">?</span>';
-        predictionAwayFlag.innerHTML = '<span class="flag placeholder">?</span>';
+        predictionHomeFlag.innerHTML = '<span class="flag placeholder" aria-hidden="true"></span>';
+        predictionAwayFlag.innerHTML = '<span class="flag placeholder" aria-hidden="true"></span>';
         predictionContext.textContent = competitionFilter.value === 'today'
           ? 'Aucun match du jour disponible pour les pronostics'
           : 'Aucun match disponible avec ce filtre';
@@ -1687,7 +1724,7 @@ def _display_score(value: Any) -> str:
 def _flag(url: str) -> str:
     if url:
         return f'<img class="flag" src="{escape(url)}" alt="">'
-    return '<span class="flag placeholder">?</span>'
+    return '<span class="flag placeholder" aria-hidden="true"></span>'
 
 
 def _status_class(match: dict[str, Any]) -> str:

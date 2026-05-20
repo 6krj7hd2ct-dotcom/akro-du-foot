@@ -962,6 +962,11 @@ def _fotmob_player_photo(player_id: str) -> str:
     return f"https://images.fotmob.com/image_resources/playerimages/{player_id}.png" if player_id else ""
 
 
+def _fotmob_team_logo(team_id: Any) -> str:
+    text = str(team_id or "").strip()
+    return f"https://images.fotmob.com/image_resources/logo/teamlogo/{text}.png" if text else ""
+
+
 def _fotmob_country_flag(row: dict[str, Any]) -> str:
     code = row.get("countryCode") or row.get("ccode") or row.get("cCode") or row.get("country")
     if isinstance(code, dict):
@@ -1028,6 +1033,7 @@ def fetch_fotmob_player_stats_from_url(url: str, metric: str, limit: int | None 
                     "name": name,
                     "team": team,
                     "team_id": team_id,
+                    "team_logo_url": _fotmob_team_logo(team_id),
                     "country_code": row.get("countryCode", "") or row.get("ccode", "") or row.get("cCode", ""),
                     "flag_url": "",
                     "photo_url": row.get("imageUrl", "") or row.get("photoUrl", "") or _fotmob_player_photo(player_id),
@@ -1056,6 +1062,7 @@ def enrich_players_with_fotmob_stats(players: list[dict[str, Any]], stats_url: s
                 "country_flag_url": match.get("country_flag_url") or player.get("country_flag_url", ""),
                 "country_code": match.get("country_code") or player.get("country_code", ""),
                 "team_id": match.get("team_id") or player.get("team_id", ""),
+                "team_logo_url": match.get("team_logo_url") or player.get("team_logo_url", ""),
             }
         )
     return enriched
