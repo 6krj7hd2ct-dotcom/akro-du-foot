@@ -437,6 +437,18 @@ def _page(data: dict[str, Any]) -> str:
     .community-panel {{ padding: 16px; }}
     .community-predictions {{ display: grid; grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr); gap: 16px; align-items: start; }}
     .community-side {{ min-width: 0; }}
+    .follow-zone {{ display: grid; gap: 12px; }}
+    .follow-list {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }}
+    .follow-card {{ padding: 13px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: radial-gradient(circle at center, rgba(245,201,107,0.10), transparent 18rem), rgba(255,255,255,0.055); }}
+    .follow-meta {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 850; text-transform: uppercase; }}
+    .follow-teams {{ display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 10px; margin-top: 12px; }}
+    .follow-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; }}
+    .follow-team.away {{ justify-content: flex-end; text-align: right; }}
+    .follow-team span:last-child {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .follow-center {{ min-width: 58px; text-align: center; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); border-radius: 10px; padding: 7px 9px; font-weight: 950; }}
+    .follow-status {{ display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; padding: 4px 8px; border-radius: 999px; color: #b9d7ff; background: rgba(31,111,235,0.18); font-size: 12px; font-weight: 900; }}
+    .follow-status.done {{ color: #9ff0d5; background: rgba(50,211,162,0.18); }}
+    .follow-status.live {{ color: #ffb8bf; background: rgba(239,51,64,0.22); box-shadow: 0 0 0 1px rgba(239,51,64,0.45); }}
     .community-form {{ display: grid; gap: 10px; margin-top: 12px; }}
     .field-row {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }}
     input, textarea, select {{ width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }}
@@ -481,7 +493,7 @@ def _page(data: dict[str, Any]) -> str:
       .team-dialog {{ max-height: 90vh; }}
       .alltime-row {{ grid-template-columns: 38px 46px minmax(0, 1fr); }}
       .alltime-value {{ grid-column: 3; font-size: 20px; text-align: left; }}
-      .community-grid, .community-predictions, .field-row {{ grid-template-columns: 1fr; }}
+      .community-grid, .community-predictions, .field-row, .follow-list {{ grid-template-columns: 1fr; }}
       .prediction-scoreboard {{ grid-template-columns: 1fr auto auto auto 1fr; gap: 8px; }}
     }}
     @media (max-width: 480px) {{
@@ -770,6 +782,10 @@ def _community_section() -> str:
       <div class="section-note">Pronostics fictifs globaux pour la Coupe du Monde et la Ligue des Champions.</div>
     </div>
     <section class="community-grid">
+      <article class="card community-panel follow-zone">
+        <div class="section-title"><h3>Matchs à suivre</h3><span class="alltime-badge" id="followMode">Aujourd’hui</span></div>
+        <div class="follow-list" id="communityFollowMatches"></div>
+      </article>
       <article class="card community-panel community-predictions">
         <div class="community-side">
           <h3>Classement</h3>
@@ -1256,6 +1272,8 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const shareButton = document.getElementById('shareButton');
     const globalPseudo = document.getElementById('globalPseudo');
     const predictionForm = document.getElementById('predictionForm');
+    const communityFollowMatches = document.getElementById('communityFollowMatches');
+    const followMode = document.getElementById('followMode');
     const competitionFilter = document.getElementById('competitionFilter');
     const predictionMatch = document.getElementById('predictionMatch');
     const predictionTeams = document.getElementById('predictionTeams');
@@ -1308,6 +1326,40 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       if (available.length) return available[0];
       const fallback = matches.slice().sort((a, b) => matchTimestamp(b) - matchTimestamp(a));
       return fallback[0] || null;
+    }}
+
+    function statusClass(match) {{
+      if (match.completed || match.status === 'Terminé') return 'done';
+      return match.status === 'LIVE' ? 'live' : '';
+    }}
+
+    function matchCenter(match) {{
+      const hasScore = match.home_score !== '' && match.away_score !== '';
+      return hasScore ? `${{match.home_score}} - ${{match.away_score}}` : shortDate(match.date).split(' ').pop() || 'VS';
+    }}
+
+    function followMatchCard(match) {{
+      return `<article class="follow-card">
+        <div class="follow-meta"><span>${{escapeHtml(match.competition || 'Compétition')}}</span><span>${{escapeHtml(shortDate(match.date))}}</span></div>
+        <div class="follow-teams">
+          <div class="follow-team">${{flagMarkup(match.home_flag_url)}}<span>${{escapeHtml(match.home_team)}}</span></div>
+          <div class="follow-center">${{escapeHtml(matchCenter(match))}}</div>
+          <div class="follow-team away"><span>${{escapeHtml(match.away_team)}}</span>${{flagMarkup(match.away_flag_url)}}</div>
+        </div>
+        <span class="follow-status ${{statusClass(match)}}">${{escapeHtml(match.status || 'À venir')}}</span>
+      </article>`;
+    }}
+
+    function renderFollowMatches(matches) {{
+      const source = matches && matches.length ? matches : DASHBOARD_MATCHES;
+      const sorted = source.slice().sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
+      const today = sorted.filter(isTodayMatch);
+      const upcoming = sorted.filter(isMatchAvailable);
+      const selected = today.length ? today : upcoming.slice(0, 3);
+      followMode.textContent = today.length ? 'Aujourd’hui' : '3 prochains';
+      communityFollowMatches.innerHTML = selected.length
+        ? selected.map(followMatchCard).join('')
+        : '<div class="empty">Aucun match à suivre pour le moment.</div>';
     }}
 
     async function sharePage() {{
@@ -1389,12 +1441,14 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       if (!serverMode) {{
         predictionStatus.textContent = 'Mode fichier statique : pronostics désactivés.';
         renderMatchOptions(DASHBOARD_MATCHES);
+        renderFollowMatches(DASHBOARD_MATCHES);
         return;
       }}
       try {{
         const response = await fetch('/api/community');
         const data = await response.json();
         renderMatchOptions(data.matches);
+        renderFollowMatches(data.matches);
         renderLeaderboard(data.leaderboard);
         predictionStatus.textContent = '';
       }} catch (error) {{
