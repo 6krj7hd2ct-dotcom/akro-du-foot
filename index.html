@@ -397,8 +397,15 @@
     input, textarea, select { width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }
     textarea { min-height: 82px; resize: vertical; }
     .message-list, .prediction-list, .leaderboard-list { display: grid; gap: 10px; margin-top: 14px; }
+    .leaderboard-list { max-height: 292px; overflow-y: auto; padding-right: 8px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
+    .leaderboard-list::-webkit-scrollbar { width: 8px; }
+    .leaderboard-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
+    .leaderboard-list::-webkit-scrollbar-thumb { background: rgba(245,201,107,0.55); border-radius: 999px; }
     .message-item, .prediction-item, .leaderboard-item { padding: 11px; border-radius: 12px; background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09); }
     .message-top, .prediction-top, .leaderboard-item { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .leaderboard-item.top-rank { border-color: rgba(245,201,107,0.34); background: linear-gradient(90deg, rgba(245,201,107,0.14), rgba(255,255,255,0.055)); }
+    .leaderboard-rank { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-right: 8px; border-radius: 50%; color: #07111f; background: linear-gradient(180deg, #ffffff, #b9c9dc); font-weight: 950; }
+    .top-rank .leaderboard-rank { background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
     .prediction-scoreboard { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 14px; border: 1px solid rgba(245,201,107,0.22); border-radius: 16px; background: radial-gradient(circle at center, rgba(245,201,107,0.12), transparent 18rem), rgba(255,255,255,0.055); }
     .prediction-team { min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; }
     .prediction-team.home { justify-content: flex-end; text-align: right; }
@@ -985,7 +992,7 @@
     function renderLeaderboard(rows) {
       const list = document.getElementById('leaderboardList');
       list.innerHTML = rows && rows.length ? rows.map((row, index) => `
-        <div class="leaderboard-item"><strong>#${index + 1} ${escapeHtml(row.pseudo)}</strong><span>${escapeHtml(row.points)} pts</span></div>
+        <div class="leaderboard-item ${index < 3 ? 'top-rank' : ''}"><strong><span class="leaderboard-rank">${index + 1}</span>${escapeHtml(row.pseudo)}</strong><span>${escapeHtml(row.points)} pts</span></div>
       `).join('') : '<div class="empty">Aucun point pour le moment.</div>';
     }
 
