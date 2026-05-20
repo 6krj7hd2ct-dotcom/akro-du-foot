@@ -299,7 +299,7 @@ def _page(data: dict[str, Any]) -> str:
     }}
     .bracket-wing {{
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: clamp(7px, 1vw, 12px);
       align-items: center;
       position: relative;
@@ -490,10 +490,10 @@ def _page(data: dict[str, Any]) -> str:
       .match-meta {{ grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }}
       th, td {{ padding: 8px 6px; }}
       .bracket-wrap {{ overflow-x: auto; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }}
-      .bracket-stage {{ width: max-content; min-width: 980px; grid-template-columns: minmax(0, 360px) 190px minmax(0, 360px); gap: 12px; }}
+      .bracket-stage {{ width: max-content; min-width: 1120px; grid-template-columns: minmax(0, 440px) 190px minmax(0, 440px); gap: 12px; }}
       .bracket-stage.ucl-official {{ min-width: 1120px; grid-template-columns: minmax(0, 440px) 190px minmax(0, 440px); }}
       .bracket-center {{ order: initial; }}
-      .bracket-wing {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
+      .bracket-wing {{ grid-template-columns: repeat(4, minmax(0, 1fr)); }}
       .bracket-wing.ucl-wing {{ grid-template-columns: repeat(4, minmax(0, 1fr)); }}
       .bracket-wing.left::after, .bracket-wing.right::before, .round::after, .ko-match::before {{ display: block; }}
       .trophy-card {{ min-height: 150px; }}
@@ -512,7 +512,7 @@ def _page(data: dict[str, Any]) -> str:
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
       .calendar-match .date, .calendar-match .match-meta {{ grid-column: 1 / -1; }}
-      .bracket-stage {{ padding: 10px; min-width: 900px; }}
+      .bracket-stage {{ padding: 10px; min-width: 1040px; }}
       .bracket-stage.ucl-official {{ min-width: 1040px; }}
       .round {{ gap: 8px; }}
       .ko-line {{ font-size: 12px; }}
@@ -981,83 +981,210 @@ def _news_section(title: str, news: list[dict[str, Any]], note: str, france: boo
 
 
 def render_worldcup_bracket(rounds: list[dict[str, Any]]) -> str:
-    return _bracket(rounds, "Coupe du Monde FIFA 2026")
-
-
-def _bracket(rounds: list[dict[str, Any]], trophy_title: str = "Coupe du Monde FIFA 2026") -> str:
     by_name = {round_data.get("name", ""): round_data for round_data in rounds}
-    round_32 = by_name.get("16es de finale", {"name": "16es de finale", "matches": []})
-    round_16 = by_name.get("8es de finale", {"name": "8es de finale", "matches": []})
-    quarter = by_name.get("Quarts de finale", {"name": "Quarts de finale", "matches": []})
-    semi = by_name.get("Demi-finales", {"name": "Demi-finales", "matches": []})
-    third = by_name.get("Match pour la 3e place", {"name": "Match pour la 3e place", "matches": []})
-    final = by_name.get("Finale", {"name": "Finale", "matches": []})
+    round_32 = _dedupe_matches(by_name.get("16es de finale", {}).get("matches", []))
+    round_16 = _dedupe_matches(by_name.get("8es de finale", {}).get("matches", []))
+    quarter = _dedupe_matches(by_name.get("Quarts de finale", {}).get("matches", []))
+    semi = _dedupe_matches(by_name.get("Demi-finales", {}).get("matches", []))
+    third = _dedupe_matches(by_name.get("Match pour la 3e place", {}).get("matches", []))
+    final = _dedupe_matches(by_name.get("Finale", {}).get("matches", []))
 
+    left32, right32 = _split_bracket_side(round_32)
+    left16, right16 = _split_bracket_side(round_16)
+    leftq, rightq = _split_bracket_side(quarter)
+    lefts, rights = _split_bracket_side(semi)
     left = [
-        {"name": "16es", "matches": round_32.get("matches", [])[:8]},
-        {"name": "8es", "matches": round_16.get("matches", [])[:4]},
-        {"name": "Quarts", "matches": quarter.get("matches", [])[:2]},
+        {"name": "16es", "matches": left32},
+        {"name": "8es", "matches": left16},
+        {"name": "Quarts", "matches": leftq},
+        {"name": "Demies", "matches": lefts},
     ]
     right = [
-        {"name": "Quarts", "matches": quarter.get("matches", [])[2:]},
-        {"name": "8es", "matches": round_16.get("matches", [])[4:]},
-        {"name": "16es", "matches": round_32.get("matches", [])[8:]},
+        {"name": "Demies", "matches": rights},
+        {"name": "Quarts", "matches": rightq},
+        {"name": "8es", "matches": right16},
+        {"name": "16es", "matches": right32},
     ]
-    final_match = (final.get("matches") or [{}])[0]
-    third_match = (third.get("matches") or [{}])[0]
+    return _bracket_shell(left, right, final, "Coupe du Monde FIFA 2026", third)
+
+
+def render_champions_league_bracket(rounds: list[dict[str, Any]]) -> str:
+    by_name = {round_data.get("name", ""): round_data for round_data in rounds}
+    playoffs = _aggregate_two_legged_ties(by_name.get("Barrages", {}).get("matches", []))
+    round_16 = _aggregate_two_legged_ties(by_name.get("8es de finale", {}).get("matches", []))
+    quarter = _aggregate_two_legged_ties(by_name.get("Quarts de finale", {}).get("matches", []))
+    semi = _aggregate_two_legged_ties(by_name.get("Demi-finales", {}).get("matches", []))
+    final = _dedupe_matches(by_name.get("Finale", {}).get("matches", []))
+
+    lefts, rights = _split_bracket_side(semi)
+    leftq, rightq = _partition_by_path(quarter, _teams_in_matches(lefts), _teams_in_matches(rights))
+    left16, right16 = _partition_by_path(round_16, _teams_in_matches(leftq), _teams_in_matches(rightq))
+    leftp, rightp = _partition_by_path(playoffs, _teams_in_matches(left16), _teams_in_matches(right16))
+    left = [
+        {"name": "Barrages", "matches": leftp},
+        {"name": "8es", "matches": left16},
+        {"name": "Quarts", "matches": leftq},
+        {"name": "Demies", "matches": lefts},
+    ]
+    right = [
+        {"name": "Demies", "matches": rights},
+        {"name": "Quarts", "matches": rightq},
+        {"name": "8es", "matches": right16},
+        {"name": "Barrages", "matches": rightp},
+    ]
+    return _bracket_shell(left, right, final, "Ligue des Champions", stage_class=" ucl-official", wing_class=" ucl-wing")
+
+
+def _bracket_shell(
+    left: list[dict[str, Any]],
+    right: list[dict[str, Any]],
+    final_matches: list[dict[str, Any]],
+    trophy_title: str,
+    third_matches: list[dict[str, Any]] | None = None,
+    stage_class: str = "",
+    wing_class: str = "",
+) -> str:
+    final_match = (final_matches or [{}])[0]
+    third_html = ""
+    if third_matches is not None:
+        third_match = (third_matches or [{}])[0]
+        third_html = '<div class="round-title">3e place</div>' + _ko_match(third_match, extra_class="third-place-card")
     center = (
         '<div class="bracket-center">'
         f'<div class="trophy-card"><div class="trophy"></div><div class="trophy-title">{escape(trophy_title)}</div></div>'
         '<div class="round-title">Finale</div>'
         f'{_ko_match(final_match, extra_class="final-card")}'
-        '<div class="round-title">3e place</div>'
-        f'{_ko_match(third_match, extra_class="third-place-card")}'
+        f'{third_html}'
         "</div>"
     )
     return (
-        '<section class="bracket-wrap"><div class="bracket-stage">'
-        f'<div class="bracket-wing left">{"".join(_bracket_round(round_data) for round_data in left)}</div>'
+        f'<section class="bracket-wrap"><div class="bracket-stage{stage_class}">'
+        f'<div class="bracket-wing{wing_class} left">{"".join(_bracket_round(round_data) for round_data in left)}</div>'
         f"{center}"
-        f'<div class="bracket-wing right">{"".join(_bracket_round(round_data) for round_data in right)}</div>'
+        f'<div class="bracket-wing{wing_class} right">{"".join(_bracket_round(round_data) for round_data in right)}</div>'
         "</div></section>"
     )
 
 
-def render_champions_league_bracket(rounds: list[dict[str, Any]]) -> str:
-    by_name = {round_data.get("name", ""): round_data for round_data in rounds}
-    playoffs = by_name.get("Barrages", {"name": "Barrages", "matches": []})
-    round_16 = by_name.get("8es de finale", {"name": "8es de finale", "matches": []})
-    quarter = by_name.get("Quarts de finale", {"name": "Quarts de finale", "matches": []})
-    semi = by_name.get("Demi-finales", {"name": "Demi-finales", "matches": []})
-    final = by_name.get("Finale", {"name": "Finale", "matches": []})
+def _split_bracket_side(matches: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    clean = sorted(_dedupe_matches(matches), key=_match_sort_key)
+    midpoint = (len(clean) + 1) // 2
+    return clean[:midpoint], clean[midpoint:]
 
-    left = [
-        {"name": "Barrages", "matches": playoffs.get("matches", [])[:8]},
-        {"name": "8es", "matches": round_16.get("matches", [])[:8]},
-        {"name": "Quarts", "matches": quarter.get("matches", [])[:4]},
-        {"name": "Demies", "matches": semi.get("matches", [])[:2]},
-    ]
-    right = [
-        {"name": "Demies", "matches": semi.get("matches", [])[2:]},
-        {"name": "Quarts", "matches": quarter.get("matches", [])[4:]},
-        {"name": "8es", "matches": round_16.get("matches", [])[8:]},
-        {"name": "Barrages", "matches": playoffs.get("matches", [])[8:]},
-    ]
-    final_match = (final.get("matches") or [{}])[0]
-    center = (
-        '<div class="bracket-center">'
-        '<div class="trophy-card"><div class="trophy"></div><div class="trophy-title">Ligue des Champions</div></div>'
-        '<div class="round-title">Finale</div>'
-        f'{_ko_match(final_match, extra_class="final-card")}'
-        "</div>"
-    )
-    return (
-        '<section class="bracket-wrap"><div class="bracket-stage ucl-official">'
-        f'<div class="bracket-wing ucl-wing left">{"".join(_bracket_round(round_data) for round_data in left)}</div>'
-        f"{center}"
-        f'<div class="bracket-wing ucl-wing right">{"".join(_bracket_round(round_data) for round_data in right)}</div>'
-        "</div></section>"
-    )
+
+def _teams_in_matches(matches: list[dict[str, Any]]) -> set[str]:
+    teams = set()
+    for match in matches:
+        for key in ("home_team", "away_team", "winner_team"):
+            team = str(match.get(key) or "").casefold()
+            if team and team != "à déterminer":
+                teams.add(team)
+    return teams
+
+
+def _partition_by_path(
+    matches: list[dict[str, Any]],
+    left_targets: set[str],
+    right_targets: set[str],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    left: list[dict[str, Any]] = []
+    right: list[dict[str, Any]] = []
+    unresolved: list[dict[str, Any]] = []
+    for match in sorted(_dedupe_matches(matches), key=_match_sort_key):
+        teams = _teams_in_matches([match])
+        if teams & left_targets and not teams & right_targets:
+            left.append(match)
+        elif teams & right_targets and not teams & left_targets:
+            right.append(match)
+        else:
+            unresolved.append(match)
+    for match in unresolved:
+        if len(left) <= len(right):
+            left.append(match)
+        else:
+            right.append(match)
+    return left, right
+
+
+def _dedupe_matches(matches: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen = set()
+    clean = []
+    for match in sorted(matches, key=_match_sort_key):
+        key = str(match.get("id") or "") or "|".join(
+            str(match.get(part, "")) for part in ("home_team", "away_team", "date")
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        clean.append(match)
+    return clean
+
+
+def _aggregate_two_legged_ties(matches: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for match in _dedupe_matches(matches):
+        home = str(match.get("home_team") or "À déterminer")
+        away = str(match.get("away_team") or "À déterminer")
+        key = tuple(sorted((home.casefold(), away.casefold())))
+        grouped.setdefault(key, []).append(match)
+
+    ties = []
+    for legs in grouped.values():
+        legs = sorted(legs, key=_match_sort_key)
+        first = legs[0]
+        home = str(first.get("home_team") or "À déterminer")
+        away = str(first.get("away_team") or "À déterminer")
+        flags = {
+            str(leg.get("home_team") or ""): leg.get("home_flag_url", "") for leg in legs
+        } | {
+            str(leg.get("away_team") or ""): leg.get("away_flag_url", "") for leg in legs
+        }
+        scores: dict[str, int] = {home: 0, away: 0}
+        has_all_scores = True
+        for leg in legs:
+            h_team = str(leg.get("home_team") or "")
+            a_team = str(leg.get("away_team") or "")
+            h_score = _score_number(leg.get("home_score"))
+            a_score = _score_number(leg.get("away_score"))
+            if h_score is None or a_score is None:
+                has_all_scores = False
+                continue
+            scores[h_team] = scores.get(h_team, 0) + h_score
+            scores[a_team] = scores.get(a_team, 0) + a_score
+        if len(legs) == 1:
+            ties.append(first)
+            continue
+        winner_team = ""
+        if has_all_scores and scores.get(home, 0) != scores.get(away, 0):
+            winner_team = home if scores.get(home, 0) > scores.get(away, 0) else away
+        statuses = [str(leg.get("status") or "") for leg in legs]
+        status = "LIVE" if any(status == "LIVE" for status in statuses) else "Terminé" if all(leg.get("completed") or status == "Terminé" for leg, status in zip(legs, statuses)) else "À venir"
+        date_label = f"{_format_datetime(legs[0].get('date', ''), with_time=False)} - {_format_datetime(legs[-1].get('date', ''), with_time=False)}"
+        ties.append({
+            **legs[-1],
+            "id": "tie:" + ":".join(sorted(str(leg.get("id") or "") for leg in legs)),
+            "home_team": home,
+            "away_team": away,
+            "home_flag_url": flags.get(home, ""),
+            "away_flag_url": flags.get(away, ""),
+            "home_score": scores.get(home, "") if has_all_scores else "",
+            "away_score": scores.get(away, "") if has_all_scores else "",
+            "status": status,
+            "completed": status == "Terminé",
+            "date_label": date_label,
+            "tie_note": "Score cumulé" if has_all_scores else "Confrontation aller-retour",
+            "winner_team": winner_team,
+        })
+    return sorted(ties, key=_match_sort_key)
+
+
+def _score_number(value: Any) -> int | None:
+    try:
+        if value == "" or value is None:
+            return None
+        return int(value)
+    except (TypeError, ValueError):
+        return None
 
 
 def _bracket_round(round_data: dict[str, Any]) -> str:
@@ -1071,11 +1198,15 @@ def _ko_match(match: dict[str, Any], extra_class: str = "") -> str:
     class_name = f"ko-match {extra_class}".strip()
     home_score = _display_score(match.get("home_score", ""))
     away_score = _display_score(match.get("away_score", ""))
+    date_label = match.get("date_label") or _format_datetime(match.get("date", ""), with_time=True)
+    tie_note = match.get("tie_note", "")
+    note = f'<div class="subtle">{escape(str(tie_note))}</div>' if tie_note else ""
     return (
         f'<div class="{escape(class_name)}">'
         f'<div class="ko-line"><span>{_team_button(match.get("home_team", "À déterminer"), match.get("home_flag_url", ""))}</span><span>{home_score}</span></div>'
         f'<div class="ko-line"><span>{_team_button(match.get("away_team", "À déterminer"), match.get("away_flag_url", ""))}</span><span>{away_score}</span></div>'
-        f'<div class="subtle">{escape(_format_datetime(match.get("date", ""), with_time=True))}</div>'
+        f'<div class="subtle">{escape(str(date_label))}</div>'
+        f'{note}'
         f'<span class="{_status_class(match)}">{escape(match.get("status", ""))}</span>'
         "</div>"
     )
