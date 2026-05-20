@@ -185,12 +185,13 @@
     .subtle { color: var(--muted); font-size: 12px; }
     .card h3 { padding: 16px 16px 0; font-size: 17px; }
     .card.france { border-color: rgba(255,255,255,0.22); background: linear-gradient(90deg, rgba(31,111,235,0.28), rgba(255,255,255,0.08), rgba(239,51,64,0.22)), linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.06)); }
-    .flag { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }
+    .flag { width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }
     .flag.placeholder { display: inline-grid; place-items: center; color: #9fb0c2; font-size: 11px; }
     .team { font-weight: 850; }
-    .team-button { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }
+    .team-button { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }
     .team-button:hover, .team-button:focus-visible { color: #fff; background: rgba(245,201,107,0.14); outline: 1px solid rgba(245,201,107,0.34); }
     .away .team-button { justify-content: flex-end; }
+    .table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; color: #edf6ff; }
     th, td { padding: 10px 9px; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: right; vertical-align: middle; }
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
@@ -226,6 +227,9 @@
     .article-meta { color: #95a9bd; font-size: 12px; margin-bottom: 10px; text-transform: uppercase; font-weight: 800; }
     .read-link { margin-top: auto; padding-top: 14px; font-weight: 850; font-size: 13px; text-decoration: none; }
     .bracket-wrap { width: 100%; max-width: 100%; overflow-x: visible; padding: 8px 0 18px; }
+    .bracket-wrap::-webkit-scrollbar { height: 9px; }
+    .bracket-wrap::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
+    .bracket-wrap::-webkit-scrollbar-thumb { background: rgba(245,201,107,0.55); border-radius: 999px; }
     .bracket-stage {
       width: 100%;
       max-width: 100%;
@@ -440,11 +444,13 @@
       .calendar-match { grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }
       .match-meta { grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }
       th, td { padding: 8px 6px; }
-      .bracket-stage { grid-template-columns: 1fr; gap: 14px; }
-      .bracket-stage.ucl-official { grid-template-columns: 1fr; }
-      .bracket-center { order: -1; }
+      .bracket-wrap { overflow-x: auto; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
+      .bracket-stage { width: max-content; min-width: 980px; grid-template-columns: minmax(0, 360px) 190px minmax(0, 360px); gap: 12px; }
+      .bracket-stage.ucl-official { min-width: 1120px; grid-template-columns: minmax(0, 440px) 190px minmax(0, 440px); }
+      .bracket-center { order: initial; }
       .bracket-wing { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .bracket-wing.left::after, .bracket-wing.right::before, .round::after, .ko-match::before { display: none; }
+      .bracket-wing.ucl-wing { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .bracket-wing.left::after, .bracket-wing.right::before, .round::after, .ko-match::before { display: block; }
       .trophy-card { min-height: 150px; }
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
@@ -454,12 +460,15 @@
     }
     @media (max-width: 480px) {
       h1 { font-size: 40px; }
+      .app-title { font-size: clamp(34px, 12vw, 44px); }
+      .app-copy { font-size: 14px; }
+      .global-controls { width: 100%; }
+      .action-button { flex: 1 1 130px; text-align: center; }
       .today-strip, .leaders, .news, .grid, .matches { grid-template-columns: 1fr; }
       .calendar-match { grid-template-columns: 1fr auto 1fr; }
       .calendar-match .date, .calendar-match .match-meta { grid-column: 1 / -1; }
-      .bracket-stage { padding: 10px; }
-      .bracket-wing { grid-template-columns: 1fr; }
-      .bracket-wing.ucl-wing { grid-template-columns: 1fr; }
+      .bracket-stage { padding: 10px; min-width: 900px; }
+      .bracket-stage.ucl-official { min-width: 1040px; }
       .round { gap: 8px; }
       .ko-line { font-size: 12px; }
       .team-modal { padding: 10px; }
@@ -578,76 +587,76 @@
     <div class="section-head"><div class="section-title"><h2>Classements des groupes</h2></div><div class="section-note">Drapeaux, points, différence de buts, matchs joués, victoires, nuls et défaites.</div></div>
     <section class="grid"><article class="card">
   <h3>Group A</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Mexico"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/mex.png" alt="">Mexico</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="South Africa"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/rsa.png" alt="">South Africa</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="South Korea"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/kors.png" alt="">South Korea</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Czechia"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/cze.png" alt="">Czechia</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group B</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Canada"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/can.png" alt="">Canada</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Bosnia-Herzegovina"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/bih.png" alt="">Bosnia-Herzegovina</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Qatar"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/qat.png" alt="">Qatar</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Switzerland"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/sui.png" alt="">Switzerland</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group C</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Brazil"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/bra.png" alt="">Brazil</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Morocco"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/mar.png" alt="">Morocco</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Haiti"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/hai.png" alt="">Haiti</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Scotland"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/sco.png" alt="">Scotland</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group D</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="United States"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/usa.png" alt="">United States</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Paraguay"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/par.png" alt="">Paraguay</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Australia"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/aus.png" alt="">Australia</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Türkiye"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/tur.png" alt="">Türkiye</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group E</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Germany"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt="">Germany</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Curacao"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/11678.png" alt="">Curacao</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Ivory Coast"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/civ.png" alt="">Ivory Coast</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Ecuador"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ecu.png" alt="">Ecuador</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group F</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Netherlands"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt="">Netherlands</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Japan"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/jpn.png" alt="">Japan</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Sweden"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/swe.png" alt="">Sweden</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Tunisia"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/tun.png" alt="">Tunisia</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group G</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Belgium"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/bel.png" alt="">Belgium</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Egypt"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/egy.png" alt="">Egypt</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Iran"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/irn.png" alt="">Iran</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="New Zealand"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/nzl.png" alt="">New Zealand</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group H</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Spain"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Spain</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Cape Verde"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/cpv.png" alt="">Cape Verde</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Saudi Arabia"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ksa.png" alt="">Saudi Arabia</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Uruguay"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/uru.png" alt="">Uruguay</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group I</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="France"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt="">France</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Senegal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/sen.png" alt="">Senegal</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Iraq"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/irq.png" alt="">Iraq</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Norway"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/nor.png" alt="">Norway</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group J</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Argentina"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/arg.png" alt="">Argentina</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Algeria"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/alg.png" alt="">Algeria</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Austria"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/aut.png" alt="">Austria</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Jordan"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/jor.png" alt="">Jordan</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group K</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Portugal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt="">Portugal</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Congo DR"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/rdc.png" alt="">Congo DR</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Uzbekistan"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/uzb.png" alt="">Uzbekistan</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Colombia"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/col.png" alt="">Colombia</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article><article class="card">
   <h3>Group L</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="England"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt="">England</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Croatia"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/cro.png" alt="">Croatia</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Ghana"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/gha.png" alt="">Ghana</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Panama"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/pan.png" alt="">Panama</button></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article></section>
 
     <div class="section-head"><div class="section-title"><h2>Résultats et calendrier des poules</h2></div><div class="section-note">Calendrier par journée, avec groupe, stade, statut et score central.</div></div>
@@ -709,10 +718,10 @@
       <div class="section-head"><div class="section-title"><h2>Classement de la phase de ligue</h2></div><div class="section-note">Clubs, matchs joués, victoires, nuls, défaites, différence et points.</div></div>
       <section class="grid"><article class="card">
   <h3>League Phase</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody><tr><td>1</td><td><button class="team team-button" type="button" data-team="Arsenal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt="">Arsenal</button></td><td>8</td><td>0</td><td>+19</td><td>24</td><td>0</td><td><strong>8</strong></td></tr><tr><td>2</td><td><button class="team team-button" type="button" data-team="Bayern Munich"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/132.png" alt="">Bayern Munich</button></td><td>8</td><td>1</td><td>+14</td><td>21</td><td>0</td><td><strong>7</strong></td></tr><tr><td>3</td><td><button class="team team-button" type="button" data-team="Liverpool"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/364.png" alt="">Liverpool</button></td><td>8</td><td>2</td><td>+12</td><td>18</td><td>0</td><td><strong>6</strong></td></tr><tr><td>4</td><td><button class="team team-button" type="button" data-team="Tottenham Hotspur"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/367.png" alt="">Tottenham Hotspur</button></td><td>8</td><td>1</td><td>+10</td><td>17</td><td>2</td><td><strong>5</strong></td></tr><tr><td>5</td><td><button class="team team-button" type="button" data-team="Barcelona"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/83.png" alt="">Barcelona</button></td><td>8</td><td>2</td><td>+8</td><td>16</td><td>1</td><td><strong>5</strong></td></tr><tr><td>6</td><td><button class="team team-button" type="button" data-team="Chelsea"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/363.png" alt="">Chelsea</button></td><td>8</td><td>2</td><td>+7</td><td>16</td><td>1</td><td><strong>5</strong></td></tr><tr><td>7</td><td><button class="team team-button" type="button" data-team="Sporting CP"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/2250.png" alt="">Sporting CP</button></td><td>8</td><td>2</td><td>+6</td><td>16</td><td>1</td><td><strong>5</strong></td></tr><tr><td>8</td><td><button class="team team-button" type="button" data-team="Manchester City"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png" alt="">Manchester City</button></td><td>8</td><td>2</td><td>+6</td><td>16</td><td>1</td><td><strong>5</strong></td></tr><tr><td>9</td><td><button class="team team-button" type="button" data-team="Real Madrid"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" alt="">Real Madrid</button></td><td>8</td><td>3</td><td>+9</td><td>15</td><td>0</td><td><strong>5</strong></td></tr><tr><td>10</td><td><button class="team team-button" type="button" data-team="Internazionale"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/110.png" alt="">Internazionale</button></td><td>8</td><td>3</td><td>+8</td><td>15</td><td>0</td><td><strong>5</strong></td></tr><tr><td>11</td><td><button class="team team-button" type="button" data-team="Paris Saint-Germain"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt="">Paris Saint-Germain</button></td><td>8</td><td>2</td><td>+10</td><td>14</td><td>2</td><td><strong>4</strong></td></tr><tr><td>12</td><td><button class="team team-button" type="button" data-team="Newcastle United"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/361.png" alt="">Newcastle United</button></td><td>8</td><td>2</td><td>+10</td><td>14</td><td>2</td><td><strong>4</strong></td></tr><tr><td>13</td><td><button class="team team-button" type="button" data-team="Juventus"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/111.png" alt="">Juventus</button></td><td>8</td><td>1</td><td>+4</td><td>13</td><td>4</td><td><strong>3</strong></td></tr><tr><td>14</td><td><button class="team team-button" type="button" data-team="Atlético Madrid"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/1068.png" alt="">Atlético Madrid</button></td><td>8</td><td>3</td><td>+2</td><td>13</td><td>1</td><td><strong>4</strong></td></tr><tr><td>15</td><td><button class="team team-button" type="button" data-team="Atalanta"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/105.png" alt="">Atalanta</button></td><td>8</td><td>3</td><td>0</td><td>13</td><td>1</td><td><strong>4</strong></td></tr><tr><td>16</td><td><button class="team team-button" type="button" data-team="Bayer Leverkusen"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/131.png" alt="">Bayer Leverkusen</button></td><td>8</td><td>2</td><td>-1</td><td>12</td><td>3</td><td><strong>3</strong></td></tr><tr><td>17</td><td><button class="team team-button" type="button" data-team="Borussia Dortmund"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/124.png" alt="">Borussia Dortmund</button></td><td>8</td><td>3</td><td>+2</td><td>11</td><td>2</td><td><strong>3</strong></td></tr><tr><td>18</td><td><button class="team team-button" type="button" data-team="Olympiacos"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/435.png" alt="">Olympiacos</button></td><td>8</td><td>3</td><td>-4</td><td>11</td><td>2</td><td><strong>3</strong></td></tr><tr><td>19</td><td><button class="team team-button" type="button" data-team="Club Brugge"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/570.png" alt="">Club Brugge</button></td><td>8</td><td>4</td><td>-2</td><td>10</td><td>1</td><td><strong>3</strong></td></tr><tr><td>20</td><td><button class="team team-button" type="button" data-team="Galatasaray"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/432.png" alt="">Galatasaray</button></td><td>8</td><td>4</td><td>-2</td><td>10</td><td>1</td><td><strong>3</strong></td></tr><tr><td>21</td><td><button class="team team-button" type="button" data-team="AS Monaco"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/174.png" alt="">AS Monaco</button></td><td>8</td><td>2</td><td>-6</td><td>10</td><td>4</td><td><strong>2</strong></td></tr><tr><td>22</td><td><button class="team team-button" type="button" data-team="FK Qarabag"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/10414.png" alt="">FK Qarabag</button></td><td>8</td><td>4</td><td>-8</td><td>10</td><td>1</td><td><strong>3</strong></td></tr><tr><td>23</td><td><button class="team team-button" type="button" data-team="Bodo/Glimt"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/2980.png" alt="">Bodo/Glimt</button></td><td>8</td><td>3</td><td>-1</td><td>9</td><td>3</td><td><strong>2</strong></td></tr><tr><td>24</td><td><button class="team team-button" type="button" data-team="Benfica"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/1929.png" alt="">Benfica</button></td><td>8</td><td>5</td><td>-2</td><td>9</td><td>0</td><td><strong>3</strong></td></tr><tr><td>25</td><td><button class="team team-button" type="button" data-team="Marseille"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/176.png" alt="">Marseille</button></td><td>8</td><td>5</td><td>-3</td><td>9</td><td>0</td><td><strong>3</strong></td></tr><tr><td>26</td><td><button class="team team-button" type="button" data-team="Pafos"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/22281.png" alt="">Pafos</button></td><td>8</td><td>3</td><td>-3</td><td>9</td><td>3</td><td><strong>2</strong></td></tr><tr><td>27</td><td><button class="team team-button" type="button" data-team="Union St.-Gilloise"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/5807.png" alt="">Union St.-Gilloise</button></td><td>8</td><td>5</td><td>-9</td><td>9</td><td>0</td><td><strong>3</strong></td></tr><tr><td>28</td><td><button class="team team-button" type="button" data-team="PSV Eindhoven"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/148.png" alt="">PSV Eindhoven</button></td><td>8</td><td>4</td><td>0</td><td>8</td><td>2</td><td><strong>2</strong></td></tr><tr><td>29</td><td><button class="team team-button" type="button" data-team="Athletic Club"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/93.png" alt="">Athletic Club</button></td><td>8</td><td>4</td><td>-5</td><td>8</td><td>2</td><td><strong>2</strong></td></tr><tr><td>30</td><td><button class="team team-button" type="button" data-team="Napoli"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/114.png" alt="">Napoli</button></td><td>8</td><td>4</td><td>-6</td><td>8</td><td>2</td><td><strong>2</strong></td></tr><tr><td>31</td><td><button class="team team-button" type="button" data-team="F.C. København"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/909.png" alt="">F.C. København</button></td><td>8</td><td>4</td><td>-9</td><td>8</td><td>2</td><td><strong>2</strong></td></tr><tr><td>32</td><td><button class="team team-button" type="button" data-team="Ajax Amsterdam"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/139.png" alt="">Ajax Amsterdam</button></td><td>8</td><td>6</td><td>-13</td><td>6</td><td>0</td><td><strong>2</strong></td></tr><tr><td>33</td><td><button class="team team-button" type="button" data-team="Eintracht Frankfurt"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/125.png" alt="">Eintracht Frankfurt</button></td><td>8</td><td>6</td><td>-11</td><td>4</td><td>1</td><td><strong>1</strong></td></tr><tr><td>34</td><td><button class="team team-button" type="button" data-team="Slavia Prague"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/494.png" alt="">Slavia Prague</button></td><td>8</td><td>5</td><td>-14</td><td>3</td><td>3</td><td><strong>0</strong></td></tr><tr><td>35</td><td><button class="team team-button" type="button" data-team="Villarreal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/102.png" alt="">Villarreal</button></td><td>8</td><td>7</td><td>-13</td><td>1</td><td>1</td><td><strong>0</strong></td></tr><tr><td>36</td><td><button class="team team-button" type="button" data-team="Kairat Almaty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/2528.png" alt="">Kairat Almaty</button></td><td>8</td><td>7</td><td>-15</td><td>1</td><td>1</td><td><strong>0</strong></td></tr></tbody>
-  </table>
+  </table></div>
 </article></section>
 
       <div class="section-head"><div class="section-title"><h2>Résultats et calendrier</h2></div><div class="section-note">Calendrier par journée, avec stade, statut et score central.</div></div>

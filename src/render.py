@@ -230,12 +230,13 @@ def _page(data: dict[str, Any]) -> str:
     .subtle {{ color: var(--muted); font-size: 12px; }}
     .card h3 {{ padding: 16px 16px 0; font-size: 17px; }}
     .card.france {{ border-color: rgba(255,255,255,0.22); background: linear-gradient(90deg, rgba(31,111,235,0.28), rgba(255,255,255,0.08), rgba(239,51,64,0.22)), linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.06)); }}
-    .flag {{ width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }}
+    .flag {{ width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }}
     .flag.placeholder {{ display: inline-grid; place-items: center; color: #9fb0c2; font-size: 11px; }}
     .team {{ font-weight: 850; }}
-    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
+    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
     .team-button:hover, .team-button:focus-visible {{ color: #fff; background: rgba(245,201,107,0.14); outline: 1px solid rgba(245,201,107,0.34); }}
     .away .team-button {{ justify-content: flex-end; }}
+    .table-scroll {{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }}
     table {{ width: 100%; border-collapse: collapse; font-size: 13px; color: #edf6ff; }}
     th, td {{ padding: 10px 9px; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: right; vertical-align: middle; }}
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) {{ text-align: left; }}
@@ -271,6 +272,9 @@ def _page(data: dict[str, Any]) -> str:
     .article-meta {{ color: #95a9bd; font-size: 12px; margin-bottom: 10px; text-transform: uppercase; font-weight: 800; }}
     .read-link {{ margin-top: auto; padding-top: 14px; font-weight: 850; font-size: 13px; text-decoration: none; }}
     .bracket-wrap {{ width: 100%; max-width: 100%; overflow-x: visible; padding: 8px 0 18px; }}
+    .bracket-wrap::-webkit-scrollbar {{ height: 9px; }}
+    .bracket-wrap::-webkit-scrollbar-track {{ background: rgba(255,255,255,0.08); border-radius: 999px; }}
+    .bracket-wrap::-webkit-scrollbar-thumb {{ background: rgba(245,201,107,0.55); border-radius: 999px; }}
     .bracket-stage {{
       width: 100%;
       max-width: 100%;
@@ -485,11 +489,13 @@ def _page(data: dict[str, Any]) -> str:
       .calendar-match {{ grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }}
       .match-meta {{ grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }}
       th, td {{ padding: 8px 6px; }}
-      .bracket-stage {{ grid-template-columns: 1fr; gap: 14px; }}
-      .bracket-stage.ucl-official {{ grid-template-columns: 1fr; }}
-      .bracket-center {{ order: -1; }}
+      .bracket-wrap {{ overflow-x: auto; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }}
+      .bracket-stage {{ width: max-content; min-width: 980px; grid-template-columns: minmax(0, 360px) 190px minmax(0, 360px); gap: 12px; }}
+      .bracket-stage.ucl-official {{ min-width: 1120px; grid-template-columns: minmax(0, 440px) 190px minmax(0, 440px); }}
+      .bracket-center {{ order: initial; }}
       .bracket-wing {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
-      .bracket-wing.left::after, .bracket-wing.right::before, .round::after, .ko-match::before {{ display: none; }}
+      .bracket-wing.ucl-wing {{ grid-template-columns: repeat(4, minmax(0, 1fr)); }}
+      .bracket-wing.left::after, .bracket-wing.right::before, .round::after, .ko-match::before {{ display: block; }}
       .trophy-card {{ min-height: 150px; }}
       .team-dialog {{ max-height: 90vh; }}
       .alltime-row {{ grid-template-columns: 38px 46px minmax(0, 1fr); }}
@@ -499,12 +505,15 @@ def _page(data: dict[str, Any]) -> str:
     }}
     @media (max-width: 480px) {{
       h1 {{ font-size: 40px; }}
+      .app-title {{ font-size: clamp(34px, 12vw, 44px); }}
+      .app-copy {{ font-size: 14px; }}
+      .global-controls {{ width: 100%; }}
+      .action-button {{ flex: 1 1 130px; text-align: center; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
       .calendar-match .date, .calendar-match .match-meta {{ grid-column: 1 / -1; }}
-      .bracket-stage {{ padding: 10px; }}
-      .bracket-wing {{ grid-template-columns: 1fr; }}
-      .bracket-wing.ucl-wing {{ grid-template-columns: 1fr; }}
+      .bracket-stage {{ padding: 10px; min-width: 900px; }}
+      .bracket-stage.ucl-official {{ min-width: 1040px; }}
       .round {{ gap: 8px; }}
       .ko-line {{ font-size: 12px; }}
       .team-modal {{ padding: 10px; }}
@@ -915,10 +924,10 @@ def _group_card(group: dict[str, Any]) -> str:
         )
     return f"""<article class="card">
   <h3>{escape(group.get("name", "Groupe"))}</h3>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
     <tbody>{''.join(rows)}</tbody>
-  </table>
+  </table></div>
 </article>"""
 
 
