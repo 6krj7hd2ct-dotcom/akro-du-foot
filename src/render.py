@@ -1291,6 +1291,25 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       return localDateKey(match.date) === localDateKey(new Date().toISOString());
     }}
 
+    function matchTimestamp(match) {{
+      const date = new Date(match.date);
+      return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+    }}
+
+    function isMatchAvailable(match) {{
+      return !match.completed && match.status !== 'Terminé' && matchTimestamp(match) >= Date.now();
+    }}
+
+    function closestPredictionMatch(matches, selectedCompetition) {{
+      if (!matches.length) return null;
+      const available = matches
+        .filter(isMatchAvailable)
+        .sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
+      if (available.length) return available[0];
+      const fallback = matches.slice().sort((a, b) => matchTimestamp(b) - matchTimestamp(a));
+      return fallback[0] || null;
+    }}
+
     async function sharePage() {{
       const url = location.href;
       try {{
@@ -1314,18 +1333,21 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         : selectedCompetition === 'today'
           ? communityMatches.filter(isTodayMatch)
           : communityMatches.filter((match) => match.competition === selectedCompetition);
+      const selected = closestPredictionMatch(filtered, selectedCompetition);
       predictionMatch.innerHTML = filtered.map((match) => {{
         const label = `${{match.competition || 'Compétition'}} · ${{shortDate(match.date)}} · ${{match.home_team}} vs ${{match.away_team}}`;
         return `<option value="${{escapeHtml(match.id)}}">${{escapeHtml(label)}}</option>`;
       }}).join('');
+      if (selected) predictionMatch.value = selected.id;
       const hasMatches = filtered.length > 0;
+      const matchAvailable = Boolean(selected && isMatchAvailable(selected));
       predictionMatch.disabled = !hasMatches;
-      document.getElementById('homePrediction').disabled = !hasMatches;
-      document.getElementById('awayPrediction').disabled = !hasMatches;
-      predictionForm.querySelector('button[type="submit"]').disabled = !hasMatches;
-      predictionStatus.textContent = selectedCompetition === 'today' && !hasMatches
-        ? 'Aucun match du jour disponible pour les pronostics'
-        : '';
+      document.getElementById('homePrediction').disabled = !matchAvailable;
+      document.getElementById('awayPrediction').disabled = !matchAvailable;
+      predictionForm.querySelector('button[type="submit"]').disabled = !matchAvailable;
+      predictionStatus.textContent = !hasMatches
+        ? (selectedCompetition === 'today' ? 'Aucun match du jour disponible pour les pronostics' : 'Aucun match disponible avec ce filtre')
+        : matchAvailable ? '' : 'Tous les matchs de ce filtre sont terminés';
       updatePredictionTeams();
     }}
 
