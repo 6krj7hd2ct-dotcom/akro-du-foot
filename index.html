@@ -977,14 +977,13 @@
 
     function renderFollowMatches(matches) {
       const source = matches && matches.length ? matches : DASHBOARD_MATCHES;
-      const sorted = source.slice().sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
-      const today = sorted.filter(isTodayMatch);
-      const upcoming = sorted.filter(isMatchAvailable);
-      const selected = today.length ? today : upcoming.slice(0, 3);
-      followMode.textContent = today.length ? 'Aujourd’hui' : '3 prochains';
+      const selected = source
+        .filter(isTodayMatch)
+        .sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
+      followMode.textContent = 'Aujourd’hui';
       communityFollowMatches.innerHTML = selected.length
         ? selected.map(followMatchCard).join('')
-        : '<div class="empty">Aucun match à suivre pour le moment.</div>';
+        : '<div class="empty">Aucun match aujourd’hui</div>';
     }
 
     async function sharePage() {
