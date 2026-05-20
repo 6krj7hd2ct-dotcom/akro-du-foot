@@ -126,7 +126,6 @@ def _page(data: dict[str, Any]) -> str:
     .app-title {{ font-size: clamp(42px, 8vw, 92px); line-height: 0.9; }}
     .app-copy {{ color: #c5d3e4; max-width: 650px; margin: 12px 0 0; font-size: 16px; line-height: 1.5; }}
     .global-controls {{ display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; align-items: center; }}
-    .pseudo-field {{ width: min(260px, 100%); }}
     .hero.champions {{
       background:
         linear-gradient(135deg, rgba(5,12,35,0.96), rgba(17,33,77,0.82)),
@@ -603,8 +602,6 @@ def _app_header() -> str:
           <p class="app-copy">Un espace unique pour suivre les compétitions, discuter entre amis, faire des pronostics fictifs sans argent et lancer une Watch Party.</p>
         </div>
         <div class="global-controls">
-          <input class="pseudo-field" id="globalPseudo" maxlength="32" placeholder="Ton pseudo" autocomplete="nickname">
-          <a class="action-button" href="#community">Pronostics</a>
           <button class="action-button" type="button" id="shareButton">Partager</button>
           <a class="action-button" href="/watch-party">Watch Party</a>
         </div>
@@ -1270,7 +1267,6 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const DASHBOARD_MATCHES = {payload};
     const serverMode = location.protocol === 'http:' || location.protocol === 'https:';
     const shareButton = document.getElementById('shareButton');
-    const globalPseudo = document.getElementById('globalPseudo');
     const predictionForm = document.getElementById('predictionForm');
     const communityFollowMatches = document.getElementById('communityFollowMatches');
     const followMode = document.getElementById('followMode');
@@ -1286,11 +1282,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     let communityMatches = DASHBOARD_MATCHES;
 
     function pseudoValue() {{
-      return (globalPseudo.value || '').trim();
-    }}
-
-    function persistPseudo() {{
-      localStorage.setItem('akrodufoot:pseudo', pseudoValue());
+      return localStorage.getItem('akrodufoot:pseudo') || 'Participant';
     }}
 
     function shortDate(value) {{
@@ -1468,8 +1460,6 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     }}
 
     shareButton.addEventListener('click', sharePage);
-    globalPseudo.value = localStorage.getItem('akrodufoot:pseudo') || '';
-    globalPseudo.addEventListener('input', persistPseudo);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
     predictionForm.addEventListener('submit', async (event) => {{
