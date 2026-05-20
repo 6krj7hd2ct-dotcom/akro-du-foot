@@ -435,7 +435,7 @@ def _page(data: dict[str, Any]) -> str:
     .alltime-value {{ color: var(--gold); font-size: 24px; font-weight: 950; text-align: right; }}
     .community-grid {{ display: grid; grid-template-columns: 1fr; gap: 16px; }}
     .community-panel {{ padding: 16px; }}
-    .community-predictions {{ display: grid; grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr); gap: 16px; align-items: start; }}
+    .community-predictions {{ display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(240px, 0.52fr); gap: 16px; align-items: start; }}
     .community-side {{ min-width: 0; }}
     .follow-zone {{ display: grid; gap: 12px; }}
     .follow-list {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }}
@@ -788,10 +788,6 @@ def _community_section() -> str:
       </article>
       <article class="card community-panel community-predictions">
         <div class="community-side">
-          <h3>Classement</h3>
-          <div class="leaderboard-list" id="leaderboardList"></div>
-        </div>
-        <div class="community-side">
           <h3 id="predictions">Pronostics du jour</h3>
           <form class="community-form" id="predictionForm">
             <div class="field-row">
@@ -814,6 +810,10 @@ def _community_section() -> str:
             <button class="action-button" type="submit">Valider le pronostic</button>
           </form>
           <div class="community-status" id="predictionStatus"></div>
+        </div>
+        <div class="community-side">
+          <h3>Classement</h3>
+          <div class="leaderboard-list" id="leaderboardList"></div>
         </div>
       </article>
     </section>
