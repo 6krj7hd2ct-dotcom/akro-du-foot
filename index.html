@@ -388,21 +388,15 @@
     .alltime-row { display: grid; grid-template-columns: 44px 52px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.06); }
     .alltime-rank { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-weight: 950; }
     .alltime-value { color: var(--gold); font-size: 24px; font-weight: 950; text-align: right; }
-    .community-grid { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: 16px; }
+    .community-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     .community-panel { padding: 16px; }
+    .community-predictions { display: grid; grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr); gap: 16px; align-items: start; }
+    .community-side { min-width: 0; }
     .community-form { display: grid; gap: 10px; margin-top: 12px; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     input, textarea, select { width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }
     textarea { min-height: 82px; resize: vertical; }
     .message-list, .prediction-list, .leaderboard-list { display: grid; gap: 10px; margin-top: 14px; }
-    .message-list { max-height: 320px; overflow-y: auto; padding-right: 8px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
-    .message-list::-webkit-scrollbar { width: 8px; }
-    .message-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
-    .message-list::-webkit-scrollbar-thumb { background: rgba(245,201,107,0.55); border-radius: 999px; }
-    .chat-tools { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .chat-color { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; font-weight: 800; }
-    .chat-color input { width: 38px; height: 38px; min-width: 38px; padding: 3px; border-radius: 50%; cursor: pointer; }
-    .message-text { color: var(--ink); overflow-wrap: anywhere; }
     .message-item, .prediction-item, .leaderboard-item { padding: 11px; border-radius: 12px; background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09); }
     .message-top, .prediction-top, .leaderboard-item { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
     .prediction-scoreboard { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 14px; border: 1px solid rgba(245,201,107,0.22); border-radius: 16px; background: radial-gradient(circle at center, rgba(245,201,107,0.12), transparent 18rem), rgba(255,255,255,0.055); }
@@ -435,7 +429,7 @@
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
-      .community-grid, .field-row { grid-template-columns: 1fr; }
+      .community-grid, .community-predictions, .field-row { grid-template-columns: 1fr; }
       .prediction-scoreboard { grid-template-columns: 1fr auto auto auto 1fr; gap: 8px; }
     }
     @media (max-width: 480px) {
@@ -469,8 +463,7 @@
         </div>
         <div class="global-controls">
           <input class="pseudo-field" id="globalPseudo" maxlength="32" placeholder="Ton pseudo" autocomplete="nickname">
-          <a class="action-button" href="#community">Tchat</a>
-          <a class="action-button" href="#predictions">Pronostics</a>
+          <a class="action-button" href="#community">Pronostics</a>
           <button class="action-button" type="button" id="shareButton">Partager</button>
           <a class="action-button" href="/watch-party">Watch Party</a>
         </div>
@@ -480,46 +473,38 @@
     
     <div class="section-head" id="community">
       <div class="section-title"><h2>Communauté</h2><span class="alltime-badge">Global</span><span class="alltime-badge">Jeu privé sans argent</span></div>
-      <div class="section-note">Tchat et pronostics restent disponibles quand tu changes d’onglet.</div>
+      <div class="section-note">Pronostics fictifs globaux pour la Coupe du Monde et la Ligue des Champions.</div>
     </div>
     <section class="community-grid">
-      <article class="card community-panel">
-        <h3>Tchat</h3>
-        <form class="community-form" id="chatForm">
-          <div class="chat-tools">
-            <label class="chat-color" for="chatColor">Couleur <input id="chatColor" type="color" value="#bfe6ff" aria-label="Couleur d’écriture"></label>
-          </div>
-          <textarea id="chatMessage" name="message" maxlength="500" placeholder="Message entre amis"></textarea>
-          <button class="action-button" type="submit">Envoyer</button>
-        </form>
-        <div class="community-status" id="chatStatus"></div>
-        <div class="message-list" id="messageList"></div>
-      </article>
-      <article class="card community-panel">
-        <h3 id="predictions">Pronostics fictifs</h3>
-        <form class="community-form" id="predictionForm">
-          <div class="field-row">
-            <select id="competitionFilter">
-              <option value="today" selected>Matchs du jour</option>
-              <option value="all">Tous les matchs</option>
-              <option value="Coupe du Monde">Coupe du Monde</option>
-              <option value="Ligue des Champions">Ligue des Champions</option>
-            </select>
-            <select id="predictionMatch"></select>
-          </div>
-          <div class="prediction-scoreboard" id="predictionTeams">
-            <div class="prediction-team home"><span class="prediction-team-name" id="predictionHomeName">Équipe A</span><span id="predictionHomeFlag" class="flag placeholder">?</span></div>
-            <input id="homePrediction" type="number" min="0" max="99" value="0" aria-label="Score équipe A">
-            <div class="prediction-separator">-</div>
-            <input id="awayPrediction" type="number" min="0" max="99" value="0" aria-label="Score équipe B">
-            <div class="prediction-team away"><span id="predictionAwayFlag" class="flag placeholder">?</span><span class="prediction-team-name" id="predictionAwayName">Équipe B</span></div>
-          </div>
-          <div class="match-context" id="predictionContext"></div>
-          <button class="action-button" type="submit">Valider le pronostic</button>
-        </form>
-        <div class="community-status" id="predictionStatus"></div>
-        <h3>Classement</h3>
-        <div class="leaderboard-list" id="leaderboardList"></div>
+      <article class="card community-panel community-predictions">
+        <div class="community-side">
+          <h3>Classement</h3>
+          <div class="leaderboard-list" id="leaderboardList"></div>
+        </div>
+        <div class="community-side">
+          <h3 id="predictions">Pronostics du jour</h3>
+          <form class="community-form" id="predictionForm">
+            <div class="field-row">
+              <select id="competitionFilter">
+                <option value="today" selected>Matchs du jour</option>
+                <option value="all">Tous les matchs</option>
+                <option value="Coupe du Monde">Coupe du Monde</option>
+                <option value="Ligue des Champions">Ligue des Champions</option>
+              </select>
+              <select id="predictionMatch"></select>
+            </div>
+            <div class="prediction-scoreboard" id="predictionTeams">
+              <div class="prediction-team home"><span class="prediction-team-name" id="predictionHomeName">Équipe A</span><span id="predictionHomeFlag" class="flag placeholder">?</span></div>
+              <input id="homePrediction" type="number" min="0" max="99" value="0" aria-label="Score équipe A">
+              <div class="prediction-separator">-</div>
+              <input id="awayPrediction" type="number" min="0" max="99" value="0" aria-label="Score équipe B">
+              <div class="prediction-team away"><span id="predictionAwayFlag" class="flag placeholder">?</span><span class="prediction-team-name" id="predictionAwayName">Équipe B</span></div>
+            </div>
+            <div class="match-context" id="predictionContext"></div>
+            <button class="action-button" type="submit">Valider le pronostic</button>
+          </form>
+          <div class="community-status" id="predictionStatus"></div>
+        </div>
       </article>
     </section>
 
@@ -896,7 +881,6 @@
     const serverMode = location.protocol === 'http:' || location.protocol === 'https:';
     const shareButton = document.getElementById('shareButton');
     const globalPseudo = document.getElementById('globalPseudo');
-    const chatForm = document.getElementById('chatForm');
     const predictionForm = document.getElementById('predictionForm');
     const competitionFilter = document.getElementById('competitionFilter');
     const predictionMatch = document.getElementById('predictionMatch');
@@ -906,8 +890,6 @@
     const predictionHomeFlag = document.getElementById('predictionHomeFlag');
     const predictionAwayFlag = document.getElementById('predictionAwayFlag');
     const predictionContext = document.getElementById('predictionContext');
-    const chatStatus = document.getElementById('chatStatus');
-    const chatColor = document.getElementById('chatColor');
     const predictionStatus = document.getElementById('predictionStatus');
     let communityMatches = DASHBOARD_MATCHES;
 
@@ -917,23 +899,6 @@
 
     function persistPseudo() {
       localStorage.setItem('akrodufoot:pseudo', pseudoValue());
-    }
-
-    function colorKey() {
-      return 'akrodufoot:color:' + (pseudoValue() || 'default');
-    }
-
-    function persistColor() {
-      localStorage.setItem(colorKey(), chatColor.value);
-      localStorage.setItem('akrodufoot:color:default', chatColor.value);
-    }
-
-    function restoreColor() {
-      chatColor.value = localStorage.getItem(colorKey()) || localStorage.getItem('akrodufoot:color:default') || '#bfe6ff';
-    }
-
-    function safeColor(value) {
-      return /^#[0-9a-f]{6}$/i.test(String(value || '')) ? value : '#bfe6ff';
     }
 
     function shortDate(value) {
@@ -1017,20 +982,6 @@
       predictionContext.textContent = `${match.competition || 'Compétition'} · ${shortDate(match.date)} · ${match.phase || ''}`;
     }
 
-    function renderMessages(messages) {
-      const list = document.getElementById('messageList');
-      const visibleMessages = messages && messages.length ? messages.slice(-100) : [];
-      list.innerHTML = visibleMessages.length ? visibleMessages.map((item) => {
-        const color = safeColor(item.color);
-        return `
-        <article class="message-item">
-          <div class="message-top"><strong style="color:${escapeHtml(color)}">${escapeHtml(item.pseudo)}</strong><span class="subtle">${shortDate(item.created_at)}</span></div>
-          <div class="message-text" style="color:${escapeHtml(color)}">${escapeHtml(item.message)}</div>
-        </article>`;
-      }).join('') : '<div class="empty">Aucun message pour le moment.</div>';
-      requestAnimationFrame(() => { list.scrollTop = list.scrollHeight; });
-    }
-
     function renderLeaderboard(rows) {
       const list = document.getElementById('leaderboardList');
       list.innerHTML = rows && rows.length ? rows.map((row, index) => `
@@ -1040,7 +991,6 @@
 
     async function loadCommunity() {
       if (!serverMode) {
-        chatStatus.textContent = 'Lance le serveur avec python app.py pour activer le tchat et les pronostics.';
         predictionStatus.textContent = 'Mode fichier statique : pronostics désactivés.';
         renderMatchOptions(DASHBOARD_MATCHES);
         return;
@@ -1049,12 +999,9 @@
         const response = await fetch('/api/community');
         const data = await response.json();
         renderMatchOptions(data.matches);
-        renderMessages(data.messages);
         renderLeaderboard(data.leaderboard);
-        chatStatus.textContent = '';
         predictionStatus.textContent = '';
       } catch (error) {
-        chatStatus.textContent = 'Serveur communautaire indisponible.';
         predictionStatus.textContent = 'Serveur communautaire indisponible.';
       }
     }
@@ -1072,29 +1019,9 @@
 
     shareButton.addEventListener('click', sharePage);
     globalPseudo.value = localStorage.getItem('akrodufoot:pseudo') || '';
-    restoreColor();
-    globalPseudo.addEventListener('input', () => {
-      persistPseudo();
-      restoreColor();
-    });
-    chatColor.addEventListener('input', persistColor);
+    globalPseudo.addEventListener('input', persistPseudo);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
-    chatForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (!serverMode) return loadCommunity();
-      try {
-        await postJson('/api/messages', {
-          pseudo: pseudoValue(),
-          message: document.getElementById('chatMessage').value,
-          color: chatColor.value
-        });
-        document.getElementById('chatMessage').value = '';
-        await loadCommunity();
-      } catch (error) {
-        chatStatus.textContent = error.message;
-      }
-    });
     predictionForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!serverMode) return loadCommunity();
