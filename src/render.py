@@ -544,7 +544,7 @@ def _page(data: dict[str, Any]) -> str:
 
     {_errors(data.get("errors", []))}
 
-    <section class="today-strip" aria-label="Matchs du jour">{_today_matches(today_matches)}</section>
+    <section class="today-strip" aria-label="Matchs du jour">{_today_matches(today_matches, group_matches, knockout)}</section>
 
     {_section_head("Meilleurs buteurs", "Top 5 uniquement, avec photo si la source la fournit.", _all_time_badge("scorers"))}
     <section class="leaders">{_player_cards(scorers, "buts")}</section>
@@ -675,7 +675,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
 
       {_errors(data.get("errors", []))}
 
-      <section class="today-strip" aria-label="Matchs du jour Ligue des Champions">{_today_matches(today_matches)}</section>
+      <section class="today-strip" aria-label="Matchs du jour Ligue des Champions">{_today_matches(today_matches, matches, knockout)}</section>
 
       {_section_head("Meilleurs buteurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.", _all_time_badge("champions-scorers"))}
       <section class="leaders">{_player_cards(scorers, "buts", prefer_country_flag=True)}</section>
@@ -754,10 +754,42 @@ def _logo_or_placeholder(url: str) -> str:
     return _flag(url)
 
 
-def _today_matches(matches: list[dict[str, Any]]) -> str:
-    if not matches:
-        return '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match prévu aujourd’hui</strong><div class="subtle">La carte se remplira automatiquement les jours de match.</div></article>'
-    return "".join(f'<article class="today-tile">{_today_match(match)}</article>' for match in matches)
+def _today_matches(
+    matches: list[dict[str, Any]],
+    group_matches: list[dict[str, Any]] | None = None,
+    knockout: list[dict[str, Any]] | None = None,
+) -> str:
+    visible = matches if matches else _upcoming_matches(group_matches or [], knockout or [], limit=5)
+    if not visible:
+        return '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong><div class="subtle">Les cartes se rempliront automatiquement dès publication du calendrier.</div></article>'
+    return "".join(f'<article class="today-tile">{_today_match(match)}</article>' for match in visible)
+
+
+def _upcoming_matches(group_matches: list[dict[str, Any]], knockout: list[dict[str, Any]], limit: int = 5) -> list[dict[str, Any]]:
+    now = datetime.now(PARIS)
+    items = []
+    for group in group_matches:
+        items.extend(group.get("matches", []))
+    for round_data in knockout:
+        items.extend(round_data.get("matches", []))
+
+    def key(match: dict[str, Any]) -> datetime:
+        return _parse_match_datetime(match.get("date", "")) or datetime.max.replace(tzinfo=PARIS)
+
+    upcoming = [match for match in items if not match.get("completed") and key(match) >= now]
+    return sorted(upcoming, key=key)[:limit]
+
+
+def _parse_match_datetime(value: str) -> datetime | None:
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=PARIS)
+    return parsed.astimezone(PARIS)
 
 
 def _today_match(match: dict[str, Any]) -> str:
