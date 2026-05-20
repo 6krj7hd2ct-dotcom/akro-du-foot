@@ -495,7 +495,7 @@ def watch_party_html() -> str:
     <div class="top">
       <div>
         <div class="badge">Watch Party en direct</div>
-        <h1>Coupe du Monde 2026</h1>
+        <h1>LIVE</h1>
       </div>
       <a class="badge" href="/">Retour dashboard</a>
     </div>

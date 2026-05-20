@@ -500,6 +500,7 @@
         <form class="community-form" id="predictionForm">
           <div class="field-row">
             <select id="competitionFilter">
+              <option value="today" selected>Matchs du jour</option>
               <option value="all">Tous les matchs</option>
               <option value="Coupe du Monde">Coupe du Monde</option>
               <option value="Ligue des Champions">Ligue des Champions</option>
@@ -941,6 +942,16 @@
       return Number.isNaN(date.getTime()) ? value : date.toLocaleString('fr-FR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
     }
 
+    function localDateKey(value) {
+      if (!value) return '';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('fr-CA');
+    }
+
+    function isTodayMatch(match) {
+      return localDateKey(match.date) === localDateKey(new Date().toISOString());
+    }
+
     async function sharePage() {
       const url = location.href;
       try {
@@ -961,11 +972,21 @@
       const selectedCompetition = competitionFilter.value;
       const filtered = selectedCompetition === 'all'
         ? communityMatches
-        : communityMatches.filter((match) => match.competition === selectedCompetition);
+        : selectedCompetition === 'today'
+          ? communityMatches.filter(isTodayMatch)
+          : communityMatches.filter((match) => match.competition === selectedCompetition);
       predictionMatch.innerHTML = filtered.map((match) => {
         const label = `${match.competition || 'Compétition'} · ${shortDate(match.date)} · ${match.home_team} vs ${match.away_team}`;
         return `<option value="${escapeHtml(match.id)}">${escapeHtml(label)}</option>`;
       }).join('');
+      const hasMatches = filtered.length > 0;
+      predictionMatch.disabled = !hasMatches;
+      document.getElementById('homePrediction').disabled = !hasMatches;
+      document.getElementById('awayPrediction').disabled = !hasMatches;
+      predictionForm.querySelector('button[type="submit"]').disabled = !hasMatches;
+      predictionStatus.textContent = selectedCompetition === 'today' && !hasMatches
+        ? 'Aucun match du jour disponible pour les pronostics'
+        : '';
       updatePredictionTeams();
     }
 
@@ -979,11 +1000,21 @@
 
     function updatePredictionTeams() {
       const match = selectedMatch();
-      predictionHomeName.textContent = match ? match.home_team : 'Équipe A';
-      predictionAwayName.textContent = match ? match.away_team : 'Équipe B';
-      predictionHomeFlag.innerHTML = flagMarkup(match ? match.home_flag_url : '');
-      predictionAwayFlag.innerHTML = flagMarkup(match ? match.away_flag_url : '');
-      predictionContext.textContent = match ? `${match.competition || 'Compétition'} · ${shortDate(match.date)} · ${match.phase || ''}` : '';
+      if (!match) {
+        predictionHomeName.textContent = 'Aucun match';
+        predictionAwayName.textContent = 'disponible';
+        predictionHomeFlag.innerHTML = '<span class="flag placeholder">?</span>';
+        predictionAwayFlag.innerHTML = '<span class="flag placeholder">?</span>';
+        predictionContext.textContent = competitionFilter.value === 'today'
+          ? 'Aucun match du jour disponible pour les pronostics'
+          : 'Aucun match disponible avec ce filtre';
+        return;
+      }
+      predictionHomeName.textContent = match.home_team;
+      predictionAwayName.textContent = match.away_team;
+      predictionHomeFlag.innerHTML = flagMarkup(match.home_flag_url);
+      predictionAwayFlag.innerHTML = flagMarkup(match.away_flag_url);
+      predictionContext.textContent = `${match.competition || 'Compétition'} · ${shortDate(match.date)} · ${match.phase || ''}`;
     }
 
     function renderMessages(messages) {
