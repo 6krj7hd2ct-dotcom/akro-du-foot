@@ -440,6 +440,14 @@ def _page(data: dict[str, Any]) -> str:
     input, textarea, select {{ width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }}
     textarea {{ min-height: 82px; resize: vertical; }}
     .message-list, .prediction-list, .leaderboard-list {{ display: grid; gap: 10px; margin-top: 14px; }}
+    .message-list {{ max-height: 320px; overflow-y: auto; padding-right: 8px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }}
+    .message-list::-webkit-scrollbar {{ width: 8px; }}
+    .message-list::-webkit-scrollbar-track {{ background: rgba(255,255,255,0.08); border-radius: 999px; }}
+    .message-list::-webkit-scrollbar-thumb {{ background: rgba(245,201,107,0.55); border-radius: 999px; }}
+    .chat-tools {{ display: flex; align-items: center; justify-content: space-between; gap: 10px; }}
+    .chat-color {{ display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; font-weight: 800; }}
+    .chat-color input {{ width: 38px; height: 38px; min-width: 38px; padding: 3px; border-radius: 50%; cursor: pointer; }}
+    .message-text {{ color: var(--ink); overflow-wrap: anywhere; }}
     .message-item, .prediction-item, .leaderboard-item {{ padding: 11px; border-radius: 12px; background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09); }}
     .message-top, .prediction-top, .leaderboard-item {{ display: flex; justify-content: space-between; gap: 10px; align-items: center; }}
     .prediction-scoreboard {{ display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 14px; border: 1px solid rgba(245,201,107,0.22); border-radius: 16px; background: radial-gradient(circle at center, rgba(245,201,107,0.12), transparent 18rem), rgba(255,255,255,0.055); }}
@@ -765,6 +773,9 @@ def _community_section() -> str:
       <article class="card community-panel">
         <h3>Tchat</h3>
         <form class="community-form" id="chatForm">
+          <div class="chat-tools">
+            <label class="chat-color" for="chatColor">Couleur <input id="chatColor" type="color" value="#bfe6ff" aria-label="Couleur d’écriture"></label>
+          </div>
           <textarea id="chatMessage" name="message" maxlength="500" placeholder="Message entre amis"></textarea>
           <button class="action-button" type="submit">Envoyer</button>
         </form>
@@ -1262,6 +1273,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const predictionAwayFlag = document.getElementById('predictionAwayFlag');
     const predictionContext = document.getElementById('predictionContext');
     const chatStatus = document.getElementById('chatStatus');
+    const chatColor = document.getElementById('chatColor');
     const predictionStatus = document.getElementById('predictionStatus');
     let communityMatches = DASHBOARD_MATCHES;
 
@@ -1271,6 +1283,23 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
 
     function persistPseudo() {{
       localStorage.setItem('akrodufoot:pseudo', pseudoValue());
+    }}
+
+    function colorKey() {{
+      return 'akrodufoot:color:' + (pseudoValue() || 'default');
+    }}
+
+    function persistColor() {{
+      localStorage.setItem(colorKey(), chatColor.value);
+      localStorage.setItem('akrodufoot:color:default', chatColor.value);
+    }}
+
+    function restoreColor() {{
+      chatColor.value = localStorage.getItem(colorKey()) || localStorage.getItem('akrodufoot:color:default') || '#bfe6ff';
+    }}
+
+    function safeColor(value) {{
+      return /^#[0-9a-f]{{6}}$/i.test(String(value || '')) ? value : '#bfe6ff';
     }}
 
     function shortDate(value) {{
@@ -1326,12 +1355,16 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
 
     function renderMessages(messages) {{
       const list = document.getElementById('messageList');
-      list.innerHTML = messages && messages.length ? messages.slice(-30).reverse().map((item) => `
+      const visibleMessages = messages && messages.length ? messages.slice(-100) : [];
+      list.innerHTML = visibleMessages.length ? visibleMessages.map((item) => {{
+        const color = safeColor(item.color);
+        return `
         <article class="message-item">
-          <div class="message-top"><strong>${{escapeHtml(item.pseudo)}}</strong><span class="subtle">${{shortDate(item.created_at)}}</span></div>
-          <div>${{escapeHtml(item.message)}}</div>
-        </article>
-      `).join('') : '<div class="empty">Aucun message pour le moment.</div>';
+          <div class="message-top"><strong style="color:${{escapeHtml(color)}}">${{escapeHtml(item.pseudo)}}</strong><span class="subtle">${{shortDate(item.created_at)}}</span></div>
+          <div class="message-text" style="color:${{escapeHtml(color)}}">${{escapeHtml(item.message)}}</div>
+        </article>`;
+      }}).join('') : '<div class="empty">Aucun message pour le moment.</div>';
+      requestAnimationFrame(() => {{ list.scrollTop = list.scrollHeight; }});
     }}
 
     function renderLeaderboard(rows) {{
@@ -1375,7 +1408,12 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
 
     shareButton.addEventListener('click', sharePage);
     globalPseudo.value = localStorage.getItem('akrodufoot:pseudo') || '';
-    globalPseudo.addEventListener('input', persistPseudo);
+    restoreColor();
+    globalPseudo.addEventListener('input', () => {{
+      persistPseudo();
+      restoreColor();
+    }});
+    chatColor.addEventListener('input', persistColor);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
     chatForm.addEventListener('submit', async (event) => {{
@@ -1384,7 +1422,8 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       try {{
         await postJson('/api/messages', {{
           pseudo: pseudoValue(),
-          message: document.getElementById('chatMessage').value
+          message: document.getElementById('chatMessage').value,
+          color: chatColor.value
         }});
         document.getElementById('chatMessage').value = '';
         await loadCommunity();

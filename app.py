@@ -94,6 +94,7 @@ if app:
 def save_message(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     pseudo = _clean(payload.get("pseudo", ""), 32)
     text = _clean(payload.get("message", ""), 500)
+    color = _clean_color(payload.get("color", ""))
     if not pseudo or not text:
         return {"error": "Pseudo et message obligatoires."}, 400
 
@@ -102,6 +103,7 @@ def save_message(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
         {
             "pseudo": pseudo,
             "message": text,
+            "color": color,
             "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         }
     )
@@ -356,6 +358,17 @@ def _to_score(value: Any) -> int | None:
 
 def _clean(value: Any, limit: int) -> str:
     return " ".join(str(value or "").split())[:limit]
+
+
+def _clean_color(value: Any) -> str:
+    color = str(value or "").strip()
+    if len(color) == 7 and color.startswith("#"):
+        try:
+            int(color[1:], 16)
+            return color
+        except ValueError:
+            pass
+    return "#bfe6ff"
 
 
 def save_watch_message(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
