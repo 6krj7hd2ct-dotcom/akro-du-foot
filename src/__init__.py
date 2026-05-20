@@ -1,0 +1,1 @@
+"""Dashboard football multi-compétitions."""
