@@ -294,6 +294,13 @@ def _page(data: dict[str, Any]) -> str:
     tr:last-child td {{ border-bottom: 0; }}
     .empty {{ padding: 18px 16px 20px; color: var(--muted); font-size: 14px; }}
     .player-card {{ padding: 16px; display: grid; grid-template-columns: 62px 1fr; gap: 14px; align-items: center; }}
+    .player-card.rank-1, .player-card.rank-2, .player-card.rank-3 {{ position: relative; overflow: hidden; }}
+    .player-card.rank-1 {{ border-color: rgba(245,201,107,0.68); background: linear-gradient(145deg, rgba(245,201,107,0.20), rgba(255,255,255,0.075)); box-shadow: 0 18px 42px rgba(245,201,107,0.12); }}
+    .player-card.rank-2 {{ border-color: rgba(215,226,238,0.54); background: linear-gradient(145deg, rgba(215,226,238,0.16), rgba(255,255,255,0.065)); }}
+    .player-card.rank-3 {{ border-color: rgba(205,127,50,0.58); background: linear-gradient(145deg, rgba(205,127,50,0.16), rgba(255,255,255,0.065)); }}
+    .player-card.rank-1 .avatar {{ border-color: rgba(245,201,107,0.88); box-shadow: 0 0 0 4px rgba(245,201,107,0.14); }}
+    .player-card.rank-2 .avatar {{ border-color: rgba(215,226,238,0.82); box-shadow: 0 0 0 4px rgba(215,226,238,0.12); }}
+    .player-card.rank-3 .avatar {{ border-color: rgba(205,127,50,0.82); box-shadow: 0 0 0 4px rgba(205,127,50,0.12); }}
     .player-card.big5-card {{ position: relative; overflow: hidden; }}
     .player-card.big5-card::before {{ content: ""; position: absolute; inset: 0; opacity: 0.16; pointer-events: none; }}
     .player-card.big5-card > * {{ position: relative; z-index: 1; }}
@@ -1185,10 +1192,10 @@ def _community_section() -> str:
 def _player_cards(players: list[dict[str, Any]], label: str, prefer_country_flag: bool = False) -> str:
     if not players:
         return _empty_block("Aucune donnée publiée pour le moment.")
-    return "".join(_player_card(player, label, prefer_country_flag) for player in players[:5])
+    return "".join(_player_card(player, label, prefer_country_flag, index) for index, player in enumerate(players[:5]))
 
 
-def _player_card(player: dict[str, Any], label: str, prefer_country_flag: bool = False) -> str:
+def _player_card(player: dict[str, Any], label: str, prefer_country_flag: bool = False, index: int = 0) -> str:
     country_flag = player.get("country_flag_url", "")
     avatar = f'<img class="avatar" src="{escape(country_flag)}" alt="">' if country_flag else '<div class="avatar placeholder" aria-hidden="true"></div>'
     team_name = str(player.get("team", ""))
@@ -1197,7 +1204,7 @@ def _player_card(player: dict[str, Any], label: str, prefer_country_flag: bool =
     all_time = player.get("all_time_rank", "")
     all_time_html = f'<div class="rank-note">({escape(str(all_time))})</div>' if all_time else ""
     return (
-        '<article class="card player-card">'
+        f'<article class="card player-card rank-{index + 1}">'
         f'<div class="avatar-wrap">{avatar}</div><div><div class="team">{escape(str(player.get("name", "")))}</div>'
         f'<div class="subtle club-line">{club_logo_html}<span class="club-name">{escape(team_name)}</span></div>'
         f'<div class="player-stat">{escape(str(player.get("value", "0")))} <span class="subtle">{escape(label)}</span></div>{all_time_html}</div>'
