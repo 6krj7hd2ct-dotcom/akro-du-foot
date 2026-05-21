@@ -441,8 +441,11 @@ def _page(data: dict[str, Any]) -> str:
     .mini-avatar {{ width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }}
     .mini-avatar.placeholder {{ display: grid; place-items: center; color: #07111f; font-weight: 950; }}
     .alltime-list {{ display: grid; gap: 10px; }}
-    .chatbot-dialog {{ width: min(430px, 100%); max-height: min(86vh, 720px); display: grid; grid-template-rows: auto minmax(220px, 1fr) auto; overflow: hidden; }}
-    .chatbot-messages {{ padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 260px; }}
+    .chatbot-dialog {{ width: min(430px, 100%); max-height: min(78vh, 620px); display: grid; grid-template-rows: auto minmax(190px, 1fr) auto; overflow: hidden; }}
+    .chatbot-messages {{ padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 220px; max-height: min(48vh, 430px); scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }}
+    .chatbot-messages::-webkit-scrollbar {{ width: 8px; }}
+    .chatbot-messages::-webkit-scrollbar-track {{ background: rgba(255,255,255,0.08); border-radius: 999px; }}
+    .chatbot-messages::-webkit-scrollbar-thumb {{ background: rgba(245,201,107,0.55); border-radius: 999px; }}
     .chatbot-message {{ max-width: 86%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.07); color: #dfeeff; line-height: 1.42; font-size: 14px; }}
     .chatbot-message.user {{ justify-self: end; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
     .chatbot-message.bot {{ justify-self: start; }}
@@ -1411,9 +1414,9 @@ def _football_chatbot_script() -> str:
           body: JSON.stringify({message: question})
         });
         const data = await response.json().catch(() => ({}));
-        pending.textContent = data.answer || data.error || 'Coach Akro indisponible';
+        pending.textContent = data.answer || data.error || 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
       } catch (error) {
-        pending.textContent = 'Coach Akro indisponible';
+        pending.textContent = 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
       }
     });
   </script>"""

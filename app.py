@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import unicodedata
 import base64
 import hashlib
 import hmac
@@ -29,7 +30,7 @@ COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 COACH_REFUSAL = "Je suis Coach Akro, je réponds uniquement aux questions liées au football."
-COACH_UNAVAILABLE = "Coach Akro indisponible"
+COACH_UNAVAILABLE = "Coach Akro indisponible : clé OpenAI absente ou invalide."
 COACH_DISCLAIMER = "Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel."
 
 app = Flask(__name__) if Flask else None
@@ -134,15 +135,17 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                     {
                         "role": "system",
                         "content": (
-                            "Tu es Coach Akro, assistant football spécialisé intégré à Akro du Foot. "
-                            "Réponds uniquement aux questions liées au football, en français, avec un ton de consultant moderne : "
-                            "passionné, clair, utile, tactique quand c'est pertinent. Tu peux couvrir la Coupe du Monde, "
-                            "la Ligue des Champions, le PSG, l'Équipe de France, les joueurs, clubs, règles, statistiques, "
-                            "historiques, analyses de match et pronostics fictifs sans argent. "
-                            f"Si la question sort du football, réponds exactement : {COACH_REFUSAL} "
-                            "Utilise les données Akro du Foot fournies quand elles sont utiles. Ne jamais inventer : "
-                            "si une donnée n'est pas disponible ou pas encore publiée, dis-le clairement. "
-                            "Ne donne jamais de conseil de pari réel et rappelle que les pronostics sont fictifs entre amis si nécessaire."
+                            "Tu es Coach Akro, assistant football expert intégré à Akro du Foot. "
+                            "Tu réponds en français comme un consultant football moderne : naturel, passionné, clair, précis, "
+                            "capable d'expliquer simplement l'histoire du foot, les règles, la tactique, les statistiques, le mercato, "
+                            "les joueurs actuels et anciens, les clubs, les sélections, le PSG, l'Équipe de France, la Coupe du Monde "
+                            "et la Ligue des Champions. Tu peux analyser des matchs et proposer des lectures tactiques utiles. "
+                            f"Si la question sort vraiment du football, réponds exactement : {COACH_REFUSAL} "
+                            "Utilise d'abord les données Akro du Foot fournies quand elles répondent à la question. "
+                            "Pour l'actualité, ne jamais inventer : si aucune donnée récente n'est présente dans le site, réponds exactement : "
+                            "Je n'ai pas encore cette information dans les données du site. "
+                            "Si une information sportive générale est stable et historique, tu peux répondre avec tes connaissances. "
+                            "Ne donne jamais de conseil de pari réel : les pronostics sont uniquement fictifs, entre amis, sans argent."
                         ),
                     },
                     {
@@ -356,17 +359,75 @@ def _openai_response_text(data: dict[str, Any]) -> str:
 
 
 def _looks_like_football_question(question: str) -> bool:
-    text = question.casefold()
+    text = _normalize_football_text(question)
+    if not text:
+        return False
     keywords = {
-        "football", "foot", "soccer", "fifa", "uefa", "ligue des champions", "champions league",
-        "coupe du monde", "psg", "paris saint-germain", "arsenal", "real madrid", "barça", "barca",
-        "bayern", "mbapp", "messi", "ronaldo", "haaland", "neymar", "deschamps", "zidane",
-        "match", "but", "buteur", "passeur", "gardien", "défenseur", "milieu", "attaquant",
-        "équipe", "club", "sélection", "joueur", "coach", "entraîneur", "stade", "carton",
-        "penalty", "hors-jeu", "classement", "calendrier", "finale", "demi-finale", "quart",
-        "ligue 1", "premier league", "liga", "serie a", "bundesliga", "mercato",
+        "football", "foot", "soccer", "fifa", "uefa", "ballon", "ballon d'or", "but", "buts",
+        "match", "matches", "joueur", "joueurs", "club", "clubs", "selection", "selectionneur",
+        "equipe", "equipes", "coach", "entraineur", "manager", "gardien", "defenseur", "milieu",
+        "attaquant", "ailier", "avant centre", "capitaine", "stade", "carton", "penalty", "penalties",
+        "hors jeu", "var", "arbitre", "classement", "calendrier", "resultat", "score", "finale",
+        "demi finale", "quart", "huitieme", "seizieme", "mercato", "transfert", "tactique",
+        "formation", "possession", "pressing", "contre attaque", "xg", "statistique", "palmares",
+        "coupe du monde", "mondial", "ligue des champions", "champions league", "euro", "can",
+        "copa america", "ligue 1", "premier league", "liga", "serie a", "bundesliga", "mls",
+        "pronostic", "favori", "nul", "victoire", "defaite",
     }
-    return any(keyword in text for keyword in keywords)
+    names = {
+        "pele", "maradona", "zidane", "messi", "cristiano ronaldo", "ronaldo", "ronaldinho",
+        "mbappe", "kylian mbappe", "haaland", "neymar", "benzema", "griezmann", "platini",
+        "henry", "thierry henry", "deschamps", "didier deschamps", "luis enrique", "ancelotti",
+        "guardiola", "mourinho", "klopp", "xavi", "iniesta", "modric", "kroos", "bellingham",
+        "vinicius", "yamal", "dembele", "olise", "kane", "salah", "lewandowski", "buffon",
+        "casillas", "beckenbauer", "cruyff", "eusebio", "klose", "platini",
+        "psg", "paris saint germain", "paris saintgermain", "real madrid", "barca", "barcelone",
+        "fc barcelona", "bayern", "bayern munich", "arsenal", "chelsea", "liverpool", "manchester city",
+        "manchester united", "juventus", "milan", "inter", "internazionale", "dortmund", "atletico",
+        "france", "bresil", "argentine", "allemagne", "espagne", "portugal", "angleterre", "italie",
+        "senegal", "maroc", "mexico", "mexique",
+    }
+    if any(term in text for term in keywords | names):
+        return True
+    return _known_football_entity_in_question(text)
+
+
+def _known_football_entity_in_question(normalized_question: str) -> bool:
+    if len(normalized_question) < 3:
+        return False
+    for data in (_read_json(CACHE_FILE, {}), _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})):
+        for name in _football_entities_from_dashboard(data):
+            normalized = _normalize_football_text(name)
+            if len(normalized) >= 4 and normalized in normalized_question:
+                return True
+    return False
+
+
+def _football_entities_from_dashboard(data: dict[str, Any]) -> set[str]:
+    entities: set[str] = set()
+    for match in _dashboard_matches(data).values():
+        entities.add(str(match.get("home_team", "")))
+        entities.add(str(match.get("away_team", "")))
+    for group in data.get("standings", []):
+        for row in group.get("teams", []) or group.get("standings", []) or []:
+            entities.add(str(row.get("team") or row.get("name") or row.get("team_name") or ""))
+    for player in data.get("top_scorers", []) + data.get("top_assists", []) + data.get("all_time_top_scorers", []):
+        entities.add(str(player.get("name", "")))
+        entities.add(str(player.get("team", "")))
+        entities.add(str(player.get("country", "")))
+    for team_name, details in data.get("teams_details", {}).items():
+        entities.add(str(team_name))
+        entities.add(str(details.get("name", "")))
+        entities.add(str(details.get("coach", "")))
+        for player in details.get("squad", []) + details.get("starters", []) + details.get("substitutes", []):
+            entities.add(str(player.get("name", "")))
+    return {entity for entity in entities if entity and entity != "À déterminer"}
+
+
+def _normalize_football_text(value: Any) -> str:
+    text = unicodedata.normalize("NFKD", str(value or "").casefold())
+    ascii_text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    return " ".join("".join(ch if ch.isalnum() else " " for ch in ascii_text).split())
 
 
 def save_message(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
