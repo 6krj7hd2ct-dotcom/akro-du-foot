@@ -1203,14 +1203,28 @@ def _player_team_logo(player: dict[str, Any]) -> str:
 def _known_club_logo(team: str) -> str:
     key = _normalize_team_label(team)
     logos = {
+        "aj auxerre": "https://a.espncdn.com/i/teamlogos/soccer/500/172.png",
         "arsenal": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
+        "as monaco": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png",
         "atletico madrid": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png",
+        "auxerre": "https://a.espncdn.com/i/teamlogos/soccer/500/172.png",
         "bayern munich": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
         "bayern munchen": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
+        "lille": "https://a.espncdn.com/i/teamlogos/soccer/500/166.png",
+        "losc": "https://a.espncdn.com/i/teamlogos/soccer/500/166.png",
+        "lyon": "https://a.espncdn.com/i/teamlogos/soccer/500/167.png",
+        "marseille": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png",
+        "monaco": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png",
         "newcastle united": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png",
+        "nice": "https://a.espncdn.com/i/teamlogos/soccer/500/2502.png",
+        "ogc nice": "https://a.espncdn.com/i/teamlogos/soccer/500/2502.png",
+        "olympique lyonnais": "https://a.espncdn.com/i/teamlogos/soccer/500/167.png",
+        "olympique de marseille": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png",
         "paris saint germain": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
         "psg": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
+        "rc lens": "https://a.espncdn.com/i/teamlogos/soccer/500/175.png",
         "real madrid": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+        "lens": "https://a.espncdn.com/i/teamlogos/soccer/500/175.png",
     }
     return logos.get(key, "")
 

@@ -149,12 +149,16 @@ COUNTRY_FLAG_SLUGS = {
 PLAYER_COUNTRIES = {
     "achraf hakimi": "Morocco",
     "anthony gordon": "England",
+    "erling haaland": "Norway",
+    "esteban lepaul": "France",
     "harry kane": "England",
     "julián álvarez": "Argentina",
     "julian alvarez": "Argentina",
     "khvicha kvaratskhelia": "Georgia",
     "kylian mbappé": "France",
     "kylian mbappe": "France",
+    "lautaro martinez": "Argentina",
+    "lautaro martínez": "Argentina",
     "michael olise": "France",
 }
 
