@@ -454,7 +454,17 @@ def _page(data: dict[str, Any]) -> str:
     .chatbot-messages::-webkit-scrollbar {{ width: 8px; }}
     .chatbot-messages::-webkit-scrollbar-track {{ background: rgba(255,255,255,0.08); border-radius: 999px; }}
     .chatbot-messages::-webkit-scrollbar-thumb {{ background: rgba(245,201,107,0.55); border-radius: 999px; }}
-    .chatbot-message {{ max-width: 86%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.07); color: #dfeeff; line-height: 1.42; font-size: 14px; }}
+    .recent-list {{ display: grid; gap: 10px; }}
+    .recent-match {{ display: grid; grid-template-columns: minmax(110px, 0.8fr) minmax(0, 1.5fr) auto auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.055); }}
+    .recent-score {{ color: var(--gold); font-size: 18px; font-weight: 950; white-space: nowrap; }}
+    .recent-result {{ justify-self: end; border-radius: 999px; padding: 5px 9px; font-size: 11px; font-weight: 950; background: rgba(255,255,255,0.10); }}
+    .recent-result.win {{ color: #9af6d3; background: rgba(50,211,162,0.15); }}
+    .recent-result.draw {{ color: #ffe1a0; background: rgba(245,201,107,0.14); }}
+    .recent-result.loss {{ color: #ffb4bd; background: rgba(239,51,64,0.14); }}
+    .chatbot-message {{ max-width: 86%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.07); color: #dfeeff; line-height: 1.48; font-size: 14px; white-space: normal; }}
+    .chatbot-message p {{ margin: 0 0 8px; }}
+    .chatbot-message p:last-child {{ margin-bottom: 0; }}
+    .chatbot-message ul {{ margin: 8px 0 0; padding-left: 18px; }}
     .chatbot-message.user {{ justify-self: end; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
     .chatbot-message.bot {{ justify-self: start; }}
     .chatbot-form {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 14px; border-top: 1px solid rgba(255,255,255,0.10); }}
@@ -556,6 +566,8 @@ def _page(data: dict[str, Any]) -> str:
       .prediction-scoreboard {{ grid-template-columns: 1fr; justify-items: center; }}
       .prediction-team.home, .prediction-team.away, .follow-team, .follow-team.away {{ justify-content: center; text-align: center; }}
       .chatbot-form {{ grid-template-columns: 1fr; }}
+      .recent-match {{ grid-template-columns: 1fr; }}
+      .recent-result {{ justify-self: start; }}
     }}
   </style>
 </head>
@@ -573,7 +585,7 @@ def _page(data: dict[str, Any]) -> str:
         <div class="hero-badges">
           <div class="hero-row">
             <span class="pill">Mis à jour : {escape(generated)}</span>
-            <span class="pill france-pill focus-pill">Focus <select class="focus-select" id="worldcupFocusSelect" aria-label="Pays à suivre Coupe du Monde">{_focus_options(data, "France")}</select></span>
+            <span class="pill france-pill focus-pill"><span id="worldcupFocusIcon">{_flag(_focus_icon(data, "France"))}</span>Focus <select class="focus-select" id="worldcupFocusSelect" aria-label="Pays à suivre Coupe du Monde">{_focus_options(data, "France")}</select></span>
           </div>
           <div class="hero-row focus-match-row">
             <span class="pill next-match-pill" id="worldcupFocusNext" data-default-focus="France">{_france_next_match_badge(france_next_match)}</span>
@@ -615,11 +627,11 @@ def _page(data: dict[str, Any]) -> str:
   {_team_modal()}
   {_all_time_modal()}
   {_football_chatbot_modal()}
-  {_team_script(teams_details)}
+  {_team_script(teams_details, prediction_matches)}
   {_all_time_script(all_time_scorers, champions_all_time_scorers)}
   {_community_script(prediction_matches)}
   {_news_script(data, champions_data)}
-  {_focus_script(prediction_matches)}
+  {_focus_script(prediction_matches, teams_details)}
   {_football_chatbot_script()}
   {_tabs_script(champions_data)}
 </body>
@@ -708,7 +720,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
           <div class="hero-badges">
             <div class="hero-row">
               <span class="pill">Mis à jour : {escape(generated)}</span>
-              <span class="pill psg-pill focus-pill">{_logo_or_placeholder(_psg_logo(data))}Focus <select class="focus-select" id="championsFocusSelect" aria-label="Club à suivre Ligue des Champions">{_focus_options(data, "Paris Saint-Germain")}</select></span>
+              <span class="pill psg-pill focus-pill"><span id="championsFocusIcon">{_logo_or_placeholder(_focus_icon(data, "Paris Saint-Germain") or _psg_logo(data))}</span>Focus <select class="focus-select" id="championsFocusSelect" aria-label="Club à suivre Ligue des Champions">{_focus_options(data, "Paris Saint-Germain")}</select></span>
             </div>
             <div class="hero-row focus-match-row">
               <span class="pill next-match-pill" id="championsFocusNext" data-default-focus="Paris Saint-Germain">{_psg_next_match_badge(psg_next_match)}</span>
@@ -778,6 +790,25 @@ def _focus_entities(data: dict[str, Any]) -> set[str]:
             if name and name != "À déterminer":
                 names.add(name)
     return names
+
+
+def _focus_icon(data: dict[str, Any], name: str) -> str:
+    details = (data.get("teams_details") or {}).get(name, {})
+    if details.get("flag_url"):
+        return str(details.get("flag_url") or "")
+    for group in data.get("group_matches", []):
+        for match in group.get("matches", []):
+            if match.get("home_team") == name and match.get("home_flag_url"):
+                return str(match.get("home_flag_url") or "")
+            if match.get("away_team") == name and match.get("away_flag_url"):
+                return str(match.get("away_flag_url") or "")
+    for round_data in data.get("knockout", []):
+        for match in round_data.get("matches", []):
+            if match.get("home_team") == name and match.get("home_flag_url"):
+                return str(match.get("home_flag_url") or "")
+            if match.get("away_team") == name and match.get("away_flag_url"):
+                return str(match.get("away_flag_url") or "")
+    return ""
 
 
 def _display_focus_name(name: str) -> str:
@@ -1085,7 +1116,9 @@ def _calendar_match(match: dict[str, Any]) -> str:
 
 
 def _dynamic_news_section(title: str, note: str, board_id: str) -> str:
-    return f'{_section_head(title, note)}<section class="news" id="{escape(board_id, quote=True)}">{_empty_block("Aucune actualité disponible pour le moment.")}</section>'
+    kind = "worldcup" if "worldcup" in board_id.casefold() else "champions"
+    action = f'<button class="alltime-badge" type="button" data-news-refresh="{escape(kind, quote=True)}">Actualiser</button>'
+    return f'{_section_head(title, note, action)}<section class="news" id="{escape(board_id, quote=True)}">{_empty_block("Aucune actualité disponible pour le moment.")}</section>'
 
 
 def _news_section(title: str, news: list[dict[str, Any]], note: str, france: bool) -> str:
@@ -1359,12 +1392,11 @@ def _team_modal() -> str:
         <button class="modal-close" type="button" id="teamModalClose" aria-label="Fermer">×</button>
       </header>
       <div class="team-modal-body">
-        <div class="team-info-grid">
-          <div class="team-info"><div class="team-info-label">Sélectionneur</div><div class="team-info-value" id="teamCoach">Non disponible</div></div>
-          <div class="team-info"><div class="team-info-label">Formation</div><div class="team-info-value" id="teamFormation">Formation non disponible</div></div>
+        <div class="team-info">
+          <div class="team-info-label">Forme récente</div>
+          <div class="team-info-value">10 derniers résultats disponibles dans Akro du Foot</div>
         </div>
-        <div class="formation-board" id="teamFormationBoard">Formation non disponible</div>
-        <div id="teamRoster"></div>
+        <div id="teamRecent"></div>
       </div>
     </article>
   </div>
@@ -1443,16 +1475,19 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
     }}
 
     function normalizeNewsText(value) {{
-      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
     }}
 
     function focusAliases(name) {{
       const normalized = normalizeNewsText(name);
       const map = {{
         'paris saint germain': ['psg', 'paris sg', 'paris saint germain'],
+        'manchester city': ['man city', 'manchester city', 'city'],
+        'marseille': ['om', 'olympique de marseille', 'marseille'],
         'france': ['france', 'equipe de france', 'bleus', 'deschamps'],
-        'senegal': ['senegal', 'lions de la teranga'],
-        'brazil': ['brazil', 'bresil', 'selecao', 'seleçao'],
+        'angleterre': ['angleterre', 'england', 'three lions'],
+        'senegal': ['senegal', 'sénégal', 'lions de la teranga'],
+        'brazil': ['brazil', 'bresil', 'brésil', 'selecao', 'seleçao'],
         'argentina': ['argentina', 'argentine', 'albiceleste'],
         'real madrid': ['real madrid'],
         'arsenal': ['arsenal', 'gunners'],
@@ -1486,18 +1521,41 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
       </article>`;
     }}
 
-    function renderNewsBoard(kind) {{
-      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : 'championsNewsBoard');
+    function newsSelection(kind) {{
       const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : 'championsFocusSelect');
-      if (!board) return;
       const focus = select ? select.value : '';
       const source = NEWS_DATA[kind] || {{general: [], focused: {{}}, all: []}};
       const focusedDirect = source.focused && source.focused[focus] ? source.focused[focus] : [];
       const focusedFromPool = (source.all || []).filter(article => focus && articleMatchesFocus(article, focus));
-      const articles = uniqueArticles([...focusedDirect, ...focusedFromPool, ...(source.general || [])]).slice(0, 6);
+      const focused = uniqueArticles([...focusedDirect, ...focusedFromPool]).slice(0, 3);
+      const focusedKeys = new Set(focused.map(article => normalizeNewsText(article.title || article.url || '').slice(0, 90)));
+      const general = uniqueArticles(source.general || []).filter(article => !focusedKeys.has(normalizeNewsText(article.title || article.url || '').slice(0, 90))).slice(0, 3);
+      return uniqueArticles([...focused, ...general]).slice(0, 6);
+    }}
+
+    function renderNewsBoard(kind) {{
+      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : 'championsNewsBoard');
+      if (!board) return;
+      const articles = newsSelection(kind);
       board.innerHTML = articles.length
         ? articles.map(articleCard).join('')
-        : '<div class="empty">Aucune actualité disponible pour le moment.</div>';
+        : '<div class="empty">Aucune actualité française disponible pour le moment.</div>';
+    }}
+
+    async function refreshNews(kind) {{
+      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : 'championsNewsBoard');
+      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : 'championsFocusSelect');
+      if (board) board.innerHTML = '<div class="empty">Actualisation des actualités...</div>';
+      try {{
+        const params = new URLSearchParams({{competition: kind, focus: select ? select.value : ''}});
+        const response = await fetch(`/api/refresh-news?${{params.toString()}}`);
+        if (!response.ok) throw new Error('refresh failed');
+        const data = await response.json();
+        NEWS_DATA[kind] = {{...(NEWS_DATA[kind] || {{}}), ...data}};
+      }} catch (error) {{
+        // En mode fichier statique ou hors ligne, on réaffiche les données déjà en cache.
+      }}
+      renderNewsBoard(kind);
     }}
 
     function refreshAllNewsBoards() {{
@@ -1505,6 +1563,10 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
       renderNewsBoard('champions');
     }}
 
+    document.addEventListener('click', event => {{
+      const trigger = event.target.closest('[data-news-refresh]');
+      if (trigger) refreshNews(trigger.dataset.newsRefresh);
+    }});
     document.addEventListener('akro:focus-change', refreshAllNewsBoards);
     window.addEventListener('DOMContentLoaded', refreshAllNewsBoards);
     refreshAllNewsBoards();
@@ -1523,10 +1585,15 @@ def _dedupe_render_news(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(out, key=lambda item: item.get("date", ""), reverse=True)[:24]
 
 
-def _focus_script(matches: list[dict[str, Any]]) -> str:
-    payload = json.dumps(matches, ensure_ascii=False).replace("</", "<\\/")
+def _focus_script(matches: list[dict[str, Any]], teams_details: dict[str, Any]) -> str:
+    matches_payload = json.dumps(matches, ensure_ascii=False).replace("</", "<\\/")
+    teams_payload = json.dumps(
+        {name: {"flag_url": details.get("flag_url", ""), "name": details.get("name", name)} for name, details in teams_details.items()},
+        ensure_ascii=False,
+    ).replace("</", "<\\/")
     return f"""<script>
-    const FOCUS_MATCHES = {payload};
+    const FOCUS_MATCHES = {matches_payload};
+    const FOCUS_TEAMS = {teams_payload};
     const FOCUS_KEYS = {{
       worldcup: 'akrodufoot:focus:worldcup',
       champions: 'akrodufoot:focus:champions'
@@ -1541,15 +1608,24 @@ def _focus_script(matches: list[dict[str, Any]]) -> str:
       const aliases = {{
         'Paris Saint-Germain': 'PSG',
         'Paris SG': 'PSG',
+        'England': 'Angleterre',
         'Senegal': 'Sénégal',
         'Bosnia-Herzegovina': 'Bosnie-Herzégovine',
         'South Africa': 'Afrique du Sud'
       }};
-      return aliases[name] || name || 'À déterminer';
+      return aliases[name] || (FOCUS_TEAMS[name] && FOCUS_TEAMS[name].name) || name || 'À déterminer';
     }}
 
     function focusFlag(url) {{
       return url ? `<img class="flag" src="${{focusEscape(url)}}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
+    }}
+
+    function focusTeamIcon(team) {{
+      const details = FOCUS_TEAMS[team] || {{}};
+      if (details.flag_url) return details.flag_url;
+      const match = FOCUS_MATCHES.find(item => item.home_team === team || item.away_team === team);
+      if (!match) return '';
+      return match.home_team === team ? match.home_flag_url : match.away_flag_url;
     }}
 
     function focusTimestamp(match) {{
@@ -1572,6 +1648,12 @@ def _focus_script(matches: list[dict[str, Any]]) -> str:
       return candidates[0] || null;
     }}
 
+    function updateFocusPillIcon(kind, team) {{
+      const icon = document.getElementById(`${{kind}}FocusIcon`);
+      if (!icon) return;
+      icon.innerHTML = focusFlag(focusTeamIcon(team));
+    }}
+
     function renderFocus(kind) {{
       const competition = kind === 'worldcup' ? 'Coupe du Monde' : 'Ligue des Champions';
       const select = document.getElementById(`${{kind}}FocusSelect`);
@@ -1580,16 +1662,17 @@ def _focus_script(matches: list[dict[str, Any]]) -> str:
       const saved = localStorage.getItem(FOCUS_KEYS[kind]);
       if (saved && Array.from(select.options).some(option => option.value === saved)) select.value = saved;
       const team = select.value || FOCUS_DEFAULTS[kind];
+      updateFocusPillIcon(kind, team);
       const match = focusNextMatch(competition, team);
       if (!match) {{
-        target.innerHTML = `<span class="focus-match-text">${{focusEscape(focusDisplayName(team))}} : prochain match à déterminer</span>`;
+        target.innerHTML = `${{focusFlag(focusTeamIcon(team))}}<span class="focus-match-text">${{focusEscape(focusDisplayName(team))}} : prochain match à déterminer</span>`;
         return;
       }}
       const isHome = match.home_team === team;
       const opponent = isHome ? match.away_team : match.home_team;
       const teamFlag = isHome ? match.home_flag_url : match.away_flag_url;
       const opponentFlag = isHome ? match.away_flag_url : match.home_flag_url;
-      target.innerHTML = `${{focusFlag(teamFlag)}}<span class="focus-match-text">${{focusEscape(focusDisplayName(team))}} vs ${{focusEscape(focusDisplayName(opponent))}} — ${{focusEscape(focusDate(match.date))}}</span>${{focusFlag(opponentFlag)}}`;
+      target.innerHTML = `${{focusFlag(teamFlag || focusTeamIcon(team))}}<span class="focus-match-text">${{focusEscape(focusDisplayName(team))}} vs ${{focusEscape(focusDisplayName(opponent))}} — ${{focusEscape(focusDate(match.date))}}</span>${{focusFlag(opponentFlag || focusTeamIcon(opponent))}}`;
     }}
 
     ['worldcup', 'champions'].forEach(kind => {{
@@ -1620,10 +1703,21 @@ def _football_chatbot_script() -> str:
       return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
 
+    function formatChatbotContent(text) {
+      const clean = chatbotEscape(text).trim();
+      const paragraphs = clean.split(/\\n{2,}/).map(part => part.trim()).filter(Boolean);
+      if (paragraphs.length > 1) return paragraphs.map(part => `<p>${part.replace(/\\n/g, '<br>')}</p>`).join('');
+      return `<p>${clean.replace(/\\n/g, '<br>')}</p>`;
+    }
+
+    function setChatbotMessage(node, text) {
+      node.innerHTML = formatChatbotContent(text);
+    }
+
     function addChatbotMessage(role, text, save = true) {
       const node = document.createElement('div');
       node.className = `chatbot-message ${role}`;
-      node.innerHTML = chatbotEscape(text);
+      setChatbotMessage(node, text);
       footballChatbotMessages.appendChild(node);
       if (save) {
         footballChatbotHistory.push({role: role === 'user' ? 'user' : 'assistant', content: text});
@@ -1667,30 +1761,31 @@ def _football_chatbot_script() -> str:
           body: JSON.stringify({message: question, history: footballChatbotHistory.slice(-8)})
         });
         const data = await response.json().catch(() => ({}));
-        pending.textContent = data.answer || data.error || 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
-        footballChatbotHistory.push({role: 'assistant', content: pending.textContent});
+        const answer = data.answer || data.error || 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
+        setChatbotMessage(pending, answer);
+        footballChatbotHistory.push({role: 'assistant', content: answer});
         if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
       } catch (error) {
-        pending.textContent = 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
-        footballChatbotHistory.push({role: 'assistant', content: pending.textContent});
+        const answer = 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
+        setChatbotMessage(pending, answer);
+        footballChatbotHistory.push({role: 'assistant', content: answer});
         if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
       }
     });
   </script>"""
 
 
-def _team_script(teams_details: dict[str, Any]) -> str:
-    payload = json.dumps(teams_details, ensure_ascii=False).replace("</", "<\\/")
+def _team_script(teams_details: dict[str, Any], matches: list[dict[str, Any]]) -> str:
+    details_payload = json.dumps(teams_details, ensure_ascii=False).replace("</", "<\\/")
+    matches_payload = json.dumps(matches, ensure_ascii=False).replace("</", "<\\/")
     return f"""<script>
-    const TEAMS_DETAILS = {payload};
+    const TEAMS_DETAILS = {details_payload};
+    const TEAM_MATCHES = {matches_payload};
     const modal = document.getElementById('teamModal');
     const modalTitle = document.getElementById('teamModalTitle');
     const modalFlag = document.getElementById('teamModalFlag');
     const modalSources = document.getElementById('teamModalSources');
-    const teamCoach = document.getElementById('teamCoach');
-    const teamFormation = document.getElementById('teamFormation');
-    const teamFormationBoard = document.getElementById('teamFormationBoard');
-    const teamRoster = document.getElementById('teamRoster');
+    const teamRecent = document.getElementById('teamRecent');
     const closeModal = document.getElementById('teamModalClose');
 
     function escapeHtml(value) {{
@@ -1701,61 +1796,63 @@ def _team_script(teams_details: dict[str, Any]) -> str:
       return url ? `<img class="team-modal-flag" src="${{escapeHtml(url)}}" alt="">` : '<div class="team-modal-flag flag placeholder" aria-hidden="true"></div>';
     }}
 
-    function playerCard(player) {{
-      const photo = player.photo_url ? `<img class="mini-avatar" src="${{escapeHtml(player.photo_url)}}" alt="">` : '<div class="mini-avatar placeholder" aria-hidden="true"></div>';
-      const number = player.number ? `<span class="mini-player-number">#${{escapeHtml(player.number)}}</span>` : '';
-      const position = player.position ? `<span>${{escapeHtml(player.position)}}</span>` : '';
-      const flag = player.country_flag_url ? `<img class="mini-player-flag" src="${{escapeHtml(player.country_flag_url)}}" alt="">` : '';
-      const meta = (number || position || flag) ? `<div class="mini-player-meta">${{number}}${{position}}${{flag}}</div>` : '';
-      return `<article class="mini-player">${{photo}}<div><strong>${{escapeHtml(player.name || 'Joueur')}}</strong>${{meta}}</div></article>`;
+    function teamDisplayName(name) {{
+      const details = TEAMS_DETAILS[name] || {{}};
+      return details.name || name || 'Équipe';
     }}
 
-    function rosterSection(title, players) {{
-      if (!players || !players.length) return '';
-      return `<section class="roster-section"><h3>${{escapeHtml(title)}}</h3><div class="player-grid">${{players.map(playerCard).join('')}}</div></section>`;
+    function matchTime(value) {{
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? 'Date non disponible' : date.toLocaleDateString('fr-FR', {{day:'2-digit', month:'2-digit', year:'numeric'}});
     }}
 
-    function cleanRoster(players) {{
-      const seen = new Set();
-      return (players || []).filter((player) => {{
-        const name = String(player.name || '').trim();
-        const position = String(player.position || '').trim();
-        const number = String(player.number || '').trim();
-        if (!name || (!position && !number)) return false;
-        const key = name.toLocaleLowerCase('fr-FR');
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      }});
+    function recentScore(match) {{
+      return match.home_score !== '' && match.away_score !== '' ? `${{match.home_score}} - ${{match.away_score}}` : 'Score non disponible';
     }}
 
-    function positionGroup(position) {{
-      const value = String(position || '').toLocaleLowerCase('fr-FR');
-      if (/(^|\\b)(gk|gardien|goalkeeper|keeper)(\\b|$)/.test(value)) return 'Gardiens';
-      if (/(^|\\b)(cb|lb|rb|lwb|rwb|df|def|déf|defender|défenseur|defenseur|back)(\\b|$)/.test(value)) return 'Défenseurs';
-      if (/(^|\\b)(dm|cm|am|lm|rm|mf|mid|milieu|midfielder)(\\b|$)/.test(value)) return 'Milieux';
-      if (/(^|\\b)(st|cf|fw|lw|rw|attaquant|forward|winger|ailier)(\\b|$)/.test(value)) return 'Attaquants';
-      return 'Autres joueurs';
+    function recentResult(match, team) {{
+      if (!match.completed || match.home_score === '' || match.away_score === '') return {{label: match.status || 'À venir', className: ''}};
+      const home = Number(match.home_score);
+      const away = Number(match.away_score);
+      if (Number.isNaN(home) || Number.isNaN(away)) return {{label: 'Terminé', className: ''}};
+      const isHome = match.home_team === team;
+      const teamScore = isHome ? home : away;
+      const opponentScore = isHome ? away : home;
+      if (teamScore > opponentScore) return {{label: 'Victoire', className: 'win'}};
+      if (teamScore < opponentScore) return {{label: 'Défaite', className: 'loss'}};
+      return {{label: 'Nul', className: 'draw'}};
     }}
 
-    function groupedRosterSections(players) {{
-      const groups = {{'Gardiens': [], 'Défenseurs': [], 'Milieux': [], 'Attaquants': [], 'Autres joueurs': []}};
-      cleanRoster(players).forEach((player) => groups[positionGroup(player.position)].push(player));
-      return Object.entries(groups).map(([title, list]) => rosterSection(title, list)).join('');
+    function recentCard(match, team) {{
+      const isHome = match.home_team === team;
+      const opponent = isHome ? match.away_team : match.home_team;
+      const location = isHome ? 'Domicile' : 'Extérieur';
+      const result = recentResult(match, team);
+      return `<article class="recent-match">
+        <div><strong>${{escapeHtml(matchTime(match.date))}}</strong><div class="subtle">${{escapeHtml(match.competition || '')}} · ${{escapeHtml(location)}}</div></div>
+        <div><strong>vs ${{escapeHtml(teamDisplayName(opponent))}}</strong><div class="subtle">${{escapeHtml(match.status || 'Statut non disponible')}}</div></div>
+        <div class="recent-score">${{escapeHtml(recentScore(match))}}</div>
+        <span class="recent-result ${{result.className}}">${{escapeHtml(result.label)}}</span>
+      </article>`;
+    }}
+
+    function recentMatches(team) {{
+      return TEAM_MATCHES
+        .filter(match => match.home_team === team || match.away_team === team)
+        .filter(match => match.date)
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+        .slice(0, 10);
     }}
 
     function openTeam(name) {{
       const details = TEAMS_DETAILS[name] || {{name}};
       modalTitle.textContent = details.name || name;
       modalFlag.innerHTML = flagHtml(details.flag_url || '');
-      modalSources.textContent = details.sources && details.sources.length ? `Source : ${{details.sources.join(', ')}}` : 'Détails enrichis dès publication par les sources suivies';
-      teamCoach.textContent = details.coach || 'Non disponible';
-      teamFormation.textContent = details.formation || 'Formation non disponible';
-      teamFormationBoard.textContent = details.formation || 'Formation non disponible';
-
-      const roster = [...(details.starters || []), ...(details.substitutes || []), ...(details.squad || [])];
-      const sections = groupedRosterSections(roster);
-      teamRoster.innerHTML = sections || '<div class="empty">Effectif non disponible</div>';
+      modalSources.textContent = 'Résultats disponibles dans les calendriers du dashboard';
+      const matches = recentMatches(name);
+      teamRecent.innerHTML = matches.length
+        ? `<div class="recent-list">${{matches.map(match => recentCard(match, name)).join('')}}</div>`
+        : '<div class="empty">Forme récente non disponible pour cette équipe.</div>';
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       closeModal.focus();

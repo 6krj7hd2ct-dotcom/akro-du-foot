@@ -65,6 +65,58 @@ if app and _background_updates_enabled():
     threading.Thread(target=_run_dashboard_update_loop, daemon=True).start()
 
 
+def refresh_news_payload(competition: str, focus: str) -> dict[str, Any]:
+    key = str(competition or "").casefold()
+    data = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}) if "champ" in key else _read_json(CACHE_FILE, {})
+    general = _dedupe_articles([*(data.get("general_news") or []), *(data.get("world_cup_news") or [])])[:3]
+    pool = _dedupe_articles([*(data.get("all_news") or []), *(data.get("france_news") or []), *(data.get("world_cup_news") or [])])
+    focused_direct = []
+    if focus:
+        focused_map = data.get("focused_club_news") or data.get("focused_team_news") or {}
+        focused_direct = focused_map.get(focus, []) if isinstance(focused_map, dict) else []
+    focused = _dedupe_articles([*focused_direct, *[article for article in pool if _article_matches_focus(article, focus)]])[:3]
+    return {"general": general, "focused": {focus: focused} if focus else {}, "all": pool[:48]}
+
+
+def _article_matches_focus(article: dict[str, Any], focus: str) -> bool:
+    if not focus:
+        return False
+    haystack = _normalize_football_text(f"{article.get('title', '')} {article.get('summary', '')} {article.get('url', '')}")
+    aliases = _focus_aliases_for_news(focus)
+    return any(alias and alias in haystack for alias in aliases)
+
+
+def _focus_aliases_for_news(focus: str) -> set[str]:
+    normalized = _normalize_football_text(focus)
+    mapping = {
+        "paris saint germain": {"psg", "paris sg", "paris saint germain"},
+        "manchester city": {"man city", "manchester city", "city"},
+        "marseille": {"om", "olympique de marseille", "marseille"},
+        "france": {"france", "equipe de france", "bleus"},
+        "england": {"angleterre", "england", "three lions"},
+        "angleterre": {"angleterre", "england", "three lions"},
+        "senegal": {"senegal", "sénégal", "lions de la teranga"},
+        "brazil": {"brazil", "bresil", "brésil", "selecao"},
+    }
+    return {normalized, *{_normalize_football_text(alias) for alias in mapping.get(normalized, set())}}
+
+
+def _dedupe_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    out: list[dict[str, Any]] = []
+    blocked = {"espn", "bbc", "bbc sport", "google news"}
+    for article in articles or []:
+        source = str(article.get("source", "")).casefold()
+        if source in blocked:
+            continue
+        key = _normalize_football_text(article.get("title") or article.get("url") or "")[:90]
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        out.append(article)
+    return sorted(out, key=lambda item: str(item.get("date", "")), reverse=True)
+
+
 def community_payload() -> dict[str, Any]:
     worldcup_dashboard = _read_json(CACHE_FILE, {})
     champions_dashboard = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
@@ -95,6 +147,12 @@ if app:
     def watch_chat():
         return jsonify({"messages": _watch_messages()[-120:]})
 
+    @app.get("/api/refresh-news")
+    def refresh_news():
+        competition = request.args.get("competition", "")
+        focus = request.args.get("focus", "")
+        return jsonify(refresh_news_payload(competition, focus))
+
     @app.post("/api/football-chatbot")
     def football_chatbot():
         payload = request.get_json(silent=True) or {}
@@ -118,7 +176,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
 
     local_answer = _local_coach_answer(question, history)
     if local_answer:
-        return {"answer": local_answer}, 200
+        return {"answer": _format_coach_answer(local_answer)}, 200
 
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
@@ -142,7 +200,9 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                         "role": "system",
                         "content": (
                             "Tu es Coach Akro, assistant football expert intégré à Akro du Foot. "
-                            "Tu réponds en français comme un consultant football moderne : naturel, passionné, clair, précis, "
+                            "Tu réponds en français comme un consultant football moderne : naturel, passionné, clair, précis. "
+                            "Tes réponses doivent être très lisibles sur mobile : paragraphes courts, sauts de ligne utiles, jamais de gros bloc compact. "
+                            "Si la réponse dépasse quelques lignes, structure-la avec Résumé, Analyse et Conclusion. "
                             "capable d'expliquer simplement l'histoire du foot, les règles, la tactique, les statistiques, le mercato, "
                             "les joueurs actuels et anciens, les clubs, les sélections, le PSG, l'Équipe de France, la Coupe du Monde "
                             "et la Ligue des Champions. Tu peux analyser des matchs et proposer des lectures tactiques utiles. "
@@ -169,7 +229,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
         if response.status_code >= 400:
             return {"error": COACH_UNAVAILABLE}, 503
         data = response.json()
-        answer = _openai_response_text(data)
+        answer = _format_coach_answer(_openai_response_text(data))
         return {"answer": answer or COACH_UNAVAILABLE}, 200
     except Exception:
         return {"error": COACH_UNAVAILABLE}, 503
@@ -388,10 +448,7 @@ def _team_strength(team_name: str, dashboards: list[dict[str, Any]]) -> tuple[fl
                 score += 1.0 + min(value, 10) * 0.15
                 reasons.append(f"{team_name} a un joueur en vue dans les statistiques offensives publiées.")
         details = data.get("teams_details", {}).get(team_name, {})
-        squad = details.get("squad") or []
-        if squad:
-            score += min(len(squad), 26) * 0.03
-            reasons.append(f"l'effectif de {team_name} est mieux renseigné dans les données disponibles.")
+        # Les fiches effectif ne sont plus affichées : on ne s'en sert pas comme argument visible.
     return score, reasons
 
 
@@ -441,8 +498,15 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
         if "mbappe" in recent or "mbappe" in normalized:
             player = _find_player_fact("mbappe")
             club = player.get("club_current") if player else "Real Madrid"
-            return f"Tu as raison, Mbappé joue au {club or 'Real Madrid'}. Je corrige : il a quitté le PSG et évolue désormais au Real Madrid. Merci pour la correction."
-        return "Tu as raison de me reprendre. Je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
+            return (
+                f"Résumé : tu as raison, Mbappé joue au {club or 'Real Madrid'}."
+                "\n\nAnalyse : je corrige mon erreur précédente, il a quitté le PSG et évolue désormais au Real Madrid."
+                "\n\nConclusion : merci pour la correction, je m'aligne sur cette information."
+            )
+        return (
+            "Résumé : tu as raison de me reprendre."
+            "\n\nAnalyse : je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
+        )
 
     if any(term in normalized for term in {"qui entraine", "entraineur", "coach", "selectionneur"}):
         team = _find_team_fact(normalized)
@@ -451,7 +515,7 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
             name = team.get("name") or team.get("original_name") or "cette équipe"
             source = ", ".join(team.get("sources", [])) if isinstance(team.get("sources"), list) else str(team.get("sources", ""))
             if coach:
-                return f"{name} est entraîné par {coach}. Source locale : {source or 'données Akro du Foot'}."
+                return f"Résumé : {name} est entraîné par {coach}.\n\nSource locale : {source or 'données Akro du Foot'}."
         return "Je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
 
     player = _find_player_fact(normalized)
@@ -461,11 +525,15 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
         source = player.get("source") or "données locales Akro du Foot"
         if club:
             if club == "retraité":
-                return f"{player.get('name')} ne joue plus : il est retraité. Il est associé au {country or 'football brésilien'}. Source locale : {source}."
+                return (
+                    f"Résumé : {player.get('name')} ne joue plus, il est retraité."
+                    f"\n\nAnalyse : il reste associé au {country or 'football brésilien'} dans les données football historiques."
+                    f"\n\nSource locale : {source}."
+                )
             details = f"{player.get('name')} évolue actuellement à {club}"
             if country:
                 details += f" et représente {country}"
-            return f"{details}. Source locale : {source}."
+            return f"Résumé : {details}.\n\nSource locale : {source}."
         return "Je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
     return ""
 
@@ -548,6 +616,31 @@ def _merge_player_indexes(*indexes: list[dict[str, Any]]) -> list[dict[str, Any]
                 if value and not current.get(field):
                     current[field] = value
     return sorted(merged.values(), key=lambda item: str(item.get("name", "")).casefold())
+
+
+def _format_coach_answer(text: str) -> str:
+    original = str(text or "").strip()
+    if not original:
+        return ""
+    if "\n" in original:
+        return original
+    clean = " ".join(original.split())
+    labels = ("Résumé :", "Analyse :", "Conclusion :", "Source locale :")
+    for label in labels:
+        clean = clean.replace(f" {label}", f"\n\n{label}")
+    if len(clean) < 260:
+        return clean
+    sentences = re.split(r"(?<=[.!?])\s+", clean)
+    paragraphs: list[str] = []
+    current: list[str] = []
+    for sentence in sentences:
+        current.append(sentence)
+        if len(" ".join(current)) >= 180:
+            paragraphs.append(" ".join(current).strip())
+            current = []
+    if current:
+        paragraphs.append(" ".join(current).strip())
+    return "\n\n".join(paragraphs)
 
 
 def _openai_response_text(data: dict[str, Any]) -> str:
@@ -743,6 +836,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json(body, status)
         elif path == "/api/watch-chat":
             self._send_json({"messages": _watch_messages()[-120:]})
+        elif path == "/api/refresh-news":
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            self._send_json(refresh_news_payload(_url_decode(query.get("competition", "")), _url_decode(query.get("focus", ""))))
         else:
             self.send_error(404)
 
