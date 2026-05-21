@@ -22,6 +22,7 @@ from .config import (
     FOTMOB_STATS_URL,
     FOTMOB_TEAM_API_URL,
     FOTMOB_TEAM_SQUAD_URL,
+    FOOTBALL_NEWS_FEEDS,
     FRANCE_NEWS_FEEDS,
     REQUEST_HEADERS,
     STATBUNKER_ALL_TIME_ASSISTS_URL,
@@ -85,6 +86,13 @@ CHAMPIONS_LEAGUE_KEYWORDS = (
     "ligue des champions",
     "uefa champions",
     "c1",
+)
+
+FOOTBALL_NEWS_KEYWORDS = (
+    "football", "foot", "soccer", "fifa", "uefa", "coupe du monde", "world cup",
+    "ligue des champions", "champions league", "psg", "paris saint-germain", "arsenal",
+    "real madrid", "barcelone", "bayern", "france", "bleus", "mercato", "transfert",
+    "match", "buteur", "passeur", "entraîneur", "selection", "sélection",
 )
 
 FRENCH_TEAM_NAMES = {
@@ -207,8 +215,11 @@ def fetch_dashboard_data() -> dict[str, Any]:
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
     world_cup_news = _safe_fetch("actualités Coupe du Monde", fetch_world_cup_news, errors)
     news = _safe_fetch("actualités Équipe de France", fetch_france_news, errors)
+    football_news_pool = _safe_fetch("actualités football élargies", fetch_football_news_pool, errors)
     all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
     all_time_top_assisters: list[dict[str, Any]] = []
+    focus_entities = sorted(teams_details.keys())
+    focused_team_news = build_focused_news(focus_entities, [*news, *world_cup_news, *football_news_pool])
 
     if not scorers:
         scorers = _safe_fetch("buteurs FotMob", lambda: fetch_fotmob_player_stats("goals"), errors)
@@ -235,6 +246,10 @@ def fetch_dashboard_data() -> dict[str, Any]:
         "all_time_top_assisters": all_time_top_assisters,
         "world_cup_news": world_cup_news,
         "france_news": news,
+        "general_news": world_cup_news,
+        "all_news": _dedupe_news([*world_cup_news, *news, *football_news_pool])[:60],
+        "focused_team_news": focused_team_news,
+        "news_sources": _news_source_names([*WORLD_CUP_NEWS_FEEDS, *FRANCE_NEWS_FEEDS, *FOOTBALL_NEWS_FEEDS]),
         "sources": [
             {"name": "ESPN - classements", "url": ESPN_STANDINGS_URL},
             {"name": "ESPN - matchs", "url": ESPN_SCOREBOARD_URL},
@@ -245,6 +260,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
             *[{"name": f"Actu Coupe du Monde - {feed['source']}", "url": feed["url"]} for feed in WORLD_CUP_NEWS_FEEDS],
             *[{"name": f"Actu France - {feed['source']}", "url": feed["url"]} for feed in FRANCE_NEWS_FEEDS],
+            *[{"name": f"Actu football - {feed['source']}", "url": feed["url"]} for feed in FOOTBALL_NEWS_FEEDS],
         ],
         "errors": errors,
     }
@@ -275,6 +291,8 @@ def fetch_champions_league_data() -> dict[str, Any]:
     scorers = _safe_fetch("buteurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_ASSISTS_URL, 1), errors)
     news = _safe_fetch("actualités Ligue des Champions", fetch_champions_league_news, errors)
+    football_news_pool = _safe_fetch("actualités football élargies", fetch_football_news_pool, errors)
+    focused_club_news = build_focused_news(sorted(teams_details.keys()), [*news, *football_news_pool])
     all_time_top_scorers = _safe_fetch(
         "buteurs all-time Ligue des Champions UEFA",
         fetch_champions_league_all_time_top_scorers,
@@ -319,6 +337,10 @@ def fetch_champions_league_data() -> dict[str, Any]:
         "all_time_top_assisters": [],
         "world_cup_news": news,
         "france_news": [],
+        "general_news": news,
+        "all_news": _dedupe_news([*news, *football_news_pool])[:60],
+        "focused_club_news": focused_club_news,
+        "news_sources": _news_source_names([*CHAMPIONS_LEAGUE_NEWS_FEEDS, *FOOTBALL_NEWS_FEEDS]),
         "sources": [
             {"name": "ESPN - classement Ligue des Champions", "url": UCL_ESPN_STANDINGS_URL},
             {"name": "ESPN - matchs Ligue des Champions", "url": UCL_ESPN_SCOREBOARD_URL},
@@ -326,6 +348,7 @@ def fetch_champions_league_data() -> dict[str, Any]:
             {"name": "FotMob - Ligue des Champions", "url": UCL_FOTMOB_STATS_URL},
             {"name": "UEFA - buteurs all-time Ligue des Champions", "url": UEFA_UCL_ALL_TIME_SCORERS_URL},
             *[{"name": f"Actu Ligue des Champions - {feed['source']}", "url": feed["url"]} for feed in CHAMPIONS_LEAGUE_NEWS_FEEDS],
+            *[{"name": f"Actu football - {feed['source']}", "url": feed["url"]} for feed in FOOTBALL_NEWS_FEEDS],
         ],
         "errors": errors,
     }
@@ -1083,15 +1106,19 @@ def enrich_players_with_known_country_flags(players: list[dict[str, Any]]) -> li
 
 
 def fetch_france_news() -> list[dict[str, Any]]:
-    return _fetch_news(FRANCE_NEWS_FEEDS, NEWS_KEYWORDS)
+    return _fetch_news(FRANCE_NEWS_FEEDS, NEWS_KEYWORDS, limit=24)
 
 
 def fetch_world_cup_news() -> list[dict[str, Any]]:
-    return _fetch_news(WORLD_CUP_NEWS_FEEDS, WORLD_CUP_KEYWORDS, WORLD_CUP_EXCLUDE_KEYWORDS)
+    return _fetch_news(WORLD_CUP_NEWS_FEEDS, WORLD_CUP_KEYWORDS, WORLD_CUP_EXCLUDE_KEYWORDS, limit=24)
 
 
 def fetch_champions_league_news() -> list[dict[str, Any]]:
-    return _fetch_news(CHAMPIONS_LEAGUE_NEWS_FEEDS, CHAMPIONS_LEAGUE_KEYWORDS)
+    return _fetch_news(CHAMPIONS_LEAGUE_NEWS_FEEDS, CHAMPIONS_LEAGUE_KEYWORDS, limit=24)
+
+
+def fetch_football_news_pool() -> list[dict[str, Any]]:
+    return _fetch_news(FOOTBALL_NEWS_FEEDS, FOOTBALL_NEWS_KEYWORDS, limit=80)
 
 
 def fetch_all_time_top_scorers() -> list[dict[str, Any]]:
@@ -1249,38 +1276,117 @@ def _fetch_news(
     feeds: list[dict[str, Any]],
     keywords: tuple[str, ...],
     exclude_keywords: tuple[str, ...] = (),
+    limit: int = 6,
 ) -> list[dict[str, Any]]:
     articles: list[dict[str, Any]] = []
     seen: set[str] = set()
 
     for feed in feeds:
-        xml = _download(feed["url"])
-        root = ElementTree.fromstring(xml)
+        try:
+            xml = _download(feed["url"])
+            root = ElementTree.fromstring(xml)
+        except Exception:
+            continue
         for item in root.findall("./channel/item"):
             title = _xml_text(item, "title")
             summary = _strip_html(_xml_text(item, "description"))
             link = _xml_text(item, "link")
             published = _parse_rss_date(_xml_text(item, "pubDate"))
-            haystack = f"{title} {summary}".lower()
-            if any(keyword in haystack for keyword in exclude_keywords):
+            haystack = _normalize_news_text(f"{title} {summary} {link}")
+            if any(_normalize_news_text(keyword) in haystack for keyword in exclude_keywords):
                 continue
-            if not feed.get("trusted_section") and not any(keyword in haystack for keyword in keywords):
+            if not feed.get("trusted_section") and not any(_normalize_news_text(keyword) in haystack for keyword in keywords):
                 continue
-            if not title or not link or link in seen:
+            key = _news_key(title, link)
+            if not title or not link or key in seen:
                 continue
-            seen.add(link)
+            seen.add(key)
             articles.append(
                 {
                     "title": title,
-                    "source": feed["source"],
+                    "source": _article_source(item, feed),
                     "date": published,
                     "summary": _shorten(summary, 210),
                     "url": link,
                 }
             )
 
+    articles = _dedupe_news(articles)
     articles.sort(key=lambda item: item.get("date", ""), reverse=True)
-    return articles[:3]
+    return articles[:limit]
+
+
+def build_focused_news(entities: list[str], articles: list[dict[str, Any]], limit: int = 12) -> dict[str, list[dict[str, Any]]]:
+    focused: dict[str, list[dict[str, Any]]] = {}
+    for entity in entities:
+        aliases = _focus_aliases(entity)
+        matches = [article for article in articles if _article_matches_aliases(article, aliases)]
+        if matches:
+            focused[entity] = _dedupe_news(matches)[:limit]
+    return focused
+
+
+def _article_matches_aliases(article: dict[str, Any], aliases: set[str]) -> bool:
+    haystack = _normalize_news_text(f"{article.get('title', '')} {article.get('summary', '')} {article.get('url', '')}")
+    return any(alias and alias in haystack for alias in aliases)
+
+
+def _focus_aliases(entity: str) -> set[str]:
+    normalized = _normalize_news_text(entity)
+    aliases = {normalized}
+    mapping = {
+        "paris saint germain": {"psg", "paris sg", "paris saint germain"},
+        "france": {"france", "equipe de france", "bleus", "deschamps"},
+        "senegal": {"senegal", "sénégal", "lions de la teranga"},
+        "brazil": {"brazil", "bresil", "brésil", "seleçao", "selecao"},
+        "argentina": {"argentina", "argentine", "albiceleste"},
+        "real madrid": {"real madrid", "real"},
+        "arsenal": {"arsenal", "gunners"},
+        "barcelona": {"barcelona", "barcelone", "barça", "barca"},
+        "bayern munich": {"bayern", "bayern munich", "bayern munchen"},
+    }
+    aliases.update(_normalize_news_text(alias) for alias in mapping.get(normalized, set()))
+    return {alias for alias in aliases if alias}
+
+
+def _dedupe_news(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    clean: list[dict[str, Any]] = []
+    for article in articles:
+        key = _news_key(str(article.get("title", "")), str(article.get("url", "")))
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        clean.append(article)
+    clean.sort(key=lambda item: item.get("date", ""), reverse=True)
+    return clean
+
+
+def _news_key(title: str, link: str) -> str:
+    title_key = _normalize_news_text(title)[:90]
+    return title_key or link.strip().lower()
+
+
+def _article_source(item: ElementTree.Element, feed: dict[str, Any]) -> str:
+    source = _xml_text(item, "source")
+    return source or feed["source"]
+
+
+def _normalize_news_text(value: str) -> str:
+    replacements = str.maketrans({"é":"e", "è":"e", "ê":"e", "ë":"e", "à":"a", "â":"a", "ä":"a", "î":"i", "ï":"i", "ô":"o", "ö":"o", "ù":"u", "û":"u", "ü":"u", "ç":"c"})
+    text = str(value or "").casefold().translate(replacements)
+    return " ".join(re.sub(r"[^a-z0-9]+", " ", text).split())
+
+
+def _news_source_names(feeds: list[dict[str, Any]]) -> list[str]:
+    names: list[str] = []
+    seen: set[str] = set()
+    for feed in feeds:
+        source = str(feed.get("source", "")).strip()
+        if source and source not in seen:
+            seen.add(source)
+            names.append(source)
+    return names
 
 
 def _safe_fetch(label: str, fetcher, errors: list[str]):

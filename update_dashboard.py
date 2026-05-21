@@ -51,12 +51,19 @@ def _merge_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[st
         "all_time_top_assisters",
         "world_cup_news",
         "france_news",
+        "general_news",
+        "all_news",
+        "focused_team_news",
+        "focused_club_news",
+        "news_sources",
         "top_scorers",
         "top_assists",
         "teams_details",
         "today_matches",
     ):
-        if refreshed_data.get(key):
+        if key in {"general_news", "all_news", "focused_team_news", "focused_club_news", "news_sources"}:
+            data[key] = refreshed_data.get(key, [] if key != "focused_team_news" and key != "focused_club_news" else {})
+        elif refreshed_data.get(key):
             data[key] = refreshed_data[key]
     data["errors"] = [
         "Mise à jour impossible pour le moment : conservation du dernier cache valide.",

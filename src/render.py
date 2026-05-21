@@ -27,8 +27,8 @@ def _page(data: dict[str, Any]) -> str:
     assists = data.get("top_assists", [])[:5]
     all_time_scorers = data.get("all_time_top_scorers", [])
     champions_all_time_scorers = champions_data.get("all_time_top_scorers", []) if champions_data else []
-    world_cup_news = data.get("world_cup_news", [])[:3]
-    france_news = data.get("france_news", [])[:3]
+    world_cup_news = (data.get("general_news") or data.get("world_cup_news", []))[:6]
+    france_news = data.get("france_news", [])[:6]
     group_total = data.get("group_matches_total", _count_matches(group_matches))
     group_remaining = data.get("group_matches_remaining", _count_remaining_groups(group_matches))
     knockout_total = data.get("knockout_matches_total", _count_knockout(knockout))
@@ -223,7 +223,7 @@ def _page(data: dict[str, Any]) -> str:
     .today-strip, .leaders, .news, .grid, .matches, .calendar-days {{ display: grid; gap: 16px; }}
     .today-strip {{ grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }}
     .leaders {{ grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }}
-    .news {{ grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }}
+    .news {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     .grid {{ grid-template-columns: repeat(auto-fit, minmax(286px, 1fr)); }}
     .matches {{ grid-template-columns: repeat(auto-fit, minmax(370px, 1fr)); }}
     .calendar-days {{ grid-template-columns: 1fr; }}
@@ -512,6 +512,7 @@ def _page(data: dict[str, Any]) -> str:
       .section-head {{ align-items: start; flex-direction: column; }}
       .section-note {{ text-align: left; }}
       .today-strip {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
+      .news {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
       .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }}
       .match-meta {{ grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }}
@@ -592,8 +593,7 @@ def _page(data: dict[str, Any]) -> str:
     {_section_head("Meilleurs passeurs", "Top 5 uniquement, avec photo si la source la fournit.")}
     <section class="leaders">{_player_cards(assists, "passes")}</section>
 
-    {_news_section("Actualité Coupe du Monde", world_cup_news, "Les 3 dernières nouvelles générales publiées par les sources suivies.", france=False)}
-    {_news_section("Actualité Équipe de France", france_news, "Les 3 dernières nouvelles des Bleus, séparées du flux général.", france=True)}
+    {_dynamic_news_section("Actualité Coupe du Monde", "Actus générales + pays choisi dans le focus. Six articles maximum, triés par date.", "worldcupNewsBoard")}
 
     {_section_head("Arbre à élimination directe", "Bracket officiel horizontal : les deux ailes convergent vers la finale au centre.")}
     {render_worldcup_bracket(knockout)}
@@ -614,6 +614,7 @@ def _page(data: dict[str, Any]) -> str:
   {_team_script(teams_details)}
   {_all_time_script(all_time_scorers, champions_all_time_scorers)}
   {_community_script(prediction_matches)}
+  {_news_script(data, champions_data)}
   {_focus_script(prediction_matches)}
   {_football_chatbot_script()}
   {_tabs_script(champions_data)}
@@ -682,7 +683,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
     today_matches = data.get("today_matches", [])
     scorers = data.get("top_scorers", [])[:5]
     assists = data.get("top_assists", [])[:5]
-    news = data.get("world_cup_news", [])[:3]
+    news = (data.get("general_news") or data.get("world_cup_news", []))[:6]
     phase_total = data.get("group_matches_total", _count_matches(matches))
     phase_remaining = data.get("group_matches_remaining", _count_remaining_groups(matches))
     knockout_total = data.get("knockout_matches_total", _count_knockout(knockout))
@@ -727,7 +728,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.")}
       <section class="leaders">{_player_cards(assists, "passes", prefer_country_flag=True)}</section>
 
-      {_news_section("Actualité Ligue des Champions", news, "Les 3 dernières nouvelles publiées par les sources suivies.", france=False)}
+      {_dynamic_news_section("Actualité Ligue des Champions", "Actus générales + club choisi dans le focus. Six articles maximum, triés par date.", "championsNewsBoard")}
 
       {_section_head("Phase finale", "Bracket Ligue des Champions affiché dès disponibilité des matchs à élimination directe.")}
       {render_champions_league_bracket(knockout)}
@@ -1079,12 +1080,16 @@ def _calendar_match(match: dict[str, Any]) -> str:
     )
 
 
+def _dynamic_news_section(title: str, note: str, board_id: str) -> str:
+    return f'{_section_head(title, note)}<section class="news" id="{escape(board_id, quote=True)}">{_empty_block("Aucune actualité disponible pour le moment.")}</section>'
+
+
 def _news_section(title: str, news: list[dict[str, Any]], note: str, france: bool) -> str:
     if not news:
         return f'{_section_head(title, note)}<section class="news">{_empty_block("Aucune actualité disponible pour le moment.")}</section>'
     articles = []
     france_class = " france" if france else ""
-    for article in news[:3]:
+    for article in news[:6]:
         articles.append(
             f'<article class="card article{france_class}">'
             f'<div class="article-meta">{escape(article.get("source", ""))} · {escape(_format_datetime(article.get("date", ""), with_time=False))}</div>'
@@ -1406,6 +1411,114 @@ def _football_chatbot_modal() -> str:
 """
 
 
+def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None) -> str:
+    payload = {
+        "worldcup": {
+            "general": _dedupe_render_news([*(worldcup_data.get("general_news") or worldcup_data.get("world_cup_news", [])), *worldcup_data.get("world_cup_news", [])]),
+            "focused": worldcup_data.get("focused_team_news", {}),
+            "all": _dedupe_render_news([*worldcup_data.get("all_news", []), *worldcup_data.get("france_news", []), *worldcup_data.get("world_cup_news", [])]),
+        },
+        "champions": {
+            "general": _dedupe_render_news([*((champions_data or {}).get("general_news") or (champions_data or {}).get("world_cup_news", [])), *((champions_data or {}).get("world_cup_news", []))]),
+            "focused": (champions_data or {}).get("focused_club_news", {}),
+            "all": _dedupe_render_news([*(champions_data or {}).get("all_news", []), *((champions_data or {}).get("world_cup_news", []))]),
+        },
+    }
+    data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
+    return f"""<script>
+    const NEWS_DATA = {data};
+
+    function newsEscape(value) {{
+      return String(value || '').replace(/[&<>\"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}}[c]));
+    }}
+
+    function newsDate(value) {{
+      if (!value) return 'Date non disponible';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('fr-FR', {{day:'2-digit', month:'2-digit', year:'numeric'}});
+    }}
+
+    function normalizeNewsText(value) {{
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+    }}
+
+    function focusAliases(name) {{
+      const normalized = normalizeNewsText(name);
+      const map = {{
+        'paris saint germain': ['psg', 'paris sg', 'paris saint germain'],
+        'france': ['france', 'equipe de france', 'bleus', 'deschamps'],
+        'senegal': ['senegal', 'lions de la teranga'],
+        'brazil': ['brazil', 'bresil', 'selecao', 'seleçao'],
+        'argentina': ['argentina', 'argentine', 'albiceleste'],
+        'real madrid': ['real madrid'],
+        'arsenal': ['arsenal', 'gunners'],
+        'barcelona': ['barcelona', 'barcelone', 'barca', 'barça'],
+        'bayern munich': ['bayern', 'bayern munich']
+      }};
+      return [normalized, ...(map[normalized] || [])].map(normalizeNewsText).filter(Boolean);
+    }}
+
+    function articleMatchesFocus(article, focus) {{
+      const haystack = normalizeNewsText(`${{article.title || ''}} ${{article.summary || ''}} ${{article.url || ''}}`);
+      return focusAliases(focus).some(alias => alias && haystack.includes(alias));
+    }}
+
+    function uniqueArticles(articles) {{
+      const seen = new Set();
+      return (articles || []).filter(article => {{
+        const key = normalizeNewsText(article.title || article.url || '').slice(0, 90);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }}).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    }}
+
+    function articleCard(article) {{
+      return `<article class="card article">
+        <div class="article-meta">${{newsEscape(article.source || 'Source')}} · ${{newsEscape(newsDate(article.date))}}</div>
+        <h3><a href="${{newsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">${{newsEscape(article.title || 'Article')}}</a></h3>
+        <p>${{newsEscape(article.summary || '')}}</p>
+        <a class="read-link" href="${{newsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">Lire l’article</a>
+      </article>`;
+    }}
+
+    function renderNewsBoard(kind) {{
+      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : 'championsNewsBoard');
+      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : 'championsFocusSelect');
+      if (!board) return;
+      const focus = select ? select.value : '';
+      const source = NEWS_DATA[kind] || {{general: [], focused: {{}}, all: []}};
+      const focusedDirect = source.focused && source.focused[focus] ? source.focused[focus] : [];
+      const focusedFromPool = (source.all || []).filter(article => focus && articleMatchesFocus(article, focus));
+      const articles = uniqueArticles([...focusedDirect, ...focusedFromPool, ...(source.general || [])]).slice(0, 6);
+      board.innerHTML = articles.length
+        ? articles.map(articleCard).join('')
+        : '<div class="empty">Aucune actualité disponible pour le moment.</div>';
+    }}
+
+    function refreshAllNewsBoards() {{
+      renderNewsBoard('worldcup');
+      renderNewsBoard('champions');
+    }}
+
+    document.addEventListener('akro:focus-change', refreshAllNewsBoards);
+    window.addEventListener('DOMContentLoaded', refreshAllNewsBoards);
+    refreshAllNewsBoards();
+  </script>"""
+
+
+def _dedupe_render_news(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    out: list[dict[str, Any]] = []
+    for article in articles:
+        key = str(article.get("title") or article.get("url") or "").casefold()[:90]
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        out.append(article)
+    return sorted(out, key=lambda item: item.get("date", ""), reverse=True)[:24]
+
+
 def _focus_script(matches: list[dict[str, Any]]) -> str:
     payload = json.dumps(matches, ensure_ascii=False).replace("</", "<\\/")
     return f"""<script>
@@ -1481,8 +1594,10 @@ def _focus_script(matches: list[dict[str, Any]]) -> str:
       select.addEventListener('change', () => {{
         localStorage.setItem(FOCUS_KEYS[kind], select.value);
         renderFocus(kind);
+        document.dispatchEvent(new CustomEvent('akro:focus-change', {{detail: {{kind, focus: select.value}}}}));
       }});
       renderFocus(kind);
+      document.dispatchEvent(new CustomEvent('akro:focus-change', {{detail: {{kind, focus: select.value}}}}));
     }});
   </script>"""
 
