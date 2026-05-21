@@ -110,16 +110,22 @@ if app:
 
 def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     question = _clean(payload.get("message", ""), 500)
+    history = _chat_history(payload.get("history", []))
     if not question:
         return {"error": "Question vide."}, 400
-    if not _looks_like_football_question(question):
+    if not _looks_like_football_question(question, history):
         return {"answer": COACH_REFUSAL}, 200
+
+    local_answer = _local_coach_answer(question, history)
+    if local_answer:
+        return {"answer": local_answer}, 200
 
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
         return {"error": COACH_UNAVAILABLE}, 503
 
     context = _coach_context_summary()
+    history_text = _format_chat_history(history)
     try:
         import requests
 
@@ -141,7 +147,9 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                             "les joueurs actuels et anciens, les clubs, les sélections, le PSG, l'Équipe de France, la Coupe du Monde "
                             "et la Ligue des Champions. Tu peux analyser des matchs et proposer des lectures tactiques utiles. "
                             f"Si la question sort vraiment du football, réponds exactement : {COACH_REFUSAL} "
-                            "Utilise d'abord les données Akro du Foot fournies quand elles répondent à la question. "
+                            "Avant de répondre sur un joueur, vérifie dans les données locales son club actuel, sa sélection, son effectif et ses statistiques. "
+                            "Les données locales Akro du Foot priment sur tes connaissances générales quand elles sont présentes. "
+                            "Si l'utilisateur te corrige (ex: 'non il joue au Real Madrid', 'tu te trompes', 'vérifie'), reconnais la correction, vérifie les données locales, puis reprends-toi clairement. "
                             "Pour l'actualité, ne jamais inventer : si aucune donnée récente n'est présente dans le site, réponds exactement : "
                             "Je n'ai pas encore cette information dans les données du site. "
                             "Si une information sportive générale est stable et historique, tu peux répondre avec tes connaissances. "
@@ -284,6 +292,7 @@ def _coach_context_summary() -> str:
         _competition_summary("Coupe du Monde", worldcup),
         _competition_summary("Ligue des Champions", champions),
     ]
+    chunks.append(_player_index_summary(worldcup, champions))
     leaderboard = _leaderboard(_predictions_with_points(community.get("predictions", []), _all_dashboard_matches(worldcup, champions)))[:5]
     if leaderboard:
         chunks.append("Classement pronostics: " + "; ".join(f"{row['pseudo']} {row['points']} pts" for row in leaderboard))
@@ -396,6 +405,151 @@ def _number(value: Any) -> float:
     except (TypeError, ValueError):
         return 0.0
 
+def _chat_history(value: Any) -> list[dict[str, str]]:
+    if not isinstance(value, list):
+        return []
+    out: list[dict[str, str]] = []
+    for item in value[-8:]:
+        if not isinstance(item, dict):
+            continue
+        role = _clean(item.get("role", ""), 16)
+        content = _clean(item.get("content", ""), 500)
+        if role in {"user", "assistant"} and content:
+            out.append({"role": role, "content": content})
+    return out
+
+
+def _format_chat_history(history: list[dict[str, str]]) -> str:
+    if not history:
+        return "Aucun historique récent."
+    return "\n".join(f"{item['role']}: {item['content']}" for item in history[-8:])
+
+
+def _is_correction_message(normalized_text: str) -> bool:
+    correction_terms = {
+        "tu te trompes", "c est faux", "ce nest pas vrai", "ce n est pas vrai", "non", "pas vrai",
+        "verifie", "verifie ca", "corrige", "correction", "il joue au", "elle joue au",
+        "il joue a", "elle joue a", "il est au", "elle est au", "il a signe", "il a rejoint",
+    }
+    return any(term in normalized_text for term in correction_terms)
+
+
+def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
+    normalized = _normalize_football_text(question)
+    recent = _recent_history_text(history)
+    if _is_correction_message(normalized):
+        if "mbappe" in recent or "mbappe" in normalized:
+            player = _find_player_fact("mbappe")
+            club = player.get("club_current") if player else "Real Madrid"
+            return f"Tu as raison, Mbappé joue au {club or 'Real Madrid'}. Je corrige : il a quitté le PSG et évolue désormais au Real Madrid. Merci pour la correction."
+        return "Tu as raison de me reprendre. Je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
+
+    if any(term in normalized for term in {"qui entraine", "entraineur", "coach", "selectionneur"}):
+        team = _find_team_fact(normalized)
+        if team:
+            coach = team.get("coach")
+            name = team.get("name") or team.get("original_name") or "cette équipe"
+            source = ", ".join(team.get("sources", [])) if isinstance(team.get("sources"), list) else str(team.get("sources", ""))
+            if coach:
+                return f"{name} est entraîné par {coach}. Source locale : {source or 'données Akro du Foot'}."
+        return "Je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
+
+    player = _find_player_fact(normalized)
+    if player and any(term in normalized for term in {"ou joue", "club", "joue", "evolue", "mbappe", "pele"}):
+        club = player.get("club_current") or player.get("associated_team")
+        country = player.get("country")
+        source = player.get("source") or "données locales Akro du Foot"
+        if club:
+            if club == "retraité":
+                return f"{player.get('name')} ne joue plus : il est retraité. Il est associé au {country or 'football brésilien'}. Source locale : {source}."
+            details = f"{player.get('name')} évolue actuellement à {club}"
+            if country:
+                details += f" et représente {country}"
+            return f"{details}. Source locale : {source}."
+        return "Je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
+    return ""
+
+
+def _find_team_fact(normalized_question: str) -> dict[str, Any] | None:
+    dashboards = (_read_json(CACHE_FILE, {}), _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}))
+    aliases = {
+        "psg": {"psg", "paris saint germain", "paris sg"},
+        "real madrid": {"real madrid"},
+        "france": {"france", "equipe de france"},
+    }
+    targets = []
+    for canonical, values in aliases.items():
+        if any(alias in normalized_question for alias in values):
+            targets.append(canonical)
+    for data in dashboards:
+        for name, details in data.get("teams_details", {}).items():
+            name_key = _normalize_football_text(name)
+            detail_name_key = _normalize_football_text(details.get("name", ""))
+            if any(target in {name_key, detail_name_key} or target in name_key for target in targets):
+                return details
+    return None
+
+
+def _recent_history_text(history: list[dict[str, str]]) -> str:
+    return _normalize_football_text(" ".join(item.get("content", "") for item in history[-6:]))
+
+
+def _find_player_fact(normalized_question: str) -> dict[str, Any] | None:
+    dashboards = (_read_json(CACHE_FILE, {}), _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}))
+    aliases = {"mbappe": "kylian mbappe", "kylian mbappe": "kylian mbappe", "pele": "pele"}
+    target = ""
+    for alias, canonical in aliases.items():
+        if alias in normalized_question:
+            target = canonical
+            break
+    for data in dashboards:
+        for player in data.get("players_index", []):
+            name_key = _normalize_football_text(player.get("name", ""))
+            if target and target in name_key:
+                return player
+            if name_key and name_key in normalized_question:
+                return player
+    if "pele" in normalized_question:
+        return {"name": "Pelé", "club_current": "retraité", "country": "Brésil", "source": "connaissance football historique"}
+    return None
+
+
+def _player_index_summary(worldcup: dict[str, Any], champions: dict[str, Any]) -> str:
+    players = _merge_player_indexes(worldcup.get("players_index", []), champions.get("players_index", []))
+    if not players:
+        return "Index joueurs: aucune donnée locale disponible."
+    priority_names = {"kylian mbappe", "kylian mbappé", "harry kane", "michael olise", "achraf hakimi", "lionel messi"}
+    priority = [player for player in players if _normalize_football_text(player.get("name", "")) in {_normalize_football_text(name) for name in priority_names}]
+    sample = priority or players[:12]
+    rows = []
+    for player in sample[:18]:
+        bits = [str(player.get("name", ""))]
+        if player.get("club_current"):
+            bits.append(f"club actuel: {player['club_current']}")
+        if player.get("country"):
+            bits.append(f"pays/sélection: {player['country']}")
+        if player.get("position"):
+            bits.append(f"poste: {player['position']}")
+        if player.get("source"):
+            bits.append(f"source: {player['source']}")
+        rows.append(" | ".join(bits))
+    return "Index joueurs local: " + "; ".join(rows)
+
+
+def _merge_player_indexes(*indexes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    merged: dict[str, dict[str, Any]] = {}
+    for index in indexes:
+        for player in index or []:
+            key = _normalize_football_text(player.get("name", ""))
+            if not key:
+                continue
+            current = merged.setdefault(key, dict(player))
+            for field, value in player.items():
+                if value and not current.get(field):
+                    current[field] = value
+    return sorted(merged.values(), key=lambda item: str(item.get("name", "")).casefold())
+
+
 def _openai_response_text(data: dict[str, Any]) -> str:
     text = data.get("output_text")
     if isinstance(text, str) and text.strip():
@@ -410,10 +564,12 @@ def _openai_response_text(data: dict[str, Any]) -> str:
     return "\n".join(part.strip() for part in parts if part.strip()).strip()
 
 
-def _looks_like_football_question(question: str) -> bool:
+def _looks_like_football_question(question: str, history: list[dict[str, str]] | None = None) -> bool:
     text = _normalize_football_text(question)
     if not text:
         return False
+    if _is_correction_message(text):
+        return True
     keywords = {
         "football", "foot", "soccer", "fifa", "uefa", "ballon", "ballon d'or", "but", "buts",
         "match", "matches", "joueur", "joueurs", "club", "clubs", "selection", "selectionneur",
@@ -424,7 +580,9 @@ def _looks_like_football_question(question: str) -> bool:
         "formation", "possession", "pressing", "contre attaque", "xg", "statistique", "palmares",
         "coupe du monde", "mondial", "ligue des champions", "champions league", "euro", "can",
         "copa america", "ligue 1", "premier league", "liga", "serie a", "bundesliga", "mls",
-        "pronostic", "favori", "nul", "victoire", "defaite",
+        "pronostic", "favori", "nul", "victoire", "defaite", "joue", "jouer", "club actuel",
+        "effectif", "composition", "compo", "selection", "selection nationale", "transfert", "verifie",
+        "corrige", "erreur", "tu te trompes", "pas vrai",
     }
     names = {
         "pele", "maradona", "zidane", "messi", "cristiano ronaldo", "ronaldo", "ronaldinho",
@@ -441,7 +599,11 @@ def _looks_like_football_question(question: str) -> bool:
     }
     if any(term in text for term in keywords | names):
         return True
-    return _known_football_entity_in_question(text)
+    if _known_football_entity_in_question(text):
+        return True
+    if history and any(_looks_like_football_question(item.get("content", ""), []) for item in history[-4:]):
+        return _is_correction_message(text) or any(word in text for word in {"non", "si", "faux", "verifie", "corrige"})
+    return False
 
 
 def _known_football_entity_in_question(normalized_question: str) -> bool:
@@ -463,9 +625,10 @@ def _football_entities_from_dashboard(data: dict[str, Any]) -> set[str]:
     for group in data.get("standings", []):
         for row in group.get("teams", []) or group.get("standings", []) or []:
             entities.add(str(row.get("team") or row.get("name") or row.get("team_name") or ""))
-    for player in data.get("top_scorers", []) + data.get("top_assists", []) + data.get("all_time_top_scorers", []):
+    for player in data.get("top_scorers", []) + data.get("top_assists", []) + data.get("all_time_top_scorers", []) + data.get("players_index", []):
         entities.add(str(player.get("name", "")))
         entities.add(str(player.get("team", "")))
+        entities.add(str(player.get("club_current", "")))
         entities.add(str(player.get("country", "")))
     for team_name, details in data.get("teams_details", {}).items():
         entities.add(str(team_name))

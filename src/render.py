@@ -1610,16 +1610,21 @@ def _football_chatbot_script() -> str:
     const footballChatbotForm = document.getElementById('footballChatbotForm');
     const footballChatbotInput = document.getElementById('footballChatbotInput');
     const footballChatbotMessages = document.getElementById('footballChatbotMessages');
+    const footballChatbotHistory = [];
 
     function chatbotEscape(value) {
       return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
 
-    function addChatbotMessage(role, text) {
+    function addChatbotMessage(role, text, save = true) {
       const node = document.createElement('div');
       node.className = `chatbot-message ${role}`;
       node.innerHTML = chatbotEscape(text);
       footballChatbotMessages.appendChild(node);
+      if (save) {
+        footballChatbotHistory.push({role: role === 'user' ? 'user' : 'assistant', content: text});
+        if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
+      }
       footballChatbotMessages.scrollTop = footballChatbotMessages.scrollHeight;
       return node;
     }
@@ -1650,17 +1655,21 @@ def _football_chatbot_script() -> str:
       if (!question) return;
       footballChatbotInput.value = '';
       addChatbotMessage('user', question);
-      const pending = addChatbotMessage('bot', 'Je réfléchis...');
+      const pending = addChatbotMessage('bot', 'Je réfléchis...', false);
       try {
         const response = await fetch('/api/football-chatbot', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({message: question})
+          body: JSON.stringify({message: question, history: footballChatbotHistory.slice(-8)})
         });
         const data = await response.json().catch(() => ({}));
         pending.textContent = data.answer || data.error || 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
+        footballChatbotHistory.push({role: 'assistant', content: pending.textContent});
+        if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
       } catch (error) {
         pending.textContent = 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
+        footballChatbotHistory.push({role: 'assistant', content: pending.textContent});
+        if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
       }
     });
   </script>"""

@@ -16,6 +16,7 @@ def main() -> None:
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
         dataset["top_assists"] = enrich_players_with_known_country_flags(dataset.get("top_assists", []))
         dataset["all_time_top_assisters"] = []
+        dataset["players_index"] = _build_players_index(dataset)
 
     CACHE_FILE.write_text(json.dumps(worldcup_data, ensure_ascii=False, indent=2), encoding="utf-8")
     CHAMPIONS_LEAGUE_CACHE_FILE.write_text(
@@ -30,6 +31,82 @@ def main() -> None:
         OUTPUT_HTML,
     )
     print(f"Dashboard généré : {OUTPUT_HTML}")
+
+
+def _build_players_index(dataset: dict[str, Any]) -> list[dict[str, Any]]:
+    generated_at = dataset.get("generated_at", "")
+    players: dict[str, dict[str, Any]] = {}
+
+    def add_player(
+        name: str,
+        *,
+        club_current: str = "",
+        country: str = "",
+        position: str = "",
+        number: str = "",
+        photo_url: str = "",
+        associated_team: str = "",
+        source: str = "",
+    ) -> None:
+        clean_name = " ".join(str(name or "").split())
+        if not clean_name:
+            return
+        key = clean_name.casefold()
+        current = players.setdefault(
+            key,
+            {
+                "name": clean_name,
+                "club_current": "",
+                "country": "",
+                "position": "",
+                "number": "",
+                "photo_url": "",
+                "associated_team": "",
+                "updated_at": generated_at,
+                "source": "",
+            },
+        )
+        for field, value in {
+            "club_current": club_current,
+            "country": country,
+            "position": position,
+            "number": number,
+            "photo_url": photo_url,
+            "associated_team": associated_team,
+            "source": source,
+        }.items():
+            if value and not current.get(field):
+                current[field] = str(value)
+        if generated_at:
+            current["updated_at"] = generated_at
+
+    for player in dataset.get("top_scorers", []) + dataset.get("top_assists", []):
+        add_player(
+            player.get("name", ""),
+            club_current=player.get("team", ""),
+            country=player.get("country", ""),
+            photo_url=player.get("photo_url", ""),
+            associated_team=player.get("team", ""),
+            source=player.get("source") or "FotMob/ESPN stats",
+        )
+
+    for team_name, details in dataset.get("teams_details", {}).items():
+        sources = details.get("sources") or []
+        source = ", ".join(sources) if isinstance(sources, list) else str(sources or "")
+        for section in ("squad", "starters", "substitutes"):
+            for player in details.get(section, []) or []:
+                add_player(
+                    player.get("name", ""),
+                    club_current=team_name,
+                    country=details.get("name", team_name),
+                    position=player.get("position", ""),
+                    number=player.get("number") or player.get("jersey") or player.get("jerseyNumber") or "",
+                    photo_url=player.get("photo_url", ""),
+                    associated_team=team_name,
+                    source=source or "ESPN/FotMob roster",
+                )
+
+    return sorted(players.values(), key=lambda item: item.get("name", "").casefold())
 
 
 def _read_cache(path) -> dict[str, Any] | None:
@@ -59,6 +136,7 @@ def _merge_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[st
         "top_scorers",
         "top_assists",
         "teams_details",
+        "players_index",
         "today_matches",
     ):
         if key in {"general_news", "all_news", "focused_team_news", "focused_club_news", "news_sources"}:
