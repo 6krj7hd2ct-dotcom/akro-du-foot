@@ -171,30 +171,6 @@ def _page(data: dict[str, Any]) -> str:
       background: linear-gradient(180deg, #ffffff, #c8d6e6);
       border-color: rgba(255,255,255,0.28);
     }}
-    .season-tabs {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      width: min(1180px, calc(100% - 32px));
-      margin: -12px auto 28px;
-      padding: 8px;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 18px;
-      background: rgba(4,13,25,0.62);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 14px 34px rgba(0,0,0,0.20);
-    }}
-    .season-tabs .tab-button {{ padding: 9px 13px; font-size: 13px; }}
-    .season-tabs-label {{
-      display: inline-flex;
-      align-items: center;
-      padding: 0 8px;
-      color: #8fa8c4;
-      font-size: 12px;
-      font-weight: 950;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }}
     .tab-panel {{ display: block; }}
     .tab-panel:not(.is-active) {{ display: none; }}
     .hero::before {{
@@ -627,8 +603,6 @@ def _page(data: dict[str, Any]) -> str:
       </div>
     </section>
 
-    {_season_tabs("worldcup", "Année", [("2026", "2026")])}
-
     {_errors(data.get("errors", []))}
 
     <section class="today-strip" aria-label="Matchs du jour">{_today_matches(today_matches, group_matches, knockout)}</section>
@@ -695,7 +669,7 @@ def _app_header() -> str:
         </div>
         <div class="global-controls">
           <button class="action-button" type="button" id="shareButton">Partager</button>
-          <button class="action-button" type="button" id="chatbotButton">Coach</button>
+          <button class="action-button" type="button" id="chatbotButton">Coach Akro</button>
           <a class="action-button" href="/watch-party">Watch Party</a>
         </div>
       </div>
@@ -771,8 +745,6 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
         </div>
       </section>
 
-      {_season_tabs("champions", "Saison", [("2025-2026", "2025-2026")])}
-
       {_errors(data.get("errors", []))}
 
       <section class="today-strip" aria-label="Matchs du jour Ligue des Champions">{_today_matches(today_matches, matches, knockout)}</section>
@@ -828,8 +800,6 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
           </div>
         </div>
       </section>
-
-      {_season_tabs("leagues", "Saison", [("2025-2026", "2025-2026")])}
 
       {_errors(data.get("errors", []))}
 
@@ -917,19 +887,6 @@ def _display_focus_name(name: str) -> str:
     return aliases.get(str(name), str(name))
 
 
-def _season_tabs(kind: str, label: str, options: list[tuple[str, str]]) -> str:
-    buttons = "".join(
-        f'<button class="tab-button{" is-active" if index == 0 else ""}" type="button" data-season-value="{escape(value, quote=True)}">{escape(text)}</button>'
-        for index, (value, text) in enumerate(options)
-    )
-    return f"""
-    <nav class="season-tabs" data-season-tabs="{escape(kind, quote=True)}" aria-label="{escape(label, quote=True)}">
-      <span class="season-tabs-label">{escape(label)}</span>
-      {buttons}
-    </nav>
-    """
-
-
 def _tabs_script(champions_data: dict[str, Any] | None) -> str:
     if not champions_data:
         return ""
@@ -943,21 +900,6 @@ def _tabs_script(champions_data: dict[str, Any] | None) -> str:
         document.querySelectorAll('[data-tab-panel]').forEach((panel) => {
           panel.classList.toggle('is-active', panel.dataset.tabPanel === target);
         });
-      });
-    });
-
-    document.querySelectorAll('[data-season-tabs]').forEach((nav) => {
-      const key = `akrodufoot:season:${nav.dataset.seasonTabs}`;
-      const buttons = Array.from(nav.querySelectorAll('[data-season-value]'));
-      const applySeason = (value) => {
-        const selected = buttons.find((button) => button.dataset.seasonValue === value) || buttons[0];
-        if (!selected) return;
-        buttons.forEach((button) => button.classList.toggle('is-active', button === selected));
-        localStorage.setItem(key, selected.dataset.seasonValue || '');
-      };
-      applySeason(localStorage.getItem(key));
-      buttons.forEach((button) => {
-        button.addEventListener('click', () => applySeason(button.dataset.seasonValue));
       });
     });
   </script>"""
@@ -1111,8 +1053,8 @@ def _community_section() -> str:
             </div>
             <div class="match-context" id="predictionContext"></div>
             <div class="coach-prediction" id="coachPrediction" aria-live="polite">
-              <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Analyse fictive pour le jeu entre amis.</span></div>
-              <div class="coach-reason">Coach prépare son analyse dès que le match est sélectionné.</div>
+              <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Analyse fictive pour le jeu entre amis.</span></div>
+              <div class="coach-reason">Coach Akro prépare son analyse dès que le match est sélectionné.</div>
               <div class="coach-disclaimer">Aucun conseil de pari réel.</div>
             </div>
             <button class="action-button" type="submit" disabled>Valider le pronostic</button>
@@ -1562,13 +1504,13 @@ def _football_chatbot_modal() -> str:
       <header class="team-modal-head">
         <div class="alltime-rank">⚽</div>
         <div>
-          <div class="team-modal-title" id="footballChatbotTitle">Coach</div>
+          <div class="team-modal-title" id="footballChatbotTitle">Coach Akro</div>
           <div class="subtle">Assistant football spécialisé, analyste et coach.</div>
         </div>
         <button class="modal-close" type="button" id="footballChatbotClose" aria-label="Fermer">×</button>
       </header>
       <div class="chatbot-messages" id="footballChatbotMessages">
-        <div class="chatbot-message bot">Salut, je suis Coach. Pose-moi une question foot.</div>
+        <div class="chatbot-message bot">Salut, je suis Coach Akro. Pose-moi une question foot.</div>
       </div>
       <form class="chatbot-form" id="footballChatbotForm">
         <input id="footballChatbotInput" type="text" maxlength="500" placeholder="Pose ta question foot…" autocomplete="off">
@@ -2029,12 +1971,12 @@ def _football_chatbot_script() -> str:
           body: JSON.stringify({message: question, history: footballChatbotHistory.slice(-8)})
         });
         const data = await response.json().catch(() => ({}));
-        const answer = data.answer || data.error || 'Coach indisponible : clé OpenAI absente ou invalide.';
+        const answer = data.answer || data.error || 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
         setChatbotMessage(pending, answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
         if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
       } catch (error) {
-        const answer = 'Coach indisponible : clé OpenAI absente ou invalide.';
+        const answer = 'Coach Akro indisponible : clé OpenAI absente ou invalide.';
         setChatbotMessage(pending, answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
         if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
@@ -2462,7 +2404,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         predicted_winner: 'Analyse en attente',
         predicted_score: '',
         confidence: '',
-        reason: 'Coach prépare son analyse dès que le match est sélectionné.',
+        reason: 'Coach Akro prépare son analyse dès que le match est sélectionné.',
         disclaimer: 'Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel.'
       }};
       const info = data || fallback;
@@ -2471,7 +2413,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       const reason = info.reason || fallback.reason;
       const disclaimer = info.disclaimer || fallback.disclaimer;
       coachPrediction.innerHTML = `
-        <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Coach : ${{escapeHtml(info.predicted_winner || fallback.predicted_winner)}}${{score}}${{confidence}}.</span></div>
+        <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Coach Akro : ${{escapeHtml(info.predicted_winner || fallback.predicted_winner)}}${{score}}${{confidence}}.</span></div>
         <div class="coach-reason">Analyse : ${{escapeHtml(reason)}}</div>
         <div class="coach-disclaimer">${{escapeHtml(disclaimer)}}</div>
       `;
@@ -2488,7 +2430,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         return;
       }}
       coachPrediction.innerHTML = `
-        <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Analyse en cours...</span></div>
+        <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Analyse en cours...</span></div>
         <div class="coach-reason">Analyse fictive pour le jeu entre amis.</div>
         <div class="coach-disclaimer">Aucun conseil de pari réel.</div>
       `;
