@@ -131,5 +131,5 @@ REQUEST_HEADERS = {
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
         "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36"
     ),
-    "Accept-Language": "en-US,en;q=0.9,fr;q=0.8",
+    "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.6",
 }

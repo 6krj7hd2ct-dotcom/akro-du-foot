@@ -6,6 +6,7 @@ import subprocess
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
+from urllib.parse import urlparse
 from xml.etree import ElementTree
 
 import requests
@@ -117,6 +118,26 @@ FRENCH_NEWS_SOURCE_NAMES = {
 
 BLOCKED_NEWS_SOURCE_NAMES = {"espn", "bbc", "bbc sport", "google news"}
 BLOCKED_NEWS_DOMAINS = ("espn.com", "bbc.", "bbc.co.uk", "news.google.")
+FRENCH_NEWS_DOMAINS = (
+    "francetvinfo.fr",
+    "rmcsport.bfmtv.com",
+    "lequipe.fr",
+    "goal.com",
+    "eurosport.fr",
+    "footmercato.net",
+    "sofoot.com",
+    "maxifoot.fr",
+    "livefoot.fr",
+    "francefootball.fr",
+    "lephoceen.fr",
+    "psg.fr",
+    "om.fr",
+    "ol.fr",
+    "asmonaco.com",
+    "fff.fr",
+    "fifa.com",
+    "uefa.com",
+)
 
 FRENCH_TEAM_NAMES = {
     "Senegal": "Sénégal",
@@ -1626,13 +1647,15 @@ def _article_source(item: ElementTree.Element, feed: dict[str, Any]) -> str:
 
 
 def _is_allowed_french_news_source(source: str, link: str) -> bool:
-    normalized_source = _normalize_news_text(source)
-    normalized_source = normalized_source.replace(" ", " ").strip()
+    normalized_source = _normalize_news_text(source).strip()
     link_lower = str(link or "").lower()
+    hostname = urlparse(link_lower).netloc.replace("www.", "")
     if normalized_source in BLOCKED_NEWS_SOURCE_NAMES or any(domain in link_lower for domain in BLOCKED_NEWS_DOMAINS):
         return False
-    allowed = {_normalize_news_text(name) for name in FRENCH_NEWS_SOURCE_NAMES}
-    return normalized_source in allowed or any(_normalize_news_text(name) in normalized_source for name in FRENCH_NEWS_SOURCE_NAMES)
+    allowed_sources = {_normalize_news_text(name) for name in FRENCH_NEWS_SOURCE_NAMES}
+    source_allowed = normalized_source in allowed_sources or any(name in normalized_source for name in allowed_sources)
+    domain_allowed = any(hostname == domain or hostname.endswith(f".{domain}") for domain in FRENCH_NEWS_DOMAINS)
+    return source_allowed and domain_allowed
 
 
 def _normalize_news_text(value: str) -> str:

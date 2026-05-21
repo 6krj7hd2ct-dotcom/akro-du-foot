@@ -107,10 +107,8 @@ def _focus_aliases_for_news(focus: str) -> set[str]:
 def _dedupe_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen: set[str] = set()
     out: list[dict[str, Any]] = []
-    blocked = {"espn", "bbc", "bbc sport", "google news"}
     for article in articles or []:
-        source = str(article.get("source", "")).casefold()
-        if source in blocked:
+        if not _is_allowed_cached_news(article):
             continue
         key = _normalize_football_text(article.get("title") or article.get("url") or "")[:90]
         if not key or key in seen:
@@ -118,6 +116,29 @@ def _dedupe_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
         seen.add(key)
         out.append(article)
     return sorted(out, key=lambda item: str(item.get("date", "")), reverse=True)
+
+
+def _is_allowed_cached_news(article: dict[str, Any]) -> bool:
+    source = _normalize_football_text(article.get("source", ""))
+    link = str(article.get("url", "")).lower()
+    hostname = urlparse(link).netloc.replace("www.", "")
+    blocked_sources = {"espn", "bbc", "bbc sport", "google news"}
+    blocked_domains = ("espn.com", "bbc.", "bbc.co.uk", "news.google.")
+    allowed_sources = {
+        "france info", "rmc sport", "l equipe", "l equipe", "goal com", "goal france",
+        "eurosport", "eurosport france", "foot mercato", "so foot", "maxifoot",
+        "livefoot", "france football", "le phoceen", "le phoceen", "fifa", "uefa"
+    }
+    allowed_domains = (
+        "francetvinfo.fr", "rmcsport.bfmtv.com", "lequipe.fr", "goal.com",
+        "eurosport.fr", "footmercato.net", "sofoot.com", "maxifoot.fr",
+        "livefoot.fr", "francefootball.fr", "lephoceen.fr", "fifa.com", "uefa.com"
+    )
+    if source in blocked_sources or any(domain in link for domain in blocked_domains):
+        return False
+    source_allowed = source in allowed_sources or any(allowed in source for allowed in allowed_sources)
+    domain_allowed = any(hostname == domain or hostname.endswith(f".{domain}") for domain in allowed_domains)
+    return source_allowed and domain_allowed
 
 
 def community_payload() -> dict[str, Any]:
