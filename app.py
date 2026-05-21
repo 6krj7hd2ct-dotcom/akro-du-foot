@@ -227,6 +227,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                             "Tu es Coach, assistant football expert intégré à Akro du Foot. "
                             "Tu réponds en français comme un consultant football moderne : naturel, passionné, clair, précis. "
                             "Tes réponses doivent être très lisibles sur mobile : paragraphes courts, sauts de ligne utiles, jamais de gros bloc compact. "
+                            "Sépare les idées après les points importants, avec des paragraphes courts de 2 à 3 phrases maximum. "
                             "Si la réponse dépasse quelques lignes, structure-la avec Résumé, Analyse et Conclusion. "
                             "capable d'expliquer simplement l'histoire du foot, les règles, la tactique, les statistiques, le mercato, "
                             "les joueurs actuels et anciens, les clubs, les sélections, le PSG, l'Équipe de France, la Coupe du Monde "
@@ -512,7 +513,8 @@ def _is_correction_message(normalized_text: str) -> bool:
     correction_terms = {
         "tu te trompes", "c est faux", "ce nest pas vrai", "ce n est pas vrai", "non", "pas vrai",
         "verifie", "verifie ca", "corrige", "correction", "il joue au", "elle joue au",
-        "il joue a", "elle joue a", "il est au", "elle est au", "il a signe", "il a rejoint",
+        "il joue a", "elle joue a", "joue pour", "il est au", "elle est au", "il est a",
+        "elle est a", "il a signe", "elle a signe", "il a rejoint", "elle a rejoint",
     }
     return any(term in normalized_text for term in correction_terms)
 
@@ -603,6 +605,14 @@ def _find_player_fact(normalized_question: str) -> dict[str, Any] | None:
                 return player
             if name_key and name_key in normalized_question:
                 return player
+    if "mbappe" in normalized_question:
+        return {
+            "name": "Kylian Mbappé",
+            "club_current": "Real Madrid",
+            "country": "France",
+            "position": "Attaquant",
+            "source": "référence locale Akro du Foot",
+        }
     if "pele" in normalized_question:
         return {"name": "Pelé", "club_current": "retraité", "country": "Brésil", "source": "connaissance football historique"}
     return None
@@ -701,7 +711,7 @@ def _looks_like_football_question(question: str, history: list[dict[str, str]] |
         "copa america", "ligue 1", "premier league", "liga", "serie a", "bundesliga", "mls",
         "pronostic", "favori", "nul", "victoire", "defaite", "joue", "jouer", "club actuel",
         "effectif", "composition", "compo", "selection", "selection nationale", "transfert", "verifie",
-        "corrige", "erreur", "tu te trompes", "pas vrai",
+        "corrige", "erreur", "tu te trompes", "pas vrai", "actualite", "actu", "rumeur",
     }
     names = {
         "pele", "maradona", "zidane", "messi", "cristiano ronaldo", "ronaldo", "ronaldinho",
