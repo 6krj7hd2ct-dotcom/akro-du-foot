@@ -266,10 +266,11 @@ def _page(data: dict[str, Any]) -> str:
     .leaders {{ grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }}
     .news {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     .grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
-    .standings-wide {{ grid-template-columns: 1fr; }}
-    .standings-wide .card {{ width: 100%; }}
-    .standings-wide table {{ min-width: 760px; }}
-    .standings-wide th:nth-child(2), .standings-wide td:nth-child(2) {{ min-width: 280px; }}
+    .standings-wide {{ grid-template-columns: 1fr; width: 100%; }}
+    .standings-wide .card {{ width: 100%; max-width: none; }}
+    .standings-wide .table-scroll {{ width: 100%; }}
+    .standings-wide table {{ min-width: 820px; table-layout: auto; }}
+    .standings-wide th:nth-child(2), .standings-wide td:nth-child(2) {{ min-width: 340px; width: 42%; }}
     .matches {{ grid-template-columns: repeat(auto-fit, minmax(370px, 1fr)); }}
     .calendar-days {{ grid-template-columns: 1fr; }}
     .calendar-day .matches {{ grid-template-columns: 1fr; }}
@@ -1275,7 +1276,7 @@ def _group_card(group: dict[str, Any]) -> str:
     return f"""<article class="card">
   <h3>{escape(group.get("name", "Groupe"))}</h3>
   <div class="table-scroll"><table>
-    <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead>
+    <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>DIFF.</th><th>PTS</th></tr></thead>
     <tbody>{''.join(rows)}</tbody>
   </table></div>
 </article>"""
@@ -1961,7 +1962,7 @@ def _leagues_script() -> str:
         <td>${leagueEscape(team.rank || '')}</td><td>${leagueTeam(team.team || '', team.flag_url || '')}</td>
         <td>${leagueEscape(team.played || '0')}</td><td>${leagueEscape(team.wins || '0')}</td><td>${leagueEscape(team.draws || '0')}</td><td>${leagueEscape(team.losses || '0')}</td><td>${leagueEscape(team.goal_diff || '0')}</td><td><strong>${leagueEscape(team.points || '0')}</strong></td>
       </tr>`).join('');
-      return `<article class="card"><h3>${leagueEscape(group.name || 'Classement')}</h3><div class="table-scroll"><table><thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
+      return `<article class="card"><h3>${leagueEscape(group.name || 'Classement')}</h3><div class="table-scroll"><table><thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>DIFF.</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
     }
 
     function leagueCalendar(groups) {

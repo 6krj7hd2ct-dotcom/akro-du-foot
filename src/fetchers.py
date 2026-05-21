@@ -609,14 +609,14 @@ def fetch_espn_standings_from_url(url: str) -> list[dict[str, Any]]:
                     "abbr": team.get("abbrev", ""),
                     "country_code": team.get("abbrev", ""),
                     "flag_url": team.get("logo", ""),
-                    "played": stats.get("gamesplayed", "0"),
-                    "wins": stats.get("wins", "0"),
-                    "draws": stats.get("ties", "0"),
-                    "losses": stats.get("losses", "0"),
-                    "goals_for": stats.get("pointsfor", "0"),
-                    "goals_against": stats.get("pointsagainst", "0"),
-                    "goal_diff": stats.get("pointdifferential", "0"),
-                    "points": stats.get("points", "0"),
+                    "played": _stat(stats, "gamesplayed", "games_played", "gp", "j"),
+                    "wins": _stat(stats, "wins", "w", "g"),
+                    "draws": _stat(stats, "ties", "draws", "d", "n"),
+                    "losses": _stat(stats, "losses", "l", "p"),
+                    "goals_for": _stat(stats, "pointsfor", "goalsfor", "gf", "bp"),
+                    "goals_against": _stat(stats, "pointsagainst", "goalsagainst", "ga", "bc"),
+                    "goal_diff": _stat(stats, "pointdifferential", "goaldifference", "goaldiff", "gd", "diff"),
+                    "points": _stat(stats, "points", "pts"),
                     "status": note.get("description", ""),
                 }
             )
@@ -1726,7 +1726,38 @@ def _extract_next_data(html: str) -> dict[str, Any]:
 
 
 def _stats_map(keys: list[str], values: list[Any]) -> dict[str, Any]:
-    return {key: values[index] for index, key in enumerate(keys) if index < len(values)}
+    stats: dict[str, Any] = {}
+    for index, cell in enumerate(values):
+        value = _stat_cell_value(cell)
+        if index < len(keys):
+            stats[_normalize_stat_key(keys[index])] = value
+        if isinstance(cell, dict):
+            for field in ("type", "name", "abbreviation", "displayName", "shortDisplayName", "label"):
+                key = cell.get(field)
+                if key:
+                    stats[_normalize_stat_key(str(key))] = value
+    return stats
+
+
+def _stat(stats: dict[str, Any], *aliases: str, default: str = "0") -> str:
+    for alias in aliases:
+        value = stats.get(_normalize_stat_key(alias))
+        if value not in (None, ""):
+            return str(value)
+    return default
+
+
+def _normalize_stat_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", str(value).casefold())
+
+
+def _stat_cell_value(cell: Any) -> Any:
+    if isinstance(cell, dict):
+        for key in ("value", "displayValue", "shortDisplayValue", "summary"):
+            if cell.get(key) not in (None, ""):
+                return cell.get(key)
+        return ""
+    return cell
 
 
 def _cell_name(cell: Any) -> str:
