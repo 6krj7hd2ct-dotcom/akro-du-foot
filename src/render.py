@@ -2571,8 +2571,23 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         .filter(isMatchAvailable)
         .sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
       if (available.length) return available[0];
+      const live = matches.find(match => match.status === 'LIVE');
+      if (live) return live;
       const fallback = matches.slice().sort((a, b) => matchTimestamp(b) - matchTimestamp(a));
       return fallback[0] || null;
+    }}
+
+    function sortPredictionMatches(matches) {{
+      const now = Date.now();
+      return matches.slice().sort((a, b) => {{
+        const aAvailable = isMatchAvailable(a);
+        const bAvailable = isMatchAvailable(b);
+        if (aAvailable !== bAvailable) return aAvailable ? -1 : 1;
+        const aDistance = Math.abs(matchTimestamp(a) - now);
+        const bDistance = Math.abs(matchTimestamp(b) - now);
+        if (aDistance !== bDistance) return aDistance - bDistance;
+        return matchTimestamp(a) - matchTimestamp(b);
+      }});
     }}
 
     function statusClass(match) {{
@@ -2631,8 +2646,9 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         : selectedCompetition === 'today'
           ? communityMatches.filter(isTodayMatch)
           : communityMatches.filter((match) => match.competition === selectedCompetition);
-      const selected = closestPredictionMatch(filtered, selectedCompetition);
-      predictionMatch.innerHTML = filtered.map((match) => {{
+      const ordered = sortPredictionMatches(filtered);
+      const selected = closestPredictionMatch(ordered, selectedCompetition);
+      predictionMatch.innerHTML = ordered.map((match) => {{
         const label = `${{match.competition || 'Compétition'}} · ${{shortDate(match.date)}} · ${{match.home_team}} vs ${{match.away_team}}`;
         return `<option value="${{escapeHtml(match.id)}}">${{escapeHtml(label)}}</option>`;
       }}).join('');
