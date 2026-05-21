@@ -29,8 +29,8 @@ from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUE
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
-COACH_REFUSAL = "Je suis Coach Akro, je réponds uniquement aux questions liées au football."
-COACH_UNAVAILABLE = "Coach Akro indisponible : clé OpenAI absente ou invalide."
+COACH_REFUSAL = "Je suis Coach, je réponds uniquement aux questions liées au football."
+COACH_UNAVAILABLE = "Coach indisponible : clé OpenAI absente ou invalide."
 COACH_DISCLAIMER = "Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel."
 
 app = Flask(__name__) if Flask else None
@@ -202,7 +202,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                     {
                         "role": "system",
                         "content": (
-                            "Tu es Coach Akro, assistant football expert intégré à Akro du Foot. "
+                            "Tu es Coach, assistant football expert intégré à Akro du Foot. "
                             "Tu réponds en français comme un consultant football moderne : naturel, passionné, clair, précis. "
                             "Tes réponses doivent être très lisibles sur mobile : paragraphes courts, sauts de ligne utiles, jamais de gros bloc compact. "
                             "Si la réponse dépasse quelques lignes, structure-la avec Résumé, Analyse et Conclusion. "
@@ -256,7 +256,7 @@ def coach_prediction_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
             "predicted_winner": "Match terminé",
             "predicted_score": _real_score_label(match),
             "confidence": "",
-            "reason": "Ce match est déjà terminé : Coach Akro lit le score final plutôt qu'une prédiction après coup.",
+            "reason": "Ce match est déjà terminé : Coach lit le score final plutôt qu'une prédiction après coup.",
             "disclaimer": COACH_DISCLAIMER,
         }, 200
 
