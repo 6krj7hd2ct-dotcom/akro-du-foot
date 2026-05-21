@@ -17,6 +17,7 @@ def render_html(data: dict[str, Any], output: Path) -> None:
 def _page(data: dict[str, Any]) -> str:
     worldcup_data = data.get("worldcup", data)
     champions_data = data.get("champions_league")
+    leagues_data = data.get("leagues")
     data = worldcup_data
     generated = _format_datetime(data.get("generated_at", ""), with_time=True)
     groups = data.get("standings", [])
@@ -35,8 +36,8 @@ def _page(data: dict[str, Any]) -> str:
     knockout_remaining = data.get("knockout_matches_remaining", _count_remaining_knockout(knockout))
     competition_stage = data.get("competition_stage", "Phase de groupes")
     france_next_match = data.get("france_next_match")
-    teams_details = _merged_teams_details(data, champions_data)
-    prediction_matches = _global_prediction_matches(data, champions_data)
+    teams_details = _merged_teams_details(data, champions_data, leagues_data)
+    prediction_matches = _global_prediction_matches(data, champions_data, leagues_data)
 
     sources = "\n".join(
         f'<a href="{escape(source["url"])}" target="_blank" rel="noreferrer">{escape(source["name"])}</a>'
@@ -205,13 +206,13 @@ def _page(data: dict[str, Any]) -> str:
     .hero-copy {{ color: #c5d3e4; font-size: clamp(16px, 2vw, 20px); line-height: 1.5; margin: 18px 0 0; max-width: 650px; }}
     .hero-badges {{ display: grid; gap: 9px; margin-top: 24px; }}
     .hero-row {{ display: flex; flex-wrap: wrap; gap: 10px; }}
-    .pill {{ gap: 8px; padding: 9px 12px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); color: #e9f4ff; font-size: 13px; flex-wrap: wrap; min-width: 0; max-width: 100%; line-height: 1.25; overflow-wrap: anywhere; }}
+    .pill {{ gap: 8px; padding: 9px 12px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); color: #e9f4ff; font-size: 13px; flex-wrap: wrap; min-width: 0; max-width: 100%; line-height: 1.25; overflow-wrap: normal; word-break: normal; }}
     .pill .flag {{ width: 18px; height: 18px; margin-right: 2px; flex: 0 0 auto; }}
     .focus-pill {{ display: inline-flex; align-items: center; gap: 8px; }}
     .focus-select {{ width: auto; max-width: min(48vw, 240px); min-width: 132px; padding: 5px 24px 5px 8px; border-radius: 999px; font-size: 12px; font-weight: 900; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
     .next-match-pill {{ flex-wrap: nowrap; white-space: nowrap; overflow-wrap: normal; word-break: keep-all; font-size: clamp(9px, 2.4vw, 13px); align-items: center; }}
     .next-match-pill .focus-match-text {{ white-space: nowrap; min-width: 0; }}
-    .france-pill::before {{ content: ""; width: 26px; height: 14px; border-radius: 2px; background: linear-gradient(90deg, var(--blue) 0 33%, var(--white) 33% 66%, var(--red) 66%); }}
+    .france-pill::before {{ content: none; }}
     .section-head {{ display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 34px 0 14px; }}
     .section-title {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
     h2 {{ font-size: clamp(24px, 3vw, 34px); line-height: 1.05; }}
@@ -224,7 +225,7 @@ def _page(data: dict[str, Any]) -> str:
     .today-strip {{ grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }}
     .leaders {{ grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }}
     .news {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
-    .grid {{ grid-template-columns: repeat(auto-fit, minmax(286px, 1fr)); }}
+    .grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     .matches {{ grid-template-columns: repeat(auto-fit, minmax(370px, 1fr)); }}
     .calendar-days {{ grid-template-columns: 1fr; }}
     .today-tile, .card, .notice {{ background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.055)); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 14px 36px rgba(0,0,0,0.20); backdrop-filter: blur(14px); overflow: hidden; }}
@@ -237,7 +238,7 @@ def _page(data: dict[str, Any]) -> str:
     .flag {{ width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }}
     .flag.placeholder {{ display: inline-grid; place-items: center; color: #9fb0c2; font-size: 11px; }}
     .team {{ font-weight: 850; }}
-    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.18; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
+    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: normal; word-break: normal; line-height: 1.18; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
     .team-button:hover, .team-button:focus-visible {{ color: #fff; background: rgba(245,201,107,0.14); outline: 1px solid rgba(245,201,107,0.34); }}
     .away .team-button {{ justify-content: flex-end; }}
     .table-scroll {{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }}
@@ -256,7 +257,7 @@ def _page(data: dict[str, Any]) -> str:
     .club-logo {{ width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; padding: 2px; background: rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.18); }}
     .club-logo.placeholder {{ display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }}
     .club-logo.placeholder::before {{ content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }}
-    .club-name {{ white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.18; }}
+    .club-name {{ white-space: normal; overflow-wrap: normal; word-break: normal; line-height: 1.18; }}
     .player-country-flag {{ position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(7,17,31,0.92); background: rgba(255,255,255,0.14); }}
     .player-stat {{ color: var(--gold); font-size: 28px; font-weight: 950; line-height: 1; margin-top: 8px; }}
     .rank-note {{ color: #b7c6d7; font-size: 12px; margin-top: 5px; }}
@@ -380,8 +381,11 @@ def _page(data: dict[str, Any]) -> str:
       background: rgba(245,201,107,0.62);
     }}
     .bracket-wing.right .ko-match::before {{ right: auto; left: -17px; }}
-    .ko-line {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; font-weight: 850; margin: 4px 0; font-size: clamp(10px, 0.92vw, 13px); }}
-    .ko-line span:first-child {{ white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.15; }}
+    .ko-line {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; font-weight: 850; margin: 6px 0; font-size: clamp(10px, 0.92vw, 13px); }}
+    .bracket-team {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 900; display: grid; justify-items: center; gap: 4px; min-width: 0; width: 100%; padding: 2px; cursor: pointer; text-align: center; }}
+    .bracket-team .flag {{ margin: 0; width: 22px; height: 22px; }}
+    .bracket-team-name {{ display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; overflow-wrap: normal; word-break: normal; line-height: 1.12; }}
+    .ko-score {{ font-weight: 950; color: #07111f; min-width: 22px; text-align: center; }}
     .ko-match .subtle {{ color: #526274; }}
     .ko-match .status {{ color: #12457a; background: rgba(31,111,235,0.13); }}
     .ko-match .status.done {{ color: #0d684d; background: rgba(50,211,162,0.16); }}
@@ -480,9 +484,9 @@ def _page(data: dict[str, Any]) -> str:
     .follow-card {{ padding: 13px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: radial-gradient(circle at center, rgba(245,201,107,0.10), transparent 18rem), rgba(255,255,255,0.055); }}
     .follow-meta {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 850; text-transform: uppercase; }}
     .follow-teams {{ display: grid; grid-template-columns: minmax(0, 1.25fr) clamp(62px, 9vw, 84px) minmax(0, 1.25fr); align-items: center; gap: 10px; margin-top: 12px; }}
-    .follow-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; line-height: 1.18; overflow-wrap: anywhere; word-break: normal; }}
+    .follow-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; line-height: 1.18; overflow-wrap: normal; word-break: normal; }}
     .follow-team.away {{ justify-content: flex-end; text-align: right; }}
-    .follow-team span:last-child {{ white-space: normal; overflow-wrap: anywhere; word-break: normal; }}
+    .follow-team span:last-child {{ white-space: normal; overflow-wrap: normal; word-break: normal; }}
     .follow-center {{ min-width: 62px; text-align: center; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); border-radius: 10px; padding: 7px 9px; font-weight: 950; }}
     .follow-status {{ display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; padding: 4px 8px; border-radius: 999px; color: #b9d7ff; background: rgba(31,111,235,0.18); font-size: 12px; font-weight: 900; }}
     .follow-status.done {{ color: #9ff0d5; background: rgba(50,211,162,0.18); }}
@@ -507,7 +511,7 @@ def _page(data: dict[str, Any]) -> str:
     .prediction-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; }}
     .prediction-team.home {{ justify-content: flex-end; text-align: right; }}
     .prediction-team.away {{ justify-content: flex-start; text-align: left; }}
-    .prediction-team-name {{ min-width: 0; white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.18; }}
+    .prediction-team-name {{ min-width: 0; white-space: normal; overflow-wrap: normal; word-break: normal; line-height: 1.18; }}
     .prediction-scoreboard input {{ width: 64px; text-align: center; font-size: 22px; font-weight: 950; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
     .prediction-separator {{ color: var(--gold); font-size: 26px; font-weight: 950; }}
     .community-status {{ margin-top: 10px; color: #ffe1a0; font-size: 13px; min-height: 18px; }}
@@ -526,7 +530,7 @@ def _page(data: dict[str, Any]) -> str:
       .section-head {{ align-items: start; flex-direction: column; }}
       .section-note {{ text-align: left; }}
       .today-strip {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
-      .news {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
+      .news, .grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
       .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }}
       .match-meta {{ grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }}
@@ -575,7 +579,7 @@ def _page(data: dict[str, Any]) -> str:
   <main>
     {_app_header()}
     {_community_section()}
-    {_tabs_nav(champions_data)}
+    {_tabs_nav(champions_data, leagues_data)}
     <section class="tab-panel is-active" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
       <div class="hero-content">
@@ -623,6 +627,7 @@ def _page(data: dict[str, Any]) -> str:
     <nav class="sources" aria-label="Sources">{sources}</nav>
     </section>
     {_champions_tab(champions_data)}
+    {_leagues_tab(leagues_data)}
   </main>
   {_team_modal()}
   {_all_time_modal()}
@@ -630,8 +635,9 @@ def _page(data: dict[str, Any]) -> str:
   {_team_script(teams_details, prediction_matches)}
   {_all_time_script(all_time_scorers, champions_all_time_scorers)}
   {_community_script(prediction_matches)}
-  {_news_script(data, champions_data)}
+  {_news_script(data, champions_data, leagues_data)}
   {_focus_script(prediction_matches, teams_details)}
+  {_leagues_script()}
   {_football_chatbot_script()}
   {_tabs_script(champions_data)}
 </body>
@@ -671,20 +677,25 @@ def _app_header() -> str:
 """
 
 
-def _merged_teams_details(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None) -> dict[str, Any]:
+def _merged_teams_details(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None, leagues_data: dict[str, Any] | None = None) -> dict[str, Any]:
     teams = dict(worldcup_data.get("teams_details", {}))
     if champions_data:
         teams.update(champions_data.get("teams_details", {}))
+    for league in (leagues_data or {}).get("leagues", {}).values():
+        teams.update(league.get("teams_details", {}))
     return teams
 
 
-def _tabs_nav(champions_data: dict[str, Any] | None) -> str:
-    if not champions_data:
+def _tabs_nav(champions_data: dict[str, Any] | None, leagues_data: dict[str, Any] | None = None) -> str:
+    if not champions_data and not leagues_data:
         return ""
-    return """
+    champions_button = '<button class="tab-button" type="button" data-tab-target="champions">Ligue des Champions</button>' if champions_data else ''
+    leagues_button = '<button class="tab-button" type="button" data-tab-target="leagues">Championnats</button>' if leagues_data else ''
+    return f"""
     <nav class="tabs-nav" aria-label="Compétitions">
       <button class="tab-button is-active" type="button" data-tab-target="worldcup">Coupe du Monde 2026</button>
-      <button class="tab-button" type="button" data-tab-target="champions">Ligue des Champions</button>
+      {champions_button}
+      {leagues_button}
     </nav>
 """
 
@@ -759,6 +770,60 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
     </section>
 """
 
+
+
+def _leagues_tab(data: dict[str, Any] | None) -> str:
+    if not data:
+        return ""
+    payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+    selected = data.get("selected_league", "ligue1")
+    options = "".join(
+        f'<option value="{escape(key, quote=True)}"{ " selected" if key == selected else ""}>{escape(league.get("name", key))}</option>'
+        for key, league in (data.get("leagues") or {}).items()
+    )
+    return f"""
+    <section class="tab-panel" id="tab-leagues" data-tab-panel="leagues">
+      <section class="hero leagues-hero">
+        <div class="hero-content">
+          <div class="kicker"><span class="ball"></span> Championnats européens</div>
+          <h1>Championnats</h1>
+          <p class="hero-copy">Suivi des 5 grands championnats : classement, calendrier, meilleurs joueurs, actualités club et prochains matchs.</p>
+          <div class="hero-badges">
+            <div class="hero-row">
+              <span class="pill">Mis à jour : <span id="leaguesUpdated">{escape(_format_datetime(data.get('generated_at', ''), with_time=True))}</span></span>
+              <span class="pill focus-pill">Championnat <select class="focus-select" id="leagueSelect" aria-label="Championnat à suivre">{options}</select></span>
+              <span class="pill focus-pill"><span id="leagueFocusIcon"></span>Focus <select class="focus-select" id="leagueClubSelect" aria-label="Club à suivre"></select></span>
+            </div>
+            <div class="hero-row focus-match-row">
+              <span class="pill next-match-pill" id="leagueFocusNext">Prochain match à déterminer</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {_errors(data.get("errors", []))}
+
+      <section class="today-strip" id="leagueUpcoming" aria-label="Matchs à venir championnat"></section>
+
+      {_section_head("Meilleurs buteurs des 5 grands championnats", "Le meilleur buteur publié pour chaque championnat.")}
+      <section class="leaders" id="big5TopScorers"></section>
+
+      {_section_head("Meilleurs buteurs", "Top 5 du championnat sélectionné.")}
+      <section class="leaders" id="leagueTopScorers"></section>
+
+      {_section_head("Meilleurs passeurs", "Top 5 du championnat sélectionné, si disponible.")}
+      <section class="leaders" id="leagueTopAssists"></section>
+
+      {_dynamic_news_section("Actualité club", "Six derniers articles liés au club choisi dans le focus.", "leaguesNewsBoard")}
+
+      {_section_head("Classement du championnat", "Clubs, matchs joués, victoires, nuls, défaites, différence et points.")}
+      <section class="grid" id="leagueStandings"></section>
+
+      {_section_head("Calendrier / résultats", "Calendrier par journée du championnat sélectionné.")}
+      <section class="calendar-days" id="leagueCalendar"></section>
+    </section>
+    <script id="leaguesData" type="application/json">{payload}</script>
+  """
 
 def _focus_options(data: dict[str, Any], selected: str) -> str:
     names = sorted(_focus_entities(data), key=lambda value: _display_focus_name(value).casefold())
@@ -1116,7 +1181,8 @@ def _calendar_match(match: dict[str, Any]) -> str:
 
 
 def _dynamic_news_section(title: str, note: str, board_id: str) -> str:
-    kind = "worldcup" if "worldcup" in board_id.casefold() else "champions"
+    board_key = board_id.casefold()
+    kind = "worldcup" if "worldcup" in board_key else "leagues" if "league" in board_key else "champions"
     action = f'<button class="alltime-badge" type="button" data-news-refresh="{escape(kind, quote=True)}">Actualiser</button>'
     return f'{_section_head(title, note, action)}<section class="news" id="{escape(board_id, quote=True)}">{_empty_block("Aucune actualité disponible pour le moment.")}</section>'
 
@@ -1361,13 +1427,21 @@ def _ko_match(match: dict[str, Any], extra_class: str = "") -> str:
     note = f'<div class="subtle">{escape(str(tie_note))}</div>' if tie_note else ""
     return (
         f'<div class="{escape(class_name)}">'
-        f'<div class="ko-line"><span>{_team_button(match.get("home_team", "À déterminer"), match.get("home_flag_url", ""))}</span><span>{home_score}</span></div>'
-        f'<div class="ko-line"><span>{_team_button(match.get("away_team", "À déterminer"), match.get("away_flag_url", ""))}</span><span>{away_score}</span></div>'
+        f'<div class="ko-line">{_bracket_team(match.get("home_team", "À déterminer"), match.get("home_flag_url", ""))}<span class="ko-score">{home_score}</span></div>'
+        f'<div class="ko-line">{_bracket_team(match.get("away_team", "À déterminer"), match.get("away_flag_url", ""))}<span class="ko-score">{away_score}</span></div>'
         f'<div class="subtle">{escape(str(date_label))}</div>'
         f'{note}'
         f'<span class="{_status_class(match)}">{escape(match.get("status", ""))}</span>'
         "</div>"
     )
+
+
+def _bracket_team(name: str, flag_url: str = "") -> str:
+    label = str(name or "À déterminer")
+    icon = _flag(flag_url)
+    if label == "À déterminer":
+        return f'<span class="bracket-team">{icon}<span class="bracket-team-name">{escape(label)}</span></span>'
+    return f'<button class="bracket-team" type="button" data-team="{escape(label, quote=True)}">{icon}<span class="bracket-team-name">{escape(label)}</span></button>'
 
 
 def _team_button(name: str, flag_url: str = "", reverse: bool = False) -> str:
@@ -1447,7 +1521,7 @@ def _football_chatbot_modal() -> str:
 """
 
 
-def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None) -> str:
+def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None, leagues_data: dict[str, Any] | None = None) -> str:
     payload = {
         "worldcup": {
             "general": _dedupe_render_news([*(worldcup_data.get("general_news") or worldcup_data.get("world_cup_news", [])), *worldcup_data.get("world_cup_news", [])]),
@@ -1534,7 +1608,7 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
     }}
 
     function renderNewsBoard(kind) {{
-      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : 'championsNewsBoard');
+      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : kind === 'leagues' ? 'leaguesNewsBoard' : 'championsNewsBoard');
       if (!board) return;
       const articles = newsSelection(kind);
       board.innerHTML = articles.length
@@ -1543,8 +1617,8 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
     }}
 
     async function refreshNews(kind) {{
-      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : 'championsNewsBoard');
-      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : 'championsFocusSelect');
+      const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : kind === 'leagues' ? 'leaguesNewsBoard' : 'championsNewsBoard');
+      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : kind === 'leagues' ? 'leagueClubSelect' : 'championsFocusSelect');
       if (board) board.innerHTML = '<div class="empty">Actualisation des actualités...</div>';
       try {{
         const params = new URLSearchParams({{competition: kind, focus: select ? select.value : ''}});
@@ -1561,6 +1635,7 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
     function refreshAllNewsBoards() {{
       renderNewsBoard('worldcup');
       renderNewsBoard('champions');
+      renderNewsBoard('leagues');
     }}
 
     document.addEventListener('click', event => {{
@@ -1686,6 +1761,141 @@ def _focus_script(matches: list[dict[str, Any]], teams_details: dict[str, Any]) 
       renderFocus(kind);
       document.dispatchEvent(new CustomEvent('akro:focus-change', {{detail: {{kind, focus: select.value}}}}));
     }});
+  </script>"""
+
+
+def _leagues_script() -> str:
+    return """<script>
+    const leaguesDataNode = document.getElementById('leaguesData');
+    const LEAGUES_DATA = leaguesDataNode ? JSON.parse(leaguesDataNode.textContent || '{}') : null;
+    const LEAGUE_KEY = 'akrodufoot:selected-league';
+    const LEAGUE_FOCUS_KEY = 'akrodufoot:league-focus:';
+
+    function leagueEscape(value) {
+      return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function leagueDate(value, withTime = true) {
+      if (!value) return 'Date non disponible';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? value : date.toLocaleString('fr-FR', withTime ? {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'} : {day:'2-digit', month:'2-digit', year:'numeric'}).replace(',', '');
+    }
+
+    function leagueFlag(url) {
+      return url ? `<img class="flag" src="${leagueEscape(url)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
+    }
+
+    function leagueTeam(name, logo = '', reverse = false) {
+      const content = reverse ? `${leagueEscape(name)}${leagueFlag(logo)}` : `${leagueFlag(logo)}${leagueEscape(name)}`;
+      return `<button class="team team-button" type="button" data-team="${leagueEscape(name)}">${content}</button>`;
+    }
+
+    function leagueMatchScore(match) {
+      return match.home_score !== '' && match.away_score !== '' ? `${match.home_score} - ${match.away_score}` : leagueDate(match.date).split(' ').pop() || 'VS';
+    }
+
+    function leagueMatchCard(match) {
+      return `<article class="today-tile">
+        <div class="today-meta">${leagueEscape(leagueDate(match.date))}</div>
+        <div class="today-teams">
+          <div class="today-team">${leagueTeam(match.home_team || 'À déterminer', match.home_flag_url || '')}</div>
+          <div class="today-score">${leagueEscape(leagueMatchScore(match))}</div>
+          <div class="today-team">${leagueTeam(match.away_team || 'À déterminer', match.away_flag_url || '', true)}</div>
+        </div>
+        <div class="subtle">${leagueEscape(match.venue || match.stadium || '')}</div>
+        <span class="${match.status === 'LIVE' ? 'status live' : match.completed ? 'status done' : 'status'}">${leagueEscape(match.status || 'À venir')}</span>
+      </article>`;
+    }
+
+    function leaguePlayerCard(player, label) {
+      const avatar = player.country_flag_url ? `<img class="avatar" src="${leagueEscape(player.country_flag_url)}" alt="">` : '<div class="avatar placeholder" aria-hidden="true"></div>';
+      const clubLogo = player.team_logo_url || player.club_logo_url || player.flag_url || '';
+      const club = player.team || '';
+      return `<article class="card player-card">
+        <div class="avatar-wrap">${avatar}</div>
+        <div><div class="team">${leagueEscape(player.name || 'Joueur')}</div>
+        <div class="subtle club-line">${clubLogo ? `<img class="club-logo" src="${leagueEscape(clubLogo)}" alt="">` : '<span class="club-logo placeholder" aria-hidden="true"></span>'}<span class="club-name">${leagueEscape(club)}</span></div>
+        ${player.league ? `<div class="subtle">${leagueEscape(player.league)}</div>` : ''}
+        <div class="player-stat">${leagueEscape(player.value || '0')} <span class="subtle">${leagueEscape(label)}</span></div></div>
+      </article>`;
+    }
+
+    function leagueGroupCard(group) {
+      const rows = (group.teams || []).map(team => `<tr>
+        <td>${leagueEscape(team.rank || '')}</td><td>${leagueTeam(team.team || '', team.flag_url || '')}</td>
+        <td>${leagueEscape(team.played || '0')}</td><td>${leagueEscape(team.wins || '0')}</td><td>${leagueEscape(team.draws || '0')}</td><td>${leagueEscape(team.losses || '0')}</td><td>${leagueEscape(team.goal_diff || '0')}</td><td><strong>${leagueEscape(team.points || '0')}</strong></td>
+      </tr>`).join('');
+      return `<article class="card"><h3>${leagueEscape(group.name || 'Classement')}</h3><div class="table-scroll"><table><thead><tr><th>#</th><th>Équipe</th><th>J</th><th>G</th><th>N</th><th>P</th><th>Diff.</th><th>Pts</th></tr></thead><tbody>${rows}</tbody></table></div></article>`;
+    }
+
+    function leagueCalendar(groups) {
+      const matches = [];
+      (groups || []).forEach(group => (group.matches || []).forEach(match => matches.push({...match, group: group.name || ''})));
+      const byDate = new Map();
+      matches.forEach(match => {
+        const key = match.date ? new Date(match.date).toLocaleDateString('fr-CA') : 'date-inconnue';
+        if (!byDate.has(key)) byDate.set(key, []);
+        byDate.get(key).push(match);
+      });
+      return Array.from(byDate.entries()).sort((a,b)=>a[0].localeCompare(b[0])).map(([date, items]) => `<article class="card calendar-day"><h3>${leagueEscape(date === 'date-inconnue' ? 'Date inconnue' : leagueDate(items[0].date, false))}</h3><div class="matches">${items.map(match => `<div class="calendar-match"><div class="date">${leagueEscape(leagueDate(match.date))}</div><div>${leagueTeam(match.home_team || 'À déterminer', match.home_flag_url || '')}</div><div class="score">${leagueEscape(match.home_score !== '' && match.away_score !== '' ? `${match.home_score} - ${match.away_score}` : '0 - 0')}</div><div class="away">${leagueTeam(match.away_team || 'À déterminer', match.away_flag_url || '', true)}</div><div class="match-meta"><div class="match-group">${leagueEscape(match.group || '')}</div><div class="subtle">${leagueEscape(match.venue || '')}</div><span class="status">${leagueEscape(match.status || 'À venir')}</span></div></div>`).join('')}</div></article>`).join('') || '<div class="empty">Calendrier indisponible.</div>';
+    }
+
+    function leagueFocusNews(kind, focus) {
+      document.dispatchEvent(new CustomEvent('akro:league-focus-change', {detail: {kind, focus}}));
+      if (typeof refreshNews === 'function') refreshNews('leagues');
+    }
+
+    function renderLeague() {
+      if (!LEAGUES_DATA) return;
+      const select = document.getElementById('leagueSelect');
+      const clubSelect = document.getElementById('leagueClubSelect');
+      const key = localStorage.getItem(LEAGUE_KEY) || (select && select.value) || LEAGUES_DATA.selected_league || 'ligue1';
+      if (select && Array.from(select.options).some(option => option.value === key)) select.value = key;
+      const league = (LEAGUES_DATA.leagues || {})[key] || {};
+      const clubs = league.clubs || [];
+      const savedClub = localStorage.getItem(LEAGUE_FOCUS_KEY + key);
+      const focus = savedClub && clubs.includes(savedClub) ? savedClub : league.focused_club || clubs[0] || '';
+      if (clubSelect) {
+        clubSelect.innerHTML = clubs.map(club => `<option value="${leagueEscape(club)}"${club === focus ? ' selected' : ''}>${leagueEscape((FOCUS_TEAMS && FOCUS_TEAMS[club] && FOCUS_TEAMS[club].name) || club)}</option>`).join('');
+      }
+      const icon = document.getElementById('leagueFocusIcon');
+      if (icon) icon.innerHTML = typeof focusTeamIcon === 'function' ? leagueFlag(focusTeamIcon(focus)) : '';
+      const matches = (league.group_matches || []).flatMap(group => group.matches || []);
+      const next = matches.filter(match => !match.completed && [match.home_team, match.away_team].includes(focus)).sort((a,b)=>String(a.date || '').localeCompare(String(b.date || '')))[0];
+      const nextNode = document.getElementById('leagueFocusNext');
+      if (nextNode) {
+        if (next) {
+          const isHome = next.home_team === focus;
+          const opponent = isHome ? next.away_team : next.home_team;
+          nextNode.innerHTML = `${leagueFlag(isHome ? next.home_flag_url : next.away_flag_url)}<span class="focus-match-text">${leagueEscape(focus)} vs ${leagueEscape(opponent)} — ${leagueEscape(leagueDate(next.date))}</span>${leagueFlag(isHome ? next.away_flag_url : next.home_flag_url)}`;
+        } else {
+          nextNode.innerHTML = `${leagueFlag(typeof focusTeamIcon === 'function' ? focusTeamIcon(focus) : '')}<span class="focus-match-text">Prochain match à déterminer</span>`;
+        }
+      }
+      const updated = document.getElementById('leaguesUpdated');
+      if (updated) updated.textContent = leagueDate(league.generated_at || LEAGUES_DATA.generated_at || '');
+      document.getElementById('leagueUpcoming').innerHTML = (league.upcoming_matches || []).slice(0,3).map(leagueMatchCard).join('') || '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong></article>';
+      document.getElementById('big5TopScorers').innerHTML = (LEAGUES_DATA.big5_top_scorers || []).map(player => leaguePlayerCard(player, 'buts')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
+      document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,5).map(player => leaguePlayerCard(player, 'buts')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
+      document.getElementById('leagueTopAssists').innerHTML = (league.top_assists || []).slice(0,5).map(player => leaguePlayerCard(player, 'passes')).join('') || '<div class="empty">Passeurs indisponibles.</div>';
+      document.getElementById('leagueStandings').innerHTML = (league.standings || []).map(leagueGroupCard).join('') || '<div class="empty">Classement indisponible.</div>';
+      document.getElementById('leagueCalendar').innerHTML = leagueCalendar(league.group_matches || []);
+      leagueFocusNews('leagues', focus);
+    }
+
+    document.addEventListener('DOMContentLoaded', renderLeague);
+    document.addEventListener('change', event => {
+      if (event.target && event.target.id === 'leagueSelect') {
+        localStorage.setItem(LEAGUE_KEY, event.target.value);
+        renderLeague();
+      }
+      if (event.target && event.target.id === 'leagueClubSelect') {
+        const leagueKey = document.getElementById('leagueSelect').value;
+        localStorage.setItem(LEAGUE_FOCUS_KEY + leagueKey, event.target.value);
+        renderLeague();
+      }
+    });
+    renderLeague();
   </script>"""
 
 
@@ -1942,7 +2152,7 @@ def _all_time_script(worldcup_scorers: list[dict[str, Any]], champions_scorers: 
   </script>"""
 
 
-def _global_prediction_matches(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None) -> list[dict[str, Any]]:
+def _global_prediction_matches(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None, leagues_data: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     matches = _prediction_matches(
         worldcup_data.get("group_matches", []),
         worldcup_data.get("knockout", []),
@@ -1958,6 +2168,8 @@ def _global_prediction_matches(worldcup_data: dict[str, Any], champions_data: di
                 "champions",
             )
         )
+    for key, league in (leagues_data or {}).get("leagues", {}).items():
+        matches.extend(_prediction_matches(league.get("group_matches", []), [], league.get("name", "Championnat"), f"league-{key}"))
     return sorted(matches, key=lambda item: item.get("date", ""))
 
 

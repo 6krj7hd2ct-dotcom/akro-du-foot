@@ -5,6 +5,7 @@ DATA_DIR = BASE_DIR / "data"
 OUTPUT_HTML = BASE_DIR / "index.html"
 CACHE_FILE = DATA_DIR / "worldcup_dashboard.json"
 CHAMPIONS_LEAGUE_CACHE_FILE = DATA_DIR / "champions_league_dashboard.json"
+LEAGUES_CACHE_FILE = DATA_DIR / "leagues_dashboard.json"
 
 ESPN_STANDINGS_URL = "https://www.espn.com/soccer/standings/_/league/fifa.world/fifa-world"
 ESPN_SCOREBOARD_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=200"
@@ -28,6 +29,46 @@ UCL_FOTMOB_STATS_URL = "https://www.fotmob.com/leagues/42/stats/Champions-League
 UEFA_UCL_ALL_TIME_SCORERS_URL = "https://www.uefa.com/uefachampionsleague/history/rankings/players/goals_scored/"
 FOTMOB_TEAM_API_URL = "https://www.fotmob.com/api/teams?id={team_id}"
 FOTMOB_TEAM_SQUAD_URL = "https://www.fotmob.com/teams/{team_id}/squad/{slug}"
+
+LEAGUE_CONFIGS = {
+    "ligue1": {
+        "name": "Ligue 1",
+        "country": "France",
+        "espn_code": "fra.1",
+        "fotmob_id": "53",
+        "fotmob_slug": "Ligue-1",
+    },
+    "laliga": {
+        "name": "Liga",
+        "country": "Espagne",
+        "espn_code": "esp.1",
+        "fotmob_id": "87",
+        "fotmob_slug": "LaLiga",
+    },
+    "bundesliga": {
+        "name": "Bundesliga",
+        "country": "Allemagne",
+        "espn_code": "ger.1",
+        "fotmob_id": "54",
+        "fotmob_slug": "Bundesliga",
+    },
+    "premierleague": {
+        "name": "Premier League",
+        "country": "Angleterre",
+        "espn_code": "eng.1",
+        "fotmob_id": "47",
+        "fotmob_slug": "Premier-League",
+    },
+    "seriea": {
+        "name": "Serie A",
+        "country": "Italie",
+        "espn_code": "ita.1",
+        "fotmob_id": "55",
+        "fotmob_slug": "Serie-A",
+    },
+}
+
+LEAGUE_SCOREBOARD_DATES = "20250801-20260630"
 
 FRANCE_NEWS_FEEDS = [
     {

@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from src.config import CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, DATA_DIR, OUTPUT_HTML
-from src.fetchers import enrich_players_with_known_country_flags, fetch_champions_league_data, fetch_dashboard_data
+from src.config import CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, DATA_DIR, LEAGUES_CACHE_FILE, OUTPUT_HTML
+from src.fetchers import enrich_players_with_known_country_flags, fetch_champions_league_data, fetch_dashboard_data, fetch_leagues_data
 from src.render import render_html
 
 
@@ -12,6 +12,7 @@ def main() -> None:
     DATA_DIR.mkdir(exist_ok=True)
     worldcup_data = _merge_refresh(_read_cache(CACHE_FILE), fetch_dashboard_data())
     champions_league_data = _merge_refresh(_read_cache(CHAMPIONS_LEAGUE_CACHE_FILE), fetch_champions_league_data())
+    leagues_data = _merge_leagues_refresh(_read_cache(LEAGUES_CACHE_FILE), fetch_leagues_data())
     for dataset in (worldcup_data, champions_league_data):
         _sanitize_dataset(dataset)
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
@@ -24,10 +25,12 @@ def main() -> None:
         json.dumps(champions_league_data, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    LEAGUES_CACHE_FILE.write_text(json.dumps(leagues_data, ensure_ascii=False, indent=2), encoding="utf-8")
     render_html(
         {
             "worldcup": worldcup_data,
             "champions_league": champions_league_data,
+            "leagues": leagues_data,
         },
         OUTPUT_HTML,
     )
@@ -142,6 +145,27 @@ def _build_players_index(dataset: dict[str, Any]) -> list[dict[str, Any]]:
                 )
 
     return sorted(players.values(), key=lambda item: item.get("name", "").casefold())
+
+
+def _merge_leagues_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[str, Any]) -> dict[str, Any]:
+    if not previous_data:
+        return refreshed_data
+    data = dict(refreshed_data)
+    leagues = dict(previous_data.get("leagues", {}))
+    for key, league in (refreshed_data.get("leagues") or {}).items():
+        previous_league = leagues.get(key, {})
+        if not league.get("standings") and previous_league.get("standings"):
+            merged = dict(previous_league)
+            for field in ("top_scorers", "top_assists", "focused_club_news", "generated_at", "sources"):
+                if league.get(field):
+                    merged[field] = league[field]
+            leagues[key] = merged
+        else:
+            leagues[key] = league
+    data["leagues"] = leagues
+    if not data.get("big5_top_scorers"):
+        data["big5_top_scorers"] = previous_data.get("big5_top_scorers", [])
+    return data
 
 
 def _read_cache(path) -> dict[str, Any] | None:

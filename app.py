@@ -24,7 +24,7 @@ except ImportError:
     request = None
     send_file = None
 
-from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, OUTPUT_HTML
+from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, OUTPUT_HTML
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
@@ -67,7 +67,10 @@ if app and _background_updates_enabled():
 
 def refresh_news_payload(competition: str, focus: str) -> dict[str, Any]:
     key = str(competition or "").casefold()
-    data = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}) if "champ" in key else _read_json(CACHE_FILE, {})
+    if "league" in key and "champ" not in key:
+        data = _read_json(LEAGUES_CACHE_FILE, {})
+    else:
+        data = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}) if "champ" in key else _read_json(CACHE_FILE, {})
     general = _dedupe_articles([*(data.get("general_news") or []), *(data.get("world_cup_news") or [])])[:3]
     pool = _dedupe_articles([*(data.get("all_news") or []), *(data.get("france_news") or []), *(data.get("world_cup_news") or [])])
     focused_direct = []

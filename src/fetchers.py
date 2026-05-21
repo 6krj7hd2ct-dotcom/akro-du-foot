@@ -22,6 +22,8 @@ from .config import (
     FOTMOB_STATS_URL,
     FOTMOB_TEAM_API_URL,
     FOTMOB_TEAM_SQUAD_URL,
+    LEAGUE_CONFIGS,
+    LEAGUE_SCOREBOARD_DATES,
     FOOTBALL_NEWS_FEEDS,
     FRANCE_NEWS_FEEDS,
     REQUEST_HEADERS,
@@ -374,6 +376,194 @@ def fetch_champions_league_data() -> dict[str, Any]:
         "errors": errors,
     }
 
+
+
+def fetch_leagues_data() -> dict[str, Any]:
+    generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    errors: list[str] = []
+    leagues: dict[str, Any] = {}
+    football_news_pool = _safe_fetch("actualités football championnats", fetch_football_news_pool, errors)
+
+    for key, config in LEAGUE_CONFIGS.items():
+        league = fetch_single_league_data(key, config, football_news_pool, errors, generated_at)
+        leagues[key] = league
+
+    big5 = []
+    for key, league in leagues.items():
+        scorer = (league.get("top_scorers") or [])[:1]
+        if scorer:
+            big5.append({**scorer[0], "league_key": key, "league": league.get("name", "")})
+
+    return {
+        "generated_at": generated_at,
+        "competition": "Championnats européens",
+        "selected_league": "ligue1",
+        "leagues": leagues,
+        "big5_top_scorers": big5[:5],
+        "all_news": football_news_pool[:80],
+        "news_sources": _news_source_names(FOOTBALL_NEWS_FEEDS),
+        "sources": [
+            {"name": f"ESPN - {config['name']}", "url": _league_standings_url(config)}
+            for config in LEAGUE_CONFIGS.values()
+        ] + [
+            {"name": f"Actu football - {feed['source']}", "url": feed["url"]} for feed in FOOTBALL_NEWS_FEEDS
+        ],
+        "errors": errors,
+    }
+
+
+def fetch_single_league_data(key: str, config: dict[str, Any], football_news_pool: list[dict[str, Any]], errors: list[str], generated_at: str) -> dict[str, Any]:
+    name = config["name"]
+    standings_url = _league_standings_url(config)
+    scoreboard_url = _league_scoreboard_url(config)
+    teams_url = _league_teams_url(config)
+    scorers_url = _league_stats_url(config)
+    assists_url = _league_assists_url(config)
+    fotmob_url = _league_fotmob_stats_url(config)
+
+    standings = _safe_fetch(f"classement {name} ESPN", lambda: fetch_espn_standings_from_url(standings_url), errors)
+    scoreboard = _safe_fetch(f"calendrier {name} ESPN", lambda: fetch_espn_scoreboard_from_url(scoreboard_url), errors)
+    teams_index = _safe_fetch(f"clubs {name} ESPN", lambda: fetch_espn_teams_index_from_url(teams_url), errors)
+    matches = build_league_matches(scoreboard)
+    today_matches = build_today_matches_from_events(scoreboard)
+    teams_details = build_teams_details(standings, matches, [], today_matches, teams_index)
+    if not teams_details:
+        teams_details = _default_league_teams(key)
+    scorers = _safe_fetch(f"buteurs {name} ESPN", lambda: fetch_espn_player_table(scorers_url, 0), errors)
+    assists = _safe_fetch(f"passeurs {name} ESPN", lambda: fetch_espn_player_table(assists_url, 1), errors)
+    if not scorers:
+        scorers = _safe_fetch(f"buteurs {name} FotMob", lambda: fetch_fotmob_player_stats_from_url(fotmob_url, "goals"), errors)
+    else:
+        scorers = _safe_fetch(f"photos buteurs {name} FotMob", lambda: enrich_players_with_fotmob_stats(scorers, fotmob_url, "goals"), errors) or scorers
+    if not assists:
+        assists = _safe_fetch(f"passeurs {name} FotMob", lambda: fetch_fotmob_player_stats_from_url(fotmob_url, "assists"), errors)
+    else:
+        assists = _safe_fetch(f"photos passeurs {name} FotMob", lambda: enrich_players_with_fotmob_stats(assists, fotmob_url, "assists"), errors) or assists
+    focused_club_news = build_focused_news(sorted(teams_details.keys()), football_news_pool, limit=12)
+    clubs = sorted(teams_details.keys(), key=str.casefold)
+    default_focus = _default_league_focus(key, clubs)
+    return {
+        "key": key,
+        "name": name,
+        "country": config.get("country", ""),
+        "generated_at": generated_at,
+        "standings": standings,
+        "group_matches": matches,
+        "fixtures": matches,
+        "today_matches": today_matches,
+        "upcoming_matches": _upcoming_matches(matches, 3),
+        "top_scorers": enrich_players_with_known_country_flags(scorers),
+        "top_assists": enrich_players_with_known_country_flags(assists),
+        "focused_club": default_focus,
+        "focused_club_next_match": _next_match_from_groups(matches, default_focus),
+        "focused_club_news": focused_club_news,
+        "clubs": clubs,
+        "teams_details": teams_details,
+        "sources": [
+            {"name": f"ESPN - classement {name}", "url": standings_url},
+            {"name": f"ESPN - matchs {name}", "url": scoreboard_url},
+            {"name": f"ESPN - statistiques {name}", "url": scorers_url},
+            {"name": f"FotMob - {name}", "url": fotmob_url},
+        ],
+    }
+
+
+def build_league_matches(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    matches = [_parse_event(event, placeholders=True) for event in events]
+    matches.sort(key=lambda match: match.get("date", ""))
+    return [{"name": "Saison", "matches": matches}]
+
+
+def _league_standings_url(config: dict[str, Any]) -> str:
+    return f"https://www.espn.com/soccer/standings/_/league/{config['espn_code']}"
+
+
+def _league_scoreboard_url(config: dict[str, Any]) -> str:
+    return f"https://site.api.espn.com/apis/site/v2/sports/soccer/{config['espn_code']}/scoreboard?dates={LEAGUE_SCOREBOARD_DATES}&limit=300"
+
+
+def _league_teams_url(config: dict[str, Any]) -> str:
+    return f"https://site.api.espn.com/apis/site/v2/sports/soccer/{config['espn_code']}/teams"
+
+
+def _league_stats_url(config: dict[str, Any]) -> str:
+    return f"https://www.espn.com/soccer/stats/_/league/{config['espn_code']}"
+
+
+def _league_assists_url(config: dict[str, Any]) -> str:
+    return f"https://www.espn.com/soccer/stats/_/league/{config['espn_code']}/view/assists"
+
+
+def _league_fotmob_stats_url(config: dict[str, Any]) -> str:
+    return f"https://www.fotmob.com/leagues/{config['fotmob_id']}/stats/{config['fotmob_slug']}/players"
+
+
+def _default_league_teams(key: str) -> dict[str, dict[str, Any]]:
+    defaults = {
+        "ligue1": [("Paris Saint-Germain", "160"), ("Marseille", "176"), ("AS Monaco", "174"), ("Lyon", "167")],
+        "laliga": [("Real Madrid", "86"), ("Barcelona", "83"), ("Atlético Madrid", "1068"), ("Villarreal", "102")],
+        "bundesliga": [("Bayern Munich", "132"), ("Borussia Dortmund", "124"), ("Bayer Leverkusen", "131")],
+        "premierleague": [("Manchester City", "382"), ("Arsenal", "359"), ("Liverpool", "364"), ("Chelsea", "363")],
+        "seriea": [("Internazionale", "110"), ("Juventus", "111"), ("Napoli", "114"), ("AC Milan", "103")],
+    }
+    teams: dict[str, dict[str, Any]] = {}
+    for name, espn_id in defaults.get(key, []):
+        teams[name] = {
+            "key": name,
+            "name": name,
+            "original_name": name,
+            "espn_id": espn_id,
+            "flag_url": f"https://a.espncdn.com/i/teamlogos/soccer/500/{espn_id}.png",
+            "country_code": "",
+            "coach": "",
+            "formation": "",
+            "starters": [],
+            "substitutes": [],
+            "squad": [],
+            "sources": ["Référentiel clubs"],
+        }
+    return teams
+
+
+def _default_league_focus(key: str, clubs: list[str]) -> str:
+    preferred = {
+        "ligue1": ["Paris Saint-Germain", "PSG", "Marseille"],
+        "laliga": ["Real Madrid", "Barcelona"],
+        "bundesliga": ["Bayern Munich", "Bayern München"],
+        "premierleague": ["Manchester City", "Arsenal"],
+        "seriea": ["Internazionale", "Juventus", "AC Milan"],
+    }.get(key, [])
+    normalized = {_normalize_name(club): club for club in clubs}
+    for club in preferred:
+        found = normalized.get(_normalize_name(club))
+        if found:
+            return found
+    return clubs[0] if clubs else ""
+
+
+def _upcoming_matches(groups: list[dict[str, Any]], limit: int = 3) -> list[dict[str, Any]]:
+    now = datetime.now(timezone.utc)
+    matches = []
+    for group in groups:
+        for match in group.get("matches", []):
+            if match.get("completed"):
+                continue
+            try:
+                date = datetime.fromisoformat(str(match.get("date", "")).replace("Z", "+00:00"))
+            except ValueError:
+                continue
+            if date >= now:
+                matches.append(match)
+    return sorted(matches, key=lambda item: item.get("date", ""))[:limit]
+
+
+def _next_match_from_groups(groups: list[dict[str, Any]], team: str) -> dict[str, Any] | None:
+    if not team:
+        return None
+    for match in _upcoming_matches(groups, 200):
+        if team in {match.get("home_team"), match.get("away_team")}:
+            return match
+    return None
 
 def fetch_espn_standings() -> list[dict[str, Any]]:
     return fetch_espn_standings_from_url(ESPN_STANDINGS_URL)
