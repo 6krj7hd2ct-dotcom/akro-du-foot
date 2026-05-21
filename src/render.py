@@ -205,7 +205,7 @@ def _page(data: dict[str, Any]) -> str:
     .hero-copy {{ color: #c5d3e4; font-size: clamp(16px, 2vw, 20px); line-height: 1.5; margin: 18px 0 0; max-width: 650px; }}
     .hero-badges {{ display: grid; gap: 9px; margin-top: 24px; }}
     .hero-row {{ display: flex; flex-wrap: wrap; gap: 10px; }}
-    .pill {{ gap: 8px; padding: 9px 12px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); color: #e9f4ff; font-size: 13px; }}
+    .pill {{ gap: 8px; padding: 9px 12px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); color: #e9f4ff; font-size: 13px; flex-wrap: wrap; min-width: 0; max-width: 100%; line-height: 1.25; overflow-wrap: anywhere; }}
     .pill .flag {{ width: 18px; height: 18px; margin-right: 2px; }}
     .france-pill::before {{ content: ""; width: 26px; height: 14px; border-radius: 2px; background: linear-gradient(90deg, var(--blue) 0 33%, var(--white) 33% 66%, var(--red) 66%); }}
     .section-head {{ display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 34px 0 14px; }}
@@ -233,7 +233,7 @@ def _page(data: dict[str, Any]) -> str:
     .flag {{ width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }}
     .flag.placeholder {{ display: inline-grid; place-items: center; color: #9fb0c2; font-size: 11px; }}
     .team {{ font-weight: 850; }}
-    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
+    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.18; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
     .team-button:hover, .team-button:focus-visible {{ color: #fff; background: rgba(245,201,107,0.14); outline: 1px solid rgba(245,201,107,0.34); }}
     .away .team-button {{ justify-content: flex-end; }}
     .table-scroll {{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }}
@@ -256,9 +256,10 @@ def _page(data: dict[str, Any]) -> str:
     .player-country-flag {{ position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(7,17,31,0.92); background: rgba(255,255,255,0.14); }}
     .player-stat {{ color: var(--gold); font-size: 28px; font-weight: 950; line-height: 1; margin-top: 8px; }}
     .rank-note {{ color: #b7c6d7; font-size: 12px; margin-top: 5px; }}
-    .today-teams {{ display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }}
-    .today-team {{ text-align: center; font-weight: 900; }}
-    .today-score {{ font-size: 26px; font-weight: 950; color: var(--gold); }}
+    .today-teams {{ display: grid; grid-template-columns: minmax(0, 1.3fr) clamp(70px, 10vw, 96px) minmax(0, 1.3fr); align-items: center; gap: 14px; }}
+    .today-team {{ min-width: 0; text-align: center; font-weight: 900; font-size: clamp(13px, 1.15vw, 15px); line-height: 1.18; }}
+    .today-team .team-button {{ justify-content: center; }}
+    .today-score {{ min-width: 70px; text-align: center; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.08; font-weight: 950; color: var(--gold); }}
     .day-card {{ padding: 0; }}
     .day-card h3 {{ padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffe1a0; }}
     .day-list {{ padding: 6px 14px 14px; }}
@@ -451,15 +452,17 @@ def _page(data: dict[str, Any]) -> str:
     .follow-list {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }}
     .follow-card {{ padding: 13px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: radial-gradient(circle at center, rgba(245,201,107,0.10), transparent 18rem), rgba(255,255,255,0.055); }}
     .follow-meta {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 850; text-transform: uppercase; }}
-    .follow-teams {{ display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 10px; margin-top: 12px; }}
-    .follow-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; }}
+    .follow-teams {{ display: grid; grid-template-columns: minmax(0, 1.25fr) clamp(62px, 9vw, 84px) minmax(0, 1.25fr); align-items: center; gap: 10px; margin-top: 12px; }}
+    .follow-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; line-height: 1.18; overflow-wrap: anywhere; word-break: normal; }}
     .follow-team.away {{ justify-content: flex-end; text-align: right; }}
-    .follow-team span:last-child {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
-    .follow-center {{ min-width: 58px; text-align: center; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); border-radius: 10px; padding: 7px 9px; font-weight: 950; }}
+    .follow-team span:last-child {{ white-space: normal; overflow-wrap: anywhere; word-break: normal; }}
+    .follow-center {{ min-width: 62px; text-align: center; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); border-radius: 10px; padding: 7px 9px; font-weight: 950; }}
     .follow-status {{ display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; padding: 4px 8px; border-radius: 999px; color: #b9d7ff; background: rgba(31,111,235,0.18); font-size: 12px; font-weight: 900; }}
     .follow-status.done {{ color: #9ff0d5; background: rgba(50,211,162,0.18); }}
     .follow-status.live {{ color: #ffb8bf; background: rgba(239,51,64,0.22); box-shadow: 0 0 0 1px rgba(239,51,64,0.45); }}
     .community-form {{ display: grid; gap: 10px; margin-top: 12px; }}
+    .pseudo-row {{ display: grid; gap: 6px; }}
+    .pseudo-row label {{ color: var(--muted); font-size: 12px; font-weight: 900; text-transform: uppercase; }}
     .field-row {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }}
     input, textarea, select {{ width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }}
     textarea {{ min-height: 82px; resize: vertical; }}
@@ -477,7 +480,7 @@ def _page(data: dict[str, Any]) -> str:
     .prediction-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; }}
     .prediction-team.home {{ justify-content: flex-end; text-align: right; }}
     .prediction-team.away {{ justify-content: flex-start; text-align: left; }}
-    .prediction-team-name {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .prediction-team-name {{ min-width: 0; white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.18; }}
     .prediction-scoreboard input {{ width: 64px; text-align: center; font-size: 22px; font-weight: 950; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
     .prediction-separator {{ color: var(--gold); font-size: 26px; font-weight: 950; }}
     .community-status {{ margin-top: 10px; color: #ffe1a0; font-size: 13px; min-height: 18px; }}
@@ -507,7 +510,7 @@ def _page(data: dict[str, Any]) -> str:
       .alltime-row {{ grid-template-columns: 38px 46px minmax(0, 1fr); }}
       .alltime-value {{ grid-column: 3; font-size: 20px; text-align: left; }}
       .community-grid, .community-predictions, .field-row, .follow-list {{ grid-template-columns: 1fr; }}
-      .prediction-scoreboard {{ grid-template-columns: 1fr auto auto auto 1fr; gap: 8px; }}
+      .prediction-scoreboard {{ grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); gap: 8px; }}
     }}
     @media (max-width: 480px) {{
       h1 {{ font-size: 40px; }}
@@ -526,8 +529,9 @@ def _page(data: dict[str, Any]) -> str:
       .team-modal-head {{ grid-template-columns: auto 1fr auto; padding: 14px; }}
       .team-modal-flag {{ width: 46px; height: 46px; }}
       .alltime-row {{ gap: 9px; padding: 10px; }}
+      .today-teams, .follow-teams {{ grid-template-columns: minmax(0, 1fr); justify-items: center; }}
       .prediction-scoreboard {{ grid-template-columns: 1fr; justify-items: center; }}
-      .prediction-team.home, .prediction-team.away {{ justify-content: center; text-align: center; }}
+      .prediction-team.home, .prediction-team.away, .follow-team, .follow-team.away {{ justify-content: center; text-align: center; }}
     }}
   </style>
 </head>
@@ -860,6 +864,10 @@ def _community_section() -> str:
         <div class="community-side">
           <h3 id="predictions">Pronostics du jour</h3>
           <form class="community-form" id="predictionForm">
+            <div class="pseudo-row">
+              <label for="predictionPseudo">Pseudo</label>
+              <input id="predictionPseudo" type="text" maxlength="32" placeholder="Votre pseudo" autocomplete="nickname">
+            </div>
             <div class="field-row">
               <select id="competitionFilter">
                 <option value="today" selected>Matchs du jour</option>
@@ -877,7 +885,7 @@ def _community_section() -> str:
               <div class="prediction-team away"><span id="predictionAwayFlag" class="flag placeholder" aria-hidden="true"></span><span class="prediction-team-name" id="predictionAwayName">Équipe B</span></div>
             </div>
             <div class="match-context" id="predictionContext"></div>
-            <button class="action-button" type="submit">Valider le pronostic</button>
+            <button class="action-button" type="submit" disabled>Valider le pronostic</button>
           </form>
           <div class="community-status" id="predictionStatus"></div>
         </div>
@@ -1514,10 +1522,18 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const predictionAwayFlag = document.getElementById('predictionAwayFlag');
     const predictionContext = document.getElementById('predictionContext');
     const predictionStatus = document.getElementById('predictionStatus');
+    const predictionPseudo = document.getElementById('predictionPseudo');
+    const predictionSubmit = predictionForm.querySelector('button[type="submit"]');
     let communityMatches = DASHBOARD_MATCHES;
 
     function pseudoValue() {{
-      return localStorage.getItem('akrodufoot:pseudo') || 'Participant';
+      return (predictionPseudo.value || '').trim();
+    }}
+
+    function savePseudo() {{
+      const pseudo = pseudoValue();
+      if (pseudo) localStorage.setItem('akrodufoot:pseudo', pseudo);
+      else localStorage.removeItem('akrodufoot:pseudo');
     }}
 
     function shortDate(value) {{
@@ -1622,11 +1638,27 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       predictionMatch.disabled = !hasMatches;
       document.getElementById('homePrediction').disabled = !matchAvailable;
       document.getElementById('awayPrediction').disabled = !matchAvailable;
-      predictionForm.querySelector('button[type="submit"]').disabled = !matchAvailable;
-      predictionStatus.textContent = !hasMatches
-        ? (selectedCompetition === 'today' ? 'Aucun match du jour disponible pour les pronostics' : 'Aucun match disponible avec ce filtre')
-        : matchAvailable ? '' : 'Tous les matchs de ce filtre sont terminés';
+      updatePredictionButton(matchAvailable, hasMatches);
       updatePredictionTeams();
+    }}
+
+    function updatePredictionButton(matchAvailable = null, hasMatches = null) {{
+      const match = selectedMatch();
+      const available = matchAvailable === null ? Boolean(match && isMatchAvailable(match)) : matchAvailable;
+      const hasAnyMatch = hasMatches === null ? Boolean(match) : hasMatches;
+      const hasPseudo = Boolean(pseudoValue());
+      predictionSubmit.disabled = !available || !hasPseudo;
+      if (!hasAnyMatch) {{
+        predictionStatus.textContent = competitionFilter.value === 'today'
+          ? 'Aucun match du jour disponible pour les pronostics'
+          : 'Aucun match disponible avec ce filtre';
+      }} else if (!available) {{
+        predictionStatus.textContent = 'Tous les matchs de ce filtre sont terminés';
+      }} else if (!hasPseudo) {{
+        predictionStatus.textContent = 'Choisis un pseudo pour participer au classement';
+      }} else {{
+        predictionStatus.textContent = '';
+      }}
     }}
 
     function selectedMatch() {{
@@ -1647,6 +1679,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         predictionContext.textContent = competitionFilter.value === 'today'
           ? 'Aucun match du jour disponible pour les pronostics'
           : 'Aucun match disponible avec ce filtre';
+        updatePredictionButton(false, false);
         return;
       }}
       predictionHomeName.textContent = match.home_team;
@@ -1654,6 +1687,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       predictionHomeFlag.innerHTML = flagMarkup(match.home_flag_url);
       predictionAwayFlag.innerHTML = flagMarkup(match.away_flag_url);
       predictionContext.textContent = `${{match.competition || 'Compétition'}} · ${{shortDate(match.date)}} · ${{match.phase || ''}}`;
+      updatePredictionButton();
     }}
 
     function renderLeaderboard(rows) {{
@@ -1676,7 +1710,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         renderMatchOptions(data.matches);
         renderFollowMatches(data.matches);
         renderLeaderboard(data.leaderboard);
-        predictionStatus.textContent = '';
+        updatePredictionButton();
       }} catch (error) {{
         predictionStatus.textContent = 'Serveur communautaire indisponible.';
       }}
@@ -1696,8 +1730,15 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     shareButton.addEventListener('click', sharePage);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
+    predictionPseudo.addEventListener('input', () => {{ savePseudo(); updatePredictionButton(); }});
     predictionForm.addEventListener('submit', async (event) => {{
       event.preventDefault();
+      if (!pseudoValue()) {{
+        predictionStatus.textContent = 'Choisis un pseudo pour participer au classement';
+        updatePredictionButton();
+        return;
+      }}
+      savePseudo();
       if (!serverMode) return loadCommunity();
       try {{
         await postJson('/api/predictions', {{
@@ -1711,6 +1752,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         predictionStatus.textContent = error.message;
       }}
     }});
+    predictionPseudo.value = localStorage.getItem('akrodufoot:pseudo') || '';
     renderMatchOptions(DASHBOARD_MATCHES);
     loadCommunity();
   </script>"""

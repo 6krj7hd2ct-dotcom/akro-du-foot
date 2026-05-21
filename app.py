@@ -131,12 +131,15 @@ def save_prediction(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     match_id = _clean(payload.get("match_id", ""), 180)
     home_score = _to_score(payload.get("home_score"))
     away_score = _to_score(payload.get("away_score"))
+    if not pseudo:
+        return {"error": "Choisis un pseudo pour participer au classement"}, 400
+
     worldcup_dashboard = _read_json(CACHE_FILE, {})
     champions_dashboard = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
     matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard)
     match = matches.get(match_id)
 
-    if not pseudo or not match or home_score is None or away_score is None:
+    if not match or home_score is None or away_score is None:
         return {"error": "Pronostic invalide."}, 400
     if _is_locked(match):
         return {"error": "Pronostic verrouillé : le match a commencé."}, 423
