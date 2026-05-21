@@ -259,6 +259,7 @@ def _page(data: dict[str, Any]) -> str:
     .section-note {{ color: var(--muted); font-size: 14px; max-width: 540px; text-align: right; }}
     .alltime-badge {{ appearance: none; border: 1px solid rgba(245,201,107,0.34); border-radius: 999px; background: rgba(245,201,107,0.10); color: #ffe1a0; padding: 7px 10px; font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; }}
     .alltime-badge:hover, .alltime-badge:focus-visible {{ background: rgba(245,201,107,0.18); outline: 1px solid rgba(245,201,107,0.45); }}
+    .history-badge {{ align-self: center; }}
     .action-button {{ appearance: none; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; background: rgba(255,255,255,0.10); color: var(--ink); padding: 9px 12px; font: inherit; font-size: 13px; font-weight: 900; cursor: pointer; text-decoration: none; }}
     .action-button:hover, .action-button:focus-visible {{ background: rgba(255,255,255,0.17); outline: 1px solid rgba(255,255,255,0.28); }}
     .today-strip, .leaders, .news, .grid, .matches, .calendar-days {{ display: grid; gap: 16px; }}
@@ -668,6 +669,7 @@ def _page(data: dict[str, Any]) -> str:
         <div class="hero-badges">
           <div class="hero-row">
             <span class="pill">Mis à jour : {escape(generated)}</span>
+            <button class="alltime-badge history-badge" type="button" data-alltime="worldcup-history">Palmarès</button>
             <span class="pill france-pill focus-pill"><span id="worldcupFocusIcon">{_flag(_focus_icon(data, "France"))}</span>Focus <select class="focus-select" id="worldcupFocusSelect" aria-label="Pays à suivre Coupe du Monde">{_focus_options(data, "France")}</select></span>
           </div>
           <div class="hero-row focus-match-row">
@@ -813,6 +815,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
           <div class="hero-badges">
             <div class="hero-row">
               <span class="pill">Mis à jour : {escape(generated)}</span>
+              <button class="alltime-badge history-badge" type="button" data-alltime="champions-history">Palmarès</button>
               <span class="pill psg-pill focus-pill"><span id="championsFocusIcon">{_logo_or_placeholder(_focus_icon(data, "Paris Saint-Germain") or _psg_logo(data))}</span>Focus <select class="focus-select" id="championsFocusSelect" aria-label="Club à suivre Ligue des Champions">{_focus_options(data, "Paris Saint-Germain")}</select></span>
             </div>
             <div class="hero-row focus-match-row">
@@ -2241,6 +2244,36 @@ def _all_time_script(worldcup_scorers: list[dict[str, Any]], champions_scorers: 
         title: 'Top 10 buteurs all-time Ligue des Champions',
         empty: 'Classement all-time des buteurs Ligue des Champions indisponible',
         label: 'buts'
+      }},
+      'worldcup-history': {{
+        players: [
+          {{rank: 1, name: 'Brésil', country: 'Brésil', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png', value: '5', years: '1958, 1962, 1970, 1994, 2002'}},
+          {{rank: 2, name: 'Allemagne', country: 'Allemagne', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png', value: '4', years: '1954, 1974, 1990, 2014'}},
+          {{rank: 3, name: 'Italie', country: 'Italie', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png', value: '4', years: '1934, 1938, 1982, 2006'}},
+          {{rank: 4, name: 'Argentine', country: 'Argentine', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', value: '3', years: '1978, 1986, 2022'}},
+          {{rank: 5, name: 'France', country: 'France', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png', value: '2', years: '1998, 2018'}},
+          {{rank: 6, name: 'Uruguay', country: 'Uruguay', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png', value: '2', years: '1930, 1950'}},
+          {{rank: 7, name: 'Angleterre', country: 'Angleterre', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png', value: '1', years: '1966'}},
+          {{rank: 8, name: 'Espagne', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png', value: '1', years: '2010'}}
+        ],
+        title: 'Palmarès Coupe du Monde',
+        empty: 'Palmarès Coupe du Monde indisponible',
+        label: 'titres'
+      }},
+      'champions-history': {{
+        players: [
+          {{rank: 1, name: 'Real Madrid', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png', value: '15', years: '1956, 1957, 1958, 1959, 1960, 1966, 1998, 2000, 2002, 2014, 2016, 2017, 2018, 2022, 2024'}},
+          {{rank: 2, name: 'AC Milan', country: 'Italie', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png', value: '7', years: '1963, 1969, 1989, 1990, 1994, 2003, 2007'}},
+          {{rank: 3, name: 'Bayern Munich', country: 'Allemagne', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png', value: '6', years: '1974, 1975, 1976, 2001, 2013, 2020'}},
+          {{rank: 4, name: 'Liverpool', country: 'Angleterre', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png', value: '6', years: '1977, 1978, 1981, 1984, 2005, 2019'}},
+          {{rank: 5, name: 'Barcelona', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png', value: '5', years: '1992, 2006, 2009, 2011, 2015'}},
+          {{rank: 6, name: 'Ajax', country: 'Pays-Bas', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/139.png', value: '4', years: '1971, 1972, 1973, 1995'}},
+          {{rank: 7, name: 'Manchester United', country: 'Angleterre', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/360.png', value: '3', years: '1968, 1999, 2008'}},
+          {{rank: 8, name: 'Internazionale', country: 'Italie', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png', value: '3', years: '1964, 1965, 2010'}}
+        ],
+        title: 'Palmarès Ligue des Champions',
+        empty: 'Palmarès Ligue des Champions indisponible',
+        label: 'titres'
       }}
     }};
     const allTimeModal = document.getElementById('allTimeModal');
@@ -2256,10 +2289,11 @@ def _all_time_script(worldcup_scorers: list[dict[str, Any]], champions_scorers: 
 
     function allTimeRow(player, label) {{
       const country = player.country || player.team || 'Pays non disponible';
+      const years = player.years ? `<div class="subtle">${{escapeHtml(player.years)}}</div>` : '';
       return `<article class="alltime-row">
         <div class="alltime-rank">${{escapeHtml(player.rank || '')}}</div>
         ${{allTimeAvatar(player)}}
-        <div><strong>${{escapeHtml(player.name || '')}}</strong><div class="subtle">${{escapeHtml(country)}}</div></div>
+        <div><strong>${{escapeHtml(player.name || '')}}</strong><div class="subtle">${{escapeHtml(country)}}</div>${{years}}</div>
         <div class="alltime-value">${{escapeHtml(player.value || '')}} <span class="subtle">${{label}}</span></div>
       </article>`;
     }}
