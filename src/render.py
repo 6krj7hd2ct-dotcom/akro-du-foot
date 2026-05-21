@@ -66,6 +66,7 @@ def _page(data: dict[str, Any]) -> str:
       --shadow: 0 24px 70px rgba(0,0,0,0.36);
     }}
     * {{ box-sizing: border-box; }}
+    html, body {{ max-width: 100%; overflow-x: hidden; }}
     body {{
       margin: 0;
       min-height: 100vh;
@@ -211,7 +212,7 @@ def _page(data: dict[str, Any]) -> str:
       text-transform: uppercase;
       letter-spacing: .04em;
     }}
-    .tab-panel {{ display: block; }}
+    .tab-panel {{ display: block; min-width: 0; max-width: 100%; }}
     .tab-panel:not(.is-active) {{ display: none; }}
     .hero::before {{
       content: "";
@@ -285,7 +286,7 @@ def _page(data: dict[str, Any]) -> str:
     .flag {{ width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }}
     .flag.placeholder {{ display: inline-grid; place-items: center; color: #9fb0c2; font-size: 11px; }}
     .team {{ font-weight: 850; }}
-    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: normal; word-break: normal; line-height: 1.18; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
+    .team-button {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.18; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }}
     .team-button:hover, .team-button:focus-visible {{ color: #fff; background: rgba(245,201,107,0.14); outline: 1px solid rgba(245,201,107,0.34); }}
     .away .team-button {{ justify-content: flex-end; }}
     .table-scroll {{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }}
@@ -319,7 +320,7 @@ def _page(data: dict[str, Any]) -> str:
     .club-logo {{ width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; padding: 2px; background: rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.18); }}
     .club-logo.placeholder {{ display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }}
     .club-logo.placeholder::before {{ content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }}
-    .club-name {{ white-space: normal; overflow-wrap: normal; word-break: normal; line-height: 1.18; }}
+    .club-name {{ white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.18; }}
     .player-country-flag {{ position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(7,17,31,0.92); background: rgba(255,255,255,0.14); }}
     .player-stat {{ color: var(--gold); font-size: 28px; font-weight: 950; line-height: 1; margin-top: 8px; }}
     .rank-note {{ color: #b7c6d7; font-size: 12px; margin-top: 5px; }}
@@ -456,7 +457,7 @@ def _page(data: dict[str, Any]) -> str:
     .ko-line {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; font-weight: 850; margin: 6px 0; font-size: clamp(10px, 0.92vw, 13px); }}
     .bracket-team {{ appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 900; display: grid; justify-items: center; gap: 4px; min-width: 0; width: 100%; padding: 2px; cursor: pointer; text-align: center; }}
     .bracket-team .flag {{ margin: 0; width: 22px; height: 22px; }}
-    .bracket-team-name {{ display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; overflow-wrap: normal; word-break: normal; line-height: 1.12; }}
+    .bracket-team-name {{ display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.12; }}
     .ko-score {{ font-weight: 950; color: #07111f; min-width: 22px; text-align: center; }}
     .ko-match .subtle {{ color: #526274; }}
     .ko-match .status {{ color: #12457a; background: rgba(31,111,235,0.13); }}
@@ -518,7 +519,7 @@ def _page(data: dict[str, Any]) -> str:
     .roster-section h3 {{ padding: 0; margin-bottom: 10px; color: #ffe1a0; }}
     .player-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }}
     .mini-player {{ display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 10px; align-items: center; padding: 10px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); min-width: 0; }}
-    .mini-player strong {{ display: block; overflow-wrap: anywhere; line-height: 1.15; }}
+    .mini-player strong {{ display: block; overflow-wrap: break-word; word-break: normal; line-height: 1.15; }}
     .mini-avatar {{ width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }}
     .mini-avatar.placeholder {{ display: grid; place-items: center; color: #07111f; font-weight: 950; }}
     .mini-player-meta {{ display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 750; }}
@@ -627,6 +628,8 @@ def _page(data: dict[str, Any]) -> str:
     }}
     @media (max-width: 480px) {{
       h1 {{ font-size: 40px; }}
+      .next-match-pill {{ width: 100%; justify-content: center; gap: 5px; padding-inline: 8px; font-size: clamp(8px, 2.65vw, 11px); }}
+      .next-match-pill .flag, .pill .flag {{ width: 15px; height: 15px; }}
       .app-title {{ font-size: clamp(34px, 12vw, 44px); }}
       .app-copy {{ font-size: 14px; }}
       .global-controls {{ width: 100%; }}
