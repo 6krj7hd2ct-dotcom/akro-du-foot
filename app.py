@@ -174,54 +174,106 @@ def coach_prediction_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
     matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard)
     match = matches.get(match_id)
     if not match:
-        return _insufficient_prediction(), 200
+        return _unavailable_prediction("Match introuvable dans les données du site."), 200
 
     home = str(match.get("home_team") or "")
     away = str(match.get("away_team") or "")
     if not home or not away or "déterminer" in home.casefold() or "déterminer" in away.casefold():
-        return _insufficient_prediction(), 200
+        return _unavailable_prediction("Les équipes ne sont pas encore connues pour ce match."), 200
     if match.get("completed"):
         return {
             "predicted_winner": "Match terminé",
+            "predicted_score": _real_score_label(match),
             "confidence": "",
-            "reason": "Ce match est déjà terminé : Coach Akro n'affiche pas de prédiction après coup.",
+            "reason": "Ce match est déjà terminé : Coach Akro lit le score final plutôt qu'une prédiction après coup.",
             "disclaimer": COACH_DISCLAIMER,
         }, 200
 
     data_pool = [worldcup_dashboard, champions_dashboard]
-    home_strength, home_reasons = _team_strength(home, data_pool)
-    away_strength, away_reasons = _team_strength(away, data_pool)
-    if home_strength == 0 and away_strength == 0:
-        return _insufficient_prediction(), 200
-
+    home_data_strength, home_reasons = _team_strength(home, data_pool)
+    away_data_strength, away_reasons = _team_strength(away, data_pool)
+    home_strength = _baseline_team_strength(home) + home_data_strength + 1.5
+    away_strength = _baseline_team_strength(away) + away_data_strength
     diff = home_strength - away_strength
-    if abs(diff) < 1.25:
-        return {
-            "predicted_winner": "Match équilibré",
-            "confidence": 52,
-            "reason": "Les données disponibles ne dégagent pas d'avantage net entre les deux équipes.",
-            "disclaimer": COACH_DISCLAIMER,
-        }, 200
 
-    winner = home if diff > 0 else away
-    reasons = home_reasons if diff > 0 else away_reasons
-    confidence = min(68, max(55, int(54 + abs(diff) * 4)))
-    reason = reasons[0] if reasons else "L'estimation s'appuie sur les données disponibles dans le dashboard."
+    if abs(diff) < 2.5:
+        predicted_winner = "Match équilibré"
+        confidence = 54
+        predicted_score = "1 - 1"
+        reason = _balanced_reason(home, away)
+    else:
+        winner = home if diff > 0 else away
+        predicted_winner = f"{winner} favori"
+        confidence = min(73, max(56, int(54 + abs(diff) * 0.85)))
+        predicted_score = _probable_score(diff)
+        if diff < 0:
+            predicted_score = " - ".join(reversed(predicted_score.split(" - ")))
+        reasons = home_reasons if diff > 0 else away_reasons
+        reason = reasons[0] if reasons else _reputation_reason(winner, home, away, match.get("competition", ""))
+
     return {
-        "predicted_winner": f"{winner} favori",
+        "predicted_winner": predicted_winner,
+        "predicted_score": predicted_score,
         "confidence": confidence,
         "reason": reason,
         "disclaimer": COACH_DISCLAIMER,
     }, 200
 
 
-def _insufficient_prediction() -> dict[str, Any]:
+def _unavailable_prediction(reason: str) -> dict[str, Any]:
     return {
-        "predicted_winner": "Données insuffisantes",
+        "predicted_winner": "Analyse impossible",
+        "predicted_score": "",
         "confidence": "",
-        "reason": "Données insuffisantes pour une prédiction fiable.",
+        "reason": reason,
         "disclaimer": COACH_DISCLAIMER,
     }
+
+
+def _baseline_team_strength(team_name: str) -> float:
+    key = _team_key(team_name)
+    ratings = {
+        "realmadrid": 92, "parissaintgermain": 89, "psg": 89, "manchestercity": 90, "bayernmunich": 90,
+        "bayernmunchen": 90, "barcelona": 88, "fcbarcelona": 88, "arsenal": 87, "liverpool": 88,
+        "inter": 86, "internazionale": 86, "juventus": 83, "chelsea": 84, "atleticomadrid": 84,
+        "borussiadortmund": 82, "benfica": 79, "napoli": 81, "marseille": 76, "asmonaco": 76,
+        "france": 91, "brazil": 91, "bresil": 91, "argentina": 90, "argentine": 90, "england": 88,
+        "angleterre": 88, "spain": 88, "espagne": 88, "germany": 87, "allemagne": 87, "portugal": 87,
+        "netherlands": 85, "paysbas": 85, "belgium": 83, "belgique": 83, "uruguay": 82, "croatia": 82,
+        "croatie": 82, "mexico": 78, "mexique": 78, "senegal": 78, "maroc": 80, "morocco": 80,
+        "switzerland": 80, "suisse": 80, "japan": 78, "japon": 78, "usa": 77, "unitedstates": 77,
+        "canada": 75, "southafrica": 70, "afriquedusud": 70, "qatar": 70, "saudiarabia": 71,
+        "tunisia": 72, "tunisie": 72, "egypt": 74, "egypte": 74, "australia": 74, "australie": 74,
+        "turkiye": 76, "turkey": 76, "czechia": 75, "republiquetcheque": 75, "bosniaherzegovina": 73,
+        "bosnieherzegovine": 73, "haiti": 68, "scotland": 75, "ecosse": 75, "paraguay": 75,
+        "colombia": 80, "colombie": 80, "ghana": 74, "ecuador": 77, "equateur": 77,
+    }
+    return float(ratings.get(key, 74))
+
+
+def _probable_score(diff: float) -> str:
+    margin = abs(diff)
+    if margin >= 14:
+        return "2 - 0"
+    if margin >= 8:
+        return "2 - 1"
+    return "1 - 0"
+
+
+def _balanced_reason(home: str, away: str) -> str:
+    return f"{home} et {away} semblent proches sur le papier : match serré, où le rythme, les transitions et l'efficacité dans les deux surfaces peuvent tout changer."
+
+
+def _reputation_reason(winner: str, home: str, away: str, competition: str) -> str:
+    if competition == "Ligue des Champions":
+        return f"{winner} a un léger avantage sur la réputation européenne, la densité d'effectif et l'expérience des grands rendez-vous."
+    return f"{winner} part avec un avantage lié au niveau global estimé, à l'expérience internationale et au potentiel offensif."
+
+
+def _real_score_label(match: dict[str, Any]) -> str:
+    home_score = match.get("home_score", "")
+    away_score = match.get("away_score", "")
+    return f"{home_score} - {away_score}" if home_score != "" and away_score != "" else "Score final non disponible"
 
 
 def _coach_context_summary() -> str:

@@ -206,7 +206,11 @@ def _page(data: dict[str, Any]) -> str:
     .hero-badges {{ display: grid; gap: 9px; margin-top: 24px; }}
     .hero-row {{ display: flex; flex-wrap: wrap; gap: 10px; }}
     .pill {{ gap: 8px; padding: 9px 12px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); color: #e9f4ff; font-size: 13px; flex-wrap: wrap; min-width: 0; max-width: 100%; line-height: 1.25; overflow-wrap: anywhere; }}
-    .pill .flag {{ width: 18px; height: 18px; margin-right: 2px; }}
+    .pill .flag {{ width: 18px; height: 18px; margin-right: 2px; flex: 0 0 auto; }}
+    .focus-pill {{ display: inline-flex; align-items: center; gap: 8px; }}
+    .focus-select {{ width: auto; max-width: min(48vw, 240px); min-width: 132px; padding: 5px 24px 5px 8px; border-radius: 999px; font-size: 12px; font-weight: 900; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
+    .next-match-pill {{ flex-wrap: nowrap; white-space: nowrap; overflow-wrap: normal; word-break: keep-all; font-size: clamp(9px, 2.4vw, 13px); align-items: center; }}
+    .next-match-pill .focus-match-text {{ white-space: nowrap; min-width: 0; }}
     .france-pill::before {{ content: ""; width: 26px; height: 14px; border-radius: 2px; background: linear-gradient(90deg, var(--blue) 0 33%, var(--white) 33% 66%, var(--red) 66%); }}
     .section-head {{ display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 34px 0 14px; }}
     .section-title {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
@@ -252,7 +256,7 @@ def _page(data: dict[str, Any]) -> str:
     .club-logo {{ width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; padding: 2px; background: rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.18); }}
     .club-logo.placeholder {{ display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }}
     .club-logo.placeholder::before {{ content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }}
-    .club-name {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .club-name {{ white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.18; }}
     .player-country-flag {{ position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(7,17,31,0.92); background: rgba(255,255,255,0.14); }}
     .player-stat {{ color: var(--gold); font-size: 28px; font-weight: 950; line-height: 1; margin-top: 8px; }}
     .rank-note {{ color: #b7c6d7; font-size: 12px; margin-top: 5px; }}
@@ -377,7 +381,7 @@ def _page(data: dict[str, Any]) -> str:
     }}
     .bracket-wing.right .ko-match::before {{ right: auto; left: -17px; }}
     .ko-line {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; font-weight: 850; margin: 4px 0; font-size: clamp(10px, 0.92vw, 13px); }}
-    .ko-line span:first-child {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .ko-line span:first-child {{ white-space: normal; overflow-wrap: anywhere; word-break: normal; line-height: 1.15; }}
     .ko-match .subtle {{ color: #526274; }}
     .ko-match .status {{ color: #12457a; background: rgba(31,111,235,0.13); }}
     .ko-match .status.done {{ color: #0d684d; background: rgba(50,211,162,0.16); }}
@@ -564,10 +568,10 @@ def _page(data: dict[str, Any]) -> str:
         <div class="hero-badges">
           <div class="hero-row">
             <span class="pill">Mis à jour : {escape(generated)}</span>
-            <span class="pill france-pill">Focus Équipe de France</span>
+            <span class="pill france-pill focus-pill">Focus <select class="focus-select" id="worldcupFocusSelect" aria-label="Pays à suivre Coupe du Monde">{_focus_options(data, "France")}</select></span>
           </div>
-          <div class="hero-row">
-            <span class="pill">{_france_next_match_badge(france_next_match)}</span>
+          <div class="hero-row focus-match-row">
+            <span class="pill next-match-pill" id="worldcupFocusNext" data-default-focus="France">{_france_next_match_badge(france_next_match)}</span>
           </div>
           <div class="hero-row">
             <span class="pill">{group_remaining}/{group_total} matchs de poules</span>
@@ -610,6 +614,7 @@ def _page(data: dict[str, Any]) -> str:
   {_team_script(teams_details)}
   {_all_time_script(all_time_scorers, champions_all_time_scorers)}
   {_community_script(prediction_matches)}
+  {_focus_script(prediction_matches)}
   {_football_chatbot_script()}
   {_tabs_script(champions_data)}
 </body>
@@ -698,10 +703,10 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
           <div class="hero-badges">
             <div class="hero-row">
               <span class="pill">Mis à jour : {escape(generated)}</span>
-              <span class="pill psg-pill">{_logo_or_placeholder(_psg_logo(data))}Focus PSG</span>
+              <span class="pill psg-pill focus-pill">{_logo_or_placeholder(_psg_logo(data))}Focus <select class="focus-select" id="championsFocusSelect" aria-label="Club à suivre Ligue des Champions">{_focus_options(data, "Paris Saint-Germain")}</select></span>
             </div>
-            <div class="hero-row">
-              <span class="pill">{_psg_next_match_badge(psg_next_match)}</span>
+            <div class="hero-row focus-match-row">
+              <span class="pill next-match-pill" id="championsFocusNext" data-default-focus="Paris Saint-Germain">{_psg_next_match_badge(psg_next_match)}</span>
             </div>
             <div class="hero-row">
               <span class="pill">{phase_remaining}/{phase_total} matchs de phase de ligue</span>
@@ -736,6 +741,49 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
       <nav class="sources" aria-label="Sources Ligue des Champions">{sources}</nav>
     </section>
 """
+
+
+def _focus_options(data: dict[str, Any], selected: str) -> str:
+    names = sorted(_focus_entities(data), key=lambda value: _display_focus_name(value).casefold())
+    if selected and selected not in names:
+        names.insert(0, selected)
+    return "".join(
+        f'<option value="{escape(name, quote=True)}"{ " selected" if name == selected else ""}>{escape(_display_focus_name(name))}</option>'
+        for name in names
+    )
+
+
+def _focus_entities(data: dict[str, Any]) -> set[str]:
+    names: set[str] = set()
+    for group in data.get("group_matches", []):
+        for match in group.get("matches", []):
+            for key in ("home_team", "away_team"):
+                name = str(match.get(key) or "").strip()
+                if name and name != "À déterminer":
+                    names.add(name)
+    for round_data in data.get("knockout", []):
+        for match in round_data.get("matches", []):
+            for key in ("home_team", "away_team"):
+                name = str(match.get(key) or "").strip()
+                if name and name != "À déterminer":
+                    names.add(name)
+    for group in data.get("standings", []):
+        for row in group.get("teams", []) or group.get("standings", []) or []:
+            name = str(row.get("team") or row.get("name") or row.get("team_name") or "").strip()
+            if name and name != "À déterminer":
+                names.add(name)
+    return names
+
+
+def _display_focus_name(name: str) -> str:
+    aliases = {
+        "Paris Saint-Germain": "PSG",
+        "Paris SG": "PSG",
+        "Senegal": "Sénégal",
+        "Bosnia-Herzegovina": "Bosnie-Herzégovine",
+        "South Africa": "Afrique du Sud",
+    }
+    return aliases.get(str(name), str(name))
 
 
 def _tabs_script(champions_data: dict[str, Any] | None) -> str:
@@ -905,7 +953,7 @@ def _community_section() -> str:
             <div class="match-context" id="predictionContext"></div>
             <div class="coach-prediction" id="coachPrediction" aria-live="polite">
               <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Analyse fictive pour le jeu entre amis.</span></div>
-              <div class="coach-reason">Coach Akro : données insuffisantes pour une prédiction fiable.</div>
+              <div class="coach-reason">Coach Akro prépare son analyse dès que le match est sélectionné.</div>
               <div class="coach-disclaimer">Aucun conseil de pari réel.</div>
             </div>
             <button class="action-button" type="submit" disabled>Valider le pronostic</button>
@@ -1358,6 +1406,87 @@ def _football_chatbot_modal() -> str:
 """
 
 
+def _focus_script(matches: list[dict[str, Any]]) -> str:
+    payload = json.dumps(matches, ensure_ascii=False).replace("</", "<\\/")
+    return f"""<script>
+    const FOCUS_MATCHES = {payload};
+    const FOCUS_KEYS = {{
+      worldcup: 'akrodufoot:focus:worldcup',
+      champions: 'akrodufoot:focus:champions'
+    }};
+    const FOCUS_DEFAULTS = {{worldcup: 'France', champions: 'Paris Saint-Germain'}};
+
+    function focusEscape(value) {{
+      return String(value || '').replace(/[&<>\"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}}[c]));
+    }}
+
+    function focusDisplayName(name) {{
+      const aliases = {{
+        'Paris Saint-Germain': 'PSG',
+        'Paris SG': 'PSG',
+        'Senegal': 'Sénégal',
+        'Bosnia-Herzegovina': 'Bosnie-Herzégovine',
+        'South Africa': 'Afrique du Sud'
+      }};
+      return aliases[name] || name || 'À déterminer';
+    }}
+
+    function focusFlag(url) {{
+      return url ? `<img class="flag" src="${{focusEscape(url)}}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
+    }}
+
+    function focusTimestamp(match) {{
+      const date = new Date(match.date);
+      return Number.isNaN(date.getTime()) ? Number.MAX_SAFE_INTEGER : date.getTime();
+    }}
+
+    function focusDate(value) {{
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? 'date à déterminer' : date.toLocaleString('fr-FR', {{day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'}}).replace(',', '');
+    }}
+
+    function focusNextMatch(competition, team) {{
+      const now = Date.now();
+      const candidates = FOCUS_MATCHES
+        .filter(match => match.competition === competition)
+        .filter(match => [match.home_team, match.away_team].includes(team))
+        .filter(match => !match.completed && focusTimestamp(match) >= now)
+        .sort((a, b) => focusTimestamp(a) - focusTimestamp(b));
+      return candidates[0] || null;
+    }}
+
+    function renderFocus(kind) {{
+      const competition = kind === 'worldcup' ? 'Coupe du Monde' : 'Ligue des Champions';
+      const select = document.getElementById(`${{kind}}FocusSelect`);
+      const target = document.getElementById(`${{kind}}FocusNext`);
+      if (!select || !target) return;
+      const saved = localStorage.getItem(FOCUS_KEYS[kind]);
+      if (saved && Array.from(select.options).some(option => option.value === saved)) select.value = saved;
+      const team = select.value || FOCUS_DEFAULTS[kind];
+      const match = focusNextMatch(competition, team);
+      if (!match) {{
+        target.innerHTML = `<span class="focus-match-text">${{focusEscape(focusDisplayName(team))}} : prochain match à déterminer</span>`;
+        return;
+      }}
+      const isHome = match.home_team === team;
+      const opponent = isHome ? match.away_team : match.home_team;
+      const teamFlag = isHome ? match.home_flag_url : match.away_flag_url;
+      const opponentFlag = isHome ? match.away_flag_url : match.home_flag_url;
+      target.innerHTML = `${{focusFlag(teamFlag)}}<span class="focus-match-text">${{focusEscape(focusDisplayName(team))}} vs ${{focusEscape(focusDisplayName(opponent))}} — ${{focusEscape(focusDate(match.date))}}</span>${{focusFlag(opponentFlag)}}`;
+    }}
+
+    ['worldcup', 'champions'].forEach(kind => {{
+      const select = document.getElementById(`${{kind}}FocusSelect`);
+      if (!select) return;
+      select.addEventListener('change', () => {{
+        localStorage.setItem(FOCUS_KEYS[kind], select.value);
+        renderFocus(kind);
+      }});
+      renderFocus(kind);
+    }});
+  </script>"""
+
+
 def _football_chatbot_script() -> str:
     return """<script>
     const footballChatbotButton = document.getElementById('chatbotButton');
@@ -1808,21 +1937,20 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     function renderCoachPrediction(data) {{
       if (!coachPrediction) return;
       const fallback = {{
-        predicted_winner: 'Données insuffisantes',
+        predicted_winner: 'Analyse en attente',
+        predicted_score: '',
         confidence: '',
-        reason: 'Données insuffisantes pour une prédiction fiable.',
+        reason: 'Coach Akro prépare son analyse dès que le match est sélectionné.',
         disclaimer: 'Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel.'
       }};
       const info = data || fallback;
-      const winner = info.predicted_winner && info.predicted_winner !== 'Données insuffisantes'
-        ? info.predicted_winner
-        : 'données insuffisantes pour une prédiction fiable';
       const confidence = info.confidence ? ` — confiance ${{escapeHtml(info.confidence)}}%` : '';
+      const score = info.predicted_score ? ` · score probable ${{escapeHtml(info.predicted_score)}}` : '';
       const reason = info.reason || fallback.reason;
       const disclaimer = info.disclaimer || fallback.disclaimer;
       coachPrediction.innerHTML = `
-        <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Coach Akro : ${{escapeHtml(winner)}}${{confidence}}.</span></div>
-        <div class="coach-reason">Raison : ${{escapeHtml(reason)}}</div>
+        <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Coach Akro : ${{escapeHtml(info.predicted_winner || fallback.predicted_winner)}}${{score}}${{confidence}}.</span></div>
+        <div class="coach-reason">Analyse : ${{escapeHtml(reason)}}</div>
         <div class="coach-disclaimer">${{escapeHtml(disclaimer)}}</div>
       `;
     }}
