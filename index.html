@@ -396,6 +396,12 @@
     .mini-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }
     .mini-avatar.placeholder { display: grid; place-items: center; color: #07111f; font-weight: 950; }
     .alltime-list { display: grid; gap: 10px; }
+    .chatbot-dialog { width: min(430px, 100%); max-height: min(86vh, 720px); display: grid; grid-template-rows: auto minmax(220px, 1fr) auto; overflow: hidden; }
+    .chatbot-messages { padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 260px; }
+    .chatbot-message { max-width: 86%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.07); color: #dfeeff; line-height: 1.42; font-size: 14px; }
+    .chatbot-message.user { justify-self: end; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }
+    .chatbot-message.bot { justify-self: start; }
+    .chatbot-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
     .alltime-row { display: grid; grid-template-columns: 44px 52px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.06); }
     .alltime-rank { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-weight: 950; }
     .alltime-value { color: var(--gold); font-size: 24px; font-weight: 950; text-align: right; }
@@ -487,6 +493,7 @@
       .today-teams, .follow-teams { grid-template-columns: minmax(0, 1fr); justify-items: center; }
       .prediction-scoreboard { grid-template-columns: 1fr; justify-items: center; }
       .prediction-team.home, .prediction-team.away, .follow-team, .follow-team.away { justify-content: center; text-align: center; }
+      .chatbot-form { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -502,6 +509,7 @@
         </div>
         <div class="global-controls">
           <button class="action-button" type="button" id="shareButton">Partager</button>
+          <button class="action-button" type="button" id="chatbotButton">Chatbot Foot</button>
           <a class="action-button" href="/watch-party">Watch Party</a>
         </div>
       </div>
@@ -582,7 +590,7 @@
       </div>
     </section>
 
-    <section class="notice">4 sources n’ont pas répondu pendant la dernière mise à jour. Le dashboard reste généré avec les données disponibles ; relance la mise à jour plus tard si une section est vide.</section>
+    <section class="notice">10 sources n’ont pas répondu pendant la dernière mise à jour. Le dashboard reste généré avec les données disponibles ; relance la mise à jour plus tard si une section est vide.</section>
 
     <section class="today-strip" aria-label="Matchs du jour"><article class="today-tile"><div class="subtle today-meta">11/06/2026 · 21:00</div><div class="today-teams"><div class="today-team"><button class="team team-button" type="button" data-team="Mexico"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/mex.png" alt="">Mexico</button></div><div class="today-score">21:00<br><span class="status">À venir</span></div><div class="today-team"><button class="team team-button" type="button" data-team="South Africa"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/rsa.png" alt="">South Africa</button></div></div><div class="subtle" style="text-align:center;margin-top:12px">Estadio Banorte, Mexico City</div></article></section>
 
@@ -642,7 +650,7 @@
         </div>
       </section>
 
-      <section class="notice">4 sources n’ont pas répondu pendant la dernière mise à jour. Le dashboard reste généré avec les données disponibles ; relance la mise à jour plus tard si une section est vide.</section>
+      <section class="notice">10 sources n’ont pas répondu pendant la dernière mise à jour. Le dashboard reste généré avec les données disponibles ; relance la mise à jour plus tard si une section est vide.</section>
 
       <section class="today-strip" aria-label="Matchs du jour Ligue des Champions"><article class="today-tile"><div class="subtle today-meta">30/05/2026 · 18:00</div><div class="today-teams"><div class="today-team"><button class="team team-button" type="button" data-team="Paris Saint-Germain"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt="">Paris Saint-Germain</button></div><div class="today-score">18:00<br><span class="status">À venir</span></div><div class="today-team"><button class="team team-button" type="button" data-team="Arsenal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt="">Arsenal</button></div></div><div class="subtle" style="text-align:center;margin-top:12px">Puskás Aréna, Budapest</div></article></section>
 
@@ -710,6 +718,27 @@
       <div class="team-modal-body">
         <div id="allTimeBody"></div>
       </div>
+    </article>
+  </div>
+
+  
+  <div class="team-modal" id="footballChatbotModal" aria-hidden="true">
+    <article class="team-dialog chatbot-dialog" role="dialog" aria-modal="true" aria-labelledby="footballChatbotTitle">
+      <header class="team-modal-head">
+        <div class="alltime-rank">⚽</div>
+        <div>
+          <div class="team-modal-title" id="footballChatbotTitle">Chatbot Foot</div>
+          <div class="subtle">Assistant sportif, réponses en français.</div>
+        </div>
+        <button class="modal-close" type="button" id="footballChatbotClose" aria-label="Fermer">×</button>
+      </header>
+      <div class="chatbot-messages" id="footballChatbotMessages">
+        <div class="chatbot-message bot">Salut, pose-moi une question sur le football.</div>
+      </div>
+      <form class="chatbot-form" id="footballChatbotForm">
+        <input id="footballChatbotInput" type="text" maxlength="500" placeholder="Pose ta question foot…" autocomplete="off">
+        <button class="action-button" type="submit">Envoyer</button>
+      </form>
     </article>
   </div>
 
@@ -1092,6 +1121,67 @@
     predictionPseudo.value = localStorage.getItem('akrodufoot:pseudo') || '';
     renderMatchOptions(DASHBOARD_MATCHES);
     loadCommunity();
+  </script>
+  <script>
+    const footballChatbotButton = document.getElementById('chatbotButton');
+    const footballChatbotModal = document.getElementById('footballChatbotModal');
+    const footballChatbotClose = document.getElementById('footballChatbotClose');
+    const footballChatbotForm = document.getElementById('footballChatbotForm');
+    const footballChatbotInput = document.getElementById('footballChatbotInput');
+    const footballChatbotMessages = document.getElementById('footballChatbotMessages');
+
+    function chatbotEscape(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function addChatbotMessage(role, text) {
+      const node = document.createElement('div');
+      node.className = `chatbot-message ${role}`;
+      node.innerHTML = chatbotEscape(text);
+      footballChatbotMessages.appendChild(node);
+      footballChatbotMessages.scrollTop = footballChatbotMessages.scrollHeight;
+      return node;
+    }
+
+    function openFootballChatbot() {
+      footballChatbotModal.classList.add('is-open');
+      footballChatbotModal.setAttribute('aria-hidden', 'false');
+      footballChatbotInput.focus();
+    }
+
+    function closeFootballChatbot() {
+      footballChatbotModal.classList.remove('is-open');
+      footballChatbotModal.setAttribute('aria-hidden', 'true');
+    }
+
+    footballChatbotButton.addEventListener('click', openFootballChatbot);
+    footballChatbotClose.addEventListener('click', closeFootballChatbot);
+    footballChatbotModal.addEventListener('click', event => {
+      if (event.target === footballChatbotModal) closeFootballChatbot();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && footballChatbotModal.classList.contains('is-open')) closeFootballChatbot();
+    });
+
+    footballChatbotForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      const question = footballChatbotInput.value.trim();
+      if (!question) return;
+      footballChatbotInput.value = '';
+      addChatbotMessage('user', question);
+      const pending = addChatbotMessage('bot', 'Je réfléchis...');
+      try {
+        const response = await fetch('/api/football-chatbot', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({message: question})
+        });
+        const data = await response.json().catch(() => ({}));
+        pending.textContent = data.answer || data.error || 'Chatbot indisponible';
+      } catch (error) {
+        pending.textContent = 'Chatbot indisponible';
+      }
+    });
   </script>
   <script>
     document.querySelectorAll('[data-tab-target]').forEach((button) => {

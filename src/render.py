@@ -441,6 +441,12 @@ def _page(data: dict[str, Any]) -> str:
     .mini-avatar {{ width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }}
     .mini-avatar.placeholder {{ display: grid; place-items: center; color: #07111f; font-weight: 950; }}
     .alltime-list {{ display: grid; gap: 10px; }}
+    .chatbot-dialog {{ width: min(430px, 100%); max-height: min(86vh, 720px); display: grid; grid-template-rows: auto minmax(220px, 1fr) auto; overflow: hidden; }}
+    .chatbot-messages {{ padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 260px; }}
+    .chatbot-message {{ max-width: 86%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.07); color: #dfeeff; line-height: 1.42; font-size: 14px; }}
+    .chatbot-message.user {{ justify-self: end; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
+    .chatbot-message.bot {{ justify-self: start; }}
+    .chatbot-form {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 14px; border-top: 1px solid rgba(255,255,255,0.10); }}
     .alltime-row {{ display: grid; grid-template-columns: 44px 52px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.06); }}
     .alltime-rank {{ width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-weight: 950; }}
     .alltime-value {{ color: var(--gold); font-size: 24px; font-weight: 950; text-align: right; }}
@@ -532,6 +538,7 @@ def _page(data: dict[str, Any]) -> str:
       .today-teams, .follow-teams {{ grid-template-columns: minmax(0, 1fr); justify-items: center; }}
       .prediction-scoreboard {{ grid-template-columns: 1fr; justify-items: center; }}
       .prediction-team.home, .prediction-team.away, .follow-team, .follow-team.away {{ justify-content: center; text-align: center; }}
+      .chatbot-form {{ grid-template-columns: 1fr; }}
     }}
   </style>
 </head>
@@ -591,9 +598,11 @@ def _page(data: dict[str, Any]) -> str:
   </main>
   {_team_modal()}
   {_all_time_modal()}
+  {_football_chatbot_modal()}
   {_team_script(teams_details)}
   {_all_time_script(all_time_scorers, champions_all_time_scorers)}
   {_community_script(prediction_matches)}
+  {_football_chatbot_script()}
   {_tabs_script(champions_data)}
 </body>
 </html>
@@ -624,6 +633,7 @@ def _app_header() -> str:
         </div>
         <div class="global-controls">
           <button class="action-button" type="button" id="shareButton">Partager</button>
+          <button class="action-button" type="button" id="chatbotButton">Chatbot Foot</button>
           <a class="action-button" href="/watch-party">Watch Party</a>
         </div>
       </div>
@@ -1309,6 +1319,94 @@ def _all_time_modal() -> str:
     </article>
   </div>
 """
+
+
+def _football_chatbot_modal() -> str:
+    return """
+  <div class="team-modal" id="footballChatbotModal" aria-hidden="true">
+    <article class="team-dialog chatbot-dialog" role="dialog" aria-modal="true" aria-labelledby="footballChatbotTitle">
+      <header class="team-modal-head">
+        <div class="alltime-rank">⚽</div>
+        <div>
+          <div class="team-modal-title" id="footballChatbotTitle">Chatbot Foot</div>
+          <div class="subtle">Assistant sportif, réponses en français.</div>
+        </div>
+        <button class="modal-close" type="button" id="footballChatbotClose" aria-label="Fermer">×</button>
+      </header>
+      <div class="chatbot-messages" id="footballChatbotMessages">
+        <div class="chatbot-message bot">Salut, pose-moi une question sur le football.</div>
+      </div>
+      <form class="chatbot-form" id="footballChatbotForm">
+        <input id="footballChatbotInput" type="text" maxlength="500" placeholder="Pose ta question foot…" autocomplete="off">
+        <button class="action-button" type="submit">Envoyer</button>
+      </form>
+    </article>
+  </div>
+"""
+
+
+def _football_chatbot_script() -> str:
+    return """<script>
+    const footballChatbotButton = document.getElementById('chatbotButton');
+    const footballChatbotModal = document.getElementById('footballChatbotModal');
+    const footballChatbotClose = document.getElementById('footballChatbotClose');
+    const footballChatbotForm = document.getElementById('footballChatbotForm');
+    const footballChatbotInput = document.getElementById('footballChatbotInput');
+    const footballChatbotMessages = document.getElementById('footballChatbotMessages');
+
+    function chatbotEscape(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function addChatbotMessage(role, text) {
+      const node = document.createElement('div');
+      node.className = `chatbot-message ${role}`;
+      node.innerHTML = chatbotEscape(text);
+      footballChatbotMessages.appendChild(node);
+      footballChatbotMessages.scrollTop = footballChatbotMessages.scrollHeight;
+      return node;
+    }
+
+    function openFootballChatbot() {
+      footballChatbotModal.classList.add('is-open');
+      footballChatbotModal.setAttribute('aria-hidden', 'false');
+      footballChatbotInput.focus();
+    }
+
+    function closeFootballChatbot() {
+      footballChatbotModal.classList.remove('is-open');
+      footballChatbotModal.setAttribute('aria-hidden', 'true');
+    }
+
+    footballChatbotButton.addEventListener('click', openFootballChatbot);
+    footballChatbotClose.addEventListener('click', closeFootballChatbot);
+    footballChatbotModal.addEventListener('click', event => {
+      if (event.target === footballChatbotModal) closeFootballChatbot();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && footballChatbotModal.classList.contains('is-open')) closeFootballChatbot();
+    });
+
+    footballChatbotForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      const question = footballChatbotInput.value.trim();
+      if (!question) return;
+      footballChatbotInput.value = '';
+      addChatbotMessage('user', question);
+      const pending = addChatbotMessage('bot', 'Je réfléchis...');
+      try {
+        const response = await fetch('/api/football-chatbot', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({message: question})
+        });
+        const data = await response.json().catch(() => ({}));
+        pending.textContent = data.answer || data.error || 'Chatbot indisponible';
+      } catch (error) {
+        pending.textContent = 'Chatbot indisponible';
+      }
+    });
+  </script>"""
 
 
 def _team_script(teams_details: dict[str, Any]) -> str:

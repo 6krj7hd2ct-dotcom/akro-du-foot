@@ -27,6 +27,7 @@ from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, OUTPUT
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
+OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 
 app = Flask(__name__) if Flask else None
 
@@ -89,6 +90,87 @@ if app:
     @app.get("/api/watch-chat")
     def watch_chat():
         return jsonify({"messages": _watch_messages()[-120:]})
+
+    @app.post("/api/football-chatbot")
+    def football_chatbot():
+        payload = request.get_json(silent=True) or {}
+        body, status = football_chatbot_response(payload)
+        return jsonify(body), status
+
+
+def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
+    question = _clean(payload.get("message", ""), 500)
+    if not question:
+        return {"error": "Question vide."}, 400
+    if not _looks_like_football_question(question):
+        return {"answer": "Je peux répondre uniquement aux questions liées au football."}, 200
+
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return {"error": "Chatbot indisponible"}, 503
+
+    try:
+        import requests
+
+        response = requests.post(
+            OPENAI_RESPONSES_URL,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": os.environ.get("OPENAI_CHATBOT_MODEL", "gpt-4.1-mini"),
+                "input": [
+                    {
+                        "role": "system",
+                        "content": (
+                            "Tu es Chatbot Foot pour Akro du Foot. Réponds uniquement aux questions liées au football, "
+                            "en français, avec un ton simple, clair et sportif. Si la question sort du football, réponds exactement : "
+                            "Je peux répondre uniquement aux questions liées au football."
+                        ),
+                    },
+                    {"role": "user", "content": question},
+                ],
+                "temperature": 0.3,
+                "max_output_tokens": 500,
+            },
+            timeout=20,
+        )
+        if response.status_code >= 400:
+            return {"error": "Chatbot indisponible"}, 503
+        data = response.json()
+        answer = _openai_response_text(data)
+        return {"answer": answer or "Chatbot indisponible"}, 200
+    except Exception:
+        return {"error": "Chatbot indisponible"}, 503
+
+
+def _openai_response_text(data: dict[str, Any]) -> str:
+    text = data.get("output_text")
+    if isinstance(text, str) and text.strip():
+        return text.strip()
+    parts: list[str] = []
+    for item in data.get("output", []) if isinstance(data.get("output"), list) else []:
+        for content in item.get("content", []) if isinstance(item, dict) else []:
+            if isinstance(content, dict) and content.get("type") in {"output_text", "text"}:
+                value = content.get("text")
+                if isinstance(value, str):
+                    parts.append(value)
+    return "\n".join(part.strip() for part in parts if part.strip()).strip()
+
+
+def _looks_like_football_question(question: str) -> bool:
+    text = question.casefold()
+    keywords = {
+        "football", "foot", "soccer", "fifa", "uefa", "ligue des champions", "champions league",
+        "coupe du monde", "psg", "paris saint-germain", "arsenal", "real madrid", "barça", "barca",
+        "bayern", "mbapp", "messi", "ronaldo", "haaland", "neymar", "deschamps", "zidane",
+        "match", "but", "buteur", "passeur", "gardien", "défenseur", "milieu", "attaquant",
+        "équipe", "club", "sélection", "joueur", "coach", "entraîneur", "stade", "carton",
+        "penalty", "hors-jeu", "classement", "calendrier", "finale", "demi-finale", "quart",
+        "ligue 1", "premier league", "liga", "serie a", "bundesliga", "mercato",
+    }
+    return any(keyword in text for keyword in keywords)
 
 
 def save_message(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
@@ -203,6 +285,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json(body, status)
         elif path == "/api/predictions":
             body, status = save_prediction(payload)
+            self._send_json(body, status)
+        elif path == "/api/football-chatbot":
+            body, status = football_chatbot_response(payload)
             self._send_json(body, status)
         else:
             self.send_error(404)
