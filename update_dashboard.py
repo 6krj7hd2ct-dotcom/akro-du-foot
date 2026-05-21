@@ -13,6 +13,7 @@ def main() -> None:
     worldcup_data = _merge_refresh(_read_cache(CACHE_FILE), fetch_dashboard_data())
     champions_league_data = _merge_refresh(_read_cache(CHAMPIONS_LEAGUE_CACHE_FILE), fetch_champions_league_data())
     for dataset in (worldcup_data, champions_league_data):
+        _sanitize_dataset(dataset)
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
         dataset["top_assists"] = enrich_players_with_known_country_flags(dataset.get("top_assists", []))
         dataset["all_time_top_assisters"] = []
@@ -31,6 +32,40 @@ def main() -> None:
         OUTPUT_HTML,
     )
     print(f"Dashboard généré : {OUTPUT_HTML}")
+
+
+def _sanitize_dataset(dataset: dict[str, Any]) -> None:
+    for details in (dataset.get("teams_details") or {}).values():
+        for section in ("squad", "starters", "substitutes"):
+            details[section] = _clean_roster(details.get(section, []) or [])
+    blocked_sources = {"espn", "bbc", "bbc sport", "google news"}
+    for section in ("world_cup_news", "france_news", "general_news", "all_news"):
+        articles = dataset.get(section)
+        if isinstance(articles, list):
+            dataset[section] = [article for article in articles if str(article.get("source", "")).casefold() not in blocked_sources]
+    sources = dataset.get("sources")
+    if isinstance(sources, list):
+        dataset["sources"] = [
+            source for source in sources
+            if not str(source.get("name", "")).casefold().startswith(("actu coupe du monde - espn", "actu coupe du monde - bbc", "actu ligue des champions - espn", "actu ligue des champions - bbc"))
+        ]
+
+
+def _clean_roster(players: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    clean: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for player in players:
+        name = " ".join(str(player.get("name") or "").split())
+        position = " ".join(str(player.get("position") or "").split())
+        number = " ".join(str(player.get("number") or player.get("jersey") or player.get("jerseyNumber") or "").split())
+        if not name or (not position and not number):
+            continue
+        key = name.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        clean.append({**player, "name": name, "position": position, "number": number})
+    return clean
 
 
 def _build_players_index(dataset: dict[str, Any]) -> list[dict[str, Any]]:
@@ -138,8 +173,9 @@ def _merge_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[st
         "teams_details",
         "players_index",
         "today_matches",
+        "sources",
     ):
-        if key in {"general_news", "all_news", "focused_team_news", "focused_club_news", "news_sources"}:
+        if key in {"general_news", "all_news", "focused_team_news", "focused_club_news", "news_sources", "sources"}:
             data[key] = refreshed_data.get(key, [] if key != "focused_team_news" and key != "focused_club_news" else {})
         elif refreshed_data.get(key):
             data[key] = refreshed_data[key]

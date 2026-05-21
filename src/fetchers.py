@@ -95,6 +95,27 @@ FOOTBALL_NEWS_KEYWORDS = (
     "match", "buteur", "passeur", "entraîneur", "selection", "sélection",
 )
 
+FRENCH_NEWS_SOURCE_NAMES = {
+    "france info",
+    "rmc sport",
+    "l'equipe",
+    "l’équipe",
+    "goal.com",
+    "goal france",
+    "eurosport",
+    "eurosport france",
+    "foot mercato",
+    "so foot",
+    "maxifoot",
+    "livefoot",
+    "france football",
+    "le phoceen",
+    "le phocéen",
+}
+
+BLOCKED_NEWS_SOURCE_NAMES = {"espn", "bbc", "bbc sport", "google news"}
+BLOCKED_NEWS_DOMAINS = ("espn.com", "bbc.", "bbc.co.uk", "news.google.")
+
 FRENCH_TEAM_NAMES = {
     "Senegal": "Sénégal",
     "Ivory Coast": "Côte d'Ivoire",
@@ -674,7 +695,7 @@ def enrich_teams_with_espn_rosters(
             continue
         if not roster:
             continue
-        details["squad"] = roster.get("squad", [])
+        details["squad"] = _clean_roster_players(roster.get("squad", []))
         details["coach"] = roster.get("coach", "")
         if "ESPN roster" not in details["sources"]:
             details["sources"].append("ESPN roster")
@@ -697,7 +718,7 @@ def enrich_teams_with_fotmob_rosters(
         except Exception:
             continue
         if fotmob_details.get("squad"):
-            details["squad"] = fotmob_details["squad"]
+            details["squad"] = _clean_roster_players(fotmob_details["squad"])
         if fotmob_details.get("coach"):
             details["coach"] = fotmob_details["coach"]
         if fotmob_details.get("formation"):
@@ -759,7 +780,7 @@ def fetch_fotmob_team_details(team_id: str, team_name: str) -> dict[str, Any]:
     squad: list[dict[str, Any]] = []
     _collect_fotmob_squad_players(data, squad)
     unique: dict[str, dict[str, Any]] = {}
-    for player in squad:
+    for player in _clean_roster_players(squad):
         name = player.get("name", "")
         if name and name not in unique:
             unique[name] = player
@@ -953,7 +974,8 @@ def _collect_fotmob_squad_players(node: Any, out: list[dict[str, Any]]) -> None:
                 "id",
             )
         )
-        if name and player_id and has_player_context:
+        has_roster_position = any(node.get(key) for key in ("position", "role", "positionLabel", "shirtNumber", "jerseyNumber", "number"))
+        if name and player_id and has_player_context and has_roster_position:
             out.append(_parse_fotmob_player(node))
         for value in node.values():
             _collect_fotmob_squad_players(value, out)
@@ -974,6 +996,27 @@ def _parse_fotmob_player(row: dict[str, Any]) -> dict[str, Any]:
         "number": str(row.get("shirtNumber") or row.get("jerseyNumber") or row.get("number") or ""),
         "country_flag_url": _fotmob_country_flag(row),
     }
+
+
+def _clean_roster_players(players: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    clean: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for player in players:
+        name = _clean_text(str(player.get("name") or ""))
+        if not name:
+            continue
+        position = _clean_text(str(player.get("position") or ""))
+        number = _clean_text(str(player.get("number") or ""))
+        # Les pages FotMob contiennent parfois des tableaux de clubs. Ces lignes
+        # ont un nom et une image, mais pas de poste ni numéro de joueur.
+        if not position and not number:
+            continue
+        key = _normalize_name(name)
+        if key in seen:
+            continue
+        seen.add(key)
+        clean.append({**player, "name": name, "position": position, "number": number})
+    return clean
 
 
 def _fotmob_player_id(row: dict[str, Any]) -> str:
@@ -1297,6 +1340,9 @@ def _fetch_news(
                 continue
             if not feed.get("trusted_section") and not any(_normalize_news_text(keyword) in haystack for keyword in keywords):
                 continue
+            source = str(feed.get("source") or _article_source(item, feed))
+            if not _is_allowed_french_news_source(source, link):
+                continue
             key = _news_key(title, link)
             if not title or not link or key in seen:
                 continue
@@ -1304,7 +1350,7 @@ def _fetch_news(
             articles.append(
                 {
                     "title": title,
-                    "source": _article_source(item, feed),
+                    "source": source,
                     "date": published,
                     "summary": _shorten(summary, 210),
                     "url": link,
@@ -1370,6 +1416,16 @@ def _news_key(title: str, link: str) -> str:
 def _article_source(item: ElementTree.Element, feed: dict[str, Any]) -> str:
     source = _xml_text(item, "source")
     return source or feed["source"]
+
+
+def _is_allowed_french_news_source(source: str, link: str) -> bool:
+    normalized_source = _normalize_news_text(source)
+    normalized_source = normalized_source.replace(" ", " ").strip()
+    link_lower = str(link or "").lower()
+    if normalized_source in BLOCKED_NEWS_SOURCE_NAMES or any(domain in link_lower for domain in BLOCKED_NEWS_DOMAINS):
+        return False
+    allowed = {_normalize_news_text(name) for name in FRENCH_NEWS_SOURCE_NAMES}
+    return normalized_source in allowed or any(_normalize_news_text(name) in normalized_source for name in FRENCH_NEWS_SOURCE_NAMES)
 
 
 def _normalize_news_text(value: str) -> str:

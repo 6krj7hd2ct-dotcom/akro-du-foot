@@ -44,16 +44,6 @@ FRANCE_NEWS_FEEDS = [
 
 WORLD_CUP_NEWS_FEEDS = [
     {
-        "source": "ESPN",
-        "url": "https://www.espn.com/espn/rss/soccer/news",
-        "trusted_section": False,
-    },
-    {
-        "source": "BBC Sport",
-        "url": "https://feeds.bbci.co.uk/sport/football/rss.xml",
-        "trusted_section": False,
-    },
-    {
         "source": "France Info",
         "url": "https://www.francetvinfo.fr/sports/foot/coupe-du-monde.rss",
         "trusted_section": True,
@@ -66,16 +56,6 @@ WORLD_CUP_NEWS_FEEDS = [
 ]
 
 CHAMPIONS_LEAGUE_NEWS_FEEDS = [
-    {
-        "source": "ESPN",
-        "url": "https://www.espn.com/espn/rss/soccer/news",
-        "trusted_section": False,
-    },
-    {
-        "source": "BBC Sport",
-        "url": "https://feeds.bbci.co.uk/sport/football/rss.xml",
-        "trusted_section": False,
-    },
     {
         "source": "RMC Sport",
         "url": "https://rmcsport.bfmtv.com/rss/football/",
@@ -96,12 +76,6 @@ EXTRA_FOOTBALL_NEWS_FEEDS = [
     {"source": "Le Phocéen", "url": "https://www.lephoceen.fr/rss", "trusted_section": False},
 ]
 
-GOOGLE_NEWS_FOOTBALL_FEEDS = [
-    {"source": "Google News", "url": "https://news.google.com/rss/search?q=%22Coupe%20du%20Monde%202026%22%20football%20OR%20%22World%20Cup%202026%22%20football&hl=fr&gl=FR&ceid=FR:fr", "trusted_section": True},
-    {"source": "Google News", "url": "https://news.google.com/rss/search?q=%22Ligue%20des%20Champions%22%20football%20OR%20%22Champions%20League%22%20football&hl=fr&gl=FR&ceid=FR:fr", "trusted_section": True},
-    {"source": "Google News", "url": "https://news.google.com/rss/search?q=PSG%20Arsenal%20Real%20Madrid%20football%20Ligue%20des%20Champions&hl=fr&gl=FR&ceid=FR:fr", "trusted_section": True},
-    {"source": "Google News", "url": "https://news.google.com/rss/search?q=%22Equipe%20de%20France%22%20football%20OR%20France%20football%20Deschamps&hl=fr&gl=FR&ceid=FR:fr", "trusted_section": True},
-]
 
 # Flux élargis utilisés pour enrichir les actualités et filtrer par équipe suivie.
 FOOTBALL_NEWS_FEEDS = [
@@ -109,7 +83,6 @@ FOOTBALL_NEWS_FEEDS = [
     *WORLD_CUP_NEWS_FEEDS,
     *CHAMPIONS_LEAGUE_NEWS_FEEDS,
     *EXTRA_FOOTBALL_NEWS_FEEDS,
-    *GOOGLE_NEWS_FOOTBALL_FEEDS,
 ]
 
 REQUEST_HEADERS = {

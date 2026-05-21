@@ -440,10 +440,14 @@ def _page(data: dict[str, Any]) -> str:
     .team-info-value {{ font-weight: 850; }}
     .formation-board {{ min-height: 140px; display: grid; place-items: center; border: 1px dashed rgba(245,201,107,0.30); border-radius: 16px; background: radial-gradient(ellipse at center, rgba(50,211,162,0.14), transparent 68%), linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035)); color: #d6e5f7; font-weight: 850; }}
     .roster-section h3 {{ padding: 0; margin-bottom: 10px; color: #ffe1a0; }}
-    .player-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }}
-    .mini-player {{ display: grid; grid-template-columns: 42px 1fr; gap: 10px; align-items: center; padding: 10px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); }}
+    .player-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }}
+    .mini-player {{ display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 10px; align-items: center; padding: 10px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); min-width: 0; }}
+    .mini-player strong {{ display: block; overflow-wrap: anywhere; line-height: 1.15; }}
     .mini-avatar {{ width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }}
     .mini-avatar.placeholder {{ display: grid; place-items: center; color: #07111f; font-weight: 950; }}
+    .mini-player-meta {{ display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 750; }}
+    .mini-player-flag {{ width: 18px; height: 18px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.18); }}
+    .mini-player-number {{ color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); border-radius: 999px; padding: 2px 7px; font-size: 11px; font-weight: 950; }}
     .alltime-list {{ display: grid; gap: 10px; }}
     .chatbot-dialog {{ width: min(430px, 100%); max-height: min(78vh, 620px); display: grid; grid-template-rows: auto minmax(190px, 1fr) auto; overflow: hidden; }}
     .chatbot-messages {{ padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 220px; max-height: min(48vh, 430px); scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }}
@@ -1699,13 +1703,45 @@ def _team_script(teams_details: dict[str, Any]) -> str:
 
     function playerCard(player) {{
       const photo = player.photo_url ? `<img class="mini-avatar" src="${{escapeHtml(player.photo_url)}}" alt="">` : '<div class="mini-avatar placeholder" aria-hidden="true"></div>';
-      const position = player.position ? `<div class="subtle">${{escapeHtml(player.position)}}</div>` : '';
-      return `<article class="mini-player">${{photo}}<div><strong>${{escapeHtml(player.name || 'Joueur')}}</strong>${{position}}</div></article>`;
+      const number = player.number ? `<span class="mini-player-number">#${{escapeHtml(player.number)}}</span>` : '';
+      const position = player.position ? `<span>${{escapeHtml(player.position)}}</span>` : '';
+      const flag = player.country_flag_url ? `<img class="mini-player-flag" src="${{escapeHtml(player.country_flag_url)}}" alt="">` : '';
+      const meta = (number || position || flag) ? `<div class="mini-player-meta">${{number}}${{position}}${{flag}}</div>` : '';
+      return `<article class="mini-player">${{photo}}<div><strong>${{escapeHtml(player.name || 'Joueur')}}</strong>${{meta}}</div></article>`;
     }}
 
     function rosterSection(title, players) {{
       if (!players || !players.length) return '';
       return `<section class="roster-section"><h3>${{escapeHtml(title)}}</h3><div class="player-grid">${{players.map(playerCard).join('')}}</div></section>`;
+    }}
+
+    function cleanRoster(players) {{
+      const seen = new Set();
+      return (players || []).filter((player) => {{
+        const name = String(player.name || '').trim();
+        const position = String(player.position || '').trim();
+        const number = String(player.number || '').trim();
+        if (!name || (!position && !number)) return false;
+        const key = name.toLocaleLowerCase('fr-FR');
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }});
+    }}
+
+    function positionGroup(position) {{
+      const value = String(position || '').toLocaleLowerCase('fr-FR');
+      if (/(^|\\b)(gk|gardien|goalkeeper|keeper)(\\b|$)/.test(value)) return 'Gardiens';
+      if (/(^|\\b)(cb|lb|rb|lwb|rwb|df|def|déf|defender|défenseur|defenseur|back)(\\b|$)/.test(value)) return 'Défenseurs';
+      if (/(^|\\b)(dm|cm|am|lm|rm|mf|mid|milieu|midfielder)(\\b|$)/.test(value)) return 'Milieux';
+      if (/(^|\\b)(st|cf|fw|lw|rw|attaquant|forward|winger|ailier)(\\b|$)/.test(value)) return 'Attaquants';
+      return 'Autres joueurs';
+    }}
+
+    function groupedRosterSections(players) {{
+      const groups = {{'Gardiens': [], 'Défenseurs': [], 'Milieux': [], 'Attaquants': [], 'Autres joueurs': []}};
+      cleanRoster(players).forEach((player) => groups[positionGroup(player.position)].push(player));
+      return Object.entries(groups).map(([title, list]) => rosterSection(title, list)).join('');
     }}
 
     function openTeam(name) {{
@@ -1717,13 +1753,8 @@ def _team_script(teams_details: dict[str, Any]) -> str:
       teamFormation.textContent = details.formation || 'Formation non disponible';
       teamFormationBoard.textContent = details.formation || 'Formation non disponible';
 
-      const starters = details.starters || [];
-      const substitutes = details.substitutes || [];
-      const squad = details.squad || [];
-      const hasLineup = starters.length || substitutes.length;
-      const sections = hasLineup
-        ? [rosterSection('Titulaires', starters), rosterSection('Remplaçants', substitutes), rosterSection('Effectif complet', squad)].join('')
-        : rosterSection('Effectif', squad);
+      const roster = [...(details.starters || []), ...(details.substitutes || []), ...(details.squad || [])];
+      const sections = groupedRosterSections(roster);
       teamRoster.innerHTML = sections || '<div class="empty">Effectif non disponible</div>';
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');

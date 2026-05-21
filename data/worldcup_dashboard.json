@@ -2971,14 +2971,6 @@
       "url": "https://www.statbunker.com/alltimestats/AllTimeCompetitionMostAssists?comp_code=WC"
     },
     {
-      "name": "Actu Coupe du Monde - ESPN",
-      "url": "https://www.espn.com/espn/rss/soccer/news"
-    },
-    {
-      "name": "Actu Coupe du Monde - BBC Sport",
-      "url": "https://feeds.bbci.co.uk/sport/football/rss.xml"
-    },
-    {
       "name": "Actu Coupe du Monde - France Info",
       "url": "https://www.francetvinfo.fr/sports/foot/coupe-du-monde.rss"
     },
@@ -2993,6 +2985,62 @@
     {
       "name": "Actu France - RMC Sport",
       "url": "https://rmcsport.bfmtv.com/rss/football/"
+    },
+    {
+      "name": "Actu football - France Info",
+      "url": "https://www.francetvinfo.fr/sports/foot/equipe-de-france.rss"
+    },
+    {
+      "name": "Actu football - RMC Sport",
+      "url": "https://rmcsport.bfmtv.com/rss/football/"
+    },
+    {
+      "name": "Actu football - France Info",
+      "url": "https://www.francetvinfo.fr/sports/foot/coupe-du-monde.rss"
+    },
+    {
+      "name": "Actu football - RMC Sport",
+      "url": "https://rmcsport.bfmtv.com/rss/football/"
+    },
+    {
+      "name": "Actu football - RMC Sport",
+      "url": "https://rmcsport.bfmtv.com/rss/football/"
+    },
+    {
+      "name": "Actu football - L'Équipe",
+      "url": "https://www.lequipe.fr/rss/actu_rss_Football.xml"
+    },
+    {
+      "name": "Actu football - Goal.com",
+      "url": "https://www.goal.com/feeds/fr/news?fmt=rss"
+    },
+    {
+      "name": "Actu football - Eurosport",
+      "url": "https://www.eurosport.fr/rss.xml"
+    },
+    {
+      "name": "Actu football - Foot Mercato",
+      "url": "https://www.footmercato.net/rss.xml"
+    },
+    {
+      "name": "Actu football - SO FOOT",
+      "url": "https://www.sofoot.com/rss"
+    },
+    {
+      "name": "Actu football - Maxifoot",
+      "url": "https://www.maxifoot.fr/rss.xml"
+    },
+    {
+      "name": "Actu football - LiveFoot",
+      "url": "https://www.livefoot.fr/rss.xml"
+    },
+    {
+      "name": "Actu football - France Football",
+      "url": "https://www.francefootball.fr/rss/actu_rss.xml"
+    },
+    {
+      "name": "Actu football - Le Phocéen",
+      "url": "https://www.lephoceen.fr/rss"
     }
   ],
   "errors": [
@@ -3006,8 +3054,6 @@
     "passeurs FotMob: ValueError"
   ],
   "news_sources": [
-    "ESPN",
-    "BBC Sport",
     "France Info",
     "RMC Sport",
     "L'Équipe",
@@ -3018,8 +3064,7 @@
     "Maxifoot",
     "LiveFoot",
     "France Football",
-    "Le Phocéen",
-    "Google News"
+    "Le Phocéen"
   ],
   "general_news": [],
   "all_news": [],
