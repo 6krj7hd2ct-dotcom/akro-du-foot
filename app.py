@@ -123,9 +123,8 @@ def _dedupe_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
 def community_payload() -> dict[str, Any]:
     worldcup_dashboard = _read_json(CACHE_FILE, {})
     champions_dashboard = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
-    leagues_dashboard = _read_json(LEAGUES_CACHE_FILE, {})
     community = _read_community()
-    matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard, leagues_dashboard)
+    matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard)
     predictions = _predictions_with_points(community.get("predictions", []), matches)
     return {
         "messages": community.get("messages", [])[-100:],
@@ -243,8 +242,7 @@ def coach_prediction_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
     match_id = _clean(payload.get("match_id", ""), 180)
     worldcup_dashboard = _read_json(CACHE_FILE, {})
     champions_dashboard = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
-    leagues_dashboard = _read_json(LEAGUES_CACHE_FILE, {})
-    matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard, leagues_dashboard)
+    matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard)
     match = matches.get(match_id)
     if not match:
         return _unavailable_prediction("Match introuvable dans les données du site."), 200
@@ -788,8 +786,7 @@ def save_prediction(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
 
     worldcup_dashboard = _read_json(CACHE_FILE, {})
     champions_dashboard = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
-    leagues_dashboard = _read_json(LEAGUES_CACHE_FILE, {})
-    matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard, leagues_dashboard)
+    matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard)
     match = matches.get(match_id)
 
     if not match or home_score is None or away_score is None:
@@ -941,16 +938,12 @@ def _dashboard_matches(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return matches
 
 
-def _all_dashboard_matches(worldcup_data: dict[str, Any], champions_data: dict[str, Any], leagues_data: dict[str, Any] | None = None) -> dict[str, dict[str, Any]]:
+def _all_dashboard_matches(worldcup_data: dict[str, Any], champions_data: dict[str, Any]) -> dict[str, dict[str, Any]]:
     matches: dict[str, dict[str, Any]] = {}
     for match_id, match in _dashboard_matches(worldcup_data).items():
         matches[f"worldcup:{match_id}"] = {**match, "id": f"worldcup:{match_id}", "competition": "Coupe du Monde"}
     for match_id, match in _dashboard_matches(champions_data).items():
         matches[f"champions:{match_id}"] = {**match, "id": f"champions:{match_id}", "competition": "Ligue des Champions"}
-    for league_key, league in (leagues_data or {}).get("leagues", {}).items():
-        for match_id, match in _dashboard_matches(league).items():
-            prefix = f"league-{league_key}:{match_id}"
-            matches[prefix] = {**match, "id": prefix, "competition": league.get("name", "Championnat")}
     return matches
 
 
