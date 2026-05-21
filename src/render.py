@@ -322,6 +322,16 @@ def _page(data: dict[str, Any]) -> str:
     .day-card h3 {{ padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffe1a0; }}
     .day-list {{ padding: 6px 14px 14px; }}
     .calendar-match {{ display: grid; grid-template-columns: 70px minmax(0, 1fr) 76px minmax(0, 1fr) 130px; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }}
+    .league-calendar-match {{
+      grid-template-columns: minmax(96px, 0.72fr) minmax(0, 1.45fr) 84px minmax(0, 1.45fr) minmax(160px, 0.9fr);
+      gap: 14px;
+      padding: 14px 16px;
+      min-height: 72px;
+    }}
+    .league-calendar-match > div {{ min-width: 0; }}
+    .league-calendar-match .team-button {{ width: 100%; gap: 6px; }}
+    .league-calendar-match .away .team-button {{ justify-content: flex-end; }}
+    .league-calendar-match .score {{ justify-self: center; }}
     .calendar-match:last-child {{ border-bottom: 0; }}
     .match-meta {{ min-width: 0; }}
     .match-group {{ color: var(--gold); font-size: 12px; font-weight: 900; text-transform: uppercase; }}
@@ -587,6 +597,8 @@ def _page(data: dict[str, Any]) -> str:
       .news, .grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
       .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }}
+      .league-calendar-match {{ grid-template-columns: 80px minmax(0, 1fr) 64px minmax(0, 1fr); padding: 12px; }}
+      .league-calendar-match .match-meta {{ grid-column: 1 / -1; }}
       .standings-wide table {{ min-width: 680px; }}
       .match-meta {{ grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }}
       th, td {{ padding: 8px 6px; }}
@@ -612,6 +624,9 @@ def _page(data: dict[str, Any]) -> str:
       .action-button {{ flex: 1 1 130px; text-align: center; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
+      .league-calendar-match {{ grid-template-columns: 1fr; text-align: center; }}
+      .league-calendar-match .away, .league-calendar-match .away .team-button {{ justify-content: center; text-align: center; }}
+      .league-calendar-match .team-button {{ justify-content: center; }}
       .calendar-match .date, .calendar-match .match-meta {{ grid-column: 1 / -1; }}
       .standings-wide table {{ min-width: 620px; }}
       .bracket-stage {{ padding: 10px; min-width: 1040px; }}
