@@ -28,6 +28,9 @@ from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, OUTPUT
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
+COACH_REFUSAL = "Je suis Coach Akro, je réponds uniquement aux questions liées au football."
+COACH_UNAVAILABLE = "Coach Akro indisponible"
+COACH_DISCLAIMER = "Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel."
 
 app = Flask(__name__) if Flask else None
 
@@ -97,18 +100,25 @@ if app:
         body, status = football_chatbot_response(payload)
         return jsonify(body), status
 
+    @app.post("/api/coach-prediction")
+    def coach_prediction():
+        payload = request.get_json(silent=True) or {}
+        body, status = coach_prediction_response(payload)
+        return jsonify(body), status
+
 
 def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     question = _clean(payload.get("message", ""), 500)
     if not question:
         return {"error": "Question vide."}, 400
     if not _looks_like_football_question(question):
-        return {"answer": "Je peux répondre uniquement aux questions liées au football."}, 200
+        return {"answer": COACH_REFUSAL}, 200
 
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
-        return {"error": "Chatbot indisponible"}, 503
+        return {"error": COACH_UNAVAILABLE}, 503
 
+    context = _coach_context_summary()
     try:
         import requests
 
@@ -124,26 +134,212 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                     {
                         "role": "system",
                         "content": (
-                            "Tu es Chatbot Foot pour Akro du Foot. Réponds uniquement aux questions liées au football, "
-                            "en français, avec un ton simple, clair et sportif. Si la question sort du football, réponds exactement : "
-                            "Je peux répondre uniquement aux questions liées au football."
+                            "Tu es Coach Akro, assistant football spécialisé intégré à Akro du Foot. "
+                            "Réponds uniquement aux questions liées au football, en français, avec un ton de consultant moderne : "
+                            "passionné, clair, utile, tactique quand c'est pertinent. Tu peux couvrir la Coupe du Monde, "
+                            "la Ligue des Champions, le PSG, l'Équipe de France, les joueurs, clubs, règles, statistiques, "
+                            "historiques, analyses de match et pronostics fictifs sans argent. "
+                            f"Si la question sort du football, réponds exactement : {COACH_REFUSAL} "
+                            "Utilise les données Akro du Foot fournies quand elles sont utiles. Ne jamais inventer : "
+                            "si une donnée n'est pas disponible ou pas encore publiée, dis-le clairement. "
+                            "Ne donne jamais de conseil de pari réel et rappelle que les pronostics sont fictifs entre amis si nécessaire."
                         ),
                     },
-                    {"role": "user", "content": question},
+                    {
+                        "role": "user",
+                        "content": f"Données Akro du Foot disponibles:\n{context}\n\nQuestion utilisateur:\n{question}",
+                    },
                 ],
-                "temperature": 0.3,
-                "max_output_tokens": 500,
+                "temperature": 0.35,
+                "max_output_tokens": 700,
             },
             timeout=20,
         )
         if response.status_code >= 400:
-            return {"error": "Chatbot indisponible"}, 503
+            return {"error": COACH_UNAVAILABLE}, 503
         data = response.json()
         answer = _openai_response_text(data)
-        return {"answer": answer or "Chatbot indisponible"}, 200
+        return {"answer": answer or COACH_UNAVAILABLE}, 200
     except Exception:
-        return {"error": "Chatbot indisponible"}, 503
+        return {"error": COACH_UNAVAILABLE}, 503
 
+
+def coach_prediction_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
+    match_id = _clean(payload.get("match_id", ""), 180)
+    worldcup_dashboard = _read_json(CACHE_FILE, {})
+    champions_dashboard = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
+    matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard)
+    match = matches.get(match_id)
+    if not match:
+        return _insufficient_prediction(), 200
+
+    home = str(match.get("home_team") or "")
+    away = str(match.get("away_team") or "")
+    if not home or not away or "déterminer" in home.casefold() or "déterminer" in away.casefold():
+        return _insufficient_prediction(), 200
+    if match.get("completed"):
+        return {
+            "predicted_winner": "Match terminé",
+            "confidence": "",
+            "reason": "Ce match est déjà terminé : Coach Akro n'affiche pas de prédiction après coup.",
+            "disclaimer": COACH_DISCLAIMER,
+        }, 200
+
+    data_pool = [worldcup_dashboard, champions_dashboard]
+    home_strength, home_reasons = _team_strength(home, data_pool)
+    away_strength, away_reasons = _team_strength(away, data_pool)
+    if home_strength == 0 and away_strength == 0:
+        return _insufficient_prediction(), 200
+
+    diff = home_strength - away_strength
+    if abs(diff) < 1.25:
+        return {
+            "predicted_winner": "Match équilibré",
+            "confidence": 52,
+            "reason": "Les données disponibles ne dégagent pas d'avantage net entre les deux équipes.",
+            "disclaimer": COACH_DISCLAIMER,
+        }, 200
+
+    winner = home if diff > 0 else away
+    reasons = home_reasons if diff > 0 else away_reasons
+    confidence = min(68, max(55, int(54 + abs(diff) * 4)))
+    reason = reasons[0] if reasons else "L'estimation s'appuie sur les données disponibles dans le dashboard."
+    return {
+        "predicted_winner": f"{winner} favori",
+        "confidence": confidence,
+        "reason": reason,
+        "disclaimer": COACH_DISCLAIMER,
+    }, 200
+
+
+def _insufficient_prediction() -> dict[str, Any]:
+    return {
+        "predicted_winner": "Données insuffisantes",
+        "confidence": "",
+        "reason": "Données insuffisantes pour une prédiction fiable.",
+        "disclaimer": COACH_DISCLAIMER,
+    }
+
+
+def _coach_context_summary() -> str:
+    worldcup = _read_json(CACHE_FILE, {})
+    champions = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
+    community = _read_community()
+    chunks = [
+        _competition_summary("Coupe du Monde", worldcup),
+        _competition_summary("Ligue des Champions", champions),
+    ]
+    leaderboard = _leaderboard(_predictions_with_points(community.get("predictions", []), _all_dashboard_matches(worldcup, champions)))[:5]
+    if leaderboard:
+        chunks.append("Classement pronostics: " + "; ".join(f"{row['pseudo']} {row['points']} pts" for row in leaderboard))
+    else:
+        chunks.append("Classement pronostics: aucune donnée publiée.")
+    return "\n".join(chunk for chunk in chunks if chunk).strip()[:6000]
+
+
+def _competition_summary(name: str, data: dict[str, Any]) -> str:
+    if not data:
+        return f"{name}: données non disponibles."
+    lines = [
+        f"{name}: {data.get('competition', name)}",
+        f"Dernière mise à jour: {data.get('generated_at', 'non disponible')}",
+        f"Phase: {data.get('competition_stage', 'non disponible')}",
+    ]
+    matches = list(_dashboard_matches(data).values())
+    today = [match for match in matches if _is_today_iso(match.get("date", ""))]
+    upcoming = sorted([match for match in matches if not match.get("completed")], key=lambda item: str(item.get("date", "")))[:5]
+    lines.append("Matchs du jour: " + (_format_match_list(today[:5]) if today else "aucun match aujourd'hui."))
+    lines.append("Prochains matchs: " + (_format_match_list(upcoming) if upcoming else "aucun match à venir publié."))
+    lines.append("Classements: " + _standings_summary(data.get("standings", [])[:2]))
+    lines.append("Buteurs: " + _players_summary(data.get("top_scorers", [])[:5], "buts"))
+    lines.append("Passeurs: " + _players_summary(data.get("top_assists", [])[:5], "passes"))
+    news = (data.get("world_cup_news") or data.get("news") or [])[:3]
+    if data.get("france_news"):
+        news += data.get("france_news", [])[:2]
+    lines.append("Actualités: " + _news_summary(news[:3]))
+    return "\n".join(lines)
+
+
+def _format_match_list(matches: list[dict[str, Any]]) -> str:
+    return "; ".join(
+        f"{match.get('home_team', 'À déterminer')} vs {match.get('away_team', 'À déterminer')} ({match.get('date', 'date inconnue')}, {match.get('status', 'statut inconnu')})"
+        for match in matches
+    )
+
+
+def _standings_summary(groups: list[dict[str, Any]]) -> str:
+    if not groups:
+        return "non publiés."
+    parts: list[str] = []
+    for group in groups:
+        teams = group.get("teams") or group.get("standings") or []
+        team_bits = []
+        for team in teams[:4]:
+            name = team.get("team") or team.get("name") or team.get("team_name") or "Équipe"
+            pts = team.get("points", team.get("pts", "?"))
+            team_bits.append(f"{name} {pts} pts")
+        if team_bits:
+            parts.append(f"{group.get('name', 'Groupe')}: " + ", ".join(team_bits))
+    return "; ".join(parts) if parts else "non publiés."
+
+
+def _players_summary(players: list[dict[str, Any]], label: str) -> str:
+    if not players:
+        return "non publiés."
+    return "; ".join(f"{player.get('name', 'Joueur')} {player.get('value', 0)} {label}" for player in players)
+
+
+def _news_summary(news: list[dict[str, Any]]) -> str:
+    if not news:
+        return "aucune actualité disponible."
+    return "; ".join(f"{item.get('source', 'Source')} - {item.get('title', 'Sans titre')}" for item in news[:3])
+
+
+def _is_today_iso(value: str) -> bool:
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return parsed.astimezone().date() == datetime.now().astimezone().date()
+
+
+def _team_strength(team_name: str, dashboards: list[dict[str, Any]]) -> tuple[float, list[str]]:
+    key = _team_key(team_name)
+    score = 0.0
+    reasons: list[str] = []
+    for data in dashboards:
+        for group in data.get("standings", []):
+            teams = group.get("teams") or group.get("standings") or []
+            for row in teams:
+                name = row.get("team") or row.get("name") or row.get("team_name") or ""
+                if _team_key(name) == key:
+                    points = _number(row.get("points", row.get("pts")))
+                    goal_diff = _number(row.get("goal_difference", row.get("gd", row.get("diff"))))
+                    score += points * 0.7 + goal_diff * 0.2
+                    reasons.append(f"{team_name} ressort mieux dans le classement disponible ({points:g} pts, différence {goal_diff:g}).")
+        for player in (data.get("top_scorers", []) + data.get("top_assists", [])):
+            player_team = player.get("team") or player.get("country") or ""
+            if _team_key(player_team) == key:
+                value = _number(player.get("value"))
+                score += 1.0 + min(value, 10) * 0.15
+                reasons.append(f"{team_name} a un joueur en vue dans les statistiques offensives publiées.")
+        details = data.get("teams_details", {}).get(team_name, {})
+        squad = details.get("squad") or []
+        if squad:
+            score += min(len(squad), 26) * 0.03
+            reasons.append(f"l'effectif de {team_name} est mieux renseigné dans les données disponibles.")
+    return score, reasons
+
+
+def _team_key(value: Any) -> str:
+    return "".join(ch for ch in str(value or "").casefold() if ch.isalnum())
+
+
+def _number(value: Any) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
 
 def _openai_response_text(data: dict[str, Any]) -> str:
     text = data.get("output_text")
@@ -288,6 +484,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json(body, status)
         elif path == "/api/football-chatbot":
             body, status = football_chatbot_response(payload)
+            self._send_json(body, status)
+        elif path == "/api/coach-prediction":
+            body, status = coach_prediction_response(payload)
             self._send_json(body, status)
         else:
             self.send_error(404)

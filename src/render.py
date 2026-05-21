@@ -491,6 +491,11 @@ def _page(data: dict[str, Any]) -> str:
     .prediction-separator {{ color: var(--gold); font-size: 26px; font-weight: 950; }}
     .community-status {{ margin-top: 10px; color: #ffe1a0; font-size: 13px; min-height: 18px; }}
     .match-context {{ text-align: center; color: var(--muted); font-size: 12px; font-weight: 800; }}
+    .coach-prediction {{ display: grid; gap: 7px; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); color: #eaf4ff; }}
+    .coach-prediction-top {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 950; }}
+    .coach-badge {{ display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }}
+    .coach-reason {{ color: #d6e5f7; font-size: 13px; line-height: 1.4; }}
+    .coach-disclaimer {{ color: var(--muted); font-size: 11px; font-weight: 800; }}
     @media (max-width: 860px) {{
       main {{ width: min(100% - 20px, 1240px); padding-top: 14px; }}
       .app-top {{ grid-template-columns: 1fr; align-items: start; }}
@@ -633,7 +638,7 @@ def _app_header() -> str:
         </div>
         <div class="global-controls">
           <button class="action-button" type="button" id="shareButton">Partager</button>
-          <button class="action-button" type="button" id="chatbotButton">Chatbot Foot</button>
+          <button class="action-button" type="button" id="chatbotButton">Coach Akro</button>
           <a class="action-button" href="/watch-party">Watch Party</a>
         </div>
       </div>
@@ -895,6 +900,11 @@ def _community_section() -> str:
               <div class="prediction-team away"><span id="predictionAwayFlag" class="flag placeholder" aria-hidden="true"></span><span class="prediction-team-name" id="predictionAwayName">Équipe B</span></div>
             </div>
             <div class="match-context" id="predictionContext"></div>
+            <div class="coach-prediction" id="coachPrediction" aria-live="polite">
+              <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Analyse fictive pour le jeu entre amis.</span></div>
+              <div class="coach-reason">Coach Akro : données insuffisantes pour une prédiction fiable.</div>
+              <div class="coach-disclaimer">Aucun conseil de pari réel.</div>
+            </div>
             <button class="action-button" type="submit" disabled>Valider le pronostic</button>
           </form>
           <div class="community-status" id="predictionStatus"></div>
@@ -1328,13 +1338,13 @@ def _football_chatbot_modal() -> str:
       <header class="team-modal-head">
         <div class="alltime-rank">⚽</div>
         <div>
-          <div class="team-modal-title" id="footballChatbotTitle">Chatbot Foot</div>
-          <div class="subtle">Assistant sportif, réponses en français.</div>
+          <div class="team-modal-title" id="footballChatbotTitle">Coach Akro</div>
+          <div class="subtle">Assistant football spécialisé, analyste et coach.</div>
         </div>
         <button class="modal-close" type="button" id="footballChatbotClose" aria-label="Fermer">×</button>
       </header>
       <div class="chatbot-messages" id="footballChatbotMessages">
-        <div class="chatbot-message bot">Salut, pose-moi une question sur le football.</div>
+        <div class="chatbot-message bot">Salut, je suis Coach Akro. Pose-moi une question foot.</div>
       </div>
       <form class="chatbot-form" id="footballChatbotForm">
         <input id="footballChatbotInput" type="text" maxlength="500" placeholder="Pose ta question foot…" autocomplete="off">
@@ -1401,9 +1411,9 @@ def _football_chatbot_script() -> str:
           body: JSON.stringify({message: question})
         });
         const data = await response.json().catch(() => ({}));
-        pending.textContent = data.answer || data.error || 'Chatbot indisponible';
+        pending.textContent = data.answer || data.error || 'Coach Akro indisponible';
       } catch (error) {
-        pending.textContent = 'Chatbot indisponible';
+        pending.textContent = 'Coach Akro indisponible';
       }
     });
   </script>"""
@@ -1619,10 +1629,12 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const predictionHomeFlag = document.getElementById('predictionHomeFlag');
     const predictionAwayFlag = document.getElementById('predictionAwayFlag');
     const predictionContext = document.getElementById('predictionContext');
+    const coachPrediction = document.getElementById('coachPrediction');
     const predictionStatus = document.getElementById('predictionStatus');
     const predictionPseudo = document.getElementById('predictionPseudo');
     const predictionSubmit = predictionForm.querySelector('button[type="submit"]');
     let communityMatches = DASHBOARD_MATCHES;
+    let coachPredictionRequest = 0;
 
     function pseudoValue() {{
       return (predictionPseudo.value || '').trim();
@@ -1777,6 +1789,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         predictionContext.textContent = competitionFilter.value === 'today'
           ? 'Aucun match du jour disponible pour les pronostics'
           : 'Aucun match disponible avec ce filtre';
+        updateCoachPrediction(null);
         updatePredictionButton(false, false);
         return;
       }}
@@ -1785,7 +1798,58 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       predictionHomeFlag.innerHTML = flagMarkup(match.home_flag_url);
       predictionAwayFlag.innerHTML = flagMarkup(match.away_flag_url);
       predictionContext.textContent = `${{match.competition || 'Compétition'}} · ${{shortDate(match.date)}} · ${{match.phase || ''}}`;
+      updateCoachPrediction(match);
       updatePredictionButton();
+    }}
+
+    function renderCoachPrediction(data) {{
+      if (!coachPrediction) return;
+      const fallback = {{
+        predicted_winner: 'Données insuffisantes',
+        confidence: '',
+        reason: 'Données insuffisantes pour une prédiction fiable.',
+        disclaimer: 'Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel.'
+      }};
+      const info = data || fallback;
+      const winner = info.predicted_winner && info.predicted_winner !== 'Données insuffisantes'
+        ? info.predicted_winner
+        : 'données insuffisantes pour une prédiction fiable';
+      const confidence = info.confidence ? ` — confiance ${{escapeHtml(info.confidence)}}%` : '';
+      const reason = info.reason || fallback.reason;
+      const disclaimer = info.disclaimer || fallback.disclaimer;
+      coachPrediction.innerHTML = `
+        <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Coach Akro : ${{escapeHtml(winner)}}${{confidence}}.</span></div>
+        <div class="coach-reason">Raison : ${{escapeHtml(reason)}}</div>
+        <div class="coach-disclaimer">${{escapeHtml(disclaimer)}}</div>
+      `;
+    }}
+
+    async function updateCoachPrediction(match) {{
+      const requestId = ++coachPredictionRequest;
+      if (!match) {{
+        renderCoachPrediction(null);
+        return;
+      }}
+      if (!serverMode) {{
+        renderCoachPrediction(null);
+        return;
+      }}
+      coachPrediction.innerHTML = `
+        <div class="coach-prediction-top"><span class="coach-badge">Coach Akro</span><span>Analyse en cours...</span></div>
+        <div class="coach-reason">Analyse fictive pour le jeu entre amis.</div>
+        <div class="coach-disclaimer">Aucun conseil de pari réel.</div>
+      `;
+      try {{
+        const response = await fetch('/api/coach-prediction', {{
+          method: 'POST',
+          headers: {{'Content-Type': 'application/json'}},
+          body: JSON.stringify({{match_id: match.id}})
+        }});
+        const data = await response.json().catch(() => ({{}}));
+        if (requestId === coachPredictionRequest) renderCoachPrediction(data);
+      }} catch (error) {{
+        if (requestId === coachPredictionRequest) renderCoachPrediction(null);
+      }}
     }}
 
     function renderLeaderboard(rows) {{
