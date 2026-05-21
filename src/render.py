@@ -963,7 +963,7 @@ def _focus_icon(data: dict[str, Any], name: str) -> str:
                 return str(match.get("home_flag_url") or "")
             if match.get("away_team") == name and match.get("away_flag_url"):
                 return str(match.get("away_flag_url") or "")
-    return ""
+    return _fallback_team_asset(name)
 
 
 def _display_focus_name(name: str) -> str:
@@ -975,6 +975,47 @@ def _display_focus_name(name: str) -> str:
         "South Africa": "Afrique du Sud",
     }
     return aliases.get(str(name), str(name))
+
+
+def _fallback_team_asset(name: str) -> str:
+    return _known_club_logo(name) or _known_country_flag(name)
+
+
+def _known_country_flag(name: str) -> str:
+    key = _normalize_team_label(name)
+    slugs = {
+        "afrique du sud": "rsa",
+        "allemagne": "ger",
+        "angleterre": "eng",
+        "argentina": "arg",
+        "argentine": "arg",
+        "belgique": "bel",
+        "brazil": "bra",
+        "bresil": "bra",
+        "bosnia herzegovina": "bih",
+        "bosnie herzegovine": "bih",
+        "cote d ivoire": "civ",
+        "croatie": "cro",
+        "espagne": "esp",
+        "etats unis": "usa",
+        "france": "fra",
+        "georgie": "geo",
+        "germany": "ger",
+        "italie": "ita",
+        "japon": "jpn",
+        "maroc": "mar",
+        "mexico": "mex",
+        "mexique": "mex",
+        "norvege": "nor",
+        "pays bas": "ned",
+        "pologne": "pol",
+        "portugal": "por",
+        "senegal": "sen",
+        "south africa": "rsa",
+        "uruguay": "uru",
+    }
+    slug = slugs.get(key)
+    return f"https://a.espncdn.com/i/teamlogos/countries/500/{slug}.png" if slug else ""
 
 
 def _season_tabs(kind: str, label: str, options: list[tuple[str, str]]) -> str:
@@ -1028,8 +1069,8 @@ def _france_next_match_badge(match: dict[str, Any] | None) -> str:
         return "France : prochain match à déterminer"
     date = _format_datetime(match.get("date", ""), with_time=True)
     opponent = match.get("opponent_display") or match.get("opponent") or "À déterminer"
-    france_flag = _flag(match.get("france_flag_url", ""))
-    opponent_flag = _flag(match.get("opponent_flag_url", ""))
+    france_flag = _flag(match.get("france_flag_url", "") or _fallback_team_asset("France"))
+    opponent_flag = _flag(match.get("opponent_flag_url", "") or _fallback_team_asset(opponent))
     if opponent == "À déterminer":
         return f"{france_flag}France vs À déterminer — {escape(date)}"
     return f"{france_flag}France vs {escape(opponent)} {opponent_flag}— {escape(date)}"
@@ -1041,7 +1082,9 @@ def _psg_next_match_badge(match: dict[str, Any] | None) -> str:
     date = _format_datetime(match.get("date", ""), with_time=True)
     team = match.get("team") or "PSG"
     opponent = match.get("opponent") or "À déterminer"
-    return f'{_logo_or_placeholder(match.get("team_logo_url", ""))}{escape(_psg_display_name(team))} vs {escape(opponent)} {_logo_or_placeholder(match.get("opponent_logo_url", ""))}— {escape(date)}'
+    team_logo = match.get("team_logo_url", "") or _fallback_team_asset(team)
+    opponent_logo = match.get("opponent_logo_url", "") or _fallback_team_asset(opponent)
+    return f'{_logo_or_placeholder(team_logo)}{escape(_psg_display_name(team))} vs {escape(opponent)} {_logo_or_placeholder(opponent_logo)}— {escape(date)}'
 
 
 def _psg_display_name(name: str) -> str:
@@ -1229,18 +1272,31 @@ def _player_team_logo(player: dict[str, Any]) -> str:
 def _known_club_logo(team: str) -> str:
     key = _normalize_team_label(team)
     logos = {
+        "ac milan": "https://a.espncdn.com/i/teamlogos/soccer/500/103.png",
+        "ajax": "https://a.espncdn.com/i/teamlogos/soccer/500/139.png",
         "aj auxerre": "https://a.espncdn.com/i/teamlogos/soccer/500/172.png",
         "arsenal": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
         "as monaco": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png",
         "atletico madrid": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png",
+        "atlético madrid": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png",
         "auxerre": "https://a.espncdn.com/i/teamlogos/soccer/500/172.png",
+        "barcelona": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png",
+        "bayer leverkusen": "https://a.espncdn.com/i/teamlogos/soccer/500/131.png",
         "bayern munich": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
         "bayern munchen": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
+        "borussia dortmund": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png",
+        "chelsea": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png",
+        "internazionale": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png",
+        "inter milan": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png",
+        "juventus": "https://a.espncdn.com/i/teamlogos/soccer/500/111.png",
         "lille": "https://a.espncdn.com/i/teamlogos/soccer/500/166.png",
         "losc": "https://a.espncdn.com/i/teamlogos/soccer/500/166.png",
         "lyon": "https://a.espncdn.com/i/teamlogos/soccer/500/167.png",
+        "manchester city": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png",
+        "manchester united": "https://a.espncdn.com/i/teamlogos/soccer/500/360.png",
         "marseille": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png",
         "monaco": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png",
+        "napoli": "https://a.espncdn.com/i/teamlogos/soccer/500/114.png",
         "newcastle united": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png",
         "nice": "https://a.espncdn.com/i/teamlogos/soccer/500/2502.png",
         "ogc nice": "https://a.espncdn.com/i/teamlogos/soccer/500/2502.png",
@@ -1250,6 +1306,7 @@ def _known_club_logo(team: str) -> str:
         "psg": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
         "rc lens": "https://a.espncdn.com/i/teamlogos/soccer/500/175.png",
         "real madrid": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+        "villarreal": "https://a.espncdn.com/i/teamlogos/soccer/500/102.png",
         "lens": "https://a.espncdn.com/i/teamlogos/soccer/500/175.png",
     }
     return logos.get(key, "")
@@ -1575,7 +1632,7 @@ def _ko_match(match: dict[str, Any], extra_class: str = "") -> str:
 
 def _bracket_team(name: str, flag_url: str = "") -> str:
     label = str(name or "À déterminer")
-    icon = _flag(flag_url)
+    icon = _flag(flag_url or _fallback_team_asset(label))
     if label == "À déterminer":
         return f'<span class="bracket-team">{icon}<span class="bracket-team-name">{escape(label)}</span></span>'
     return f'<button class="bracket-team" type="button" data-team="{escape(label, quote=True)}">{icon}<span class="bracket-team-name">{escape(label)}</span></button>'
@@ -1583,10 +1640,11 @@ def _bracket_team(name: str, flag_url: str = "") -> str:
 
 def _team_button(name: str, flag_url: str = "", reverse: bool = False) -> str:
     label = str(name or "À déterminer")
+    icon = _flag(flag_url or _fallback_team_asset(label))
     if label == "À déterminer":
-        content = f"{escape(label)}{_flag(flag_url)}" if reverse else f"{_flag(flag_url)}{escape(label)}"
+        content = f"{escape(label)}{icon}" if reverse else f"{icon}{escape(label)}"
         return f'<span class="team">{content}</span>'
-    content = f"{escape(label)}{_flag(flag_url)}" if reverse else f"{_flag(flag_url)}{escape(label)}"
+    content = f"{escape(label)}{icon}" if reverse else f"{icon}{escape(label)}"
     return f'<button class="team team-button" type="button" data-team="{escape(label, quote=True)}">{content}</button>'
 
 
@@ -1832,12 +1890,37 @@ def _focus_script(matches: list[dict[str, Any]], teams_details: dict[str, Any]) 
       return url ? `<img class="flag" src="${{focusEscape(url)}}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
     }}
 
+    function focusNormalize(name) {{
+      return String(name || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+    }}
+
+    function focusFallbackIcon(team) {{
+      const key = focusNormalize(team);
+      const clubs = {{
+        'arsenal': 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png',
+        'barcelona': 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+        'bayern munich': 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png',
+        'chelsea': 'https://a.espncdn.com/i/teamlogos/soccer/500/363.png',
+        'liverpool': 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png',
+        'manchester city': 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png',
+        'paris saint germain': 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png',
+        'psg': 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png',
+        'real madrid': 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'
+      }};
+      const countries = {{
+        'afrique du sud': 'rsa', 'allemagne': 'ger', 'angleterre': 'eng', 'argentine': 'arg',
+        'bresil': 'bra', 'bosnie herzegovine': 'bih', 'espagne': 'esp', 'france': 'fra',
+        'italie': 'ita', 'maroc': 'mar', 'mexique': 'mex', 'senegal': 'sen', 'uruguay': 'uru'
+      }};
+      return clubs[key] || (countries[key] ? `https://a.espncdn.com/i/teamlogos/countries/500/${{countries[key]}}.png` : '');
+    }}
+
     function focusTeamIcon(team) {{
       const details = FOCUS_TEAMS[team] || {{}};
       if (details.flag_url) return details.flag_url;
       const match = FOCUS_MATCHES.find(item => item.home_team === team || item.away_team === team);
-      if (!match) return '';
-      return match.home_team === team ? match.home_flag_url : match.away_flag_url;
+      if (match) return match.home_team === team ? match.home_flag_url : match.away_flag_url;
+      return focusFallbackIcon(team);
     }}
 
     function focusTimestamp(match) {{
@@ -1907,6 +1990,39 @@ def _leagues_script() -> str:
     const LEAGUES_DATA = leaguesDataNode ? JSON.parse(leaguesDataNode.textContent || '{}') : null;
     const LEAGUE_KEY = 'akrodufoot:selected-league';
     const LEAGUE_FOCUS_KEY = 'akrodufoot:league-focus:';
+    const LEAGUE_CLUB_LOGOS = {
+      'ac milan': 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png',
+      'ajax': 'https://a.espncdn.com/i/teamlogos/soccer/500/139.png',
+      'aj auxerre': 'https://a.espncdn.com/i/teamlogos/soccer/500/172.png',
+      'arsenal': 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png',
+      'as monaco': 'https://a.espncdn.com/i/teamlogos/soccer/500/174.png',
+      'atletico madrid': 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png',
+      'atlético madrid': 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png',
+      'auxerre': 'https://a.espncdn.com/i/teamlogos/soccer/500/172.png',
+      'barcelona': 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+      'bayer leverkusen': 'https://a.espncdn.com/i/teamlogos/soccer/500/131.png',
+      'bayern munich': 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png',
+      'borussia dortmund': 'https://a.espncdn.com/i/teamlogos/soccer/500/124.png',
+      'chelsea': 'https://a.espncdn.com/i/teamlogos/soccer/500/363.png',
+      'internazionale': 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png',
+      'inter milan': 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png',
+      'juventus': 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png',
+      'lille': 'https://a.espncdn.com/i/teamlogos/soccer/500/166.png',
+      'losc': 'https://a.espncdn.com/i/teamlogos/soccer/500/166.png',
+      'lyon': 'https://a.espncdn.com/i/teamlogos/soccer/500/167.png',
+      'manchester city': 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png',
+      'manchester united': 'https://a.espncdn.com/i/teamlogos/soccer/500/360.png',
+      'marseille': 'https://a.espncdn.com/i/teamlogos/soccer/500/176.png',
+      'monaco': 'https://a.espncdn.com/i/teamlogos/soccer/500/174.png',
+      'napoli': 'https://a.espncdn.com/i/teamlogos/soccer/500/114.png',
+      'nice': 'https://a.espncdn.com/i/teamlogos/soccer/500/2502.png',
+      'ogc nice': 'https://a.espncdn.com/i/teamlogos/soccer/500/2502.png',
+      'paris saint germain': 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png',
+      'psg': 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png',
+      'rc lens': 'https://a.espncdn.com/i/teamlogos/soccer/500/175.png',
+      'real madrid': 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png',
+      'villarreal': 'https://a.espncdn.com/i/teamlogos/soccer/500/102.png'
+    };
 
     function leagueEscape(value) {
       return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1922,8 +2038,14 @@ def _leagues_script() -> str:
       return url ? `<img class="flag" src="${leagueEscape(url)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
     }
 
+    function leagueClubLogo(name) {
+      const key = String(name || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+      return LEAGUE_CLUB_LOGOS[key] || '';
+    }
+
     function leagueTeam(name, logo = '', reverse = false) {
-      const content = reverse ? `${leagueEscape(name)}${leagueFlag(logo)}` : `${leagueFlag(logo)}${leagueEscape(name)}`;
+      const safeLogo = logo || leagueClubLogo(name);
+      const content = reverse ? `${leagueEscape(name)}${leagueFlag(safeLogo)}` : `${leagueFlag(safeLogo)}${leagueEscape(name)}`;
       return `<button class="team team-button" type="button" data-team="${leagueEscape(name)}">${content}</button>`;
     }
 
@@ -1945,11 +2067,11 @@ def _leagues_script() -> str:
     }
 
     function leaguePlayerCard(player, label, variant = 'club') {
-      const clubLogo = player.team_logo_url || player.club_logo_url || player.flag_url || '';
+      const club = player.team || '';
+      const clubLogo = player.team_logo_url || player.club_logo_url || leagueClubLogo(club) || player.flag_url || '';
       const countryFlag = player.country_flag_url || player.flag_url || '';
       const mainImage = variant === 'big5' ? countryFlag : clubLogo;
       const avatar = mainImage ? `<img class="avatar" src="${leagueEscape(mainImage)}" alt="">` : '<div class="avatar placeholder" aria-hidden="true"></div>';
-      const club = player.team || '';
       const bgClass = variant === 'big5' && player.league_key ? ` big5-card league-bg-${leagueEscape(player.league_key)}` : '';
       return `<article class="card player-card${bgClass}">
         <div class="avatar-wrap">${avatar}</div>
@@ -1998,7 +2120,7 @@ def _leagues_script() -> str:
       if (clubSelect) {
         clubSelect.innerHTML = clubs.map(club => `<option value="${leagueEscape(club)}"${club === focus ? ' selected' : ''}>${leagueEscape((FOCUS_TEAMS && FOCUS_TEAMS[club] && FOCUS_TEAMS[club].name) || club)}</option>`).join('');
       }
-      const focusLogo = typeof focusTeamIcon === 'function' ? focusTeamIcon(focus) : '';
+      const focusLogo = (typeof focusTeamIcon === 'function' ? focusTeamIcon(focus) : '') || leagueClubLogo(focus);
       const icon = document.getElementById('leagueFocusIcon');
       if (icon) icon.innerHTML = leagueFlag(focusLogo);
       const backdrop = document.getElementById('leagueFocusBackdrop');
@@ -2010,9 +2132,11 @@ def _leagues_script() -> str:
         if (next) {
           const isHome = next.home_team === focus;
           const opponent = isHome ? next.away_team : next.home_team;
-          nextNode.innerHTML = `${leagueFlag(isHome ? next.home_flag_url : next.away_flag_url)}<span class="focus-match-text">${leagueEscape(focus)} vs ${leagueEscape(opponent)} — ${leagueEscape(leagueDate(next.date))}</span>${leagueFlag(isHome ? next.away_flag_url : next.home_flag_url)}`;
+          const focusMatchLogo = (isHome ? next.home_flag_url : next.away_flag_url) || leagueClubLogo(focus);
+          const opponentMatchLogo = (isHome ? next.away_flag_url : next.home_flag_url) || leagueClubLogo(opponent);
+          nextNode.innerHTML = `${leagueFlag(focusMatchLogo)}<span class="focus-match-text">${leagueEscape(focus)} vs ${leagueEscape(opponent)} — ${leagueEscape(leagueDate(next.date))}</span>${leagueFlag(opponentMatchLogo)}`;
         } else {
-          nextNode.innerHTML = `${leagueFlag(typeof focusTeamIcon === 'function' ? focusTeamIcon(focus) : '')}<span class="focus-match-text">Prochain match à déterminer</span>`;
+          nextNode.innerHTML = `${leagueFlag((typeof focusTeamIcon === 'function' ? focusTeamIcon(focus) : '') || leagueClubLogo(focus))}<span class="focus-match-text">Prochain match à déterminer</span>`;
         }
       }
       const updated = document.getElementById('leaguesUpdated');
