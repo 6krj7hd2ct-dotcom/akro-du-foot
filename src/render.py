@@ -236,7 +236,7 @@ def _page(data: dict[str, Any]) -> str:
       box-shadow: 0 0 14px rgba(239,51,64,0.75);
     }}
     .mercato-track {{ min-width: 0; overflow: hidden; display: flex; align-items: center; }}
-    .mercato-marquee {{ display: flex; width: max-content; animation: mercato-scroll 42s linear infinite; will-change: transform; }}
+    .mercato-marquee {{ display: flex; width: max-content; animation: mercato-scroll 92s linear infinite; will-change: transform; }}
     .mercato-track:hover .mercato-marquee {{ animation-play-state: paused; }}
     .mercato-items {{ display: flex; align-items: center; gap: 28px; padding: 0 28px; white-space: nowrap; }}
     .mercato-link {{ display: inline-flex; align-items: center; gap: 8px; color: #eaf4ff; text-decoration: none; font-size: 14px; font-weight: 850; }}
@@ -398,6 +398,20 @@ def _page(data: dict[str, Any]) -> str:
     .player-card.big5-card {{ position: relative; overflow: hidden; }}
     .player-card.big5-card::before {{ content: ""; position: absolute; inset: 0; opacity: 0.16; pointer-events: none; }}
     .player-card.big5-card > * {{ position: relative; z-index: 1; }}
+    .big5-ticker {{
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(245,201,107,0.22);
+      border-radius: 18px;
+      background: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(18,43,70,0.72));
+      box-shadow: 0 18px 44px rgba(0,0,0,0.22);
+    }}
+    .big5-track {{ display: flex; width: max-content; animation: big5-scroll 72s linear infinite; will-change: transform; }}
+    .big5-ticker:hover .big5-track {{ animation-play-state: paused; }}
+    .big5-items {{ display: flex; align-items: stretch; gap: 14px; padding: 14px; white-space: nowrap; }}
+    .big5-item {{ width: min(310px, 78vw); flex: 0 0 auto; min-height: 138px; }}
+    .big5-item .player-card {{ height: 100%; }}
+    @keyframes big5-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .league-bg-ligue1::before {{ background: linear-gradient(90deg, #0055a4 0 33%, #fff 33% 66%, #ef4135 66%); }}
     .league-bg-laliga::before {{ background: linear-gradient(180deg, #aa151b 0 28%, #f1bf00 28% 72%, #aa151b 72%); }}
     .league-bg-bundesliga::before {{ background: linear-gradient(180deg, #000 0 33%, #dd0000 33% 66%, #ffce00 66%); }}
@@ -714,7 +728,7 @@ def _page(data: dict[str, Any]) -> str:
       .global-controls {{ justify-content: flex-start; }}
       .mercato-ticker {{ grid-template-columns: 1fr; }}
       .mercato-badge {{ justify-content: center; }}
-      .mercato-marquee {{ animation-duration: 34s; }}
+      .mercato-marquee {{ animation-duration: 118s; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
       .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; transform: none; width: clamp(92px, 25vw, 138px); opacity: 0.62; }}
@@ -754,6 +768,7 @@ def _page(data: dict[str, Any]) -> str:
       .action-button {{ flex: 1 1 130px; text-align: center; }}
       .mercato-link {{ font-size: 13px; }}
       .mercato-items {{ gap: 20px; padding: 0 20px; }}
+      .big5-track {{ animation-duration: 92s; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
       .league-calendar-match {{ grid-template-columns: 1fr; text-align: center; }}
@@ -783,8 +798,8 @@ def _page(data: dict[str, Any]) -> str:
   <main>
     {_app_header()}
     {_mercato_ticker(mercato_data)}
-    {_tabs_nav(champions_data, leagues_data)}
     {_community_section()}
+    {_tabs_nav(champions_data, leagues_data)}
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
       {_competition_trophy_svg("worldcup", "hero")}
@@ -1024,7 +1039,7 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
       <section class="today-strip" id="leagueUpcoming" aria-label="Matchs à venir championnat"></section>
 
       {_section_head("Meilleurs buteurs des 5 grands championnats", "Le meilleur buteur publié pour chaque championnat.")}
-      <section class="leaders" id="big5TopScorers"></section>
+      <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
 
       {_section_head("Meilleurs buteurs", "Top 5 du championnat sélectionné.")}
       <section class="leaders" id="leagueTopScorers"></section>
@@ -2394,7 +2409,8 @@ def _leagues_script() -> str:
       const honoursButton = document.getElementById('leagueHonoursButton');
       if (honoursButton) honoursButton.dataset.alltime = `league-history-${key}`;
       document.getElementById('leagueUpcoming').innerHTML = (league.upcoming_matches || []).slice(0,3).map(leagueMatchCard).join('') || '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong></article>';
-      document.getElementById('big5TopScorers').innerHTML = (LEAGUES_DATA.big5_top_scorers || []).map(player => leaguePlayerCard(player, 'buts', 'big5')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
+      const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
+      document.getElementById('big5TopScorers').innerHTML = big5Items ? `<div class="big5-track"><div class="big5-items">${big5Items}</div><div class="big5-items" aria-hidden="true">${big5Items}</div></div>` : '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,5).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopAssists').innerHTML = (league.top_assists || []).slice(0,5).map(player => leaguePlayerCard(player, 'passes', 'club')).join('') || '<div class="empty">Passeurs indisponibles.</div>';
       document.getElementById('leagueStandings').innerHTML = (league.standings || []).map(leagueGroupCard).join('') || '<div class="empty">Classement indisponible.</div>';
