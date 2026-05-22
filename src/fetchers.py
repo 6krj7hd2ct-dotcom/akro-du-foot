@@ -151,6 +151,7 @@ NEWS_SOURCE_PRIORITY = (
     "france football",
     "goal",
     "fifa",
+    "fff",
     "uefa",
 )
 
@@ -172,6 +173,7 @@ NEWS_SOURCE_LOGOS = {
     "le phoceen": "https://www.lephoceen.fr/favicon.ico",
     "le phocéen": "https://www.lephoceen.fr/favicon.ico",
     "fifa": "https://www.fifa.com/favicon.ico",
+    "fff": "https://www.fff.fr/favicon.ico",
     "uefa": "https://www.uefa.com/favicon.ico",
 }
 
@@ -273,6 +275,11 @@ DEDICATED_WORLD_CUP_NEWS_SOURCES = [
     {"source": "Foot Mercato", "url": "https://www.footmercato.net/international/coupe-du-monde/actu"},
     {"source": "FIFA", "url": "https://www.fifa.com/fr/tournaments/mens/worldcup/canadamexicousa2026/news"},
 ]
+DEDICATED_FFF_FRANCE_NEWS_SOURCE = {
+    "source": "FFF",
+    "url": "https://www.fff.fr/selection/2-equipe-de-france/index.html",
+    "topic": "focus",
+}
 DEDICATED_CHAMPIONS_NEWS_SOURCES = [
     {"source": "Foot Mercato", "url": "https://www.footmercato.net/europe/ligue-des-champions-uefa/actu"},
     {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/Ligue-des-champions/"},
@@ -494,6 +501,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
     world_cup_news = _safe_fetch("actualités Coupe du Monde Foot Mercato + FIFA", fetch_world_cup_news, errors)
+    fff_news = _safe_fetch("actualités FFF Équipe de France", fetch_fff_france_news, errors)
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
     all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
@@ -525,10 +533,11 @@ def fetch_dashboard_data() -> dict[str, Any]:
         "all_time_top_assisters": all_time_top_assisters,
         "world_cup_news": world_cup_news,
         "france_news": news,
+        "fff_news": fff_news,
         "general_news": world_cup_news,
         "all_news": _dedupe_news(world_cup_news)[:12],
         "focused_team_news": focused_team_news,
-        "news_sources": [source["source"] for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
+        "news_sources": [source["source"] for source in DEDICATED_WORLD_CUP_NEWS_SOURCES] + [DEDICATED_FFF_FRANCE_NEWS_SOURCE["source"]],
         "sources": [
             {"name": "ESPN - classements", "url": ESPN_STANDINGS_URL},
             {"name": "ESPN - matchs", "url": ESPN_SCOREBOARD_URL},
@@ -539,6 +548,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "StatBunker - buteurs all-time", "url": STATBUNKER_ALL_TIME_SCORERS_URL},
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
             *[{"name": f"Actu Coupe du Monde - {source['source']}", "url": source["url"]} for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
+            {"name": "Actu Équipe de France - FFF", "url": DEDICATED_FFF_FRANCE_NEWS_SOURCE["url"]},
         ],
         "errors": errors,
     }
@@ -1767,6 +1777,10 @@ def fetch_world_cup_news() -> list[dict[str, Any]]:
     return fetch_dedicated_news(DEDICATED_WORLD_CUP_NEWS_SOURCES, limit=6, per_source=3)
 
 
+def fetch_fff_france_news() -> list[dict[str, Any]]:
+    return fetch_dedicated_news([DEDICATED_FFF_FRANCE_NEWS_SOURCE], limit=8, per_source=8)
+
+
 def fetch_champions_league_news() -> list[dict[str, Any]]:
     return fetch_dedicated_news(DEDICATED_CHAMPIONS_NEWS_SOURCES, limit=6, per_source=3)
 
@@ -2030,7 +2044,7 @@ def _is_dedicated_article_link(url: str, title: str, source_name: str) -> bool:
         return False
     normalized = _normalize_news_text(title)
     blocked = {"accueil", "contact", "mentions legales", "archives", "voir plus", "programme tv", "classements"}
-    if normalized in blocked or any(word in normalized for word in ("connexion", "abonnez", "newsletter")):
+    if normalized in blocked or any(word in normalized for word in ("connexion", "abonnez", "newsletter", "voir toutes")):
         return False
     hostname = urlparse(url).netloc.replace("www.", "")
     if source_name == "Foot Mercato":
@@ -2039,6 +2053,9 @@ def _is_dedicated_article_link(url: str, title: str, source_name: str) -> bool:
         return hostname.endswith("lequipe.fr") and "/Football/" in urlparse(url).path
     if source_name == "FIFA":
         return hostname.endswith("fifa.com") and "/news" in urlparse(url).path
+    if source_name == "FFF":
+        path = urlparse(url).path
+        return hostname == "fff.fr" and path not in {"", "/"}
     return True
 
 
