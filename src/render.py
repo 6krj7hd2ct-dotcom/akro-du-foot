@@ -513,6 +513,16 @@ def _page(data: dict[str, Any]) -> str:
     .team-info {{ padding: 13px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.06); }}
     .team-info-label {{ color: var(--muted); font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; }}
     .team-info-value {{ font-weight: 850; }}
+    .coach-card {{ display: grid; gap: 14px; padding: 14px; border: 1px solid rgba(245,201,107,0.20); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }}
+    .coach-profile {{ display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 12px; align-items: center; }}
+    .coach-photo {{ width: 62px; height: 62px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.18); background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }}
+    .coach-photo.placeholder {{ display: grid; place-items: center; color: #07111f; font-weight: 950; }}
+    .coach-name {{ font-size: 20px; font-weight: 950; line-height: 1.1; }}
+    .coach-stats {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }}
+    .coach-stat {{ padding: 11px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.06); }}
+    .coach-stat strong {{ display: block; color: var(--gold); font-size: 22px; line-height: 1; }}
+    .coach-stat span {{ display: block; margin-top: 5px; color: var(--muted); font-size: 12px; font-weight: 850; text-transform: uppercase; }}
+    .coach-source {{ color: var(--muted); font-size: 12px; font-weight: 800; }}
     .formation-board {{ min-height: 140px; display: grid; place-items: center; border: 1px dashed rgba(245,201,107,0.30); border-radius: 16px; background: radial-gradient(ellipse at center, rgba(50,211,162,0.14), transparent 68%), linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035)); color: #d6e5f7; font-weight: 850; }}
     .roster-section h3 {{ padding: 0; margin-bottom: 10px; color: #ffe1a0; }}
     .player-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }}
@@ -654,6 +664,7 @@ def _page(data: dict[str, Any]) -> str:
       .chatbot-form {{ grid-template-columns: 1fr; }}
       .recent-match {{ grid-template-columns: 1fr; }}
       .recent-result {{ justify-self: start; }}
+      .coach-stats {{ grid-template-columns: 1fr; }}
     }}
   </style>
 </head>
@@ -1672,6 +1683,7 @@ def _team_modal() -> str:
           <div class="team-info-label">Forme récente</div>
           <div class="team-info-value">10 derniers résultats disponibles dans Akro du Foot</div>
         </div>
+        <div id="teamCoach"></div>
         <div id="teamRecent"></div>
       </div>
     </article>
@@ -2272,6 +2284,7 @@ def _team_script(teams_details: dict[str, Any], matches: list[dict[str, Any]]) -
     const modalFlag = document.getElementById('teamModalFlag');
     const modalSources = document.getElementById('teamModalSources');
     const teamRecent = document.getElementById('teamRecent');
+    const teamCoach = document.getElementById('teamCoach');
     const closeModal = document.getElementById('teamModalClose');
 
     function escapeHtml(value) {{
@@ -2330,11 +2343,50 @@ def _team_script(teams_details: dict[str, Any], matches: list[dict[str, Any]]) -
         .slice(0, 10);
     }}
 
+    function coachPhoto(info) {{
+      return info.coach_photo
+        ? `<img class="coach-photo" src="${{escapeHtml(info.coach_photo)}}" alt="">`
+        : '<div class="coach-photo placeholder" aria-hidden="true">Coach</div>';
+    }}
+
+    function coachLine(info) {{
+      const bits = [];
+      if (info.coach_age) bits.push(`${{escapeHtml(info.coach_age)}} ans`);
+      if (info.coach_country) bits.push(escapeHtml(info.coach_country));
+      if (info.coach_matches) bits.push(`${{escapeHtml(info.coach_matches)}} matchs officiels`);
+      return bits.join(' — ');
+    }}
+
+    function coachStat(label, percent, total, className) {{
+      const value = percent !== undefined && percent !== null && percent !== '' ? `${{escapeHtml(percent)}}%` : '—';
+      const detail = total !== undefined && total !== null && total !== '' ? `${{escapeHtml(total)}} ${{label.toLowerCase()}}` : label;
+      return `<div class="coach-stat ${{className || ''}}"><strong>${{value}}</strong><span>${{escapeHtml(detail)}}</span></div>`;
+    }}
+
+    function coachCard(details) {{
+      const info = details.coach_info || {{}};
+      if (!info.coach_name) return '<div class="team-info"><div class="team-info-label">Entraîneur / sélectionneur</div><div class="team-info-value">Informations entraîneur non disponibles</div></div>';
+      const source = info.source_url ? `<a href="${{escapeHtml(info.source_url)}}" target="_blank" rel="noreferrer">Foot Mercato</a>` : 'Foot Mercato';
+      return `<section class="coach-card">
+        <div class="coach-profile">
+          ${{coachPhoto(info)}}
+          <div><div class="team-info-label">Entraîneur / sélectionneur</div><div class="coach-name">${{escapeHtml(info.coach_name)}}</div><div class="subtle">${{coachLine(info)}}</div></div>
+        </div>
+        <div class="coach-stats">
+          ${{coachStat('Victoires', info.coach_win_percent, info.coach_wins, 'win')}}
+          ${{coachStat('Nuls', info.coach_draw_percent, info.coach_draws, 'draw')}}
+          ${{coachStat('Défaites', info.coach_loss_percent, info.coach_losses, 'loss')}}
+        </div>
+        <div class="coach-source">Source : ${{source}}</div>
+      </section>`;
+    }}
+
     function openTeam(name) {{
       const details = TEAMS_DETAILS[name] || {{name}};
       modalTitle.textContent = details.name || name;
       modalFlag.innerHTML = flagHtml(details.flag_url || '');
-      modalSources.textContent = 'Résultats disponibles dans les calendriers du dashboard';
+      modalSources.textContent = details.coach_info && details.coach_info.source ? `Source entraîneur : ${{details.coach_info.source}}` : 'Résultats disponibles dans les calendriers du dashboard';
+      teamCoach.innerHTML = coachCard(details);
       const matches = recentMatches(name);
       teamRecent.innerHTML = matches.length
         ? `<div class="recent-list">${{matches.map(match => recentCard(match, name)).join('')}}</div>`

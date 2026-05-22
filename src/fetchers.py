@@ -6,7 +6,7 @@ import subprocess
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 from xml.etree import ElementTree
 
 import requests
@@ -222,6 +222,42 @@ UCL_ALL_TIME_COUNTRIES = {
 }
 
 REQUEST_TIMEOUT_SECONDS = 10
+FOOTMERCATO_TIMEOUT_SECONDS = 3
+FOOTMERCATO_BASE_URL = "https://www.footmercato.net"
+
+FOOTMERCATO_TEAM_PATHS = {
+    "france": "/selection/france/effectif/",
+    "paris saint germain": "/club/psg/",
+    "psg": "/club/psg/",
+    "olympique de marseille": "/club/olympique-de-marseille/",
+    "marseille": "/club/olympique-de-marseille/",
+    "real madrid": "/club/real-madrid/",
+    "manchester city": "/club/manchester-city/",
+    "arsenal": "/club/arsenal/",
+    "barcelona": "/club/fc-barcelone/",
+    "fc barcelone": "/club/fc-barcelone/",
+    "bayern munich": "/club/bayern-munich/",
+    "borussia dortmund": "/club/borussia-dortmund/",
+    "chelsea": "/club/chelsea/",
+    "liverpool": "/club/liverpool/",
+    "inter milan": "/club/inter-milan/",
+    "internazionale": "/club/inter-milan/",
+    "juventus": "/club/juventus/",
+    "napoli": "/club/naples/",
+    "ac milan": "/club/ac-milan/",
+    "as monaco": "/club/as-monaco/",
+    "monaco": "/club/as-monaco/",
+    "lyon": "/club/olympique-lyonnais/",
+    "olympique lyonnais": "/club/olympique-lyonnais/",
+    "lille": "/club/lille/",
+    "losc": "/club/lille/",
+    "nice": "/club/ogc-nice/",
+    "ogc nice": "/club/ogc-nice/",
+    "rc lens": "/club/rc-lens/",
+    "lens": "/club/rc-lens/",
+    "aj auxerre": "/club/aj-auxerre/",
+    "auxerre": "/club/aj-auxerre/",
+}
 
 FALLBACK_ALL_TIME_SCORERS = [
     {"rank": 1, "name": "Miroslav Klose", "team": "Germany", "country": "Germany", "photo_url": "", "value": 16, "source": "FIFA / StatBunker"},
@@ -272,6 +308,11 @@ def fetch_dashboard_data() -> dict[str, Any]:
         lambda: enrich_teams_with_espn_rosters(teams_details),
         errors,
     ) or teams_details
+    teams_details = _safe_fetch(
+        "entraîneurs Foot Mercato",
+        lambda: enrich_teams_with_footmercato_coaches(teams_details),
+        errors,
+    ) or teams_details
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
     world_cup_news = _safe_fetch("actualités Coupe du Monde", fetch_world_cup_news, errors)
@@ -317,6 +358,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "ESPN - équipes", "url": ESPN_TEAMS_URL},
             {"name": "ESPN - statistiques", "url": ESPN_SCORING_URL},
             {"name": "FotMob - statistiques joueurs", "url": FOTMOB_STATS_URL},
+            {"name": "Foot Mercato - fiches équipes", "url": FOOTMERCATO_BASE_URL},
             {"name": "StatBunker - buteurs all-time", "url": STATBUNKER_ALL_TIME_SCORERS_URL},
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
             *[{"name": f"Actu Coupe du Monde - {feed['source']}", "url": feed["url"]} for feed in WORLD_CUP_NEWS_FEEDS],
@@ -347,6 +389,11 @@ def fetch_champions_league_data() -> dict[str, Any]:
     teams_details = _safe_fetch(
         "effectifs clubs Ligue des Champions FotMob",
         lambda: enrich_teams_with_fotmob_rosters(teams_details, UCL_FOTMOB_STATS_URL),
+        errors,
+    ) or teams_details
+    teams_details = _safe_fetch(
+        "entraîneurs clubs Ligue des Champions Foot Mercato",
+        lambda: enrich_teams_with_footmercato_coaches(teams_details),
         errors,
     ) or teams_details
     scorers = _safe_fetch("buteurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_SCORING_URL, 0), errors)
@@ -407,6 +454,7 @@ def fetch_champions_league_data() -> dict[str, Any]:
             {"name": "ESPN - matchs Ligue des Champions", "url": UCL_ESPN_SCOREBOARD_URL},
             {"name": "ESPN - statistiques Ligue des Champions", "url": UCL_ESPN_SCORING_URL},
             {"name": "FotMob - Ligue des Champions", "url": UCL_FOTMOB_STATS_URL},
+            {"name": "Foot Mercato - fiches clubs", "url": FOOTMERCATO_BASE_URL},
             {"name": "UEFA - buteurs all-time Ligue des Champions", "url": UEFA_UCL_ALL_TIME_SCORERS_URL},
             *[{"name": f"Actu Ligue des Champions - {feed['source']}", "url": feed["url"]} for feed in CHAMPIONS_LEAGUE_NEWS_FEEDS],
             *[{"name": f"Actu football - {feed['source']}", "url": feed["url"]} for feed in FOOTBALL_NEWS_FEEDS],
@@ -467,6 +515,11 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
     teams_details = build_teams_details(standings, matches, [], today_matches, teams_index)
     if not teams_details:
         teams_details = _default_league_teams(key)
+    teams_details = _safe_fetch(
+        f"entraîneurs {name} Foot Mercato",
+        lambda: enrich_teams_with_footmercato_coaches(teams_details),
+        errors,
+    ) or teams_details
     scorers = _safe_fetch(f"buteurs {name} ESPN", lambda: fetch_espn_player_table(scorers_url, 0), errors)
     assists = _safe_fetch(f"passeurs {name} ESPN", lambda: fetch_espn_player_table(assists_url, 1), errors)
     if not scorers:
@@ -502,6 +555,7 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
             {"name": f"ESPN - matchs {name}", "url": scoreboard_url},
             {"name": f"ESPN - statistiques {name}", "url": scorers_url},
             {"name": f"FotMob - {name}", "url": fotmob_url},
+            {"name": "Foot Mercato - fiches clubs", "url": FOOTMERCATO_BASE_URL},
         ],
     }
 
@@ -905,6 +959,105 @@ def build_teams_details(
         register(name, team.get("flag_url", ""), team.get("country_code", ""), team.get("espn_id", ""))
 
     return dict(sorted(teams.items()))
+
+
+
+def enrich_teams_with_footmercato_coaches(
+    teams_details: dict[str, dict[str, Any]],
+    max_teams: int = 10,
+) -> dict[str, dict[str, Any]]:
+    enriched = {name: dict(details) for name, details in teams_details.items()}
+    candidates: list[tuple[str, str]] = []
+    for name in enriched:
+        path = _footmercato_team_path(name)
+        if path:
+            candidates.append((name, path))
+    for name, path in candidates[:max_teams]:
+        try:
+            coach = fetch_footmercato_coach_info(path)
+        except Exception:
+            coach = {}
+        if not coach:
+            continue
+        details = enriched[name]
+        details["coach"] = coach.get("coach_name") or details.get("coach", "")
+        details["coach_info"] = coach
+        sources = details.setdefault("sources", [])
+        if "Foot Mercato" not in sources:
+            sources.append("Foot Mercato")
+    return enriched
+
+
+def _footmercato_team_path(name: str) -> str:
+    return FOOTMERCATO_TEAM_PATHS.get(_normalize_name(name), "")
+
+
+def fetch_footmercato_coach_info(path_or_url: str) -> dict[str, Any]:
+    url = path_or_url if path_or_url.startswith("http") else urljoin(FOOTMERCATO_BASE_URL, path_or_url)
+    html = _download_footmercato(url)
+    soup = BeautifulSoup(html, "html.parser")
+    text = _clean_text(soup.get_text(" "))
+    coach = _parse_footmercato_coach_text(text)
+    if not coach:
+        return {}
+    photo = _footmercato_coach_photo(soup, coach.get("coach_name", ""))
+    if photo:
+        coach["coach_photo"] = photo
+    coach["source"] = "Foot Mercato"
+    coach["source_url"] = url
+    return coach
+
+
+def _download_footmercato(url: str) -> str:
+    response = requests.get(url, headers=REQUEST_HEADERS, timeout=FOOTMERCATO_TIMEOUT_SECONDS)
+    response.raise_for_status()
+    if not response.text.strip():
+        raise ValueError(f"réponse vide pour {url}")
+    return response.text
+
+
+def _parse_footmercato_coach_text(text: str) -> dict[str, Any]:
+    patterns = (
+        r"(?:Sélectionneur|Selectionneur|Entraîneur|Entraineur)\s+(.+?)\s+(\d{2})\s+ans\s*-\s*(\d+)\s+matchs?\s+officiels?\s*(\d+)%\s*(\d+)\s+victoires?\s*(\d+)%\s*(\d+)\s+nuls?\s*(\d+)%\s*(\d+)\s+défaites?",
+        r"(?:Sélectionneur|Selectionneur|Entraîneur|Entraineur)\s+(.+?)\s+(\d{2})\s+ans\s*-\s*(\d+)\s+matchs?\s+officiels?\s*(\d+)%\s*(\d+)\s+victoires?\s*(\d+)%\s*(\d+)\s+nuls?\s*(\d+)%\s*(\d+)\s+defaites?",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text, flags=re.IGNORECASE)
+        if not match:
+            continue
+        name = _clean_text(match.group(1))
+        # Avoid swallowing page sections before the actual name.
+        for prefix in ("Résumé Actus Classement Calendrier Effectif Stats Transferts ", "Résumé Actus "):
+            if name.startswith(prefix):
+                name = name[len(prefix):]
+        return {
+            "coach_name": name,
+            "coach_age": int(match.group(2)),
+            "coach_matches": int(match.group(3)),
+            "coach_win_percent": int(match.group(4)),
+            "coach_wins": int(match.group(5)),
+            "coach_draw_percent": int(match.group(6)),
+            "coach_draws": int(match.group(7)),
+            "coach_loss_percent": int(match.group(8)),
+            "coach_losses": int(match.group(9)),
+        }
+    return {}
+
+
+def _footmercato_coach_photo(soup: BeautifulSoup, coach_name: str) -> str:
+    if not coach_name:
+        return ""
+    normalized = _normalize_name(coach_name)
+    for image in soup.find_all("img"):
+        alt = _normalize_name(str(image.get("alt") or ""))
+        if normalized and normalized in alt:
+            src = str(image.get("src") or image.get("data-src") or "")
+            if src:
+                return urljoin(FOOTMERCATO_BASE_URL, src)
+    meta = soup.find("meta", property="og:image")
+    if meta and meta.get("content"):
+        return urljoin(FOOTMERCATO_BASE_URL, str(meta["content"]))
+    return ""
 
 
 def enrich_teams_with_espn_rosters(
@@ -1586,7 +1739,7 @@ def _fetch_news(
             )
 
     articles = _dedupe_news(articles)
-    articles.sort(key=lambda item: item.get("date", ""), reverse=True)
+    articles.sort(key=_news_sort_key, reverse=True)
     return articles[:limit]
 
 
@@ -1632,8 +1785,15 @@ def _dedupe_news(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
             continue
         seen.add(key)
         clean.append(article)
-    clean.sort(key=lambda item: item.get("date", ""), reverse=True)
+    clean.sort(key=_news_sort_key, reverse=True)
     return clean
+
+
+def _news_sort_key(article: dict[str, Any]) -> tuple[int, str]:
+    source = _normalize_news_text(str(article.get("source", "")))
+    link = str(article.get("url", "")).lower()
+    priority = 1 if "foot mercato" in source or "footmercato.net" in link else 0
+    return (priority, str(article.get("date", "")))
 
 
 def _news_key(title: str, link: str) -> str:
