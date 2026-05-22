@@ -34,6 +34,29 @@ COACH_REFUSAL = "Je suis Coach, je réponds uniquement aux questions liées au f
 COACH_UNAVAILABLE = "Coach indisponible : clé OpenAI absente ou invalide."
 COACH_DISCLAIMER = "Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel."
 
+COMMUNITY_LEVELS = [
+    ("Débutant", "Bronze", "🥉"),
+    ("Supporter", "Bronze", "🥉"),
+    ("Observateur", "Bronze", "🥉"),
+    ("Analyste", "Argent", "🥈"),
+    ("Tacticien", "Argent", "🥈"),
+    ("Visionnaire", "Argent", "🥈"),
+    ("Expert", "Or", "🥇"),
+    ("Prodige", "Or", "🥇"),
+    ("Maestro", "Or", "🥇"),
+    ("Elite", "Diamant", "💎"),
+    ("Stratège", "Diamant", "💎"),
+    ("Architecte", "Diamant", "💎"),
+    ("Capitaine", "Étoile", "⭐"),
+    ("Sélectionneur", "Étoile", "⭐"),
+    ("Champion", "Trophée", "🏆"),
+    ("Grand Champion", "Trophée", "🏆"),
+    ("Icône", "Couronne", "👑"),
+    ("Légende", "Couronne", "👑"),
+    ("Immortel", "Galaxie", "✦"),
+    ("Hall of Fame", "Galaxie", "✦"),
+]
+
 app = Flask(__name__) if Flask else None
 
 
@@ -209,10 +232,12 @@ def community_payload() -> dict[str, Any]:
     community = _read_community()
     matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard, leagues_dashboard)
     predictions = _predictions_with_points(community.get("predictions", []), matches)
+    profiles = _community_profiles(predictions, matches)
     return {
         "messages": community.get("messages", [])[-100:],
         "predictions": predictions,
-        "leaderboard": _leaderboard(predictions),
+        "leaderboard": _leaderboard(predictions, matches),
+        "profiles": profiles,
         "matches": list(matches.values()),
     }
 
@@ -221,6 +246,14 @@ if app:
     @app.get("/api/community")
     def get_community():
         return jsonify(community_payload())
+
+    @app.get("/api/community/profile")
+    def get_community_profile():
+        pseudo = _clean(request.args.get("pseudo", ""), 32)
+        profile = community_payload().get("profiles", {}).get(pseudo)
+        if not profile:
+            return jsonify({"error": "Profil introuvable."}), 404
+        return jsonify(profile)
 
     @app.get("/api/livekit-token")
     def livekit_token():
@@ -357,7 +390,7 @@ def coach_prediction_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
             "disclaimer": COACH_DISCLAIMER,
         }, 200
 
-    data_pool = [worldcup_dashboard, champions_dashboard]
+    data_pool = [worldcup_dashboard, champions_dashboard, leagues_dashboard]
     home_data_strength, home_reasons = _team_strength(home, data_pool)
     away_data_strength, away_reasons = _team_strength(away, data_pool)
     home_strength = _baseline_team_strength(home) + home_data_strength + 1.5
@@ -447,18 +480,33 @@ def _real_score_label(match: dict[str, Any]) -> str:
 def _coach_context_summary() -> str:
     worldcup = _read_json(CACHE_FILE, {})
     champions = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
+    leagues = _read_json(LEAGUES_CACHE_FILE, {})
     community = _read_community()
     chunks = [
         _competition_summary("Coupe du Monde", worldcup),
         _competition_summary("Ligue des Champions", champions),
+        _leagues_context_summary(leagues),
     ]
     chunks.append(_player_index_summary(worldcup, champions))
-    leaderboard = _leaderboard(_predictions_with_points(community.get("predictions", []), _all_dashboard_matches(worldcup, champions)))[:5]
+    leaderboard = _leaderboard(_predictions_with_points(community.get("predictions", []), _all_dashboard_matches(worldcup, champions, leagues)))[:5]
     if leaderboard:
         chunks.append("Classement pronostics: " + "; ".join(f"{row['pseudo']} {row['points']} pts" for row in leaderboard))
     else:
         chunks.append("Classement pronostics: aucune donnée publiée.")
     return "\n".join(chunk for chunk in chunks if chunk).strip()[:6000]
+
+
+def _leagues_context_summary(data: dict[str, Any]) -> str:
+    leagues = (data or {}).get("leagues", {})
+    if not leagues:
+        return "Championnats: données non disponibles."
+    lines = ["Championnats européens:"]
+    for key, league in list(leagues.items())[:5]:
+        matches = list(_dashboard_matches(league).values())
+        upcoming = sorted([match for match in matches if not match.get("completed")], key=lambda item: str(item.get("date", "")))[:3]
+        lines.append(f"{league.get('name', key)} prochains matchs: " + (_format_match_list(upcoming) if upcoming else "aucun match publié."))
+        lines.append(f"{league.get('name', key)} classement: " + _standings_summary(league.get("standings", [])[:1]))
+    return "\n".join(lines)
 
 
 def _competition_summary(name: str, data: dict[str, Any]) -> str:
@@ -940,6 +988,11 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json({"status": "ok"})
         elif path == "/api/community":
             self._send_json(community_payload())
+        elif path == "/api/community/profile":
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            pseudo = _clean(_url_decode(query.get("pseudo", "")), 32)
+            profile = community_payload().get("profiles", {}).get(pseudo)
+            self._send_json(profile or {"error": "Profil introuvable."}, 200 if profile else 404)
         elif path == "/api/livekit-token":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             pseudo = _clean(_url_decode(query.get("pseudo", "")), 32) or "Invite"
@@ -1088,15 +1141,91 @@ def _predictions_with_points(predictions: list[dict[str, Any]], matches: dict[st
     return [{**prediction, "points": _points(prediction, matches.get(prediction.get("match_id", "")))} for prediction in predictions]
 
 
-def _leaderboard(predictions: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    totals: dict[str, int] = {}
+def _leaderboard(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    profiles = _community_profiles(predictions, matches or {})
+    rows = sorted(profiles.values(), key=lambda item: (-int(item.get("points", 0)), -int(item.get("exact_scores", 0)), str(item.get("pseudo", "")).lower()))
+    for index, row in enumerate(rows, start=1):
+        row["rank"] = index
+    return rows
+
+
+def _community_profiles(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    profiles: dict[str, dict[str, Any]] = {}
     for prediction in predictions:
-        totals[prediction.get("pseudo", "")] = totals.get(prediction.get("pseudo", ""), 0) + int(prediction.get("points", 0))
-    return [
-        {"pseudo": pseudo, "points": points}
-        for pseudo, points in sorted(totals.items(), key=lambda item: (-item[1], item[0].lower()))
-        if pseudo
-    ]
+        pseudo = _clean(prediction.get("pseudo", ""), 32)
+        if not pseudo:
+            continue
+        profile = profiles.setdefault(pseudo, _empty_profile(pseudo))
+        points = int(prediction.get("points", 0) or 0)
+        profile["points"] += points
+        profile["predictions_count"] += 1
+        if points == 3:
+            profile["exact_scores"] += 1
+            profile["correct_results"] += 1
+        elif points == 1:
+            profile["correct_results"] += 1
+        match = matches.get(str(prediction.get("match_id", ""))) if matches else None
+        profile["history"].append(_profile_prediction_row(prediction, match, points))
+    for profile in profiles.values():
+        completed = [item for item in profile["history"] if item.get("completed")]
+        completed_count = len(completed)
+        profile["completed_predictions"] = completed_count
+        profile["success_rate"] = round((profile["correct_results"] / completed_count) * 100) if completed_count else 0
+        level = _community_level(profile["predictions_count"])
+        profile.update(level)
+        profile["recent_predictions"] = sorted(profile["history"], key=lambda item: str(item.get("created_at", "")), reverse=True)[:12]
+    return profiles
+
+
+def _empty_profile(pseudo: str) -> dict[str, Any]:
+    level = _community_level(0)
+    return {
+        "pseudo": pseudo,
+        "points": 0,
+        "predictions_count": 0,
+        "completed_predictions": 0,
+        "correct_results": 0,
+        "exact_scores": 0,
+        "success_rate": 0,
+        "history": [],
+        "recent_predictions": [],
+        **level,
+    }
+
+
+def _community_level(predictions_count: int) -> dict[str, Any]:
+    index = max(0, min(len(COMMUNITY_LEVELS) - 1, predictions_count // 10))
+    level_name, badge, icon = COMMUNITY_LEVELS[index]
+    next_goal = (index + 1) * 10 if index < len(COMMUNITY_LEVELS) - 1 else predictions_count
+    return {
+        "level_index": index + 1,
+        "level": level_name,
+        "badge": badge,
+        "badge_icon": icon,
+        "next_level_at": next_goal,
+    }
+
+
+def _profile_prediction_row(prediction: dict[str, Any], match: dict[str, Any] | None, points: int) -> dict[str, Any]:
+    home = match.get("home_team", "Match") if match else "Match"
+    away = match.get("away_team", "inconnu") if match else "inconnu"
+    real_score = ""
+    completed = bool(match and match.get("completed"))
+    if match and match.get("home_score", "") != "" and match.get("away_score", "") != "":
+        real_score = f"{match.get('home_score')} - {match.get('away_score')}"
+    return {
+        "match_id": prediction.get("match_id", ""),
+        "competition": match.get("competition", "") if match else "",
+        "date": match.get("date", "") if match else "",
+        "home_team": home,
+        "away_team": away,
+        "prediction": f"{prediction.get('home_score', '')} - {prediction.get('away_score', '')}",
+        "real_score": real_score,
+        "status": match.get("status", "") if match else "",
+        "completed": completed,
+        "points": points,
+        "created_at": prediction.get("created_at", ""),
+    }
 
 
 def _points(prediction: dict[str, Any], match: dict[str, Any] | None) -> int:

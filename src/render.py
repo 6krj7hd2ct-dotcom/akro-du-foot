@@ -175,6 +175,16 @@ def _page(data: dict[str, Any]) -> str:
     .app-title {{ font-size: clamp(42px, 8vw, 92px); line-height: 0.9; }}
     .app-copy {{ color: #c5d3e4; max-width: 650px; margin: 12px 0 0; font-size: 16px; line-height: 1.5; }}
     .global-controls {{ display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; align-items: center; }}
+    .global-search {{ position: relative; min-width: min(320px, 100%); flex: 1 1 280px; max-width: 420px; }}
+    .search-input {{ width: 100%; padding: 12px 42px 12px 14px; border-radius: 999px; border-color: rgba(245,201,107,0.28); background: rgba(4,14,28,0.72); box-shadow: inset 0 1px 0 rgba(255,255,255,0.08); }}
+    .search-icon {{ position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); font-weight: 950; pointer-events: none; }}
+    .search-results {{ position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; right: 0; display: none; max-height: min(430px, 70vh); overflow-y: auto; padding: 8px; border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; background: rgba(5,16,31,0.98); box-shadow: var(--shadow); backdrop-filter: blur(16px); }}
+    .search-results.is-open {{ display: grid; gap: 8px; }}
+    .search-result {{ width: 100%; text-align: left; display: grid; gap: 4px; padding: 11px; border: 1px solid rgba(255,255,255,0.09); border-radius: 12px; color: var(--ink); background: rgba(255,255,255,0.055); cursor: pointer; }}
+    .search-result:hover {{ border-color: rgba(245,201,107,0.40); background: rgba(245,201,107,0.11); }}
+    .search-kind {{ color: var(--gold); font-size: 11px; font-weight: 950; text-transform: uppercase; }}
+    .search-title {{ font-weight: 950; line-height: 1.2; }}
+    .search-detail {{ color: var(--muted); font-size: 12px; line-height: 1.35; }}
     .hero.champions {{
       background:
         linear-gradient(135deg, rgba(5,12,35,0.96), rgba(17,33,77,0.82)),
@@ -746,6 +756,32 @@ def _page(data: dict[str, Any]) -> str:
     .leaderboard-item.top-rank {{ border-color: rgba(245,201,107,0.34); background: linear-gradient(90deg, rgba(245,201,107,0.14), rgba(255,255,255,0.055)); }}
     .leaderboard-rank {{ display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-right: 8px; border-radius: 50%; color: #07111f; background: linear-gradient(180deg, #ffffff, #b9c9dc); font-weight: 950; }}
     .top-rank .leaderboard-rank {{ background: linear-gradient(180deg, #ffe1a0, #d5a63a); }}
+    .leaderboard-person {{ min-width: 0; display: flex; align-items: center; gap: 8px; color: inherit; background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-align: left; }}
+    .leaderboard-name {{ display: grid; gap: 2px; min-width: 0; }}
+    .leaderboard-name strong {{ overflow-wrap: normal; word-break: normal; line-height: 1.15; }}
+    .leaderboard-meta {{ color: var(--muted); font-size: 11px; font-weight: 850; }}
+    .leaderboard-points {{ text-align: right; display: grid; gap: 2px; color: var(--gold); font-weight: 950; }}
+    .leaderboard-rate {{ color: var(--muted); font-size: 11px; font-weight: 850; }}
+    .reward-badge {{ display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(210,222,238,0.78)); color: #07111f; font-weight: 950; box-shadow: 0 0 0 1px rgba(245,201,107,0.22); }}
+    .top-rank .reward-badge {{ background: linear-gradient(180deg, #ffe1a0, #d5a63a); }}
+    .live-events-ticker {{ display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; min-height: 46px; max-height: 54px; overflow: hidden; border: 1px solid rgba(77,224,180,0.24); border-radius: 14px; background: linear-gradient(90deg, rgba(7,24,45,0.96), rgba(10,37,64,0.78)); }}
+    .live-events-badge {{ height: 100%; min-height: 46px; display: grid; place-items: center; padding: 0 14px; color: #07111f; background: linear-gradient(180deg, #9af6d3, #32d3a2); font-size: 11px; font-weight: 950; text-transform: uppercase; white-space: nowrap; }}
+    .live-events-window {{ overflow: hidden; min-width: 0; }}
+    .live-events-track {{ display: inline-flex; align-items: center; gap: 28px; width: max-content; padding-left: 24px; white-space: nowrap; animation: liveTicker 96s linear infinite; }}
+    .live-events-ticker:hover .live-events-track {{ animation-play-state: paused; }}
+    .live-event {{ display: inline-flex; align-items: center; gap: 8px; color: #dff7ff; font-size: 13px; font-weight: 850; white-space: nowrap; }}
+    .live-event::before {{ content: ''; width: 8px; height: 8px; border-radius: 50%; background: #32d3a2; box-shadow: 0 0 12px rgba(50,211,162,0.75); }}
+    .live-event.goal::before {{ background: var(--gold); box-shadow: 0 0 12px rgba(245,201,107,0.78); }}
+    .live-event.red::before {{ background: var(--red); box-shadow: 0 0 12px rgba(239,51,64,0.78); }}
+    .live-event.end::before {{ background: #b9c9dc; box-shadow: none; }}
+    @keyframes liveTicker {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
+    .profile-dialog {{ width: min(720px, 100%); max-height: min(88vh, 760px); overflow: hidden; }}
+    .profile-summary {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }}
+    .profile-stat {{ padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }}
+    .profile-stat strong {{ display: block; color: var(--gold); font-size: 22px; }}
+    .profile-history {{ display: grid; gap: 9px; max-height: 330px; overflow-y: auto; padding-right: 6px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }}
+    .profile-history-row {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 11px; border-radius: 13px; background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09); }}
+    .profile-points {{ color: var(--gold); font-weight: 950; white-space: nowrap; }}
     .prediction-scoreboard {{ display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 14px; border: 1px solid rgba(245,201,107,0.22); border-radius: 16px; background: radial-gradient(circle at center, rgba(245,201,107,0.12), transparent 18rem), rgba(255,255,255,0.055); }}
     .prediction-team {{ min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; }}
     .prediction-team.home {{ justify-content: flex-end; text-align: right; }}
@@ -764,6 +800,7 @@ def _page(data: dict[str, Any]) -> str:
       main {{ width: min(100% - 20px, 1240px); padding-top: 14px; }}
       .app-top {{ grid-template-columns: 1fr; align-items: start; }}
       .global-controls {{ justify-content: flex-start; }}
+      .global-search {{ order: -1; max-width: none; width: 100%; }}
       .mercato-ticker {{ grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }}
       .mercato-badge {{ min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }}
       .mercato-track, .mercato-link, .mercato-item-break {{ height: 50px; }}
@@ -796,7 +833,8 @@ def _page(data: dict[str, Any]) -> str:
       .team-dialog {{ max-height: 90vh; }}
       .alltime-row {{ grid-template-columns: 38px 46px minmax(0, 1fr); }}
       .alltime-value {{ grid-column: 3; font-size: 20px; text-align: left; }}
-      .community-grid, .community-predictions, .field-row, .follow-list {{ grid-template-columns: 1fr; }}
+      .community-grid, .community-predictions, .field-row, .follow-list, .profile-summary {{ grid-template-columns: 1fr; }}
+      .live-events-track {{ animation-duration: 128s; }}
       .prediction-scoreboard {{ grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); gap: 8px; }}
     }}
     @media (max-width: 480px) {{
@@ -903,10 +941,12 @@ def _page(data: dict[str, Any]) -> str:
   {_team_modal()}
   {_all_time_modal()}
   {_football_chatbot_modal()}
+  {_user_profile_modal()}
   {_team_script(teams_details, prediction_matches)}
   {_all_time_script(all_time_scorers, champions_all_time_scorers)}
   {_community_script(prediction_matches)}
   {_global_news_script(news_data)}
+  {_global_search_script(news_data)}
   {_focus_script(prediction_matches, teams_details)}
   {_leagues_script()}
   {_football_chatbot_script()}
@@ -1071,6 +1111,71 @@ def _global_news_script(news_data: dict[str, Any] | None) -> str:
   </script>"""
 
 
+def _global_search_script(news_data: dict[str, Any] | None) -> str:
+    data = json.dumps(news_data or {"articles": [], "all_articles": []}, ensure_ascii=False).replace("</", "<\\/")
+    return f"""<script>
+    const GLOBAL_SEARCH_NEWS = {data};
+    function searchNorm(value) {{ return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }}
+    function buildSearchItems() {{
+      const items = [];
+      const seen = new Set();
+      const add = (kind, title, detail, action, extra = '') => {{
+        const key = `${{kind}}:${{searchNorm(title)}}:${{extra}}`;
+        if (!title || seen.has(key)) return;
+        seen.add(key);
+        items.push({{kind, title, detail, action, extra, haystack: searchNorm(`${{title}} ${{detail}} ${{extra}}`)}});
+      }};
+      Object.entries(typeof TEAMS_DETAILS !== 'undefined' ? TEAMS_DETAILS : {{}}).forEach(([name, details]) => {{
+        add('Équipe / club', details.name || name, 'Fiche forme récente, palmarès et entraîneur si disponibles', 'team', name);
+      }});
+      ((typeof TEAM_MATCHES !== 'undefined' ? TEAM_MATCHES : (typeof DASHBOARD_MATCHES !== 'undefined' ? DASHBOARD_MATCHES : []))).forEach(match => {{
+        add('Match', `${{match.home_team}} vs ${{match.away_team}}`, `${{match.competition || ''}} · ${{match.status || 'À venir'}} · ${{match.date || ''}}`, 'match', match.id || '');
+        add('Compétition', match.competition || '', 'Matchs, calendrier et pronostics disponibles', 'competition', match.competition || '');
+      }});
+      (GLOBAL_SEARCH_NEWS.all_articles || GLOBAL_SEARCH_NEWS.articles || []).slice(0, 80).forEach(article => {{
+        add('Actualité', article.title || '', `${{article.source_name || article.source || 'Source'}} · ${{article.summary || ''}}`, 'news', article.url || '');
+      }});
+      ['PSG', 'France', 'Real Madrid', 'Ligue des Champions', 'Coupe du Monde', 'Ligue 1', 'Premier League', 'Liga', 'Bundesliga', 'Serie A'].forEach(topic => add('Focus rapide', topic, 'Recherche dans les données Akro du Foot', 'filter', topic));
+      return items;
+    }}
+    function searchResultMarkup(item) {{
+      return `<button class="search-result" type="button" data-action="${{escapeHtml(item.action)}}" data-extra="${{escapeHtml(item.extra || item.title)}}"><span class="search-kind">${{escapeHtml(item.kind)}}</span><span class="search-title">${{escapeHtml(item.title)}}</span><span class="search-detail">${{escapeHtml(item.detail || '')}}</span></button>`;
+    }}
+    function renderGlobalSearch(query = '') {{
+      const panel = document.getElementById('globalSearchResults');
+      if (!panel) return;
+      const normalized = searchNorm(query);
+      if (normalized.length < 2) {{ panel.classList.remove('is-open'); panel.innerHTML = ''; return; }}
+      const words = normalized.split(' ').filter(Boolean);
+      const results = buildSearchItems()
+        .filter(item => words.every(word => item.haystack.includes(word)))
+        .slice(0, 9);
+      panel.innerHTML = results.length ? results.map(searchResultMarkup).join('') : '<div class="search-result"><span class="search-kind">Recherche</span><span class="search-title">Aucun résultat trouvé</span><span class="search-detail">Essaie PSG, France, Mbappé ou Ligue des Champions.</span></div>';
+      panel.classList.add('is-open');
+    }}
+    function runSearchAction(button) {{
+      const action = button.dataset.action;
+      const extra = button.dataset.extra || '';
+      document.getElementById('globalSearchResults')?.classList.remove('is-open');
+      if (action === 'team' && typeof openTeam === 'function') {{ openTeam(extra); return; }}
+      if (action === 'news' && extra) {{ window.open(extra, '_blank', 'noreferrer'); return; }}
+      if (action === 'match') {{ document.getElementById('community')?.scrollIntoView({{behavior:'smooth', block:'start'}}); return; }}
+      if (action === 'competition' || action === 'filter') {{
+        const label = searchNorm(extra);
+        const target = label.includes('champions') ? 'champions' : label.includes('coupe') || label.includes('mond') ? 'worldcup' : label.includes('ligue 1') || label.includes('liga') || label.includes('bundesliga') || label.includes('premier') || label.includes('serie') ? 'leagues' : 'news';
+        document.querySelector(`[data-tab-target="${{target}}"]`)?.click();
+        document.querySelector(`[data-tab-panel="${{target}}"]`)?.scrollIntoView({{behavior:'smooth', block:'start'}});
+      }}
+    }}
+    document.addEventListener('input', event => {{ if (event.target && event.target.id === 'globalSearchInput') renderGlobalSearch(event.target.value); }});
+    document.addEventListener('click', event => {{
+      const result = event.target.closest('.search-result[data-action]');
+      if (result) runSearchAction(result);
+      else if (!event.target.closest('.global-search')) document.getElementById('globalSearchResults')?.classList.remove('is-open');
+    }});
+  </script>"""
+
+
 def _app_header() -> str:
     return """
     <header class="app-header">
@@ -1081,6 +1186,11 @@ def _app_header() -> str:
           <p class="app-copy">Un espace unique pour suivre les compétitions, discuter entre amis, faire des pronostics fictifs sans argent et lancer une Watch Party.</p>
         </div>
         <div class="global-controls">
+          <div class="global-search" role="search">
+            <input class="search-input" id="globalSearchInput" type="search" placeholder="Rechercher club, joueur, nation…" autocomplete="off" aria-label="Recherche globale">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <div class="search-results" id="globalSearchResults" role="listbox" aria-label="Résultats de recherche"></div>
+          </div>
           <button class="action-button" type="button" id="shareButton">Partager</button>
           <button class="action-button" type="button" id="chatbotButton">Coach</button>
           <a class="action-button" href="/watch-party">Watch Party</a>
@@ -1559,6 +1669,7 @@ def _community_section() -> str:
       <article class="card community-panel follow-zone">
         <div class="section-title"><h3>Matchs à suivre</h3><span class="alltime-badge" id="followMode">Aujourd’hui</span></div>
         <div class="follow-list" id="communityFollowMatches"></div>
+        <div class="live-events-ticker" id="communityLiveTicker" aria-label="Notifications live communauté"></div>
       </article>
       <article class="card community-panel community-predictions">
         <div class="community-side">
@@ -2100,6 +2211,24 @@ def _football_chatbot_modal() -> str:
         <input id="footballChatbotInput" type="text" maxlength="500" placeholder="Pose ta question foot…" autocomplete="off">
         <button class="action-button" type="submit">Envoyer</button>
       </form>
+    </article>
+  </div>
+"""
+
+
+def _user_profile_modal() -> str:
+    return """
+  <div class="team-modal" id="userProfileModal" aria-hidden="true">
+    <article class="team-dialog profile-dialog" role="dialog" aria-modal="true" aria-labelledby="userProfileTitle">
+      <header class="team-modal-head">
+        <div class="alltime-rank" id="userProfileBadge">★</div>
+        <div>
+          <div class="team-modal-title" id="userProfileTitle">Profil participant</div>
+          <div class="subtle" id="userProfileSubtitle">Historique des pronostics</div>
+        </div>
+        <button class="modal-close" type="button" id="userProfileClose" aria-label="Fermer">×</button>
+      </header>
+      <div class="team-modal-body" id="userProfileBody"></div>
     </article>
   </div>
 """
@@ -3211,6 +3340,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const shareButton = document.getElementById('shareButton');
     const predictionForm = document.getElementById('predictionForm');
     const communityFollowMatches = document.getElementById('communityFollowMatches');
+    const communityLiveTicker = document.getElementById('communityLiveTicker');
     const followMode = document.getElementById('followMode');
     const competitionFilter = document.getElementById('competitionFilter');
     const predictionMatch = document.getElementById('predictionMatch');
@@ -3225,6 +3355,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const predictionPseudo = document.getElementById('predictionPseudo');
     const predictionSubmit = predictionForm.querySelector('button[type="submit"]');
     let communityMatches = DASHBOARD_MATCHES;
+    let communityProfiles = {{}};
     let coachPredictionRequest = 0;
 
     function pseudoValue() {{
@@ -3318,6 +3449,26 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       communityFollowMatches.innerHTML = selected.length
         ? selected.map(followMatchCard).join('')
         : '<div class="empty">Aucun match aujourd’hui</div>';
+      renderLiveEventsTicker(selected);
+    }}
+
+    function liveEventLabel(match) {{
+      const score = matchCenter(match);
+      if (match.status === 'LIVE') return {{type: 'goal', text: `LIVE · ${{match.home_team}} ${{score}} ${{match.away_team}}`}};
+      if (match.completed || match.status === 'Terminé') return {{type: 'end', text: `FIN · ${{match.home_team}} ${{score}} ${{match.away_team}}`}};
+      return {{type: 'start', text: `Début prévu · ${{match.home_team}} vs ${{match.away_team}} · ${{shortDate(match.date)}}`}};
+    }}
+
+    function renderLiveEventsTicker(matches) {{
+      if (!communityLiveTicker) return;
+      const today = (matches || []).filter(isTodayMatch).sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
+      const events = today.map(liveEventLabel);
+      if (!events.length) {{
+        communityLiveTicker.innerHTML = '<div class="live-events-badge">Live</div><div class="live-events-window"><div class="live-events-track"><span class="live-event">Aucune notification live aujourd’hui</span></div></div>';
+        return;
+      }}
+      const items = [...events, ...events].map(event => `<span class="live-event ${{event.type}}">${{escapeHtml(event.text)}}</span>`).join('');
+      communityLiveTicker.innerHTML = `<div class="live-events-badge">Live</div><div class="live-events-window"><div class="live-events-track">${{items}}</div></div>`;
     }}
 
     async function sharePage() {{
@@ -3461,8 +3612,62 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     function renderLeaderboard(rows) {{
       const list = document.getElementById('leaderboardList');
       list.innerHTML = rows && rows.length ? rows.map((row, index) => `
-        <div class="leaderboard-item ${{index < 3 ? 'top-rank' : ''}}"><strong><span class="leaderboard-rank">${{index + 1}}</span>${{escapeHtml(row.pseudo)}}</strong><span>${{escapeHtml(row.points)}} pts</span></div>
+        <div class="leaderboard-item ${{index < 3 ? 'top-rank' : ''}}">
+          <button class="leaderboard-person" type="button" data-profile-pseudo="${{escapeHtml(row.pseudo)}}">
+            <span class="leaderboard-rank">${{row.rank || index + 1}}</span>
+            <span class="reward-badge" title="${{escapeHtml(row.badge || 'Badge')}}">${{escapeHtml(row.badge_icon || '★')}}</span>
+            <span class="leaderboard-name"><strong>${{escapeHtml(row.pseudo)}}</strong><span class="leaderboard-meta">Niv. ${{escapeHtml(row.level_index || 1)}} · ${{escapeHtml(row.level || 'Débutant')}} · ${{escapeHtml(row.predictions_count || 0)}} pronos</span></span>
+          </button>
+          <span class="leaderboard-points">${{escapeHtml(row.points || 0)}} pts<span class="leaderboard-rate">${{escapeHtml(row.success_rate || 0)}}% réussite</span></span>
+        </div>
       `).join('') : '<div class="empty">Aucun point pour le moment.</div>';
+    }}
+
+    function profileDate(value) {{
+      if (!value) return '';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('fr-FR', {{day:'2-digit', month:'2-digit', year:'numeric'}});
+    }}
+
+    function profileHistoryRow(item) {{
+      const match = `${{item.home_team || 'Match'}} vs ${{item.away_team || ''}}`;
+      const real = item.real_score ? ` · réel ${{item.real_score}}` : '';
+      return `<article class="profile-history-row"><div><strong>${{escapeHtml(match)}}</strong><div class="subtle">${{escapeHtml(item.competition || '')}} · ${{escapeHtml(profileDate(item.date))}} · prono ${{escapeHtml(item.prediction || '')}}${{escapeHtml(real)}}</div></div><span class="profile-points">${{escapeHtml(item.points || 0)}} pt${{Number(item.points || 0) > 1 ? 's' : ''}}</span></article>`;
+    }}
+
+    function openUserProfile(pseudo) {{
+      const modal = document.getElementById('userProfileModal');
+      const body = document.getElementById('userProfileBody');
+      const title = document.getElementById('userProfileTitle');
+      const subtitle = document.getElementById('userProfileSubtitle');
+      const badge = document.getElementById('userProfileBadge');
+      const close = document.getElementById('userProfileClose');
+      const profile = communityProfiles[pseudo];
+      if (!modal || !body || !profile) return;
+      title.textContent = profile.pseudo || pseudo;
+      subtitle.textContent = `${{profile.badge || 'Badge'}} · niveau ${{profile.level_index || 1}} · ${{profile.level || 'Débutant'}}`;
+      badge.textContent = profile.badge_icon || '★';
+      const history = profile.recent_predictions || profile.history || [];
+      body.innerHTML = `
+        <div class="profile-summary">
+          <div class="profile-stat"><strong>${{escapeHtml(profile.points || 0)}}</strong><span>points</span></div>
+          <div class="profile-stat"><strong>${{escapeHtml(profile.predictions_count || 0)}}</strong><span>pronostics</span></div>
+          <div class="profile-stat"><strong>${{escapeHtml(profile.exact_scores || 0)}}</strong><span>scores exacts</span></div>
+          <div class="profile-stat"><strong>${{escapeHtml(profile.success_rate || 0)}}%</strong><span>réussite</span></div>
+        </div>
+        <div class="team-info"><div class="team-info-label">Progression</div><div class="team-info-value">${{escapeHtml(profile.badge_icon || '★')}} ${{escapeHtml(profile.level || 'Débutant')}} · prochain palier à ${{escapeHtml(profile.next_level_at || 10)}} pronostics</div></div>
+        <h3>Derniers pronostics</h3>
+        <div class="profile-history">${{history.length ? history.map(profileHistoryRow).join('') : '<div class="empty">Aucun pronostic enregistré.</div>'}}</div>
+      `;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      close?.focus();
+    }}
+
+    function closeUserProfile() {{
+      const modal = document.getElementById('userProfileModal');
+      modal?.classList.remove('is-open');
+      modal?.setAttribute('aria-hidden', 'true');
     }}
 
     async function loadCommunity() {{
@@ -3477,6 +3682,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
         const data = await response.json();
         renderMatchOptions(data.matches);
         renderFollowMatches(data.matches);
+        communityProfiles = data.profiles || {{}};
         renderLeaderboard(data.leaderboard);
         updatePredictionButton();
       }} catch (error) {{
@@ -3495,6 +3701,13 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       return data;
     }}
 
+    document.addEventListener('click', (event) => {{
+      const profileTrigger = event.target.closest('[data-profile-pseudo]');
+      if (profileTrigger) openUserProfile(profileTrigger.dataset.profilePseudo);
+      if (event.target && event.target.id === 'userProfileModal') closeUserProfile();
+    }});
+    document.getElementById('userProfileClose')?.addEventListener('click', closeUserProfile);
+    document.addEventListener('keydown', (event) => {{ if (event.key === 'Escape') closeUserProfile(); }});
     shareButton.addEventListener('click', sharePage);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
