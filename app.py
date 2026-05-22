@@ -52,6 +52,10 @@ if app:
 
 
 def _background_updates_enabled() -> bool:
+    # Render must open the web port immediately. Background scraping is disabled
+    # there unless explicitly re-enabled after the service is healthy.
+    if os.environ.get("RENDER") and os.environ.get("AKRO_ALLOW_RENDER_BACKGROUND_UPDATES", "").strip().lower() not in {"1", "true", "yes", "on"}:
+        return False
     return os.environ.get("AKRO_BACKGROUND_UPDATES", "").strip().lower() in {"1", "true", "yes", "on"}
 
 
