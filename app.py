@@ -24,7 +24,7 @@ except ImportError:
     request = None
     send_file = None
 
-from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, OUTPUT_HTML
+from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, OUTPUT_HTML
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
@@ -177,6 +177,10 @@ if app:
         competition = request.args.get("competition", "")
         focus = request.args.get("focus", "")
         return jsonify(refresh_news_payload(competition, focus))
+
+    @app.get("/api/mercato-live")
+    def mercato_live():
+        return jsonify(_read_json(MERCATO_LIVE_CACHE_FILE, {"items": [], "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}))
 
     @app.post("/api/football-chatbot")
     def football_chatbot():

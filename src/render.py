@@ -65,6 +65,7 @@ def _page(data: dict[str, Any]) -> str:
     worldcup_data = data.get("worldcup", data)
     champions_data = data.get("champions_league")
     leagues_data = data.get("leagues")
+    mercato_data = data.get("mercato_live", {})
     data = worldcup_data
     generated = _format_datetime(data.get("generated_at", ""), with_time=True)
     groups = data.get("standings", [])
@@ -202,6 +203,49 @@ def _page(data: dict[str, Any]) -> str:
     }}
     .league-focus-backdrop img {{ width: 100%; height: 100%; object-fit: contain; }}
     .league-focus-backdrop .flag.placeholder {{ width: 100%; height: 100%; border-radius: 28px; margin: 0; }}
+    .mercato-ticker {{
+      margin: 18px 0 16px;
+      border: 1px solid rgba(245,201,107,0.24);
+      border-radius: 18px;
+      background: linear-gradient(90deg, rgba(7,17,31,0.96), rgba(16,38,66,0.94));
+      overflow: hidden;
+      box-shadow: 0 18px 42px rgba(0,0,0,0.22);
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: stretch;
+    }}
+    .mercato-badge {{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 15px;
+      color: #07111f;
+      background: linear-gradient(180deg, #ffe1a0, #d5a63a);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }}
+    .mercato-badge::before {{
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ef3340;
+      box-shadow: 0 0 14px rgba(239,51,64,0.75);
+    }}
+    .mercato-track {{ min-width: 0; overflow: hidden; display: flex; align-items: center; }}
+    .mercato-marquee {{ display: flex; width: max-content; animation: mercato-scroll 42s linear infinite; will-change: transform; }}
+    .mercato-track:hover .mercato-marquee {{ animation-play-state: paused; }}
+    .mercato-items {{ display: flex; align-items: center; gap: 28px; padding: 0 28px; white-space: nowrap; }}
+    .mercato-link {{ display: inline-flex; align-items: center; gap: 8px; color: #eaf4ff; text-decoration: none; font-size: 14px; font-weight: 850; }}
+    .mercato-link:hover, .mercato-link:focus-visible {{ color: #ffe1a0; outline: none; }}
+    .mercato-time {{ color: #ffe1a0; font-size: 12px; font-weight: 950; }}
+    .mercato-entity {{ color: #ffb7bd; font-size: 12px; font-weight: 950; }}
+    .mercato-source {{ color: #8fa8c4; font-size: 12px; font-weight: 800; }}
+    .mercato-empty {{ padding: 12px 16px; color: #c5d3e4; font-size: 14px; font-weight: 850; }}
+    @keyframes mercato-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .tabs-nav {{
       position: sticky;
       top: 12px;
@@ -660,6 +704,9 @@ def _page(data: dict[str, Any]) -> str:
       main {{ width: min(100% - 20px, 1240px); padding-top: 14px; }}
       .app-top {{ grid-template-columns: 1fr; align-items: start; }}
       .global-controls {{ justify-content: flex-start; }}
+      .mercato-ticker {{ grid-template-columns: 1fr; }}
+      .mercato-badge {{ justify-content: center; }}
+      .mercato-marquee {{ animation-duration: 34s; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
       .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; transform: none; width: clamp(92px, 25vw, 138px); opacity: 0.62; }}
@@ -697,6 +744,8 @@ def _page(data: dict[str, Any]) -> str:
       .app-copy {{ font-size: 14px; }}
       .global-controls {{ width: 100%; }}
       .action-button {{ flex: 1 1 130px; text-align: center; }}
+      .mercato-link {{ font-size: 13px; }}
+      .mercato-items {{ gap: 20px; padding: 0 20px; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
       .league-calendar-match {{ grid-template-columns: 1fr; text-align: center; }}
@@ -725,8 +774,9 @@ def _page(data: dict[str, Any]) -> str:
 <body>
   <main>
     {_app_header()}
-    {_community_section()}
+    {_mercato_ticker(mercato_data)}
     {_tabs_nav(champions_data, leagues_data)}
+    {_community_section()}
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
       {_competition_trophy_svg("worldcup", "hero")}
@@ -1244,6 +1294,44 @@ def _today_match(match: dict[str, Any]) -> str:
         f'<div class="today-score">{escape(center)}<br><span class="{_status_class(match)}">{escape(match.get("status", ""))}</span></div>'
         f'<div class="today-team">{_team_button(match.get("away_team", "À déterminer"), match.get("away_flag_url", ""))}</div></div>'
         f'<div class="subtle" style="text-align:center;margin-top:12px">{escape(_venue_text(match))}</div>'
+    )
+
+
+def _mercato_ticker(mercato_data: dict[str, Any] | None) -> str:
+    data = mercato_data or {}
+    items = [item for item in data.get("items", []) if item.get("title") and item.get("url")]
+    if not items:
+        return """
+    <section class="mercato-ticker" aria-label="Mercato live">
+      <div class="mercato-badge">Mercato Live</div>
+      <div class="mercato-empty">Mercato Live indisponible pour le moment</div>
+    </section>
+"""
+    rendered = "".join(_mercato_item(item) for item in items[:18])
+    return f"""
+    <section class="mercato-ticker" aria-label="Mercato live">
+      <div class="mercato-badge">Mercato Live</div>
+      <div class="mercato-track">
+        <div class="mercato-marquee">
+          <div class="mercato-items">{rendered}</div>
+          <div class="mercato-items" aria-hidden="true">{rendered}</div>
+        </div>
+      </div>
+    </section>
+"""
+
+
+def _mercato_item(item: dict[str, Any]) -> str:
+    title = escape(str(item.get("title") or "Info mercato"))
+    url = escape(str(item.get("url") or "https://www.mercatolive.fr/"))
+    published = escape(str(item.get("published_at") or ""))
+    source = escape(str(item.get("source") or "Mercato Live"))
+    entity = escape(str(item.get("club") or item.get("player") or ""))
+    time_html = f'<span class="mercato-time">{published}</span>' if published else ""
+    entity_html = f'<span class="mercato-entity">{entity}</span>' if entity else ""
+    return (
+        f'<a class="mercato-link" href="{url}" target="_blank" rel="noreferrer">'
+        f'{time_html}<span>{title}</span>{entity_html}<span class="mercato-source">{source}</span></a>'
     )
 
 

@@ -229,6 +229,8 @@ UCL_ALL_TIME_COUNTRIES = {
 REQUEST_TIMEOUT_SECONDS = 10
 FOOTMERCATO_TIMEOUT_SECONDS = 3
 FOOTMERCATO_BASE_URL = "https://www.footmercato.net"
+MERCATO_LIVE_URL = "https://www.mercatolive.fr/"
+MERCATO_LIVE_TIMEOUT_SECONDS = 6
 
 FOOTMERCATO_TEAM_PATHS = {
     "france": "/selection/france/",
@@ -314,6 +316,100 @@ FALLBACK_UCL_ALL_TIME_SCORERS = [
     {"rank": 9, "name": "Thomas Müller", "team": "Germany", "country": "Germany", "photo_url": "", "value": 57, "source": "UEFA"},
 ]
 
+
+
+
+def fetch_mercato_live(limit: int = 18) -> list[dict[str, Any]]:
+    try:
+        response = requests.get(MERCATO_LIVE_URL, headers=REQUEST_HEADERS, timeout=MERCATO_LIVE_TIMEOUT_SECONDS)
+        response.raise_for_status()
+    except requests.RequestException:
+        return []
+    soup = BeautifulSoup(response.text, "html.parser")
+    items: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for link in soup.find_all("a", href=True):
+        title = _clean_text(link.get_text(" "))
+        href = str(link.get("href") or "")
+        url = urljoin(MERCATO_LIVE_URL, href)
+        hostname = urlparse(url).netloc.replace("www.", "")
+        if not title or len(title) < 12:
+            continue
+        if "mercatolive.fr" in hostname:
+            continue
+        if title.casefold() in {"accueil", "equipes", "équipes", "contact"}:
+            continue
+        context = _clean_text(link.parent.get_text(" ") if link.parent else title)
+        published_at = _extract_mercato_time(context)
+        source = _extract_mercato_source_from_context(context, url)
+        key = f"{title.casefold()}|{url}"
+        if key in seen:
+            continue
+        seen.add(key)
+        items.append(
+            {
+                "title": _shorten(title, 140),
+                "url": url,
+                "published_at": published_at,
+                "source": source,
+                "club": _extract_mercato_entity(title),
+                "player": "",
+            }
+        )
+        if len(items) >= limit:
+            break
+    return items
+
+
+def _extract_mercato_time(text: str) -> str:
+    match = re.search(r"\b(\d{1,2}:\d{2}|\d{1,2}/\d{1,2}/\d{2,4})\b", text)
+    return _clean_text(match.group(1)) if match else ""
+
+
+def _extract_mercato_source_from_context(text: str, url: str) -> str:
+    parts = [part.strip() for part in re.split(r"\s+-\s+", text) if part.strip()]
+    if parts:
+        candidate = parts[-1]
+        if 2 <= len(candidate) <= 42 and not re.search(r"[.!?]$", candidate):
+            return _clean_text(candidate)
+    hostname = urlparse(url).netloc.replace("www.", "")
+    return hostname.upper() if hostname else "Mercato Live"
+
+
+def _looks_like_mercato_item(text: str) -> bool:
+    normalized = _normalize_news_text(text)
+    keywords = (
+        "mercato", "transfert", "signature", "signe", "pret", "prêt", "prolong", "official", "officiel",
+        "accord", "recrue", "départ", "depart", "arrivée", "arrivee", "rumeur", "piste",
+    )
+    return any(keyword in normalized for keyword in keywords)
+
+
+def _split_mercato_time(text: str) -> tuple[str, str]:
+    match = re.match(r"^((?:\d{1,2}:\d{2})|(?:\d{1,2}/\d{1,2}/\d{2,4}))\s*[-–]\s*(.+)$", text)
+    if match:
+        return _clean_text(match.group(2)), _clean_text(match.group(1))
+    return text, ""
+
+
+def _extract_mercato_source(title: str, url: str) -> str:
+    parts = re.split(r"\s+-\s+", title)
+    if len(parts) > 1 and len(parts[-1]) <= 32:
+        return _clean_text(parts[-1])
+    hostname = urlparse(url).netloc.replace("www.", "")
+    return hostname or "Mercato Live"
+
+
+def _extract_mercato_entity(title: str) -> str:
+    known = (
+        "PSG", "OM", "OL", "Real Madrid", "Manchester City", "Arsenal", "Barcelone", "Bayern", "Chelsea",
+        "Liverpool", "Juventus", "Milan", "Inter", "Marseille", "Lyon", "Monaco", "Lens", "Lille",
+    )
+    lower = title.casefold()
+    for entity in known:
+        if entity.casefold() in lower:
+            return entity
+    return ""
 
 def fetch_dashboard_data() -> dict[str, Any]:
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds")

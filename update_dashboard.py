@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from src.config import CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, DATA_DIR, LEAGUES_CACHE_FILE, OUTPUT_HTML
-from src.fetchers import enrich_players_with_known_country_flags, fetch_champions_league_data, fetch_dashboard_data, fetch_leagues_data
+from src.config import CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, DATA_DIR, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, OUTPUT_HTML
+from src.fetchers import enrich_players_with_known_country_flags, fetch_champions_league_data, fetch_dashboard_data, fetch_leagues_data, fetch_mercato_live
 from src.render import render_html
 
 
@@ -13,6 +13,9 @@ def main() -> None:
     worldcup_data = _merge_refresh(_read_cache(CACHE_FILE), fetch_dashboard_data())
     champions_league_data = _merge_refresh(_read_cache(CHAMPIONS_LEAGUE_CACHE_FILE), fetch_champions_league_data())
     leagues_data = _merge_leagues_refresh(_read_cache(LEAGUES_CACHE_FILE), fetch_leagues_data())
+    previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
+    mercato_items = fetch_mercato_live()
+    mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
     for dataset in (worldcup_data, champions_league_data):
         _sanitize_dataset(dataset)
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
@@ -26,8 +29,10 @@ def main() -> None:
         encoding="utf-8",
     )
     LEAGUES_CACHE_FILE.write_text(json.dumps(leagues_data, ensure_ascii=False, indent=2), encoding="utf-8")
+    MERCATO_LIVE_CACHE_FILE.write_text(json.dumps(mercato_data, ensure_ascii=False, indent=2), encoding="utf-8")
     render_html(
         {
+            "mercato_live": mercato_data,
             "worldcup": worldcup_data,
             "champions_league": champions_league_data,
             "leagues": leagues_data,
