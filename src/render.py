@@ -203,49 +203,57 @@ def _page(data: dict[str, Any]) -> str:
     .league-focus-backdrop img {{ width: 100%; height: 100%; object-fit: contain; }}
     .league-focus-backdrop .flag.placeholder {{ width: 100%; height: 100%; border-radius: 28px; margin: 0; }}
     .mercato-ticker {{
-      margin: 18px 0 16px;
+      margin: 14px 0 16px;
+      min-height: 52px;
+      max-height: 60px;
       border: 1px solid rgba(245,201,107,0.24);
-      border-radius: 18px;
+      border-radius: 16px;
       background: linear-gradient(90deg, rgba(7,17,31,0.96), rgba(16,38,66,0.94));
       overflow: hidden;
-      box-shadow: 0 18px 42px rgba(0,0,0,0.22);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.20);
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       align-items: stretch;
     }}
     .mercato-badge {{
+      min-height: 52px;
+      max-height: 60px;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      padding: 12px 15px;
+      padding: 0 14px;
       color: #07111f;
       background: linear-gradient(180deg, #ffe1a0, #d5a63a);
       font-size: 12px;
+      line-height: 1;
       font-weight: 950;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: .035em;
       white-space: nowrap;
     }}
     .mercato-badge::before {{
       content: "";
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #ef3340;
-      box-shadow: 0 0 14px rgba(239,51,64,0.75);
+      box-shadow: 0 0 12px rgba(239,51,64,0.75);
+      flex: 0 0 auto;
     }}
-    .mercato-track {{ min-width: 0; overflow: hidden; display: flex; align-items: center; }}
-    .mercato-marquee {{ display: flex; width: max-content; animation: mercato-scroll 128s linear infinite; will-change: transform; }}
+    .mercato-track {{ min-width: 0; height: 52px; overflow: hidden; display: flex; align-items: center; }}
+    .mercato-marquee {{ display: flex; align-items: center; width: max-content; animation: mercato-scroll 132s linear infinite; will-change: transform; }}
     .mercato-track:hover .mercato-marquee {{ animation-play-state: paused; }}
-    .mercato-items {{ display: flex; align-items: center; gap: 46px; padding: 0 46px; white-space: nowrap; }}
-    .mercato-link {{ display: inline-flex; align-items: center; gap: 8px; color: #eaf4ff; text-decoration: none; font-size: 13px; line-height: 1.4; font-weight: 850; max-width: min(760px, 86vw); }}
-    .mercato-title {{ font-size: 13px; line-height: 1.4; font-weight: 850; white-space: normal; overflow: visible; }}
-    .mercato-sep {{ color: rgba(245,201,107,0.78); font-size: 13px; line-height: 1.4; font-weight: 950; flex: 0 0 auto; }}
+    .mercato-items {{ display: flex; align-items: center; gap: 0; padding: 0 34px; white-space: nowrap; flex: 0 0 auto; }}
+    .mercato-link {{ height: 52px; display: inline-flex; align-items: center; gap: 7px; color: #eaf4ff; text-decoration: none; font-size: 13px; line-height: 1; font-weight: 850; white-space: nowrap; overflow: hidden; text-overflow: clip; max-width: min(780px, 82vw); flex: 0 0 auto; }}
+    .mercato-title {{ display: inline-block; max-width: min(560px, 58vw); font-size: 13px; line-height: 1; font-weight: 850; white-space: nowrap; overflow: hidden; text-overflow: clip; vertical-align: middle; }}
+    .mercato-sep {{ color: rgba(245,201,107,0.78); font-size: 13px; line-height: 1; font-weight: 950; flex: 0 0 auto; }}
+    .mercato-item-break {{ color: rgba(245,201,107,0.80); display: inline-flex; align-items: center; height: 52px; padding: 0 26px; font-size: 15px; line-height: 1; font-weight: 950; flex: 0 0 auto; }}
     .mercato-link:hover, .mercato-link:focus-visible {{ color: #ffe1a0; outline: none; }}
-    .mercato-time {{ color: #ffe1a0; font-size: 12px; line-height: 1.35; font-weight: 950; flex: 0 0 auto; }}
-    .mercato-entity {{ color: #ffb7bd; font-size: 12px; line-height: 1.35; font-weight: 950; flex: 0 0 auto; }}
-    .mercato-source {{ color: #8fa8c4; font-size: 12px; line-height: 1.35; font-weight: 800; flex: 0 0 auto; }}
-    .mercato-empty {{ padding: 12px 16px; color: #c5d3e4; font-size: 14px; font-weight: 850; }}
+    .mercato-time {{ color: #ffe1a0; font-size: 13px; line-height: 1; font-weight: 950; flex: 0 0 auto; }}
+    .mercato-entity {{ color: #ffb7bd; font-size: 13px; line-height: 1; font-weight: 950; flex: 0 0 auto; }}
+    .mercato-source {{ color: #8fa8c4; font-size: 13px; line-height: 1; font-weight: 800; flex: 0 0 auto; }}
+    .mercato-empty {{ height: 52px; display: flex; align-items: center; padding: 0 16px; color: #c5d3e4; font-size: 13px; font-weight: 850; white-space: nowrap; overflow: hidden; }}
     @keyframes mercato-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .tabs-nav {{
       position: sticky;
@@ -756,9 +764,10 @@ def _page(data: dict[str, Any]) -> str:
       main {{ width: min(100% - 20px, 1240px); padding-top: 14px; }}
       .app-top {{ grid-template-columns: 1fr; align-items: start; }}
       .global-controls {{ justify-content: flex-start; }}
-      .mercato-ticker {{ grid-template-columns: 1fr; }}
-      .mercato-badge {{ justify-content: center; }}
-      .mercato-marquee {{ animation-duration: 156s; }}
+      .mercato-ticker {{ grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }}
+      .mercato-badge {{ min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }}
+      .mercato-track, .mercato-link, .mercato-item-break {{ height: 50px; }}
+      .mercato-marquee {{ animation-duration: 164s; }}
       .france-header-news.is-visible {{ grid-template-columns: 1fr; }}
       .france-header-badge {{ justify-content: center; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
@@ -798,8 +807,11 @@ def _page(data: dict[str, Any]) -> str:
       .app-copy {{ font-size: 14px; }}
       .global-controls {{ width: 100%; }}
       .action-button {{ flex: 1 1 130px; text-align: center; }}
-      .mercato-link {{ font-size: 13px; }}
-      .mercato-items {{ gap: 34px; padding: 0 34px; }}
+      .mercato-link {{ font-size: 12px; max-width: 78vw; }}
+      .mercato-title {{ font-size: 12px; max-width: 48vw; }}
+      .mercato-time, .mercato-entity, .mercato-source, .mercato-sep {{ font-size: 12px; }}
+      .mercato-items {{ padding: 0 24px; }}
+      .mercato-item-break {{ padding: 0 18px; }}
       .france-header-items {{ gap: 10px; padding: 8px 10px; }}
       .france-header-card {{ width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }}
       .france-header-image {{ width: 56px; height: 48px; }}
@@ -1501,7 +1513,7 @@ def _mercato_ticker(mercato_data: dict[str, Any] | None) -> str:
       <div class="mercato-empty">Mercato Live indisponible pour le moment</div>
     </section>
 """
-    rendered = "".join(_mercato_item(item) for item in items[:18])
+    rendered = '<span class="mercato-item-break">•</span>'.join(_mercato_item(item) for item in items[:18])
     return f"""
     <section class="mercato-ticker" aria-label="Mercato live">
       <div class="mercato-badge">Mercato Live</div>
