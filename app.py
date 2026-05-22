@@ -25,7 +25,7 @@ except ImportError:
     send_file = None
 
 from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, OUTPUT_HTML
-from src.fetchers import fetch_champions_league_news, fetch_league_news, fetch_world_cup_news
+from src.fetchers import fetch_champions_league_news, fetch_fff_france_header_news, fetch_league_news, fetch_world_cup_news
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
@@ -81,7 +81,12 @@ def refresh_news_payload(competition: str, focus: str, league: str = "") -> dict
     else:
         data = _read_json(CACHE_FILE, {})
         live = fetch_world_cup_news()
+        fff_live = fetch_fff_france_header_news()
         cached = data.get("general_news") or data.get("all_news") or data.get("world_cup_news") or []
+        france_cached = data.get("france_header_news") or []
+        articles = _dedupe_articles(live or cached)[:6]
+        france_header_news = _dedupe_articles(fff_live or france_cached)[:10]
+        return {"general": articles, "focused": {}, "all": articles, "france_header_news": france_header_news}
     articles = _dedupe_articles(live or cached)[:6]
     return {"general": articles, "focused": {}, "all": articles}
 

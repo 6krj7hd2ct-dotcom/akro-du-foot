@@ -283,6 +283,15 @@ DEDICATED_WORLD_CUP_NEWS_SOURCES = [
         "keywords": ["coupe du monde", "mondial", "world cup", "fifa"],
     },
 ]
+
+DEDICATED_FFF_FRANCE_HEADER_NEWS_SOURCE = {
+    "source": "FFF",
+    "url": "https://www.fff.fr/voir_plus/dernieres_actualites.html",
+    "topic": "focus",
+    "keywords": ["équipe de france", "equipe de france", "sélection", "selection", "bleus", "france"],
+    "exclude_keywords": ["résultat", "resultat", "résultats", "resultats", "calendrier", "classement", "score"],
+}
+
 DEDICATED_CHAMPIONS_NEWS_SOURCES = [
     {
         "source": "L'Équipe",
@@ -527,6 +536,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
     world_cup_news = _safe_fetch("actualités Coupe du Monde L’Équipe + RMC Sport", fetch_world_cup_news, errors)
+    france_header_news = _safe_fetch("bandeau Équipe de France FFF", fetch_fff_france_header_news, errors)
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
     all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
@@ -558,6 +568,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
         "all_time_top_assisters": all_time_top_assisters,
         "world_cup_news": world_cup_news,
         "france_news": news,
+        "france_header_news": france_header_news,
         "general_news": world_cup_news,
         "all_news": _dedupe_news(world_cup_news)[:12],
         "focused_team_news": focused_team_news,
@@ -572,6 +583,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "StatBunker - buteurs all-time", "url": STATBUNKER_ALL_TIME_SCORERS_URL},
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
             *[{"name": f"Actu Coupe du Monde - {source['source']}", "url": source["url"]} for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
+            {"name": "Bandeau Équipe de France - FFF", "url": DEDICATED_FFF_FRANCE_HEADER_NEWS_SOURCE["url"]},
         ],
         "errors": errors,
     }
@@ -1801,6 +1813,10 @@ def fetch_world_cup_news() -> list[dict[str, Any]]:
     return fetch_dedicated_news(DEDICATED_WORLD_CUP_NEWS_SOURCES, limit=6, per_source=3)
 
 
+def fetch_fff_france_header_news() -> list[dict[str, Any]]:
+    return fetch_dedicated_news([DEDICATED_FFF_FRANCE_HEADER_NEWS_SOURCE], limit=10, per_source=10)
+
+
 def fetch_champions_league_news() -> list[dict[str, Any]]:
     return fetch_dedicated_news(DEDICATED_CHAMPIONS_NEWS_SOURCES, limit=6, per_source=3)
 
@@ -2008,6 +2024,8 @@ def _fetch_dedicated_source_page(source: dict[str, str]) -> list[dict[str, Any]]
             continue
         if not _matches_dedicated_news_topic(article_url, title, source):
             continue
+        if _matches_dedicated_news_exclusion(article_url, title, source):
+            continue
         key = _news_key(title, article_url)
         if key in seen:
             continue
@@ -2074,6 +2092,8 @@ def _is_dedicated_article_link(url: str, title: str, source_name: str) -> bool:
         return hostname.endswith("lequipe.fr") and "/Football/" in path
     if source_name == "RMC Sport":
         return hostname.endswith("rmcsport.bfmtv.com") and path.startswith("/football/")
+    if source_name == "FFF":
+        return hostname == "fff.fr" and path not in {"", "/"}
     return True
 
 
@@ -2083,6 +2103,14 @@ def _matches_dedicated_news_topic(url: str, title: str, source: dict[str, Any]) 
         return True
     haystack = _normalize_news_text(f"{title} {urlparse(url).path.replace('-', ' ')}")
     return any(keyword and keyword in haystack for keyword in keywords)
+
+
+def _matches_dedicated_news_exclusion(url: str, title: str, source: dict[str, Any]) -> bool:
+    exclusions = [_normalize_news_text(str(item)) for item in source.get("exclude_keywords", [])]
+    if not exclusions:
+        return False
+    haystack = _normalize_news_text(f"{title} {urlparse(url).path.replace('-', ' ')}")
+    return any(word and word in haystack for word in exclusions)
 
 
 def _news_article(source: str, url: str, title: str, published: str = "", topic_type: str = "competition") -> dict[str, Any]:

@@ -344,6 +344,22 @@ def _page(data: dict[str, Any]) -> str:
     .focus-select {{ width: auto; max-width: min(48vw, 240px); min-width: 132px; padding: 5px 24px 5px 8px; border-radius: 999px; font-size: 12px; font-weight: 900; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }}
     .next-match-pill {{ flex-wrap: nowrap; white-space: nowrap; overflow-wrap: normal; word-break: keep-all; font-size: clamp(9px, 2.4vw, 13px); align-items: center; }}
     .next-match-pill .focus-match-text {{ white-space: nowrap; min-width: 0; }}
+    .france-header-news {{ display: none; margin-top: 14px; width: min(100%, 780px); border: 1px solid rgba(255,255,255,0.16); border-radius: 16px; overflow: hidden; background: linear-gradient(90deg, rgba(31,111,235,0.26), rgba(255,255,255,0.08), rgba(239,51,64,0.20)); box-shadow: 0 16px 34px rgba(0,0,0,0.20); }}
+    .france-header-news.is-visible {{ display: grid; grid-template-columns: auto minmax(0, 1fr); }}
+    .france-header-badge {{ display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(255,255,255,0.94); color: #07111f; font-size: 12px; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; white-space: nowrap; }}
+    .france-header-badge img {{ width: 22px; height: 22px; object-fit: contain; }}
+    .france-header-track {{ min-width: 0; overflow: hidden; display: flex; align-items: center; }}
+    .france-header-marquee {{ display: flex; width: max-content; animation: france-news-scroll 96s linear infinite; will-change: transform; }}
+    .france-header-track:hover .france-header-marquee {{ animation-play-state: paused; }}
+    .france-header-items {{ display: flex; align-items: stretch; gap: 12px; padding: 8px 12px; white-space: nowrap; }}
+    .france-header-card {{ width: min(300px, 72vw); min-height: 70px; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.13); background: rgba(7,17,31,0.58); color: #f4f8ff; text-decoration: none; }}
+    .france-header-card:hover, .france-header-card:focus-visible {{ background: rgba(7,17,31,0.74); outline: 1px solid rgba(245,201,107,0.42); }}
+    .france-header-image {{ width: 64px; height: 52px; border-radius: 10px; object-fit: cover; background: linear-gradient(135deg, rgba(31,111,235,0.40), rgba(239,51,64,0.30)); }}
+    .france-header-copy {{ min-width: 0; display: grid; gap: 4px; }}
+    .france-header-title {{ color: #fff; font-size: 13px; font-weight: 950; line-height: 1.18; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
+    .france-header-meta {{ display: flex; align-items: center; gap: 7px; color: #c7d7ea; font-size: 11px; font-weight: 850; }}
+    .france-header-meta img {{ width: 16px; height: 16px; object-fit: contain; }}
+    @keyframes france-news-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .france-pill::before {{ content: none; }}
     .section-head {{ display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 34px 0 14px; }}
     .section-title {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
@@ -734,6 +750,9 @@ def _page(data: dict[str, Any]) -> str:
       .mercato-ticker {{ grid-template-columns: 1fr; }}
       .mercato-badge {{ justify-content: center; }}
       .mercato-marquee {{ animation-duration: 118s; }}
+      .france-header-news.is-visible {{ grid-template-columns: 1fr; }}
+      .france-header-badge {{ justify-content: center; }}
+      .france-header-marquee {{ animation-duration: 120s; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
       .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; transform: none; width: clamp(92px, 25vw, 138px); opacity: 0.62; }}
@@ -773,6 +792,9 @@ def _page(data: dict[str, Any]) -> str:
       .action-button {{ flex: 1 1 130px; text-align: center; }}
       .mercato-link {{ font-size: 13px; }}
       .mercato-items {{ gap: 20px; padding: 0 20px; }}
+      .france-header-items {{ gap: 10px; padding: 8px 10px; }}
+      .france-header-card {{ width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }}
+      .france-header-image {{ width: 56px; height: 48px; }}
       .big5-track {{ animation-duration: 76s; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
@@ -826,6 +848,7 @@ def _page(data: dict[str, Any]) -> str:
             <span class="pill">{knockout_remaining}/{knockout_total} matchs à élimination</span>
             <span class="pill">Avancement : {escape(competition_stage)}</span>
           </div>
+          {_france_header_news_placeholder()}
         </div>
       </div>
     </section>
@@ -885,6 +908,15 @@ def _section_head(title: str, note: str, action: str = "") -> str:
 
 def _all_time_badge(kind: str) -> str:
     return f'<button class="alltime-badge" type="button" data-alltime="{escape(kind, quote=True)}">Top 10 all-time</button>'
+
+
+def _france_header_news_placeholder() -> str:
+    return (
+        '<section class="france-header-news" id="franceHeaderNews" aria-label="Actualités Équipe de France FFF">'
+        '<div class="france-header-badge"><img src="https://www.fff.fr/favicon.ico" alt="" loading="lazy">Équipe de France</div>'
+        '<div class="france-header-track" id="franceHeaderNewsTrack"></div>'
+        '</section>'
+    )
 
 
 def _app_header() -> str:
@@ -1957,6 +1989,7 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
             "general": _dedupe_render_news([*(worldcup_data.get("general_news") or worldcup_data.get("world_cup_news", [])), *worldcup_data.get("world_cup_news", [])]),
             "focused": worldcup_data.get("focused_team_news", {}),
             "all": _dedupe_render_news([*worldcup_data.get("all_news", []), *worldcup_data.get("france_news", []), *worldcup_data.get("world_cup_news", [])]),
+            "france_header_news": _dedupe_render_news(worldcup_data.get("france_header_news", [])),
         },
         "champions": {
             "general": _dedupe_render_news([*((champions_data or {}).get("general_news") or (champions_data or {}).get("world_cup_news", [])), *((champions_data or {}).get("world_cup_news", []))]),
@@ -2054,6 +2087,39 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
       </article>`;
     }}
 
+    function isFranceHeaderFocus() {{
+      const select = document.getElementById('worldcupFocusSelect');
+      const value = select ? select.value : localStorage.getItem('akrodufoot:focus:worldcup') || 'France';
+      return normalizeNewsText(value) === 'france';
+    }}
+
+    function franceHeaderCard(article) {{
+      const logo = article.source_logo || 'https://www.fff.fr/favicon.ico';
+      const image = article.image_url ? `<img class="france-header-image" src="${{newsEscape(article.image_url)}}" alt="" loading="lazy" onerror="this.classList.add('is-hidden')">` : '<div class="france-header-image"></div>';
+      return `<a class="france-header-card" href="${{newsEscape(article.url || 'https://www.fff.fr/voir_plus/dernieres_actualites.html')}}" target="_blank" rel="noreferrer">
+        ${{image}}
+        <span class="france-header-copy">
+          <span class="france-header-title">${{newsEscape(article.title || 'Actualité Équipe de France')}}</span>
+          <span class="france-header-meta"><img src="${{newsEscape(logo)}}" alt="" loading="lazy">${{newsEscape(newsDate(article.published_at || article.date))}}</span>
+        </span>
+      </a>`;
+    }}
+
+    function renderFranceHeaderNews() {{
+      const ticker = document.getElementById('franceHeaderNews');
+      const track = document.getElementById('franceHeaderNewsTrack');
+      if (!ticker || !track) return;
+      const articles = uniqueArticles((NEWS_DATA.worldcup && NEWS_DATA.worldcup.france_header_news) || []).slice(0, 10);
+      const visible = isFranceHeaderFocus() && articles.length > 0;
+      ticker.classList.toggle('is-visible', visible);
+      if (!visible) {{
+        track.innerHTML = '';
+        return;
+      }}
+      const cards = articles.map(franceHeaderCard).join('');
+      track.innerHTML = `<div class="france-header-marquee"><div class="france-header-items">${{cards}}</div><div class="france-header-items" aria-hidden="true">${{cards}}</div></div>`;
+    }}
+
     function selectedLeagueKey() {{
       const select = document.getElementById('leagueSelect');
       return select ? select.value : 'ligue1';
@@ -2084,6 +2150,7 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
         if (!response.ok) throw new Error('refresh failed');
         const data = await response.json();
         NEWS_DATA[kind] = {{...(NEWS_DATA[kind] || {{}}), ...data}};
+        if (kind === 'worldcup' && data.france_header_news) NEWS_DATA.worldcup.france_header_news = data.france_header_news;
       }} catch (error) {{
         // En mode fichier statique ou hors ligne, on réaffiche les données déjà en cache.
       }}
@@ -2092,6 +2159,7 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
 
     function refreshAllNewsBoards() {{
       renderNewsBoard('worldcup');
+      renderFranceHeaderNews();
       renderNewsBoard('champions');
       renderNewsBoard('leagues');
     }}
@@ -2239,6 +2307,7 @@ def _focus_script(matches: list[dict[str, Any]], teams_details: dict[str, Any]) 
       select.addEventListener('change', () => {{
         localStorage.setItem(FOCUS_KEYS[kind], select.value);
         renderFocus(kind);
+        renderFranceHeaderNews();
         document.dispatchEvent(new CustomEvent('akro:focus-change', {{detail: {{kind, focus: select.value}}}}));
       }});
       renderFocus(kind);

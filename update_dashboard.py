@@ -51,7 +51,7 @@ def main() -> None:
 def _preserve_news_cache(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
     if not previous:
         return current
-    for section in ("world_cup_news", "france_news", "general_news", "all_news"):
+    for section in ("world_cup_news", "france_news", "france_header_news", "general_news", "all_news"):
         if not current.get(section) and previous.get(section):
             current[section] = previous[section]
     for section in ("focused_team_news", "focused_club_news"):
@@ -286,6 +286,7 @@ def _merge_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[st
         "all_time_top_assisters",
         "world_cup_news",
         "france_news",
+        "france_header_news",
         "general_news",
         "all_news",
         "focused_team_news",
