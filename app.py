@@ -65,20 +65,24 @@ if app and _background_updates_enabled():
     threading.Thread(target=_run_dashboard_update_loop, daemon=True).start()
 
 
-def refresh_news_payload(competition: str, focus: str) -> dict[str, Any]:
+def refresh_news_payload(competition: str, focus: str, league: str = "") -> dict[str, Any]:
     key = str(competition or "").casefold()
     if "league" in key and "champ" not in key:
-        data = _read_json(LEAGUES_CACHE_FILE, {})
+        root = _read_json(LEAGUES_CACHE_FILE, {})
+        data = (root.get("leagues") or {}).get(league, {}) if league else root
+        pool = _dedupe_articles([*(data.get("all_news") or []), *(root.get("all_news") or [])])
+        general_seed = [article for article in pool if _article_matches_focus(article, data.get("name", ""))] or pool
     else:
         data = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}) if "champ" in key else _read_json(CACHE_FILE, {})
-    general = _dedupe_articles([*(data.get("general_news") or []), *(data.get("world_cup_news") or [])])[:3]
-    pool = _dedupe_articles([*(data.get("all_news") or []), *(data.get("france_news") or []), *(data.get("world_cup_news") or [])])
+        pool = _dedupe_articles([*(data.get("all_news") or []), *(data.get("france_news") or []), *(data.get("world_cup_news") or [])])
+        general_seed = [*(data.get("general_news") or []), *(data.get("world_cup_news") or [])]
+    general = _balanced_articles(_dedupe_articles(general_seed), 3)
     focused_direct = []
     if focus:
         focused_map = data.get("focused_club_news") or data.get("focused_team_news") or {}
         focused_direct = focused_map.get(focus, []) if isinstance(focused_map, dict) else []
-    focused = _dedupe_articles([*focused_direct, *[article for article in pool if _article_matches_focus(article, focus)]])[:3]
-    return {"general": general, "focused": {focus: focused} if focus else {}, "all": pool[:48]}
+    focused = _balanced_articles(_dedupe_articles([*focused_direct, *[article for article in pool if _article_matches_focus(article, focus)]]), 3)
+    return {"general": general, "focused": {focus: focused} if focus else {}, "all": _balanced_articles(pool, 48)}
 
 
 def _article_matches_focus(article: dict[str, Any], focus: str) -> bool:
@@ -115,11 +119,41 @@ def _dedupe_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
             continue
         seen.add(key)
         out.append(article)
-    return sorted(out, key=lambda item: str(item.get("date", "")), reverse=True)
+    return sorted(out, key=_cached_news_sort_key, reverse=True)
+
+
+def _balanced_articles(articles: list[dict[str, Any]], limit: int, max_per_source: int = 2) -> list[dict[str, Any]]:
+    selected: list[dict[str, Any]] = []
+    counts: dict[str, int] = {}
+    for article in sorted(articles or [], key=_cached_news_sort_key, reverse=True):
+        source = _normalize_football_text(article.get("source_name") or article.get("source") or "source")
+        if counts.get(source, 0) >= max_per_source:
+            continue
+        selected.append(article)
+        counts[source] = counts.get(source, 0) + 1
+        if len(selected) >= limit:
+            return selected
+    for article in sorted(articles or [], key=_cached_news_sort_key, reverse=True):
+        if article not in selected:
+            selected.append(article)
+            if len(selected) >= limit:
+                break
+    return selected
+
+
+def _cached_news_sort_key(article: dict[str, Any]) -> tuple[int, str]:
+    source = _normalize_football_text(article.get("source_name") or article.get("source") or "")
+    priority = ["foot mercato", "rmc sport", "l equipe", "eurosport", "france info", "maxifoot", "so foot", "livefoot", "france football", "goal"]
+    score = 40
+    for index, name in enumerate(priority):
+        if _normalize_football_text(name) in source:
+            score = 100 - index
+            break
+    return (score, str(article.get("published_at") or article.get("date") or ""))
 
 
 def _is_allowed_cached_news(article: dict[str, Any]) -> bool:
-    source = _normalize_football_text(article.get("source", ""))
+    source = _normalize_football_text(article.get("source_name") or article.get("source", ""))
     link = str(article.get("url", "")).lower()
     hostname = urlparse(link).netloc.replace("www.", "")
     blocked_sources = {"espn", "bbc", "bbc sport", "google news"}
@@ -176,7 +210,7 @@ if app:
     def refresh_news():
         competition = request.args.get("competition", "")
         focus = request.args.get("focus", "")
-        return jsonify(refresh_news_payload(competition, focus))
+        return jsonify(refresh_news_payload(competition, focus, request.args.get("league", "")))
 
     @app.get("/api/mercato-live")
     def mercato_live():
@@ -879,7 +913,7 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json({"messages": _watch_messages()[-120:]})
         elif path == "/api/refresh-news":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
-            self._send_json(refresh_news_payload(_url_decode(query.get("competition", "")), _url_decode(query.get("focus", ""))))
+            self._send_json(refresh_news_payload(_url_decode(query.get("competition", "")), _url_decode(query.get("focus", "")), _url_decode(query.get("league", ""))))
         else:
             self.send_error(404)
 

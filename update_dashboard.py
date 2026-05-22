@@ -10,9 +10,12 @@ from src.render import render_html
 
 def main() -> None:
     DATA_DIR.mkdir(exist_ok=True)
-    worldcup_data = _merge_refresh(_read_cache(CACHE_FILE), fetch_dashboard_data())
-    champions_league_data = _merge_refresh(_read_cache(CHAMPIONS_LEAGUE_CACHE_FILE), fetch_champions_league_data())
-    leagues_data = _merge_leagues_refresh(_read_cache(LEAGUES_CACHE_FILE), fetch_leagues_data())
+    previous_worldcup = _read_cache(CACHE_FILE)
+    previous_champions = _read_cache(CHAMPIONS_LEAGUE_CACHE_FILE)
+    previous_leagues = _read_cache(LEAGUES_CACHE_FILE)
+    worldcup_data = _preserve_news_cache(_merge_refresh(previous_worldcup, fetch_dashboard_data()), previous_worldcup)
+    champions_league_data = _preserve_news_cache(_merge_refresh(previous_champions, fetch_champions_league_data()), previous_champions)
+    leagues_data = _preserve_leagues_news_cache(_merge_leagues_refresh(previous_leagues, fetch_leagues_data()), previous_leagues)
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
     mercato_items = fetch_mercato_live()
     mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
@@ -40,6 +43,34 @@ def main() -> None:
         OUTPUT_HTML,
     )
     print(f"Dashboard généré : {OUTPUT_HTML}")
+
+
+def _preserve_news_cache(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
+    if not previous:
+        return current
+    for section in ("world_cup_news", "france_news", "general_news", "all_news"):
+        if not current.get(section) and previous.get(section):
+            current[section] = previous[section]
+    for section in ("focused_team_news", "focused_club_news"):
+        if not current.get(section) and previous.get(section):
+            current[section] = previous[section]
+    return current
+
+
+def _preserve_leagues_news_cache(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
+    if not previous:
+        return current
+    if not current.get("all_news") and previous.get("all_news"):
+        current["all_news"] = previous["all_news"]
+    current_leagues = current.get("leagues") or {}
+    previous_leagues = previous.get("leagues") or {}
+    for key, league in current_leagues.items():
+        previous_league = previous_leagues.get(key, {})
+        if not league.get("focused_club_news") and previous_league.get("focused_club_news"):
+            league["focused_club_news"] = previous_league["focused_club_news"]
+        if not league.get("all_news") and previous_league.get("all_news"):
+            league["all_news"] = previous_league["all_news"]
+    return current
 
 
 def _sanitize_dataset(dataset: dict[str, Any]) -> None:

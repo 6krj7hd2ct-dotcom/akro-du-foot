@@ -139,6 +139,42 @@ FRENCH_NEWS_DOMAINS = (
     "uefa.com",
 )
 
+NEWS_SOURCE_PRIORITY = (
+    "foot mercato",
+    "rmc sport",
+    "l equipe",
+    "eurosport",
+    "france info",
+    "maxifoot",
+    "so foot",
+    "livefoot",
+    "france football",
+    "goal",
+    "fifa",
+    "uefa",
+)
+
+NEWS_SOURCE_LOGOS = {
+    "france info": "https://www.francetvinfo.fr/favicon.ico",
+    "rmc sport": "https://rmcsport.bfmtv.com/favicon.ico",
+    "l equipe": "https://www.lequipe.fr/favicon.ico",
+    "l'equipe": "https://www.lequipe.fr/favicon.ico",
+    "l’équipe": "https://www.lequipe.fr/favicon.ico",
+    "goal.com": "https://www.goal.com/favicon.ico",
+    "goal france": "https://www.goal.com/favicon.ico",
+    "eurosport": "https://www.eurosport.fr/favicon.ico",
+    "eurosport france": "https://www.eurosport.fr/favicon.ico",
+    "foot mercato": "https://www.footmercato.net/favicon.ico",
+    "so foot": "https://www.sofoot.com/favicon.ico",
+    "maxifoot": "https://www.maxifoot.fr/favicon.ico",
+    "livefoot": "https://www.livefoot.fr/favicon.ico",
+    "france football": "https://www.francefootball.fr/favicon.ico",
+    "le phoceen": "https://www.lephoceen.fr/favicon.ico",
+    "le phocéen": "https://www.lephoceen.fr/favicon.ico",
+    "fifa": "https://www.fifa.com/favicon.ico",
+    "uefa": "https://www.uefa.com/favicon.ico",
+}
+
 FRENCH_TEAM_NAMES = {
     "Senegal": "Sénégal",
     "Ivory Coast": "Côte d'Ivoire",
@@ -1904,19 +1940,26 @@ def _fetch_news(
             if not title or not link or key in seen:
                 continue
             seen.add(key)
+            fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+            image_url = _article_image_url(item, _xml_text(item, "description"))
             articles.append(
                 {
                     "title": title,
                     "source": source,
+                    "source_name": source,
+                    "source_logo": _source_logo_url(source, link),
                     "date": published,
+                    "published_at": published,
                     "summary": _shorten(summary, 210),
                     "url": link,
+                    "image_url": image_url,
+                    "topic_type": "competition",
+                    "related_team_or_club": "",
+                    "fetched_at": fetched_at,
                 }
             )
 
-    articles = _dedupe_news(articles)
-    articles.sort(key=_news_sort_key, reverse=True)
-    return articles[:limit]
+    return _balanced_news(_dedupe_news(articles), limit)
 
 
 def build_focused_news(entities: list[str], articles: list[dict[str, Any]], limit: int = 12) -> dict[str, list[dict[str, Any]]]:
@@ -1925,7 +1968,10 @@ def build_focused_news(entities: list[str], articles: list[dict[str, Any]], limi
         aliases = _focus_aliases(entity)
         matches = [article for article in articles if _article_matches_aliases(article, aliases)]
         if matches:
-            focused[entity] = _dedupe_news(matches)[:limit]
+            focused[entity] = [
+                {**article, "topic_type": "focus", "related_team_or_club": entity}
+                for article in _balanced_news(_dedupe_news(matches), limit)
+            ]
     return focused
 
 
@@ -1965,12 +2011,69 @@ def _dedupe_news(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return clean
 
 
-def _news_sort_key(article: dict[str, Any]) -> tuple[int, str]:
-    source = _normalize_news_text(str(article.get("source", "")))
-    link = str(article.get("url", "")).lower()
-    priority = 1 if "foot mercato" in source or "footmercato.net" in link else 0
-    return (priority, str(article.get("date", "")))
+def _balanced_news(articles: list[dict[str, Any]], limit: int, max_per_source: int = 2) -> list[dict[str, Any]]:
+    sorted_articles = sorted(articles, key=_news_sort_key, reverse=True)
+    selected: list[dict[str, Any]] = []
+    source_counts: dict[str, int] = {}
+    for article in sorted_articles:
+        source_key = _news_source_key(article)
+        if source_counts.get(source_key, 0) >= max_per_source:
+            continue
+        selected.append(article)
+        source_counts[source_key] = source_counts.get(source_key, 0) + 1
+        if len(selected) >= limit:
+            return selected
+    for article in sorted_articles:
+        if article not in selected:
+            selected.append(article)
+            if len(selected) >= limit:
+                break
+    return selected
 
+
+def _news_sort_key(article: dict[str, Any]) -> tuple[int, str]:
+    return (_news_source_score(article), str(article.get("date") or article.get("published_at") or ""))
+
+
+def _news_source_key(article: dict[str, Any]) -> str:
+    return _normalize_news_text(str(article.get("source") or article.get("source_name") or urlparse(str(article.get("url") or "")).netloc))
+
+
+def _news_source_score(article: dict[str, Any]) -> int:
+    source = _news_source_key(article)
+    link = str(article.get("url", "")).lower()
+    for index, name in enumerate(NEWS_SOURCE_PRIORITY):
+        normalized = _normalize_news_text(name)
+        if normalized in source or normalized.replace(" ", "") in link:
+            return 100 - index
+    return 40
+
+
+def _source_logo_url(source: str, link: str = "") -> str:
+    normalized = _normalize_news_text(source)
+    for key, logo in NEWS_SOURCE_LOGOS.items():
+        if _normalize_news_text(key) in normalized:
+            return logo
+    hostname = urlparse(str(link or "")).netloc.replace("www.", "")
+    return f"https://{hostname}/favicon.ico" if hostname else ""
+
+
+def _article_image_url(item: ElementTree.Element, description_html: str) -> str:
+    for child in item.iter():
+        tag = child.tag.split("}")[-1].casefold()
+        if tag in {"content", "thumbnail"}:
+            url = child.attrib.get("url")
+            if url and url.startswith(("http://", "https://")):
+                return url
+        if tag == "enclosure":
+            url = child.attrib.get("url")
+            mime = child.attrib.get("type", "")
+            if url and url.startswith(("http://", "https://")) and (not mime or "image" in mime):
+                return url
+    match = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', description_html or "", flags=re.I)
+    if match and match.group(1).startswith(("http://", "https://")):
+        return match.group(1)
+    return ""
 
 def _news_key(title: str, link: str) -> str:
     title_key = _normalize_news_text(title)[:90]

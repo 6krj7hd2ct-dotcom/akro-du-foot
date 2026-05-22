@@ -442,9 +442,17 @@ def _page(data: dict[str, Any]) -> str:
     .status {{ padding: 4px 8px; font-size: 12px; background: rgba(31,111,235,0.18); color: #b9d7ff; margin-top: 5px; }}
     .status.done {{ background: rgba(50,211,162,0.18); color: #9ff0d5; }}
     .status.live {{ background: rgba(239,51,64,0.22); color: #ffb8bf; box-shadow: 0 0 0 1px rgba(239,51,64,0.45); }}
-    .article {{ padding: 16px; min-height: 190px; display: flex; flex-direction: column; }}
+    .article {{ min-height: 310px; display: flex; flex-direction: column; position: relative; }}
+    .article-visual {{ position: relative; height: 132px; overflow: hidden; background: radial-gradient(circle at 28% 20%, rgba(245,201,107,0.22), transparent 10rem), linear-gradient(135deg, rgba(31,111,235,0.18), rgba(239,51,64,0.12)); }}
+    .article-image {{ width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.92; }}
+    .article-image.is-hidden {{ display: none; }}
+    .article-visual-fallback {{ width: 100%; height: 100%; display: grid; place-items: center; color: rgba(255,255,255,0.72); font-size: 12px; font-weight: 950; text-transform: uppercase; letter-spacing: .08em; }}
+    .article-source {{ position: absolute; left: 12px; top: 12px; display: inline-flex; align-items: center; gap: 8px; max-width: calc(100% - 24px); padding: 6px 9px; border-radius: 999px; background: rgba(7,17,31,0.76); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(10px); color: #f3f8ff; font-size: 11px; font-weight: 950; text-transform: uppercase; }}
+    .source-logo {{ width: 20px; height: 20px; flex: 0 0 20px; border-radius: 50%; object-fit: contain; background: rgba(255,255,255,0.94); padding: 2px; }}
+    .source-logo.is-hidden {{ display: none; }}
+    .article-body {{ padding: 15px 16px 16px; display: flex; flex-direction: column; flex: 1; }}
     .article h3 {{ padding: 0; font-size: 16px; line-height: 1.25; }}
-    .article p {{ color: #b7c6d7; font-size: 13px; line-height: 1.5; margin: 11px 0 0; }}
+    .article p {{ color: #b7c6d7; font-size: 13px; line-height: 1.5; margin: 11px 0 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }}
     .article-meta {{ color: #95a9bd; font-size: 12px; margin-bottom: 10px; text-transform: uppercase; font-weight: 800; }}
     .read-link {{ margin-top: auto; padding-top: 14px; font-weight: 850; font-size: 13px; text-decoration: none; }}
     .bracket-wrap {{ width: 100%; max-width: 100%; overflow-x: visible; padding: 8px 0 18px; }}
@@ -1545,15 +1553,28 @@ def _news_section(title: str, news: list[dict[str, Any]], note: str, france: boo
     articles = []
     france_class = " france" if france else ""
     for article in news[:6]:
-        articles.append(
-            f'<article class="card article{france_class}">'
-            f'<div class="article-meta">{escape(article.get("source", ""))} · {escape(_format_datetime(article.get("date", ""), with_time=False))}</div>'
-            f'<h3><a href="{escape(article.get("url", ""))}" target="_blank" rel="noreferrer">{escape(article.get("title", ""))}</a></h3>'
-            f'<p>{escape(article.get("summary", ""))}</p>'
-            f'<a class="read-link" href="{escape(article.get("url", ""))}" target="_blank" rel="noreferrer">Lire l’article</a>'
-            "</article>"
-        )
+        articles.append(_article_card_html(article, france_class))
     return f'{_section_head(title, note)}<section class="news">{"".join(articles)}</section>'
+
+
+def _article_card_html(article: dict[str, Any], extra_class: str = "") -> str:
+    source = str(article.get("source_name") or article.get("source") or "Source")
+    logo = str(article.get("source_logo") or "")
+    image = str(article.get("image_url") or "")
+    date_value = str(article.get("published_at") or article.get("date") or "")
+    url = str(article.get("url") or "#")
+    image_html = f'<img class="article-image" src="{escape(image, quote=True)}" alt="" loading="lazy" onerror="this.classList.add(\'is-hidden\')">' if image else '<div class="article-visual-fallback">Akro du Foot</div>'
+    logo_html = f'<img class="source-logo" src="{escape(logo, quote=True)}" alt="" loading="lazy" onerror="this.classList.add(\'is-hidden\')">' if logo else ''
+    return (
+        f'<article class="card article{extra_class}">'
+        f'<div class="article-visual">{image_html}<div class="article-source">{logo_html}<span>{escape(source)}</span></div></div>'
+        '<div class="article-body">'
+        f'<div class="article-meta">{escape(_format_datetime(date_value, with_time=False))}</div>'
+        f'<h3><a href="{escape(url, quote=True)}" target="_blank" rel="noreferrer">{escape(str(article.get("title", "Article")))}</a></h3>'
+        f'<p>{escape(str(article.get("summary", "")))}</p>'
+        f'<a class="read-link" href="{escape(url, quote=True)}" target="_blank" rel="noreferrer">Lire l’article</a>'
+        '</div></article>'
+    )
 
 
 def render_worldcup_bracket(rounds: list[dict[str, Any]]) -> str:
@@ -1878,6 +1899,38 @@ def _football_chatbot_modal() -> str:
 """
 
 
+def _leagues_news_payload(leagues_data: dict[str, Any] | None) -> dict[str, Any]:
+    data = leagues_data or {}
+    by_league: dict[str, dict[str, Any]] = {}
+    for key, league in (data.get("leagues") or {}).items():
+        league_name = league.get("name", key)
+        all_news = _dedupe_render_news([*(league.get("all_news") or []), *(data.get("all_news") or [])])
+        general = [article for article in all_news if _focus_text_match(article, str(league_name))]
+        by_league[key] = {
+            "general": _dedupe_render_news(general or all_news),
+            "focused": league.get("focused_club_news", {}),
+            "all": all_news,
+        }
+    return {
+        "general": _dedupe_render_news(data.get("all_news", [])),
+        "focused": {},
+        "all": _dedupe_render_news(data.get("all_news", [])),
+        "byLeague": by_league,
+    }
+
+
+def _focus_text_match(article: dict[str, Any], focus: str) -> bool:
+    normalized_focus = _normalize_render_text(focus)
+    haystack = _normalize_render_text(f"{article.get('title', '')} {article.get('summary', '')} {article.get('url', '')}")
+    return bool(normalized_focus and normalized_focus in haystack)
+
+
+def _normalize_render_text(value: str) -> str:
+    replacements = str.maketrans({"é":"e", "è":"e", "ê":"e", "ë":"e", "à":"a", "â":"a", "ä":"a", "î":"i", "ï":"i", "ô":"o", "ö":"o", "ù":"u", "û":"u", "ü":"u", "ç":"c"})
+    import re
+    return " ".join(re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold().translate(replacements)).split())
+
+
 def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] | None, leagues_data: dict[str, Any] | None = None) -> str:
     payload = {
         "worldcup": {
@@ -1890,6 +1943,7 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
             "focused": (champions_data or {}).get("focused_club_news", {}),
             "all": _dedupe_render_news([*(champions_data or {}).get("all_news", []), *((champions_data or {}).get("world_cup_news", []))]),
         },
+        "leagues": _leagues_news_payload(leagues_data),
     }
     data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
     return f"""<script>
@@ -1940,28 +1994,62 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
         if (!key || seen.has(key)) return false;
         seen.add(key);
         return true;
-      }}).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+      }}).sort((a, b) => String(b.published_at || b.date || '').localeCompare(String(a.published_at || a.date || '')));
+    }}
+
+    function sourceKey(article) {{
+      return normalizeNewsText(article.source_name || article.source || 'source');
+    }}
+
+    function balancedArticles(articles, limit) {{
+      const sorted = uniqueArticles(articles);
+      const selected = [];
+      const counts = new Map();
+      for (const article of sorted) {{
+        const key = sourceKey(article);
+        if ((counts.get(key) || 0) >= 2) continue;
+        selected.push(article);
+        counts.set(key, (counts.get(key) || 0) + 1);
+        if (selected.length >= limit) return selected;
+      }}
+      for (const article of sorted) {{
+        if (!selected.includes(article)) selected.push(article);
+        if (selected.length >= limit) break;
+      }}
+      return selected;
     }}
 
     function articleCard(article) {{
+      const source = newsEscape(article.source_name || article.source || 'Source');
+      const logo = article.source_logo ? `<img class="source-logo" src="${{newsEscape(article.source_logo)}}" alt="" loading="lazy" onerror="this.classList.add('is-hidden')">` : '';
+      const image = article.image_url ? `<img class="article-image" src="${{newsEscape(article.image_url)}}" alt="" loading="lazy" onerror="this.classList.add('is-hidden')">` : '<div class="article-visual-fallback">Akro du Foot</div>';
       return `<article class="card article">
-        <div class="article-meta">${{newsEscape(article.source || 'Source')}} · ${{newsEscape(newsDate(article.date))}}</div>
-        <h3><a href="${{newsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">${{newsEscape(article.title || 'Article')}}</a></h3>
-        <p>${{newsEscape(article.summary || '')}}</p>
-        <a class="read-link" href="${{newsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">Lire l’article</a>
+        <div class="article-visual">${{image}}<div class="article-source">${{logo}}<span>${{source}}</span></div></div>
+        <div class="article-body">
+          <div class="article-meta">${{newsEscape(newsDate(article.published_at || article.date))}}</div>
+          <h3><a href="${{newsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">${{newsEscape(article.title || 'Article')}}</a></h3>
+          <p>${{newsEscape(article.summary || '')}}</p>
+          <a class="read-link" href="${{newsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">Lire l’article</a>
+        </div>
       </article>`;
     }}
 
+    function selectedLeagueKey() {{
+      const select = document.getElementById('leagueSelect');
+      return select ? select.value : 'ligue1';
+    }}
+
     function newsSelection(kind) {{
-      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : 'championsFocusSelect');
+      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : kind === 'leagues' ? 'leagueClubSelect' : 'championsFocusSelect');
       const focus = select ? select.value : '';
-      const source = NEWS_DATA[kind] || {{general: [], focused: {{}}, all: []}};
+      const base = NEWS_DATA[kind] || {{general: [], focused: {{}}, all: []}};
+      const source = kind === 'leagues' && base.byLeague ? (base.byLeague[selectedLeagueKey()] || base) : base;
       const focusedDirect = source.focused && source.focused[focus] ? source.focused[focus] : [];
       const focusedFromPool = (source.all || []).filter(article => focus && articleMatchesFocus(article, focus));
-      const focused = uniqueArticles([...focusedDirect, ...focusedFromPool]).slice(0, 3);
+      const focused = balancedArticles([...focusedDirect, ...focusedFromPool], 3);
       const focusedKeys = new Set(focused.map(article => normalizeNewsText(article.title || article.url || '').slice(0, 90)));
-      const general = uniqueArticles(source.general || []).filter(article => !focusedKeys.has(normalizeNewsText(article.title || article.url || '').slice(0, 90))).slice(0, 3);
-      return uniqueArticles([...focused, ...general]).slice(0, 6);
+      const general = balancedArticles(source.general || source.all || [], 6).filter(article => !focusedKeys.has(normalizeNewsText(article.title || article.url || '').slice(0, 90))).slice(0, 3);
+      return [...focused, ...general].slice(0, 6);
     }}
 
     function renderNewsBoard(kind) {{
