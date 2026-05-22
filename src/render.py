@@ -141,6 +141,8 @@ def _page(data: dict[str, Any]) -> str:
       clip-path: polygon(50% 0, 58% 28%, 88% 28%, 64% 46%, 75% 78%, 50% 58%, 25% 78%, 36% 46%, 12% 28%, 42% 28%);
     }}
     .leagues-hero::after {{ display: none; }}
+    .hero-logo-mark {{ position: absolute; z-index: 0; right: clamp(26px, 8vw, 110px); top: 48px; width: clamp(126px, 20vw, 230px); max-height: 230px; object-fit: contain; opacity: 0.42; filter: drop-shadow(0 0 30px rgba(245,201,107,0.28)); pointer-events: none; }}
+    .hero.champions .hero-logo-mark {{ opacity: 0.34; filter: drop-shadow(0 0 34px rgba(132,173,255,0.38)); }}
     .league-focus-backdrop {{
       position: absolute;
       right: clamp(22px, 7vw, 96px);
@@ -480,6 +482,7 @@ def _page(data: dict[str, Any]) -> str:
         linear-gradient(180deg, rgba(17,39,64,0.94), rgba(7,17,31,0.95));
       box-shadow: 0 0 46px rgba(245,201,107,0.18), inset 0 0 0 1px rgba(255,255,255,0.05);
     }}
+    .bracket-logo {{ width: clamp(72px, 8vw, 118px); max-height: 126px; object-fit: contain; margin: 2px auto 12px; display: block; filter: drop-shadow(0 0 24px rgba(245,201,107,0.28)); }}
     .trophy {{
       width: clamp(58px, 6.5vw, 86px);
       height: clamp(92px, 10vw, 136px);
@@ -600,6 +603,7 @@ def _page(data: dict[str, Any]) -> str:
       .global-controls {{ justify-content: flex-start; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
+      .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; width: clamp(82px, 23vw, 128px); opacity: 0.24; }}
       .league-focus-backdrop {{ right: 20px; top: auto; bottom: 26px; opacity: 0.24; width: clamp(110px, 34vw, 170px); }}
       .section-head {{ align-items: start; flex-direction: column; }}
       .section-note {{ text-align: left; }}
@@ -665,6 +669,7 @@ def _page(data: dict[str, Any]) -> str:
     {_tabs_nav(champions_data, leagues_data)}
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
+      <img class="hero-logo-mark" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_(Jules_Rimet_Trophy)_at_National_Football_Museum,_Manchester_01.jpg" alt="" loading="lazy" onerror="this.remove()">
       <div class="hero-content">
         <div class="kicker"><span class="ball"></span> Coupe du Monde 2026</div>
         <h1>{escape(data.get("competition", "Coupe du Monde 2026"))}</h1>
@@ -811,6 +816,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
     return f"""
     <section class="tab-panel" id="tab-champions" data-tab-panel="champions">
       <section class="hero champions">
+        <img class="hero-logo-mark" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/UEFA_Champions_League_logo.svg" alt="" loading="lazy" onerror="this.remove()">
         <div class="hero-content">
           <div class="kicker"><span class="ball"></span> UEFA Champions League</div>
           <h1>{escape(data.get("competition", "Ligue des Champions"))}</h1>
@@ -882,6 +888,7 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
           <div class="hero-badges">
             <div class="hero-row">
               <span class="pill">Mis à jour : <span id="leaguesUpdated">{escape(_format_datetime(data.get('generated_at', ''), with_time=True))}</span></span>
+              <button class="alltime-badge history-badge" type="button" id="leagueHonoursButton" data-alltime="league-history-ligue1">Palmarès</button>
               <span class="pill focus-pill">Championnat <select class="focus-select" id="leagueSelect" aria-label="Championnat à suivre">{options}</select></span>
               <span class="pill focus-pill"><span id="leagueFocusIcon"></span>Focus <select class="focus-select" id="leagueClubSelect" aria-label="Club à suivre"></select></span>
             </div>
@@ -1426,7 +1433,7 @@ def render_worldcup_bracket(rounds: list[dict[str, Any]]) -> str:
         {"name": "8es", "matches": right16},
         {"name": "16es", "matches": right32},
     ]
-    return _bracket_shell(left, right, final, "Coupe du Monde FIFA 2026", third)
+    return _bracket_shell(left, right, final, "Coupe du Monde FIFA 2026", third, logo_url="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_(Jules_Rimet_Trophy)_at_National_Football_Museum,_Manchester_01.jpg")
 
 
 def render_champions_league_bracket(rounds: list[dict[str, Any]]) -> str:
@@ -1453,7 +1460,7 @@ def render_champions_league_bracket(rounds: list[dict[str, Any]]) -> str:
         {"name": "8es", "matches": right16},
         {"name": "Barrages", "matches": rightp},
     ]
-    return _bracket_shell(left, right, final, "Ligue des Champions", stage_class=" ucl-official", wing_class=" ucl-wing")
+    return _bracket_shell(left, right, final, "Ligue des Champions", stage_class=" ucl-official", wing_class=" ucl-wing", logo_url="https://commons.wikimedia.org/wiki/Special:Redirect/file/UEFA_Champions_League_logo.svg")
 
 
 def _bracket_shell(
@@ -1464,15 +1471,17 @@ def _bracket_shell(
     third_matches: list[dict[str, Any]] | None = None,
     stage_class: str = "",
     wing_class: str = "",
+    logo_url: str = "",
 ) -> str:
     final_match = (final_matches or [{}])[0]
     third_html = ""
     if third_matches is not None:
         third_match = (third_matches or [{}])[0]
         third_html = '<div class="round-title">3e place</div>' + _ko_match(third_match, extra_class="third-place-card")
+    trophy_visual = f'<img class="bracket-logo" src="{escape(logo_url)}" alt="" loading="lazy" onerror="this.remove()">' if logo_url else '<div class="trophy"></div>'
     center = (
         '<div class="bracket-center">'
-        f'<div class="trophy-card"><div class="trophy"></div><div class="trophy-title">{escape(trophy_title)}</div></div>'
+        f'<div class="trophy-card">{trophy_visual}<div class="trophy-title">{escape(trophy_title)}</div></div>'
         '<div class="round-title">Finale</div>'
         f'{_ko_match(final_match, extra_class="final-card")}'
         f'{third_html}'
@@ -2144,6 +2153,8 @@ def _leagues_script() -> str:
       }
       const updated = document.getElementById('leaguesUpdated');
       if (updated) updated.textContent = leagueDate(league.generated_at || LEAGUES_DATA.generated_at || '');
+      const honoursButton = document.getElementById('leagueHonoursButton');
+      if (honoursButton) honoursButton.dataset.alltime = `league-history-${key}`;
       document.getElementById('leagueUpcoming').innerHTML = (league.upcoming_matches || []).slice(0,3).map(leagueMatchCard).join('') || '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong></article>';
       document.getElementById('big5TopScorers').innerHTML = (LEAGUES_DATA.big5_top_scorers || []).map(player => leaguePlayerCard(player, 'buts', 'big5')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,5).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
