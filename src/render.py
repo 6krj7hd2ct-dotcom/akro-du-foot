@@ -566,13 +566,17 @@ def _page(data: dict[str, Any]) -> str:
     .coach-card {{ display: grid; gap: 14px; padding: 14px; border: 1px solid rgba(245,201,107,0.20); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }}
     .coach-profile {{ display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 12px; align-items: center; }}
     .coach-photo {{ width: 62px; height: 62px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.18); background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }}
-    .coach-photo.placeholder {{ display: grid; place-items: center; color: #07111f; font-weight: 950; }}
+    .coach-photo.placeholder {{ display: grid; place-items: center; color: #07111f; font-weight: 950; font-size: 11px; }}
     .coach-name {{ font-size: 20px; font-weight: 950; line-height: 1.1; }}
     .coach-stats {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }}
     .coach-stat {{ padding: 11px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.06); }}
     .coach-stat strong {{ display: block; color: var(--gold); font-size: 22px; line-height: 1; }}
     .coach-stat span {{ display: block; margin-top: 5px; color: var(--muted); font-size: 12px; font-weight: 850; text-transform: uppercase; }}
     .coach-source {{ color: var(--muted); font-size: 12px; font-weight: 800; }}
+    .honors-list {{ display: grid; gap: 9px; }}
+    .honor-row {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 11px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.055); }}
+    .honor-row strong {{ display: block; line-height: 1.16; }}
+    .honor-value {{ color: var(--gold); font-weight: 950; white-space: nowrap; }}
     .formation-board {{ min-height: 140px; display: grid; place-items: center; border: 1px dashed rgba(245,201,107,0.30); border-radius: 16px; background: radial-gradient(ellipse at center, rgba(50,211,162,0.14), transparent 68%), linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035)); color: #d6e5f7; font-weight: 850; }}
     .roster-section h3 {{ padding: 0; margin-bottom: 10px; color: #ffe1a0; }}
     .player-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }}
@@ -1734,6 +1738,7 @@ def _team_modal() -> str:
           <div class="team-info-value">10 derniers résultats disponibles dans Akro du Foot</div>
         </div>
         <div id="teamCoach"></div>
+        <div id="teamHonors"></div>
         <div id="teamRecent"></div>
       </div>
     </article>
@@ -2335,6 +2340,7 @@ def _team_script(teams_details: dict[str, Any], matches: list[dict[str, Any]]) -
     const modalSources = document.getElementById('teamModalSources');
     const teamRecent = document.getElementById('teamRecent');
     const teamCoach = document.getElementById('teamCoach');
+    const teamHonors = document.getElementById('teamHonors');
     const closeModal = document.getElementById('teamModalClose');
 
     function escapeHtml(value) {{
@@ -2394,9 +2400,9 @@ def _team_script(teams_details: dict[str, Any], matches: list[dict[str, Any]]) -
     }}
 
     function coachPhoto(info) {{
-      return info.coach_photo
-        ? `<img class="coach-photo" src="${{escapeHtml(info.coach_photo)}}" alt="">`
-        : '<div class="coach-photo placeholder" aria-hidden="true">Coach</div>';
+      return info.coach_country_flag
+        ? `<img class="coach-photo" src="${{escapeHtml(info.coach_country_flag)}}" alt="">`
+        : '<div class="coach-photo placeholder" aria-hidden="true">Drapeau</div>';
     }}
 
     function coachLine(info) {{
@@ -2431,12 +2437,19 @@ def _team_script(teams_details: dict[str, Any], matches: list[dict[str, Any]]) -
       </section>`;
     }}
 
+    function honorsCard(details) {{
+      const honors = details.honors || details.palmares || [];
+      if (!honors.length) return '<div class="team-info"><div class="team-info-label">Palmarès</div><div class="team-info-value">Information non disponible</div></div>';
+      return `<section class="team-info"><div class="team-info-label">Palmarès Foot Mercato</div><div class="honors-list">${{honors.map(item => `<article class="honor-row"><div><strong>${{escapeHtml(item.competition || '')}}</strong><div class="subtle">${{escapeHtml(item.years || 'Années non disponibles')}}</div></div><div class="honor-value">${{escapeHtml(item.titles || '')}} titre${{Number(item.titles) > 1 ? 's' : ''}}</div></article>`).join('')}}</div></section>`;
+    }}
+
     function openTeam(name) {{
       const details = TEAMS_DETAILS[name] || {{name}};
       modalTitle.textContent = details.name || name;
       modalFlag.innerHTML = flagHtml(details.flag_url || '');
       modalSources.textContent = details.coach_info && details.coach_info.source ? `Source entraîneur : ${{details.coach_info.source}}` : 'Résultats disponibles dans les calendriers du dashboard';
       teamCoach.innerHTML = coachCard(details);
+      teamHonors.innerHTML = honorsCard(details);
       const matches = recentMatches(name);
       teamRecent.innerHTML = matches.length
         ? `<div class="recent-list">${{matches.map(match => recentCard(match, name)).join('')}}</div>`

@@ -153,12 +153,17 @@ FRENCH_TEAM_NAMES = {
 COUNTRY_FLAG_SLUGS = {
     "Allemagne": "ger",
     "Angleterre": "eng",
+    "Allemagne": "ger",
     "Argentina": "arg",
+    "Argentine": "arg",
+    "Autriche": "aut",
+    "Belgique": "bel",
     "Argentine": "arg",
     "Brazil": "bra",
     "Brésil": "bra",
     "England": "eng",
     "Espagne": "esp",
+    "Croatie": "cro",
     "France": "fra",
     "Georgia": "geo",
     "Géorgie": "geo",
@@ -226,7 +231,7 @@ FOOTMERCATO_TIMEOUT_SECONDS = 3
 FOOTMERCATO_BASE_URL = "https://www.footmercato.net"
 
 FOOTMERCATO_TEAM_PATHS = {
-    "france": "/selection/france/effectif/",
+    "france": "/selection/france/",
     "paris saint germain": "/club/psg/",
     "psg": "/club/psg/",
     "olympique de marseille": "/club/olympique-de-marseille/",
@@ -257,6 +262,30 @@ FOOTMERCATO_TEAM_PATHS = {
     "lens": "/club/rc-lens/",
     "aj auxerre": "/club/aj-auxerre/",
     "auxerre": "/club/aj-auxerre/",
+}
+
+KNOWN_COACH_COUNTRIES = {
+    "didier deschamps": "France",
+    "luis enrique": "Espagne",
+    "xabi alonso": "Espagne",
+    "pep guardiola": "Espagne",
+    "mikel arteta": "Espagne",
+    "roberto de zerbi": "Italie",
+    "adi hutter": "Autriche",
+    "adi hütter": "Autriche",
+    "bruno genesio": "France",
+    "pierre sage": "France",
+    "vincent kompany": "Belgique",
+    "niko kovac": "Croatie",
+    "niko kovač": "Croatie",
+    "enzo maresca": "Italie",
+    "arne slot": "Pays-Bas",
+    "simone inzaghi": "Italie",
+    "thiago motta": "Italie",
+    "antonio conte": "Italie",
+    "sergio conceicao": "Portugal",
+    "sérgio conceição": "Portugal",
+    "thomas tuchel": "Allemagne",
 }
 
 FALLBACK_ALL_TIME_SCORERS = [
@@ -964,7 +993,7 @@ def build_teams_details(
 
 def enrich_teams_with_footmercato_coaches(
     teams_details: dict[str, dict[str, Any]],
-    max_teams: int = 10,
+    max_teams: int = 16,
 ) -> dict[str, dict[str, Any]]:
     enriched = {name: dict(details) for name, details in teams_details.items()}
     candidates: list[tuple[str, str]] = []
@@ -974,14 +1003,26 @@ def enrich_teams_with_footmercato_coaches(
             candidates.append((name, path))
     for name, path in candidates[:max_teams]:
         try:
-            coach = fetch_footmercato_coach_info(path)
+            footmercato = fetch_footmercato_team_info(path)
         except Exception:
-            coach = {}
-        if not coach:
+            footmercato = {}
+        if not footmercato:
             continue
         details = enriched[name]
-        details["coach"] = coach.get("coach_name") or details.get("coach", "")
-        details["coach_info"] = coach
+        coach = footmercato.get("coach_info") or {}
+        if coach.get("coach_name"):
+            details["coach"] = coach.get("coach_name") or details.get("coach", "")
+            details["coach_info"] = coach
+            for key, value in coach.items():
+                if key.startswith("coach_") and value not in (None, ""):
+                    details[key] = value
+        honors = footmercato.get("honors") or []
+        if honors:
+            details["honors"] = honors
+            details["palmares"] = honors
+        details["footmercato_url"] = footmercato.get("footmercato_url", "")
+        details["source"] = "Foot Mercato"
+        details["last_updated"] = footmercato.get("last_updated", "")
         sources = details.setdefault("sources", [])
         if "Foot Mercato" not in sources:
             sources.append("Foot Mercato")
@@ -993,19 +1034,32 @@ def _footmercato_team_path(name: str) -> str:
 
 
 def fetch_footmercato_coach_info(path_or_url: str) -> dict[str, Any]:
+    return (fetch_footmercato_team_info(path_or_url).get("coach_info") or {})
+
+
+def fetch_footmercato_team_info(path_or_url: str) -> dict[str, Any]:
     url = path_or_url if path_or_url.startswith("http") else urljoin(FOOTMERCATO_BASE_URL, path_or_url)
     html = _download_footmercato(url)
     soup = BeautifulSoup(html, "html.parser")
     text = _clean_text(soup.get_text(" "))
     coach = _parse_footmercato_coach_text(text)
-    if not coach:
-        return {}
-    photo = _footmercato_coach_photo(soup, coach.get("coach_name", ""))
-    if photo:
-        coach["coach_photo"] = photo
-    coach["source"] = "Foot Mercato"
-    coach["source_url"] = url
-    return coach
+    honors = _parse_footmercato_honors_text(text)
+    payload: dict[str, Any] = {
+        "footmercato_url": url,
+        "source": "Foot Mercato",
+        "last_updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    if coach:
+        country = coach.get("coach_country") or _known_coach_country(coach.get("coach_name", ""))
+        if country:
+            coach["coach_country"] = country
+            coach["coach_country_flag"] = _country_flag_url(country)
+        coach["source"] = "Foot Mercato"
+        coach["source_url"] = url
+        payload["coach_info"] = coach
+    if honors:
+        payload["honors"] = honors
+    return payload if coach or honors else {}
 
 
 def _download_footmercato(url: str) -> str:
@@ -1018,15 +1072,14 @@ def _download_footmercato(url: str) -> str:
 
 def _parse_footmercato_coach_text(text: str) -> dict[str, Any]:
     patterns = (
-        r"(?:Sélectionneur|Selectionneur|Entraîneur|Entraineur)\s+(.+?)\s+(\d{2})\s+ans\s*-\s*(\d+)\s+matchs?\s+officiels?\s*(\d+)%\s*(\d+)\s+victoires?\s*(\d+)%\s*(\d+)\s+nuls?\s*(\d+)%\s*(\d+)\s+défaites?",
-        r"(?:Sélectionneur|Selectionneur|Entraîneur|Entraineur)\s+(.+?)\s+(\d{2})\s+ans\s*-\s*(\d+)\s+matchs?\s+officiels?\s*(\d+)%\s*(\d+)\s+victoires?\s*(\d+)%\s*(\d+)\s+nuls?\s*(\d+)%\s*(\d+)\s+defaites?",
+        r"(?:Sélectionneur|Selectionneur|Entraîneur|Entraineur|Entraîneurs|Entraineurs)\s+(.+?)\s+(\d{2})\s+ans\s*-\s*(\d+)\s+matchs?\s+officiels?\s*(\d+)%\s*(\d+)\s+victoires?\s*(\d+)%\s*(\d+)\s+nuls?\s*(\d+)%\s*(\d+)\s+défaites?",
+        r"(?:Sélectionneur|Selectionneur|Entraîneur|Entraineur|Entraîneurs|Entraineurs)\s+(.+?)\s+(\d{2})\s+ans\s*-\s*(\d+)\s+matchs?\s+officiels?\s*(\d+)%\s*(\d+)\s+victoires?\s*(\d+)%\s*(\d+)\s+nuls?\s*(\d+)%\s*(\d+)\s+defaites?",
     )
     for pattern in patterns:
         match = re.search(pattern, text, flags=re.IGNORECASE)
         if not match:
             continue
         name = _clean_text(match.group(1))
-        # Avoid swallowing page sections before the actual name.
         for prefix in ("Résumé Actus Classement Calendrier Effectif Stats Transferts ", "Résumé Actus "):
             if name.startswith(prefix):
                 name = name[len(prefix):]
@@ -1044,20 +1097,47 @@ def _parse_footmercato_coach_text(text: str) -> dict[str, Any]:
     return {}
 
 
-def _footmercato_coach_photo(soup: BeautifulSoup, coach_name: str) -> str:
-    if not coach_name:
+def _parse_footmercato_honors_text(text: str) -> list[dict[str, Any]]:
+    section = _footmercato_section(text, "Palmarès", ("Stades", "Informations", "Autres équipes", "Top joueurs", "À la une"))
+    if not section:
+        return []
+    section = section.replace("Voir tous", " ")
+    competitions = [
+        "Ligue des Champions", "Coupe du Monde", "UEFA Nations League", "Ligue des Nations",
+        "Coupe des Confédérations", "Jeux Olympiques", "Euro", "Ligue 1 McDonald's", "Ligue 1",
+        "Premier League", "Liga", "LaLiga", "Bundesliga", "Serie A", "Coupe de France", "Coupe de la Ligue BKT",
+        "Coupe de la Ligue", "Trophée des Champions", "Coupe du Roi", "Copa del Rey", "FA Cup", "League Cup",
+        "Community Shield", "Supercoupe d'Europe", "Coupe UEFA", "Ligue Europa", "Coupe Intercontinentale",
+        "Coupe du monde des clubs", "Serie B",
+    ]
+    results: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for competition in sorted(competitions, key=len, reverse=True):
+        pattern = rf"{re.escape(competition)}\s+([0-9]{{4}}(?:/[0-9]{{4}})?(?:\s*,\s*[0-9]{{4}}(?:/[0-9]{{4}})?)*?)\s+(\d+)"
+        for match in re.finditer(pattern, section, flags=re.IGNORECASE):
+            name = _clean_text(competition)
+            years = _clean_text(match.group(1))
+            titles = int(match.group(2))
+            key = f"{name.casefold()}:{years}:{titles}"
+            if key in seen:
+                continue
+            seen.add(key)
+            results.append({"competition": name, "years": years, "titles": titles, "source": "Foot Mercato"})
+    return sorted(results, key=lambda item: (-int(item.get("titles") or 0), str(item.get("competition", ""))))
+
+
+def _footmercato_section(text: str, start_label: str, end_labels: tuple[str, ...]) -> str:
+    start = text.find(start_label)
+    if start == -1:
         return ""
-    normalized = _normalize_name(coach_name)
-    for image in soup.find_all("img"):
-        alt = _normalize_name(str(image.get("alt") or ""))
-        if normalized and normalized in alt:
-            src = str(image.get("src") or image.get("data-src") or "")
-            if src:
-                return urljoin(FOOTMERCATO_BASE_URL, src)
-    meta = soup.find("meta", property="og:image")
-    if meta and meta.get("content"):
-        return urljoin(FOOTMERCATO_BASE_URL, str(meta["content"]))
-    return ""
+    start += len(start_label)
+    end_positions = [text.find(label, start) for label in end_labels if text.find(label, start) != -1]
+    end = min(end_positions) if end_positions else len(text)
+    return text[start:end]
+
+
+def _known_coach_country(name: str) -> str:
+    return KNOWN_COACH_COUNTRIES.get(_normalize_name(name), "")
 
 
 def enrich_teams_with_espn_rosters(

@@ -156,9 +156,9 @@ def _merge_leagues_refresh(previous_data: dict[str, Any] | None, refreshed_data:
         previous_league = leagues.get(key, {})
         if not league.get("standings") and previous_league.get("standings"):
             merged = dict(previous_league)
-            for field in ("top_scorers", "top_assists", "focused_club_news", "generated_at", "sources"):
+            for field in ("top_scorers", "top_assists", "focused_club_news", "teams_details", "generated_at", "sources"):
                 if league.get(field):
-                    merged[field] = league[field]
+                    merged[field] = _merge_team_footmercato_cache(previous_league.get(field), league[field]) if field == "teams_details" else league[field]
             leagues[key] = merged
         else:
             leagues[key] = league
@@ -166,6 +166,41 @@ def _merge_leagues_refresh(previous_data: dict[str, Any] | None, refreshed_data:
     if not data.get("big5_top_scorers"):
         data["big5_top_scorers"] = previous_data.get("big5_top_scorers", [])
     return data
+
+
+
+def _merge_team_footmercato_cache(previous: Any, current: Any) -> Any:
+    if not isinstance(previous, dict) or not isinstance(current, dict):
+        return current
+    merged = dict(current)
+    for team, previous_details in previous.items():
+        if not isinstance(previous_details, dict):
+            continue
+        current_details = dict(merged.get(team, {}))
+        for field in (
+            "coach_info",
+            "coach_name",
+            "coach_age",
+            "coach_country",
+            "coach_country_flag",
+            "coach_matches",
+            "coach_wins",
+            "coach_draws",
+            "coach_losses",
+            "coach_win_percent",
+            "coach_draw_percent",
+            "coach_loss_percent",
+            "honors",
+            "palmares",
+            "footmercato_url",
+            "source",
+            "last_updated",
+        ):
+            if not current_details.get(field) and previous_details.get(field):
+                current_details[field] = previous_details[field]
+        if current_details:
+            merged[team] = current_details
+    return merged
 
 
 def _read_cache(path) -> dict[str, Any] | None:
@@ -202,7 +237,7 @@ def _merge_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[st
         if key in {"general_news", "all_news", "focused_team_news", "focused_club_news", "news_sources", "sources"}:
             data[key] = refreshed_data.get(key, [] if key != "focused_team_news" and key != "focused_club_news" else {})
         elif refreshed_data.get(key):
-            data[key] = refreshed_data[key]
+            data[key] = _merge_team_footmercato_cache(previous_data.get(key), refreshed_data[key]) if key == "teams_details" else refreshed_data[key]
     data["errors"] = [
         "Mise à jour impossible pour le moment : conservation du dernier cache valide.",
         *refreshed_data.get("errors", []),
