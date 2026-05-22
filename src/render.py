@@ -235,11 +235,12 @@ def _page(data: dict[str, Any]) -> str:
       box-shadow: 0 0 14px rgba(239,51,64,0.75);
     }}
     .mercato-track {{ min-width: 0; overflow: hidden; display: flex; align-items: center; }}
-    .mercato-marquee {{ display: flex; width: max-content; animation: mercato-scroll 92s linear infinite; will-change: transform; }}
+    .mercato-marquee {{ display: flex; width: max-content; animation: mercato-scroll 128s linear infinite; will-change: transform; }}
     .mercato-track:hover .mercato-marquee {{ animation-play-state: paused; }}
-    .mercato-items {{ display: flex; align-items: center; gap: 28px; padding: 0 28px; white-space: nowrap; }}
-    .mercato-link {{ display: inline-flex; align-items: flex-start; gap: 8px; color: #eaf4ff; text-decoration: none; font-size: 13px; line-height: 1.35; font-weight: 850; max-width: min(540px, 78vw); }}
-    .mercato-title {{ font-size: 13px; line-height: 1.35; font-weight: 850; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; }}
+    .mercato-items {{ display: flex; align-items: center; gap: 46px; padding: 0 46px; white-space: nowrap; }}
+    .mercato-link {{ display: inline-flex; align-items: center; gap: 8px; color: #eaf4ff; text-decoration: none; font-size: 13px; line-height: 1.4; font-weight: 850; max-width: min(760px, 86vw); }}
+    .mercato-title {{ font-size: 13px; line-height: 1.4; font-weight: 850; white-space: normal; overflow: visible; }}
+    .mercato-sep {{ color: rgba(245,201,107,0.78); font-size: 13px; line-height: 1.4; font-weight: 950; flex: 0 0 auto; }}
     .mercato-link:hover, .mercato-link:focus-visible {{ color: #ffe1a0; outline: none; }}
     .mercato-time {{ color: #ffe1a0; font-size: 12px; line-height: 1.35; font-weight: 950; flex: 0 0 auto; }}
     .mercato-entity {{ color: #ffb7bd; font-size: 12px; line-height: 1.35; font-weight: 950; flex: 0 0 auto; }}
@@ -757,7 +758,7 @@ def _page(data: dict[str, Any]) -> str:
       .global-controls {{ justify-content: flex-start; }}
       .mercato-ticker {{ grid-template-columns: 1fr; }}
       .mercato-badge {{ justify-content: center; }}
-      .mercato-marquee {{ animation-duration: 118s; }}
+      .mercato-marquee {{ animation-duration: 156s; }}
       .france-header-news.is-visible {{ grid-template-columns: 1fr; }}
       .france-header-badge {{ justify-content: center; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
@@ -798,7 +799,7 @@ def _page(data: dict[str, Any]) -> str:
       .global-controls {{ width: 100%; }}
       .action-button {{ flex: 1 1 130px; text-align: center; }}
       .mercato-link {{ font-size: 13px; }}
-      .mercato-items {{ gap: 20px; padding: 0 20px; }}
+      .mercato-items {{ gap: 34px; padding: 0 34px; }}
       .france-header-items {{ gap: 10px; padding: 8px 10px; }}
       .france-header-card {{ width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }}
       .france-header-image {{ width: 56px; height: 48px; }}
@@ -1515,17 +1516,25 @@ def _mercato_ticker(mercato_data: dict[str, Any] | None) -> str:
 
 
 def _mercato_item(item: dict[str, Any]) -> str:
-    title = escape(str(item.get("title") or "Info mercato"))
+    title_value = _clean_mercato_display_title(str(item.get("title") or "Info mercato"))
+    title = escape(title_value)
     url = escape(str(item.get("url") or "https://www.mercatolive.fr/"))
-    published = escape(str(item.get("published_at") or ""))
     source = escape(str(item.get("source") or "Mercato Live"))
+    published = escape(str(item.get("published_at") or ""))
     entity = escape(str(item.get("club") or item.get("player") or ""))
-    time_html = f'<span class="mercato-time">{published}</span>' if published else ""
-    entity_html = f'<span class="mercato-entity">{entity}</span>' if entity else ""
+    time_html = f'<span class="mercato-time">{published}</span><span class="mercato-sep">·</span>' if published else ""
+    entity_html = f'<span class="mercato-entity">{entity}</span><span class="mercato-sep">·</span>' if entity else ""
     return (
-        f'<a class="mercato-link" href="{url}" target="_blank" rel="noreferrer">'
-        f'{time_html}<span class="mercato-title">{title}</span>{entity_html}<span class="mercato-source">{source}</span></a>'
+        f'<a class="mercato-link" href="{url}" target="_blank" rel="noreferrer" title="{title}">'
+        f'{time_html}{entity_html}<span class="mercato-title">Mercato : {title}</span><span class="mercato-sep">·</span><span class="mercato-source">{source}</span></a>'
     )
+
+
+def _clean_mercato_display_title(value: str) -> str:
+    import re
+    title = re.sub(r"\bSuivant\b", "", value, flags=re.I)
+    title = re.sub(r"\s{2,}", " ", title).strip(" -–·")
+    return title or "Info mercato"
 
 
 def _community_section() -> str:

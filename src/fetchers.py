@@ -501,7 +501,7 @@ def fetch_mercato_live(limit: int = 18) -> list[dict[str, Any]]:
         seen.add(key)
         items.append(
             {
-                "title": _shorten(title, 140),
+                "title": _clean_mercato_title(title),
                 "url": url,
                 "published_at": published_at,
                 "source": source,
@@ -512,6 +512,13 @@ def fetch_mercato_live(limit: int = 18) -> list[dict[str, Any]]:
         if len(items) >= limit:
             break
     return items
+
+
+def _clean_mercato_title(text: str) -> str:
+    title = _clean_text(text)
+    title = re.sub(r"\bSuivant\b", "", title, flags=re.I)
+    title = re.sub(r"\s{2,}", " ", title).strip(" -–·")
+    return _shorten(title, 240)
 
 
 def _extract_mercato_time(text: str) -> str:
