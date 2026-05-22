@@ -10,6 +10,53 @@ from zoneinfo import ZoneInfo
 PARIS = ZoneInfo("Europe/Paris")
 
 
+
+def _competition_trophy_svg(kind: str, placement: str = "hero") -> str:
+    base_class = "hero-logo-mark" if placement == "hero" else "bracket-logo"
+    if kind == "champions":
+        return f"""
+        <div class="{base_class} premium-trophy ucl-trophy {placement}-trophy" aria-hidden="true">
+          <svg viewBox="0 0 220 300" role="img" focusable="false">
+            <defs>
+              <linearGradient id="uclChrome" x1="20%" x2="82%" y1="8%" y2="92%">
+                <stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#cfd8e8"/><stop offset="0.48" stop-color="#7f91ad"/><stop offset="0.72" stop-color="#eef5ff"/><stop offset="1" stop-color="#92a5c4"/>
+              </linearGradient>
+              <linearGradient id="uclStem" x1="0" x2="1"><stop offset="0" stop-color="#75879f"/><stop offset="0.48" stop-color="#f7fbff"/><stop offset="1" stop-color="#6c7d97"/></linearGradient>
+              <radialGradient id="uclGlow" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#ddebff" stop-opacity="0.90"/><stop offset="0.52" stop-color="#7ba9ff" stop-opacity="0.22"/><stop offset="1" stop-color="#0b1735" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="110" cy="151" rx="92" ry="122" fill="url(#uclGlow)"/>
+            <path d="M52 71c-29 13-43 41-38 73 5 31 27 51 57 58" fill="none" stroke="url(#uclChrome)" stroke-width="13" stroke-linecap="round"/>
+            <path d="M168 71c29 13 43 41 38 73-5 31-27 51-57 58" fill="none" stroke="url(#uclChrome)" stroke-width="13" stroke-linecap="round"/>
+            <path d="M58 48h104l-12 124c-3 35-22 57-40 57s-37-22-40-57L58 48Z" fill="url(#uclChrome)" stroke="rgba(255,255,255,.72)" stroke-width="3"/>
+            <path d="M82 71h56l-7 92c-2 24-11 39-21 39s-19-15-21-39L82 71Z" fill="rgba(255,255,255,.20)"/>
+            <path d="M110 226v33" stroke="url(#uclStem)" stroke-width="18" stroke-linecap="round"/>
+            <path d="M68 269h84l15 18H53l15-18Z" fill="url(#uclStem)"/>
+            <path d="M82 288h56" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="110" cy="118" r="31" fill="none" stroke="#f8fbff" stroke-opacity=".64" stroke-width="5"/>
+            <path d="M110 86l10 23h25l-20 15 8 24-23-14-22 14 8-24-20-15h25l9-23Z" fill="#f8fbff" fill-opacity=".74"/>
+          </svg>
+        </div>"""
+    return f"""
+        <div class="{base_class} premium-trophy worldcup-trophy {placement}-trophy" aria-hidden="true">
+          <svg viewBox="0 0 220 300" role="img" focusable="false">
+            <defs>
+              <linearGradient id="wcGold" x1="18%" x2="86%" y1="2%" y2="100%"><stop offset="0" stop-color="#fff6c7"/><stop offset="0.18" stop-color="#ffd76d"/><stop offset="0.45" stop-color="#c99224"/><stop offset="0.72" stop-color="#ffe69a"/><stop offset="1" stop-color="#9f6817"/></linearGradient>
+              <linearGradient id="wcGreen" x1="0" x2="1"><stop offset="0" stop-color="#37d49a"/><stop offset="1" stop-color="#0f8d68"/></linearGradient>
+              <radialGradient id="wcGlow" cx="50%" cy="38%" r="66%"><stop offset="0" stop-color="#ffe8a5" stop-opacity="0.92"/><stop offset="0.58" stop-color="#d5a63a" stop-opacity="0.24"/><stop offset="1" stop-color="#07111f" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="110" cy="150" rx="94" ry="124" fill="url(#wcGlow)"/>
+            <path d="M70 52c-24 10-39 30-38 55 1 31 25 51 57 64l7-25c-23-10-34-23-34-39 0-15 9-25 24-32l-16-23Z" fill="url(#wcGold)" opacity=".94"/>
+            <path d="M150 52c24 10 39 30 38 55-1 31-25 51-57 64l-7-25c23-10 34-23 34-39 0-15-9-25-24-32l16-23Z" fill="url(#wcGold)" opacity=".94"/>
+            <path d="M76 44c7-19 24-30 34-30s27 11 34 30c11 30-2 64-20 86-8 10-12 24-12 39v22H108v-22c0-15-4-29-12-39-18-22-31-56-20-86Z" fill="url(#wcGold)" stroke="rgba(255,255,255,.52)" stroke-width="3"/>
+            <path d="M79 92c26-12 56-9 76 12-5 17-15 31-29 43-15-17-37-25-61-20 2-13 7-25 14-35Z" fill="url(#wcGreen)" opacity=".90"/>
+            <path d="M74 170c24 18 50 18 72 0 2 16 7 30 16 42H58c9-12 14-26 16-42Z" fill="url(#wcGold)"/>
+            <path d="M85 212h50l10 48H75l10-48Z" fill="url(#wcGold)"/>
+            <path d="M56 263h108l18 23H38l18-23Z" fill="url(#wcGold)"/>
+            <path d="M75 286h70" stroke="#fff3c1" stroke-opacity=".62" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="108" cy="50" r="20" fill="#fff4ba" fill-opacity=".30"/>
+          </svg>
+        </div>"""
+
 def render_html(data: dict[str, Any], output: Path) -> None:
     output.write_text(_page(data), encoding="utf-8")
 
@@ -135,8 +182,11 @@ def _page(data: dict[str, Any]) -> str:
     }}
     .hero.champions::after {{ display: none; }}
     .leagues-hero::after {{ display: none; }}
-    .hero-logo-mark {{ position: absolute; z-index: 0; right: clamp(26px, 8vw, 110px); top: 48px; width: clamp(126px, 20vw, 230px); max-height: 230px; object-fit: contain; opacity: 0.92; filter: drop-shadow(0 0 30px rgba(245,201,107,0.30)); pointer-events: none; }}
-    .hero.champions .hero-logo-mark {{ opacity: 0.92; filter: drop-shadow(0 0 34px rgba(132,173,255,0.40)); }}
+    .hero-logo-mark {{ position: absolute; z-index: 0; right: clamp(26px, 8vw, 110px); top: 50%; transform: translateY(-50%); width: clamp(150px, 21vw, 260px); aspect-ratio: 0.74; display: grid; place-items: center; opacity: 0.96; pointer-events: none; }}
+    .premium-trophy svg {{ width: 100%; height: 100%; display: block; overflow: visible; }}
+    .worldcup-trophy {{ filter: drop-shadow(0 0 22px rgba(245,201,107,0.32)) drop-shadow(0 18px 34px rgba(0,0,0,0.30)); }}
+    .ucl-trophy {{ filter: drop-shadow(0 0 24px rgba(180,210,255,0.30)) drop-shadow(0 18px 34px rgba(0,0,0,0.32)); }}
+    .hero.champions .hero-logo-mark {{ opacity: 0.96; }}
     .league-focus-backdrop {{
       position: absolute;
       right: clamp(22px, 7vw, 96px);
@@ -477,7 +527,7 @@ def _page(data: dict[str, Any]) -> str:
         linear-gradient(180deg, rgba(17,39,64,0.94), rgba(7,17,31,0.95));
       box-shadow: 0 0 46px rgba(245,201,107,0.18), inset 0 0 0 1px rgba(255,255,255,0.05);
     }}
-    .bracket-logo {{ width: clamp(72px, 8vw, 118px); max-height: 126px; object-fit: contain; margin: 2px auto 12px; display: block; filter: drop-shadow(0 0 24px rgba(245,201,107,0.28)); }}
+    .bracket-logo {{ width: clamp(88px, 9vw, 132px); aspect-ratio: 0.74; margin: 0 auto 12px; display: grid; place-items: center; }}
     .trophy {{
       width: clamp(58px, 6.5vw, 86px);
       height: clamp(92px, 10vw, 136px);
@@ -608,7 +658,7 @@ def _page(data: dict[str, Any]) -> str:
       .global-controls {{ justify-content: flex-start; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
-      .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; width: clamp(82px, 23vw, 128px); opacity: 0.58; }}
+      .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; transform: none; width: clamp(92px, 25vw, 138px); opacity: 0.62; }}
       .league-focus-backdrop {{ right: 20px; top: auto; bottom: 26px; opacity: 0.24; width: clamp(110px, 34vw, 170px); }}
       .section-head {{ align-items: start; flex-direction: column; }}
       .section-note {{ text-align: left; }}
@@ -675,7 +725,7 @@ def _page(data: dict[str, Any]) -> str:
     {_tabs_nav(champions_data, leagues_data)}
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
-      <img class="hero-logo-mark" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_at_National_Football_Museum,_Manchester_02.jpg" alt="" loading="lazy" onerror="this.remove()">
+      {_competition_trophy_svg("worldcup", "hero")}
       <div class="hero-content">
         <div class="kicker"><span class="ball"></span> Coupe du Monde 2026</div>
         <h1>{escape(data.get("competition", "Coupe du Monde 2026"))}</h1>
@@ -822,7 +872,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
     return f"""
     <section class="tab-panel" id="tab-champions" data-tab-panel="champions">
       <section class="hero champions">
-        <img class="hero-logo-mark" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/UEFA_Champions_League_logo.svg" alt="" loading="lazy" onerror="this.remove()">
+        {_competition_trophy_svg("champions", "hero")}
         <div class="hero-content">
           <div class="kicker"><span class="ball"></span> UEFA Champions League</div>
           <h1>{escape(data.get("competition", "Ligue des Champions"))}</h1>
@@ -1439,7 +1489,7 @@ def render_worldcup_bracket(rounds: list[dict[str, Any]]) -> str:
         {"name": "8es", "matches": right16},
         {"name": "16es", "matches": right32},
     ]
-    return _bracket_shell(left, right, final, "Coupe du Monde FIFA 2026", third, logo_url="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_at_National_Football_Museum,_Manchester_02.jpg")
+    return _bracket_shell(left, right, final, "Coupe du Monde FIFA 2026", third, logo_url="worldcup")
 
 
 def render_champions_league_bracket(rounds: list[dict[str, Any]]) -> str:
@@ -1466,7 +1516,7 @@ def render_champions_league_bracket(rounds: list[dict[str, Any]]) -> str:
         {"name": "8es", "matches": right16},
         {"name": "Barrages", "matches": rightp},
     ]
-    return _bracket_shell(left, right, final, "Ligue des Champions", stage_class=" ucl-official", wing_class=" ucl-wing", logo_url="https://commons.wikimedia.org/wiki/Special:Redirect/file/UEFA_Champions_League_logo.svg")
+    return _bracket_shell(left, right, final, "Ligue des Champions", stage_class=" ucl-official", wing_class=" ucl-wing", logo_url="champions")
 
 
 def _bracket_shell(
@@ -1484,7 +1534,7 @@ def _bracket_shell(
     if third_matches is not None:
         third_match = (third_matches or [{}])[0]
         third_html = '<div class="round-title">3e place</div>' + _ko_match(third_match, extra_class="third-place-card")
-    trophy_visual = f'<img class="bracket-logo" src="{escape(logo_url)}" alt="" loading="lazy" onerror="this.remove()">' if logo_url else '<div class="trophy"></div>'
+    trophy_visual = _competition_trophy_svg(logo_url, "bracket") if logo_url in {"worldcup", "champions"} else '<div class="trophy"></div>'
     center = (
         '<div class="bracket-center">'
         f'<div class="trophy-card">{trophy_visual}<div class="trophy-title">{escape(trophy_title)}</div></div>'
