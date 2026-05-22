@@ -285,12 +285,12 @@ DEDICATED_WORLD_CUP_NEWS_SOURCES = [
     },
 ]
 
-DEDICATED_FFF_FRANCE_HEADER_NEWS_SOURCE = {
-    "source": "FFF",
-    "url": "https://www.fff.fr/voir_plus/dernieres_actualites.html",
+DEDICATED_FRANCE_HEADER_NEWS_SOURCE = {
+    "source": "L'Équipe",
+    "url": "https://www.lequipe.fr/Football/France/",
     "topic": "focus",
-    "keywords": ["équipe de france", "equipe de france", "sélection", "selection", "bleus", "france"],
-    "exclude_keywords": ["résultat", "resultat", "résultats", "resultats", "calendrier", "classement", "score"],
+    "keywords": ["équipe de france", "equipe de france", "sélection", "selection", "bleus", "france", "deschamps"],
+    "exclude_keywords": ["résultat", "resultat", "résultats", "resultats", "calendrier", "classement", "score", "statistiques"],
 }
 
 DEDICATED_CHAMPIONS_NEWS_SOURCES = [
@@ -539,7 +539,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
     world_cup_news = _safe_fetch("actualités Coupe du Monde FIFA FR + L’Équipe", fetch_world_cup_news, errors)
-    france_header_news = _safe_fetch("bandeau Équipe de France FFF", fetch_fff_france_header_news, errors)
+    france_header_news = _safe_fetch("bandeau Équipe de France L’Équipe", fetch_france_header_news, errors)
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
     all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
@@ -586,7 +586,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "StatBunker - buteurs all-time", "url": STATBUNKER_ALL_TIME_SCORERS_URL},
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
             *[{"name": f"Actu Coupe du Monde - {source['source']}", "url": source["url"]} for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
-            {"name": "Bandeau Équipe de France - FFF", "url": DEDICATED_FFF_FRANCE_HEADER_NEWS_SOURCE["url"]},
+            {"name": "Bandeau Équipe de France - L’Équipe", "url": DEDICATED_FRANCE_HEADER_NEWS_SOURCE["url"]},
         ],
         "errors": errors,
     }
@@ -1816,8 +1816,8 @@ def fetch_world_cup_news() -> list[dict[str, Any]]:
     return fetch_dedicated_news(DEDICATED_WORLD_CUP_NEWS_SOURCES, limit=6, per_source=3)
 
 
-def fetch_fff_france_header_news() -> list[dict[str, Any]]:
-    return fetch_dedicated_news([DEDICATED_FFF_FRANCE_HEADER_NEWS_SOURCE], limit=10, per_source=10)
+def fetch_france_header_news() -> list[dict[str, Any]]:
+    return fetch_dedicated_news([DEDICATED_FRANCE_HEADER_NEWS_SOURCE], limit=10, per_source=10)
 
 
 def fetch_champions_league_news() -> list[dict[str, Any]]:
@@ -1984,7 +1984,7 @@ def _clean_text(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
 
 
-def fetch_dedicated_news(sources: list[dict[str, str]], limit: int = 6, per_source: int = 3) -> list[dict[str, Any]]:
+def fetch_dedicated_news(sources: list[dict[str, Any]], limit: int = 6, per_source: int = 3) -> list[dict[str, Any]]:
     collected: list[dict[str, Any]] = []
     pools: list[list[dict[str, Any]]] = []
     for source in sources:
@@ -2009,7 +2009,7 @@ def fetch_dedicated_news(sources: list[dict[str, str]], limit: int = 6, per_sour
     return _dedupe_news(collected)[:limit]
 
 
-def _fetch_dedicated_source_page(source: dict[str, str]) -> list[dict[str, Any]]:
+def _fetch_dedicated_source_page(source: dict[str, Any]) -> list[dict[str, Any]]:
     url = source.get("url", "")
     source_name = source.get("source", "Source")
     try:
@@ -2022,6 +2022,8 @@ def _fetch_dedicated_source_page(source: dict[str, str]) -> list[dict[str, Any]]
     for link in soup.find_all("a", href=True):
         href = str(link.get("href") or "")
         article_url = urljoin(url, href)
+        if article_url.rstrip("/") == url.rstrip("/"):
+            continue
         title, published = _parse_dedicated_news_text(_clean_text(link.get_text(" ")))
         if not _is_dedicated_article_link(article_url, title, source_name):
             continue
@@ -2087,20 +2089,27 @@ def _is_dedicated_article_link(url: str, title: str, source_name: str) -> bool:
         return False
     normalized = _normalize_news_text(title)
     blocked = {"accueil", "contact", "mentions legales", "archives", "voir plus", "programme tv", "classements"}
-    if normalized in blocked or any(word in normalized for word in ("connexion", "abonnez", "newsletter", "voir toutes")):
+    blocked_words = (
+        "connexion", "abonnez", "newsletter", "voir toutes", "classement", "classements",
+        "calendrier", "calendriers", "resultat", "resultats", "résultat", "résultats",
+        "statistique", "statistiques", "matchs en direct", "direct", "livescore",
+    )
+    if normalized in blocked or any(word in normalized for word in blocked_words):
         return False
-    hostname = urlparse(url).netloc.replace("www.", "")
-    path = urlparse(url).path
+    parsed = urlparse(url)
+    hostname = parsed.netloc.replace("www.", "")
+    path = parsed.path
+    path_norm = _normalize_news_text(path.replace("-", " ").replace("/", " "))
+    if any(word in path_norm for word in ("classement", "calendrier", "resultat", "resultats", "statistique", "statistiques", "direct")):
+        return False
     if source_name == "L'Équipe":
-        return hostname.endswith("lequipe.fr") and "/Football/" in path
+        return hostname.endswith("lequipe.fr") and "/Football/" in path and "/Actualites/" in path
     if source_name == "Eurosport France":
-        return hostname.endswith("eurosport.fr") and path.startswith("/football/")
+        return hostname.endswith("eurosport.fr") and path.startswith("/football/") and ("_sto" in path or path.endswith(".shtml"))
     if source_name == "FIFA":
-        return hostname.endswith("fifa.com") and "/news" in path
+        return hostname.endswith("fifa.com") and "/news" in path and path.rstrip("/").count("/") >= 5
     if source_name == "RMC Sport":
-        return hostname.endswith("rmcsport.bfmtv.com") and path.startswith("/football/")
-    if source_name == "FFF":
-        return hostname == "fff.fr" and path not in {"", "/"}
+        return hostname.endswith("rmcsport.bfmtv.com") and path.startswith("/football/") and path.rstrip("/").count("/") >= 3
     return True
 
 

@@ -239,11 +239,12 @@ def _page(data: dict[str, Any]) -> str:
     .mercato-marquee {{ display: flex; width: max-content; animation: mercato-scroll 92s linear infinite; will-change: transform; }}
     .mercato-track:hover .mercato-marquee {{ animation-play-state: paused; }}
     .mercato-items {{ display: flex; align-items: center; gap: 28px; padding: 0 28px; white-space: nowrap; }}
-    .mercato-link {{ display: inline-flex; align-items: center; gap: 8px; color: #eaf4ff; text-decoration: none; font-size: 14px; font-weight: 850; }}
+    .mercato-link {{ display: inline-flex; align-items: flex-start; gap: 8px; color: #eaf4ff; text-decoration: none; font-size: 13px; line-height: 1.35; font-weight: 850; max-width: min(540px, 78vw); }}
+    .mercato-title {{ font-size: 13px; line-height: 1.35; font-weight: 850; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; }}
     .mercato-link:hover, .mercato-link:focus-visible {{ color: #ffe1a0; outline: none; }}
-    .mercato-time {{ color: #ffe1a0; font-size: 12px; font-weight: 950; }}
-    .mercato-entity {{ color: #ffb7bd; font-size: 12px; font-weight: 950; }}
-    .mercato-source {{ color: #8fa8c4; font-size: 12px; font-weight: 800; }}
+    .mercato-time {{ color: #ffe1a0; font-size: 12px; line-height: 1.35; font-weight: 950; flex: 0 0 auto; }}
+    .mercato-entity {{ color: #ffb7bd; font-size: 12px; line-height: 1.35; font-weight: 950; flex: 0 0 auto; }}
+    .mercato-source {{ color: #8fa8c4; font-size: 12px; line-height: 1.35; font-weight: 800; flex: 0 0 auto; }}
     .mercato-empty {{ padding: 12px 16px; color: #c5d3e4; font-size: 14px; font-weight: 850; }}
     @keyframes mercato-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .tabs-nav {{
@@ -348,18 +349,19 @@ def _page(data: dict[str, Any]) -> str:
     .france-header-news.is-visible {{ display: grid; grid-template-columns: auto minmax(0, 1fr); }}
     .france-header-badge {{ display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(255,255,255,0.94); color: #07111f; font-size: 12px; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; white-space: nowrap; }}
     .france-header-badge img {{ width: 22px; height: 22px; object-fit: contain; }}
-    .france-header-track {{ min-width: 0; overflow: hidden; display: flex; align-items: center; }}
-    .france-header-marquee {{ display: flex; width: max-content; animation: france-news-scroll 96s linear infinite; will-change: transform; }}
-    .france-header-track:hover .france-header-marquee {{ animation-play-state: paused; }}
-    .france-header-items {{ display: flex; align-items: stretch; gap: 12px; padding: 8px 12px; white-space: nowrap; }}
-    .france-header-card {{ width: min(300px, 72vw); min-height: 70px; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.13); background: rgba(7,17,31,0.58); color: #f4f8ff; text-decoration: none; }}
+    .france-header-track {{ min-width: 0; overflow-x: auto; overflow-y: hidden; display: flex; align-items: center; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.65) rgba(255,255,255,0.08); cursor: grab; }}
+    .france-header-track:active {{ cursor: grabbing; }}
+    .france-header-track::-webkit-scrollbar {{ height: 7px; }}
+    .france-header-track::-webkit-scrollbar-track {{ background: rgba(255,255,255,0.08); }}
+    .france-header-track::-webkit-scrollbar-thumb {{ background: rgba(245,201,107,0.62); border-radius: 999px; }}
+    .france-header-items {{ display: flex; align-items: stretch; gap: 12px; padding: 8px 12px; min-width: max-content; white-space: nowrap; }}
+    .france-header-card {{ width: min(300px, 72vw); min-height: 70px; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.13); background: rgba(7,17,31,0.58); color: #f4f8ff; text-decoration: none; scroll-snap-align: start; }}
     .france-header-card:hover, .france-header-card:focus-visible {{ background: rgba(7,17,31,0.74); outline: 1px solid rgba(245,201,107,0.42); }}
     .france-header-image {{ width: 64px; height: 52px; border-radius: 10px; object-fit: cover; background: linear-gradient(135deg, rgba(31,111,235,0.40), rgba(239,51,64,0.30)); }}
     .france-header-copy {{ min-width: 0; display: grid; gap: 4px; }}
     .france-header-title {{ color: #fff; font-size: 13px; font-weight: 950; line-height: 1.18; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
     .france-header-meta {{ display: flex; align-items: center; gap: 7px; color: #c7d7ea; font-size: 11px; font-weight: 850; }}
     .france-header-meta img {{ width: 16px; height: 16px; object-fit: contain; }}
-    @keyframes france-news-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .france-pill::before {{ content: none; }}
     .section-head {{ display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 34px 0 14px; }}
     .section-title {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
@@ -752,7 +754,6 @@ def _page(data: dict[str, Any]) -> str:
       .mercato-marquee {{ animation-duration: 118s; }}
       .france-header-news.is-visible {{ grid-template-columns: 1fr; }}
       .france-header-badge {{ justify-content: center; }}
-      .france-header-marquee {{ animation-duration: 120s; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
       .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; transform: none; width: clamp(92px, 25vw, 138px); opacity: 0.62; }}
@@ -912,8 +913,8 @@ def _all_time_badge(kind: str) -> str:
 
 def _france_header_news_placeholder() -> str:
     return (
-        '<section class="france-header-news" id="franceHeaderNews" aria-label="Actualités Équipe de France FFF">'
-        '<div class="france-header-badge"><img src="https://www.fff.fr/favicon.ico" alt="" loading="lazy">Équipe de France</div>'
+        '<section class="france-header-news" id="franceHeaderNews" aria-label="Actualités Équipe de France L’Équipe">'
+        '<div class="france-header-badge"><img src="https://www.lequipe.fr/favicon.ico" alt="" loading="lazy">Équipe de France</div>'
         '<div class="france-header-track" id="franceHeaderNewsTrack"></div>'
         '</section>'
     )
@@ -1391,7 +1392,7 @@ def _mercato_item(item: dict[str, Any]) -> str:
     entity_html = f'<span class="mercato-entity">{entity}</span>' if entity else ""
     return (
         f'<a class="mercato-link" href="{url}" target="_blank" rel="noreferrer">'
-        f'{time_html}<span>{title}</span>{entity_html}<span class="mercato-source">{source}</span></a>'
+        f'{time_html}<span class="mercato-title">{title}</span>{entity_html}<span class="mercato-source">{source}</span></a>'
     )
 
 
@@ -2094,9 +2095,9 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
     }}
 
     function franceHeaderCard(article) {{
-      const logo = article.source_logo || 'https://www.fff.fr/favicon.ico';
+      const logo = article.source_logo || 'https://www.lequipe.fr/favicon.ico';
       const image = article.image_url ? `<img class="france-header-image" src="${{newsEscape(article.image_url)}}" alt="" loading="lazy" onerror="this.classList.add('is-hidden')">` : '<div class="france-header-image"></div>';
-      return `<a class="france-header-card" href="${{newsEscape(article.url || 'https://www.fff.fr/voir_plus/dernieres_actualites.html')}}" target="_blank" rel="noreferrer">
+      return `<a class="france-header-card" href="${{newsEscape(article.url || 'https://www.lequipe.fr/Football/France/')}}" target="_blank" rel="noreferrer">
         ${{image}}
         <span class="france-header-copy">
           <span class="france-header-title">${{newsEscape(article.title || 'Actualité Équipe de France')}}</span>
@@ -2117,7 +2118,8 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
         return;
       }}
       const cards = articles.map(franceHeaderCard).join('');
-      track.innerHTML = `<div class="france-header-marquee"><div class="france-header-items">${{cards}}</div><div class="france-header-items" aria-hidden="true">${{cards}}</div></div>`;
+      track.innerHTML = `<div class="france-header-items">${{cards}}</div>`;
+      enableHorizontalWheelScroll(track);
     }}
 
     function selectedLeagueKey() {{
