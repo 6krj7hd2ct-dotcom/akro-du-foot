@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 try:
     from flask import Flask, jsonify, request, send_file
@@ -56,6 +56,11 @@ COMMUNITY_LEVELS = [
     ("Immortel", "Galaxie", "✦"),
     ("Hall of Fame", "Galaxie", "✦"),
 ]
+
+SUPABASE_TIMEOUT = 8
+SUPABASE_USER_COLUMNS = "id,pseudo,total_points,predictions_count,current_badge,success_rate,created_at,updated_at"
+SUPABASE_PREDICTION_COLUMNS = "id,user_id,pseudo,match_id,home_score,away_score,points,created_at,updated_at"
+SUPABASE_BADGE_COLUMNS = "id,name,level,icon,min_predictions"
 
 app = Flask(__name__) if Flask else None
 
@@ -231,14 +236,18 @@ def community_payload() -> dict[str, Any]:
     leagues_dashboard = _read_json(LEAGUES_CACHE_FILE, {})
     community = _read_community()
     matches = _all_dashboard_matches(worldcup_dashboard, champions_dashboard, leagues_dashboard)
-    predictions = _predictions_with_points(community.get("predictions", []), matches)
-    profiles = _community_profiles(predictions, matches)
+    supabase = _read_supabase_community(matches)
+    source_predictions = supabase.get("predictions") if supabase.get("available") else community.get("predictions", [])
+    predictions = _predictions_with_points(source_predictions or [], matches)
+    profiles = _community_profiles(predictions, matches, supabase.get("badges", {}))
+    leaderboard = _leaderboard(predictions, matches, supabase.get("badges", {}))
     return {
         "messages": community.get("messages", [])[-100:],
         "predictions": predictions,
-        "leaderboard": _leaderboard(predictions, matches),
+        "leaderboard": leaderboard,
         "profiles": profiles,
         "matches": list(matches.values()),
+        "storage": "supabase" if supabase.get("available") else "json",
     }
 
 
@@ -949,6 +958,9 @@ def save_prediction(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     if _is_locked(match):
         return {"error": "Pronostic verrouillé : le match a commencé."}, 423
 
+    if _save_prediction_supabase(pseudo, match_id, home_score, away_score, matches):
+        return {"ok": True, "storage": "supabase"}, 200
+
     community = _read_community()
     predictions = [
         prediction
@@ -966,7 +978,7 @@ def save_prediction(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     )
     community["predictions"] = predictions
     _write_community(community)
-    return {"ok": True}, 200
+    return {"ok": True, "storage": "json"}, 200
 
 
 if app:
@@ -1073,6 +1085,213 @@ class CommunityHandler(BaseHTTPRequestHandler):
         self.wfile.write(raw)
 
 
+def _supabase_config() -> tuple[str, str]:
+    return os.environ.get("SUPABASE_URL", "").rstrip("/"), os.environ.get("SUPABASE_ANON_KEY", "").strip()
+
+
+def _supabase_enabled() -> bool:
+    url, key = _supabase_config()
+    return bool(url and key)
+
+
+def _supabase_headers(prefer: str = "return=representation") -> dict[str, str]:
+    _, key = _supabase_config()
+    return {
+        "apikey": key,
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "Prefer": prefer,
+    }
+
+
+def _supabase_request(method: str, path: str, **kwargs: Any) -> Any:
+    if not _supabase_enabled():
+        return None
+    try:
+        import requests
+
+        url, _ = _supabase_config()
+        response = requests.request(
+            method,
+            f"{url}/rest/v1/{path.lstrip('/')}",
+            headers=_supabase_headers(kwargs.pop("prefer", "return=representation")),
+            timeout=SUPABASE_TIMEOUT,
+            **kwargs,
+        )
+        if response.status_code >= 400:
+            return None
+        if not response.content:
+            return []
+        return response.json()
+    except Exception:
+        return None
+
+
+def _read_supabase_community(matches: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    if not _supabase_enabled():
+        return {"available": False}
+    users = _supabase_request("GET", f"users?select={SUPABASE_USER_COLUMNS}&order=total_points.desc.nullslast")
+    predictions = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&order=created_at.desc")
+    if users is None or predictions is None:
+        return {"available": False}
+    user_by_id = {str(user.get("id")): user for user in users if user.get("id") is not None}
+    user_by_pseudo = {str(user.get("pseudo")): user for user in users if user.get("pseudo")}
+    normalized_predictions = [_prediction_from_supabase(row, user_by_id) for row in predictions]
+    return {
+        "available": True,
+        "users": users,
+        "predictions": normalized_predictions,
+        "badges": _read_supabase_badges_by_user(user_by_id, user_by_pseudo),
+    }
+
+
+def _prediction_from_supabase(row: dict[str, Any], user_by_id: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    user = user_by_id.get(str(row.get("user_id")), {})
+    return {
+        "id": row.get("id"),
+        "user_id": row.get("user_id"),
+        "pseudo": row.get("pseudo") or user.get("pseudo") or "",
+        "match_id": row.get("match_id", ""),
+        "home_score": row.get("home_score"),
+        "away_score": row.get("away_score"),
+        "stored_points": row.get("points", 0),
+        "created_at": row.get("created_at", ""),
+        "updated_at": row.get("updated_at", ""),
+    }
+
+
+def _read_supabase_badges_by_user(user_by_id: dict[str, dict[str, Any]], user_by_pseudo: dict[str, dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    badges_by_id = _supabase_badge_catalog()
+    if not badges_by_id:
+        return {}
+    rows = _supabase_request("GET", "user_badges?select=*&order=earned_at.asc")
+    if rows is None:
+        return {}
+    out: dict[str, list[dict[str, Any]]] = {}
+    for row in rows:
+        user = user_by_id.get(str(row.get("user_id")), {})
+        pseudo = str(user.get("pseudo") or row.get("pseudo") or "")
+        badge = badges_by_id.get(str(row.get("badge_id"))) or {}
+        if pseudo and badge:
+            out.setdefault(pseudo, []).append(badge)
+    return out
+
+
+def _supabase_badge_catalog() -> dict[str, dict[str, Any]]:
+    rows = _supabase_request("GET", f"badges?select={SUPABASE_BADGE_COLUMNS}&order=min_predictions.asc")
+    if rows is None:
+        return {}
+    return {str(row.get("id")): row for row in rows if row.get("id") is not None}
+
+
+def _save_prediction_supabase(pseudo: str, match_id: str, home_score: int, away_score: int, matches: dict[str, dict[str, Any]]) -> bool:
+    if not _supabase_enabled():
+        return False
+    user = _supabase_get_or_create_user(pseudo)
+    if not user:
+        return False
+    match = matches.get(match_id)
+    points = _points({"match_id": match_id, "home_score": home_score, "away_score": away_score}, match)
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    existing = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&user_id=eq.{quote(str(user.get('id')), safe='')}&match_id=eq.{quote(match_id, safe='')}&limit=1")
+    payload = {
+        "user_id": user.get("id"),
+        "pseudo": pseudo,
+        "match_id": match_id,
+        "home_score": home_score,
+        "away_score": away_score,
+        "points": points,
+        "updated_at": now,
+    }
+    if existing:
+        saved = _supabase_request("PATCH", f"predictions?id=eq.{quote(str(existing[0].get('id')), safe='')}", json=payload)
+    else:
+        payload["created_at"] = now
+        saved = _supabase_request("POST", "predictions", json=payload)
+    if saved is None:
+        return False
+    _sync_supabase_user_totals(str(user.get("id")), pseudo, matches)
+    return True
+
+
+def _supabase_get_or_create_user(pseudo: str) -> dict[str, Any] | None:
+    existing = _supabase_request("GET", f"users?select={SUPABASE_USER_COLUMNS}&pseudo=eq.{quote(pseudo, safe='')}&limit=1")
+    if existing:
+        return existing[0]
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    created = _supabase_request(
+        "POST",
+        "users",
+        json={"pseudo": pseudo, "total_points": 0, "predictions_count": 0, "success_rate": 0, "created_at": now, "updated_at": now},
+    )
+    if created:
+        return created[0]
+    # If the table does not expose all optional columns, retry with the strict minimum.
+    created = _supabase_request("POST", "users", json={"pseudo": pseudo})
+    return created[0] if created else None
+
+
+def _sync_supabase_user_totals(user_id: str, pseudo: str, matches: dict[str, dict[str, Any]]) -> None:
+    rows = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&user_id=eq.{quote(user_id, safe='')}")
+    if rows is None:
+        return
+    predictions = [_prediction_from_supabase(row, {user_id: {"pseudo": pseudo}}) for row in rows]
+    scored = _predictions_with_points(predictions, matches)
+    points = sum(int(item.get("points", 0) or 0) for item in scored)
+    count = len(scored)
+    completed = [item for item in scored if matches.get(str(item.get("match_id", "")), {}).get("completed")]
+    correct = len([item for item in completed if int(item.get("points", 0) or 0) > 0])
+    success_rate = round((correct / len(completed)) * 100) if completed else 0
+    level = _community_level(count)
+    patch = {
+        "total_points": points,
+        "predictions_count": count,
+        "success_rate": success_rate,
+        "current_badge": level["level"],
+        "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    _supabase_request("PATCH", f"users?id=eq.{quote(user_id, safe='')}", json=patch)
+    _award_supabase_badge(user_id, level)
+    _sync_supabase_prediction_points(scored)
+
+
+def _sync_supabase_prediction_points(predictions: list[dict[str, Any]]) -> None:
+    for prediction in predictions:
+        prediction_id = prediction.get("id")
+        if prediction_id is None:
+            continue
+        if int(prediction.get("stored_points", -1) or -1) == int(prediction.get("points", 0) or 0):
+            continue
+        _supabase_request("PATCH", f"predictions?id=eq.{quote(str(prediction_id), safe='')}", json={"points": int(prediction.get("points", 0) or 0)})
+
+
+def _award_supabase_badge(user_id: str, level: dict[str, Any]) -> None:
+    badge = _ensure_supabase_badge(level)
+    if not badge or not badge.get("id"):
+        return
+    existing = _supabase_request("GET", f"user_badges?select=*&user_id=eq.{quote(user_id, safe='')}&badge_id=eq.{quote(str(badge.get('id')), safe='')}&limit=1")
+    if existing:
+        return
+    _supabase_request(
+        "POST",
+        "user_badges",
+        json={"user_id": user_id, "badge_id": badge.get("id"), "earned_at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
+    )
+
+
+def _ensure_supabase_badge(level: dict[str, Any]) -> dict[str, Any] | None:
+    name = str(level.get("level") or level.get("badge") or "Badge")
+    existing = _supabase_request("GET", f"badges?select={SUPABASE_BADGE_COLUMNS}&name=eq.{quote(name, safe='')}&limit=1")
+    if existing:
+        return existing[0]
+    created = _supabase_request(
+        "POST",
+        "badges",
+        json={"name": name, "level": level.get("level_index"), "icon": level.get("badge_icon"), "min_predictions": max(0, (int(level.get("level_index", 1)) - 1) * 10)},
+    )
+    return created[0] if created else None
+
+
 def _read_community() -> dict[str, Any]:
     data = _read_json(COMMUNITY_FILE, {"messages": [], "predictions": []})
     data.setdefault("messages", [])
@@ -1141,15 +1360,15 @@ def _predictions_with_points(predictions: list[dict[str, Any]], matches: dict[st
     return [{**prediction, "points": _points(prediction, matches.get(prediction.get("match_id", "")))} for prediction in predictions]
 
 
-def _leaderboard(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]] | None = None) -> list[dict[str, Any]]:
-    profiles = _community_profiles(predictions, matches or {})
+def _leaderboard(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]] | None = None, badges: dict[str, list[dict[str, Any]]] | None = None) -> list[dict[str, Any]]:
+    profiles = _community_profiles(predictions, matches or {}, badges)
     rows = sorted(profiles.values(), key=lambda item: (-int(item.get("points", 0)), -int(item.get("exact_scores", 0)), str(item.get("pseudo", "")).lower()))
     for index, row in enumerate(rows, start=1):
         row["rank"] = index
     return rows
 
 
-def _community_profiles(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+def _community_profiles(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]], badges: dict[str, list[dict[str, Any]]] | None = None) -> dict[str, dict[str, Any]]:
     profiles: dict[str, dict[str, Any]] = {}
     for prediction in predictions:
         pseudo = _clean(prediction.get("pseudo", ""), 32)
@@ -1171,7 +1390,7 @@ def _community_profiles(predictions: list[dict[str, Any]], matches: dict[str, di
         completed_count = len(completed)
         profile["completed_predictions"] = completed_count
         profile["success_rate"] = round((profile["correct_results"] / completed_count) * 100) if completed_count else 0
-        level = _community_level(profile["predictions_count"])
+        level = _community_level(profile["predictions_count"], badges.get(str(profile.get("pseudo", "")), []) if badges else None)
         profile.update(level)
         profile["recent_predictions"] = sorted(profile["history"], key=lambda item: str(item.get("created_at", "")), reverse=True)[:12]
     return profiles
@@ -1193,15 +1412,18 @@ def _empty_profile(pseudo: str) -> dict[str, Any]:
     }
 
 
-def _community_level(predictions_count: int) -> dict[str, Any]:
+def _community_level(predictions_count: int, awarded_badges: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     index = max(0, min(len(COMMUNITY_LEVELS) - 1, predictions_count // 10))
     level_name, badge, icon = COMMUNITY_LEVELS[index]
     next_goal = (index + 1) * 10 if index < len(COMMUNITY_LEVELS) - 1 else predictions_count
+    badges = awarded_badges or []
+    current_badge = badges[-1] if badges else {}
     return {
         "level_index": index + 1,
-        "level": level_name,
-        "badge": badge,
-        "badge_icon": icon,
+        "level": str(current_badge.get("name") or level_name),
+        "badge": str(current_badge.get("badge") or current_badge.get("name") or badge),
+        "badge_icon": str(current_badge.get("icon") or icon),
+        "badges": badges,
         "next_level_at": next_goal,
     }
 
