@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import subprocess
 from datetime import datetime, timezone
@@ -286,6 +287,7 @@ FOOTMERCATO_BASE_URL = "https://www.footmercato.net"
 MERCATO_LIVE_URL = "https://www.mercatolive.fr/"
 MERCATO_LIVE_TIMEOUT_SECONDS = 6
 NEWS_PAGE_TIMEOUT_SECONDS = 6
+GLOBAL_NEWS_FEED_TIMEOUT_SECONDS = 4
 
 DEDICATED_WORLD_CUP_NEWS_SOURCES = [
     {
@@ -1865,12 +1867,12 @@ def fetch_all_news(filter_key: str = "all", limit: int = 50, previous: list[dict
             errors.append(f"{feed.get('source', 'Source')}: {type(exc).__name__}")
             continue
 
-    # Official pages are useful but optional. They go through the stricter editorial link parser.
-    for source in [*DEDICATED_WORLD_CUP_NEWS_SOURCES, *DEDICATED_CHAMPIONS_NEWS_SOURCES]:
-        try:
-            articles.extend(_enrich_news_article(article) for article in _fetch_dedicated_source_page(source)[:8])
-        except Exception as exc:
-            errors.append(f"{source.get('source', 'Source')}: {type(exc).__name__}")
+    if os.environ.get("AKRO_FETCH_OFFICIAL_NEWS", "").strip().lower() in {"1", "true", "yes", "on"}:
+        for source in [*DEDICATED_WORLD_CUP_NEWS_SOURCES, *DEDICATED_CHAMPIONS_NEWS_SOURCES]:
+            try:
+                articles.extend(_fetch_dedicated_source_page(source)[:6])
+            except Exception as exc:
+                errors.append(f"{source.get('source', 'Source')}: {type(exc).__name__}")
 
     merged = [*articles, *(previous or [])]
     clean = rank_articles(dedupe_articles(merged))
@@ -1886,10 +1888,10 @@ def fetch_all_news(filter_key: str = "all", limit: int = 50, previous: list[dict
 
 
 def _fetch_global_news_feed(feed: dict[str, Any]) -> list[dict[str, Any]]:
-    xml = _download(feed["url"])
+    xml = _download_news_feed(feed["url"])
     root = ElementTree.fromstring(xml)
     articles: list[dict[str, Any]] = []
-    for item in root.findall("./channel/item")[:40]:
+    for item in root.findall("./channel/item")[:18]:
         title = _xml_text(item, "title")
         summary = _strip_html(_xml_text(item, "description"))
         link = _xml_text(item, "link")
@@ -1926,6 +1928,16 @@ def _fetch_global_news_feed(feed: dict[str, Any]) -> list[dict[str, Any]]:
         }
         articles.append(article)
     return articles
+
+
+def _download_news_feed(url: str) -> str:
+    try:
+        response = requests.get(url, headers=REQUEST_HEADERS, timeout=GLOBAL_NEWS_FEED_TIMEOUT_SECONDS)
+        if response.status_code == 200 and response.text.strip():
+            return response.text
+    except requests.RequestException:
+        pass
+    raise ValueError(f"flux actualités indisponible pour {url}")
 
 
 def filter_news_articles(articles: list[dict[str, Any]], filter_key: str = "all") -> list[dict[str, Any]]:

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import os
+from datetime import datetime, timezone
 from typing import Any
 
 from src.config import CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, DATA_DIR, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, NEWS_CACHE_FILE, OUTPUT_HTML
@@ -17,7 +19,9 @@ def main() -> None:
     champions_league_data = _preserve_news_cache(_merge_refresh(previous_champions, fetch_champions_league_data()), previous_champions)
     leagues_data = _preserve_leagues_news_cache(_merge_leagues_refresh(previous_leagues, fetch_leagues_data()), previous_leagues)
     previous_news = _read_cache(NEWS_CACHE_FILE) or {}
-    news_data = fetch_all_news(previous=previous_news.get("all_articles") or previous_news.get("articles") or [])
+    news_data = _news_cache_for_render(previous_news)
+    if os.environ.get("AKRO_FETCH_NEWS_DURING_UPDATE", "").strip().lower() in {"1", "true", "yes", "on"}:
+        news_data = fetch_all_news(previous=previous_news.get("all_articles") or previous_news.get("articles") or [])
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
     mercato_items = fetch_mercato_live()
     mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
@@ -50,6 +54,20 @@ def main() -> None:
         OUTPUT_HTML,
     )
     print(f"Dashboard généré : {OUTPUT_HTML}")
+
+
+def _news_cache_for_render(previous: dict[str, Any] | None) -> dict[str, Any]:
+    if previous:
+        return previous
+    generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return {
+        "generated_at": generated_at,
+        "articles": [],
+        "all_articles": [],
+        "filter": "all",
+        "sources": [],
+        "errors": [],
+    }
 
 
 def _preserve_news_cache(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:

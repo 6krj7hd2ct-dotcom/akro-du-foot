@@ -42,6 +42,10 @@ if app:
     def index():
         return send_file(OUTPUT_HTML)
 
+    @app.get("/healthz")
+    def healthz():
+        return jsonify({"status": "ok"})
+
     @app.get("/watch-party")
     def watch_party():
         return watch_party_html()
@@ -928,6 +932,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_file(OUTPUT_HTML, "text/html; charset=utf-8")
         elif path == "/watch-party":
             self._send_html(watch_party_html())
+        elif path == "/healthz":
+            self._send_json({"status": "ok"})
         elif path == "/api/community":
             self._send_json(community_payload())
         elif path == "/api/livekit-token":
