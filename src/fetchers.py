@@ -140,8 +140,7 @@ FRENCH_NEWS_DOMAINS = (
 )
 
 NEWS_SOURCE_PRIORITY = (
-    "foot mercato",
-    "rmc sport",
+    "fifa",
     "l equipe",
     "eurosport",
     "france info",
@@ -273,14 +272,16 @@ NEWS_PAGE_TIMEOUT_SECONDS = 6
 
 DEDICATED_WORLD_CUP_NEWS_SOURCES = [
     {
-        "source": "L'Équipe",
-        "url": "https://www.lequipe.fr/Football/Coupe-du-monde/",
-        "keywords": ["coupe du monde", "mondial", "world cup", "fifa"],
+        "source": "FIFA",
+        "url": "https://www.fifa.com/fr/tournaments/mens/worldcup/canadamexicousa2026/news",
+        "keywords": ["coupe du monde", "mondial", "world cup", "fifa", "qualification", "groupe", "sélection", "selection", "calendrier"],
+        "exclude_keywords": ["mercato", "transfert", "ligue des champions", "champions league", "ligue 1", "liga", "serie a", "bundesliga", "premier league"],
     },
     {
-        "source": "RMC Sport",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/",
-        "keywords": ["coupe du monde", "mondial", "world cup", "fifa"],
+        "source": "L'Équipe",
+        "url": "https://www.lequipe.fr/Football/Coupe-du-monde/",
+        "keywords": ["coupe du monde", "mondial", "world cup", "fifa", "qualification", "groupe", "sélection", "selection", "calendrier"],
+        "exclude_keywords": ["mercato", "transfert", "ligue des champions", "champions league", "ligue 1", "liga", "serie a", "bundesliga", "premier league"],
     },
 ]
 
@@ -296,34 +297,36 @@ DEDICATED_CHAMPIONS_NEWS_SOURCES = [
     {
         "source": "L'Équipe",
         "url": "https://www.lequipe.fr/Football/Ligue-des-champions/",
-        "keywords": ["ligue des champions", "champions league", "uefa"],
+        "keywords": ["ligue des champions", "champions league", "c1", "uefa", "psg", "arsenal", "real madrid", "bayern"],
+        "exclude_keywords": ["coupe du monde", "mondial", "mercato", "transfert", "ligue 1", "liga", "serie a", "bundesliga", "premier league"],
     },
     {
-        "source": "RMC Sport",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/",
-        "keywords": ["ligue des champions", "champions league", "uefa"],
+        "source": "Eurosport France",
+        "url": "https://www.eurosport.fr/football/ligue-des-champions/",
+        "keywords": ["ligue des champions", "champions league", "c1", "uefa", "psg", "arsenal", "real madrid", "bayern"],
+        "exclude_keywords": ["coupe du monde", "mondial", "mercato", "transfert", "ligue 1", "liga", "serie a", "bundesliga", "premier league"],
     },
 ]
 LEAGUE_DEDICATED_NEWS_SOURCES = {
     "ligue1": [
-        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/ligue-1/", "keywords": ["ligue 1", "championnat de france"]},
-        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/ligue-1/", "keywords": ["ligue 1", "championnat de france"]},
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/ligue-1/", "keywords": ["ligue 1", "championnat de france", "psg", "marseille", "monaco", "lyon", "lille", "lens", "rennes", "nice"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
+        {"source": "Eurosport France", "url": "https://www.eurosport.fr/football/ligue-1/", "keywords": ["ligue 1", "championnat de france", "psg", "marseille", "monaco", "lyon", "lille", "lens", "rennes", "nice"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
     ],
     "seriea": [
-        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-italie/", "keywords": ["serie a", "italie", "championnat d italie"]},
-        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/serie-a/", "keywords": ["serie a", "italie", "championnat italien"]},
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-italie/", "keywords": ["serie a", "italie", "championnat d italie", "inter", "milan", "juventus", "naples", "napoli", "roma", "lazio"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
+        {"source": "Eurosport France", "url": "https://www.eurosport.fr/football/serie-a/", "keywords": ["serie a", "italie", "championnat italien", "inter", "milan", "juventus", "naples", "napoli", "roma", "lazio"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
     ],
     "laliga": [
-        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-espagne/", "keywords": ["liga", "laliga", "espagne", "championnat d espagne"]},
-        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/liga/", "keywords": ["liga", "laliga", "espagne", "championnat espagnol"]},
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-espagne/", "keywords": ["liga", "laliga", "espagne", "championnat d espagne", "real madrid", "barcelone", "barça", "atletico", "séville"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
+        {"source": "Eurosport France", "url": "https://www.eurosport.fr/football/liga/", "keywords": ["liga", "laliga", "espagne", "championnat espagnol", "real madrid", "barcelone", "barça", "atletico", "séville"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
     ],
     "premierleague": [
-        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-angleterre/", "keywords": ["premier league", "angleterre", "championnat d angleterre"]},
-        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/premier-league/", "keywords": ["premier league", "angleterre", "championnat anglais"]},
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-angleterre/", "keywords": ["premier league", "angleterre", "championnat d angleterre", "arsenal", "liverpool", "chelsea", "manchester city", "manchester united", "tottenham"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
+        {"source": "Eurosport France", "url": "https://www.eurosport.fr/football/premier-league/", "keywords": ["premier league", "angleterre", "championnat anglais", "arsenal", "liverpool", "chelsea", "manchester city", "manchester united", "tottenham"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
     ],
     "bundesliga": [
-        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-allemagne/", "keywords": ["bundesliga", "allemagne", "championnat d allemagne"]},
-        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/bundesliga/", "keywords": ["bundesliga", "allemagne", "championnat allemand"]},
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-allemagne/", "keywords": ["bundesliga", "allemagne", "championnat d allemagne", "bayern", "dortmund", "leverkusen", "leipzig"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
+        {"source": "Eurosport France", "url": "https://www.eurosport.fr/football/bundesliga/", "keywords": ["bundesliga", "allemagne", "championnat allemand", "bayern", "dortmund", "leverkusen", "leipzig"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
     ],
 }
 
@@ -535,7 +538,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
-    world_cup_news = _safe_fetch("actualités Coupe du Monde L’Équipe + RMC Sport", fetch_world_cup_news, errors)
+    world_cup_news = _safe_fetch("actualités Coupe du Monde FIFA FR + L’Équipe", fetch_world_cup_news, errors)
     france_header_news = _safe_fetch("bandeau Équipe de France FFF", fetch_fff_france_header_news, errors)
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
@@ -618,7 +621,7 @@ def fetch_champions_league_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_ASSISTS_URL, 1), errors)
-    news = _safe_fetch("actualités Ligue des Champions L’Équipe + RMC Sport", fetch_champions_league_news, errors)
+    news = _safe_fetch("actualités Ligue des Champions L’Équipe + Eurosport", fetch_champions_league_news, errors)
     football_news_pool: list[dict[str, Any]] = []
     focused_club_news: dict[str, list[dict[str, Any]]] = {}
     all_time_top_scorers = _safe_fetch(
@@ -706,7 +709,7 @@ def fetch_leagues_data() -> dict[str, Any]:
         "leagues": leagues,
         "big5_top_scorers": big5[:5],
         "all_news": _dedupe_news([article for league in leagues.values() for article in league.get("all_news", [])])[:40],
-        "news_sources": ["L’Équipe", "RMC Sport"],
+        "news_sources": ["L’Équipe", "Eurosport France"],
         "sources": [
             {"name": f"ESPN - {config['name']}", "url": _league_standings_url(config)}
             for config in LEAGUE_CONFIGS.values()
@@ -751,7 +754,7 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
         assists = _safe_fetch(f"passeurs {name} FotMob", lambda: fetch_fotmob_player_stats_from_url(fotmob_url, "assists"), errors)
     else:
         assists = _safe_fetch(f"photos passeurs {name} FotMob", lambda: enrich_players_with_fotmob_stats(assists, fotmob_url, "assists"), errors) or assists
-    league_news = _safe_fetch(f"actualités {name} L’Équipe + RMC Sport", lambda: fetch_league_news(key), errors)
+    league_news = _safe_fetch(f"actualités {name} L’Équipe + Eurosport", lambda: fetch_league_news(key), errors)
     focused_club_news: dict[str, list[dict[str, Any]]] = {}
     clubs = sorted(teams_details.keys(), key=str.casefold)
     default_focus = _default_league_focus(key, clubs)
@@ -2090,6 +2093,10 @@ def _is_dedicated_article_link(url: str, title: str, source_name: str) -> bool:
     path = urlparse(url).path
     if source_name == "L'Équipe":
         return hostname.endswith("lequipe.fr") and "/Football/" in path
+    if source_name == "Eurosport France":
+        return hostname.endswith("eurosport.fr") and path.startswith("/football/")
+    if source_name == "FIFA":
+        return hostname.endswith("fifa.com") and "/news" in path
     if source_name == "RMC Sport":
         return hostname.endswith("rmcsport.bfmtv.com") and path.startswith("/football/")
     if source_name == "FFF":

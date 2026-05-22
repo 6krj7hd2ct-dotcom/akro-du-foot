@@ -865,7 +865,7 @@ def _page(data: dict[str, Any]) -> str:
     {_section_head("Meilleurs passeurs", "Top 5 uniquement, avec photo si la source la fournit.")}
     <section class="leaders">{_player_cards(assists, "passes")}</section>
 
-    {_dynamic_news_section("Actualité Coupe du Monde", "Six derniers articles L’Équipe et RMC Sport, dédiés à la Coupe du Monde.", "worldcupNewsBoard")}
+    {_dynamic_news_section("Actualité Coupe du Monde", "Six derniers articles FIFA FR et L’Équipe, dédiés à la Coupe du Monde.", "worldcupNewsBoard")}
 
     {_section_head("Arbre à élimination directe", "Bracket officiel horizontal : les deux ailes convergent vers la finale au centre.")}
     {render_worldcup_bracket(knockout)}
@@ -1021,7 +1021,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.")}
       <section class="leaders">{_player_cards(assists, "passes", prefer_country_flag=True)}</section>
 
-      {_dynamic_news_section("Actualité Ligue des Champions", "Six derniers articles L’Équipe et RMC Sport, dédiés à la Ligue des Champions.", "championsNewsBoard")}
+      {_dynamic_news_section("Actualité Ligue des Champions", "Six derniers articles L’Équipe et Eurosport FR, dédiés à la Ligue des Champions.", "championsNewsBoard")}
 
       {_section_head("Phase finale", "Bracket Ligue des Champions affiché dès disponibilité des matchs à élimination directe.")}
       {render_champions_league_bracket(knockout)}
@@ -1084,7 +1084,7 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 du championnat sélectionné, si disponible.")}
       <section class="leaders" id="leagueTopAssists"></section>
 
-      {_dynamic_news_section("Actualité championnat", "Six derniers articles L’Équipe et RMC Sport liés au championnat sélectionné.", "leaguesNewsBoard")}
+      {_dynamic_news_section("Actualité championnat", "Six derniers articles L’Équipe et Eurosport FR liés au championnat sélectionné.", "leaguesNewsBoard")}
 
       {_section_head("Classement du championnat", "Clubs, matchs joués, victoires, nuls, défaites, différence et points.")}
       <section class="grid standings-wide" id="leagueStandings"></section>

@@ -149,7 +149,7 @@ def _balanced_articles(articles: list[dict[str, Any]], limit: int, max_per_sourc
 
 def _cached_news_sort_key(article: dict[str, Any]) -> tuple[int, str]:
     source = _normalize_football_text(article.get("source_name") or article.get("source") or "")
-    priority = ["l equipe", "rmc sport"]
+    priority = ["fifa", "l equipe", "eurosport", "eurosport france"]
     score = 40
     for index, name in enumerate(priority):
         if _normalize_football_text(name) in source:
@@ -164,8 +164,8 @@ def _is_allowed_cached_news(article: dict[str, Any]) -> bool:
     hostname = urlparse(link).netloc.replace("www.", "")
     blocked_sources = {"espn", "bbc", "bbc sport", "google news"}
     blocked_domains = ("espn.com", "bbc.", "bbc.co.uk", "news.google.")
-    allowed_sources = {"rmc sport", "l equipe", "l equipe"}
-    allowed_domains = ("rmcsport.bfmtv.com", "lequipe.fr")
+    allowed_sources = {"fifa", "l equipe", "l equipe", "eurosport", "eurosport france"}
+    allowed_domains = ("fifa.com", "lequipe.fr", "eurosport.fr")
     if source in blocked_sources or any(domain in link for domain in blocked_domains):
         return False
     source_allowed = source in allowed_sources or any(allowed in source for allowed in allowed_sources)

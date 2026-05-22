@@ -19,9 +19,9 @@ def main() -> None:
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
     mercato_items = fetch_mercato_live()
     mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
-    _filter_news_sources(worldcup_data, {"rmc sport", "l equipe", "l'equipe", "l’équipe"})
-    _filter_news_sources(champions_league_data, {"rmc sport", "l equipe", "l'equipe", "l’équipe"})
-    _filter_leagues_news_sources(leagues_data, {"rmc sport", "l equipe", "l'equipe", "l’équipe"})
+    _filter_news_sources(worldcup_data, {"fifa", "l equipe", "l'equipe", "l’équipe"})
+    _filter_news_sources(champions_league_data, {"eurosport", "eurosport france", "l equipe", "l'equipe", "l’équipe"})
+    _filter_leagues_news_sources(leagues_data, {"eurosport", "eurosport france", "l equipe", "l'equipe", "l’équipe"})
     for dataset in (worldcup_data, champions_league_data):
         _sanitize_dataset(dataset)
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
