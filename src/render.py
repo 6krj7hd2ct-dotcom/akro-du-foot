@@ -245,20 +245,7 @@ def _page(data: dict[str, Any]) -> str:
     .mercato-entity {{ color: #ffb7bd; font-size: 12px; font-weight: 950; }}
     .mercato-source {{ color: #8fa8c4; font-size: 12px; font-weight: 800; }}
     .mercato-empty {{ padding: 12px 16px; color: #c5d3e4; font-size: 14px; font-weight: 850; }}
-    .fff-ticker {{ display: none; margin: 0 0 16px; border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; overflow: hidden; background: linear-gradient(90deg, rgba(31,111,235,0.24), rgba(255,255,255,0.08), rgba(239,51,64,0.18)); box-shadow: 0 12px 30px rgba(0,0,0,0.18); grid-template-columns: auto minmax(0, 1fr); align-items: stretch; }}
-    .fff-ticker.is-visible {{ display: grid; }}
-    .fff-badge {{ display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; background: rgba(255,255,255,0.92); color: #07111f; font-size: 12px; font-weight: 950; text-transform: uppercase; white-space: nowrap; }}
-    .fff-badge img {{ width: 24px; height: 24px; object-fit: contain; }}
-    .fff-track {{ min-width: 0; overflow: hidden; display: flex; align-items: center; }}
-    .fff-marquee {{ display: flex; width: max-content; animation: fff-scroll 86s linear infinite; will-change: transform; }}
-    .fff-track:hover .fff-marquee {{ animation-play-state: paused; }}
-    .fff-items {{ display: flex; align-items: center; gap: 26px; padding: 0 26px; white-space: nowrap; }}
-    .fff-link {{ display: inline-flex; align-items: center; gap: 8px; color: #f4f8ff; text-decoration: none; font-size: 13px; font-weight: 900; }}
-    .fff-link::before {{ content: ""; width: 7px; height: 7px; border-radius: 50%; background: #ef3340; box-shadow: 0 0 12px rgba(239,51,64,0.7); flex: 0 0 auto; }}
-    .fff-link:hover, .fff-link:focus-visible {{ color: #ffe1a0; outline: none; }}
-    .fff-empty {{ padding: 10px 14px; color: #d8e8fa; font-size: 13px; font-weight: 850; }}
     @keyframes mercato-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
-    @keyframes fff-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .tabs-nav {{
       position: sticky;
       top: 12px;
@@ -747,9 +734,6 @@ def _page(data: dict[str, Any]) -> str:
       .mercato-ticker {{ grid-template-columns: 1fr; }}
       .mercato-badge {{ justify-content: center; }}
       .mercato-marquee {{ animation-duration: 118s; }}
-      .fff-ticker.is-visible {{ grid-template-columns: 1fr; }}
-      .fff-badge {{ justify-content: center; }}
-      .fff-marquee {{ animation-duration: 112s; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
       .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; transform: none; width: clamp(92px, 25vw, 138px); opacity: 0.62; }}
@@ -789,8 +773,6 @@ def _page(data: dict[str, Any]) -> str:
       .action-button {{ flex: 1 1 130px; text-align: center; }}
       .mercato-link {{ font-size: 13px; }}
       .mercato-items {{ gap: 20px; padding: 0 20px; }}
-      .fff-items {{ gap: 20px; padding: 0 20px; }}
-      .fff-link {{ font-size: 12px; }}
       .big5-track {{ animation-duration: 76s; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
@@ -860,7 +842,7 @@ def _page(data: dict[str, Any]) -> str:
     {_section_head("Meilleurs passeurs", "Top 5 uniquement, avec photo si la source la fournit.")}
     <section class="leaders">{_player_cards(assists, "passes")}</section>
 
-    {_dynamic_news_section("Actualité Coupe du Monde", "Six derniers articles Foot Mercato et FIFA, triés par fraîcheur.", "worldcupNewsBoard")}
+    {_dynamic_news_section("Actualité Coupe du Monde", "Six derniers articles L’Équipe et RMC Sport, dédiés à la Coupe du Monde.", "worldcupNewsBoard")}
 
     {_section_head("Arbre à élimination directe", "Bracket officiel horizontal : les deux ailes convergent vers la finale au centre.")}
     {render_worldcup_bracket(knockout)}
@@ -1007,7 +989,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.")}
       <section class="leaders">{_player_cards(assists, "passes", prefer_country_flag=True)}</section>
 
-      {_dynamic_news_section("Actualité Ligue des Champions", "Six derniers articles Foot Mercato et L’Équipe, triés par fraîcheur.", "championsNewsBoard")}
+      {_dynamic_news_section("Actualité Ligue des Champions", "Six derniers articles L’Équipe et RMC Sport, dédiés à la Ligue des Champions.", "championsNewsBoard")}
 
       {_section_head("Phase finale", "Bracket Ligue des Champions affiché dès disponibilité des matchs à élimination directe.")}
       {render_champions_league_bracket(knockout)}
@@ -1070,7 +1052,7 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 du championnat sélectionné, si disponible.")}
       <section class="leaders" id="leagueTopAssists"></section>
 
-      {_dynamic_news_section("Actualité championnat", "Six derniers articles Foot Mercato liés au championnat sélectionné.", "leaguesNewsBoard")}
+      {_dynamic_news_section("Actualité championnat", "Six derniers articles L’Équipe et RMC Sport liés au championnat sélectionné.", "leaguesNewsBoard")}
 
       {_section_head("Classement du championnat", "Clubs, matchs joués, victoires, nuls, défaites, différence et points.")}
       <section class="grid standings-wide" id="leagueStandings"></section>
@@ -1582,17 +1564,7 @@ def _dynamic_news_section(title: str, note: str, board_id: str) -> str:
     board_key = board_id.casefold()
     kind = "worldcup" if "worldcup" in board_key else "leagues" if "league" in board_key else "champions"
     action = f'<button class="alltime-badge" type="button" data-news-refresh="{escape(kind, quote=True)}">Actualiser</button>'
-    fff_ticker = _fff_ticker_placeholder() if board_id == "worldcupNewsBoard" else ""
-    return f'{_section_head(title, note, action)}{fff_ticker}<section class="news" id="{escape(board_id, quote=True)}">{_empty_block("Aucune actualité disponible pour le moment.")}</section>'
-
-
-def _fff_ticker_placeholder() -> str:
-    return (
-        '<section class="fff-ticker" id="worldcupFffTicker" aria-label="Actualités FFF Équipe de France">'
-        '<div class="fff-badge"><img src="https://www.fff.fr/favicon.ico" alt="" loading="lazy">Équipe de France</div>'
-        '<div class="fff-track" id="worldcupFffTrack"><div class="fff-empty">Actualités FFF indisponibles pour le moment</div></div>'
-        '</section>'
-    )
+    return f'{_section_head(title, note, action)}<section class="news" id="{escape(board_id, quote=True)}">{_empty_block("Aucune actualité disponible pour le moment.")}</section>'
 
 
 def _news_section(title: str, news: list[dict[str, Any]], note: str, france: bool) -> str:
@@ -1985,7 +1957,6 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
             "general": _dedupe_render_news([*(worldcup_data.get("general_news") or worldcup_data.get("world_cup_news", [])), *worldcup_data.get("world_cup_news", [])]),
             "focused": worldcup_data.get("focused_team_news", {}),
             "all": _dedupe_render_news([*worldcup_data.get("all_news", []), *worldcup_data.get("france_news", []), *worldcup_data.get("world_cup_news", [])]),
-            "fff_news": _dedupe_render_news(worldcup_data.get("fff_news", [])),
         },
         "champions": {
             "general": _dedupe_render_news([*((champions_data or {}).get("general_news") or (champions_data or {}).get("world_cup_news", [])), *((champions_data or {}).get("world_cup_news", []))]),
@@ -2083,30 +2054,6 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
       </article>`;
     }}
 
-    function isFranceFocusSelected() {{
-      const select = document.getElementById('worldcupFocusSelect');
-      return normalizeNewsText(select ? select.value : localStorage.getItem('akrodufoot:focus:worldcup') || 'France') === 'france';
-    }}
-
-    function fffTickerItem(article) {{
-      return `<a class="fff-link" href="${{newsEscape(article.url || 'https://www.fff.fr/selection/2-equipe-de-france/index.html')}}" target="_blank" rel="noreferrer">${{newsEscape(article.title || 'Actualité FFF')}}</a>`;
-    }}
-
-    function renderFffTicker() {{
-      const ticker = document.getElementById('worldcupFffTicker');
-      const track = document.getElementById('worldcupFffTrack');
-      if (!ticker || !track) return;
-      const articles = uniqueArticles((NEWS_DATA.worldcup && NEWS_DATA.worldcup.fff_news) || []).slice(0, 8);
-      const visible = isFranceFocusSelected() && articles.length;
-      ticker.classList.toggle('is-visible', Boolean(visible));
-      if (!visible) {{
-        track.innerHTML = '<div class="fff-empty">Actualités FFF indisponibles pour le moment</div>';
-        return;
-      }}
-      const items = articles.map(fffTickerItem).join('');
-      track.innerHTML = `<div class="fff-marquee"><div class="fff-items">${{items}}</div><div class="fff-items" aria-hidden="true">${{items}}</div></div>`;
-    }}
-
     function selectedLeagueKey() {{
       const select = document.getElementById('leagueSelect');
       return select ? select.value : 'ligue1';
@@ -2122,7 +2069,6 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
       const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : kind === 'leagues' ? 'leaguesNewsBoard' : 'championsNewsBoard');
       if (!board) return;
       const articles = newsSelection(kind);
-      if (kind === 'worldcup') renderFffTicker();
       board.innerHTML = articles.length
         ? articles.map(articleCard).join('')
         : '<div class="empty">Aucune actualité française disponible pour le moment.</div>';
@@ -2138,7 +2084,6 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
         if (!response.ok) throw new Error('refresh failed');
         const data = await response.json();
         NEWS_DATA[kind] = {{...(NEWS_DATA[kind] || {{}}), ...data}};
-        if (kind === 'worldcup' && data.fff_news) NEWS_DATA.worldcup.fff_news = data.fff_news;
       }} catch (error) {{
         // En mode fichier statique ou hors ligne, on réaffiche les données déjà en cache.
       }}
@@ -2147,7 +2092,6 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
 
     function refreshAllNewsBoards() {{
       renderNewsBoard('worldcup');
-      renderFffTicker();
       renderNewsBoard('champions');
       renderNewsBoard('leagues');
     }}

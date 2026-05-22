@@ -19,9 +19,9 @@ def main() -> None:
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
     mercato_items = fetch_mercato_live()
     mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
-    _filter_news_sources(worldcup_data, {"foot mercato", "fifa", "fff"})
-    _filter_news_sources(champions_league_data, {"foot mercato", "l'equipe", "l’équipe"})
-    _filter_leagues_news_sources(leagues_data, {"foot mercato"})
+    _filter_news_sources(worldcup_data, {"rmc sport", "l equipe", "l'equipe", "l’équipe"})
+    _filter_news_sources(champions_league_data, {"rmc sport", "l equipe", "l'equipe", "l’équipe"})
+    _filter_leagues_news_sources(leagues_data, {"rmc sport", "l equipe", "l'equipe", "l’équipe"})
     for dataset in (worldcup_data, champions_league_data):
         _sanitize_dataset(dataset)
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
@@ -51,7 +51,7 @@ def main() -> None:
 def _preserve_news_cache(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
     if not previous:
         return current
-    for section in ("world_cup_news", "france_news", "fff_news", "general_news", "all_news"):
+    for section in ("world_cup_news", "france_news", "general_news", "all_news"):
         if not current.get(section) and previous.get(section):
             current[section] = previous[section]
     for section in ("focused_team_news", "focused_club_news"):
@@ -77,7 +77,7 @@ def _preserve_leagues_news_cache(current: dict[str, Any], previous: dict[str, An
 
 
 def _filter_news_sources(dataset: dict[str, Any], allowed_sources: set[str]) -> None:
-    for section in ("world_cup_news", "france_news", "fff_news", "general_news", "all_news"):
+    for section in ("world_cup_news", "france_news", "general_news", "all_news"):
         articles = dataset.get(section)
         if isinstance(articles, list):
             dataset[section] = [article for article in articles if _news_source_allowed(article, allowed_sources)]
@@ -106,7 +106,7 @@ def _sanitize_dataset(dataset: dict[str, Any]) -> None:
         for section in ("squad", "starters", "substitutes"):
             details[section] = _clean_roster(details.get(section, []) or [])
     blocked_sources = {"espn", "bbc", "bbc sport", "google news"}
-    for section in ("world_cup_news", "france_news", "fff_news", "general_news", "all_news"):
+    for section in ("world_cup_news", "france_news", "general_news", "all_news"):
         articles = dataset.get(section)
         if isinstance(articles, list):
             dataset[section] = [article for article in articles if str(article.get("source", "")).casefold() not in blocked_sources]
@@ -286,7 +286,6 @@ def _merge_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[st
         "all_time_top_assisters",
         "world_cup_news",
         "france_news",
-        "fff_news",
         "general_news",
         "all_news",
         "focused_team_news",

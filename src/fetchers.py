@@ -272,24 +272,50 @@ MERCATO_LIVE_TIMEOUT_SECONDS = 6
 NEWS_PAGE_TIMEOUT_SECONDS = 6
 
 DEDICATED_WORLD_CUP_NEWS_SOURCES = [
-    {"source": "Foot Mercato", "url": "https://www.footmercato.net/international/coupe-du-monde/actu"},
-    {"source": "FIFA", "url": "https://www.fifa.com/fr/tournaments/mens/worldcup/canadamexicousa2026/news"},
+    {
+        "source": "L'Équipe",
+        "url": "https://www.lequipe.fr/Football/Coupe-du-monde/",
+        "keywords": ["coupe du monde", "mondial", "world cup", "fifa"],
+    },
+    {
+        "source": "RMC Sport",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/",
+        "keywords": ["coupe du monde", "mondial", "world cup", "fifa"],
+    },
 ]
-DEDICATED_FFF_FRANCE_NEWS_SOURCE = {
-    "source": "FFF",
-    "url": "https://www.fff.fr/selection/2-equipe-de-france/index.html",
-    "topic": "focus",
-}
 DEDICATED_CHAMPIONS_NEWS_SOURCES = [
-    {"source": "Foot Mercato", "url": "https://www.footmercato.net/europe/ligue-des-champions-uefa/actu"},
-    {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/Ligue-des-champions/"},
+    {
+        "source": "L'Équipe",
+        "url": "https://www.lequipe.fr/Football/Ligue-des-champions/",
+        "keywords": ["ligue des champions", "champions league", "uefa"],
+    },
+    {
+        "source": "RMC Sport",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/",
+        "keywords": ["ligue des champions", "champions league", "uefa"],
+    },
 ]
 LEAGUE_DEDICATED_NEWS_SOURCES = {
-    "ligue1": {"source": "Foot Mercato", "url": "https://www.footmercato.net/france/ligue-1/transfert"},
-    "seriea": {"source": "Foot Mercato", "url": "https://www.footmercato.net/italie/serie-a/transfert"},
-    "laliga": {"source": "Foot Mercato", "url": "https://www.footmercato.net/espagne/liga/transfert"},
-    "premierleague": {"source": "Foot Mercato", "url": "https://www.footmercato.net/angleterre/premier-league/transfert"},
-    "bundesliga": {"source": "Foot Mercato", "url": "https://www.footmercato.net/allemagne/bundesliga/transfert"},
+    "ligue1": [
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/ligue-1/", "keywords": ["ligue 1", "championnat de france"]},
+        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/ligue-1/", "keywords": ["ligue 1", "championnat de france"]},
+    ],
+    "seriea": [
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-italie/", "keywords": ["serie a", "italie", "championnat d italie"]},
+        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/serie-a/", "keywords": ["serie a", "italie", "championnat italien"]},
+    ],
+    "laliga": [
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-espagne/", "keywords": ["liga", "laliga", "espagne", "championnat d espagne"]},
+        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/liga/", "keywords": ["liga", "laliga", "espagne", "championnat espagnol"]},
+    ],
+    "premierleague": [
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-angleterre/", "keywords": ["premier league", "angleterre", "championnat d angleterre"]},
+        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/premier-league/", "keywords": ["premier league", "angleterre", "championnat anglais"]},
+    ],
+    "bundesliga": [
+        {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/championnat-d-allemagne/", "keywords": ["bundesliga", "allemagne", "championnat d allemagne"]},
+        {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/football/bundesliga/", "keywords": ["bundesliga", "allemagne", "championnat allemand"]},
+    ],
 }
 
 FOOTMERCATO_TEAM_PATHS = {
@@ -500,8 +526,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
-    world_cup_news = _safe_fetch("actualités Coupe du Monde Foot Mercato + FIFA", fetch_world_cup_news, errors)
-    fff_news = _safe_fetch("actualités FFF Équipe de France", fetch_fff_france_news, errors)
+    world_cup_news = _safe_fetch("actualités Coupe du Monde L’Équipe + RMC Sport", fetch_world_cup_news, errors)
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
     all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
@@ -533,11 +558,10 @@ def fetch_dashboard_data() -> dict[str, Any]:
         "all_time_top_assisters": all_time_top_assisters,
         "world_cup_news": world_cup_news,
         "france_news": news,
-        "fff_news": fff_news,
         "general_news": world_cup_news,
         "all_news": _dedupe_news(world_cup_news)[:12],
         "focused_team_news": focused_team_news,
-        "news_sources": [source["source"] for source in DEDICATED_WORLD_CUP_NEWS_SOURCES] + [DEDICATED_FFF_FRANCE_NEWS_SOURCE["source"]],
+        "news_sources": [source["source"] for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
         "sources": [
             {"name": "ESPN - classements", "url": ESPN_STANDINGS_URL},
             {"name": "ESPN - matchs", "url": ESPN_SCOREBOARD_URL},
@@ -548,7 +572,6 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "StatBunker - buteurs all-time", "url": STATBUNKER_ALL_TIME_SCORERS_URL},
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
             *[{"name": f"Actu Coupe du Monde - {source['source']}", "url": source["url"]} for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
-            {"name": "Actu Équipe de France - FFF", "url": DEDICATED_FFF_FRANCE_NEWS_SOURCE["url"]},
         ],
         "errors": errors,
     }
@@ -583,7 +606,7 @@ def fetch_champions_league_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_ASSISTS_URL, 1), errors)
-    news = _safe_fetch("actualités Ligue des Champions Foot Mercato + L'Équipe", fetch_champions_league_news, errors)
+    news = _safe_fetch("actualités Ligue des Champions L’Équipe + RMC Sport", fetch_champions_league_news, errors)
     football_news_pool: list[dict[str, Any]] = []
     focused_club_news: dict[str, list[dict[str, Any]]] = {}
     all_time_top_scorers = _safe_fetch(
@@ -671,13 +694,14 @@ def fetch_leagues_data() -> dict[str, Any]:
         "leagues": leagues,
         "big5_top_scorers": big5[:5],
         "all_news": _dedupe_news([article for league in leagues.values() for article in league.get("all_news", [])])[:40],
-        "news_sources": ["Foot Mercato"],
+        "news_sources": ["L’Équipe", "RMC Sport"],
         "sources": [
             {"name": f"ESPN - {config['name']}", "url": _league_standings_url(config)}
             for config in LEAGUE_CONFIGS.values()
         ] + [
-            {"name": f"Actu {config['name']} - Foot Mercato", "url": LEAGUE_DEDICATED_NEWS_SOURCES[key]["url"]}
+            {"name": f"Actu {config['name']} - {source['source']}", "url": source["url"]}
             for key, config in LEAGUE_CONFIGS.items()
+            for source in LEAGUE_DEDICATED_NEWS_SOURCES.get(key, [])
         ],
         "errors": errors,
     }
@@ -715,7 +739,7 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
         assists = _safe_fetch(f"passeurs {name} FotMob", lambda: fetch_fotmob_player_stats_from_url(fotmob_url, "assists"), errors)
     else:
         assists = _safe_fetch(f"photos passeurs {name} FotMob", lambda: enrich_players_with_fotmob_stats(assists, fotmob_url, "assists"), errors) or assists
-    league_news = _safe_fetch(f"actualités {name} Foot Mercato", lambda: fetch_league_news(key), errors)
+    league_news = _safe_fetch(f"actualités {name} L’Équipe + RMC Sport", lambda: fetch_league_news(key), errors)
     focused_club_news: dict[str, list[dict[str, Any]]] = {}
     clubs = sorted(teams_details.keys(), key=str.casefold)
     default_focus = _default_league_focus(key, clubs)
@@ -744,7 +768,7 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
             {"name": f"ESPN - statistiques {name}", "url": scorers_url},
             {"name": f"FotMob - {name}", "url": fotmob_url},
             {"name": "Foot Mercato - fiches clubs", "url": FOOTMERCATO_BASE_URL},
-            {"name": f"Actu {name} - Foot Mercato", "url": LEAGUE_DEDICATED_NEWS_SOURCES[key]["url"]},
+            *[{"name": f"Actu {name} - {source['source']}", "url": source["url"]} for source in LEAGUE_DEDICATED_NEWS_SOURCES.get(key, [])],
         ],
     }
 
@@ -1777,17 +1801,13 @@ def fetch_world_cup_news() -> list[dict[str, Any]]:
     return fetch_dedicated_news(DEDICATED_WORLD_CUP_NEWS_SOURCES, limit=6, per_source=3)
 
 
-def fetch_fff_france_news() -> list[dict[str, Any]]:
-    return fetch_dedicated_news([DEDICATED_FFF_FRANCE_NEWS_SOURCE], limit=8, per_source=8)
-
-
 def fetch_champions_league_news() -> list[dict[str, Any]]:
     return fetch_dedicated_news(DEDICATED_CHAMPIONS_NEWS_SOURCES, limit=6, per_source=3)
 
 
 def fetch_league_news(key: str) -> list[dict[str, Any]]:
-    source = LEAGUE_DEDICATED_NEWS_SOURCES.get(key)
-    return fetch_dedicated_news([source], limit=6, per_source=6) if source else []
+    sources = LEAGUE_DEDICATED_NEWS_SOURCES.get(key, [])
+    return fetch_dedicated_news(sources, limit=6, per_source=3) if sources else []
 
 
 def fetch_football_news_pool() -> list[dict[str, Any]]:
@@ -1986,6 +2006,8 @@ def _fetch_dedicated_source_page(source: dict[str, str]) -> list[dict[str, Any]]
         title, published = _parse_dedicated_news_text(_clean_text(link.get_text(" ")))
         if not _is_dedicated_article_link(article_url, title, source_name):
             continue
+        if not _matches_dedicated_news_topic(article_url, title, source):
+            continue
         key = _news_key(title, article_url)
         if key in seen:
             continue
@@ -2047,16 +2069,20 @@ def _is_dedicated_article_link(url: str, title: str, source_name: str) -> bool:
     if normalized in blocked or any(word in normalized for word in ("connexion", "abonnez", "newsletter", "voir toutes")):
         return False
     hostname = urlparse(url).netloc.replace("www.", "")
-    if source_name == "Foot Mercato":
-        return hostname.endswith("footmercato.net") and "/" in urlparse(url).path.strip("/")
+    path = urlparse(url).path
     if source_name == "L'Équipe":
-        return hostname.endswith("lequipe.fr") and "/Football/" in urlparse(url).path
-    if source_name == "FIFA":
-        return hostname.endswith("fifa.com") and "/news" in urlparse(url).path
-    if source_name == "FFF":
-        path = urlparse(url).path
-        return hostname == "fff.fr" and path not in {"", "/"}
+        return hostname.endswith("lequipe.fr") and "/Football/" in path
+    if source_name == "RMC Sport":
+        return hostname.endswith("rmcsport.bfmtv.com") and path.startswith("/football/")
     return True
+
+
+def _matches_dedicated_news_topic(url: str, title: str, source: dict[str, Any]) -> bool:
+    keywords = [_normalize_news_text(str(item)) for item in source.get("keywords", [])]
+    if not keywords:
+        return True
+    haystack = _normalize_news_text(f"{title} {urlparse(url).path.replace('-', ' ')}")
+    return any(keyword and keyword in haystack for keyword in keywords)
 
 
 def _news_article(source: str, url: str, title: str, published: str = "", topic_type: str = "competition") -> dict[str, Any]:

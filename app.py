@@ -25,7 +25,7 @@ except ImportError:
     send_file = None
 
 from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, OUTPUT_HTML
-from src.fetchers import fetch_champions_league_news, fetch_fff_france_news, fetch_league_news, fetch_world_cup_news
+from src.fetchers import fetch_champions_league_news, fetch_league_news, fetch_world_cup_news
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
@@ -81,12 +81,7 @@ def refresh_news_payload(competition: str, focus: str, league: str = "") -> dict
     else:
         data = _read_json(CACHE_FILE, {})
         live = fetch_world_cup_news()
-        fff_live = fetch_fff_france_news()
         cached = data.get("general_news") or data.get("all_news") or data.get("world_cup_news") or []
-        fff_cached = data.get("fff_news") or []
-        articles = _dedupe_articles(live or cached)[:6]
-        fff_articles = _dedupe_articles(fff_live or fff_cached)[:8]
-        return {"general": articles, "focused": {}, "all": articles, "fff_news": fff_articles}
     articles = _dedupe_articles(live or cached)[:6]
     return {"general": articles, "focused": {}, "all": articles}
 
@@ -149,7 +144,7 @@ def _balanced_articles(articles: list[dict[str, Any]], limit: int, max_per_sourc
 
 def _cached_news_sort_key(article: dict[str, Any]) -> tuple[int, str]:
     source = _normalize_football_text(article.get("source_name") or article.get("source") or "")
-    priority = ["foot mercato", "rmc sport", "l equipe", "eurosport", "france info", "maxifoot", "so foot", "livefoot", "france football", "goal"]
+    priority = ["l equipe", "rmc sport"]
     score = 40
     for index, name in enumerate(priority):
         if _normalize_football_text(name) in source:
@@ -164,16 +159,8 @@ def _is_allowed_cached_news(article: dict[str, Any]) -> bool:
     hostname = urlparse(link).netloc.replace("www.", "")
     blocked_sources = {"espn", "bbc", "bbc sport", "google news"}
     blocked_domains = ("espn.com", "bbc.", "bbc.co.uk", "news.google.")
-    allowed_sources = {
-        "france info", "rmc sport", "l equipe", "l equipe", "goal com", "goal france",
-        "eurosport", "eurosport france", "foot mercato", "so foot", "maxifoot",
-        "livefoot", "france football", "le phoceen", "le phoceen", "fifa", "uefa"
-    }
-    allowed_domains = (
-        "francetvinfo.fr", "rmcsport.bfmtv.com", "lequipe.fr", "goal.com",
-        "eurosport.fr", "footmercato.net", "sofoot.com", "maxifoot.fr",
-        "livefoot.fr", "francefootball.fr", "lephoceen.fr", "fifa.com", "uefa.com"
-    )
+    allowed_sources = {"rmc sport", "l equipe", "l equipe"}
+    allowed_domains = ("rmcsport.bfmtv.com", "lequipe.fr")
     if source in blocked_sources or any(domain in link for domain in blocked_domains):
         return False
     source_allowed = source in allowed_sources or any(allowed in source for allowed in allowed_sources)
