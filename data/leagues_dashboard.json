@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-22T14:41:15+00:00",
+  "generated_at": "2026-05-22T14:52:09+00:00",
   "competition": "Championnats européens",
   "selected_league": "ligue1",
   "leagues": {
@@ -7,7 +7,7 @@
       "key": "ligue1",
       "name": "Ligue 1",
       "country": "France",
-      "generated_at": "2026-05-22T14:41:15+00:00",
+      "generated_at": "2026-05-22T14:52:09+00:00",
       "standings": [],
       "group_matches": [
         {
@@ -28,6 +28,8 @@
       "focused_club": "Paris Saint-Germain",
       "focused_club_next_match": null,
       "focused_club_news": {},
+      "general_news": [],
+      "all_news": [],
       "clubs": [
         "AS Monaco",
         "Lyon",
@@ -120,6 +122,10 @@
         {
           "name": "Foot Mercato - fiches clubs",
           "url": "https://www.footmercato.net"
+        },
+        {
+          "name": "Actu Ligue 1 - Foot Mercato",
+          "url": "https://www.footmercato.net/france/ligue-1/transfert"
         }
       ]
     },
@@ -127,7 +133,7 @@
       "key": "laliga",
       "name": "Liga",
       "country": "Espagne",
-      "generated_at": "2026-05-22T14:41:15+00:00",
+      "generated_at": "2026-05-22T14:52:09+00:00",
       "standings": [],
       "group_matches": [
         {
@@ -148,6 +154,8 @@
       "focused_club": "Real Madrid",
       "focused_club_next_match": null,
       "focused_club_news": {},
+      "general_news": [],
+      "all_news": [],
       "clubs": [
         "Atlético Madrid",
         "Barcelona",
@@ -240,6 +248,10 @@
         {
           "name": "Foot Mercato - fiches clubs",
           "url": "https://www.footmercato.net"
+        },
+        {
+          "name": "Actu Liga - Foot Mercato",
+          "url": "https://www.footmercato.net/espagne/liga/transfert"
         }
       ]
     },
@@ -247,7 +259,7 @@
       "key": "bundesliga",
       "name": "Bundesliga",
       "country": "Allemagne",
-      "generated_at": "2026-05-22T14:41:15+00:00",
+      "generated_at": "2026-05-22T14:52:09+00:00",
       "standings": [],
       "group_matches": [
         {
@@ -268,6 +280,8 @@
       "focused_club": "Bayern Munich",
       "focused_club_next_match": null,
       "focused_club_news": {},
+      "general_news": [],
+      "all_news": [],
       "clubs": [
         "Bayer Leverkusen",
         "Bayern Munich",
@@ -343,6 +357,10 @@
         {
           "name": "Foot Mercato - fiches clubs",
           "url": "https://www.footmercato.net"
+        },
+        {
+          "name": "Actu Bundesliga - Foot Mercato",
+          "url": "https://www.footmercato.net/allemagne/bundesliga/transfert"
         }
       ]
     },
@@ -350,7 +368,7 @@
       "key": "premierleague",
       "name": "Premier League",
       "country": "Angleterre",
-      "generated_at": "2026-05-22T14:41:15+00:00",
+      "generated_at": "2026-05-22T14:52:09+00:00",
       "standings": [],
       "group_matches": [
         {
@@ -371,6 +389,8 @@
       "focused_club": "Manchester City",
       "focused_club_next_match": null,
       "focused_club_news": {},
+      "general_news": [],
+      "all_news": [],
       "clubs": [
         "Arsenal",
         "Chelsea",
@@ -463,6 +483,10 @@
         {
           "name": "Foot Mercato - fiches clubs",
           "url": "https://www.footmercato.net"
+        },
+        {
+          "name": "Actu Premier League - Foot Mercato",
+          "url": "https://www.footmercato.net/angleterre/premier-league/transfert"
         }
       ]
     },
@@ -470,7 +494,7 @@
       "key": "seriea",
       "name": "Serie A",
       "country": "Italie",
-      "generated_at": "2026-05-22T14:41:15+00:00",
+      "generated_at": "2026-05-22T14:52:09+00:00",
       "standings": [],
       "group_matches": [
         {
@@ -491,6 +515,8 @@
       "focused_club": "Internazionale",
       "focused_club_next_match": null,
       "focused_club_news": {},
+      "general_news": [],
+      "all_news": [],
       "clubs": [
         "AC Milan",
         "Internazionale",
@@ -583,6 +609,10 @@
         {
           "name": "Foot Mercato - fiches clubs",
           "url": "https://www.footmercato.net"
+        },
+        {
+          "name": "Actu Serie A - Foot Mercato",
+          "url": "https://www.footmercato.net/italie/serie-a/transfert"
         }
       ]
     }
@@ -590,17 +620,7 @@
   "big5_top_scorers": [],
   "all_news": [],
   "news_sources": [
-    "France Info",
-    "RMC Sport",
-    "L'Équipe",
-    "Goal.com",
-    "Eurosport",
-    "Foot Mercato",
-    "SO FOOT",
-    "Maxifoot",
-    "LiveFoot",
-    "France Football",
-    "Le Phocéen"
+    "Foot Mercato"
   ],
   "sources": [
     {
@@ -624,60 +644,24 @@
       "url": "https://www.espn.com/soccer/standings/_/league/ita.1"
     },
     {
-      "name": "Actu football - France Info",
-      "url": "https://www.francetvinfo.fr/sports/foot/equipe-de-france.rss"
+      "name": "Actu Ligue 1 - Foot Mercato",
+      "url": "https://www.footmercato.net/france/ligue-1/transfert"
     },
     {
-      "name": "Actu football - RMC Sport",
-      "url": "https://rmcsport.bfmtv.com/rss/football/"
+      "name": "Actu Liga - Foot Mercato",
+      "url": "https://www.footmercato.net/espagne/liga/transfert"
     },
     {
-      "name": "Actu football - France Info",
-      "url": "https://www.francetvinfo.fr/sports/foot/coupe-du-monde.rss"
+      "name": "Actu Bundesliga - Foot Mercato",
+      "url": "https://www.footmercato.net/allemagne/bundesliga/transfert"
     },
     {
-      "name": "Actu football - RMC Sport",
-      "url": "https://rmcsport.bfmtv.com/rss/football/"
+      "name": "Actu Premier League - Foot Mercato",
+      "url": "https://www.footmercato.net/angleterre/premier-league/transfert"
     },
     {
-      "name": "Actu football - RMC Sport",
-      "url": "https://rmcsport.bfmtv.com/rss/football/"
-    },
-    {
-      "name": "Actu football - L'Équipe",
-      "url": "https://www.lequipe.fr/rss/actu_rss_Football.xml"
-    },
-    {
-      "name": "Actu football - Goal.com",
-      "url": "https://www.goal.com/feeds/fr/news?fmt=rss"
-    },
-    {
-      "name": "Actu football - Eurosport",
-      "url": "https://www.eurosport.fr/rss.xml"
-    },
-    {
-      "name": "Actu football - Foot Mercato",
-      "url": "https://www.footmercato.net/rss.xml"
-    },
-    {
-      "name": "Actu football - SO FOOT",
-      "url": "https://www.sofoot.com/rss"
-    },
-    {
-      "name": "Actu football - Maxifoot",
-      "url": "https://www.maxifoot.fr/rss.xml"
-    },
-    {
-      "name": "Actu football - LiveFoot",
-      "url": "https://www.livefoot.fr/rss.xml"
-    },
-    {
-      "name": "Actu football - France Football",
-      "url": "https://www.francefootball.fr/rss/actu_rss.xml"
-    },
-    {
-      "name": "Actu football - Le Phocéen",
-      "url": "https://www.lephoceen.fr/rss"
+      "name": "Actu Serie A - Foot Mercato",
+      "url": "https://www.footmercato.net/italie/serie-a/transfert"
     }
   ],
   "errors": [

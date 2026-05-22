@@ -267,6 +267,23 @@ FOOTMERCATO_TIMEOUT_SECONDS = 3
 FOOTMERCATO_BASE_URL = "https://www.footmercato.net"
 MERCATO_LIVE_URL = "https://www.mercatolive.fr/"
 MERCATO_LIVE_TIMEOUT_SECONDS = 6
+NEWS_PAGE_TIMEOUT_SECONDS = 6
+
+DEDICATED_WORLD_CUP_NEWS_SOURCES = [
+    {"source": "Foot Mercato", "url": "https://www.footmercato.net/international/coupe-du-monde/actu"},
+    {"source": "FIFA", "url": "https://www.fifa.com/fr/tournaments/mens/worldcup/canadamexicousa2026/news"},
+]
+DEDICATED_CHAMPIONS_NEWS_SOURCES = [
+    {"source": "Foot Mercato", "url": "https://www.footmercato.net/europe/ligue-des-champions-uefa/actu"},
+    {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/Ligue-des-champions/"},
+]
+LEAGUE_DEDICATED_NEWS_SOURCES = {
+    "ligue1": {"source": "Foot Mercato", "url": "https://www.footmercato.net/france/ligue-1/transfert"},
+    "seriea": {"source": "Foot Mercato", "url": "https://www.footmercato.net/italie/serie-a/transfert"},
+    "laliga": {"source": "Foot Mercato", "url": "https://www.footmercato.net/espagne/liga/transfert"},
+    "premierleague": {"source": "Foot Mercato", "url": "https://www.footmercato.net/angleterre/premier-league/transfert"},
+    "bundesliga": {"source": "Foot Mercato", "url": "https://www.footmercato.net/allemagne/bundesliga/transfert"},
+}
 
 FOOTMERCATO_TEAM_PATHS = {
     "france": "/selection/france/",
@@ -476,13 +493,12 @@ def fetch_dashboard_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
-    world_cup_news = _safe_fetch("actualités Coupe du Monde", fetch_world_cup_news, errors)
-    news = _safe_fetch("actualités Équipe de France", fetch_france_news, errors)
-    football_news_pool = _safe_fetch("actualités football élargies", fetch_football_news_pool, errors)
+    world_cup_news = _safe_fetch("actualités Coupe du Monde Foot Mercato + FIFA", fetch_world_cup_news, errors)
+    news: list[dict[str, Any]] = []
+    football_news_pool: list[dict[str, Any]] = []
     all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
     all_time_top_assisters: list[dict[str, Any]] = []
-    focus_entities = sorted(teams_details.keys())
-    focused_team_news = build_focused_news(focus_entities, [*news, *world_cup_news, *football_news_pool])
+    focused_team_news: dict[str, list[dict[str, Any]]] = {}
 
     if not scorers:
         scorers = _safe_fetch("buteurs FotMob", lambda: fetch_fotmob_player_stats("goals"), errors)
@@ -510,9 +526,9 @@ def fetch_dashboard_data() -> dict[str, Any]:
         "world_cup_news": world_cup_news,
         "france_news": news,
         "general_news": world_cup_news,
-        "all_news": _dedupe_news([*world_cup_news, *news, *football_news_pool])[:60],
+        "all_news": _dedupe_news(world_cup_news)[:12],
         "focused_team_news": focused_team_news,
-        "news_sources": _news_source_names([*WORLD_CUP_NEWS_FEEDS, *FRANCE_NEWS_FEEDS, *FOOTBALL_NEWS_FEEDS]),
+        "news_sources": [source["source"] for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
         "sources": [
             {"name": "ESPN - classements", "url": ESPN_STANDINGS_URL},
             {"name": "ESPN - matchs", "url": ESPN_SCOREBOARD_URL},
@@ -522,9 +538,7 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "Foot Mercato - fiches équipes", "url": FOOTMERCATO_BASE_URL},
             {"name": "StatBunker - buteurs all-time", "url": STATBUNKER_ALL_TIME_SCORERS_URL},
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
-            *[{"name": f"Actu Coupe du Monde - {feed['source']}", "url": feed["url"]} for feed in WORLD_CUP_NEWS_FEEDS],
-            *[{"name": f"Actu France - {feed['source']}", "url": feed["url"]} for feed in FRANCE_NEWS_FEEDS],
-            *[{"name": f"Actu football - {feed['source']}", "url": feed["url"]} for feed in FOOTBALL_NEWS_FEEDS],
+            *[{"name": f"Actu Coupe du Monde - {source['source']}", "url": source["url"]} for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
         ],
         "errors": errors,
     }
@@ -559,9 +573,9 @@ def fetch_champions_league_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_ASSISTS_URL, 1), errors)
-    news = _safe_fetch("actualités Ligue des Champions", fetch_champions_league_news, errors)
-    football_news_pool = _safe_fetch("actualités football élargies", fetch_football_news_pool, errors)
-    focused_club_news = build_focused_news(sorted(teams_details.keys()), [*news, *football_news_pool])
+    news = _safe_fetch("actualités Ligue des Champions Foot Mercato + L'Équipe", fetch_champions_league_news, errors)
+    football_news_pool: list[dict[str, Any]] = []
+    focused_club_news: dict[str, list[dict[str, Any]]] = {}
     all_time_top_scorers = _safe_fetch(
         "buteurs all-time Ligue des Champions UEFA",
         fetch_champions_league_all_time_top_scorers,
@@ -607,9 +621,9 @@ def fetch_champions_league_data() -> dict[str, Any]:
         "world_cup_news": news,
         "france_news": [],
         "general_news": news,
-        "all_news": _dedupe_news([*news, *football_news_pool])[:60],
+        "all_news": _dedupe_news(news)[:12],
         "focused_club_news": focused_club_news,
-        "news_sources": _news_source_names([*CHAMPIONS_LEAGUE_NEWS_FEEDS, *FOOTBALL_NEWS_FEEDS]),
+        "news_sources": [source["source"] for source in DEDICATED_CHAMPIONS_NEWS_SOURCES],
         "sources": [
             {"name": "ESPN - classement Ligue des Champions", "url": UCL_ESPN_STANDINGS_URL},
             {"name": "ESPN - matchs Ligue des Champions", "url": UCL_ESPN_SCOREBOARD_URL},
@@ -617,8 +631,7 @@ def fetch_champions_league_data() -> dict[str, Any]:
             {"name": "FotMob - Ligue des Champions", "url": UCL_FOTMOB_STATS_URL},
             {"name": "Foot Mercato - fiches clubs", "url": FOOTMERCATO_BASE_URL},
             {"name": "UEFA - buteurs all-time Ligue des Champions", "url": UEFA_UCL_ALL_TIME_SCORERS_URL},
-            *[{"name": f"Actu Ligue des Champions - {feed['source']}", "url": feed["url"]} for feed in CHAMPIONS_LEAGUE_NEWS_FEEDS],
-            *[{"name": f"Actu football - {feed['source']}", "url": feed["url"]} for feed in FOOTBALL_NEWS_FEEDS],
+            *[{"name": f"Actu Ligue des Champions - {source['source']}", "url": source["url"]} for source in DEDICATED_CHAMPIONS_NEWS_SOURCES],
         ],
         "errors": errors,
     }
@@ -629,7 +642,7 @@ def fetch_leagues_data() -> dict[str, Any]:
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
     errors: list[str] = []
     leagues: dict[str, Any] = {}
-    football_news_pool = _safe_fetch("actualités football championnats", fetch_football_news_pool, errors)
+    football_news_pool: list[dict[str, Any]] = []
 
     for key, config in LEAGUE_CONFIGS.items():
         league = fetch_single_league_data(key, config, football_news_pool, errors, generated_at)
@@ -647,13 +660,14 @@ def fetch_leagues_data() -> dict[str, Any]:
         "selected_league": "ligue1",
         "leagues": leagues,
         "big5_top_scorers": big5[:5],
-        "all_news": football_news_pool[:80],
-        "news_sources": _news_source_names(FOOTBALL_NEWS_FEEDS),
+        "all_news": _dedupe_news([article for league in leagues.values() for article in league.get("all_news", [])])[:40],
+        "news_sources": ["Foot Mercato"],
         "sources": [
             {"name": f"ESPN - {config['name']}", "url": _league_standings_url(config)}
             for config in LEAGUE_CONFIGS.values()
         ] + [
-            {"name": f"Actu football - {feed['source']}", "url": feed["url"]} for feed in FOOTBALL_NEWS_FEEDS
+            {"name": f"Actu {config['name']} - Foot Mercato", "url": LEAGUE_DEDICATED_NEWS_SOURCES[key]["url"]}
+            for key, config in LEAGUE_CONFIGS.items()
         ],
         "errors": errors,
     }
@@ -691,7 +705,8 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
         assists = _safe_fetch(f"passeurs {name} FotMob", lambda: fetch_fotmob_player_stats_from_url(fotmob_url, "assists"), errors)
     else:
         assists = _safe_fetch(f"photos passeurs {name} FotMob", lambda: enrich_players_with_fotmob_stats(assists, fotmob_url, "assists"), errors) or assists
-    focused_club_news = build_focused_news(sorted(teams_details.keys()), football_news_pool, limit=12)
+    league_news = _safe_fetch(f"actualités {name} Foot Mercato", lambda: fetch_league_news(key), errors)
+    focused_club_news: dict[str, list[dict[str, Any]]] = {}
     clubs = sorted(teams_details.keys(), key=str.casefold)
     default_focus = _default_league_focus(key, clubs)
     return {
@@ -709,6 +724,8 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
         "focused_club": default_focus,
         "focused_club_next_match": _next_match_from_groups(matches, default_focus),
         "focused_club_news": focused_club_news,
+        "general_news": league_news,
+        "all_news": league_news,
         "clubs": clubs,
         "teams_details": teams_details,
         "sources": [
@@ -717,6 +734,7 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
             {"name": f"ESPN - statistiques {name}", "url": scorers_url},
             {"name": f"FotMob - {name}", "url": fotmob_url},
             {"name": "Foot Mercato - fiches clubs", "url": FOOTMERCATO_BASE_URL},
+            {"name": f"Actu {name} - Foot Mercato", "url": LEAGUE_DEDICATED_NEWS_SOURCES[key]["url"]},
         ],
     }
 
@@ -1742,19 +1760,24 @@ def enrich_players_with_known_country_flags(players: list[dict[str, Any]]) -> li
 
 
 def fetch_france_news() -> list[dict[str, Any]]:
-    return _fetch_news(FRANCE_NEWS_FEEDS, NEWS_KEYWORDS, limit=24)
+    return []
 
 
 def fetch_world_cup_news() -> list[dict[str, Any]]:
-    return _fetch_news(WORLD_CUP_NEWS_FEEDS, WORLD_CUP_KEYWORDS, WORLD_CUP_EXCLUDE_KEYWORDS, limit=24)
+    return fetch_dedicated_news(DEDICATED_WORLD_CUP_NEWS_SOURCES, limit=6, per_source=3)
 
 
 def fetch_champions_league_news() -> list[dict[str, Any]]:
-    return _fetch_news(CHAMPIONS_LEAGUE_NEWS_FEEDS, CHAMPIONS_LEAGUE_KEYWORDS, limit=24)
+    return fetch_dedicated_news(DEDICATED_CHAMPIONS_NEWS_SOURCES, limit=6, per_source=3)
+
+
+def fetch_league_news(key: str) -> list[dict[str, Any]]:
+    source = LEAGUE_DEDICATED_NEWS_SOURCES.get(key)
+    return fetch_dedicated_news([source], limit=6, per_source=6) if source else []
 
 
 def fetch_football_news_pool() -> list[dict[str, Any]]:
-    return _fetch_news(FOOTBALL_NEWS_FEEDS, FOOTBALL_NEWS_KEYWORDS, limit=80)
+    return []
 
 
 def fetch_all_time_top_scorers() -> list[dict[str, Any]]:
@@ -1908,6 +1931,161 @@ def _clean_text(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
 
 
+def fetch_dedicated_news(sources: list[dict[str, str]], limit: int = 6, per_source: int = 3) -> list[dict[str, Any]]:
+    collected: list[dict[str, Any]] = []
+    pools: list[list[dict[str, Any]]] = []
+    for source in sources:
+        if not source:
+            continue
+        pool = _fetch_dedicated_source_page(source)
+        pools.append(pool)
+        collected.extend(_enrich_news_article(article) for article in pool[:per_source])
+    if len(collected) < limit:
+        existing = {_news_key(str(article.get("title", "")), str(article.get("url", ""))) for article in collected}
+        for pool in pools:
+            for article in pool[per_source:]:
+                key = _news_key(str(article.get("title", "")), str(article.get("url", "")))
+                if key in existing:
+                    continue
+                collected.append(_enrich_news_article(article))
+                existing.add(key)
+                if len(collected) >= limit:
+                    break
+            if len(collected) >= limit:
+                break
+    return _dedupe_news(collected)[:limit]
+
+
+def _fetch_dedicated_source_page(source: dict[str, str]) -> list[dict[str, Any]]:
+    url = source.get("url", "")
+    source_name = source.get("source", "Source")
+    try:
+        html = _download_news_page(url)
+    except ValueError:
+        return []
+    soup = BeautifulSoup(html, "html.parser")
+    articles: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for link in soup.find_all("a", href=True):
+        href = str(link.get("href") or "")
+        article_url = urljoin(url, href)
+        title, published = _parse_dedicated_news_text(_clean_text(link.get_text(" ")))
+        if not _is_dedicated_article_link(article_url, title, source_name):
+            continue
+        key = _news_key(title, article_url)
+        if key in seen:
+            continue
+        seen.add(key)
+        articles.append(_news_article(source_name, article_url, title, published, source.get("topic", "competition")))
+        if len(articles) >= 12:
+            break
+    return articles
+
+
+def _download_news_page(url: str) -> str:
+    try:
+        response = requests.get(url, headers=REQUEST_HEADERS, timeout=NEWS_PAGE_TIMEOUT_SECONDS)
+        if response.status_code == 200 and response.text.strip():
+            return response.text
+    except requests.RequestException:
+        pass
+    raise ValueError(f"actualités indisponibles pour {url}")
+
+
+def _parse_dedicated_news_text(text: str) -> tuple[str, str]:
+    text = _clean_text(text)
+    patterns = (
+        r"^(.+?)\s+(\d{1,2}:\d{2})\s+-\s+.+$",
+        r"^(.+?)\s+(\d{1,2}/\d{1,2})\s+-\s+.+$",
+        r"^(.+?)\s+(\d{1,2}/\d{1,2}/\d{2,4})\s+-\s+.+$",
+    )
+    for pattern in patterns:
+        match = re.match(pattern, text)
+        if match:
+            return _clean_text(match.group(1)), _dedicated_date_to_iso(match.group(2))
+    return text, ""
+
+
+def _dedicated_date_to_iso(value: str) -> str:
+    now = datetime.now(timezone.utc)
+    if re.match(r"^\d{1,2}:\d{2}$", value):
+        hour, minute = [int(part) for part in value.split(":")]
+        return now.replace(hour=hour, minute=minute, second=0, microsecond=0).isoformat(timespec="seconds")
+    match = re.match(r"^(\d{1,2})/(\d{1,2})(?:/(\d{2,4}))?$", value)
+    if match:
+        day = int(match.group(1))
+        month = int(match.group(2))
+        year = int(match.group(3) or now.year)
+        if year < 100:
+            year += 2000
+        try:
+            return datetime(year, month, day, tzinfo=timezone.utc).isoformat(timespec="seconds")
+        except ValueError:
+            return ""
+    return ""
+
+
+def _is_dedicated_article_link(url: str, title: str, source_name: str) -> bool:
+    if not title or len(title) < 18:
+        return False
+    normalized = _normalize_news_text(title)
+    blocked = {"accueil", "contact", "mentions legales", "archives", "voir plus", "programme tv", "classements"}
+    if normalized in blocked or any(word in normalized for word in ("connexion", "abonnez", "newsletter")):
+        return False
+    hostname = urlparse(url).netloc.replace("www.", "")
+    if source_name == "Foot Mercato":
+        return hostname.endswith("footmercato.net") and "/" in urlparse(url).path.strip("/")
+    if source_name == "L'Équipe":
+        return hostname.endswith("lequipe.fr") and "/Football/" in urlparse(url).path
+    if source_name == "FIFA":
+        return hostname.endswith("fifa.com") and "/news" in urlparse(url).path
+    return True
+
+
+def _news_article(source: str, url: str, title: str, published: str = "", topic_type: str = "competition") -> dict[str, Any]:
+    fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return {
+        "title": _shorten(title, 150),
+        "source": source,
+        "source_name": source,
+        "source_logo": _source_logo_url(source, url),
+        "date": published or fetched_at,
+        "published_at": published or fetched_at,
+        "summary": "",
+        "url": url,
+        "image_url": "",
+        "topic_type": topic_type,
+        "related_team_or_club": "",
+        "fetched_at": fetched_at,
+    }
+
+
+def _enrich_news_article(article: dict[str, Any]) -> dict[str, Any]:
+    try:
+        html = _download_news_page(str(article.get("url", "")))
+    except ValueError:
+        return article
+    soup = BeautifulSoup(html, "html.parser")
+    description = _meta_content(soup, ("description", "og:description", "twitter:description"))
+    image = _meta_content(soup, ("og:image", "twitter:image"))
+    published = _meta_content(soup, ("article:published_time", "date", "pubdate"))
+    return {
+        **article,
+        "summary": _shorten(_strip_html(description), 210) if description else article.get("summary", ""),
+        "image_url": image or article.get("image_url", ""),
+        "date": published or article.get("date", ""),
+        "published_at": published or article.get("published_at", ""),
+    }
+
+
+def _meta_content(soup: BeautifulSoup, names: tuple[str, ...]) -> str:
+    for name in names:
+        node = soup.find("meta", attrs={"property": name}) or soup.find("meta", attrs={"name": name}) or soup.find("meta", attrs={"itemprop": name})
+        if node and node.get("content"):
+            return _clean_text(str(node.get("content")))
+    return ""
+
+
 def _fetch_news(
     feeds: list[dict[str, Any]],
     keywords: tuple[str, ...],
@@ -2031,8 +2209,8 @@ def _balanced_news(articles: list[dict[str, Any]], limit: int, max_per_source: i
     return selected
 
 
-def _news_sort_key(article: dict[str, Any]) -> tuple[int, str]:
-    return (_news_source_score(article), str(article.get("date") or article.get("published_at") or ""))
+def _news_sort_key(article: dict[str, Any]) -> tuple[str, int]:
+    return (str(article.get("date") or article.get("published_at") or ""), _news_source_score(article))
 
 
 def _news_source_key(article: dict[str, Any]) -> str:

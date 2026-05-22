@@ -19,6 +19,9 @@ def main() -> None:
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
     mercato_items = fetch_mercato_live()
     mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
+    _filter_news_sources(worldcup_data, {"foot mercato", "fifa"})
+    _filter_news_sources(champions_league_data, {"foot mercato", "l'equipe", "l’équipe"})
+    _filter_leagues_news_sources(leagues_data, {"foot mercato"})
     for dataset in (worldcup_data, champions_league_data):
         _sanitize_dataset(dataset)
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
@@ -71,6 +74,31 @@ def _preserve_leagues_news_cache(current: dict[str, Any], previous: dict[str, An
         if not league.get("all_news") and previous_league.get("all_news"):
             league["all_news"] = previous_league["all_news"]
     return current
+
+
+def _filter_news_sources(dataset: dict[str, Any], allowed_sources: set[str]) -> None:
+    for section in ("world_cup_news", "france_news", "general_news", "all_news"):
+        articles = dataset.get(section)
+        if isinstance(articles, list):
+            dataset[section] = [article for article in articles if _news_source_allowed(article, allowed_sources)]
+    for section in ("focused_team_news", "focused_club_news"):
+        focused = dataset.get(section)
+        if isinstance(focused, dict):
+            dataset[section] = {key: [article for article in value if _news_source_allowed(article, allowed_sources)] for key, value in focused.items()}
+
+
+def _filter_leagues_news_sources(dataset: dict[str, Any], allowed_sources: set[str]) -> None:
+    articles = dataset.get("all_news")
+    if isinstance(articles, list):
+        dataset["all_news"] = [article for article in articles if _news_source_allowed(article, allowed_sources)]
+    for league in (dataset.get("leagues") or {}).values():
+        _filter_news_sources(league, allowed_sources)
+
+
+def _news_source_allowed(article: dict[str, Any], allowed_sources: set[str]) -> bool:
+    source = str(article.get("source_name") or article.get("source") or "").casefold()
+    normalized = source.replace("é", "e").replace("è", "e").replace("ê", "e").replace("’", "'")
+    return any(allowed in normalized for allowed in allowed_sources)
 
 
 def _sanitize_dataset(dataset: dict[str, Any]) -> None:

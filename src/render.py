@@ -842,7 +842,7 @@ def _page(data: dict[str, Any]) -> str:
     {_section_head("Meilleurs passeurs", "Top 5 uniquement, avec photo si la source la fournit.")}
     <section class="leaders">{_player_cards(assists, "passes")}</section>
 
-    {_dynamic_news_section("Actualité Coupe du Monde", "Actus générales + pays choisi dans le focus. Six articles maximum, triés par date.", "worldcupNewsBoard")}
+    {_dynamic_news_section("Actualité Coupe du Monde", "Six derniers articles Foot Mercato et FIFA, triés par fraîcheur.", "worldcupNewsBoard")}
 
     {_section_head("Arbre à élimination directe", "Bracket officiel horizontal : les deux ailes convergent vers la finale au centre.")}
     {render_worldcup_bracket(knockout)}
@@ -989,7 +989,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.")}
       <section class="leaders">{_player_cards(assists, "passes", prefer_country_flag=True)}</section>
 
-      {_dynamic_news_section("Actualité Ligue des Champions", "Actus générales + club choisi dans le focus. Six articles maximum, triés par date.", "championsNewsBoard")}
+      {_dynamic_news_section("Actualité Ligue des Champions", "Six derniers articles Foot Mercato et L’Équipe, triés par fraîcheur.", "championsNewsBoard")}
 
       {_section_head("Phase finale", "Bracket Ligue des Champions affiché dès disponibilité des matchs à élimination directe.")}
       {render_champions_league_bracket(knockout)}
@@ -1052,7 +1052,7 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 du championnat sélectionné, si disponible.")}
       <section class="leaders" id="leagueTopAssists"></section>
 
-      {_dynamic_news_section("Actualité club", "Six derniers articles liés au club choisi dans le focus.", "leaguesNewsBoard")}
+      {_dynamic_news_section("Actualité championnat", "Six derniers articles Foot Mercato liés au championnat sélectionné.", "leaguesNewsBoard")}
 
       {_section_head("Classement du championnat", "Clubs, matchs joués, victoires, nuls, défaites, différence et points.")}
       <section class="grid standings-wide" id="leagueStandings"></section>
@@ -2060,16 +2060,9 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
     }}
 
     function newsSelection(kind) {{
-      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : kind === 'leagues' ? 'leagueClubSelect' : 'championsFocusSelect');
-      const focus = select ? select.value : '';
       const base = NEWS_DATA[kind] || {{general: [], focused: {{}}, all: []}};
       const source = kind === 'leagues' && base.byLeague ? (base.byLeague[selectedLeagueKey()] || base) : base;
-      const focusedDirect = source.focused && source.focused[focus] ? source.focused[focus] : [];
-      const focusedFromPool = (source.all || []).filter(article => focus && articleMatchesFocus(article, focus));
-      const focused = balancedArticles([...focusedDirect, ...focusedFromPool], 3);
-      const focusedKeys = new Set(focused.map(article => normalizeNewsText(article.title || article.url || '').slice(0, 90)));
-      const general = balancedArticles(source.general || source.all || [], 6).filter(article => !focusedKeys.has(normalizeNewsText(article.title || article.url || '').slice(0, 90))).slice(0, 3);
-      return [...focused, ...general].slice(0, 6);
+      return balancedArticles([...(source.general || []), ...(source.all || [])], 6);
     }}
 
     function renderNewsBoard(kind) {{
@@ -2083,7 +2076,7 @@ def _news_script(worldcup_data: dict[str, Any], champions_data: dict[str, Any] |
 
     async function refreshNews(kind) {{
       const board = document.getElementById(kind === 'worldcup' ? 'worldcupNewsBoard' : kind === 'leagues' ? 'leaguesNewsBoard' : 'championsNewsBoard');
-      const select = document.getElementById(kind === 'worldcup' ? 'worldcupFocusSelect' : kind === 'leagues' ? 'leagueClubSelect' : 'championsFocusSelect');
+      const select = document.getElementById(kind === 'leagues' ? 'leagueSelect' : '');
       if (board) board.innerHTML = '<div class="empty">Actualisation des actualités...</div>';
       try {{
         const params = new URLSearchParams({{competition: kind, focus: select ? select.value : ''}});

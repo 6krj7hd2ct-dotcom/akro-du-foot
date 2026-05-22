@@ -25,6 +25,7 @@ except ImportError:
     send_file = None
 
 from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, OUTPUT_HTML
+from src.fetchers import fetch_champions_league_news, fetch_league_news, fetch_world_cup_news
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
@@ -67,22 +68,22 @@ if app and _background_updates_enabled():
 
 def refresh_news_payload(competition: str, focus: str, league: str = "") -> dict[str, Any]:
     key = str(competition or "").casefold()
+    live: list[dict[str, Any]] = []
     if "league" in key and "champ" not in key:
         root = _read_json(LEAGUES_CACHE_FILE, {})
         data = (root.get("leagues") or {}).get(league, {}) if league else root
-        pool = _dedupe_articles([*(data.get("all_news") or []), *(root.get("all_news") or [])])
-        general_seed = [article for article in pool if _article_matches_focus(article, data.get("name", ""))] or pool
+        live = fetch_league_news(league) if league else []
+        cached = data.get("all_news") or root.get("all_news") or []
+    elif "champ" in key:
+        data = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
+        live = fetch_champions_league_news()
+        cached = data.get("general_news") or data.get("all_news") or data.get("world_cup_news") or []
     else:
-        data = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}) if "champ" in key else _read_json(CACHE_FILE, {})
-        pool = _dedupe_articles([*(data.get("all_news") or []), *(data.get("france_news") or []), *(data.get("world_cup_news") or [])])
-        general_seed = [*(data.get("general_news") or []), *(data.get("world_cup_news") or [])]
-    general = _balanced_articles(_dedupe_articles(general_seed), 3)
-    focused_direct = []
-    if focus:
-        focused_map = data.get("focused_club_news") or data.get("focused_team_news") or {}
-        focused_direct = focused_map.get(focus, []) if isinstance(focused_map, dict) else []
-    focused = _balanced_articles(_dedupe_articles([*focused_direct, *[article for article in pool if _article_matches_focus(article, focus)]]), 3)
-    return {"general": general, "focused": {focus: focused} if focus else {}, "all": _balanced_articles(pool, 48)}
+        data = _read_json(CACHE_FILE, {})
+        live = fetch_world_cup_news()
+        cached = data.get("general_news") or data.get("all_news") or data.get("world_cup_news") or []
+    articles = _dedupe_articles(live or cached)[:6]
+    return {"general": articles, "focused": {}, "all": articles}
 
 
 def _article_matches_focus(article: dict[str, Any], focus: str) -> bool:
