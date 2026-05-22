@@ -133,16 +133,10 @@ def _page(data: dict[str, Any]) -> str:
         linear-gradient(135deg, rgba(5,12,35,0.96), rgba(17,33,77,0.82)),
         radial-gradient(circle at 75% 35%, rgba(132,173,255,0.32), transparent 14rem);
     }}
-    .hero.champions::after {{
-      opacity: 0.30;
-      background:
-        radial-gradient(circle at 50% 12%, rgba(255,255,255,0.92) 0 10%, transparent 11%),
-        radial-gradient(circle at 50% 50%, transparent 0 42%, rgba(183,209,255,0.88) 43% 51%, transparent 52%);
-      clip-path: polygon(50% 0, 58% 28%, 88% 28%, 64% 46%, 75% 78%, 50% 58%, 25% 78%, 36% 46%, 12% 28%, 42% 28%);
-    }}
+    .hero.champions::after {{ display: none; }}
     .leagues-hero::after {{ display: none; }}
-    .hero-logo-mark {{ position: absolute; z-index: 0; right: clamp(26px, 8vw, 110px); top: 48px; width: clamp(126px, 20vw, 230px); max-height: 230px; object-fit: contain; opacity: 0.42; filter: drop-shadow(0 0 30px rgba(245,201,107,0.28)); pointer-events: none; }}
-    .hero.champions .hero-logo-mark {{ opacity: 0.34; filter: drop-shadow(0 0 34px rgba(132,173,255,0.38)); }}
+    .hero-logo-mark {{ position: absolute; z-index: 0; right: clamp(26px, 8vw, 110px); top: 48px; width: clamp(126px, 20vw, 230px); max-height: 230px; object-fit: contain; opacity: 0.92; filter: drop-shadow(0 0 30px rgba(245,201,107,0.30)); pointer-events: none; }}
+    .hero.champions .hero-logo-mark {{ opacity: 0.92; filter: drop-shadow(0 0 34px rgba(132,173,255,0.40)); }}
     .league-focus-backdrop {{
       position: absolute;
       right: clamp(22px, 7vw, 96px);
@@ -227,6 +221,7 @@ def _page(data: dict[str, Any]) -> str:
       transform-origin: bottom;
     }}
     .hero::after {{
+      display: none;
       content: "";
       position: absolute;
       right: clamp(26px, 8vw, 110px);
@@ -603,7 +598,7 @@ def _page(data: dict[str, Any]) -> str:
       .global-controls {{ justify-content: flex-start; }}
       .hero {{ min-height: 430px; border-radius: 14px; }}
       .hero::after {{ right: 18px; top: auto; bottom: 28px; opacity: 0.30; }}
-      .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; width: clamp(82px, 23vw, 128px); opacity: 0.24; }}
+      .hero-logo-mark {{ right: 18px; top: auto; bottom: 30px; width: clamp(82px, 23vw, 128px); opacity: 0.58; }}
       .league-focus-backdrop {{ right: 20px; top: auto; bottom: 26px; opacity: 0.24; width: clamp(110px, 34vw, 170px); }}
       .section-head {{ align-items: start; flex-direction: column; }}
       .section-note {{ text-align: left; }}
@@ -669,7 +664,7 @@ def _page(data: dict[str, Any]) -> str:
     {_tabs_nav(champions_data, leagues_data)}
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
-      <img class="hero-logo-mark" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_(Jules_Rimet_Trophy)_at_National_Football_Museum,_Manchester_01.jpg" alt="" loading="lazy" onerror="this.remove()">
+      <img class="hero-logo-mark" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_at_National_Football_Museum,_Manchester_02.jpg" alt="" loading="lazy" onerror="this.remove()">
       <div class="hero-content">
         <div class="kicker"><span class="ball"></span> Coupe du Monde 2026</div>
         <h1>{escape(data.get("competition", "Coupe du Monde 2026"))}</h1>
@@ -1433,7 +1428,7 @@ def render_worldcup_bracket(rounds: list[dict[str, Any]]) -> str:
         {"name": "8es", "matches": right16},
         {"name": "16es", "matches": right32},
     ]
-    return _bracket_shell(left, right, final, "Coupe du Monde FIFA 2026", third, logo_url="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_(Jules_Rimet_Trophy)_at_National_Football_Museum,_Manchester_01.jpg")
+    return _bracket_shell(left, right, final, "Coupe du Monde FIFA 2026", third, logo_url="https://commons.wikimedia.org/wiki/Special:Redirect/file/FIFA_World_Cup_Trophy_at_National_Football_Museum,_Manchester_02.jpg")
 
 
 def render_champions_league_bracket(rounds: list[dict[str, Any]]) -> str:
@@ -2366,11 +2361,201 @@ def _team_script(teams_details: dict[str, Any], matches: list[dict[str, Any]]) -
   </script>"""
 
 
+
+def _honours_entry(name: str, country: str, titles: int, years: str = "", asset_url: str = "") -> dict[str, Any]:
+    return {
+        "name": name,
+        "country": country,
+        "flag_url": asset_url or _known_club_logo(name),
+        "value": str(titles),
+        "years": years,
+    }
+
+
+def _ranked_honours(title: str, empty: str, entries: list[dict[str, Any]]) -> dict[str, Any]:
+    sorted_entries = sorted(entries, key=lambda item: int(item.get("value") or 0), reverse=True)
+    ranked_entries = []
+    previous_titles: int | None = None
+    rank = 0
+    for index, entry in enumerate(sorted_entries, start=1):
+        titles = int(entry.get("value") or 0)
+        if titles != previous_titles:
+            rank = index
+            previous_titles = titles
+        ranked_entries.append({**entry, "rank": rank})
+    return {"players": ranked_entries, "title": title, "empty": empty, "label": "titres"}
+
+
+def _country_asset(code: str) -> str:
+    return f"https://a.espncdn.com/i/teamlogos/countries/500/{code}.png"
+
+
+def _honours_lists() -> dict[str, Any]:
+    return {
+        "worldcup-history": _ranked_honours(
+            "Palmarès Coupe du Monde",
+            "Palmarès Coupe du Monde indisponible",
+            [
+                _honours_entry("Brésil", "Brésil", 5, "1958, 1962, 1970, 1994, 2002", _country_asset("bra")),
+                _honours_entry("Allemagne", "Allemagne", 4, "1954, 1974, 1990, 2014", _country_asset("ger")),
+                _honours_entry("Italie", "Italie", 4, "1934, 1938, 1982, 2006", _country_asset("ita")),
+                _honours_entry("Argentine", "Argentine", 3, "1978, 1986, 2022", _country_asset("arg")),
+                _honours_entry("France", "France", 2, "1998, 2018", _country_asset("fra")),
+                _honours_entry("Uruguay", "Uruguay", 2, "1930, 1950", _country_asset("uru")),
+                _honours_entry("Angleterre", "Angleterre", 1, "1966", _country_asset("eng")),
+                _honours_entry("Espagne", "Espagne", 1, "2010", _country_asset("esp")),
+            ],
+        ),
+        "champions-history": _ranked_honours(
+            "Palmarès Ligue des Champions",
+            "Palmarès Ligue des Champions indisponible",
+            [
+                _honours_entry("Real Madrid", "Espagne", 15, "1956, 1957, 1958, 1959, 1960, 1966, 1998, 2000, 2002, 2014, 2016, 2017, 2018, 2022, 2024"),
+                _honours_entry("AC Milan", "Italie", 7, "1963, 1969, 1989, 1990, 1994, 2003, 2007"),
+                _honours_entry("Bayern Munich", "Allemagne", 6, "1974, 1975, 1976, 2001, 2013, 2020"),
+                _honours_entry("Liverpool", "Angleterre", 6, "1977, 1978, 1981, 1984, 2005, 2019"),
+                _honours_entry("Barcelona", "Espagne", 5, "1992, 2006, 2009, 2011, 2015"),
+                _honours_entry("Ajax", "Pays-Bas", 4, "1971, 1972, 1973, 1995"),
+                _honours_entry("Internazionale", "Italie", 3, "1964, 1965, 2010"),
+                _honours_entry("Manchester United", "Angleterre", 3, "1968, 1999, 2008"),
+                _honours_entry("Benfica", "Portugal", 2, "1961, 1962"),
+                _honours_entry("Chelsea", "Angleterre", 2, "2012, 2021"),
+                _honours_entry("Juventus", "Italie", 2, "1985, 1996"),
+                _honours_entry("Nottingham Forest", "Angleterre", 2, "1979, 1980"),
+                _honours_entry("Porto", "Portugal", 2, "1987, 2004"),
+                _honours_entry("Celtic", "Écosse", 1, "1967"),
+                _honours_entry("Feyenoord", "Pays-Bas", 1, "1970"),
+                _honours_entry("Aston Villa", "Angleterre", 1, "1982"),
+                _honours_entry("Hamburg", "Allemagne", 1, "1983"),
+                _honours_entry("Steaua București", "Roumanie", 1, "1986"),
+                _honours_entry("PSV", "Pays-Bas", 1, "1988"),
+                _honours_entry("Red Star Belgrade", "Serbie", 1, "1991"),
+                _honours_entry("Marseille", "France", 1, "1993"),
+                _honours_entry("Borussia Dortmund", "Allemagne", 1, "1997"),
+                _honours_entry("Manchester City", "Angleterre", 1, "2023"),
+                _honours_entry("Paris Saint-Germain", "France", 1, "2025"),
+            ],
+        ),
+        "league-history-ligue1": _ranked_honours(
+            "Palmarès Ligue 1",
+            "Palmarès Ligue 1 indisponible",
+            [
+                _honours_entry("Paris Saint-Germain", "France", 13, "1986, 1994, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2022, 2023, 2024, 2025"),
+                _honours_entry("Saint-Étienne", "France", 10, "1957, 1964, 1967, 1968, 1969, 1970, 1974, 1975, 1976, 1981"),
+                _honours_entry("Marseille", "France", 9, "1937, 1948, 1971, 1972, 1989, 1990, 1991, 1992, 2010"),
+                _honours_entry("AS Monaco", "France", 8, "1961, 1963, 1978, 1982, 1988, 1997, 2000, 2017"),
+                _honours_entry("Nantes", "France", 8, "1965, 1966, 1973, 1977, 1980, 1983, 1995, 2001"),
+                _honours_entry("Lyon", "France", 7, "2002, 2003, 2004, 2005, 2006, 2007, 2008"),
+                _honours_entry("Bordeaux", "France", 6, "1950, 1984, 1985, 1987, 1999, 2009"),
+                _honours_entry("Reims", "France", 6, "1949, 1953, 1955, 1958, 1960, 1962"),
+                _honours_entry("Lille", "France", 5, "1933, 1946, 1954, 2011, 2021"),
+                _honours_entry("Nice", "France", 4, "1951, 1952, 1956, 1959"),
+                _honours_entry("Sète", "France", 2, "1934, 1939"),
+                _honours_entry("Sochaux", "France", 2, "1935, 1938"),
+                _honours_entry("Auxerre", "France", 1, "1996"),
+                _honours_entry("Lens", "France", 1, "1998"),
+                _honours_entry("Montpellier", "France", 1, "2012"),
+                _honours_entry("Racing Club de France", "France", 1, "1936"),
+                _honours_entry("Roubaix-Tourcoing", "France", 1, "1947"),
+                _honours_entry("Strasbourg", "France", 1, "1979"),
+            ],
+        ),
+        "league-history-laliga": _ranked_honours(
+            "Palmarès Liga",
+            "Palmarès Liga indisponible",
+            [
+                _honours_entry("Real Madrid", "Espagne", 36, "1932, 1933, 1954, 1955, 1957, 1958, 1961, 1962, 1963, 1964, 1965, 1967, 1968, 1969, 1972, 1975, 1976, 1978, 1979, 1980, 1986, 1987, 1988, 1989, 1990, 1995, 1997, 2001, 2003, 2007, 2008, 2012, 2017, 2020, 2022, 2024"),
+                _honours_entry("Barcelona", "Espagne", 28, "1929, 1945, 1948, 1949, 1952, 1953, 1959, 1960, 1974, 1985, 1991, 1992, 1993, 1994, 1998, 1999, 2005, 2006, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2023, 2025"),
+                _honours_entry("Atlético Madrid", "Espagne", 11, "1940, 1941, 1950, 1951, 1966, 1970, 1973, 1977, 1996, 2014, 2021"),
+                _honours_entry("Athletic Club", "Espagne", 8, "1930, 1931, 1934, 1936, 1943, 1956, 1983, 1984"),
+                _honours_entry("Valencia", "Espagne", 6, "1942, 1944, 1947, 1971, 2002, 2004"),
+                _honours_entry("Real Sociedad", "Espagne", 2, "1981, 1982"),
+                _honours_entry("Deportivo La Coruña", "Espagne", 1, "2000"),
+                _honours_entry("Real Betis", "Espagne", 1, "1935"),
+                _honours_entry("Sevilla", "Espagne", 1, "1946"),
+            ],
+        ),
+        "league-history-bundesliga": _ranked_honours(
+            "Palmarès Bundesliga",
+            "Palmarès Bundesliga indisponible",
+            [
+                _honours_entry("Bayern Munich", "Allemagne", 33, "1969, 1972, 1973, 1974, 1980, 1981, 1985, 1986, 1987, 1989, 1990, 1994, 1997, 1999, 2000, 2001, 2003, 2005, 2006, 2008, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2025"),
+                _honours_entry("Borussia Dortmund", "Allemagne", 5, "1995, 1996, 2002, 2011, 2012"),
+                _honours_entry("Borussia Mönchengladbach", "Allemagne", 5, "1970, 1971, 1975, 1976, 1977"),
+                _honours_entry("Werder Bremen", "Allemagne", 4, "1965, 1988, 1993, 2004"),
+                _honours_entry("Hamburg", "Allemagne", 3, "1979, 1982, 1983"),
+                _honours_entry("Stuttgart", "Allemagne", 3, "1984, 1992, 2007"),
+                _honours_entry("Kaiserslautern", "Allemagne", 2, "1991, 1998"),
+                _honours_entry("Köln", "Allemagne", 2, "1964, 1978"),
+                _honours_entry("1860 Munich", "Allemagne", 1, "1966"),
+                _honours_entry("Bayer Leverkusen", "Allemagne", 1, "2024"),
+                _honours_entry("Eintracht Braunschweig", "Allemagne", 1, "1967"),
+                _honours_entry("Nürnberg", "Allemagne", 1, "1968"),
+                _honours_entry("Wolfsburg", "Allemagne", 1, "2009"),
+            ],
+        ),
+        "league-history-premierleague": _ranked_honours(
+            "Palmarès championnat anglais",
+            "Palmarès championnat anglais indisponible",
+            [
+                _honours_entry("Liverpool", "Angleterre", 20),
+                _honours_entry("Manchester United", "Angleterre", 20),
+                _honours_entry("Arsenal", "Angleterre", 13),
+                _honours_entry("Manchester City", "Angleterre", 10),
+                _honours_entry("Everton", "Angleterre", 9),
+                _honours_entry("Aston Villa", "Angleterre", 7),
+                _honours_entry("Chelsea", "Angleterre", 6),
+                _honours_entry("Sunderland", "Angleterre", 6),
+                _honours_entry("Newcastle United", "Angleterre", 4),
+                _honours_entry("Sheffield Wednesday", "Angleterre", 4),
+                _honours_entry("Blackburn Rovers", "Angleterre", 3),
+                _honours_entry("Huddersfield Town", "Angleterre", 3),
+                _honours_entry("Leeds United", "Angleterre", 3),
+                _honours_entry("Wolverhampton Wanderers", "Angleterre", 3),
+                _honours_entry("Burnley", "Angleterre", 2),
+                _honours_entry("Derby County", "Angleterre", 2),
+                _honours_entry("Portsmouth", "Angleterre", 2),
+                _honours_entry("Preston North End", "Angleterre", 2),
+                _honours_entry("Tottenham Hotspur", "Angleterre", 2),
+                _honours_entry("Ipswich Town", "Angleterre", 1),
+                _honours_entry("Leicester City", "Angleterre", 1),
+                _honours_entry("Nottingham Forest", "Angleterre", 1),
+                _honours_entry("Sheffield United", "Angleterre", 1),
+                _honours_entry("West Bromwich Albion", "Angleterre", 1),
+            ],
+        ),
+        "league-history-seriea": _ranked_honours(
+            "Palmarès Serie A",
+            "Palmarès Serie A indisponible",
+            [
+                _honours_entry("Juventus", "Italie", 36),
+                _honours_entry("Internazionale", "Italie", 20),
+                _honours_entry("AC Milan", "Italie", 19),
+                _honours_entry("Genoa", "Italie", 9),
+                _honours_entry("Bologna", "Italie", 7),
+                _honours_entry("Pro Vercelli", "Italie", 7),
+                _honours_entry("Torino", "Italie", 7),
+                _honours_entry("Napoli", "Italie", 4, "1987, 1990, 2023, 2025"),
+                _honours_entry("Roma", "Italie", 3),
+                _honours_entry("Fiorentina", "Italie", 2),
+                _honours_entry("Lazio", "Italie", 2),
+                _honours_entry("Cagliari", "Italie", 1),
+                _honours_entry("Casale", "Italie", 1),
+                _honours_entry("Hellas Verona", "Italie", 1),
+                _honours_entry("Novese", "Italie", 1),
+                _honours_entry("Sampdoria", "Italie", 1),
+            ],
+        ),
+    }
+
+
 def _all_time_script(worldcup_scorers: list[dict[str, Any]], champions_scorers: list[dict[str, Any]]) -> str:
     worldcup_scorers_payload = json.dumps(worldcup_scorers[:10], ensure_ascii=False).replace("</", "<\\/")
     champions_scorers_payload = json.dumps(champions_scorers[:10], ensure_ascii=False).replace("</", "<\\/")
+    honours_payload = json.dumps(_honours_lists(), ensure_ascii=False).replace("</", "<\\/")
     return f"""<script>
-    const ALL_TIME_LISTS = {{
+    const HONOURS_LISTS = {honours_payload};
+    const ALL_TIME_LISTS = Object.assign({{
       'scorers': {{
         players: {worldcup_scorers_payload},
         title: 'Top 10 buteurs all-time Coupe du Monde',
@@ -2382,38 +2567,8 @@ def _all_time_script(worldcup_scorers: list[dict[str, Any]], champions_scorers: 
         title: 'Top 10 buteurs all-time Ligue des Champions',
         empty: 'Classement all-time des buteurs Ligue des Champions indisponible',
         label: 'buts'
-      }},
-      'worldcup-history': {{
-        players: [
-          {{rank: 1, name: 'Brésil', country: 'Brésil', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png', value: '5', years: '1958, 1962, 1970, 1994, 2002'}},
-          {{rank: 2, name: 'Allemagne', country: 'Allemagne', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png', value: '4', years: '1954, 1974, 1990, 2014'}},
-          {{rank: 3, name: 'Italie', country: 'Italie', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png', value: '4', years: '1934, 1938, 1982, 2006'}},
-          {{rank: 4, name: 'Argentine', country: 'Argentine', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', value: '3', years: '1978, 1986, 2022'}},
-          {{rank: 5, name: 'France', country: 'France', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png', value: '2', years: '1998, 2018'}},
-          {{rank: 6, name: 'Uruguay', country: 'Uruguay', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png', value: '2', years: '1930, 1950'}},
-          {{rank: 7, name: 'Angleterre', country: 'Angleterre', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png', value: '1', years: '1966'}},
-          {{rank: 8, name: 'Espagne', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png', value: '1', years: '2010'}}
-        ],
-        title: 'Palmarès Coupe du Monde',
-        empty: 'Palmarès Coupe du Monde indisponible',
-        label: 'titres'
-      }},
-      'champions-history': {{
-        players: [
-          {{rank: 1, name: 'Real Madrid', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png', value: '15', years: '1956, 1957, 1958, 1959, 1960, 1966, 1998, 2000, 2002, 2014, 2016, 2017, 2018, 2022, 2024'}},
-          {{rank: 2, name: 'AC Milan', country: 'Italie', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png', value: '7', years: '1963, 1969, 1989, 1990, 1994, 2003, 2007'}},
-          {{rank: 3, name: 'Bayern Munich', country: 'Allemagne', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png', value: '6', years: '1974, 1975, 1976, 2001, 2013, 2020'}},
-          {{rank: 4, name: 'Liverpool', country: 'Angleterre', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png', value: '6', years: '1977, 1978, 1981, 1984, 2005, 2019'}},
-          {{rank: 5, name: 'Barcelona', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png', value: '5', years: '1992, 2006, 2009, 2011, 2015'}},
-          {{rank: 6, name: 'Ajax', country: 'Pays-Bas', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/139.png', value: '4', years: '1971, 1972, 1973, 1995'}},
-          {{rank: 7, name: 'Manchester United', country: 'Angleterre', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/360.png', value: '3', years: '1968, 1999, 2008'}},
-          {{rank: 8, name: 'Internazionale', country: 'Italie', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png', value: '3', years: '1964, 1965, 2010'}}
-        ],
-        title: 'Palmarès Ligue des Champions',
-        empty: 'Palmarès Ligue des Champions indisponible',
-        label: 'titres'
       }}
-    }};
+    }}, HONOURS_LISTS);
     const allTimeModal = document.getElementById('allTimeModal');
     const allTimeTitle = document.getElementById('allTimeTitle');
     const allTimeBody = document.getElementById('allTimeBody');
