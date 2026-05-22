@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from src.config import CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, DATA_DIR, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, OUTPUT_HTML
-from src.fetchers import enrich_players_with_known_country_flags, fetch_champions_league_data, fetch_dashboard_data, fetch_leagues_data, fetch_mercato_live
+from src.config import CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, DATA_DIR, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, NEWS_CACHE_FILE, OUTPUT_HTML
+from src.fetchers import enrich_players_with_known_country_flags, fetch_all_news, fetch_champions_league_data, fetch_dashboard_data, fetch_leagues_data, fetch_mercato_live
 from src.render import render_html
 
 
@@ -16,12 +16,14 @@ def main() -> None:
     worldcup_data = _preserve_news_cache(_merge_refresh(previous_worldcup, fetch_dashboard_data()), previous_worldcup)
     champions_league_data = _preserve_news_cache(_merge_refresh(previous_champions, fetch_champions_league_data()), previous_champions)
     leagues_data = _preserve_leagues_news_cache(_merge_leagues_refresh(previous_leagues, fetch_leagues_data()), previous_leagues)
+    previous_news = _read_cache(NEWS_CACHE_FILE) or {}
+    news_data = fetch_all_news(previous=previous_news.get("all_articles") or previous_news.get("articles") or [])
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
     mercato_items = fetch_mercato_live()
     mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
-    _filter_news_sources(worldcup_data, {"fifa", "l equipe", "l'equipe", "l’équipe"})
-    _filter_news_sources(champions_league_data, {"eurosport", "eurosport france", "l equipe", "l'equipe", "l’équipe"})
-    _filter_leagues_news_sources(leagues_data, {"eurosport", "eurosport france", "l equipe", "l'equipe", "l’équipe"})
+    _clear_competition_news(worldcup_data)
+    _clear_competition_news(champions_league_data)
+    _clear_leagues_news(leagues_data)
     for dataset in (worldcup_data, champions_league_data):
         _sanitize_dataset(dataset)
         dataset["top_scorers"] = enrich_players_with_known_country_flags(dataset.get("top_scorers", []))
@@ -36,8 +38,10 @@ def main() -> None:
     )
     LEAGUES_CACHE_FILE.write_text(json.dumps(leagues_data, ensure_ascii=False, indent=2), encoding="utf-8")
     MERCATO_LIVE_CACHE_FILE.write_text(json.dumps(mercato_data, ensure_ascii=False, indent=2), encoding="utf-8")
+    NEWS_CACHE_FILE.write_text(json.dumps(news_data, ensure_ascii=False, indent=2), encoding="utf-8")
     render_html(
         {
+            "news": news_data,
             "mercato_live": mercato_data,
             "worldcup": worldcup_data,
             "champions_league": champions_league_data,
@@ -74,6 +78,19 @@ def _preserve_leagues_news_cache(current: dict[str, Any], previous: dict[str, An
         if not league.get("all_news") and previous_league.get("all_news"):
             league["all_news"] = previous_league["all_news"]
     return current
+
+
+def _clear_competition_news(dataset: dict[str, Any]) -> None:
+    for section in ("world_cup_news", "france_news", "france_header_news", "general_news", "all_news"):
+        dataset[section] = []
+    for section in ("focused_team_news", "focused_club_news"):
+        dataset[section] = {}
+
+
+def _clear_leagues_news(dataset: dict[str, Any]) -> None:
+    dataset["all_news"] = []
+    for league in (dataset.get("leagues") or {}).values():
+        _clear_competition_news(league)
 
 
 def _filter_news_sources(dataset: dict[str, Any], allowed_sources: set[str]) -> None:

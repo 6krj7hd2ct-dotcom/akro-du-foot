@@ -24,8 +24,8 @@ except ImportError:
     request = None
     send_file = None
 
-from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, OUTPUT_HTML
-from src.fetchers import fetch_champions_league_news, fetch_france_header_news, fetch_league_news, fetch_world_cup_news
+from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, NEWS_CACHE_FILE, OUTPUT_HTML
+from src.fetchers import fetch_all_news, fetch_champions_league_news, fetch_france_header_news, fetch_league_news, fetch_world_cup_news, filter_news_articles, rank_articles, dedupe_articles
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
 WATCH_ROOM = "worldcup-watch-party"
@@ -64,6 +64,27 @@ def _run_dashboard_update_loop() -> None:
 
 if app and _background_updates_enabled():
     threading.Thread(target=_run_dashboard_update_loop, daemon=True).start()
+
+
+def news_payload(filter_key: str = "all") -> dict[str, Any]:
+    data = _read_json(NEWS_CACHE_FILE, {})
+    articles = data.get("all_articles") or data.get("articles") or []
+    filtered = filter_news_articles(rank_articles(dedupe_articles(articles)), filter_key)[:50]
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "filter": filter_key or "all",
+        "articles": filtered,
+        "count": len(filtered),
+        "sources": data.get("sources", []),
+        "errors": data.get("errors", []),
+    }
+
+
+def refresh_global_news_payload(filter_key: str = "all") -> dict[str, Any]:
+    previous = _read_json(NEWS_CACHE_FILE, {})
+    data = fetch_all_news(filter_key=filter_key or "all", previous=previous.get("all_articles") or previous.get("articles") or [])
+    NEWS_CACHE_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    return news_payload(filter_key)
 
 
 def refresh_news_payload(competition: str, focus: str, league: str = "") -> dict[str, Any]:
@@ -209,6 +230,14 @@ if app:
         competition = request.args.get("competition", "")
         focus = request.args.get("focus", "")
         return jsonify(refresh_news_payload(competition, focus, request.args.get("league", "")))
+
+    @app.get("/api/news")
+    def global_news():
+        return jsonify(news_payload(request.args.get("filter", "all")))
+
+    @app.get("/api/news/refresh")
+    def refresh_global_news():
+        return jsonify(refresh_global_news_payload(request.args.get("filter", "all")))
 
     @app.get("/api/mercato-live")
     def mercato_live():
@@ -912,6 +941,12 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/refresh-news":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(refresh_news_payload(_url_decode(query.get("competition", "")), _url_decode(query.get("focus", "")), _url_decode(query.get("league", ""))))
+        elif path == "/api/news":
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            self._send_json(news_payload(_url_decode(query.get("filter", "all"))))
+        elif path == "/api/news/refresh":
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
         else:
             self.send_error(404)
 

@@ -66,6 +66,7 @@ def _page(data: dict[str, Any]) -> str:
     champions_data = data.get("champions_league")
     leagues_data = data.get("leagues")
     mercato_data = data.get("mercato_live", {})
+    news_data = data.get("news", {})
     data = worldcup_data
     generated = _format_datetime(data.get("generated_at", ""), with_time=True)
     groups = data.get("standings", [])
@@ -76,8 +77,6 @@ def _page(data: dict[str, Any]) -> str:
     assists = data.get("top_assists", [])[:5]
     all_time_scorers = data.get("all_time_top_scorers", [])
     champions_all_time_scorers = champions_data.get("all_time_top_scorers", []) if champions_data else []
-    world_cup_news = (data.get("general_news") or data.get("world_cup_news", []))[:6]
-    france_news = data.get("france_news", [])[:6]
     group_total = data.get("group_matches_total", _count_matches(group_matches))
     group_remaining = data.get("group_matches_remaining", _count_remaining_groups(group_matches))
     knockout_total = data.get("knockout_matches_total", _count_knockout(knockout))
@@ -376,6 +375,13 @@ def _page(data: dict[str, Any]) -> str:
     .today-strip {{ grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }}
     .leaders {{ grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }}
     .news {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
+    .news-hero {{ min-height: 340px; }}
+    .news-toolbar {{ position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 22px; }}
+    .news-filter {{ min-width: min(260px, 100%); padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.92); color: #07111f; font-weight: 900; }}
+    .news-status {{ color: #c5d3e4; font-size: 13px; font-weight: 800; }}
+    .news-board {{ margin-top: 18px; }}
+    .article-tags {{ display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }}
+    .article-tag {{ display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 8px; background: rgba(245,201,107,0.12); border: 1px solid rgba(245,201,107,0.22); color: #ffe1a0; font-size: 11px; font-weight: 900; }}
     .grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     .standings-wide {{ grid-template-columns: 1fr; width: 100%; }}
     .standings-wide .card {{ width: 100%; max-width: none; }}
@@ -828,6 +834,7 @@ def _page(data: dict[str, Any]) -> str:
     {_mercato_ticker(mercato_data)}
     {_community_section()}
     {_tabs_nav(champions_data, leagues_data)}
+    {_news_tab(news_data)}
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
       {_competition_trophy_svg("worldcup", "hero")}
@@ -849,7 +856,6 @@ def _page(data: dict[str, Any]) -> str:
             <span class="pill">{knockout_remaining}/{knockout_total} matchs à élimination</span>
             <span class="pill">Avancement : {escape(competition_stage)}</span>
           </div>
-          {_france_header_news_placeholder()}
         </div>
       </div>
     </section>
@@ -866,7 +872,6 @@ def _page(data: dict[str, Any]) -> str:
     {_section_head("Meilleurs passeurs", "Top 5 uniquement, avec photo si la source la fournit.")}
     <section class="leaders">{_player_cards(assists, "passes")}</section>
 
-    {_dynamic_news_section("Actualité Coupe du Monde", "Six derniers articles FIFA FR et L’Équipe, dédiés à la Coupe du Monde.", "worldcupNewsBoard")}
 
     {_section_head("Arbre à élimination directe", "Bracket officiel horizontal : les deux ailes convergent vers la finale au centre.")}
     {render_worldcup_bracket(knockout)}
@@ -888,7 +893,7 @@ def _page(data: dict[str, Any]) -> str:
   {_team_script(teams_details, prediction_matches)}
   {_all_time_script(all_time_scorers, champions_all_time_scorers)}
   {_community_script(prediction_matches)}
-  {_news_script(data, champions_data, leagues_data)}
+  {_global_news_script(news_data)}
   {_focus_script(prediction_matches, teams_details)}
   {_leagues_script()}
   {_football_chatbot_script()}
@@ -920,6 +925,139 @@ def _france_header_news_placeholder() -> str:
     )
 
 
+def _news_tab(news_data: dict[str, Any] | None) -> str:
+    updated = _format_datetime((news_data or {}).get("generated_at", ""), with_time=True) or "À actualiser"
+    return f"""
+    <section class="tab-panel is-active" id="tab-news" data-tab-panel="news">
+      <section class="hero news-hero">
+        <div class="hero-content">
+          <div class="kicker"><span class="ball"></span> Actualités football</div>
+          <h1>Actus</h1>
+          <p class="hero-copy">Toutes les dernières news football en français, centralisées dans un seul espace : France, PSG, compétitions, championnats et mercato important.</p>
+          <div class="hero-badges">
+            <div class="hero-row">
+              <span class="pill">Mis à jour : <span id="newsUpdated">{escape(updated)}</span></span>
+              <span class="pill">50 articles maximum</span>
+            </div>
+          </div>
+          <div class="news-toolbar">
+            <select class="news-filter" id="newsFilter" aria-label="Filtrer les actualités">
+              <option value="all">Toutes les actualités</option>
+              <option value="france">Équipe de France</option>
+              <option value="psg">PSG</option>
+              <option value="ligue_des_champions">Ligue des Champions</option>
+              <option value="coupe_du_monde">Coupe du Monde</option>
+              <option value="championnats">Championnats</option>
+              <option value="ligue_1">Ligue 1</option>
+              <option value="liga">Liga</option>
+              <option value="bundesliga">Bundesliga</option>
+              <option value="premier_league">Premier League</option>
+              <option value="serie_a">Serie A</option>
+              <option value="mercato">Mercato</option>
+            </select>
+            <button class="action-button" type="button" id="newsRefreshButton">Rafraîchir les actualités</button>
+            <span class="news-status" id="newsStatus"></span>
+          </div>
+        </div>
+      </section>
+      {_section_head("Fil d’actualités", "Articles français uniquement, triés du plus récent au plus ancien.")}
+      <section class="news news-board" id="globalNewsBoard">{_empty_block("Aucune actualité disponible pour le moment.")}</section>
+    </section>
+"""
+
+
+def _global_news_script(news_data: dict[str, Any] | None) -> str:
+    data = json.dumps(news_data or {"articles": [], "all_articles": []}, ensure_ascii=False).replace("</", "<\\/")
+    return f"""<script>
+    const GLOBAL_NEWS_DATA = {data};
+    const NEWS_FILTER_LABELS = {{
+      all: 'Toutes les actualités', france: 'Équipe de France', psg: 'PSG', ligue_des_champions: 'Ligue des Champions', coupe_du_monde: 'Coupe du Monde', championnats: 'Championnats', ligue_1: 'Ligue 1', liga: 'Liga', bundesliga: 'Bundesliga', premier_league: 'Premier League', serie_a: 'Serie A', mercato: 'Mercato'
+    }};
+    const NEWS_FILTER_ALIASES = {{
+      all: [],
+      france: ['france', 'equipe de france', 'bleus', 'deschamps'],
+      psg: ['psg', 'paris saint germain', 'paris sg'],
+      ligue_des_champions: ['ligue des champions', 'champions league', 'c1', 'uefa champions'],
+      coupe_du_monde: ['coupe du monde', 'mondial', 'world cup', 'fifa'],
+      championnats: ['ligue 1', 'liga', 'bundesliga', 'premier league', 'serie a', 'championnat'],
+      ligue_1: ['ligue 1', 'psg', 'marseille', 'monaco', 'lyon', 'lille', 'lens'],
+      liga: ['liga', 'laliga', 'real madrid', 'barcelone', 'barca', 'atletico'],
+      bundesliga: ['bundesliga', 'bayern', 'dortmund', 'leverkusen'],
+      premier_league: ['premier league', 'arsenal', 'chelsea', 'liverpool', 'manchester city', 'manchester united'],
+      serie_a: ['serie a', 'juventus', 'inter', 'milan', 'napoli', 'roma'],
+      mercato: ['mercato', 'transfert', 'transferts', 'signature', 'officialise', 'prolongation', 'pret', 'prêt']
+    }};
+    function globalNewsEscape(value) {{ return String(value || '').replace(/[&<>\"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}}[c])); }}
+    function globalNewsNormalize(value) {{ return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }}
+    function globalNewsDate(value) {{
+      if (!value) return 'Date non disponible';
+      const parsed = new Date(value);
+      return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleString('fr-FR', {{day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'}});
+    }}
+    function globalNewsFilterArticles(filterKey) {{
+      const source = GLOBAL_NEWS_DATA.all_articles || GLOBAL_NEWS_DATA.articles || [];
+      if (filterKey === 'all') return source.slice(0, 50);
+      const aliases = (NEWS_FILTER_ALIASES[filterKey] || []).map(globalNewsNormalize);
+      return source.filter(article => {{
+        const tags = (article.tags || []).map(tag => String(tag));
+        const haystack = globalNewsNormalize(`${{article.title || ''}} ${{article.summary || ''}} ${{article.url || ''}}`);
+        return tags.includes(filterKey) || aliases.some(alias => alias && haystack.includes(alias));
+      }}).slice(0, 50);
+    }}
+    function globalNewsCard(article) {{
+      const source = globalNewsEscape(article.source_name || article.source || 'Source');
+      const logo = article.source_logo ? `<img class="source-logo" src="${{globalNewsEscape(article.source_logo)}}" alt="" loading="lazy" onerror="this.classList.add('is-hidden')">` : '';
+      const image = article.image_url ? `<img class="article-image" src="${{globalNewsEscape(article.image_url)}}" alt="" loading="lazy" onerror="this.classList.add('is-hidden')">` : '<div class="article-visual-fallback">Akro du Foot</div>';
+      const tags = (article.tags || []).slice(0, 4).map(tag => `<span class="article-tag">${{globalNewsEscape(NEWS_FILTER_LABELS[tag] || tag)}}</span>`).join('');
+      return `<article class="card article">
+        <div class="article-visual">${{image}}<div class="article-source">${{logo}}<span>${{source}}</span></div></div>
+        <div class="article-body">
+          <div class="article-meta">${{globalNewsEscape(globalNewsDate(article.published_at || article.date))}}</div>
+          <h3><a href="${{globalNewsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">${{globalNewsEscape(article.title || 'Article')}}</a></h3>
+          <p>${{globalNewsEscape(article.summary || '')}}</p>
+          <div class="article-tags">${{tags}}</div>
+          <a class="read-link" href="${{globalNewsEscape(article.url || '#')}}" target="_blank" rel="noreferrer">Lire l’article</a>
+        </div>
+      </article>`;
+    }}
+    function renderGlobalNews() {{
+      const board = document.getElementById('globalNewsBoard');
+      const filter = document.getElementById('newsFilter');
+      if (!board || !filter) return;
+      const articles = globalNewsFilterArticles(filter.value || 'all');
+      board.innerHTML = articles.length ? articles.map(globalNewsCard).join('') : '<div class="empty">Aucune actualité trouvée pour ce filtre.</div>';
+    }}
+    async function refreshGlobalNews() {{
+      const filter = document.getElementById('newsFilter');
+      const status = document.getElementById('newsStatus');
+      const button = document.getElementById('newsRefreshButton');
+      const value = filter ? filter.value : 'all';
+      if (status) status.textContent = 'Actualisation…';
+      if (button) button.disabled = true;
+      try {{
+        const response = await fetch(`/api/news/refresh?filter=${{encodeURIComponent(value)}}`);
+        if (!response.ok) throw new Error('refresh failed');
+        const data = await response.json();
+        GLOBAL_NEWS_DATA.articles = data.articles || [];
+        GLOBAL_NEWS_DATA.all_articles = data.articles || GLOBAL_NEWS_DATA.articles || [];
+        GLOBAL_NEWS_DATA.generated_at = data.generated_at || GLOBAL_NEWS_DATA.generated_at;
+        const updated = document.getElementById('newsUpdated');
+        if (updated && data.generated_at) updated.textContent = globalNewsDate(data.generated_at);
+        if (status) status.textContent = 'Actualités mises à jour';
+      }} catch (error) {{
+        if (status) status.textContent = 'Actualisation impossible, cache affiché';
+      }} finally {{
+        if (button) button.disabled = false;
+        renderGlobalNews();
+      }}
+    }}
+    document.addEventListener('change', event => {{ if (event.target && event.target.id === 'newsFilter') renderGlobalNews(); }});
+    document.addEventListener('click', event => {{ if (event.target && event.target.id === 'newsRefreshButton') refreshGlobalNews(); }});
+    window.addEventListener('DOMContentLoaded', renderGlobalNews);
+    renderGlobalNews();
+  </script>"""
+
+
 def _app_header() -> str:
     return """
     <header class="app-header">
@@ -949,16 +1087,14 @@ def _merged_teams_details(worldcup_data: dict[str, Any], champions_data: dict[st
 
 
 def _tabs_nav(champions_data: dict[str, Any] | None, leagues_data: dict[str, Any] | None = None) -> str:
-    if not champions_data and not leagues_data:
-        return ""
-    leagues_button = '<button class="tab-button is-active" type="button" data-tab-target="leagues">Championnats</button>' if leagues_data else ''
-    champions_button = '<button class="tab-button" type="button" data-tab-target="champions">Ligue des Champions</button>' if champions_data else ''
-    worldcup_active = '' if leagues_data else ' is-active'
+    champions_button = '<button class="tab-button" type="button" data-tab-target="champions">Champions League</button>' if champions_data else ''
+    leagues_button = '<button class="tab-button" type="button" data-tab-target="leagues">Championnats</button>' if leagues_data else ''
     return f"""
-    <nav class="tabs-nav" aria-label="Compétitions">
-      {leagues_button}
+    <nav class="tabs-nav" aria-label="Navigation principale">
+      <button class="tab-button is-active" type="button" data-tab-target="news">Actus</button>
+      <button class="tab-button" type="button" data-tab-target="worldcup">Coupe du Monde</button>
       {champions_button}
-      <button class="tab-button{worldcup_active}" type="button" data-tab-target="worldcup">Coupe du Monde 2026</button>
+      {leagues_button}
     </nav>
 """
 
@@ -1022,7 +1158,6 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.")}
       <section class="leaders">{_player_cards(assists, "passes", prefer_country_flag=True)}</section>
 
-      {_dynamic_news_section("Actualité Ligue des Champions", "Six derniers articles L’Équipe et Eurosport FR, dédiés à la Ligue des Champions.", "championsNewsBoard")}
 
       {_section_head("Phase finale", "Bracket Ligue des Champions affiché dès disponibilité des matchs à élimination directe.")}
       {render_champions_league_bracket(knockout)}
@@ -1049,7 +1184,7 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
         for key, league in (data.get("leagues") or {}).items()
     )
     return f"""
-    <section class="tab-panel is-active" id="tab-leagues" data-tab-panel="leagues">
+    <section class="tab-panel" id="tab-leagues" data-tab-panel="leagues">
       <section class="hero leagues-hero">
         <div class="league-focus-backdrop" id="leagueFocusBackdrop" aria-hidden="true"></div>
         <div class="hero-content">
@@ -1085,7 +1220,6 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs passeurs", "Top 5 du championnat sélectionné, si disponible.")}
       <section class="leaders" id="leagueTopAssists"></section>
 
-      {_dynamic_news_section("Actualité championnat", "Six derniers articles L’Équipe et Eurosport FR liés au championnat sélectionné.", "leaguesNewsBoard")}
 
       {_section_head("Classement du championnat", "Clubs, matchs joués, victoires, nuls, défaites, différence et points.")}
       <section class="grid standings-wide" id="leagueStandings"></section>
@@ -1213,8 +1347,6 @@ def _season_tabs(kind: str, label: str, options: list[tuple[str, str]]) -> str:
 
 
 def _tabs_script(champions_data: dict[str, Any] | None) -> str:
-    if not champions_data:
-        return ""
     return """<script>
     document.querySelectorAll('[data-tab-target]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -2309,7 +2441,6 @@ def _focus_script(matches: list[dict[str, Any]], teams_details: dict[str, Any]) 
       select.addEventListener('change', () => {{
         localStorage.setItem(FOCUS_KEYS[kind], select.value);
         renderFocus(kind);
-        renderFranceHeaderNews();
         document.dispatchEvent(new CustomEvent('akro:focus-change', {{detail: {{kind, focus: select.value}}}}));
       }});
       renderFocus(kind);

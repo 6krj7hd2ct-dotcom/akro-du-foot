@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -114,6 +115,11 @@ FRENCH_NEWS_SOURCE_NAMES = {
     "france football",
     "le phoceen",
     "le phocéen",
+    "football.fr",
+    "made in foot",
+    "onze mondial",
+    "france info sport",
+    "fotmob",
 }
 
 BLOCKED_NEWS_SOURCE_NAMES = {"espn", "bbc", "bbc sport", "google news"}
@@ -137,6 +143,10 @@ FRENCH_NEWS_DOMAINS = (
     "fff.fr",
     "fifa.com",
     "uefa.com",
+    "football.fr",
+    "madeinfoot.com",
+    "onzemondial.com",
+    "fotmob.com",
 )
 
 NEWS_SOURCE_PRIORITY = (
@@ -152,6 +162,9 @@ NEWS_SOURCE_PRIORITY = (
     "fifa",
     "fff",
     "uefa",
+    "football.fr",
+    "made in foot",
+    "onze mondial",
 )
 
 NEWS_SOURCE_LOGOS = {
@@ -174,6 +187,10 @@ NEWS_SOURCE_LOGOS = {
     "fifa": "https://www.fifa.com/favicon.ico",
     "fff": "https://www.fff.fr/favicon.ico",
     "uefa": "https://www.uefa.com/favicon.ico",
+    "football.fr": "https://www.football.fr/favicon.ico",
+    "made in foot": "https://www.madeinfoot.com/favicon.ico",
+    "onze mondial": "https://www.onzemondial.com/favicon.ico",
+    "fotmob": "https://www.fotmob.com/favicon.ico",
 }
 
 FRENCH_TEAM_NAMES = {
@@ -307,6 +324,42 @@ DEDICATED_CHAMPIONS_NEWS_SOURCES = [
         "exclude_keywords": ["coupe du monde", "mondial", "mercato", "transfert", "ligue 1", "liga", "serie a", "bundesliga", "premier league"],
     },
 ]
+
+GLOBAL_NEWS_FEEDS = [
+    {"source": "RMC Sport", "url": "https://rmcsport.bfmtv.com/rss/football/", "trusted_section": True},
+    {"source": "L'Équipe", "url": "https://www.lequipe.fr/rss/actu_rss_Football.xml", "trusted_section": True},
+    {"source": "Goal France", "url": "https://www.goal.com/feeds/fr/news?fmt=rss", "trusted_section": True},
+    {"source": "Eurosport France", "url": "https://www.eurosport.fr/rss.xml", "trusted_section": False},
+    {"source": "Foot Mercato", "url": "https://www.footmercato.net/rss.xml", "trusted_section": False},
+    {"source": "SO FOOT", "url": "https://www.sofoot.com/rss", "trusted_section": True},
+    {"source": "Maxifoot", "url": "https://www.maxifoot.fr/rss.xml", "trusted_section": True},
+    {"source": "LiveFoot", "url": "https://www.livefoot.fr/rss.xml", "trusted_section": True},
+    {"source": "France Football", "url": "https://www.francefootball.fr/rss/actu_rss.xml", "trusted_section": True},
+    {"source": "Football.fr", "url": "https://www.football.fr/feed", "trusted_section": True},
+    {"source": "Made In Foot", "url": "https://www.madeinfoot.com/rss/actualites.xml", "trusted_section": True},
+    {"source": "Onze Mondial", "url": "https://www.onzemondial.com/rss.xml", "trusted_section": True},
+    {"source": "France Info Sport", "url": "https://www.francetvinfo.fr/sports/foot.rss", "trusted_section": True},
+]
+
+NEWS_FILTERS = {
+    "all": (),
+    "france": ("equipe de france", "équipe de france", "bleus", "france", "deschamps"),
+    "psg": ("psg", "paris saint germain", "paris sg"),
+    "ligue_des_champions": ("ligue des champions", "champions league", "c1", "uefa champions"),
+    "coupe_du_monde": ("coupe du monde", "mondial", "world cup", "fifa"),
+    "championnats": ("ligue 1", "liga", "bundesliga", "premier league", "serie a", "championnat"),
+    "ligue_1": ("ligue 1", "psg", "marseille", "monaco", "lyon", "lille", "lens", "rennes", "nice"),
+    "liga": ("liga", "laliga", "real madrid", "barcelone", "barça", "atletico", "séville", "espagne"),
+    "bundesliga": ("bundesliga", "bayern", "dortmund", "leverkusen", "allemagne"),
+    "premier_league": ("premier league", "arsenal", "chelsea", "liverpool", "manchester city", "manchester united", "angleterre"),
+    "serie_a": ("serie a", "juventus", "inter", "milan", "napoli", "roma", "italie"),
+    "mercato": ("mercato", "transfert", "transferts", "signature", "officialise", "prêt", "pret", "prolongation"),
+}
+
+NEWS_GENERIC_EXCLUDE_KEYWORDS = (
+    "classement", "classements", "calendrier", "calendriers", "résultat", "resultat", "résultats", "resultats",
+    "statistique", "statistiques", "livescore", "direct", "programme tv", "score en direct", "matchs en direct",
+)
 LEAGUE_DEDICATED_NEWS_SOURCES = {
     "ligue1": [
         {"source": "L'Équipe", "url": "https://www.lequipe.fr/Football/ligue-1/", "keywords": ["ligue 1", "championnat de france", "psg", "marseille", "monaco", "lyon", "lille", "lens", "rennes", "nice"], "exclude_keywords": ["coupe du monde", "mondial", "ligue des champions", "champions league", "mercato"]},
@@ -538,8 +591,8 @@ def fetch_dashboard_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs ESPN", lambda: fetch_espn_player_table(ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs ESPN", lambda: fetch_espn_player_table(ESPN_ASSISTS_URL, 1), errors)
-    world_cup_news = _safe_fetch("actualités Coupe du Monde FIFA FR + L’Équipe", fetch_world_cup_news, errors)
-    france_header_news = _safe_fetch("bandeau Équipe de France L’Équipe", fetch_france_header_news, errors)
+    world_cup_news: list[dict[str, Any]] = []
+    france_header_news: list[dict[str, Any]] = []
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
     all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
@@ -585,8 +638,6 @@ def fetch_dashboard_data() -> dict[str, Any]:
             {"name": "Foot Mercato - fiches équipes", "url": FOOTMERCATO_BASE_URL},
             {"name": "StatBunker - buteurs all-time", "url": STATBUNKER_ALL_TIME_SCORERS_URL},
             {"name": "StatBunker - passeurs all-time", "url": STATBUNKER_ALL_TIME_ASSISTS_URL},
-            *[{"name": f"Actu Coupe du Monde - {source['source']}", "url": source["url"]} for source in DEDICATED_WORLD_CUP_NEWS_SOURCES],
-            {"name": "Bandeau Équipe de France - L’Équipe", "url": DEDICATED_FRANCE_HEADER_NEWS_SOURCE["url"]},
         ],
         "errors": errors,
     }
@@ -621,7 +672,7 @@ def fetch_champions_league_data() -> dict[str, Any]:
     ) or teams_details
     scorers = _safe_fetch("buteurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_SCORING_URL, 0), errors)
     assists = _safe_fetch("passeurs Ligue des Champions ESPN", lambda: fetch_espn_player_table(UCL_ESPN_ASSISTS_URL, 1), errors)
-    news = _safe_fetch("actualités Ligue des Champions L’Équipe + Eurosport", fetch_champions_league_news, errors)
+    news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
     focused_club_news: dict[str, list[dict[str, Any]]] = {}
     all_time_top_scorers = _safe_fetch(
@@ -679,7 +730,6 @@ def fetch_champions_league_data() -> dict[str, Any]:
             {"name": "FotMob - Ligue des Champions", "url": UCL_FOTMOB_STATS_URL},
             {"name": "Foot Mercato - fiches clubs", "url": FOOTMERCATO_BASE_URL},
             {"name": "UEFA - buteurs all-time Ligue des Champions", "url": UEFA_UCL_ALL_TIME_SCORERS_URL},
-            *[{"name": f"Actu Ligue des Champions - {source['source']}", "url": source["url"]} for source in DEDICATED_CHAMPIONS_NEWS_SOURCES],
         ],
         "errors": errors,
     }
@@ -713,10 +763,6 @@ def fetch_leagues_data() -> dict[str, Any]:
         "sources": [
             {"name": f"ESPN - {config['name']}", "url": _league_standings_url(config)}
             for config in LEAGUE_CONFIGS.values()
-        ] + [
-            {"name": f"Actu {config['name']} - {source['source']}", "url": source["url"]}
-            for key, config in LEAGUE_CONFIGS.items()
-            for source in LEAGUE_DEDICATED_NEWS_SOURCES.get(key, [])
         ],
         "errors": errors,
     }
@@ -754,7 +800,7 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
         assists = _safe_fetch(f"passeurs {name} FotMob", lambda: fetch_fotmob_player_stats_from_url(fotmob_url, "assists"), errors)
     else:
         assists = _safe_fetch(f"photos passeurs {name} FotMob", lambda: enrich_players_with_fotmob_stats(assists, fotmob_url, "assists"), errors) or assists
-    league_news = _safe_fetch(f"actualités {name} L’Équipe + Eurosport", lambda: fetch_league_news(key), errors)
+    league_news: list[dict[str, Any]] = []
     focused_club_news: dict[str, list[dict[str, Any]]] = {}
     clubs = sorted(teams_details.keys(), key=str.casefold)
     default_focus = _default_league_focus(key, clubs)
@@ -783,7 +829,6 @@ def fetch_single_league_data(key: str, config: dict[str, Any], football_news_poo
             {"name": f"ESPN - statistiques {name}", "url": scorers_url},
             {"name": f"FotMob - {name}", "url": fotmob_url},
             {"name": "Foot Mercato - fiches clubs", "url": FOOTMERCATO_BASE_URL},
-            *[{"name": f"Actu {name} - {source['source']}", "url": source["url"]} for source in LEAGUE_DEDICATED_NEWS_SOURCES.get(key, [])],
         ],
     }
 
@@ -1806,6 +1851,185 @@ def enrich_players_with_known_country_flags(players: list[dict[str, Any]]) -> li
             }
         )
     return enriched
+
+
+def fetch_all_news(filter_key: str = "all", limit: int = 50, previous: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    """Fetch a global French football news cache without blocking if sources fail."""
+    generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    articles: list[dict[str, Any]] = []
+    errors: list[str] = []
+    for feed in GLOBAL_NEWS_FEEDS:
+        try:
+            articles.extend(_fetch_global_news_feed(feed))
+        except Exception as exc:
+            errors.append(f"{feed.get('source', 'Source')}: {type(exc).__name__}")
+            continue
+
+    # Official pages are useful but optional. They go through the stricter editorial link parser.
+    for source in [*DEDICATED_WORLD_CUP_NEWS_SOURCES, *DEDICATED_CHAMPIONS_NEWS_SOURCES]:
+        try:
+            articles.extend(_enrich_news_article(article) for article in _fetch_dedicated_source_page(source)[:8])
+        except Exception as exc:
+            errors.append(f"{source.get('source', 'Source')}: {type(exc).__name__}")
+
+    merged = [*articles, *(previous or [])]
+    clean = rank_articles(dedupe_articles(merged))
+    selected = filter_news_articles(clean, filter_key)[:limit]
+    return {
+        "generated_at": generated_at,
+        "articles": selected,
+        "all_articles": clean[:limit],
+        "filter": filter_key or "all",
+        "sources": [feed["source"] for feed in GLOBAL_NEWS_FEEDS],
+        "errors": errors,
+    }
+
+
+def _fetch_global_news_feed(feed: dict[str, Any]) -> list[dict[str, Any]]:
+    xml = _download(feed["url"])
+    root = ElementTree.fromstring(xml)
+    articles: list[dict[str, Any]] = []
+    for item in root.findall("./channel/item")[:40]:
+        title = _xml_text(item, "title")
+        summary = _strip_html(_xml_text(item, "description"))
+        link = _xml_text(item, "link")
+        if not title or not link:
+            continue
+        source = str(feed.get("source") or _article_source(item, feed))
+        if not _is_allowed_french_news_source(source, link):
+            continue
+        if _is_generic_or_non_editorial_news(link, title, summary):
+            continue
+        haystack = _normalize_news_text(f"{title} {summary} {link}")
+        if not feed.get("trusted_section") and not any(keyword in haystack for keyword in ("football", "foot", "psg", "france", "ligue", "champions", "mercato", "coupe du monde", "mondial")):
+            continue
+        published = _parse_rss_date(_xml_text(item, "pubDate"))
+        tags = _news_tags(title, summary, link)
+        if not tags:
+            continue
+        fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        article = {
+            "id": hashlib.sha1(f"{title}|{link}".encode("utf-8", "ignore")).hexdigest()[:16],
+            "title": title,
+            "summary": _shorten(summary, 220),
+            "source": source,
+            "source_name": source,
+            "source_logo": _source_logo_url(source, link),
+            "image_url": _article_image_url(item, _xml_text(item, "description")),
+            "url": link,
+            "published_at": published,
+            "date": published,
+            "tags": tags,
+            "priority_score": _news_priority_score(title, summary, link, source),
+            "language": "fr",
+            "fetched_at": fetched_at,
+        }
+        articles.append(article)
+    return articles
+
+
+def filter_news_articles(articles: list[dict[str, Any]], filter_key: str = "all") -> list[dict[str, Any]]:
+    key = _normalize_filter_key(filter_key)
+    if key == "all":
+        return articles[:]
+    keywords = tuple(_normalize_news_text(item) for item in NEWS_FILTERS.get(key, ()))
+    filtered: list[dict[str, Any]] = []
+    for article in articles:
+        tags = {_normalize_filter_key(tag) for tag in article.get("tags", []) or []}
+        haystack = _normalize_news_text(f"{article.get('title', '')} {article.get('summary', '')} {article.get('url', '')}")
+        if key in tags or any(keyword and keyword in haystack for keyword in keywords):
+            filtered.append(article)
+    return filtered
+
+
+def dedupe_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    priority = {"l equipe": 100, "fotmob": 95, "rmc sport": 90, "eurosport": 85, "fifa": 82, "uefa": 82, "fff": 82, "france football": 78, "goal": 74}
+    best: dict[str, dict[str, Any]] = {}
+    for article in articles or []:
+        if not _is_allowed_cached_global_news(article):
+            continue
+        title = str(article.get("title") or "")
+        url = str(article.get("url") or "")
+        if not title or not url:
+            continue
+        normalized_title = _normalize_news_text(title)
+        words = [word for word in normalized_title.split() if len(word) > 3]
+        key = " ".join(words[:10]) or _news_key(title, url)
+        source = _normalize_news_text(str(article.get("source_name") or article.get("source") or ""))
+        score = max((value for name, value in priority.items() if name in source), default=40)
+        current = best.get(key)
+        if current is None or score > int(current.get("_source_choice_score", 0)):
+            best[key] = {**article, "_source_choice_score": score}
+    cleaned = []
+    for article in best.values():
+        article.pop("_source_choice_score", None)
+        article.setdefault("tags", _news_tags(str(article.get("title", "")), str(article.get("summary", "")), str(article.get("url", ""))))
+        article.setdefault("priority_score", _news_priority_score(str(article.get("title", "")), str(article.get("summary", "")), str(article.get("url", "")), str(article.get("source_name") or article.get("source") or "")))
+        article.setdefault("language", "fr")
+        cleaned.append(article)
+    return cleaned
+
+
+def rank_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return sorted(articles or [], key=lambda article: (str(article.get("published_at") or article.get("date") or ""), int(article.get("priority_score") or 0)), reverse=True)
+
+
+def _normalize_filter_key(value: str) -> str:
+    return _normalize_news_text(value).replace(" ", "_") or "all"
+
+
+def _is_generic_or_non_editorial_news(url: str, title: str, summary: str = "") -> bool:
+    haystack = _normalize_news_text(f"{url} {title} {summary}")
+    return any(keyword in haystack for keyword in NEWS_GENERIC_EXCLUDE_KEYWORDS)
+
+
+def _is_allowed_cached_global_news(article: dict[str, Any]) -> bool:
+    if str(article.get("language") or "fr").casefold() not in {"", "fr", "fr-fr"}:
+        return False
+    source = str(article.get("source_name") or article.get("source") or "")
+    link = str(article.get("url") or "")
+    if not _is_allowed_french_news_source(source, link):
+        return False
+    return not _is_generic_or_non_editorial_news(link, str(article.get("title") or ""), str(article.get("summary") or ""))
+
+
+def _news_tags(title: str, summary: str = "", link: str = "") -> list[str]:
+    haystack = _normalize_news_text(f"{title} {summary} {link}")
+    tag_keywords = {
+        "france": ("equipe de france", "bleus", "deschamps", "selection francaise"),
+        "psg": ("psg", "paris saint germain", "paris sg"),
+        "ligue_des_champions": ("ligue des champions", "champions league", "c1", "uefa champions"),
+        "coupe_du_monde": ("coupe du monde", "mondial", "world cup", "fifa"),
+        "ligue_1": ("ligue 1", "championnat de france", "marseille", "monaco", "lyon", "lille", "lens"),
+        "liga": ("liga", "laliga", "real madrid", "barcelone", "barca", "atletico"),
+        "bundesliga": ("bundesliga", "bayern", "dortmund", "leverkusen"),
+        "premier_league": ("premier league", "arsenal", "chelsea", "liverpool", "manchester city", "manchester united"),
+        "serie_a": ("serie a", "juventus", "inter", "milan", "napoli", "roma"),
+        "mercato": ("mercato", "transfert", "transferts", "officialise", "signature", "prolongation", "pret", "prêt"),
+    }
+    tags = [tag for tag, keywords in tag_keywords.items() if any(_normalize_news_text(keyword) in haystack for keyword in keywords)]
+    if any(tag in tags for tag in ("ligue_1", "liga", "bundesliga", "premier_league", "serie_a")):
+        tags.append("championnats")
+    return list(dict.fromkeys(tags))
+
+
+def _news_priority_score(title: str, summary: str, link: str, source: str) -> int:
+    tags = set(_news_tags(title, summary, link))
+    score = 10
+    if "france" in tags:
+        score += 40
+    if "psg" in tags:
+        score += 35
+    if "coupe_du_monde" in tags:
+        score += 28
+    if "ligue_des_champions" in tags:
+        score += 24
+    if "championnats" in tags:
+        score += 18
+    if "mercato" in tags:
+        score += 12
+    score += _news_source_score({"source": source, "url": link}) // 10
+    return score
 
 
 def fetch_france_news() -> list[dict[str, Any]]:
