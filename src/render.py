@@ -406,11 +406,16 @@ def _page(data: dict[str, Any]) -> str:
       background: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(18,43,70,0.72));
       box-shadow: 0 18px 44px rgba(0,0,0,0.22);
     }}
-    .big5-track {{ display: flex; width: max-content; animation: big5-scroll 72s linear infinite; will-change: transform; }}
+    .big5-track {{ display: flex; width: max-content; animation: big5-scroll 62s linear infinite; will-change: transform; }}
     .big5-ticker:hover .big5-track {{ animation-play-state: paused; }}
-    .big5-items {{ display: flex; align-items: stretch; gap: 14px; padding: 14px; white-space: nowrap; }}
-    .big5-item {{ width: min(310px, 78vw); flex: 0 0 auto; min-height: 138px; }}
-    .big5-item .player-card {{ height: 100%; }}
+    .big5-items {{ display: flex; align-items: stretch; gap: 10px; padding: 10px; white-space: nowrap; }}
+    .big5-item {{ width: min(278px, 76vw); flex: 0 0 auto; min-height: 112px; }}
+    .big5-item .player-card {{ height: 100%; padding: 11px 12px; grid-template-columns: 50px minmax(0, 1fr); gap: 10px; }}
+    .big5-item .avatar-wrap, .big5-item .avatar {{ width: 50px; height: 50px; }}
+    .big5-item .team {{ font-size: 14px; line-height: 1.15; }}
+    .big5-item .subtle {{ font-size: 11px; }}
+    .big5-item .club-logo {{ width: 18px; height: 18px; flex-basis: 18px; }}
+    .big5-item .player-stat {{ font-size: 22px; margin-top: 5px; }}
     @keyframes big5-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .league-bg-ligue1::before {{ background: linear-gradient(90deg, #0055a4 0 33%, #fff 33% 66%, #ef4135 66%); }}
     .league-bg-laliga::before {{ background: linear-gradient(180deg, #aa151b 0 28%, #f1bf00 28% 72%, #aa151b 72%); }}
@@ -768,7 +773,7 @@ def _page(data: dict[str, Any]) -> str:
       .action-button {{ flex: 1 1 130px; text-align: center; }}
       .mercato-link {{ font-size: 13px; }}
       .mercato-items {{ gap: 20px; padding: 0 20px; }}
-      .big5-track {{ animation-duration: 92s; }}
+      .big5-track {{ animation-duration: 76s; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
       .league-calendar-match {{ grid-template-columns: 1fr; text-align: center; }}
