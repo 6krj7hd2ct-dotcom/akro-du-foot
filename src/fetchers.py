@@ -221,7 +221,7 @@ UCL_ALL_TIME_COUNTRIES = {
     "thomas muller": "Germany",
 }
 
-REQUEST_TIMEOUT_SECONDS = 12
+REQUEST_TIMEOUT_SECONDS = 10
 
 FALLBACK_ALL_TIME_SCORERS = [
     {"rank": 1, "name": "Miroslav Klose", "team": "Germany", "country": "Germany", "photo_url": "", "value": 16, "source": "FIFA / StatBunker"},
@@ -1698,21 +1698,25 @@ def _download(url: str) -> str:
 
     # ESPN renvoie parfois une réponse 202 vide aux clients Python, même avec
     # un User-Agent navigateur. curl récupère la même page publique correctement.
-    curl = subprocess.run(
-        [
-            "curl",
-            "-L",
-            "-s",
-            "--max-time",
-            str(REQUEST_TIMEOUT_SECONDS),
-            url,
-        ],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if curl.returncode == 0 and curl.stdout.strip():
-        return curl.stdout
+    try:
+        curl = subprocess.run(
+            [
+                "curl",
+                "-L",
+                "-s",
+                "--max-time",
+                str(REQUEST_TIMEOUT_SECONDS),
+                url,
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=REQUEST_TIMEOUT_SECONDS + 2,
+        )
+        if curl.returncode == 0 and curl.stdout.strip():
+            return curl.stdout
+    except (subprocess.SubprocessError, OSError):
+        pass
 
     if response is not None:
         response.raise_for_status()

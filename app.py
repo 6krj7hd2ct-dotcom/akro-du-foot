@@ -250,7 +250,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                 "temperature": 0.35,
                 "max_output_tokens": 700,
             },
-            timeout=20,
+            timeout=10,
         )
         if response.status_code >= 400:
             return {"error": COACH_UNAVAILABLE}, 503
