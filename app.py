@@ -62,6 +62,7 @@ SUPABASE_TIMEOUT = 8
 SUPABASE_USER_COLUMNS = "id,pseudo,total_points,predictions_count,current_badge,success_rate,created_at,updated_at"
 SUPABASE_PREDICTION_COLUMNS = "id,user_id,pseudo,match_id,home_score,away_score,points,created_at,updated_at"
 SUPABASE_BADGE_COLUMNS = "id,name,level,icon,min_predictions"
+SUPABASE_COACH_COLUMNS = "id,session_id,role,content,detected_entity,detected_intent,created_at"
 
 app = Flask(__name__) if Flask else None
 
@@ -324,25 +325,47 @@ if app:
         body, status = search_coach_response(payload)
         return jsonify(body), status
 
+    @app.get("/api/coach/messages")
+    def coach_messages():
+        session_id = _clean(request.args.get("session_id", ""), 120)
+        raw_limit = _clean(request.args.get("limit", "12"), 8)
+        try:
+            limit = min(30, max(1, int(raw_limit or "12")))
+        except ValueError:
+            limit = 12
+        return jsonify({"messages": _coach_messages_from_supabase(session_id, limit) if session_id else []})
+
 
 def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     question = _clean(payload.get("message", ""), 500)
     history = _chat_history(payload.get("history", []))
+    session_id = _clean(payload.get("session_id", ""), 120)
+    client_context = payload.get("context") if isinstance(payload.get("context"), dict) else {}
+    merged_history = history[-12:]
+    if session_id:
+        merged_history = _chat_history(_coach_messages_from_supabase(session_id, 12) + merged_history)[-12:]
+    context_state = _detect_conversation_context(merged_history, question, client_context)
+    resolved_question = _resolve_followup_question(question, context_state)
     if not question:
         return {"error": "Question vide."}, 400
-    if not _looks_like_football_question(question, history):
+    if session_id:
+        _save_coach_message_supabase(session_id, "user", question, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
+    if not _looks_like_football_question(resolved_question, merged_history):
         return {"answer": COACH_REFUSAL}, 200
 
-    local_answer = _local_coach_answer(question, history)
+    local_answer = _local_coach_answer(resolved_question, merged_history)
     if local_answer:
-        return {"answer": _format_coach_answer(local_answer)}, 200
+        answer = _format_coach_answer(local_answer)
+        if session_id:
+            _save_coach_message_supabase(session_id, "assistant", answer, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
+        return {"answer": answer, "detected_context": context_state, "resolved_question": resolved_question}, 200
 
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
         return {"error": COACH_UNAVAILABLE}, 503
 
     context = _coach_context_summary()
-    history_text = _format_chat_history(history)
+    history_text = _format_chat_history(merged_history)
     try:
         import requests
 
@@ -360,6 +383,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                         "content": (
                             "Tu es Coach, assistant football expert intégré à Akro du Foot. "
                             "Tu réponds en français comme un consultant football moderne : naturel, passionné, clair, précis. "
+                            "Tu dois comprendre les relances courtes grâce au contexte précédent (ex: 'nombre de but', 'et en ligue des champions ?'). "
                             "Tes réponses doivent être très lisibles sur mobile : paragraphes courts, sauts de ligne utiles, jamais de gros bloc compact. "
                             "Sépare les idées après les points importants, avec des paragraphes courts de 2 à 3 phrases maximum. "
                             "Si la réponse dépasse quelques lignes, structure-la avec Résumé, Analyse et Conclusion. "
@@ -378,7 +402,12 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                     },
                     {
                         "role": "user",
-                        "content": f"Données Akro du Foot disponibles:\n{context}\n\nQuestion utilisateur:\n{question}",
+                        "content": (
+                            f"Contexte détecté: {json.dumps(context_state, ensure_ascii=False)}\n"
+                            f"Historique récent:\n{history_text}\n\n"
+                            f"Données Akro du Foot disponibles:\n{context}\n\n"
+                            f"Question utilisateur résolue:\n{resolved_question}"
+                        ),
                     },
                 ],
                 "temperature": 0.35,
@@ -390,7 +419,9 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
             return {"error": COACH_UNAVAILABLE}, 503
         data = response.json()
         answer = _format_coach_answer(_openai_response_text(data))
-        return {"answer": answer or COACH_UNAVAILABLE}, 200
+        if session_id and answer:
+            _save_coach_message_supabase(session_id, "assistant", answer, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
+        return {"answer": answer or COACH_UNAVAILABLE, "detected_context": context_state, "resolved_question": resolved_question}, 200
     except Exception:
         return {"error": COACH_UNAVAILABLE}, 503
 
@@ -709,7 +740,7 @@ def _chat_history(value: Any) -> list[dict[str, str]]:
     if not isinstance(value, list):
         return []
     out: list[dict[str, str]] = []
-    for item in value[-8:]:
+    for item in value[-12:]:
         if not isinstance(item, dict):
             continue
         role = _clean(item.get("role", ""), 16)
@@ -722,7 +753,79 @@ def _chat_history(value: Any) -> list[dict[str, str]]:
 def _format_chat_history(history: list[dict[str, str]]) -> str:
     if not history:
         return "Aucun historique récent."
-    return "\n".join(f"{item['role']}: {item['content']}" for item in history[-8:])
+    return "\n".join(f"{item['role']}: {item['content']}" for item in history[-12:])
+
+
+def _detect_conversation_context(history: list[dict[str, str]], question: str, client_context: dict[str, Any]) -> dict[str, str]:
+    text = _normalize_football_text(" ".join(item.get("content", "") for item in history[-10:]) + " " + question)
+    entity = str(client_context.get("lastEntity", "") or "")
+    entity_type = str(client_context.get("lastEntityType", "") or "")
+    competition = str(client_context.get("lastCompetition", "") or "")
+    season = str(client_context.get("lastSeason", "") or "")
+    intent = str(client_context.get("lastIntent", "") or "")
+
+    players = {"mbappe": "Kylian Mbappé", "messi": "Lionel Messi", "ronaldo": "Cristiano Ronaldo", "haaland": "Erling Haaland"}
+    clubs = {"psg": "PSG", "paris saint germain": "PSG", "om": "OM", "marseille": "OM", "real madrid": "Real Madrid", "barca": "Barcelona", "barcelona": "Barcelona", "manchester city": "Manchester City"}
+    competitions = {"ligue des champions": "Ligue des Champions", "champions league": "Ligue des Champions", "coupe du monde": "Coupe du Monde", "euro": "Euro", "ligue 1": "Ligue 1", "ballon d or": "Ballon d'Or"}
+
+    for key, value in players.items():
+        if key in text:
+            entity, entity_type = value, "player"
+    for key, value in clubs.items():
+        if key in text:
+            entity, entity_type = value, "club"
+    for key, value in competitions.items():
+        if key in text:
+            competition = value
+
+    qn = _normalize_football_text(question)
+    if any(term in qn for term in {"nombre de but", "but", "buts"}):
+        intent = "goals"
+    elif any(term in qn for term in {"passe", "passes", "assist"}):
+        intent = "assists"
+    elif any(term in qn for term in {"compare", "compar"}):
+        intent = "compare"
+    elif any(term in qn for term in {"club", "son club", "ou joue"}):
+        intent = "club"
+    elif any(term in qn for term in {"selection", "sélection", "nation", "sa selection"}):
+        intent = "national_team"
+    elif "stats" in qn or "stat" in qn:
+        intent = "stats"
+
+    if "cette saison" in qn:
+        season = "cette saison"
+    elif any(year in question for year in {"2024", "2025", "2026"}):
+        for year in ("2026", "2025", "2024"):
+            if year in question:
+                season = year
+                break
+
+    return {
+        "lastEntity": entity,
+        "lastEntityType": entity_type,
+        "lastCompetition": competition,
+        "lastSeason": season,
+        "lastIntent": intent,
+    }
+
+
+def _resolve_followup_question(question: str, context_state: dict[str, str]) -> str:
+    qn = _normalize_football_text(question)
+    ambiguous = len(qn.split()) <= 4 or any(term in qn for term in {"et en", "cette saison", "son club", "sa selection", "sa sélection", "nombre de but"})
+    if not ambiguous:
+        return question
+    parts = []
+    if context_state.get("lastEntity"):
+        parts.append(f"sujet={context_state['lastEntity']}")
+    if context_state.get("lastCompetition"):
+        parts.append(f"compétition={context_state['lastCompetition']}")
+    if context_state.get("lastSeason"):
+        parts.append(f"saison={context_state['lastSeason']}")
+    if context_state.get("lastIntent"):
+        parts.append(f"intention={context_state['lastIntent']}")
+    if not parts:
+        return question
+    return f"{question} (contexte conversationnel: {', '.join(parts)})"
 
 
 def _is_correction_message(normalized_text: str) -> bool:
@@ -763,6 +866,20 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
         return "Je dois vérifier cette information, mes données locales ne sont peut-être pas à jour."
 
     player = _find_player_fact(normalized)
+    asks_goals = any(term in normalized for term in {"nombre de but", "combien de but", "combien de buts", "buts", "but"})
+    if player and asks_goals:
+        name = player.get("name") or "ce joueur"
+        source = player.get("source") or "données locales Akro du Foot"
+        goals = player.get("goals") or player.get("goals_total") or player.get("season_goals")
+        if goals not in (None, ""):
+            return (
+                f"Résumé : {name} a marqué {goals} buts selon les données locales."
+                f"\n\nSource locale : {source}."
+            )
+        return (
+            f"Résumé : pour {name}, je n'ai pas le nombre exact de buts dans les données locales actuelles."
+            "\n\nAnalyse : je peux quand même te donner son club, sa sélection et ses stats disponibles, puis affiner si tu précises la compétition ou la saison."
+        )
     if player and any(term in normalized for term in {"ou joue", "club", "joue", "evolue", "mbappe", "pele"}):
         club = player.get("club_current") or player.get("associated_team")
         country = player.get("country")
@@ -1114,6 +1231,15 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/news/refresh":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
+        elif path == "/api/coach/messages":
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            session_id = _clean(_url_decode(query.get("session_id", "")), 120)
+            raw_limit = _clean(_url_decode(query.get("limit", "12")), 8)
+            try:
+                limit = min(30, max(1, int(raw_limit or "12")))
+            except ValueError:
+                limit = 12
+            self._send_json({"messages": _coach_messages_from_supabase(session_id, limit) if session_id else []})
         else:
             self.send_error(404)
 
@@ -1222,6 +1348,40 @@ def _supabase_request(method: str, path: str, **kwargs: Any) -> Any:
     except Exception as exc:
         print(f"[supabase] {method} {path} error: {exc}")
         return None
+
+
+def _coach_messages_from_supabase(session_id: str, limit: int = 12) -> list[dict[str, str]]:
+    if not session_id or not _supabase_enabled():
+        return []
+    rows = _supabase_request(
+        "GET",
+        f"coach_messages?select={SUPABASE_COACH_COLUMNS}&session_id=eq.{quote(session_id, safe='')}&order=created_at.asc&limit={int(limit)}",
+    )
+    if not isinstance(rows, list):
+        return []
+    out: list[dict[str, str]] = []
+    for row in rows:
+        role = "assistant" if str(row.get("role", "")).lower() == "assistant" else "user"
+        content = _clean(row.get("content", ""), 1200)
+        if content:
+            out.append({"role": role, "content": content})
+    return out
+
+
+def _save_coach_message_supabase(session_id: str, role: str, content: str, detected_entity: str = "", detected_intent: str = "") -> None:
+    if not session_id or not _supabase_enabled():
+        return
+    payload = {
+        "session_id": _clean(session_id, 120),
+        "role": "assistant" if role == "assistant" else "user",
+        "content": _clean(content, 2400),
+        "detected_entity": _clean(detected_entity, 120),
+        "detected_intent": _clean(detected_intent, 80),
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    saved = _supabase_request("POST", "coach_messages", json=payload)
+    if saved is None:
+        print(f"[coach] Supabase save message failed session_id={session_id}")
 
 
 def _search_short_answer(text: str) -> str:
