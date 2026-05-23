@@ -372,6 +372,12 @@ if app:
         url, key = _supabase_config()
         return jsonify({"url": url, "anon_key": key, "configured": bool(url and key)})
 
+    @app.post("/api/profile-password/hash")
+    def profile_password_hash():
+        payload = request.get_json(silent=True) or {}
+        body, status = make_profile_password_hash(payload)
+        return jsonify(body), status
+
     @app.get("/api/community/profile")
     def get_community_profile():
         pseudo = _clean(request.args.get("pseudo", ""), 32)
@@ -1474,6 +1480,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/search/coach":
             body, status = search_coach_response(payload)
             self._send_json(body, status)
+        elif path == "/api/profile-password/hash":
+            body, status = make_profile_password_hash(payload)
+            self._send_json(body, status)
         else:
             self.send_error(404)
 
@@ -1532,6 +1541,23 @@ class CommunityHandler(BaseHTTPRequestHandler):
 
 def _supabase_config() -> tuple[str, str]:
     return os.environ.get("SUPABASE_URL", "").rstrip("/"), os.environ.get("SUPABASE_ANON_KEY", "").strip()
+
+
+def make_profile_password_hash(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
+    pseudo = _clean(str(payload.get("pseudo", "")), 48)
+    password = str(payload.get("password", ""))
+    if len(password) < 6 or len(password) > 72:
+        return {"error": "Mot de passe invalide."}, 400
+    normalized = unicodedata.normalize("NFKC", pseudo).strip().casefold()
+    salt = os.urandom(16)
+    material = f"{normalized}:{password}".encode("utf-8")
+    digest = hashlib.pbkdf2_hmac("sha256", material, salt, 210_000)
+    return {
+        "password_hash": "pbkdf2_sha256$210000$"
+        + base64.urlsafe_b64encode(salt).decode("ascii").rstrip("=")
+        + "$"
+        + base64.urlsafe_b64encode(digest).decode("ascii").rstrip("=")
+    }, 200
 
 
 def _supabase_enabled() -> bool:

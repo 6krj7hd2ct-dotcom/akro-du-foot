@@ -9,6 +9,7 @@ create table if not exists public.profiles (
   favorite_club_logo text,
   favorite_nation text,
   favorite_nation_flag text,
+  password_hash text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -19,7 +20,11 @@ alter table public.profiles
   add column if not exists favorite_club text,
   add column if not exists favorite_club_logo text,
   add column if not exists favorite_nation text,
-  add column if not exists favorite_nation_flag text;
+  add column if not exists favorite_nation_flag text,
+  add column if not exists password_hash text;
+
+create unique index if not exists idx_profiles_pseudo_unique_lower
+  on public.profiles (lower(pseudo));
 
 create table if not exists public.predictions (
   id uuid primary key default gen_random_uuid(),
