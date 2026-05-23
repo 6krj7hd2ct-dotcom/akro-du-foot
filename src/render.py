@@ -73,8 +73,8 @@ def _page(data: dict[str, Any]) -> str:
     group_matches = data.get("group_matches", [])
     knockout = data.get("knockout", [])
     today_matches = data.get("today_matches", [])
-    scorers = data.get("top_scorers", [])[:5]
-    assists = data.get("top_assists", [])[:5]
+    scorers = data.get("top_scorers", [])[:3]
+    assists = data.get("top_assists", [])[:3]
     all_time_scorers = data.get("all_time_top_scorers", [])
     champions_all_time_scorers = champions_data.get("all_time_top_scorers", []) if champions_data else []
     group_total = data.get("group_matches_total", _count_matches(group_matches))
@@ -466,29 +466,23 @@ def _page(data: dict[str, Any]) -> str:
     .player-card.big5-card > * {{ position: relative; z-index: 1; }}
     .big5-ticker {{
       position: relative;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      overflow: visible;
       border: 1px solid rgba(245,201,107,0.22);
       border-radius: 18px;
       background: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(18,43,70,0.72));
       box-shadow: 0 18px 44px rgba(0,0,0,0.22);
     }}
-    .big5-ticker::-webkit-scrollbar {{ height: 8px; }}
-    .big5-ticker::-webkit-scrollbar-track {{ background: rgba(255,255,255,0.08); border-radius: 999px; }}
-    .big5-ticker::-webkit-scrollbar-thumb {{ background: rgba(245,201,107,0.55); border-radius: 999px; }}
-    .big5-track {{ display: flex; width: max-content; min-width: 100%; }}
-    .big5-items {{ display: flex; align-items: stretch; gap: 10px; padding: 10px; white-space: nowrap; }}
-    .big5-item {{ width: min(278px, 76vw); flex: 0 0 auto; min-height: 112px; }}
+    .big5-item {{ min-width: 0; min-height: 112px; }}
     .big5-item .player-card {{ height: 100%; padding: 11px 12px; grid-template-columns: 50px minmax(0, 1fr); gap: 10px; }}
     .big5-item .avatar-wrap, .big5-item .avatar {{ width: 50px; height: 50px; }}
     .big5-item .team {{ font-size: 14px; line-height: 1.15; }}
     .big5-item .subtle {{ font-size: 11px; }}
     .big5-item .club-logo {{ width: 18px; height: 18px; flex-basis: 18px; }}
     .big5-item .player-stat {{ font-size: 22px; margin-top: 5px; }}
-    @keyframes big5-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .league-bg-ligue1::before {{ background: linear-gradient(90deg, #0055a4 0 33%, #fff 33% 66%, #ef4135 66%); }}
     .league-bg-laliga::before {{ background: linear-gradient(180deg, #aa151b 0 28%, #f1bf00 28% 72%, #aa151b 72%); }}
     .league-bg-bundesliga::before {{ background: linear-gradient(180deg, #000 0 33%, #dd0000 33% 66%, #ffce00 66%); }}
@@ -940,7 +934,6 @@ def _page(data: dict[str, Any]) -> str:
       .france-header-items {{ gap: 10px; padding: 8px 10px; }}
       .france-header-card {{ width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }}
       .france-header-image {{ width: 56px; height: 48px; }}
-      .big5-track {{ animation-duration: 76s; }}
       .today-strip, .leaders, .news, .grid, .matches {{ grid-template-columns: 1fr; }}
       .calendar-match {{ grid-template-columns: 1fr auto 1fr; }}
       .league-calendar-match {{ grid-template-columns: 1fr; text-align: center; }}
@@ -1006,10 +999,10 @@ def _page(data: dict[str, Any]) -> str:
 
     <section class="today-strip" aria-label="Matchs du jour">{_today_matches(today_matches, group_matches, knockout)}</section>
 
-    {_section_head("Meilleurs buteurs", "Top 5 uniquement, avec photo si la source la fournit.", _all_time_badge("scorers"))}
+    {_section_head("Meilleurs buteurs", "Top 3", _all_time_badge("scorers"))}
     <section class="leaders">{_player_cards(scorers, "buts")}</section>
 
-    {_section_head("Meilleurs passeurs", "Top 5 uniquement, avec photo si la source la fournit.")}
+    {_section_head("Meilleurs passeurs", "Top 3")}
     <section class="leaders">{_player_cards(assists, "passes")}</section>
 
 
@@ -1478,8 +1471,8 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
     matches = data.get("group_matches", [])
     knockout = data.get("knockout", [])
     today_matches = data.get("today_matches", [])
-    scorers = data.get("top_scorers", [])[:5]
-    assists = data.get("top_assists", [])[:5]
+    scorers = data.get("top_scorers", [])[:3]
+    assists = data.get("top_assists", [])[:3]
     news = (data.get("general_news") or data.get("world_cup_news", []))[:6]
     phase_total = data.get("group_matches_total", _count_matches(matches))
     phase_remaining = data.get("group_matches_remaining", _count_remaining_groups(matches))
@@ -1523,10 +1516,10 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
 
       <section class="today-strip" aria-label="Matchs du jour Ligue des Champions">{_today_matches(today_matches, matches, knockout)}</section>
 
-      {_section_head("Meilleurs buteurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.", _all_time_badge("champions-scorers"))}
+      {_section_head("Meilleurs buteurs", "Top 3", _all_time_badge("champions-scorers"))}
       <section class="leaders">{_player_cards(scorers, "buts", prefer_country_flag=True)}</section>
 
-      {_section_head("Meilleurs passeurs", "Top 5 Ligue des Champions, avec photo si la source la fournit.")}
+      {_section_head("Meilleurs passeurs", "Top 3")}
       <section class="leaders">{_player_cards(assists, "passes", prefer_country_flag=True)}</section>
 
 
@@ -1585,10 +1578,10 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
       {_section_head("Meilleurs buteurs des 5 grands championnats", "Le meilleur buteur publié pour chaque championnat.")}
       <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
 
-      {_section_head("Meilleurs buteurs", "Top 5 du championnat sélectionné.")}
+      {_section_head("Meilleurs buteurs", "Top 3")}
       <section class="leaders" id="leagueTopScorers"></section>
 
-      {_section_head("Meilleurs passeurs", "Top 5 du championnat sélectionné, si disponible.")}
+      {_section_head("Meilleurs passeurs", "Top 3")}
       <section class="leaders" id="leagueTopAssists"></section>
 
 
@@ -3057,9 +3050,9 @@ def _leagues_script() -> str:
       if (honoursButton) honoursButton.dataset.alltime = `league-history-${key}`;
       document.getElementById('leagueUpcoming').innerHTML = (league.upcoming_matches || []).slice(0,3).map(leagueMatchCard).join('') || '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong></article>';
       const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
-      document.getElementById('big5TopScorers').innerHTML = big5Items ? `<div class="big5-track"><div class="big5-items">${big5Items}</div></div>` : '<div class="empty">Buteurs indisponibles.</div>';
-      document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,5).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
-      document.getElementById('leagueTopAssists').innerHTML = (league.top_assists || []).slice(0,5).map(player => leaguePlayerCard(player, 'passes', 'club')).join('') || '<div class="empty">Passeurs indisponibles.</div>';
+      document.getElementById('big5TopScorers').innerHTML = big5Items || '<div class="empty">Buteurs indisponibles.</div>';
+      document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,3).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
+      document.getElementById('leagueTopAssists').innerHTML = (league.top_assists || []).slice(0,3).map(player => leaguePlayerCard(player, 'passes', 'club')).join('') || '<div class="empty">Passeurs indisponibles.</div>';
       document.getElementById('leagueStandings').innerHTML = (league.standings || []).map(leagueGroupCard).join('') || '<div class="empty">Classement indisponible.</div>';
       document.getElementById('leagueCalendar').innerHTML = leagueCalendar(matchGroups);
       console.info('[championnats] rendu', key, {
