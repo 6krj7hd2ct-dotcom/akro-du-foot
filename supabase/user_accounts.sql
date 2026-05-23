@@ -63,17 +63,32 @@ create table if not exists public.profile_badges (
   unique(profile_id, badge_key)
 );
 
+create table if not exists public.quiz_results (
+  id uuid primary key default gen_random_uuid(),
+  profile_id uuid not null references public.profiles(id) on delete cascade,
+  difficulty text not null,
+  theme_type text not null,
+  theme_value text not null,
+  score int not null,
+  total_questions int not null default 10,
+  created_at timestamptz not null default now()
+);
+
 create index if not exists idx_predictions_profile_created
   on public.predictions (profile_id, created_at desc);
 
 create index if not exists idx_profile_badges_profile_unlocked
   on public.profile_badges (profile_id, unlocked_at asc);
 
+create index if not exists idx_quiz_results_profile_created
+  on public.quiz_results (profile_id, created_at desc);
+
 grant usage on schema public to authenticated;
 grant select, insert, update on public.profiles to authenticated;
 grant select, insert, update on public.predictions to authenticated;
 grant select, insert, update on public.profile_stats to authenticated;
 grant select, insert, update on public.profile_badges to authenticated;
+grant select, insert on public.quiz_results to authenticated;
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -94,6 +109,7 @@ alter table public.profiles enable row level security;
 alter table public.predictions enable row level security;
 alter table public.profile_stats enable row level security;
 alter table public.profile_badges enable row level security;
+alter table public.quiz_results enable row level security;
 
 drop policy if exists "profiles_select_own" on public.profiles;
 create policy "profiles_select_own"
@@ -169,4 +185,16 @@ create policy "badges_update_own"
 on public.profile_badges for update
 to authenticated
 using (auth.uid() = profile_id)
+with check (auth.uid() = profile_id);
+
+drop policy if exists "quiz_results_select_own" on public.quiz_results;
+create policy "quiz_results_select_own"
+on public.quiz_results for select
+to authenticated
+using (auth.uid() = profile_id);
+
+drop policy if exists "quiz_results_insert_own" on public.quiz_results;
+create policy "quiz_results_insert_own"
+on public.quiz_results for insert
+to authenticated
 with check (auth.uid() = profile_id);
