@@ -171,12 +171,13 @@ def _page(data: dict[str, Any]) -> str:
       background: linear-gradient(90deg, var(--blue), var(--white), var(--red), var(--gold));
       opacity: 0.8;
     }}
-    .app-top {{ position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: end; }}
+    .app-top {{ position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }}
     .app-title {{ font-size: clamp(42px, 8vw, 92px); line-height: 0.9; }}
     .app-copy {{ color: #c5d3e4; max-width: 650px; margin: 12px 0 0; font-size: 16px; line-height: 1.5; }}
-    .global-controls {{ display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; align-items: center; }}
-    .global-search {{ position: relative; min-width: min(320px, 100%); flex: 1 1 280px; max-width: 420px; }}
-    .search-input {{ width: 100%; padding: 12px 42px 12px 14px; border-radius: 999px; border-color: rgba(245,201,107,0.28); background: rgba(4,14,28,0.72); box-shadow: inset 0 1px 0 rgba(255,255,255,0.08); }}
+    .global-controls {{ display: grid; gap: 12px; justify-items: start; align-items: start; max-width: min(760px, 100%); }}
+    .global-actions {{ display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; align-items: center; padding-left: 2px; }}
+    .global-search {{ position: relative; width: min(720px, 100%); max-width: 100%; }}
+    .search-input {{ width: 100%; padding: 14px 46px 14px 17px; border-radius: 999px; border-color: rgba(245,201,107,0.30); background: rgba(4,14,28,0.74); box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 16px 38px rgba(0,0,0,0.18); font-size: 15px; }}
     .search-icon {{ position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); font-weight: 950; pointer-events: none; }}
     .search-results {{ position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; right: 0; display: none; max-height: min(430px, 70vh); overflow-y: auto; padding: 8px; border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; background: rgba(5,16,31,0.98); box-shadow: var(--shadow); backdrop-filter: blur(16px); }}
     .search-results.is-open {{ display: grid; gap: 8px; }}
@@ -802,8 +803,9 @@ def _page(data: dict[str, Any]) -> str:
     @media (max-width: 860px) {{
       main {{ width: min(100% - 20px, 1240px); padding-top: 14px; }}
       .app-top {{ grid-template-columns: 1fr; align-items: start; }}
-      .global-controls {{ justify-content: flex-start; }}
-      .global-search {{ order: -1; max-width: none; width: 100%; }}
+      .global-controls {{ width: 100%; max-width: none; }}
+      .global-search {{ max-width: none; width: 100%; }}
+      .global-actions {{ width: 100%; }}
       .mercato-ticker {{ grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }}
       .mercato-badge {{ min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }}
       .mercato-track, .mercato-link, .mercato-item-break {{ height: 50px; }}
@@ -847,6 +849,7 @@ def _page(data: dict[str, Any]) -> str:
       .app-title {{ font-size: clamp(34px, 12vw, 44px); }}
       .app-copy {{ font-size: 14px; }}
       .global-controls {{ width: 100%; }}
+      .global-actions {{ width: 100%; }}
       .action-button {{ flex: 1 1 130px; text-align: center; }}
       .mercato-link {{ font-size: 12px; max-width: 78vw; }}
       .mercato-title {{ font-size: 12px; max-width: 48vw; }}
@@ -1194,9 +1197,11 @@ def _app_header() -> str:
             <span class="search-icon" aria-hidden="true">⌕</span>
             <div class="search-results" id="globalSearchResults" role="listbox" aria-label="Résultats de recherche"></div>
           </div>
-          <button class="action-button" type="button" id="shareButton">Partager</button>
-          <button class="action-button" type="button" id="chatbotButton">Coach</button>
-          <a class="action-button" href="/watch-party">Watch Party</a>
+          <div class="global-actions" aria-label="Actions rapides">
+            <button class="action-button" type="button" id="shareButton">Partager</button>
+            <button class="action-button" type="button" id="chatbotButton">Coach</button>
+            <a class="action-button" href="/watch-party">Watch Party</a>
+          </div>
         </div>
       </div>
     </header>
