@@ -472,11 +472,25 @@ FALLBACK_UCL_ALL_TIME_SCORERS = [
 
 
 
+FETCH_RETRY_COUNT = max(1, int(os.environ.get("AKRO_FETCH_RETRIES", "2")))
+
+
 def fetch_mercato_live(limit: int = 18) -> list[dict[str, Any]]:
-    try:
-        response = requests.get(MERCATO_LIVE_URL, headers=REQUEST_HEADERS, timeout=MERCATO_LIVE_TIMEOUT_SECONDS)
-        response.raise_for_status()
-    except requests.RequestException:
+    last_error = ""
+    for attempt in range(1, FETCH_RETRY_COUNT + 1):
+        print(f"[source] appel Mercato Live tentative {attempt}/{FETCH_RETRY_COUNT}: {MERCATO_LIVE_URL}", flush=True)
+        try:
+            response = requests.get(MERCATO_LIVE_URL, headers=REQUEST_HEADERS, timeout=MERCATO_LIVE_TIMEOUT_SECONDS)
+            response.raise_for_status()
+            if response.text.strip():
+                print(f"[source] ok Mercato Live tentative {attempt}", flush=True)
+                break
+            last_error = "réponse vide"
+        except requests.RequestException as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+            print(f"[source] échec Mercato Live tentative {attempt}: {last_error}", flush=True)
+    else:
+        print(f"[source] abandon Mercato Live: {last_error}", flush=True)
         return []
     soup = BeautifulSoup(response.text, "html.parser")
     items: list[dict[str, Any]] = []
@@ -1938,13 +1952,19 @@ def _fetch_global_news_feed(feed: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _download_news_feed(url: str) -> str:
-    try:
-        response = requests.get(url, headers=REQUEST_HEADERS, timeout=GLOBAL_NEWS_FEED_TIMEOUT_SECONDS)
-        if response.status_code == 200 and response.text.strip():
-            return response.text
-    except requests.RequestException:
-        pass
-    raise ValueError(f"flux actualités indisponible pour {url}")
+    last_error = ""
+    for attempt in range(1, FETCH_RETRY_COUNT + 1):
+        print(f"[source] appel flux tentative {attempt}/{FETCH_RETRY_COUNT}: {url}", flush=True)
+        try:
+            response = requests.get(url, headers=REQUEST_HEADERS, timeout=GLOBAL_NEWS_FEED_TIMEOUT_SECONDS)
+            if response.status_code == 200 and response.text.strip():
+                print(f"[source] ok flux tentative {attempt}: {url}", flush=True)
+                return response.text
+            last_error = f"status={response.status_code} taille={len(response.text or '')}"
+        except requests.RequestException as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+        print(f"[source] échec flux tentative {attempt}: {url} ({last_error})", flush=True)
+    raise ValueError(f"flux actualités indisponible pour {url} ({last_error})")
 
 
 def filter_news_articles(articles: list[dict[str, Any]], filter_key: str = "all") -> list[dict[str, Any]]:
@@ -2285,13 +2305,19 @@ def _fetch_dedicated_source_page(source: dict[str, Any]) -> list[dict[str, Any]]
 
 
 def _download_news_page(url: str) -> str:
-    try:
-        response = requests.get(url, headers=REQUEST_HEADERS, timeout=NEWS_PAGE_TIMEOUT_SECONDS)
-        if response.status_code == 200 and response.text.strip():
-            return response.text
-    except requests.RequestException:
-        pass
-    raise ValueError(f"actualités indisponibles pour {url}")
+    last_error = ""
+    for attempt in range(1, FETCH_RETRY_COUNT + 1):
+        print(f"[source] appel actualités tentative {attempt}/{FETCH_RETRY_COUNT}: {url}", flush=True)
+        try:
+            response = requests.get(url, headers=REQUEST_HEADERS, timeout=NEWS_PAGE_TIMEOUT_SECONDS)
+            if response.status_code == 200 and response.text.strip():
+                print(f"[source] ok actualités tentative {attempt}: {url}", flush=True)
+                return response.text
+            last_error = f"status={response.status_code} taille={len(response.text or '')}"
+        except requests.RequestException as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+        print(f"[source] échec actualités tentative {attempt}: {url} ({last_error})", flush=True)
+    raise ValueError(f"actualités indisponibles pour {url} ({last_error})")
 
 
 def _parse_dedicated_news_text(text: str) -> tuple[str, str]:
@@ -2623,25 +2649,35 @@ def _news_source_names(feeds: list[dict[str, Any]]) -> list[str]:
 
 
 def _safe_fetch(label: str, fetcher, errors: list[str]):
-    print(f"Récupération : {label}...", flush=True)
-    try:
-        result = fetcher()
-        print(f"OK : {label}", flush=True)
-        return result
-    except Exception as exc:  # noqa: BLE001 - le dashboard doit rester générable.
-        errors.append(f"{label}: {type(exc).__name__}")
-        print(f"Source indisponible : {label} ({type(exc).__name__})", flush=True)
-        return []
+    last_error = ""
+    for attempt in range(1, FETCH_RETRY_COUNT + 1):
+        print(f"[source] appel {label} tentative {attempt}/{FETCH_RETRY_COUNT}", flush=True)
+        try:
+            result = fetcher()
+            print(f"[source] ok {label} tentative {attempt}", flush=True)
+            return result
+        except Exception as exc:  # noqa: BLE001 - le dashboard doit rester générable.
+            last_error = f"{type(exc).__name__}: {exc}"
+            print(f"[source] échec {label} tentative {attempt}: {last_error}", flush=True)
+    errors.append(f"{label}: {last_error or 'erreur inconnue'}")
+    print(f"[source] abandon {label}: {last_error or 'erreur inconnue'}", flush=True)
+    return []
 
 
 def _download(url: str) -> str:
     response = None
-    try:
-        response = requests.get(url, headers=REQUEST_HEADERS, timeout=REQUEST_TIMEOUT_SECONDS)
-        if response.status_code == 200 and response.text.strip():
-            return response.text
-    except requests.RequestException:
-        pass
+    last_error = ""
+    for attempt in range(1, FETCH_RETRY_COUNT + 1):
+        print(f"[source] appel HTTP tentative {attempt}/{FETCH_RETRY_COUNT}: {url}", flush=True)
+        try:
+            response = requests.get(url, headers=REQUEST_HEADERS, timeout=REQUEST_TIMEOUT_SECONDS)
+            if response.status_code == 200 and response.text.strip():
+                print(f"[source] ok HTTP tentative {attempt}: {url}", flush=True)
+                return response.text
+            last_error = f"status={response.status_code} taille={len(response.text or '')}"
+        except requests.RequestException as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+        print(f"[source] échec HTTP tentative {attempt}: {url} ({last_error})", flush=True)
 
     # ESPN renvoie parfois une réponse 202 vide aux clients Python, même avec
     # un User-Agent navigateur. curl récupère la même page publique correctement.
@@ -2667,7 +2703,7 @@ def _download(url: str) -> str:
 
     if response is not None:
         response.raise_for_status()
-    raise ValueError(f"réponse vide pour {url}")
+    raise ValueError(f"réponse vide pour {url} ({last_error})")
 
 
 def _download_json(url: str) -> dict[str, Any]:

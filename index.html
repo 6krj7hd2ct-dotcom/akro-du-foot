@@ -677,8 +677,8 @@
     .community-predictions { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(240px, 0.52fr); gap: 16px; align-items: start; }
     .community-side { min-width: 0; }
     .follow-zone { display: grid; gap: 12px; }
-    .live-section-title { align-items: center; }
-    .live-title-actions { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .live-section-title { align-items: center; justify-content: space-between; }
+    .live-title-actions { display: inline-flex; align-items: center; gap: 8px; flex-wrap: nowrap; min-width: 0; }
     .live-refresh-button {
       appearance: none;
       width: 30px;
@@ -699,7 +699,7 @@
     .live-refresh-button:hover, .live-refresh-button:focus-visible { border-color: rgba(245,201,107,0.48); background: rgba(245,201,107,0.13); outline: none; }
     .live-refresh-button.is-loading { animation: liveRefreshSpin .8s linear infinite; pointer-events: none; }
     @keyframes liveRefreshSpin { to { transform: rotate(360deg); } }
-    .live-update-meta { min-height: 16px; color: var(--muted); font-size: 12px; font-weight: 850; }
+    .live-update-meta { min-height: 0; color: var(--muted); font-size: 12px; font-weight: 850; white-space: nowrap; }
     .live-update-meta.is-error { color: #ffb4bd; }
     .follow-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .follow-card { padding: 13px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: radial-gradient(circle at center, rgba(245,201,107,0.10), transparent 18rem), rgba(255,255,255,0.055); }
@@ -838,6 +838,9 @@
       .mercato-ticker { grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }
       .mercato-under-tabs { margin: -2px 0 16px; }
       .live-main-ticker.is-fixed { width: min(100% - 20px, 1240px); }
+      .live-section-title { align-items: flex-start; }
+      .live-title-actions { width: 100%; overflow-x: auto; scrollbar-width: none; }
+      .live-title-actions::-webkit-scrollbar { display: none; }
       .tabs-nav { top: 68px; }
       .mercato-badge { min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }
       .mercato-track, .mercato-link, .mercato-item-break { height: 50px; }
@@ -957,8 +960,7 @@
     </div>
     <section class="community-grid">
       <article class="card community-panel follow-zone">
-        <div class="section-title live-section-title"><h3>Match en direct</h3><div class="live-title-actions"><span class="alltime-badge" id="followMode">Aujourd’hui</span><button class="live-refresh-button" type="button" id="liveRefreshButton" aria-label="Rafraîchir les scores" title="Rafraîchir les scores">↻</button></div></div>
-        <div class="live-update-meta" id="liveUpdateMeta">Dernière mise à jour : chargement...</div>
+        <div class="section-title live-section-title"><h3>Match en direct</h3><div class="live-title-actions"><span class="alltime-badge" id="followMode">Aujourd’hui</span><button class="live-refresh-button" type="button" id="liveRefreshButton" aria-label="Rafraîchir les scores" title="Rafraîchir les scores">↻</button><span class="live-update-meta" id="liveUpdateMeta">Dernière mise à jour : chargement...</span></div></div>
         <div class="follow-list" id="communityFollowMatches"></div>
         <div class="favorite-matches-block" aria-label="Prochains matchs favoris">
           <h4>Prochains matchs favoris</h4>
@@ -1028,8 +1030,31 @@
 
     <section class="mercato-ticker mercato-under-tabs" aria-label="Mercato live">
       <div class="mercato-badge">Mercato Live</div>
-      <div class="mercato-empty">Mercato Live indisponible pour le moment</div>
+      <div class="mercato-empty" id="mercatoLiveFallback">Chargement Mercato Live...</div>
     </section>
+    <script>
+      (() => {
+        const ticker = document.querySelector('.mercato-under-tabs');
+        const clean = value => String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+        const itemMarkup = item => {
+          const title = clean(String(item.title || 'Info mercato').replace(/\bSuivant\b/gi, '').replace(/\s{2,}/g, ' ').trim());
+          const url = clean(item.url || 'https://www.mercatolive.fr/');
+          const source = clean(item.source || 'Mercato Live');
+          const time = item.published_at ? `<span class="mercato-time">${clean(item.published_at)}</span><span class="mercato-sep">·</span>` : '';
+          const entity = item.club || item.player ? `<span class="mercato-entity">${clean(item.club || item.player)}</span><span class="mercato-sep">·</span>` : '';
+          return `<a class="mercato-link" href="${url}" target="_blank" rel="noreferrer" title="${title}">${time}${entity}<span class="mercato-title">Mercato : ${title}</span><span class="mercato-sep">·</span><span class="mercato-source">${source}</span></a>`;
+        };
+        fetch('/api/mercato-live', {cache: 'no-store'})
+          .then(response => response.ok ? response.json() : null)
+          .then(data => {
+            const items = (data && Array.isArray(data.items) ? data.items : []).filter(item => item && item.title && item.url).slice(0, 18);
+            if (!ticker || !items.length) return;
+            const rendered = items.map(itemMarkup).join('<span class="mercato-item-break">•</span>');
+            ticker.innerHTML = `<div class="mercato-badge">Mercato Live</div><div class="mercato-track"><div class="mercato-marquee"><div class="mercato-items">${rendered}</div><div class="mercato-items" aria-hidden="true">${rendered}</div></div></div>`;
+          })
+          .catch(error => console.warn('[mercato-live] cache indisponible', error));
+      })();
+    </script>
 
     
     <section class="tab-panel is-active" id="tab-news" data-tab-panel="news">
@@ -1119,7 +1144,7 @@
     </nav>
     
 
-    <section class="notice">8 sources n’ont pas répondu pendant la dernière mise à jour. Le dashboard reste généré avec les données disponibles ; relance la mise à jour plus tard si une section est vide.</section>
+    
 
     <section class="today-strip" aria-label="Matchs du jour"><article class="today-tile"><div class="subtle today-meta">11/06/2026 · 21:00</div><div class="today-teams"><div class="today-team"><button class="team team-button" type="button" data-team="Mexico"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/mex.png" alt="">Mexico</button></div><div class="today-score">21:00<br><span class="status">À venir</span></div><div class="today-team"><button class="team team-button" type="button" data-team="South Africa"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/rsa.png" alt="">South Africa</button></div></div><div class="subtle" style="text-align:center;margin-top:12px">Estadio Banorte, Mexico City</div></article></section>
 
@@ -1221,7 +1246,7 @@
     </nav>
     
 
-      <section class="notice">9 sources n’ont pas répondu pendant la dernière mise à jour. Le dashboard reste généré avec les données disponibles ; relance la mise à jour plus tard si une section est vide.</section>
+      
 
       <section class="today-strip" aria-label="Matchs du jour Ligue des Champions"><article class="today-tile"><div class="subtle today-meta">30/05/2026 · 18:00</div><div class="today-teams"><div class="today-team"><button class="team team-button" type="button" data-team="Paris Saint-Germain"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt="">Paris Saint-Germain</button></div><div class="today-score">18:00<br><span class="status">À venir</span></div><div class="today-team"><button class="team team-button" type="button" data-team="Arsenal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt="">Arsenal</button></div></div><div class="subtle" style="text-align:center;margin-top:12px">Puskás Aréna, Budapest</div></article></section>
 
@@ -1299,7 +1324,7 @@
     </nav>
     
 
-      <section class="notice">35 sources n’ont pas répondu pendant la dernière mise à jour. Le dashboard reste généré avec les données disponibles ; relance la mise à jour plus tard si une section est vide.</section>
+      
 
       <section class="today-strip" id="leagueUpcoming" aria-label="Matchs à venir championnat"></section>
 

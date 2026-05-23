@@ -24,7 +24,17 @@ def main() -> None:
         news_data = fetch_all_news(previous=previous_news.get("all_articles") or previous_news.get("articles") or [])
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
     mercato_items = fetch_mercato_live()
-    mercato_data = {"items": mercato_items or previous_mercato.get("items", []), "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}
+    mercado_generated = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    mercado_fallback = not bool(mercato_items) and bool(previous_mercato.get("items"))
+    mercado_source_items = mercato_items or previous_mercato.get("items", [])
+    mercato_data = {
+        "items": mercado_source_items,
+        "source": "Mercato Live",
+        "url": "https://www.mercatolive.fr/",
+        "generated_at": previous_mercato.get("generated_at") if mercado_fallback else mercado_generated,
+        "fallback": mercado_fallback,
+        "errors": ["Mercato Live indisponible : conservation du dernier cache valide."] if mercado_fallback else [],
+    }
     _clear_competition_news(worldcup_data)
     _clear_competition_news(champions_league_data)
     _clear_leagues_news(leagues_data)
@@ -270,7 +280,11 @@ def _merge_leagues_refresh(previous_data: dict[str, Any] | None, refreshed_data:
                     merged[field] = _merge_team_footmercato_cache(previous_league.get(field), league[field]) if field == "teams_details" else league[field]
             leagues[key] = merged
         else:
-            leagues[key] = league
+            merged = dict(league)
+            for field in ("standings", "group_matches", "fixtures", "today_matches", "upcoming_matches", "top_scorers", "top_assists", "teams_details"):
+                if not merged.get(field) and previous_league.get(field):
+                    merged[field] = previous_league[field]
+            leagues[key] = merged
     data["leagues"] = leagues
     if not data.get("big5_top_scorers"):
         data["big5_top_scorers"] = previous_data.get("big5_top_scorers", [])
@@ -323,6 +337,22 @@ def _read_cache(path) -> dict[str, Any] | None:
 
 def _merge_refresh(previous_data: dict[str, Any] | None, refreshed_data: dict[str, Any]) -> dict[str, Any]:
     if not (_is_failed_refresh(refreshed_data) and previous_data and _has_core_data(previous_data)):
+        if previous_data:
+            data = dict(refreshed_data)
+            for key in (
+                "standings",
+                "group_matches",
+                "knockout",
+                "today_matches",
+                "top_scorers",
+                "top_assists",
+                "all_time_top_scorers",
+                "teams_details",
+                "players_index",
+            ):
+                if not data.get(key) and previous_data.get(key):
+                    data[key] = previous_data[key]
+            return data
         return refreshed_data
 
     data = dict(previous_data)

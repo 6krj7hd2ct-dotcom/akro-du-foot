@@ -758,8 +758,8 @@ def _page(data: dict[str, Any]) -> str:
     .community-predictions {{ display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(240px, 0.52fr); gap: 16px; align-items: start; }}
     .community-side {{ min-width: 0; }}
     .follow-zone {{ display: grid; gap: 12px; }}
-    .live-section-title {{ align-items: center; }}
-    .live-title-actions {{ display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
+    .live-section-title {{ align-items: center; justify-content: space-between; }}
+    .live-title-actions {{ display: inline-flex; align-items: center; gap: 8px; flex-wrap: nowrap; min-width: 0; }}
     .live-refresh-button {{
       appearance: none;
       width: 30px;
@@ -780,7 +780,7 @@ def _page(data: dict[str, Any]) -> str:
     .live-refresh-button:hover, .live-refresh-button:focus-visible {{ border-color: rgba(245,201,107,0.48); background: rgba(245,201,107,0.13); outline: none; }}
     .live-refresh-button.is-loading {{ animation: liveRefreshSpin .8s linear infinite; pointer-events: none; }}
     @keyframes liveRefreshSpin {{ to {{ transform: rotate(360deg); }} }}
-    .live-update-meta {{ min-height: 16px; color: var(--muted); font-size: 12px; font-weight: 850; }}
+    .live-update-meta {{ min-height: 0; color: var(--muted); font-size: 12px; font-weight: 850; white-space: nowrap; }}
     .live-update-meta.is-error {{ color: #ffb4bd; }}
     .follow-list {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }}
     .follow-card {{ padding: 13px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: radial-gradient(circle at center, rgba(245,201,107,0.10), transparent 18rem), rgba(255,255,255,0.055); }}
@@ -882,6 +882,9 @@ def _page(data: dict[str, Any]) -> str:
       .mercato-ticker {{ grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }}
       .mercato-under-tabs {{ margin: -2px 0 16px; }}
       .live-main-ticker.is-fixed {{ width: min(100% - 20px, 1240px); }}
+      .live-section-title {{ align-items: flex-start; }}
+      .live-title-actions {{ width: 100%; overflow-x: auto; scrollbar-width: none; }}
+      .live-title-actions::-webkit-scrollbar {{ display: none; }}
       .tabs-nav {{ top: 68px; }}
       .mercato-badge {{ min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }}
       .mercato-track, .mercato-link, .mercato-item-break {{ height: 50px; }}
@@ -1912,8 +1915,7 @@ def _community_section() -> str:
     </div>
     <section class="community-grid">
       <article class="card community-panel follow-zone">
-        <div class="section-title live-section-title"><h3>Match en direct</h3><div class="live-title-actions"><span class="alltime-badge" id="followMode">Aujourd’hui</span><button class="live-refresh-button" type="button" id="liveRefreshButton" aria-label="Rafraîchir les scores" title="Rafraîchir les scores">↻</button></div></div>
-        <div class="live-update-meta" id="liveUpdateMeta">Dernière mise à jour : chargement...</div>
+        <div class="section-title live-section-title"><h3>Match en direct</h3><div class="live-title-actions"><span class="alltime-badge" id="followMode">Aujourd’hui</span><button class="live-refresh-button" type="button" id="liveRefreshButton" aria-label="Rafraîchir les scores" title="Rafraîchir les scores">↻</button><span class="live-update-meta" id="liveUpdateMeta">Dernière mise à jour : chargement...</span></div></div>
         <div class="follow-list" id="communityFollowMatches"></div>
         <div class="favorite-matches-block" aria-label="Prochains matchs favoris">
           <h4>Prochains matchs favoris</h4>

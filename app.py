@@ -60,9 +60,10 @@ COMMUNITY_LEVELS = [
 ]
 
 SUPABASE_TIMEOUT = 8
-SUPABASE_USER_COLUMNS = "id,pseudo,total_points,predictions_count,current_badge,success_rate,created_at,updated_at"
-SUPABASE_PREDICTION_COLUMNS = "id,user_id,pseudo,match_id,home_score,away_score,points,created_at,updated_at"
-SUPABASE_BADGE_COLUMNS = "id,name,level,icon,min_predictions"
+SUPABASE_PROFILE_COLUMNS = "id,pseudo,avatar_url,favorite_club,favorite_club_logo,favorite_nation,favorite_nation_flag,created_at,updated_at"
+SUPABASE_PROFILE_STATS_COLUMNS = "id,profile_id,total_predictions,correct_scores,correct_results,total_points,rank,updated_at"
+SUPABASE_PREDICTION_COLUMNS = "id,profile_id,match_id,home_team,away_team,predicted_home_score,predicted_away_score,actual_home_score,actual_away_score,status,points,created_at"
+SUPABASE_PROFILE_BADGE_COLUMNS = "id,profile_id,badge_key,badge_name,unlocked_at"
 SUPABASE_COACH_COLUMNS = "id,session_id,role,content,detected_entity,detected_intent,created_at"
 BUILD_VERSION_TOKEN = "__AKRO_BUILD_VERSION__"
 NO_STORE_CACHE_CONTROL = "no-store, no-cache, must-revalidate, max-age=0"
@@ -1408,6 +1409,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/news/refresh":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
+        elif path == "/api/mercato-live":
+            self._send_json(_read_json(MERCATO_LIVE_CACHE_FILE, {"items": [], "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}))
         elif path == "/api/coach/messages":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             session_id = _clean(_url_decode(query.get("session_id", "")), 120)
@@ -1633,30 +1636,31 @@ def _search_ai_answer_upsert(query: str, normalized_query: str, answer: str, ent
 def _read_supabase_community(matches: dict[str, dict[str, Any]]) -> dict[str, Any]:
     if not _supabase_enabled():
         return {"available": False}
-    users = _supabase_request("GET", f"users?select={SUPABASE_USER_COLUMNS}&order=total_points.desc.nullslast")
+    profiles = _supabase_request("GET", f"profiles?select={SUPABASE_PROFILE_COLUMNS}&order=created_at.desc")
     predictions = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&order=created_at.desc")
-    if users is None or predictions is None:
+    if profiles is None or predictions is None:
         return {"available": False}
-    user_by_id = {str(user.get("id")): user for user in users if user.get("id") is not None}
-    user_by_pseudo = {str(user.get("pseudo")): user for user in users if user.get("pseudo")}
-    normalized_predictions = [_prediction_from_supabase(row, user_by_id) for row in predictions]
+    profile_by_id = {str(profile.get("id")): profile for profile in profiles if profile.get("id") is not None}
+    profile_by_pseudo = {str(profile.get("pseudo")): profile for profile in profiles if profile.get("pseudo")}
+    normalized_predictions = [_prediction_from_supabase(row, profile_by_id) for row in predictions]
     return {
         "available": True,
-        "users": users,
+        "users": profiles,
         "predictions": normalized_predictions,
-        "badges": _read_supabase_badges_by_user(user_by_id, user_by_pseudo),
+        "badges": _read_supabase_badges_by_user(profile_by_id, profile_by_pseudo),
     }
 
 
 def _prediction_from_supabase(row: dict[str, Any], user_by_id: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    user = user_by_id.get(str(row.get("user_id")), {})
+    profile_id = row.get("profile_id") or row.get("user_id")
+    user = user_by_id.get(str(profile_id), {})
     return {
         "id": row.get("id"),
-        "user_id": row.get("user_id"),
+        "user_id": profile_id,
         "pseudo": row.get("pseudo") or user.get("pseudo") or "",
         "match_id": row.get("match_id", ""),
-        "home_score": row.get("home_score"),
-        "away_score": row.get("away_score"),
+        "home_score": row.get("predicted_home_score", row.get("home_score")),
+        "away_score": row.get("predicted_away_score", row.get("away_score")),
         "stored_points": row.get("points", 0),
         "created_at": row.get("created_at", ""),
         "updated_at": row.get("updated_at", ""),
@@ -1664,27 +1668,25 @@ def _prediction_from_supabase(row: dict[str, Any], user_by_id: dict[str, dict[st
 
 
 def _read_supabase_badges_by_user(user_by_id: dict[str, dict[str, Any]], user_by_pseudo: dict[str, dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
-    badges_by_id = _supabase_badge_catalog()
-    if not badges_by_id:
-        return {}
-    rows = _supabase_request("GET", "user_badges?select=*&order=earned_at.asc")
+    rows = _supabase_request("GET", f"profile_badges?select={SUPABASE_PROFILE_BADGE_COLUMNS}&order=unlocked_at.asc")
     if rows is None:
         return {}
     out: dict[str, list[dict[str, Any]]] = {}
     for row in rows:
-        user = user_by_id.get(str(row.get("user_id")), {})
+        user = user_by_id.get(str(row.get("profile_id")), {})
         pseudo = str(user.get("pseudo") or row.get("pseudo") or "")
-        badge = badges_by_id.get(str(row.get("badge_id"))) or {}
-        if pseudo and badge:
+        badge = {
+            "name": row.get("badge_name") or row.get("badge_key") or "Badge",
+            "badge_key": row.get("badge_key"),
+            "earned_at": row.get("unlocked_at"),
+        }
+        if pseudo:
             out.setdefault(pseudo, []).append(badge)
     return out
 
 
 def _supabase_badge_catalog() -> dict[str, dict[str, Any]]:
-    rows = _supabase_request("GET", f"badges?select={SUPABASE_BADGE_COLUMNS}&order=min_predictions.asc")
-    if rows is None:
-        return {}
-    return {str(row.get("id")): row for row in rows if row.get("id") is not None}
+    return {}
 
 
 def _save_prediction_supabase(pseudo: str, match_id: str, home_score: int, away_score: int, matches: dict[str, dict[str, Any]]) -> bool:
@@ -1696,15 +1698,19 @@ def _save_prediction_supabase(pseudo: str, match_id: str, home_score: int, away_
     match = matches.get(match_id)
     points = _points({"match_id": match_id, "home_score": home_score, "away_score": away_score}, match)
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    existing = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&user_id=eq.{quote(str(user.get('id')), safe='')}&match_id=eq.{quote(match_id, safe='')}&limit=1")
+    profile_id = str(user.get("id") or "")
+    existing = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&profile_id=eq.{quote(profile_id, safe='')}&match_id=eq.{quote(match_id, safe='')}&limit=1")
     payload = {
-        "user_id": user.get("id"),
-        "pseudo": pseudo,
+        "profile_id": profile_id,
         "match_id": match_id,
-        "home_score": home_score,
-        "away_score": away_score,
+        "home_team": str((match or {}).get("home_team") or ""),
+        "away_team": str((match or {}).get("away_team") or ""),
+        "predicted_home_score": home_score,
+        "predicted_away_score": away_score,
+        "actual_home_score": _to_score((match or {}).get("home_score")),
+        "actual_away_score": _to_score((match or {}).get("away_score")),
+        "status": "completed" if (match or {}).get("completed") else "pending",
         "points": points,
-        "updated_at": now,
     }
     if existing:
         saved = _supabase_request("PATCH", f"predictions?id=eq.{quote(str(existing[0].get('id')), safe='')}", json=payload)
@@ -1713,29 +1719,20 @@ def _save_prediction_supabase(pseudo: str, match_id: str, home_score: int, away_
         saved = _supabase_request("POST", "predictions", json=payload)
     if saved is None:
         return False
-    _sync_supabase_user_totals(str(user.get("id")), pseudo, matches)
+    _sync_supabase_user_totals(profile_id, pseudo, matches)
     return True
 
 
 def _supabase_get_or_create_user(pseudo: str) -> dict[str, Any] | None:
-    existing = _supabase_request("GET", f"users?select={SUPABASE_USER_COLUMNS}&pseudo=eq.{quote(pseudo, safe='')}&limit=1")
+    existing = _supabase_request("GET", f"profiles?select={SUPABASE_PROFILE_COLUMNS}&pseudo=eq.{quote(pseudo, safe='')}&limit=1")
     if existing:
         return existing[0]
-    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    created = _supabase_request(
-        "POST",
-        "users",
-        json={"pseudo": pseudo, "total_points": 0, "predictions_count": 0, "success_rate": 0, "created_at": now, "updated_at": now},
-    )
-    if created:
-        return created[0]
-    # If the table does not expose all optional columns, retry with the strict minimum.
-    created = _supabase_request("POST", "users", json={"pseudo": pseudo})
-    return created[0] if created else None
+    print("[supabase] profil introuvable par pseudo; création serveur ignorée car profiles.id doit venir de Supabase Auth")
+    return None
 
 
 def _sync_supabase_user_totals(user_id: str, pseudo: str, matches: dict[str, dict[str, Any]]) -> None:
-    rows = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&user_id=eq.{quote(user_id, safe='')}")
+    rows = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&profile_id=eq.{quote(user_id, safe='')}")
     if rows is None:
         return
     predictions = [_prediction_from_supabase(row, {user_id: {"pseudo": pseudo}}) for row in rows]
@@ -1747,13 +1744,18 @@ def _sync_supabase_user_totals(user_id: str, pseudo: str, matches: dict[str, dic
     success_rate = round((correct / len(completed)) * 100) if completed else 0
     level = _community_level(count)
     patch = {
+        "profile_id": user_id,
+        "total_predictions": count,
+        "correct_scores": len([item for item in completed if int(item.get("points", 0) or 0) >= 3]),
+        "correct_results": correct,
         "total_points": points,
-        "predictions_count": count,
-        "success_rate": success_rate,
-        "current_badge": level["level"],
         "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
-    _supabase_request("PATCH", f"users?id=eq.{quote(user_id, safe='')}", json=patch)
+    existing = _supabase_request("GET", f"profile_stats?select={SUPABASE_PROFILE_STATS_COLUMNS}&profile_id=eq.{quote(user_id, safe='')}&limit=1")
+    if existing:
+        _supabase_request("PATCH", f"profile_stats?profile_id=eq.{quote(user_id, safe='')}", json=patch)
+    else:
+        _supabase_request("POST", "profile_stats", json=patch)
     _award_supabase_badge(user_id, level)
     _sync_supabase_prediction_points(scored)
 
@@ -1769,30 +1771,19 @@ def _sync_supabase_prediction_points(predictions: list[dict[str, Any]]) -> None:
 
 
 def _award_supabase_badge(user_id: str, level: dict[str, Any]) -> None:
-    badge = _ensure_supabase_badge(level)
-    if not badge or not badge.get("id"):
-        return
-    existing = _supabase_request("GET", f"user_badges?select=*&user_id=eq.{quote(user_id, safe='')}&badge_id=eq.{quote(str(badge.get('id')), safe='')}&limit=1")
+    badge_key = str(level.get("level") or level.get("badge") or "badge")
+    existing = _supabase_request("GET", f"profile_badges?select={SUPABASE_PROFILE_BADGE_COLUMNS}&profile_id=eq.{quote(user_id, safe='')}&badge_key=eq.{quote(badge_key, safe='')}&limit=1")
     if existing:
         return
     _supabase_request(
         "POST",
-        "user_badges",
-        json={"user_id": user_id, "badge_id": badge.get("id"), "earned_at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
+        "profile_badges",
+        json={"profile_id": user_id, "badge_key": badge_key, "badge_name": str(level.get("level") or "Badge"), "unlocked_at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
     )
 
 
 def _ensure_supabase_badge(level: dict[str, Any]) -> dict[str, Any] | None:
-    name = str(level.get("level") or level.get("badge") or "Badge")
-    existing = _supabase_request("GET", f"badges?select={SUPABASE_BADGE_COLUMNS}&name=eq.{quote(name, safe='')}&limit=1")
-    if existing:
-        return existing[0]
-    created = _supabase_request(
-        "POST",
-        "badges",
-        json={"name": name, "level": level.get("level_index"), "icon": level.get("badge_icon"), "min_predictions": max(0, (int(level.get("level_index", 1)) - 1) * 10)},
-    )
-    return created[0] if created else None
+    return None
 
 
 def _icon_content_type(path: str) -> str:
