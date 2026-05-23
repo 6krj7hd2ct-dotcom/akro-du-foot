@@ -677,6 +677,15 @@
     .follow-status.done { color: #9ff0d5; background: rgba(50,211,162,0.18); }
     .follow-status.live { color: #ffb8bf; background: rgba(239,51,64,0.22); box-shadow: 0 0 0 1px rgba(239,51,64,0.45); }
     .community-form { display: grid; gap: 10px; margin-top: 12px; }
+    .profile-gate { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.08)); }
+    .profile-gate-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .profile-gate-copy { color: #d6e5f7; font-weight: 850; line-height: 1.35; }
+    .active-profile-card { display: none; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(50,211,162,0.24); border-radius: 16px; background: rgba(50,211,162,0.08); }
+    .active-profile-card.is-visible { display: grid; }
+    .active-profile-meta { display: grid; gap: 5px; min-width: 0; }
+    .active-profile-name { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 950; }
+    .active-profile-stats { display: flex; flex-wrap: wrap; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 850; }
+    .profile-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 999px; background: rgba(255,255,255,0.075); border: 1px solid rgba(255,255,255,0.09); }
     .pseudo-row { display: grid; gap: 6px; }
     .pseudo-row label { color: var(--muted); font-size: 12px; font-weight: 900; text-transform: uppercase; }
     .avatar-picker { display: grid; gap: 8px; }
@@ -687,6 +696,8 @@
     .avatar-option.is-selected { border-color: rgba(245,201,107,0.9); box-shadow: 0 0 0 2px rgba(245,201,107,0.22), 0 14px 28px rgba(0,0,0,0.18); background: rgba(245,201,107,0.13); }
     .avatar-option img, .profile-avatar, .leaderboard-avatar, .history-avatar { display: block; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.08); }
     .avatar-option img { width: 100%; height: 100%; }
+    .profile-create-dialog { width: min(680px, 100%); max-height: min(88vh, 760px); overflow: hidden; }
+    .profile-create-body { display: grid; gap: 13px; }
     .leaderboard-avatar { width: 36px; height: 36px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(255,255,255,0.16); }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     input, textarea, select { width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }
@@ -885,13 +896,13 @@
         <div class="community-side">
           <h3 id="predictions">Pronostics du jour</h3>
           <form class="community-form" id="predictionForm">
-            <div class="pseudo-row">
-              <label for="predictionPseudo">Pseudo</label>
-              <input id="predictionPseudo" type="text" maxlength="32" placeholder="Votre pseudo" autocomplete="nickname">
-            </div>
-            <div class="avatar-picker">
-              <div class="avatar-picker-label">Avatar</div>
-              <div class="avatar-grid" id="avatarGrid" role="radiogroup" aria-label="Choix de l'avatar"></div>
+            <input id="predictionPseudo" type="hidden" maxlength="32" autocomplete="nickname">
+            <div class="profile-gate" id="profileGate">
+              <div class="profile-gate-top">
+                <div class="profile-gate-copy">Crée ton profil pour participer aux pronostics.</div>
+                <button class="action-button" type="button" id="openProfileCreate">Créer ton profil</button>
+              </div>
+              <div class="active-profile-card" id="activeProfileCard"></div>
             </div>
             <div class="field-row">
               <select id="competitionFilter">
@@ -1312,6 +1323,31 @@
     </article>
   </div>
 
+  <div class="team-modal" id="profileCreateModal" aria-hidden="true">
+    <article class="team-dialog profile-create-dialog" role="dialog" aria-modal="true" aria-labelledby="profileCreateTitle">
+      <header class="team-modal-head">
+        <div class="alltime-rank">ID</div>
+        <div>
+          <div class="team-modal-title" id="profileCreateTitle">Créer ton profil</div>
+          <div class="subtle">Ton identité communautaire Akro du Foot.</div>
+        </div>
+        <button class="modal-close" type="button" id="profileCreateClose" aria-label="Fermer">×</button>
+      </header>
+      <div class="team-modal-body profile-create-body">
+        <div class="pseudo-row">
+          <label for="profilePseudoInput">Pseudo</label>
+          <input id="profilePseudoInput" type="text" maxlength="32" placeholder="Votre pseudo" autocomplete="nickname">
+        </div>
+        <div class="avatar-picker">
+          <div class="avatar-picker-label">Avatar</div>
+          <div class="avatar-grid" id="profileAvatarGrid" role="radiogroup" aria-label="Choix de l'avatar"></div>
+        </div>
+        <button class="action-button" type="button" id="profileCreateSubmit">Créer mon profil</button>
+        <div class="community-status" id="profileCreateStatus"></div>
+      </div>
+    </article>
+  </div>
+
   
   <div class="team-modal" id="userProfileModal" aria-hidden="true">
     <article class="team-dialog profile-dialog" role="dialog" aria-modal="true" aria-labelledby="userProfileTitle">
@@ -1554,7 +1590,12 @@
     const coachPrediction = document.getElementById('coachPrediction');
     const predictionStatus = document.getElementById('predictionStatus');
     const predictionPseudo = document.getElementById('predictionPseudo');
-    const avatarGrid = document.getElementById('avatarGrid');
+    const avatarGrid = document.getElementById('profileAvatarGrid');
+    const profileCreateModal = document.getElementById('profileCreateModal');
+    const profilePseudoInput = document.getElementById('profilePseudoInput');
+    const profileCreateStatus = document.getElementById('profileCreateStatus');
+    const activeProfileCard = document.getElementById('activeProfileCard');
+    const openProfileCreateButton = document.getElementById('openProfileCreate');
     const predictionSubmit = predictionForm.querySelector('button[type="submit"]');
     let communityMatches = DASHBOARD_MATCHES;
     let communityProfiles = {};
@@ -1611,6 +1652,10 @@
       else localStorage.removeItem('akrodufoot:pseudo');
     }
 
+    function hasActiveProfile() {
+      return Boolean(akroProfile && akroProfile.id && akroProfile.pseudo);
+    }
+
     function avatarUrl(value) {
       return PROFILE_AVATARS.includes(value) ? value : DEFAULT_AVATAR_URL;
     }
@@ -1653,6 +1698,48 @@
       } catch (error) {
         logSupabaseError('erreur Supabase', error);
       }
+    }
+
+    function openProfileCreateModal() {
+      if (profilePseudoInput) profilePseudoInput.value = akroProfile?.pseudo || pseudoValue() || localStorage.getItem('akrodufoot:pseudo') || '';
+      if (profileCreateStatus) profileCreateStatus.textContent = '';
+      renderAvatarPicker();
+      profileCreateModal?.classList.add('is-open');
+      profileCreateModal?.setAttribute('aria-hidden', 'false');
+      setTimeout(() => profilePseudoInput?.focus(), 0);
+    }
+
+    function closeProfileCreateModal() {
+      profileCreateModal?.classList.remove('is-open');
+      profileCreateModal?.setAttribute('aria-hidden', 'true');
+    }
+
+    function renderActiveProfile() {
+      if (!activeProfileCard) return;
+      const profile = profileFromSupabaseState();
+      const gateCopy = document.querySelector('.profile-gate-copy');
+      if (!profile) {
+        activeProfileCard.classList.remove('is-visible');
+        activeProfileCard.innerHTML = '';
+        if (gateCopy) gateCopy.textContent = 'Crée ton profil pour participer aux pronostics.';
+        if (openProfileCreateButton) openProfileCreateButton.textContent = 'Créer ton profil';
+        return;
+      }
+      if (gateCopy) gateCopy.textContent = 'Profil actif';
+      if (openProfileCreateButton) openProfileCreateButton.textContent = 'Modifier ton profil';
+      activeProfileCard.classList.add('is-visible');
+      activeProfileCard.innerHTML = `
+        ${avatarImage(profile.avatar_url)}
+        <div class="active-profile-meta">
+          <div class="active-profile-name"><span>${escapeHtml(profile.pseudo)}</span><span class="reward-badge">${escapeHtml(profile.badge_icon || '★')}</span></div>
+          <div class="active-profile-stats">
+            <span class="profile-pill">Niv. ${escapeHtml(profile.level_index || 1)} · ${escapeHtml(profile.level || 'Débutant')}</span>
+            <span class="profile-pill">${escapeHtml(profile.points || 0)} pts</span>
+            <span class="profile-pill">${escapeHtml(profile.predictions_count || 0)} pronos</span>
+            <span class="profile-pill">${profile.rank ? `#${escapeHtml(profile.rank)}` : 'Non classé'}</span>
+          </div>
+        </div>
+      `;
     }
 
     function logSupabase(message, detail = '') {
@@ -1820,13 +1907,18 @@
 
     function mergeSupabaseProfileIntoUi() {
       const profile = profileFromSupabaseState();
-      if (!profile) return;
+      if (!profile) {
+        renderActiveProfile();
+        updatePredictionButton();
+        return;
+      }
       communityProfiles[profile.pseudo] = profile;
       const currentRows = Object.values(communityProfiles)
         .filter(item => item && item.pseudo)
         .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
       currentRows.forEach((row, index) => { row.rank = row.rank || index + 1; });
       renderLeaderboard(currentRows);
+      renderActiveProfile();
       updatePredictionButton();
     }
 
@@ -1858,8 +1950,33 @@
       mergeSupabaseProfileIntoUi();
     }
 
+    async function createProfileFromModal() {
+      const pseudo = (profilePseudoInput?.value || '').trim();
+      if (!pseudo) {
+        if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un pseudo pour créer ton profil.';
+        return;
+      }
+      if (profileCreateStatus) profileCreateStatus.textContent = 'Création du profil...';
+      try {
+        await requireSupabaseSession();
+        if (!akroSupabase) throw new Error('Supabase indisponible');
+        predictionPseudo.value = pseudo;
+        savePseudo();
+        saveSelectedAvatar();
+        await ensureSupabaseProfile();
+        if (!akroProfile) throw new Error('Profil Supabase indisponible');
+        await refreshSupabaseStats();
+        closeProfileCreateModal();
+        predictionStatus.textContent = '';
+        logSupabase('profil créé', akroProfile);
+      } catch (error) {
+        logSupabaseError('erreur Supabase', error);
+        if (profileCreateStatus) profileCreateStatus.textContent = 'Création impossible pour le moment.';
+      }
+    }
+
     async function refreshSupabaseStats() {
-      const profile = await ensureSupabaseProfile();
+      const profile = akroProfile;
       if (!profile) return null;
       const profileId = profile.id;
       const predictionsResult = await akroSupabase
@@ -1906,7 +2023,7 @@
     }
 
     async function saveSupabasePrediction(match, homeScore, awayScore) {
-      const profile = await ensureSupabaseProfile();
+      const profile = akroProfile;
       if (!profile) throw new Error('Profil Supabase indisponible');
       const actualHome = match.home_score !== '' && match.home_score !== null && match.home_score !== undefined ? Number(match.home_score) : null;
       const actualAway = match.away_score !== '' && match.away_score !== null && match.away_score !== undefined ? Number(match.away_score) : null;
@@ -2081,16 +2198,18 @@
       const match = selectedMatch();
       const available = matchAvailable === null ? Boolean(match && isMatchAvailable(match)) : matchAvailable;
       const hasAnyMatch = hasMatches === null ? Boolean(match) : hasMatches;
-      const hasPseudo = Boolean(pseudoValue());
-      predictionSubmit.disabled = !available || !hasPseudo;
+      const profileReady = hasActiveProfile();
+      predictionSubmit.disabled = !available || !profileReady;
+      document.getElementById('homePrediction').disabled = !available || !profileReady;
+      document.getElementById('awayPrediction').disabled = !available || !profileReady;
       if (!hasAnyMatch) {
         predictionStatus.textContent = competitionFilter.value === 'today'
           ? 'Aucun match du jour disponible pour les pronostics'
           : 'Aucun match disponible avec ce filtre';
       } else if (!available) {
         predictionStatus.textContent = 'Tous les matchs de ce filtre sont terminés';
-      } else if (!hasPseudo) {
-        predictionStatus.textContent = 'Choisis un pseudo pour participer au classement';
+      } else if (!profileReady) {
+        predictionStatus.textContent = 'Crée ton profil pour participer aux pronostics.';
       } else {
         predictionStatus.textContent = '';
       }
@@ -2282,9 +2401,14 @@
       const profileTrigger = event.target.closest('[data-profile-pseudo]');
       if (profileTrigger) openUserProfile(profileTrigger.dataset.profilePseudo);
       if (event.target && event.target.id === 'userProfileModal') closeUserProfile();
+      if (event.target && event.target.id === 'profileCreateModal') closeProfileCreateModal();
     });
     document.getElementById('userProfileClose')?.addEventListener('click', closeUserProfile);
-    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeUserProfile(); });
+    document.getElementById('profileCreateClose')?.addEventListener('click', closeProfileCreateModal);
+    document.getElementById('profileCreateSubmit')?.addEventListener('click', createProfileFromModal);
+    profilePseudoInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
+    openProfileCreateButton?.addEventListener('click', openProfileCreateModal);
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeUserProfile(); closeProfileCreateModal(); } });
     shareButton.addEventListener('click', sharePage);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
@@ -2295,47 +2419,30 @@
     });
     predictionForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!pseudoValue()) {
-        predictionStatus.textContent = 'Choisis un pseudo pour participer au classement';
+      if (!hasActiveProfile()) {
+        predictionStatus.textContent = 'Crée ton profil pour participer aux pronostics.';
         updatePredictionButton();
+        openProfileCreateModal();
         return;
       }
-      savePseudo();
       if (!serverMode) return loadCommunity();
       try {
         const match = selectedMatch();
         const homeScore = document.getElementById('homePrediction').value;
         const awayScore = document.getElementById('awayPrediction').value;
         if (!match || !isMatchAvailable(match)) throw new Error('Pronostic verrouillé : le match a commencé.');
-        if (akroSupabase) {
-          await saveSupabasePrediction(match, homeScore, awayScore);
-        } else {
-          await postJson('/api/predictions', {
-            pseudo: pseudoValue(),
-            match_id: predictionMatch.value,
-            home_score: homeScore,
-            away_score: awayScore
-          });
-        }
+        if (!akroSupabase) throw new Error('Supabase indisponible : crée ton profil quand la connexion revient.');
+        await saveSupabasePrediction(match, homeScore, awayScore);
         await loadCommunity();
       } catch (error) {
         logSupabaseError('erreur Supabase', error);
         predictionStatus.textContent = error.message;
       }
     });
-    predictionPseudo.value = localStorage.getItem('akrodufoot:pseudo') || '';
     renderAvatarPicker();
     renderMatchOptions(DASHBOARD_MATCHES);
     (async function startCommunityApp() {
       await initSupabaseAccount();
-      if (akroSupabase && !akroProfile && pseudoValue()) {
-        try {
-          await ensureSupabaseProfile();
-          await refreshSupabaseStats();
-        } catch (error) {
-          logSupabaseError('erreur Supabase', error);
-        }
-      }
       await loadCommunity();
     })();
   </script>
