@@ -18,6 +18,7 @@ def main() -> None:
     worldcup_data = _preserve_news_cache(_merge_refresh(previous_worldcup, fetch_dashboard_data()), previous_worldcup)
     champions_league_data = _preserve_news_cache(_merge_refresh(previous_champions, fetch_champions_league_data()), previous_champions)
     leagues_data = _preserve_leagues_news_cache(_merge_leagues_refresh(previous_leagues, fetch_leagues_data()), previous_leagues)
+    _log_leagues_payload("données championnats chargées", leagues_data)
     previous_news = _read_cache(NEWS_CACHE_FILE) or {}
     news_data = _news_cache_for_render(previous_news)
     if os.environ.get("AKRO_FETCH_NEWS_DURING_UPDATE", "").strip().lower() in {"1", "true", "yes", "on"}:
@@ -51,6 +52,7 @@ def main() -> None:
         encoding="utf-8",
     )
     LEAGUES_CACHE_FILE.write_text(json.dumps(leagues_data, ensure_ascii=False, indent=2), encoding="utf-8")
+    _log_leagues_payload("cache championnats écrit", leagues_data)
     MERCATO_LIVE_CACHE_FILE.write_text(json.dumps(mercato_data, ensure_ascii=False, indent=2), encoding="utf-8")
     NEWS_CACHE_FILE.write_text(json.dumps(news_data, ensure_ascii=False, indent=2), encoding="utf-8")
     if _should_render_html():
@@ -100,6 +102,25 @@ def _preserve_news_cache(current: dict[str, Any], previous: dict[str, Any] | Non
         if not current.get(section) and previous.get(section):
             current[section] = previous[section]
     return current
+
+
+def _log_leagues_payload(label: str, data: dict[str, Any] | None) -> None:
+    leagues = (data or {}).get("leagues") or {}
+    rendered = {
+        key: {
+            "scorers": len(league.get("top_scorers") or []),
+            "assists": len(league.get("top_assists") or []),
+            "standings": sum(len(group.get("teams") or group.get("standings") or []) for group in league.get("standings") or []),
+            "matches": sum(len(group.get("matches") or []) for group in league.get("group_matches") or []),
+        }
+        for key, league in leagues.items()
+    }
+    print(
+        f"[championnats] {label}: leagues={len(leagues)} "
+        f"big5={len((data or {}).get('big5_top_scorers') or [])} "
+        f"errors={len((data or {}).get('errors') or [])} rendered={rendered}",
+        flush=True,
+    )
 
 
 def _preserve_leagues_news_cache(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
@@ -274,6 +295,7 @@ def _merge_leagues_refresh(previous_data: dict[str, Any] | None, refreshed_data:
     for key, league in (refreshed_data.get("leagues") or {}).items():
         previous_league = leagues.get(key, {})
         if not league.get("standings") and previous_league.get("standings"):
+            print(f"[championnats] fallback utilisé pour {key}: standings absents, conservation du dernier cache valide", flush=True)
             merged = dict(previous_league)
             for field in ("top_scorers", "top_assists", "focused_club_news", "teams_details", "generated_at", "sources"):
                 if league.get(field):
@@ -283,10 +305,12 @@ def _merge_leagues_refresh(previous_data: dict[str, Any] | None, refreshed_data:
             merged = dict(league)
             for field in ("standings", "group_matches", "fixtures", "today_matches", "upcoming_matches", "top_scorers", "top_assists", "teams_details"):
                 if not merged.get(field) and previous_league.get(field):
+                    print(f"[championnats] fallback utilisé pour {key}.{field}: conservation du dernier cache valide", flush=True)
                     merged[field] = previous_league[field]
             leagues[key] = merged
     data["leagues"] = leagues
     if not data.get("big5_top_scorers"):
+        print("[championnats] fallback utilisé pour big5_top_scorers: conservation du dernier cache valide", flush=True)
         data["big5_top_scorers"] = previous_data.get("big5_top_scorers", [])
     return data
 

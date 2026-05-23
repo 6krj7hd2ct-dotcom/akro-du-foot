@@ -409,6 +409,22 @@ if app:
     def mercato_live():
         return jsonify(_read_json(MERCATO_LIVE_CACHE_FILE, {"items": [], "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}))
 
+    @app.get("/api/leagues-dashboard")
+    def leagues_dashboard_cache():
+        payload = _read_json(LEAGUES_CACHE_FILE, {"leagues": {}, "big5_top_scorers": [], "errors": []})
+        leagues = payload.get("leagues") or {}
+        rendered = {
+            key: {
+                "scorers": len(value.get("top_scorers") or []),
+                "assists": len(value.get("top_assists") or []),
+                "standings": sum(len(group.get("teams") or group.get("standings") or []) for group in value.get("standings") or []),
+                "matches": sum(len(group.get("matches") or []) for group in value.get("group_matches") or []),
+            }
+            for key, value in leagues.items()
+        }
+        print(f"[championnats] cache utilisé: leagues={len(leagues)} big5={len(payload.get('big5_top_scorers') or [])} rendered={rendered}", flush=True)
+        return jsonify(payload)
+
     @app.post("/api/football-chatbot")
     def football_chatbot():
         payload = request.get_json(silent=True) or {}
@@ -1411,6 +1427,20 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
         elif path == "/api/mercato-live":
             self._send_json(_read_json(MERCATO_LIVE_CACHE_FILE, {"items": [], "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}))
+        elif path == "/api/leagues-dashboard":
+            payload = _read_json(LEAGUES_CACHE_FILE, {"leagues": {}, "big5_top_scorers": [], "errors": []})
+            leagues = payload.get("leagues") or {}
+            rendered = {
+                key: {
+                    "scorers": len(value.get("top_scorers") or []),
+                    "assists": len(value.get("top_assists") or []),
+                    "standings": sum(len(group.get("teams") or group.get("standings") or []) for group in value.get("standings") or []),
+                    "matches": sum(len(group.get("matches") or []) for group in value.get("group_matches") or []),
+                }
+                for key, value in leagues.items()
+            }
+            print(f"[championnats] cache utilisé: leagues={len(leagues)} big5={len(payload.get('big5_top_scorers') or [])} rendered={rendered}", flush=True)
+            self._send_json(payload)
         elif path == "/api/coach/messages":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             session_id = _clean(_url_decode(query.get("session_id", "")), 120)

@@ -2853,7 +2853,7 @@ def _focus_script(matches: list[dict[str, Any]], teams_details: dict[str, Any]) 
 def _leagues_script() -> str:
     return """<script>
     const leaguesDataNode = document.getElementById('leaguesData');
-    const LEAGUES_DATA = leaguesDataNode ? JSON.parse(leaguesDataNode.textContent || '{}') : null;
+    let LEAGUES_DATA = leaguesDataNode ? JSON.parse(leaguesDataNode.textContent || '{}') : null;
     const LEAGUE_KEY = 'akrodufoot:selected-league';
     const LEAGUE_FOCUS_KEY = 'akrodufoot:league-focus:';
     const LEAGUE_CLUB_LOGOS = {
@@ -2968,12 +2968,57 @@ def _leagues_script() -> str:
       return Array.from(byDate.entries()).sort((a,b)=>a[0].localeCompare(b[0])).map(([date, items]) => `<article class="card calendar-day"><h3>${leagueEscape(date === 'date-inconnue' ? 'Date inconnue' : leagueDate(items[0].date, false))}</h3><div class="matches">${items.map(match => `<div class="calendar-match league-calendar-match"><div class="date">${leagueEscape(leagueDate(match.date))}</div><div>${leagueTeam(match.home_team || 'À déterminer', match.home_flag_url || '')}</div><div class="score">${leagueEscape(match.home_score !== '' && match.away_score !== '' ? `${match.home_score} - ${match.away_score}` : '0 - 0')}</div><div class="away">${leagueTeam(match.away_team || 'À déterminer', match.away_flag_url || '', true)}</div><div class="match-meta"><div class="match-group">${leagueEscape(match.group || '')}</div><div class="subtle">${leagueEscape(match.venue || '')}</div><span class="status">${leagueEscape(match.status || 'À venir')}</span></div></div>`).join('')}</div></article>`).join('') || '<div class="empty">Calendrier indisponible.</div>';
     }
 
+    function leagueRenderStats(data) {
+      const leagues = Object.values((data && data.leagues) || {});
+      return {
+        leagues: leagues.length,
+        scorers: leagues.reduce((total, league) => total + (league.top_scorers || []).length, 0),
+        assists: leagues.reduce((total, league) => total + (league.top_assists || []).length, 0),
+        standings: leagues.reduce((total, league) => total + (league.standings || []).reduce((sum, group) => sum + ((group.teams || group.standings || []).length), 0), 0),
+        matches: leagues.reduce((total, league) => total + ((league.group_matches && league.group_matches.length ? league.group_matches : league.fixtures) || []).reduce((sum, group) => sum + ((group.matches || []).length), 0), 0),
+        errors: (data && data.errors || []).length
+      };
+    }
+
+    function leagueHasRenderableData(data) {
+      const leagues = Object.values((data && data.leagues) || {});
+      return leagues.some(league =>
+        (league.top_scorers || []).length ||
+        (league.top_assists || []).length ||
+        (league.standings || []).some(group => (group.teams || group.standings || []).length) ||
+        ((league.group_matches && league.group_matches.length ? league.group_matches : league.fixtures) || []).some(group => (group.matches || []).length)
+      );
+    }
+
+    async function ensureLeagueData() {
+      if (leagueHasRenderableData(LEAGUES_DATA)) {
+        console.info('[championnats] données chargées', leagueRenderStats(LEAGUES_DATA));
+        return LEAGUES_DATA;
+      }
+      try {
+        console.warn('[championnats] données HTML vides, fallback cache demandé', leagueRenderStats(LEAGUES_DATA));
+        const response = await fetch('/api/leagues-dashboard', {cache: 'no-store'});
+        if (!response.ok) throw new Error(`status=${response.status}`);
+        const payload = await response.json();
+        if (leagueHasRenderableData(payload)) {
+          LEAGUES_DATA = payload;
+          console.info('[championnats] fallback utilisé', leagueRenderStats(LEAGUES_DATA));
+        } else {
+          console.warn('[championnats] fallback vide', leagueRenderStats(payload));
+        }
+      } catch (error) {
+        console.warn('[championnats] source échouée: fallback cache indisponible', error);
+      }
+      return LEAGUES_DATA;
+    }
+
     function leagueFocusNews(kind, focus) {
       document.dispatchEvent(new CustomEvent('akro:league-focus-change', {detail: {kind, focus}}));
       if (typeof refreshNews === 'function') refreshNews('leagues');
     }
 
-    function renderLeague() {
+    async function renderLeague() {
+      await ensureLeagueData();
       if (!LEAGUES_DATA) return;
       const select = document.getElementById('leagueSelect');
       const clubSelect = document.getElementById('leagueClubSelect');
@@ -2991,7 +3036,8 @@ def _leagues_script() -> str:
       if (icon) icon.innerHTML = leagueFlag(focusLogo);
       const backdrop = document.getElementById('leagueFocusBackdrop');
       if (backdrop) backdrop.innerHTML = focusLogo ? `<img src="${leagueEscape(focusLogo)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
-      const matches = (league.group_matches || []).flatMap(group => group.matches || []);
+      const matchGroups = (league.group_matches && league.group_matches.length ? league.group_matches : league.fixtures) || [];
+      const matches = matchGroups.flatMap(group => group.matches || []);
       const next = matches.filter(match => !match.completed && [match.home_team, match.away_team].includes(focus)).sort((a,b)=>String(a.date || '').localeCompare(String(b.date || '')))[0];
       const nextNode = document.getElementById('leagueFocusNext');
       if (nextNode) {
@@ -3015,7 +3061,13 @@ def _leagues_script() -> str:
       document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,5).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopAssists').innerHTML = (league.top_assists || []).slice(0,5).map(player => leaguePlayerCard(player, 'passes', 'club')).join('') || '<div class="empty">Passeurs indisponibles.</div>';
       document.getElementById('leagueStandings').innerHTML = (league.standings || []).map(leagueGroupCard).join('') || '<div class="empty">Classement indisponible.</div>';
-      document.getElementById('leagueCalendar').innerHTML = leagueCalendar(league.group_matches || []);
+      document.getElementById('leagueCalendar').innerHTML = leagueCalendar(matchGroups);
+      console.info('[championnats] rendu', key, {
+        scorers: (league.top_scorers || []).length,
+        assists: (league.top_assists || []).length,
+        standings: (league.standings || []).reduce((sum, group) => sum + ((group.teams || group.standings || []).length), 0),
+        matches: matches.length
+      });
       leagueFocusNews('leagues', focus);
     }
 
