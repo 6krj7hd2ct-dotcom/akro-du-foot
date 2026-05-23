@@ -3,34 +3,36 @@ create extension if not exists pgcrypto;
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   email text,
-  pseudo text not null,
+  pseudo text,
   avatar_url text,
   focus_teams text[] not null default '{}',
   favorite_club text,
   favorite_club_logo text,
   favorite_nation text,
   favorite_nation_flag text,
-  password_hash text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 alter table public.profiles
   add column if not exists email text,
-  add column if not exists focus_teams text[] not null default '{}';
-alter table public.profiles
+  add column if not exists pseudo text,
+  add column if not exists avatar_url text,
+  add column if not exists focus_teams text[] not null default '{}',
   add column if not exists favorite_club text,
   add column if not exists favorite_club_logo text,
   add column if not exists favorite_nation text,
   add column if not exists favorite_nation_flag text,
-  add column if not exists password_hash text;
+  add column if not exists created_at timestamptz not null default now(),
+  add column if not exists updated_at timestamptz not null default now();
 
 create unique index if not exists idx_profiles_pseudo_unique_lower
-  on public.profiles (lower(pseudo));
+  on public.profiles (lower(pseudo))
+  where pseudo is not null;
 
 create table if not exists public.predictions (
   id uuid primary key default gen_random_uuid(),
-  profile_id uuid not null references public.profiles(id) on delete cascade,
+  profile_id uuid references public.profiles(id) on delete cascade,
   match_id text not null,
   home_team text not null,
   away_team text not null,
@@ -41,33 +43,33 @@ create table if not exists public.predictions (
   status text not null default 'pending',
   points int not null default 0,
   created_at timestamptz not null default now(),
-  unique(profile_id, match_id)
+  constraint predictions_profile_match_key unique(profile_id, match_id)
 );
 
 create table if not exists public.profile_stats (
   id uuid primary key default gen_random_uuid(),
-  profile_id uuid not null references public.profiles(id) on delete cascade,
+  profile_id uuid references public.profiles(id) on delete cascade,
   total_predictions int not null default 0,
   correct_scores int not null default 0,
   correct_results int not null default 0,
   total_points int not null default 0,
   rank int,
   updated_at timestamptz not null default now(),
-  unique(profile_id)
+  constraint profile_stats_profile_id_key unique(profile_id)
 );
 
 create table if not exists public.profile_badges (
   id uuid primary key default gen_random_uuid(),
-  profile_id uuid not null references public.profiles(id) on delete cascade,
+  profile_id uuid references public.profiles(id) on delete cascade,
   badge_key text not null,
   badge_name text not null,
   unlocked_at timestamptz not null default now(),
-  unique(profile_id, badge_key)
+  constraint profile_badges_profile_badge_key unique(profile_id, badge_key)
 );
 
 create table if not exists public.quiz_results (
   id uuid primary key default gen_random_uuid(),
-  profile_id uuid not null references public.profiles(id) on delete cascade,
+  profile_id uuid references public.profiles(id) on delete cascade,
   difficulty text not null,
   theme_type text not null,
   theme_value text not null,
@@ -75,6 +77,163 @@ create table if not exists public.quiz_results (
   total_questions int not null default 10,
   created_at timestamptz not null default now()
 );
+
+do $$
+begin
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'predictions' and column_name = 'user_id'
+  ) and not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'predictions' and column_name = 'profile_id'
+  ) then
+    execute 'alter table public.predictions rename column user_id to profile_id';
+  end if;
+
+  execute 'alter table public.predictions add column if not exists profile_id uuid';
+
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'predictions' and column_name = 'user_id'
+  ) then
+    execute 'update public.predictions set profile_id = user_id where profile_id is null and user_id is not null';
+  end if;
+end $$;
+
+do $$
+begin
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'profile_stats' and column_name = 'user_id'
+  ) and not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'profile_stats' and column_name = 'profile_id'
+  ) then
+    execute 'alter table public.profile_stats rename column user_id to profile_id';
+  end if;
+
+  execute 'alter table public.profile_stats add column if not exists profile_id uuid';
+
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'profile_stats' and column_name = 'user_id'
+  ) then
+    execute 'update public.profile_stats set profile_id = user_id where profile_id is null and user_id is not null';
+  end if;
+end $$;
+
+do $$
+begin
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'profile_badges' and column_name = 'user_id'
+  ) and not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'profile_badges' and column_name = 'profile_id'
+  ) then
+    execute 'alter table public.profile_badges rename column user_id to profile_id';
+  end if;
+
+  execute 'alter table public.profile_badges add column if not exists profile_id uuid';
+
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'profile_badges' and column_name = 'user_id'
+  ) then
+    execute 'update public.profile_badges set profile_id = user_id where profile_id is null and user_id is not null';
+  end if;
+end $$;
+
+do $$
+begin
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'quiz_results' and column_name = 'user_id'
+  ) and not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'quiz_results' and column_name = 'profile_id'
+  ) then
+    execute 'alter table public.quiz_results rename column user_id to profile_id';
+  end if;
+
+  execute 'alter table public.quiz_results add column if not exists profile_id uuid';
+
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'quiz_results' and column_name = 'user_id'
+  ) then
+    execute 'update public.quiz_results set profile_id = user_id where profile_id is null and user_id is not null';
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'predictions_profile_id_fkey'
+      and conrelid = 'public.predictions'::regclass
+  ) then
+    alter table public.predictions
+      add constraint predictions_profile_id_fkey
+      foreign key (profile_id) references public.profiles(id)
+      on delete cascade
+      not valid;
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'profile_stats_profile_id_fkey'
+      and conrelid = 'public.profile_stats'::regclass
+  ) then
+    alter table public.profile_stats
+      add constraint profile_stats_profile_id_fkey
+      foreign key (profile_id) references public.profiles(id)
+      on delete cascade
+      not valid;
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'profile_badges_profile_id_fkey'
+      and conrelid = 'public.profile_badges'::regclass
+  ) then
+    alter table public.profile_badges
+      add constraint profile_badges_profile_id_fkey
+      foreign key (profile_id) references public.profiles(id)
+      on delete cascade
+      not valid;
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'quiz_results_profile_id_fkey'
+      and conrelid = 'public.quiz_results'::regclass
+  ) then
+    alter table public.quiz_results
+      add constraint quiz_results_profile_id_fkey
+      foreign key (profile_id) references public.profiles(id)
+      on delete cascade
+      not valid;
+  end if;
+end $$;
+
+create unique index if not exists predictions_profile_match_key
+  on public.predictions (profile_id, match_id);
+
+create unique index if not exists profile_stats_profile_id_key
+  on public.profile_stats (profile_id);
+
+create unique index if not exists profile_badges_profile_badge_key
+  on public.profile_badges (profile_id, badge_key);
 
 create index if not exists idx_predictions_profile_created
   on public.predictions (profile_id, created_at desc);
