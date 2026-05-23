@@ -1919,7 +1919,7 @@ def _community_section() -> str:
         <div class="follow-list" id="communityFollowMatches"></div>
         <div class="favorite-matches-block" aria-label="Prochains matchs favoris">
           <h4>Prochains matchs favoris</h4>
-          <div class="favorite-match-list" id="favoriteMatchesList"><div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div></div>
+          <div class="favorite-match-list" id="favoriteMatchesList"><div class="empty">Ajoute des équipes favorites pour voir leurs prochains matchs.</div></div>
         </div>
       </article>
       <article class="card community-panel community-predictions">
@@ -3886,7 +3886,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       if (!favoriteMatchesList) return;
       const teams = profileFocusTeams();
       if (!teams.length) {{
-        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div>';
+        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes favorites pour voir leurs prochains matchs.</div>';
         return;
       }}
       const now = Date.now();

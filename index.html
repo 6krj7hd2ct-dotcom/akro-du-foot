@@ -964,7 +964,7 @@
         <div class="follow-list" id="communityFollowMatches"></div>
         <div class="favorite-matches-block" aria-label="Prochains matchs favoris">
           <h4>Prochains matchs favoris</h4>
-          <div class="favorite-match-list" id="favoriteMatchesList"><div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div></div>
+          <div class="favorite-match-list" id="favoriteMatchesList"><div class="empty">Ajoute des équipes favorites pour voir leurs prochains matchs.</div></div>
         </div>
       </article>
       <article class="card community-panel community-predictions">
@@ -1814,6 +1814,7 @@
       '/avatars/avatar-shush.png'
     ];
     const DEFAULT_AVATAR_URL = PROFILE_AVATARS[0];
+    const AUTH_EMAIL_STORAGE_PREFIX = 'akrodufoot:auth-email:';
     const FAVORITE_CLUBS = [
       ['Paris Saint-Germain', 'PSG', 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png'],
       ['Real Madrid', 'Real Madrid', 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'],
@@ -1863,12 +1864,80 @@
       return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '.').replace(/^\.+|\.+$/g, '').slice(0, 48);
     }
 
+    function authEmailStorageKey(value) {
+      const normalized = normalizeAuthPseudo(value);
+      return normalized ? `${AUTH_EMAIL_STORAGE_PREFIX}${normalized}` : '';
+    }
+
+    function stableAuthToken(value) {
+      let hash = 2166136261;
+      String(value || '').split('').forEach(char => {
+        hash ^= char.charCodeAt(0);
+        hash = Math.imul(hash, 16777619);
+      });
+      return (hash >>> 0).toString(36);
+    }
+
+    function technicalAuthEmailForPseudo(value, domain = 'akrodufoot.local') {
+      const normalized = normalizeAuthPseudo(value).replace(/\./g, '-') || 'supporter';
+      return `${normalized}-${stableAuthToken(normalized)}@${domain}`.toLowerCase();
+    }
+
+    function rememberTechnicalAuthEmail(pseudo, email) {
+      const key = authEmailStorageKey(pseudo);
+      if (key && email) localStorage.setItem(key, email);
+    }
+
     function authEmailFromIdentifier(value) {
       const raw = String(value || '').trim();
       if (raw.includes('@')) return raw.toLowerCase();
       const normalized = normalizeAuthPseudo(raw);
       if (!normalized) return '';
-      return `${normalized}@akrodufoot.app`;
+      const stored = localStorage.getItem(authEmailStorageKey(raw));
+      return stored || technicalAuthEmailForPseudo(raw);
+    }
+
+    function authEmailCandidatesFromIdentifier(value) {
+      const raw = String(value || '').trim();
+      if (raw.includes('@')) return [raw.toLowerCase()];
+      const normalized = normalizeAuthPseudo(raw);
+      if (!normalized) return [];
+      return Array.from(new Set([
+        localStorage.getItem(authEmailStorageKey(raw)),
+        technicalAuthEmailForPseudo(raw, 'akrodufoot.local'),
+        technicalAuthEmailForPseudo(raw, 'users.akrodufoot.app'),
+        technicalAuthEmailForPseudo(raw, 'akrodufoot.example.com'),
+        `${normalized}@akrodufoot.app`
+      ].filter(Boolean)));
+    }
+
+    function isInvalidEmailAuthError(error) {
+      return /invalid.*email|email.*invalid|email address/i.test(String(error?.message || error || ''));
+    }
+
+    async function signUpWithTechnicalEmail(pseudo, password) {
+      let lastError = null;
+      for (const domain of ['akrodufoot.local', 'users.akrodufoot.app', 'akrodufoot.example.com']) {
+        const email = technicalAuthEmailForPseudo(pseudo, domain);
+        const signed = await akroSupabase.auth.signUp({
+          email,
+          password,
+          options: {data: {pseudo, avatar_url: selectedAvatarUrl}}
+        });
+        if (!signed.error) {
+          rememberTechnicalAuthEmail(pseudo, email);
+          return {signed, email};
+        }
+        lastError = signed.error;
+        if (!isInvalidEmailAuthError(signed.error)) break;
+      }
+      throw lastError || new Error('Création impossible pour le moment.');
+    }
+
+    function publicAuthErrorMessage(error, fallback = 'Action impossible pour le moment.') {
+      const message = String(error?.message || error || fallback);
+      if (isInvalidEmailAuthError(error)) return 'Création impossible avec cet identifiant. Essaie un pseudo avec lettres ou chiffres.';
+      return message.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, 'email technique');
     }
 
     function hasActiveProfile() {
@@ -2132,7 +2201,7 @@
       }
       const created = await akroSupabase
         .from('profiles')
-        .insert({id: userId, pseudo, avatar_url: selectedAvatarUrl, focus_teams: currentLocalFocusTeams(), ...selectedFavoritePayload()})
+        .insert({id: userId, pseudo, avatar_url: selectedAvatarUrl, ...selectedFavoritePayload()})
         .select('*')
         .single();
       if (created.error) throw created.error;
@@ -2276,13 +2345,7 @@
         saveSelectedAvatar();
         syncSelectedFavoritesToStorage();
         if (!akroSession?.user?.id) {
-          const email = authEmailFromIdentifier(pseudo);
-          const signed = await akroSupabase.auth.signUp({
-            email,
-            password,
-            options: {data: {pseudo, avatar_url: selectedAvatarUrl}}
-          });
-          if (signed.error) throw signed.error;
+          const {signed, email} = await signUpWithTechnicalEmail(pseudo, password);
           akroSession = signed.data.session;
           if (!akroSession) {
             const login = await akroSupabase.auth.signInWithPassword({email, password});
@@ -2300,8 +2363,8 @@
         predictionStatus.textContent = '';
         logSupabase('profil créé', akroProfile);
       } catch (error) {
-        logSupabaseError('erreur auth', error);
-        if (profileCreateStatus) profileCreateStatus.textContent = error.message || 'Création impossible pour le moment.';
+        logSupabaseError('erreur auth', {message: publicAuthErrorMessage(error, 'Création impossible pour le moment.')});
+        if (profileCreateStatus) profileCreateStatus.textContent = publicAuthErrorMessage(error, 'Création impossible pour le moment.');
       }
     }
 
@@ -2315,18 +2378,29 @@
       if (profileLoginStatus) profileLoginStatus.textContent = 'Connexion...';
       try {
         if (!akroSupabase) throw new Error('Supabase indisponible');
-        const email = authEmailFromIdentifier(identifier);
-        const {data, error} = await akroSupabase.auth.signInWithPassword({email, password});
-        if (error) throw error;
-        akroSession = data.session;
+        let loginData = null;
+        let loginError = null;
+        for (const email of authEmailCandidatesFromIdentifier(identifier)) {
+          const {data, error} = await akroSupabase.auth.signInWithPassword({email, password});
+          if (!error) {
+            rememberTechnicalAuthEmail(identifier, email);
+            loginData = data;
+            loginError = null;
+            break;
+          }
+          loginError = error;
+        }
+        if (loginError) throw loginError;
+        if (!loginData?.session) throw new Error('Connexion impossible.');
+        akroSession = loginData?.session;
         logSupabase('utilisateur connecté', akroSession?.user?.id || '');
         await loadSupabaseUserData();
         if (!akroProfile) throw new Error('Profil introuvable pour ce compte.');
         closeProfileLoginModal();
         predictionStatus.textContent = '';
       } catch (error) {
-        logSupabaseError('erreur auth', error);
-        if (profileLoginStatus) profileLoginStatus.textContent = error.message || 'Connexion impossible.';
+        logSupabaseError('erreur auth', {message: publicAuthErrorMessage(error, 'Connexion impossible.')});
+        if (profileLoginStatus) profileLoginStatus.textContent = publicAuthErrorMessage(error, 'Connexion impossible.');
       }
     }
 
@@ -2512,17 +2586,18 @@
     function profileFocusTeams() {
       if (!hasActiveProfile()) return [];
       const profile = akroProfile || {};
+      const favorites = [profile.favorite_club, profile.favorite_nation];
       const raw = profile.focus_teams || profile.favorite_teams || profile.favorites || profile.teams_focus;
-      if (Array.isArray(raw) && raw.length) return uniqueTeams(raw);
+      if (Array.isArray(raw) && raw.length) return uniqueTeams([...favorites, ...raw]);
       if (typeof raw === 'string' && raw.trim()) {
         try {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) return uniqueTeams(parsed);
+          if (Array.isArray(parsed)) return uniqueTeams([...favorites, ...parsed]);
         } catch (error) {
-          return uniqueTeams(raw.split(','));
+          return uniqueTeams([...favorites, ...raw.split(',')]);
         }
       }
-      return currentLocalFocusTeams();
+      return uniqueTeams([...favorites, ...currentLocalFocusTeams()]);
     }
 
     function currentLocalFocusTeams() {
@@ -2538,11 +2613,18 @@
 
     async function saveFocusTeamsToSupabase() {
       if (!akroSupabase || !akroProfile?.id) return;
-      const focus_teams = currentLocalFocusTeams();
+      const club = favoriteClubConfig(localStorage.getItem('akrodufoot:focus:champions') || akroProfile.favorite_club);
+      const nation = favoriteNationConfig(localStorage.getItem('akrodufoot:focus:worldcup') || akroProfile.favorite_nation);
+      const patch = {
+        favorite_club: club[0],
+        favorite_club_logo: club[2],
+        favorite_nation: nation[0],
+        favorite_nation_flag: nation[2]
+      };
       try {
         const {data, error} = await akroSupabase
           .from('profiles')
-          .update({focus_teams})
+          .update(patch)
           .eq('id', akroProfile.id)
           .select('*')
           .single();
@@ -2566,12 +2648,12 @@
     function renderFavoriteMatches(matches) {
       if (!favoriteMatchesList) return;
       if (!hasActiveProfile()) {
-        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div>';
+        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes favorites pour voir leurs prochains matchs.</div>';
         return;
       }
       const teams = profileFocusTeams();
       if (!teams.length) {
-        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div>';
+        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes favorites pour voir leurs prochains matchs.</div>';
         return;
       }
       const now = Date.now();
