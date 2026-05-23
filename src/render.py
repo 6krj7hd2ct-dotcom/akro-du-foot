@@ -2828,6 +2828,18 @@ def _football_chatbot_script() -> str:
     const footballChatbotInput = document.getElementById('footballChatbotInput');
     const footballChatbotMessages = document.getElementById('footballChatbotMessages');
     const footballChatbotHistory = [];
+    const COACH_SESSION_KEY = 'akro:coach:session_id';
+    const coachSessionId = localStorage.getItem(COACH_SESSION_KEY) || `coach-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    localStorage.setItem(COACH_SESSION_KEY, coachSessionId);
+    const coachConversationMemory = {
+      lastEntity: '',
+      lastEntityType: '',
+      lastCompetition: '',
+      lastSeason: '',
+      lastIntent: '',
+      lastComparisonEntity: ''
+    };
+    let coachHistoryLoaded = false;
 
     function chatbotEscape(value) {
       return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2851,13 +2863,78 @@ def _football_chatbot_script() -> str:
       footballChatbotMessages.appendChild(node);
       if (save) {
         footballChatbotHistory.push({role: role === 'user' ? 'user' : 'assistant', content: text});
-        if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
+        if (footballChatbotHistory.length > 12) footballChatbotHistory.shift();
       }
       footballChatbotMessages.scrollTop = footballChatbotMessages.scrollHeight;
       return node;
     }
 
+    function coachNormalize(value) {
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+    }
+
+    function updateCoachMemoryFromText(text) {
+      const norm = coachNormalize(text);
+      const previousEntity = coachConversationMemory.lastEntity;
+      if (norm.includes('mbappe')) { coachConversationMemory.lastEntity = 'Kylian Mbappé'; coachConversationMemory.lastEntityType = 'player'; }
+      else if (norm.includes('messi')) { coachConversationMemory.lastEntity = 'Lionel Messi'; coachConversationMemory.lastEntityType = 'player'; }
+      else if (norm.includes('ronaldo')) { coachConversationMemory.lastEntity = 'Cristiano Ronaldo'; coachConversationMemory.lastEntityType = 'player'; }
+      else if (norm.includes('haaland')) {
+        if ((norm.includes('compare') || norm.includes('avec')) && previousEntity && previousEntity !== 'Erling Haaland') coachConversationMemory.lastComparisonEntity = 'Erling Haaland';
+        else { coachConversationMemory.lastEntity = 'Erling Haaland'; coachConversationMemory.lastEntityType = 'player'; }
+      }
+      else if (norm.includes('neymar')) { coachConversationMemory.lastEntity = 'Neymar'; coachConversationMemory.lastEntityType = 'player'; }
+      else if (norm.includes('psg') || norm.includes('paris saint germain')) { coachConversationMemory.lastEntity = 'PSG'; coachConversationMemory.lastEntityType = 'club'; }
+      else if (norm.includes('real madrid')) { coachConversationMemory.lastEntity = 'Real Madrid'; coachConversationMemory.lastEntityType = 'club'; }
+      else if (norm.includes('manchester city')) { coachConversationMemory.lastEntity = 'Manchester City'; coachConversationMemory.lastEntityType = 'club'; }
+      if (norm.includes('ligue des champions') || norm.includes('champions league')) coachConversationMemory.lastCompetition = 'Ligue des Champions';
+      else if (norm.includes('coupe du monde')) coachConversationMemory.lastCompetition = 'Coupe du Monde';
+      else if (norm.includes('ligue 1')) coachConversationMemory.lastCompetition = 'Ligue 1';
+      else if (norm.includes('euro')) coachConversationMemory.lastCompetition = 'Euro';
+      if (norm.includes('cette saison')) coachConversationMemory.lastSeason = 'cette saison';
+      const season = norm.match(/\\b20\\d{2}\\b/);
+      if (season) coachConversationMemory.lastSeason = season[0];
+      if (norm.includes('nombre de but') || norm.includes('combien de but') || norm.includes('buts') || norm.includes('but')) coachConversationMemory.lastIntent = 'goals';
+      else if (norm.includes('passe') || norm.includes('assist')) coachConversationMemory.lastIntent = 'assists';
+      else if (norm.includes('compare') || norm.includes('compar')) coachConversationMemory.lastIntent = 'compare';
+      else if (norm.includes('club')) coachConversationMemory.lastIntent = 'club';
+      else if (norm.includes('selection') || norm.includes('sélection') || norm.includes('nation')) coachConversationMemory.lastIntent = 'national_team';
+      else if (norm.includes('stats') || norm.includes('stat')) coachConversationMemory.lastIntent = 'stats';
+    }
+
+    function updateCoachMemoryFromDetectedContext(context) {
+      if (!context || typeof context !== 'object') return;
+      coachConversationMemory.lastEntity = context.lastEntity || coachConversationMemory.lastEntity;
+      coachConversationMemory.lastEntityType = context.lastEntityType || coachConversationMemory.lastEntityType;
+      coachConversationMemory.lastCompetition = context.lastCompetition || coachConversationMemory.lastCompetition;
+      coachConversationMemory.lastSeason = context.lastSeason || coachConversationMemory.lastSeason;
+      coachConversationMemory.lastIntent = context.lastIntent || coachConversationMemory.lastIntent;
+      coachConversationMemory.lastComparisonEntity = context.lastComparisonEntity || coachConversationMemory.lastComparisonEntity;
+    }
+
+    async function loadCoachHistory() {
+      if (coachHistoryLoaded) return;
+      coachHistoryLoaded = true;
+      try {
+        const response = await fetch(`/api/coach/messages?session_id=${encodeURIComponent(coachSessionId)}&limit=12`);
+        if (!response.ok) return;
+        const data = await response.json().catch(() => ({}));
+        const messages = Array.isArray(data.messages) ? data.messages : [];
+        if (!messages.length) return;
+        footballChatbotMessages.innerHTML = '';
+        footballChatbotHistory.length = 0;
+        messages.forEach(item => {
+          const role = item.role === 'assistant' ? 'bot' : 'user';
+          addChatbotMessage(role, item.content || '', true);
+          updateCoachMemoryFromText(item.content || '');
+        });
+      } catch (error) {
+        console.error('[coach] impossible de charger l’historique', error);
+      }
+    }
+
     function openFootballChatbot() {
+      loadCoachHistory();
       footballChatbotModal.classList.add('is-open');
       footballChatbotModal.setAttribute('aria-hidden', 'false');
       footballChatbotInput.focus();
@@ -2883,23 +2960,31 @@ def _football_chatbot_script() -> str:
       if (!question) return;
       footballChatbotInput.value = '';
       addChatbotMessage('user', question);
+      updateCoachMemoryFromText(question);
       const pending = addChatbotMessage('bot', 'Je réfléchis...', false);
       try {
         const response = await fetch('/api/football-chatbot', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({message: question, history: footballChatbotHistory.slice(-8)})
+          body: JSON.stringify({
+            message: question,
+            history: footballChatbotHistory.slice(-12),
+            context: coachConversationMemory,
+            session_id: coachSessionId
+          })
         });
         const data = await response.json().catch(() => ({}));
         const answer = data.answer || data.error || 'Coach indisponible : clé OpenAI absente ou invalide.';
         setChatbotMessage(pending, answer);
+        updateCoachMemoryFromDetectedContext(data.detected_context || {});
+        updateCoachMemoryFromText(answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
-        if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
+        if (footballChatbotHistory.length > 12) footballChatbotHistory.shift();
       } catch (error) {
         const answer = 'Coach indisponible : clé OpenAI absente ou invalide.';
         setChatbotMessage(pending, answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
-        if (footballChatbotHistory.length > 10) footballChatbotHistory.shift();
+        if (footballChatbotHistory.length > 12) footballChatbotHistory.shift();
       }
     });
   </script>"""

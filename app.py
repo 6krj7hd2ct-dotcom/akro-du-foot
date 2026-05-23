@@ -757,28 +757,41 @@ def _format_chat_history(history: list[dict[str, str]]) -> str:
 
 
 def _detect_conversation_context(history: list[dict[str, str]], question: str, client_context: dict[str, Any]) -> dict[str, str]:
-    text = _normalize_football_text(" ".join(item.get("content", "") for item in history[-10:]) + " " + question)
+    history_text = _normalize_football_text(" ".join(item.get("content", "") for item in history[-10:]))
+    text = _normalize_football_text(history_text + " " + question)
+    qn = _normalize_football_text(question)
     entity = str(client_context.get("lastEntity", "") or "")
     entity_type = str(client_context.get("lastEntityType", "") or "")
     competition = str(client_context.get("lastCompetition", "") or "")
     season = str(client_context.get("lastSeason", "") or "")
     intent = str(client_context.get("lastIntent", "") or "")
+    comparison_entity = str(client_context.get("lastComparisonEntity", "") or "")
 
-    players = {"mbappe": "Kylian Mbappé", "messi": "Lionel Messi", "ronaldo": "Cristiano Ronaldo", "haaland": "Erling Haaland"}
+    players = {"mbappe": "Kylian Mbappé", "kylian mbappe": "Kylian Mbappé", "messi": "Lionel Messi", "ronaldo": "Cristiano Ronaldo", "cristiano ronaldo": "Cristiano Ronaldo", "haaland": "Erling Haaland", "erling haaland": "Erling Haaland", "neymar": "Neymar", "benzema": "Karim Benzema"}
     clubs = {"psg": "PSG", "paris saint germain": "PSG", "om": "OM", "marseille": "OM", "real madrid": "Real Madrid", "barca": "Barcelona", "barcelona": "Barcelona", "manchester city": "Manchester City"}
     competitions = {"ligue des champions": "Ligue des Champions", "champions league": "Ligue des Champions", "coupe du monde": "Coupe du Monde", "euro": "Euro", "ligue 1": "Ligue 1", "ballon d or": "Ballon d'Or"}
 
+    current_player = ""
     for key, value in players.items():
-        if key in text:
+        if _normalized_contains(qn, key):
+            current_player = value
+        elif not entity and _normalized_contains(history_text, key):
             entity, entity_type = value, "player"
+
+    if current_player:
+        if any(term in qn for term in {"compare", "compar", "versus", "vs", "avec"}) and entity and current_player != entity:
+            comparison_entity = current_player
+            intent = "compare"
+        else:
+            entity, entity_type = current_player, "player"
+
     for key, value in clubs.items():
-        if key in text:
+        if _normalized_contains(qn, key) or (not entity and _normalized_contains(text, key)):
             entity, entity_type = value, "club"
     for key, value in competitions.items():
-        if key in text:
+        if _normalized_contains(qn, key) or (not competition and _normalized_contains(text, key)):
             competition = value
 
-    qn = _normalize_football_text(question)
     if any(term in qn for term in {"nombre de but", "but", "buts"}):
         intent = "goals"
     elif any(term in qn for term in {"passe", "passes", "assist"}):
@@ -806,17 +819,20 @@ def _detect_conversation_context(history: list[dict[str, str]], question: str, c
         "lastCompetition": competition,
         "lastSeason": season,
         "lastIntent": intent,
+        "lastComparisonEntity": comparison_entity,
     }
 
 
 def _resolve_followup_question(question: str, context_state: dict[str, str]) -> str:
     qn = _normalize_football_text(question)
-    ambiguous = len(qn.split()) <= 4 or any(term in qn for term in {"et en", "cette saison", "son club", "sa selection", "sa sélection", "nombre de but"})
+    ambiguous = len(qn.split()) <= 5 or any(term in qn for term in {"et en", "cette saison", "son club", "sa selection", "sa sélection", "nombre de but", "compare avec", "et lui", "ses buts", "sa stat"})
     if not ambiguous:
         return question
     parts = []
     if context_state.get("lastEntity"):
         parts.append(f"sujet={context_state['lastEntity']}")
+    if context_state.get("lastComparisonEntity"):
+        parts.append(f"comparaison={context_state['lastComparisonEntity']}")
     if context_state.get("lastCompetition"):
         parts.append(f"compétition={context_state['lastCompetition']}")
     if context_state.get("lastSeason"):
@@ -826,6 +842,13 @@ def _resolve_followup_question(question: str, context_state: dict[str, str]) -> 
     if not parts:
         return question
     return f"{question} (contexte conversationnel: {', '.join(parts)})"
+
+
+def _normalized_contains(text: str, phrase: str) -> bool:
+    normalized_phrase = _normalize_football_text(phrase)
+    if not normalized_phrase:
+        return False
+    return re.search(rf"(^|\s){re.escape(normalized_phrase)}($|\s)", text) is not None
 
 
 def _is_correction_message(normalized_text: str) -> bool:
@@ -873,13 +896,41 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
         goals = player.get("goals") or player.get("goals_total") or player.get("season_goals")
         if goals not in (None, ""):
             return (
-                f"Résumé : {name} a marqué {goals} buts selon les données locales."
+                f"Résumé : pour {name}, tu veux sûrement parler de son nombre de buts. Il a marqué {goals} buts selon les données locales."
                 f"\n\nSource locale : {source}."
             )
         return (
-            f"Résumé : pour {name}, je n'ai pas le nombre exact de buts dans les données locales actuelles."
-            "\n\nAnalyse : je peux quand même te donner son club, sa sélection et ses stats disponibles, puis affiner si tu précises la compétition ou la saison."
+            f"Résumé : pour {name}, tu veux sûrement parler de son nombre de buts. Je n'ai pas le total exact dans les données locales actuelles."
+            "\n\nAnalyse : je peux quand même te situer le contexte avec les infos disponibles : club, sélection et compétition si elle est mentionnée. Pour un total exact, il faut préciser la saison ou la compétition, ou lancer une recherche plus précise."
         )
+    if player and any(term in normalized for term in {"selection", "sa selection", "nation", "pays"}):
+        country = player.get("country")
+        source = player.get("source") or "données locales Akro du Foot"
+        if country:
+            return f"Résumé : {player.get('name')} représente {country} en sélection.\n\nSource locale : {source}."
+        return f"Résumé : je n'ai pas la sélection exacte de {player.get('name') or 'ce joueur'} dans les données locales actuelles."
+    if player and any(term in normalized for term in {"stats", "statistique", "statistiques"}):
+        bits = []
+        if player.get("club_current"):
+            bits.append(f"club actuel : {player['club_current']}")
+        if player.get("country"):
+            bits.append(f"sélection : {player['country']}")
+        if player.get("position"):
+            bits.append(f"poste : {player['position']}")
+        source = player.get("source") or "données locales Akro du Foot"
+        detail = "; ".join(bits) if bits else "les statistiques détaillées ne sont pas disponibles localement."
+        return f"Résumé : {player.get('name') or 'ce joueur'} - {detail}.\n\nAnalyse : les totaux exacts de buts/passes peuvent dépendre de la saison et de la compétition demandées.\n\nSource locale : {source}."
+    if "intention compare" in normalized or "comparaison" in normalized or any(term in normalized for term in {"compare avec", "comparer avec"}):
+        comparison = ""
+        match = re.search(r"comparaison ([a-z0-9 ]+?)(?: competition| saison| intention|$)", normalized)
+        if match:
+            comparison = match.group(1).strip()
+        if player:
+            other = f" avec {comparison.title()}" if comparison else " avec l'autre joueur mentionné"
+            return (
+                f"Résumé : je peux comparer {player.get('name')}{other}, mais les données locales ne contiennent pas assez de statistiques exactes pour une comparaison chiffrée complète."
+                "\n\nAnalyse : je peux comparer le profil, le poste, le club, la sélection et les compétitions si tu veux une lecture qualitative."
+            )
     if player and any(term in normalized for term in {"ou joue", "club", "joue", "evolue", "mbappe", "pele"}):
         club = player.get("club_current") or player.get("associated_team")
         country = player.get("country")
@@ -925,7 +976,17 @@ def _recent_history_text(history: list[dict[str, str]]) -> str:
 
 def _find_player_fact(normalized_question: str) -> dict[str, Any] | None:
     dashboards = (_read_json(CACHE_FILE, {}), _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {}))
-    aliases = {"mbappe": "kylian mbappe", "kylian mbappe": "kylian mbappe", "pele": "pele"}
+    aliases = {
+        "mbappe": "kylian mbappe",
+        "kylian mbappe": "kylian mbappe",
+        "haaland": "erling haaland",
+        "erling haaland": "erling haaland",
+        "messi": "lionel messi",
+        "lionel messi": "lionel messi",
+        "cristiano ronaldo": "cristiano ronaldo",
+        "ronaldo": "cristiano ronaldo",
+        "pele": "pele",
+    }
     target = ""
     for alias, canonical in aliases.items():
         if alias in normalized_question:
@@ -948,6 +1009,12 @@ def _find_player_fact(normalized_question: str) -> dict[str, Any] | None:
         }
     if "pele" in normalized_question:
         return {"name": "Pelé", "club_current": "retraité", "country": "Brésil", "source": "connaissance football historique"}
+    if "haaland" in normalized_question:
+        return {"name": "Erling Haaland", "club_current": "Manchester City", "country": "Norvège", "position": "Avant-centre", "source": "référence locale Akro du Foot"}
+    if "messi" in normalized_question:
+        return {"name": "Lionel Messi", "club_current": "Inter Miami", "country": "Argentine", "position": "Attaquant", "source": "référence locale Akro du Foot"}
+    if "ronaldo" in normalized_question:
+        return {"name": "Cristiano Ronaldo", "club_current": "Al-Nassr", "country": "Portugal", "position": "Attaquant", "source": "référence locale Akro du Foot"}
     return None
 
 
@@ -1355,10 +1422,11 @@ def _coach_messages_from_supabase(session_id: str, limit: int = 12) -> list[dict
         return []
     rows = _supabase_request(
         "GET",
-        f"coach_messages?select={SUPABASE_COACH_COLUMNS}&session_id=eq.{quote(session_id, safe='')}&order=created_at.asc&limit={int(limit)}",
+        f"coach_messages?select={SUPABASE_COACH_COLUMNS}&session_id=eq.{quote(session_id, safe='')}&order=created_at.desc&limit={int(limit)}",
     )
     if not isinstance(rows, list):
         return []
+    rows = list(reversed(rows))
     out: list[dict[str, str]] = []
     for row in rows:
         role = "assistant" if str(row.get("role", "")).lower() == "assistant" else "user"

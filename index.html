@@ -2477,7 +2477,8 @@
       lastEntityType: '',
       lastCompetition: '',
       lastSeason: '',
-      lastIntent: ''
+      lastIntent: '',
+      lastComparisonEntity: ''
     };
     let coachHistoryLoaded = false;
 
@@ -2515,10 +2516,15 @@
 
     function updateCoachMemoryFromText(text) {
       const norm = coachNormalize(text);
+      const previousEntity = coachConversationMemory.lastEntity;
       if (norm.includes('mbappe')) { coachConversationMemory.lastEntity = 'Kylian Mbappé'; coachConversationMemory.lastEntityType = 'player'; }
       else if (norm.includes('messi')) { coachConversationMemory.lastEntity = 'Lionel Messi'; coachConversationMemory.lastEntityType = 'player'; }
       else if (norm.includes('ronaldo')) { coachConversationMemory.lastEntity = 'Cristiano Ronaldo'; coachConversationMemory.lastEntityType = 'player'; }
-      else if (norm.includes('haaland')) { coachConversationMemory.lastEntity = 'Erling Haaland'; coachConversationMemory.lastEntityType = 'player'; }
+      else if (norm.includes('haaland')) {
+        if ((norm.includes('compare') || norm.includes('avec')) && previousEntity && previousEntity !== 'Erling Haaland') coachConversationMemory.lastComparisonEntity = 'Erling Haaland';
+        else { coachConversationMemory.lastEntity = 'Erling Haaland'; coachConversationMemory.lastEntityType = 'player'; }
+      }
+      else if (norm.includes('neymar')) { coachConversationMemory.lastEntity = 'Neymar'; coachConversationMemory.lastEntityType = 'player'; }
       else if (norm.includes('psg') || norm.includes('paris saint germain')) { coachConversationMemory.lastEntity = 'PSG'; coachConversationMemory.lastEntityType = 'club'; }
       else if (norm.includes('real madrid')) { coachConversationMemory.lastEntity = 'Real Madrid'; coachConversationMemory.lastEntityType = 'club'; }
       if (norm.includes('ligue des champions') || norm.includes('champions league')) coachConversationMemory.lastCompetition = 'Ligue des Champions';
@@ -2541,6 +2547,7 @@
       coachConversationMemory.lastCompetition = context.lastCompetition || coachConversationMemory.lastCompetition;
       coachConversationMemory.lastSeason = context.lastSeason || coachConversationMemory.lastSeason;
       coachConversationMemory.lastIntent = context.lastIntent || coachConversationMemory.lastIntent;
+      coachConversationMemory.lastComparisonEntity = context.lastComparisonEntity || coachConversationMemory.lastComparisonEntity;
     }
 
     async function loadCoachHistory() {
