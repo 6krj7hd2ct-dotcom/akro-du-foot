@@ -90,20 +90,20 @@ python update_dashboard.py && AKRO_BACKGROUND_UPDATES=1 gunicorn app:app --bind 
 
 Render fournit automatiquement la variable `PORT`. `AKRO_BACKGROUND_UPDATES=1` active aussi la régénération horaire de `data/worldcup_dashboard.json`, `data/champions_league_dashboard.json` et `index.html` pendant que le serveur tourne.
 
-### 3. Données communautaires
+### 3. Données communautaires et comptes
 
-Le tchat et les pronostics utilisent `data/community.json`.
-
-Sur Render, le disque du service peut être réinitialisé lors d'un redéploiement si aucun disque persistant n'est configuré. Pour conserver les messages et pronostics :
-
-1. Ajoute un `Persistent Disk` dans Render.
-2. Monte-le sur :
+Les comptes, profils, pronostics, statistiques et badges utilisent Supabase comme source principale de vérité. Applique le script SQL `supabase/user_accounts.sql` dans l'éditeur SQL Supabase, puis configure ces variables Render :
 
 ```bash
-/opt/render/project/src/data
+SUPABASE_URL="https://TON-PROJET.supabase.co"
+SUPABASE_ANON_KEY="TA_CLE_ANON_PUBLIC"
 ```
 
-Sans disque persistant, le tchat et les pronostics fonctionnent en ligne, mais peuvent être perdus après redémarrage ou redéploiement.
+Cette application n'est pas un build React/Vite dans ce dossier : `app.py` expose ces deux valeurs publiques au navigateur via `/api/supabase-public-config`. Si une version React/Vite est ajoutée plus tard, il faudra renommer les variables frontend en `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY`. Ne mets jamais `service_role` côté frontend.
+
+Dans Supabase, active aussi les connexions anonymes : `Authentication` -> `Sign In / Providers` -> `Anonymous sign-ins`.
+
+`data/community.json` reste seulement un filet de secours local pour les anciens messages/pronostics si Supabase est indisponible.
 
 ### 4. Tester en ligne
 

@@ -270,6 +270,11 @@ if app:
     def get_community():
         return jsonify(community_payload())
 
+    @app.get("/api/supabase-public-config")
+    def supabase_public_config():
+        url, key = _supabase_config()
+        return jsonify({"url": url, "anon_key": key, "configured": bool(url and key)})
+
     @app.get("/api/community/profile")
     def get_community_profile():
         pseudo = _clean(request.args.get("pseudo", ""), 32)
@@ -1276,6 +1281,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json({"status": "ok"})
         elif path == "/api/community":
             self._send_json(community_payload())
+        elif path == "/api/supabase-public-config":
+            url, key = _supabase_config()
+            self._send_json({"url": url, "anon_key": key, "configured": bool(url and key)})
         elif path == "/api/community/profile":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             pseudo = _clean(_url_decode(query.get("pseudo", "")), 32)
