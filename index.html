@@ -1955,7 +1955,37 @@
       '/avatars/avatar-brune-cool.png'
     ];
     const DEFAULT_AVATAR_URL = PROFILE_AVATARS[0];
-    const PROFILE_SELECT_COLUMNS = 'id,pseudo,avatar_url,favorite_club,favorite_club_logo,favorite_nation,favorite_nation_flag,created_at,updated_at';
+    const PROFILE_SELECT_COLUMNS = 'id,email,pseudo,avatar_url,favorite_club,favorite_club_logo,favorite_nation,favorite_nation_flag,created_at,updated_at';
+    const SUPABASE_PROFILES_SQL = `create table if not exists public.profiles (
+  id uuid primary key references auth.users(id) on delete cascade,
+  email text,
+  pseudo text,
+  avatar_url text,
+  favorite_club text,
+  favorite_nation text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+alter table public.profiles enable row level security;
+
+create policy "profiles_select_own"
+on public.profiles for select
+to authenticated
+using (auth.uid() = id);
+
+create policy "profiles_insert_own"
+on public.profiles for insert
+to authenticated
+with check (auth.uid() = id);
+
+create policy "profiles_update_own"
+on public.profiles for update
+to authenticated
+using (auth.uid() = id)
+with check (auth.uid() = id);
+
+grant select, insert, update on public.profiles to authenticated;`;
     const FAVORITE_CLUBS = [
       ['Paris Saint-Germain', 'PSG', 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png'],
       ['Real Madrid', 'Real Madrid', 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'],
@@ -2009,12 +2039,21 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeAuthEmail(value));
     }
 
+    function isMissingProfilesTableError(error) {
+      return /public\.profiles|schema cache|Could not find the table|relation .*profiles.* does not exist|PGRST205|PGRST116/i.test(String(error?.message || error || ''));
+    }
+
+    function profilesSetupMessage() {
+      return 'Table Supabase public.profiles introuvable. Exécute le SQL fourni dans supabase/user_accounts.sql, puis recharge la page.';
+    }
+
     function publicAuthErrorMessage(error, fallback = 'Action impossible pour le moment.') {
       const message = String(error?.message || error || fallback);
+      if (isMissingProfilesTableError(error)) return profilesSetupMessage();
       if (/already registered|already exists|user already|email.*exists|email.*registered/i.test(message)) return 'Cet email possède déjà un compte. Utilise “Se connecter”.';
       if (/invalid.*email|email.*invalid|email address/i.test(message)) return 'Entre une adresse email valide.';
       if (/invalid login credentials|invalid.*credentials/i.test(message)) return 'Email ou mot de passe incorrect.';
-      if (/email not confirmed/i.test(message)) return 'Confirme ton email avant de te connecter.';
+      if (/email not confirmed|confirm your email|not confirmed/i.test(message)) return 'Supabase demande encore une confirmation email. Désactive “Confirm email” dans Authentication > Providers > Email, puis réessaie.';
       return message.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, 'email technique');
     }
 
@@ -2269,6 +2308,7 @@
       if (!akroSupabase || !userId) return null;
       const pseudo = pseudoValue();
       if (!pseudo) return null;
+      const email = normalizeAuthEmail(session?.user?.email || profileEmailInput?.value || profileLoginIdentifier?.value || '');
       selectedAvatarUrl = avatarUrl(selectedAvatarUrl);
       saveSelectedAvatar();
       const {data: existing, error: readError} = await akroSupabase
@@ -2279,6 +2319,7 @@
       if (readError) throw readError;
       if (existing) {
         const patch = {};
+        if ((existing.email || '') !== email) patch.email = email;
         if (existing.pseudo !== pseudo) patch.pseudo = pseudo;
         const favorites = selectedFavoritePayload();
         if (avatarUrl(existing.avatar_url) !== selectedAvatarUrl) patch.avatar_url = selectedAvatarUrl;
@@ -2295,7 +2336,7 @@
         logSupabase('profil chargé', akroProfile);
         return akroProfile;
       }
-      const payload = {id: userId, pseudo, avatar_url: selectedAvatarUrl, ...selectedFavoritePayload()};
+      const payload = {id: userId, email, pseudo, avatar_url: selectedAvatarUrl, ...selectedFavoritePayload()};
       const created = await akroSupabase
         .from('profiles')
         .upsert(payload, {onConflict: 'id'})
@@ -2397,7 +2438,10 @@
       if (!akroSupabase || !akroSession?.user?.id) return;
       const userId = akroSession.user.id;
       const profileResult = await akroSupabase.from('profiles').select(PROFILE_SELECT_COLUMNS).eq('id', userId).maybeSingle();
-      if (profileResult.error) throw profileResult.error;
+      if (profileResult.error) {
+        if (isMissingProfilesTableError(profileResult.error)) throw new Error(`${profilesSetupMessage()}\n\n${SUPABASE_PROFILES_SQL}`);
+        throw profileResult.error;
+      }
       akroProfile = profileResult.data;
       if (akroProfile?.pseudo) {
         predictionPseudo.value = akroProfile.pseudo;
@@ -2457,8 +2501,12 @@
           }
           akroSession = data?.session || null;
           if (!akroSession?.user?.id) {
-            if (profileCreateStatus) profileCreateStatus.textContent = 'Compte créé. Confirme ton email, puis connecte-toi.';
-            return;
+            const login = await akroSupabase.auth.signInWithPassword({email, password});
+            if (login.error) throw login.error;
+            akroSession = login.data?.session || null;
+          }
+          if (!akroSession?.user?.id) {
+            throw new Error('Supabase demande encore une confirmation email. Désactive “Confirm email” dans Authentication > Providers > Email, puis réessaie.');
           }
         } else {
           await requireSupabaseSession();
@@ -2491,6 +2539,14 @@
         akroSession = data?.session || null;
         if (!akroSession?.user?.id) throw new Error('Session Supabase introuvable après connexion.');
         await loadSupabaseUserData();
+        if (!akroProfile) {
+          const fallbackPseudo = localStorage.getItem('akrodufoot:pseudo') || email.split('@')[0] || 'Supporter';
+          predictionPseudo.value = fallbackPseudo.slice(0, 32);
+          savePseudo();
+          await ensureSupabaseProfile();
+          await refreshSupabaseStats();
+          await loadSupabaseUserData();
+        }
         if (!akroProfile) throw new Error('Profil introuvable pour ce compte.');
         applyProfileFavorites(akroProfile);
         renderFavoriteSelectors();

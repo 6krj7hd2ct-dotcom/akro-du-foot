@@ -2,6 +2,7 @@ create extension if not exists pgcrypto;
 
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
+  email text,
   pseudo text not null,
   avatar_url text,
   focus_teams text[] not null default '{}',
@@ -15,6 +16,7 @@ create table if not exists public.profiles (
 );
 
 alter table public.profiles
+  add column if not exists email text,
   add column if not exists focus_teams text[] not null default '{}';
 alter table public.profiles
   add column if not exists favorite_club text,
