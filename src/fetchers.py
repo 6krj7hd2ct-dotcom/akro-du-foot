@@ -5,6 +5,7 @@ import json
 import os
 import re
 import subprocess
+import time
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
@@ -282,6 +283,8 @@ UCL_ALL_TIME_COUNTRIES = {
 }
 
 REQUEST_TIMEOUT_SECONDS = 10
+ESPN_TIMEOUT_SECONDS = max(3, int(os.environ.get("AKRO_ESPN_TIMEOUT_SECONDS", "6")))
+ESPN_CACHE_TTL_SECONDS = max(60, int(os.environ.get("AKRO_ESPN_CACHE_TTL_SECONDS", "900")))
 FOOTMERCATO_TIMEOUT_SECONDS = 3
 FOOTMERCATO_BASE_URL = "https://www.footmercato.net"
 MERCATO_LIVE_URL = "https://www.mercatolive.fr/"
@@ -473,6 +476,14 @@ FALLBACK_UCL_ALL_TIME_SCORERS = [
 
 
 FETCH_RETRY_COUNT = max(1, int(os.environ.get("AKRO_FETCH_RETRIES", "2")))
+ESPN_RETRY_COUNT = min(2, max(1, int(os.environ.get("AKRO_ESPN_RETRIES", "2"))))
+_HTTP_TEXT_CACHE: dict[str, tuple[float, str]] = {}
+_HTTP_JSON_CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
+_ESPN_SKIP_CACHE: dict[str, tuple[float, str]] = {}
+
+
+class ESPNUnavailable(ValueError):
+    pass
 
 
 def fetch_mercato_live(limit: int = 18) -> list[dict[str, Any]]:
@@ -2650,21 +2661,34 @@ def _news_source_names(feeds: list[dict[str, Any]]) -> list[str]:
 
 def _safe_fetch(label: str, fetcher, errors: list[str]):
     last_error = ""
-    for attempt in range(1, FETCH_RETRY_COUNT + 1):
-        print(f"[source] appel {label} tentative {attempt}/{FETCH_RETRY_COUNT}", flush=True)
+    is_espn = "ESPN" in label
+    attempts = ESPN_RETRY_COUNT if is_espn else FETCH_RETRY_COUNT
+    for attempt in range(1, attempts + 1):
+        if not is_espn:
+            print(f"[source] appel {label} tentative {attempt}/{attempts}", flush=True)
         try:
             result = fetcher()
-            print(f"[source] ok {label} tentative {attempt}", flush=True)
+            if not is_espn:
+                print(f"[source] ok {label} tentative {attempt}", flush=True)
             return result
+        except ESPNUnavailable as exc:
+            last_error = str(exc)
+            break
         except Exception as exc:  # noqa: BLE001 - le dashboard doit rester générable.
             last_error = f"{type(exc).__name__}: {exc}"
-            print(f"[source] échec {label} tentative {attempt}: {last_error}", flush=True)
-    errors.append(f"{label}: {last_error or 'erreur inconnue'}")
-    print(f"[source] abandon {label}: {last_error or 'erreur inconnue'}", flush=True)
+            if not is_espn:
+                print(f"[source] échec {label} tentative {attempt}: {last_error}", flush=True)
+    if is_espn:
+        print(f"[ESPN SKIPPED] {label}: {last_error or 'source indisponible'}", flush=True)
+    else:
+        errors.append(f"{label}: {last_error or 'erreur inconnue'}")
+        print(f"[source] abandon {label}: {last_error or 'erreur inconnue'}", flush=True)
     return []
 
 
 def _download(url: str) -> str:
+    if _is_espn_url(url):
+        return _download_espn_text(url)
     response = None
     last_error = ""
     for attempt in range(1, FETCH_RETRY_COUNT + 1):
@@ -2707,6 +2731,8 @@ def _download(url: str) -> str:
 
 
 def _download_json(url: str) -> dict[str, Any]:
+    if _is_espn_url(url):
+        return _download_espn_json(url)
     try:
         response = requests.get(url, headers=REQUEST_HEADERS, timeout=REQUEST_TIMEOUT_SECONDS)
         if response.status_code == 200 and response.text.strip():
@@ -2714,6 +2740,65 @@ def _download_json(url: str) -> dict[str, Any]:
     except requests.RequestException:
         pass
     return json.loads(_download(url))
+
+
+def _is_espn_url(url: str) -> bool:
+    host = urlparse(str(url or "")).netloc.lower()
+    return host.endswith("espn.com")
+
+
+def _cached_text(url: str) -> str | None:
+    cached = _HTTP_TEXT_CACHE.get(url)
+    if cached and time.time() - cached[0] <= ESPN_CACHE_TTL_SECONDS:
+        print(f"[source] cache ESPN: {url}", flush=True)
+        return cached[1]
+    return None
+
+
+def _cached_json(url: str) -> dict[str, Any] | None:
+    cached = _HTTP_JSON_CACHE.get(url)
+    if cached and time.time() - cached[0] <= ESPN_CACHE_TTL_SECONDS:
+        print(f"[source] cache ESPN JSON: {url}", flush=True)
+        return cached[1]
+    return None
+
+
+def _download_espn_text(url: str) -> str:
+    skipped = _ESPN_SKIP_CACHE.get(url)
+    if skipped and time.time() - skipped[0] <= ESPN_CACHE_TTL_SECONDS:
+        raise ESPNUnavailable(skipped[1])
+    cached = _cached_text(url)
+    if cached is not None:
+        return cached
+    last_error = ""
+    for attempt in range(1, ESPN_RETRY_COUNT + 1):
+        try:
+            response = requests.get(url, headers=REQUEST_HEADERS, timeout=ESPN_TIMEOUT_SECONDS)
+            body = response.text or ""
+            if response.status_code == 202 or not body.strip():
+                last_error = f"status={response.status_code} taille={len(body)}"
+                _ESPN_SKIP_CACHE[url] = (time.time(), last_error)
+                raise ESPNUnavailable(last_error)
+            response.raise_for_status()
+            _HTTP_TEXT_CACHE[url] = (time.time(), body)
+            return body
+        except ESPNUnavailable:
+            raise
+        except requests.RequestException as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+    last_error = last_error or "réponse ESPN indisponible"
+    _ESPN_SKIP_CACHE[url] = (time.time(), last_error)
+    raise ESPNUnavailable(last_error)
+
+
+def _download_espn_json(url: str) -> dict[str, Any]:
+    cached = _cached_json(url)
+    if cached is not None:
+        return cached
+    text = _download_espn_text(url)
+    data = json.loads(text)
+    _HTTP_JSON_CACHE[url] = (time.time(), data)
+    return data
 
 
 def _extract_espn_state(html: str) -> dict[str, Any]:
