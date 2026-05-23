@@ -1977,31 +1977,94 @@
   </script>
   <script>
     const GLOBAL_SEARCH_NEWS = {"generated_at": "2026-05-22T21:06:25+00:00", "articles": [], "all_articles": [], "filter": "mercato", "sources": ["RMC Sport", "L'Équipe", "Goal France", "Eurosport France", "Foot Mercato", "SO FOOT", "Maxifoot", "LiveFoot", "France Football", "Football.fr", "Made In Foot", "Onze Mondial", "France Info Sport"], "errors": ["RMC Sport: ValueError", "L'Équipe: ValueError", "Goal France: ValueError", "Eurosport France: ValueError", "Foot Mercato: ValueError", "SO FOOT: ValueError", "Maxifoot: ValueError", "LiveFoot: ValueError", "France Football: ValueError", "Football.fr: ValueError", "Made In Foot: ValueError", "Onze Mondial: ValueError", "France Info Sport: ValueError"]};
-    function searchNorm(value) { return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+    const SEARCH_ALIASES = {
+      'kylian mbappe': ['mbappe', 'mbappé'],
+      'lionel messi': ['messi', 'leo messi'],
+      'cristiano ronaldo': ['ronaldo', 'cr7'],
+      'erling haaland': ['haaland'],
+      'paris saint germain': ['psg', 'paris', 'paris sg'],
+      'marseille': ['om', 'olympique de marseille'],
+      'barcelona': ['barca', 'barça', 'fc barcelona'],
+      'real madrid': ['real', 'madrid'],
+      'manchester city': ['man city', 'city'],
+      'ligue des champions': ['champions league', 'ucl', 'ldc'],
+      'coupe du monde': ['mondial', 'world cup'],
+      'ligue 1': ['ligue un'],
+      'ballon d or': ['ballon d or', 'ballon dor', "ballon d'or"],
+      'france': ['equipe de france', 'bleus'],
+      'espagne': ['spain'],
+      'bresil': ['brésil', 'brazil'],
+      'maroc': ['morocco']
+    };
+    function searchNorm(value) { return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim(); }
+    function searchTokens(value) { return searchNorm(value).split(' ').filter(Boolean); }
+    function levenshtein(a, b) {
+      if (a === b) return 0;
+      if (!a || !b) return Math.max(a.length, b.length);
+      const dp = Array.from({length: a.length + 1}, () => new Array(b.length + 1).fill(0));
+      for (let i = 0; i <= a.length; i += 1) dp[i][0] = i;
+      for (let j = 0; j <= b.length; j += 1) dp[0][j] = j;
+      for (let i = 1; i <= a.length; i += 1) {
+        for (let j = 1; j <= b.length; j += 1) {
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
+        }
+      }
+      return dp[a.length][b.length];
+    }
     function buildSearchItems() {
       const items = [];
       const seen = new Set();
-      const add = (kind, title, detail, action, extra = '') => {
-        const key = `${kind}:${searchNorm(title)}:${extra}`;
+      const add = (kind, title, detail, action, extra = '', aliases = []) => {
+        const canonical = searchNorm(title);
+        const aliasList = [...aliases, ...(SEARCH_ALIASES[canonical] || [])].map(searchNorm).filter(Boolean);
+        const key = `${kind}:${canonical}:${extra}`;
         if (!title || seen.has(key)) return;
         seen.add(key);
-        items.push({kind, title, detail, action, extra, haystack: searchNorm(`${title} ${detail} ${extra}`)});
+        items.push({kind, title, detail, action, extra, canonical, aliases: aliasList, haystack: searchNorm(`${title} ${detail} ${extra} ${aliasList.join(' ')}`)});
       };
       Object.entries(typeof TEAMS_DETAILS !== 'undefined' ? TEAMS_DETAILS : {}).forEach(([name, details]) => {
-        add('Équipe / club', details.name || name, 'Fiche forme récente, palmarès et entraîneur si disponibles', 'team', name);
+        add('Club', details.name || name, 'Fiche équipe et effectif', 'team', name);
       });
       ((typeof TEAM_MATCHES !== 'undefined' ? TEAM_MATCHES : (typeof DASHBOARD_MATCHES !== 'undefined' ? DASHBOARD_MATCHES : []))).forEach(match => {
         add('Match', `${match.home_team} vs ${match.away_team}`, `${match.competition || ''} · ${match.status || 'À venir'} · ${match.date || ''}`, 'match', match.id || '');
-        add('Compétition', match.competition || '', 'Matchs, calendrier et pronostics disponibles', 'competition', match.competition || '');
+        add('Compétition', match.competition || '', 'Calendrier et résultats', 'competition', match.competition || '');
       });
+      ['Mbappé', 'Messi', 'Ronaldo', 'Haaland'].forEach(player => add('Joueur', player, 'Référence joueur', 'filter', player));
+      ['France', 'Espagne', 'Brésil', 'Maroc'].forEach(nation => add('Nation', nation, 'Sélection nationale', 'filter', nation));
+      ['PSG', 'OM', 'Real Madrid', 'Barça', 'Manchester City', 'Ligue des Champions', 'Coupe du Monde', 'Ligue 1', 'Euro', 'Ballon d’Or']
+        .forEach(topic => add('Focus rapide', topic, 'Recherche intelligente Akro du Foot', 'filter', topic));
       (GLOBAL_SEARCH_NEWS.all_articles || GLOBAL_SEARCH_NEWS.articles || []).slice(0, 80).forEach(article => {
         add('Actualité', article.title || '', `${article.source_name || article.source || 'Source'} · ${article.summary || ''}`, 'news', article.url || '');
       });
-      ['PSG', 'France', 'Real Madrid', 'Ligue des Champions', 'Coupe du Monde', 'Ligue 1', 'Premier League', 'Liga', 'Bundesliga', 'Serie A'].forEach(topic => add('Focus rapide', topic, 'Recherche dans les données Akro du Foot', 'filter', topic));
       return items;
+    }
+    function scoreSearchItem(item, queryWords) {
+      const targetWords = searchTokens(`${item.haystack} ${item.aliases.join(' ')}`);
+      let score = 0;
+      for (const word of queryWords) {
+        let best = 999;
+        for (const target of targetWords) {
+          if (!target) continue;
+          if (target.includes(word) || word.includes(target)) { best = 0; break; }
+          const d = levenshtein(word, target);
+          if (d < best) best = d;
+        }
+        const tolerance = word.length <= 4 ? 1 : 2;
+        if (best > tolerance) return -1;
+        score += best;
+      }
+      return score;
     }
     function searchResultMarkup(item) {
       return `<button class="search-result" type="button" data-action="${escapeHtml(item.action)}" data-extra="${escapeHtml(item.extra || item.title)}"><span class="search-kind">${escapeHtml(item.kind)}</span><span class="search-title">${escapeHtml(item.title)}</span><span class="search-detail">${escapeHtml(item.detail || '')}</span></button>`;
+    }
+    function coachFallbackMarkup(query, answer = '', loading = false, fullAnswer = '') {
+      const loadingText = loading ? '<span class="search-detail">Coach réfléchit...</span>' : '';
+      const answerText = answer ? `<span class="search-detail">${escapeHtml(answer)}</span>` : '';
+      const expanded = fullAnswer || answer;
+      const showMore = expanded && expanded.length > 160 && answer !== expanded ? `<button class="search-result" type="button" data-action="coach-more" data-answer="${escapeHtml(expanded)}"><span class="search-kind">Coach</span><span class="search-title">Voir plus</span><span class="search-detail">Afficher la réponse complète.</span></button>` : '';
+      return `<div class="search-result"><span class="search-kind">Demander au Coach</span><span class="search-title">Aucun résultat local trouvé</span><span class="search-detail">Le Coach peut répondre à ta recherche.</span><button class="search-result" type="button" data-action="ask-coach" data-query="${escapeHtml(query)}"><span class="search-kind">Coach IA</span><span class="search-title">Le Coach cherche pour moi</span><span class="search-detail">Réponse courte et pertinente dans ce panneau.</span></button>${loadingText}${answerText}</div>${showMore}`;
     }
     function renderGlobalSearch(query = '') {
       const panel = document.getElementById('globalSearchResults');
@@ -2009,16 +2072,42 @@
       const normalized = searchNorm(query);
       if (normalized.length < 2) { panel.classList.remove('is-open'); panel.innerHTML = ''; return; }
       const words = normalized.split(' ').filter(Boolean);
-      const results = buildSearchItems()
-        .filter(item => words.every(word => item.haystack.includes(word)))
-        .slice(0, 9);
-      panel.innerHTML = results.length ? results.map(searchResultMarkup).join('') : '<div class="search-result"><span class="search-kind">Recherche</span><span class="search-title">Aucun résultat trouvé</span><span class="search-detail">Essaie PSG, France, Mbappé ou Ligue des Champions.</span></div>';
+      const scored = buildSearchItems()
+        .map(item => ({item, score: scoreSearchItem(item, words)}))
+        .filter(entry => entry.score >= 0)
+        .sort((a, b) => a.score - b.score)
+        .slice(0, 9)
+        .map(entry => entry.item);
+      panel.innerHTML = scored.length ? scored.map(searchResultMarkup).join('') : coachFallbackMarkup(query);
+      panel.classList.add('is-open');
+    }
+    async function askCoachFromSearch(query) {
+      const panel = document.getElementById('globalSearchResults');
+      if (!panel) return;
+      panel.innerHTML = coachFallbackMarkup(query, '', true);
+      try {
+        const response = await fetch('/api/search/coach', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({query})
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || 'Coach indisponible');
+        const answer = String(data.answer || data.error || 'Coach n’a pas pu répondre pour le moment.').trim();
+        panel.innerHTML = coachFallbackMarkup(query, answer.length > 160 ? `${answer.slice(0, 160)}…` : answer, false, answer);
+      } catch (error) {
+        console.error('[search] coach error', error);
+        panel.innerHTML = coachFallbackMarkup(query, 'Coach indisponible pour le moment. Réessaie dans quelques instants.');
+      }
       panel.classList.add('is-open');
     }
     function runSearchAction(button) {
       const action = button.dataset.action;
       const extra = button.dataset.extra || '';
-      document.getElementById('globalSearchResults')?.classList.remove('is-open');
+      const panel = document.getElementById('globalSearchResults');
+      if (action === 'ask-coach') { askCoachFromSearch(button.dataset.query || extra); return; }
+      if (action === 'coach-more') { if (panel) panel.innerHTML = coachFallbackMarkup(document.getElementById('globalSearchInput')?.value || '', button.dataset.answer || ''); return; }
+      panel?.classList.remove('is-open');
       if (action === 'team' && typeof openTeam === 'function') { openTeam(extra); return; }
       if (action === 'news' && extra) { window.open(extra, '_blank', 'noreferrer'); return; }
       if (action === 'match') { document.getElementById('community')?.scrollIntoView({behavior:'smooth', block:'start'}); return; }

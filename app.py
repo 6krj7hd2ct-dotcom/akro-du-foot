@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unicodedata
 import base64
 import hashlib
@@ -317,6 +318,12 @@ if app:
         body, status = coach_prediction_response(payload)
         return jsonify(body), status
 
+    @app.post("/api/search/coach")
+    def search_coach():
+        payload = request.get_json(silent=True) or {}
+        body, status = search_coach_response(payload)
+        return jsonify(body), status
+
 
 def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     question = _clean(payload.get("message", ""), 500)
@@ -385,6 +392,73 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
         answer = _format_coach_answer(_openai_response_text(data))
         return {"answer": answer or COACH_UNAVAILABLE}, 200
     except Exception:
+        return {"error": COACH_UNAVAILABLE}, 503
+
+
+def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
+    query = _clean(payload.get("query", ""), 500)
+    normalized_query = _normalize_football_text(query)
+    if not query or not normalized_query:
+        return {"error": "Question vide."}, 400
+
+    if not _looks_like_football_question(query, []):
+        return {"answer": COACH_REFUSAL, "source": "refusal", "cached": False}, 200
+
+    cached = _search_ai_answer_get(normalized_query)
+    if cached:
+        _search_ai_answer_increment_usage(cached.get("id"))
+        return {
+            "answer": str(cached.get("answer", "")),
+            "source": "supabase",
+            "cached": True,
+            "normalized_query": normalized_query,
+        }, 200
+
+    local_answer = _local_coach_answer(query, [])
+    if local_answer:
+        answer = _search_short_answer(local_answer)
+        _search_ai_answer_upsert(query, normalized_query, answer)
+        return {"answer": answer, "source": "local", "cached": False, "normalized_query": normalized_query}, 200
+
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return {"error": COACH_UNAVAILABLE}, 503
+
+    try:
+        import requests
+
+        response = requests.post(
+            OPENAI_RESPONSES_URL,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": os.environ.get("OPENAI_CHATBOT_MODEL", "gpt-4.1-mini"),
+                "input": [
+                    {
+                        "role": "system",
+                        "content": (
+                            "Tu es Coach Akro du Foot. Réponds en français, court, clair, utile. "
+                            "Réponse maximum 3 phrases. Reste 100% football."
+                        ),
+                    },
+                    {"role": "user", "content": query},
+                ],
+                "temperature": 0.25,
+                "max_output_tokens": 220,
+            },
+            timeout=10,
+        )
+        if response.status_code >= 400:
+            print(f"[search-coach] OpenAI error status={response.status_code}")
+            return {"error": COACH_UNAVAILABLE}, 503
+        data = response.json()
+        answer = _search_short_answer(_format_coach_answer(_openai_response_text(data)) or COACH_UNAVAILABLE)
+        _search_ai_answer_upsert(query, normalized_query, answer)
+        return {"answer": answer, "source": "openai", "cached": False, "normalized_query": normalized_query}, 200
+    except Exception as exc:
+        print(f"[search-coach] OpenAI request error: {exc}")
         return {"error": COACH_UNAVAILABLE}, 503
 
 
@@ -1061,6 +1135,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/coach-prediction":
             body, status = coach_prediction_response(payload)
             self._send_json(body, status)
+        elif path == "/api/search/coach":
+            body, status = search_coach_response(payload)
+            self._send_json(body, status)
         else:
             self.send_error(404)
 
@@ -1137,12 +1214,59 @@ def _supabase_request(method: str, path: str, **kwargs: Any) -> Any:
             **kwargs,
         )
         if response.status_code >= 400:
+            print(f"[supabase] {method} {path} failed status={response.status_code} body={response.text[:280]}")
             return None
         if not response.content:
             return []
         return response.json()
-    except Exception:
+    except Exception as exc:
+        print(f"[supabase] {method} {path} error: {exc}")
         return None
+
+
+def _search_short_answer(text: str) -> str:
+    clean = " ".join(str(text or "").split())
+    if not clean:
+        return ""
+    sentences = re.split(r"(?<=[.!?])\s+", clean)
+    return " ".join(sentences[:3]).strip()[:420]
+
+
+def _search_ai_answer_get(normalized_query: str) -> dict[str, Any] | None:
+    if not _supabase_enabled():
+        return None
+    row = _supabase_request(
+        "GET",
+        f"search_ai_answers?select=id,answer,usage_count&normalized_query=eq.{quote(normalized_query, safe='')}&order=created_at.desc&limit=1",
+    )
+    if isinstance(row, list) and row:
+        return row[0]
+    return None
+
+
+def _search_ai_answer_increment_usage(answer_id: Any) -> None:
+    if answer_id is None or not _supabase_enabled():
+        return
+    current = _supabase_request("GET", f"search_ai_answers?select=usage_count&id=eq.{quote(str(answer_id), safe='')}&limit=1")
+    if not isinstance(current, list) or not current:
+        return
+    count = int(current[0].get("usage_count", 0) or 0) + 1
+    _supabase_request("PATCH", f"search_ai_answers?id=eq.{quote(str(answer_id), safe='')}", json={"usage_count": count})
+
+
+def _search_ai_answer_upsert(query: str, normalized_query: str, answer: str) -> None:
+    if not _supabase_enabled() or not answer:
+        return
+    payload = {
+        "query": query,
+        "normalized_query": normalized_query,
+        "answer": answer,
+        "usage_count": 1,
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    saved = _supabase_request("POST", "search_ai_answers", json=payload)
+    if saved is None:
+        print(f"[search-coach] Supabase save failed for normalized_query='{normalized_query}'")
 
 
 def _read_supabase_community(matches: dict[str, dict[str, Any]]) -> dict[str, Any]:
