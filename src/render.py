@@ -822,12 +822,22 @@ def _page(data: dict[str, Any]) -> str:
     .reward-badge {{ display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(210,222,238,0.78)); color: #07111f; font-weight: 950; box-shadow: 0 0 0 1px rgba(245,201,107,0.22); }}
     .top-rank .reward-badge {{ background: linear-gradient(180deg, #ffe1a0, #d5a63a); }}
     .live-events-ticker {{ display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; min-height: 46px; max-height: 54px; overflow: hidden; border: 1px solid rgba(239,51,64,0.34); border-radius: 14px; background: linear-gradient(90deg, rgba(20,8,18,0.96), rgba(10,31,56,0.86)); box-shadow: 0 14px 28px rgba(0,0,0,0.18); }}
+    .live-main-anchor {{ height: 0; }}
     .live-main-ticker {{
       position: sticky;
-      top: 10px;
-      z-index: 12000;
+      top: max(0px, env(safe-area-inset-top));
+      z-index: 30000;
       margin: 14px 0 22px;
       backdrop-filter: blur(14px);
+    }}
+    .live-main-ticker.is-fixed {{
+      position: fixed;
+      top: max(0px, env(safe-area-inset-top));
+      left: 50%;
+      width: min(1240px, calc(100% - 32px));
+      margin: 0;
+      transform: translateX(-50%);
+      z-index: 30000;
     }}
     .live-events-badge {{ height: 100%; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; color: #fff; background: linear-gradient(180deg, #ff5a66, #c91525); font-size: 11px; line-height: 1; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; white-space: nowrap; }}
     .live-events-badge::before {{ content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 13px rgba(255,255,255,0.78); }}
@@ -871,7 +881,7 @@ def _page(data: dict[str, Any]) -> str:
       .global-actions {{ width: 100%; flex-wrap: wrap; justify-content: flex-start; }}
       .mercato-ticker {{ grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }}
       .mercato-under-tabs {{ margin: -2px 0 16px; }}
-      .live-main-ticker {{ top: 8px; margin-bottom: 18px; }}
+      .live-main-ticker.is-fixed {{ width: min(100% - 20px, 1240px); }}
       .tabs-nav {{ top: 68px; }}
       .mercato-badge {{ min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }}
       .mercato-track, .mercato-link, .mercato-item-break {{ height: 50px; }}
@@ -956,6 +966,7 @@ def _page(data: dict[str, Any]) -> str:
 <body>
   <main>
     {_app_header()}
+    <div class="live-main-anchor" id="liveMainAnchor" aria-hidden="true"></div>
     <section class="live-events-ticker live-main-ticker" id="communityLiveTicker" aria-label="Notifications live communauté"></section>
     {_community_section()}
     {_tabs_nav(champions_data, leagues_data)}
@@ -3665,6 +3676,7 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     const communityFollowMatches = document.getElementById('communityFollowMatches');
     const favoriteMatchesList = document.getElementById('favoriteMatchesList');
     const communityLiveTicker = document.getElementById('communityLiveTicker');
+    const liveMainAnchor = document.getElementById('liveMainAnchor');
     const followMode = document.getElementById('followMode');
     const liveRefreshButton = document.getElementById('liveRefreshButton');
     const liveUpdateMeta = document.getElementById('liveUpdateMeta');
@@ -3687,6 +3699,17 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     let lastLiveRefreshAt = 0;
     const LIVE_AUTO_REFRESH_MS = 45000;
     const LIVE_MIN_MANUAL_REFRESH_MS = 30000;
+
+    function syncMainLiveTickerPosition() {{
+      if (!communityLiveTicker || !liveMainAnchor) return;
+      const shouldFix = liveMainAnchor.getBoundingClientRect().top <= 0;
+      communityLiveTicker.classList.toggle('is-fixed', shouldFix);
+      liveMainAnchor.style.height = shouldFix ? `${{communityLiveTicker.offsetHeight + 22}}px` : '0px';
+    }}
+
+    window.addEventListener('scroll', syncMainLiveTickerPosition, {{ passive: true }});
+    window.addEventListener('resize', syncMainLiveTickerPosition);
+    requestAnimationFrame(syncMainLiveTickerPosition);
 
     function pseudoValue() {{
       return (predictionPseudo.value || '').trim();
