@@ -62,7 +62,7 @@
         repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 84px);
       mask-image: linear-gradient(180deg, rgba(0,0,0,0.9), transparent 72%);
     }
-    main { width: min(1240px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 54px; position: relative; }
+    main { width: min(1240px, calc(100% - 32px)); margin: 10px auto 0; padding: 0 0 54px; position: relative; }
     a { color: #bfe6ff; }
     h1, h2, h3 { margin: 0; letter-spacing: 0; }
     .hero {
@@ -81,7 +81,7 @@
       position: relative;
       overflow: visible;
       z-index: var(--header-z);
-      margin-top: calc(var(--live-bar-height) + 18px);
+      margin-top: calc(var(--live-bar-height) + 10px);
       margin-bottom: 18px;
       padding: clamp(22px, 4vw, 42px);
       border: 1px solid rgba(255,255,255,0.14);
@@ -117,8 +117,9 @@
     .search-kind { color: var(--gold); font-size: 11px; font-weight: 950; text-transform: uppercase; }
     .search-title { font-weight: 950; line-height: 1.2; }
     .search-detail { color: var(--muted); font-size: 12px; line-height: 1.35; }
-    .search-detail-dialog { width: min(760px, 100%); max-height: min(76vh, 780px); overflow: hidden; }
-    .search-detail-body { display: grid; gap: 13px; }
+    .search-detail-dialog { width: min(760px, 100%); max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; }
+    .search-detail-dialog .team-modal-head { flex: 0 0 auto; }
+    .search-detail-body { display: grid; gap: 13px; flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-right: 16px; }
     .search-detail-summary { color: #d6e5f7; line-height: 1.5; }
     .search-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
     .search-fact { padding: 11px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); }
@@ -126,7 +127,7 @@
     .search-fact-value { color: var(--ink); font-weight: 850; line-height: 1.35; }
     .search-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
     .search-secondary-button { appearance: none; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 10px 13px; color: #d7e7fb; background: rgba(255,255,255,0.07); font: inherit; font-weight: 900; cursor: pointer; }
-    .search-coach-answer { display: none; gap: 9px; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); }
+    .search-coach-answer { display: none; gap: 9px; max-height: min(46vh, 430px); overflow-y: auto; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); }
     .search-coach-answer.is-open { display: grid; }
     .search-coach-answer .chatbot-message { margin: 0; }
     .hero.champions {
@@ -217,7 +218,7 @@
     .tabs-nav {
       position: sticky;
       top: 74px;
-      z-index: 11000;
+      z-index: 1000;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -652,8 +653,8 @@
     .mini-player-flag { width: 18px; height: 18px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.18); }
     .mini-player-number { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); border-radius: 999px; padding: 2px 7px; font-size: 11px; font-weight: 950; }
     .alltime-list { display: grid; gap: 10px; }
-    .chatbot-dialog { width: min(430px, 100%); max-height: min(78vh, 620px); display: grid; grid-template-rows: auto minmax(190px, 1fr) auto; overflow: hidden; }
-    .chatbot-messages { padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 220px; max-height: min(48vh, 430px); scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
+    .chatbot-dialog { width: min(520px, 100%); max-height: 80vh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; }
+    .chatbot-messages { padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 220px; max-height: none; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .chatbot-messages::-webkit-scrollbar { width: 8px; }
     .chatbot-messages::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
     .chatbot-messages::-webkit-scrollbar-thumb { background: rgba(245,201,107,0.55); border-radius: 999px; }
@@ -779,7 +780,7 @@
     .live-main-anchor { display: none; height: 0; }
     .live-main-ticker {
       position: fixed;
-      top: max(0px, env(safe-area-inset-top));
+      top: max(12px, env(safe-area-inset-top));
       left: 50%;
       width: min(1240px, calc(100% - 32px));
       z-index: var(--live-z);
@@ -789,7 +790,7 @@
     }
     .live-main-ticker.is-fixed {
       position: fixed;
-      top: max(0px, env(safe-area-inset-top));
+      top: max(12px, env(safe-area-inset-top));
       left: 50%;
       width: min(1240px, calc(100% - 32px));
       margin: 0;
@@ -851,7 +852,7 @@
       .live-section-title { align-items: flex-start; }
       .live-title-actions { width: 100%; overflow-x: auto; scrollbar-width: none; }
       .live-title-actions::-webkit-scrollbar { display: none; }
-      .tabs-nav { top: 68px; }
+      .tabs-nav { top: 74px; }
       .mercato-badge { min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }
       .mercato-track, .mercato-link, .mercato-item-break { height: 50px; }
       .mercato-marquee { animation-duration: 164s; }
@@ -919,7 +920,10 @@
       .round { gap: 8px; }
       .ko-line { font-size: 12px; }
       .team-modal { padding: calc(var(--live-bar-height) + 10px) 10px 10px; }
-      #searchDetailModal { padding-top: calc(var(--live-bar-height) + 12px); }
+      #searchDetailModal { padding: calc(var(--live-bar-height) + 10px) 10px 10px; }
+      .search-detail-dialog { width: 100%; max-height: calc(100vh - var(--live-bar-height) - 22px); }
+      .search-coach-answer { max-height: 52vh; }
+      .chatbot-dialog { width: 100%; max-height: calc(100vh - var(--live-bar-height) - 22px); }
       .team-modal-head { grid-template-columns: auto 1fr auto; padding: 14px; }
       .team-modal-flag { width: 46px; height: 46px; }
       .alltime-row { gap: 9px; padding: 10px; }
@@ -1449,7 +1453,11 @@
         <button class="modal-close" type="button" id="profileCreateClose" aria-label="Fermer">×</button>
       </header>
       <div class="team-modal-body profile-create-body">
-        <div class="profile-auth-note">Crée ton profil Akro du Foot sans email. Ta progression, tes badges et tes pronostics sont sauvegardés dans Supabase.</div>
+        <div class="profile-auth-note">Crée ton profil Akro du Foot avec email et mot de passe. Ta progression, tes badges et tes pronostics sont sauvegardés dans Supabase.</div>
+        <div class="pseudo-row">
+          <label for="profileEmailInput">Email</label>
+          <input id="profileEmailInput" type="email" maxlength="120" placeholder="ton@email.com" autocomplete="email">
+        </div>
         <div class="pseudo-row">
           <label for="profilePseudoInput">Pseudo</label>
           <input id="profilePseudoInput" type="text" maxlength="32" placeholder="Votre pseudo" autocomplete="nickname">
@@ -1484,14 +1492,14 @@
         <div class="alltime-rank">ID</div>
         <div>
           <div class="team-modal-title" id="profileLoginTitle">Se connecter</div>
-          <div class="subtle">Retrouve ton profil sur cet appareil si ta session est encore active.</div>
+          <div class="subtle">Connecte-toi avec ton email et ton mot de passe.</div>
         </div>
         <button class="modal-close" type="button" id="profileLoginClose" aria-label="Fermer">×</button>
       </header>
       <div class="team-modal-body profile-create-body">
         <div class="pseudo-row">
-          <label for="profileLoginIdentifier">Pseudo</label>
-          <input id="profileLoginIdentifier" type="text" maxlength="80" placeholder="Ton pseudo" autocomplete="username">
+          <label for="profileLoginIdentifier">Email</label>
+          <input id="profileLoginIdentifier" type="email" maxlength="120" placeholder="ton@email.com" autocomplete="email">
         </div>
         <div class="pseudo-row">
           <label for="profileLoginPassword">Mot de passe</label>
@@ -1751,6 +1759,7 @@
     const predictionPseudo = document.getElementById('predictionPseudo');
     const avatarGrid = document.getElementById('profileAvatarGrid');
     const profileCreateModal = document.getElementById('profileCreateModal');
+    const profileEmailInput = document.getElementById('profileEmailInput');
     const profilePseudoInput = document.getElementById('profilePseudoInput');
     const profilePasswordInput = document.getElementById('profilePasswordInput');
     const profileFavoriteClub = document.getElementById('profileFavoriteClub');
@@ -1879,18 +1888,20 @@
       else localStorage.removeItem('akrodufoot:pseudo');
     }
 
-    function normalizeAuthPseudo(value) {
-      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '.').replace(/^\.+|\.+$/g, '').slice(0, 48);
+    function normalizeAuthEmail(value) {
+      return String(value || '').trim().toLocaleLowerCase('fr-FR');
     }
 
-    function isInvalidEmailAuthError(error) {
-      return /invalid.*email|email.*invalid|email address/i.test(String(error?.message || error || ''));
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeAuthEmail(value));
     }
 
     function publicAuthErrorMessage(error, fallback = 'Action impossible pour le moment.') {
       const message = String(error?.message || error || fallback);
-      if (isInvalidEmailAuthError(error)) return 'Création impossible avec cet identifiant. Essaie un pseudo avec lettres ou chiffres.';
-      if (/anonymous|provider|disabled/i.test(message)) return 'Auth anonyme Supabase désactivée : active Email > Anonymous sign-ins dans Supabase.';
+      if (/already registered|already exists|user already|email.*exists|email.*registered/i.test(message)) return 'Cet email possède déjà un compte. Utilise “Se connecter”.';
+      if (/invalid.*email|email.*invalid|email address/i.test(message)) return 'Entre une adresse email valide.';
+      if (/invalid login credentials|invalid.*credentials/i.test(message)) return 'Email ou mot de passe incorrect.';
+      if (/email not confirmed/i.test(message)) return 'Confirme ton email avant de te connecter.';
       return message.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, 'email technique');
     }
 
@@ -2000,6 +2011,10 @@
     }
 
     function openProfileCreateModal() {
+      if (profileEmailInput) {
+        profileEmailInput.value = akroSession?.user?.email || '';
+        profileEmailInput.disabled = Boolean(akroSession?.user?.email);
+      }
       if (profilePseudoInput) profilePseudoInput.value = akroProfile?.pseudo || pseudoValue() || localStorage.getItem('akrodufoot:pseudo') || '';
       if (profilePasswordInput) profilePasswordInput.value = '';
       if (profileCreateStatus) profileCreateStatus.textContent = '';
@@ -2007,7 +2022,7 @@
       renderFavoriteSelectors();
       profileCreateModal?.classList.add('is-open');
       profileCreateModal?.setAttribute('aria-hidden', 'false');
-      setTimeout(() => profilePseudoInput?.focus(), 0);
+      setTimeout(() => (profileEmailInput && !profileEmailInput.disabled ? profileEmailInput : profilePseudoInput)?.focus(), 0);
     }
 
     function closeProfileCreateModal() {
@@ -2016,7 +2031,7 @@
     }
 
     function openProfileLoginModal() {
-      if (profileLoginIdentifier) profileLoginIdentifier.value = pseudoValue() || akroProfile?.pseudo || localStorage.getItem('akrodufoot:pseudo') || '';
+      if (profileLoginIdentifier) profileLoginIdentifier.value = akroSession?.user?.email || '';
       if (profileLoginPassword) profileLoginPassword.value = '';
       if (profileLoginStatus) profileLoginStatus.textContent = '';
       profileLoginModal?.classList.add('is-open');
@@ -2087,10 +2102,17 @@
             detectSessionInUrl: true
           }
         });
-        akroSupabase.auth.onAuthStateChange((event, session) => {
+        akroSupabase.auth.onAuthStateChange(async (event, session) => {
           akroSession = session;
           if (event === 'SIGNED_IN') logSupabase('utilisateur connecté', session?.user?.id || '');
           if (event === 'SIGNED_OUT') logSupabase('utilisateur déconnecté');
+          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+            try {
+              await loadSupabaseUserData();
+            } catch (error) {
+              logSupabaseError('rechargement profil impossible', error);
+            }
+          }
         });
         const {data: sessionData, error: sessionError} = await akroSupabase.auth.getSession();
         if (sessionError) throw sessionError;
@@ -2121,62 +2143,7 @@
       throw new Error('Connecte-toi ou crée ton profil pour participer.');
     }
 
-    async function createAnonymousProfileSession() {
-      if (!akroSupabase) throw new Error('Supabase indisponible');
-      logSupabase('tentative création profil');
-      const {data, error} = await akroSupabase.auth.signInAnonymously();
-      if (error) {
-        logSupabaseError('erreur Supabase exacte', error);
-        throw error;
-      }
-      akroSession = data?.session || null;
-      if (!akroSession?.user?.id) throw new Error('Session anonyme Supabase introuvable.');
-      logSupabase('session anonyme créée', akroSession.user.id);
-      return akroSession;
-    }
-
-    async function profilePasswordHash(pseudo, password) {
-      if (!password) return '';
-      try {
-        const response = await fetch('/api/profile-password/hash', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({pseudo, password})
-        });
-        const payload = await response.json().catch(() => ({}));
-        if (!response.ok || !payload.password_hash) throw new Error(payload.error || 'Hash indisponible');
-        return payload.password_hash;
-      } catch (error) {
-        logSupabaseError('erreur hash mot de passe', error);
-        return '';
-      }
-    }
-
-    function isMissingPasswordHashColumn(error) {
-      return /password_hash|column .*does not exist|schema cache/i.test(String(error?.message || error || ''));
-    }
-
-    async function insertProfileWithOptionalPasswordHash(payload) {
-      const created = await akroSupabase
-        .from('profiles')
-        .insert(payload)
-        .select(PROFILE_SELECT_COLUMNS)
-        .single();
-      if (!created.error) return created;
-      if (payload.password_hash && isMissingPasswordHashColumn(created.error)) {
-        logSupabase('colonne password_hash absente, création profil sans mot de passe temporaire');
-        const fallbackPayload = {...payload};
-        delete fallbackPayload.password_hash;
-        return akroSupabase
-          .from('profiles')
-          .insert(fallbackPayload)
-          .select(PROFILE_SELECT_COLUMNS)
-          .single();
-      }
-      return created;
-    }
-
-    async function ensureSupabaseProfile(options = {}) {
+    async function ensureSupabaseProfile() {
       const session = await requireSupabaseSession();
       const userId = session?.user?.id;
       if (!akroSupabase || !userId) return null;
@@ -2209,8 +2176,11 @@
         return akroProfile;
       }
       const payload = {id: userId, pseudo, avatar_url: selectedAvatarUrl, ...selectedFavoritePayload()};
-      if (options.password_hash) payload.password_hash = options.password_hash;
-      const created = await insertProfileWithOptionalPasswordHash(payload);
+      const created = await akroSupabase
+        .from('profiles')
+        .upsert(payload, {onConflict: 'id'})
+        .select(PROFILE_SELECT_COLUMNS)
+        .single();
       if (created.error) throw created.error;
       akroProfile = created.data;
       logSupabase('profil créé', akroProfile);
@@ -2334,32 +2304,49 @@
     }
 
     async function createProfileFromModal() {
+      const email = normalizeAuthEmail(profileEmailInput?.value || '');
       const pseudo = (profilePseudoInput?.value || '').trim();
       const password = profilePasswordInput?.value || '';
+      const editingExistingProfile = Boolean(akroSession?.user?.id);
+      if (!editingExistingProfile && !isValidEmail(email)) {
+        if (profileCreateStatus) profileCreateStatus.textContent = 'Entre une adresse email valide.';
+        return;
+      }
       if (!pseudo) {
         if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un pseudo pour créer ton profil.';
         return;
       }
-      if (!akroSession?.user?.id && password.length < 6) {
+      if (!editingExistingProfile && password.length < 6) {
         if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un mot de passe de 6 caractères minimum.';
         return;
       }
-      if (profileCreateStatus) profileCreateStatus.textContent = 'Création du profil...';
+      if (profileCreateStatus) profileCreateStatus.textContent = editingExistingProfile ? 'Mise à jour du profil...' : 'Création du compte...';
       try {
         if (!akroSupabase) throw new Error('Supabase indisponible');
         predictionPseudo.value = pseudo;
         savePseudo();
         saveSelectedAvatar();
         syncSelectedFavoritesToStorage();
-        if (!akroSession?.user?.id) {
-          await createAnonymousProfileSession();
+        if (!editingExistingProfile) {
+          const {data, error} = await akroSupabase.auth.signUp({email, password});
+          if (error) throw error;
+          const identities = data?.user?.identities;
+          if (Array.isArray(identities) && identities.length === 0) {
+            await akroSupabase.auth.signOut();
+            throw new Error('Cet email possède déjà un compte. Utilise “Se connecter”.');
+          }
+          akroSession = data?.session || null;
+          if (!akroSession?.user?.id) {
+            if (profileCreateStatus) profileCreateStatus.textContent = 'Compte créé. Confirme ton email, puis connecte-toi.';
+            return;
+          }
         } else {
           await requireSupabaseSession();
         }
-        const passwordHash = await profilePasswordHash(pseudo, password);
-        await ensureSupabaseProfile({password_hash: passwordHash});
+        await ensureSupabaseProfile();
         if (!akroProfile) throw new Error('Profil Supabase indisponible');
         await refreshSupabaseStats();
+        await loadSupabaseUserData();
         closeProfileCreateModal();
         predictionStatus.textContent = '';
         logSupabase('profil créé', akroProfile);
@@ -2370,23 +2357,24 @@
     }
 
     async function loginProfileFromModal() {
-      const identifier = (profileLoginIdentifier?.value || '').trim();
+      const email = normalizeAuthEmail(profileLoginIdentifier?.value || '');
       const password = profileLoginPassword?.value || '';
-      if (!identifier || !password) {
-        if (profileLoginStatus) profileLoginStatus.textContent = 'Entre ton pseudo et ton mot de passe.';
+      if (!isValidEmail(email) || !password) {
+        if (profileLoginStatus) profileLoginStatus.textContent = 'Entre ton email et ton mot de passe.';
         return;
       }
       if (profileLoginStatus) profileLoginStatus.textContent = 'Connexion...';
       try {
         if (!akroSupabase) throw new Error('Supabase indisponible');
-        const {data: sessionData, error: sessionError} = await akroSupabase.auth.getSession();
-        if (sessionError) throw sessionError;
-        akroSession = sessionData.session;
-        if (!akroSession?.user?.id) {
-          throw new Error('Connexion pseudo/mot de passe bientôt disponible. Sur cet appareil, ton profil est restauré automatiquement si la session existe encore.');
-        }
+        const {data, error} = await akroSupabase.auth.signInWithPassword({email, password});
+        if (error) throw error;
+        akroSession = data?.session || null;
+        if (!akroSession?.user?.id) throw new Error('Session Supabase introuvable après connexion.');
         await loadSupabaseUserData();
         if (!akroProfile) throw new Error('Profil introuvable pour ce compte.');
+        applyProfileFavorites(akroProfile);
+        renderFavoriteSelectors();
+        renderFavoriteMatches(communityMatches);
         closeProfileLoginModal();
         predictionStatus.textContent = '';
       } catch (error) {
@@ -2984,8 +2972,10 @@
     document.getElementById('profileLoginClose')?.addEventListener('click', closeProfileLoginModal);
     document.getElementById('profileCreateSubmit')?.addEventListener('click', createProfileFromModal);
     document.getElementById('profileLoginSubmit')?.addEventListener('click', loginProfileFromModal);
+    profileEmailInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
     profilePseudoInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
     profilePasswordInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
+    profileLoginIdentifier?.addEventListener('keydown', event => { if (event.key === 'Enter') loginProfileFromModal(); });
     profileLoginPassword?.addEventListener('keydown', event => { if (event.key === 'Enter') loginProfileFromModal(); });
     openProfileCreateButton?.addEventListener('click', openProfileCreateModal);
     openProfileLoginButton?.addEventListener('click', openProfileLoginModal);
