@@ -835,29 +835,35 @@
     .coach-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
     .coach-reason { color: #d6e5f7; font-size: 13px; line-height: 1.4; }
     .coach-disclaimer { color: var(--muted); font-size: 11px; font-weight: 800; }
-    .quiz-dialog { width: min(760px, 100%); max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; }
-    .quiz-body { overflow-y: auto; min-height: 0; }
-    .quiz-setup, .quiz-stage, .quiz-result { display: grid; gap: 14px; }
-    .quiz-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .quiz-theme-selectors { display: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .quiz-dialog { width: min(700px, 100%); max-height: min(74vh, 650px); display: flex; flex-direction: column; overflow: hidden; }
+    .quiz-dialog .team-modal-head { padding-block: 12px; }
+    .quiz-dialog .team-modal-title { font-size: clamp(20px, 3vw, 30px); }
+    .quiz-dialog .subtle { font-size: 12px; line-height: 1.25; }
+    .quiz-body { overflow-y: visible; min-height: 0; padding: 12px 14px 14px; }
+    .quiz-setup, .quiz-stage, .quiz-result { display: grid; gap: 9px; }
+    .quiz-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .quiz-theme-selectors { display: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
     .quiz-theme-selectors.is-visible { display: grid; }
-    .quiz-progress { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; font-weight: 900; text-transform: uppercase; }
-    .quiz-progress-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
+    .quiz-progress { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 900; text-transform: uppercase; }
+    .quiz-score-pill { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; padding: 4px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
+    .quiz-progress-bar { height: 5px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
     .quiz-progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--gold), var(--green)); transition: width .25s ease; }
-    .quiz-card { display: grid; gap: 14px; padding: 16px; border: 1px solid rgba(245,201,107,0.22); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }
-    .quiz-question { font-size: clamp(18px, 2.4vw, 26px); line-height: 1.18; font-weight: 950; }
-    .quiz-answers { display: grid; gap: 10px; }
-    .quiz-answer { appearance: none; width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.12); border-radius: 13px; color: var(--ink); background: rgba(255,255,255,0.07); font: inherit; font-weight: 850; text-align: left; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .quiz-card { display: grid; gap: 9px; padding: 12px; border: 1px solid rgba(245,201,107,0.22); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }
+    .quiz-card .coach-badge { width: max-content; padding: 4px 8px; font-size: 11px; }
+    .quiz-question { font-size: clamp(16px, 2vw, 21px); line-height: 1.16; font-weight: 950; }
+    .quiz-answers { display: grid; gap: 7px; }
+    .quiz-answer { appearance: none; width: 100%; padding: 9px 11px; min-height: 40px; border: 1px solid rgba(255,255,255,0.12); border-radius: 11px; color: var(--ink); background: rgba(255,255,255,0.07); font: inherit; font-size: 14px; line-height: 1.25; font-weight: 850; text-align: left; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .quiz-answer:hover, .quiz-answer:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.42); outline: none; }
     .quiz-answer.is-correct { border-color: rgba(50,211,162,0.72); background: rgba(50,211,162,0.18); animation: quizPulse .28s ease; }
     .quiz-answer.is-wrong { border-color: rgba(239,51,64,0.72); background: rgba(239,51,64,0.18); animation: quizShake .28s ease; }
-    .quiz-feedback { min-height: 24px; color: #d6e5f7; font-size: 14px; font-weight: 850; }
+    .quiz-feedback { min-height: 18px; color: #d6e5f7; font-size: 13px; line-height: 1.32; font-weight: 850; }
     .quiz-feedback.good { color: #9ff0d5; }
     .quiz-feedback.bad { color: #ffb4bd; }
-    .quiz-actions { display: flex; flex-wrap: wrap; gap: 10px; }
-    .quiz-result-score { color: var(--gold); font-size: clamp(38px, 8vw, 72px); line-height: 1; font-weight: 950; }
-    .quiz-badge-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .quiz-badge-pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
+    .quiz-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+    .quiz-actions .action-button, .quiz-actions .search-secondary-button { padding-block: 8px; }
+    .quiz-result-score { justify-self: start; color: var(--gold); font-size: clamp(26px, 5vw, 42px); line-height: 1; font-weight: 950; }
+    .quiz-badge-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .quiz-badge-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
     @keyframes quizPulse { 50% { transform: scale(1.015); } }
     @keyframes quizShake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
     @media (max-width: 860px) {
@@ -951,6 +957,8 @@
       .search-coach-answer { max-height: 48vh; padding-bottom: 24px; }
       .chatbot-dialog { width: 100%; max-height: calc(100vh - var(--live-bar-height) - 22px); }
       .quiz-dialog { width: 100%; max-height: calc(100vh - var(--live-bar-height) - 22px); }
+      .quiz-body { overflow-y: auto; padding: 12px; }
+      .quiz-question { font-size: 17px; }
       .quiz-controls, .quiz-theme-selectors { grid-template-columns: 1fr; }
       .team-modal-head { grid-template-columns: auto 1fr auto; padding: 14px; }
       .team-modal-flag { width: 46px; height: 46px; }
@@ -1499,7 +1507,7 @@
         <div class="quiz-stage" id="quizStage" hidden>
           <div class="quiz-progress">
             <span id="quizProgressText">Question 1/10</span>
-            <span id="quizScoreText">Score 0</span>
+            <span class="quiz-score-pill" id="quizScoreText">0/10</span>
           </div>
           <div class="quiz-progress-bar" aria-hidden="true"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
           <article class="quiz-card">
@@ -4189,7 +4197,7 @@
       quizState.answered = false;
       quizContextBadge.textContent = quizContextLabel(quizState.config);
       quizProgressText.textContent = `Question ${quizState.index + 1}/10`;
-      quizScoreText.textContent = `Score ${quizState.score}`;
+      quizScoreText.textContent = `${quizState.score}/10`;
       quizProgressFill.style.width = `${(quizState.index / 10) * 100}%`;
       quizQuestion.textContent = current.text;
       quizFeedback.textContent = '';
@@ -4213,7 +4221,7 @@
       if (!isCorrect) button.classList.add('is-wrong');
       quizFeedback.textContent = isCorrect ? `Bonne réponse. ${current.explanation || ''}` : `Mauvaise réponse. La bonne réponse était : ${current.correct}. ${current.explanation || ''}`;
       quizFeedback.className = `quiz-feedback ${isCorrect ? 'good' : 'bad'}`;
-      quizScoreText.textContent = `Score ${quizState.score}`;
+      quizScoreText.textContent = `${quizState.score}/10`;
       quizProgressFill.style.width = `${((quizState.index + 1) / 10) * 100}%`;
       quizNextButton.disabled = false;
     }
