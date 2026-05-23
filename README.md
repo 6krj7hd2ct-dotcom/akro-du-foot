@@ -103,6 +103,8 @@ Cette application n'est pas un build React/Vite dans ce dossier : `app.py` expos
 
 Dans Supabase, active aussi les connexions anonymes : `Authentication` -> `Sign In / Providers` -> `Anonymous sign-ins`.
 
+Les avatars prédéfinis sont servis depuis `public/avatars/`. Supabase stocke uniquement le chemin choisi dans `profiles.avatar_url`, par exemple `/avatars/avatar-cool.png`.
+
 `data/community.json` reste seulement un filet de secours local pour les anciens messages/pronostics si Supabase est indisponible.
 
 ### 4. Tester en ligne

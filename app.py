@@ -92,6 +92,10 @@ if app:
     def icon_file(filename: str):
         return send_file(BASE_DIR / "icons" / filename)
 
+    @app.get("/avatars/<path:filename>")
+    def avatar_file(filename: str):
+        return send_file(BASE_DIR / "public" / "avatars" / filename)
+
 
 def _background_updates_enabled() -> bool:
     # Render must open the web port immediately. Background scraping is disabled
@@ -1277,6 +1281,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_file(BASE_DIR / "service-worker.js", "application/javascript; charset=utf-8")
         elif path.startswith("/icons/"):
             self._send_file(BASE_DIR / path.lstrip("/"), _icon_content_type(path))
+        elif path.startswith("/avatars/"):
+            self._send_file(BASE_DIR / "public" / path.lstrip("/"), _icon_content_type(path))
         elif path == "/healthz":
             self._send_json({"status": "ok"})
         elif path == "/api/community":

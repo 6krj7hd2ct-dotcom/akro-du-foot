@@ -667,6 +667,15 @@
     .community-form { display: grid; gap: 10px; margin-top: 12px; }
     .pseudo-row { display: grid; gap: 6px; }
     .pseudo-row label { color: var(--muted); font-size: 12px; font-weight: 900; text-transform: uppercase; }
+    .avatar-picker { display: grid; gap: 8px; }
+    .avatar-picker-label { color: var(--muted); font-size: 12px; font-weight: 900; text-transform: uppercase; }
+    .avatar-grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 8px; }
+    .avatar-option { appearance: none; display: grid; place-items: center; aspect-ratio: 1; min-width: 0; padding: 4px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06); cursor: pointer; transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease; }
+    .avatar-option:hover { border-color: rgba(245,201,107,0.42); transform: translateY(-1px); }
+    .avatar-option.is-selected { border-color: rgba(245,201,107,0.9); box-shadow: 0 0 0 2px rgba(245,201,107,0.22), 0 14px 28px rgba(0,0,0,0.18); background: rgba(245,201,107,0.13); }
+    .avatar-option img, .profile-avatar, .leaderboard-avatar, .history-avatar { display: block; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.08); }
+    .avatar-option img { width: 100%; height: 100%; }
+    .leaderboard-avatar { width: 36px; height: 36px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(255,255,255,0.16); }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     input, textarea, select { width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }
     textarea { min-height: 82px; resize: vertical; }
@@ -703,6 +712,10 @@
     .live-event.start::before { background: #32d3a2; box-shadow: 0 0 12px rgba(50,211,162,0.75); }
     @keyframes liveTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .profile-dialog { width: min(720px, 100%); max-height: min(88vh, 760px); overflow: hidden; }
+    #userProfileBadge { padding: 0; overflow: hidden; background: transparent; border: 1px solid rgba(245,201,107,0.38); }
+    #userProfileBadge img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .profile-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
     .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
     .profile-stat strong { display: block; color: var(--gold); font-size: 22px; }
@@ -762,6 +775,7 @@
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
       .community-grid, .community-predictions, .field-row, .follow-list, .profile-summary { grid-template-columns: 1fr; }
+      .avatar-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
       .live-events-track { animation-duration: 164s; }
       .prediction-scoreboard { grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); gap: 8px; }
     }
@@ -862,6 +876,10 @@
             <div class="pseudo-row">
               <label for="predictionPseudo">Pseudo</label>
               <input id="predictionPseudo" type="text" maxlength="32" placeholder="Votre pseudo" autocomplete="nickname">
+            </div>
+            <div class="avatar-picker">
+              <div class="avatar-picker-label">Avatar</div>
+              <div class="avatar-grid" id="avatarGrid" role="radiogroup" aria-label="Choix de l'avatar"></div>
             </div>
             <div class="field-row">
               <select id="competitionFilter">
@@ -1503,6 +1521,7 @@
     const coachPrediction = document.getElementById('coachPrediction');
     const predictionStatus = document.getElementById('predictionStatus');
     const predictionPseudo = document.getElementById('predictionPseudo');
+    const avatarGrid = document.getElementById('avatarGrid');
     const predictionSubmit = predictionForm.querySelector('button[type="submit"]');
     let communityMatches = DASHBOARD_MATCHES;
     let communityProfiles = {};
@@ -1535,6 +1554,19 @@
       ['immortel', 'Immortel', '✦'],
       ['hall_of_fame', 'Hall of Fame', '✦']
     ];
+    const PROFILE_AVATARS = [
+      '/avatars/avatar-cool.png',
+      '/avatars/avatar-cry.png',
+      '/avatars/avatar-mask.png',
+      '/avatars/avatar-kiss.png',
+      '/avatars/avatar-love.png',
+      '/avatars/avatar-laugh.png',
+      '/avatars/avatar-angry.png',
+      '/avatars/avatar-trophy.png',
+      '/avatars/avatar-shush.png'
+    ];
+    const DEFAULT_AVATAR_URL = PROFILE_AVATARS[0];
+    let selectedAvatarUrl = localStorage.getItem('akrodufoot:avatar_url') || DEFAULT_AVATAR_URL;
 
     function pseudoValue() {
       return (predictionPseudo.value || '').trim();
@@ -1544,6 +1576,50 @@
       const pseudo = pseudoValue();
       if (pseudo) localStorage.setItem('akrodufoot:pseudo', pseudo);
       else localStorage.removeItem('akrodufoot:pseudo');
+    }
+
+    function avatarUrl(value) {
+      return PROFILE_AVATARS.includes(value) ? value : DEFAULT_AVATAR_URL;
+    }
+
+    function saveSelectedAvatar() {
+      selectedAvatarUrl = avatarUrl(selectedAvatarUrl);
+      localStorage.setItem('akrodufoot:avatar_url', selectedAvatarUrl);
+    }
+
+    function avatarImage(url, className = 'profile-avatar') {
+      return `<img class="${className}" src="${escapeHtml(avatarUrl(url))}" alt="">`;
+    }
+
+    function renderAvatarPicker() {
+      if (!avatarGrid) return;
+      selectedAvatarUrl = avatarUrl(selectedAvatarUrl);
+      avatarGrid.innerHTML = PROFILE_AVATARS.map((url) => `
+        <button class="avatar-option ${url === selectedAvatarUrl ? 'is-selected' : ''}" type="button" role="radio" aria-checked="${url === selectedAvatarUrl ? 'true' : 'false'}" data-avatar-url="${escapeHtml(url)}">
+          <img src="${escapeHtml(url)}" alt="">
+        </button>
+      `).join('');
+    }
+
+    async function setSelectedAvatar(url, persist = true) {
+      selectedAvatarUrl = avatarUrl(url);
+      saveSelectedAvatar();
+      renderAvatarPicker();
+      if (!persist || !akroSupabase || !akroProfile?.id) return;
+      try {
+        const {data, error} = await akroSupabase
+          .from('profiles')
+          .update({avatar_url: selectedAvatarUrl})
+          .eq('id', akroProfile.id)
+          .select('*')
+          .single();
+        if (error) throw error;
+        akroProfile = data;
+        mergeSupabaseProfileIntoUi();
+        logSupabase('profil chargé', akroProfile);
+      } catch (error) {
+        logSupabaseError('erreur Supabase', error);
+      }
     }
 
     function logSupabase(message, detail = '') {
@@ -1611,6 +1687,8 @@
       if (!akroSupabase || !userId) return null;
       const pseudo = pseudoValue();
       if (!pseudo) return null;
+      selectedAvatarUrl = avatarUrl(selectedAvatarUrl);
+      saveSelectedAvatar();
       const {data: existing, error: readError} = await akroSupabase
         .from('profiles')
         .select('*')
@@ -1618,16 +1696,22 @@
         .maybeSingle();
       if (readError) throw readError;
       if (existing) {
-        const nextProfile = existing.pseudo === pseudo
-          ? existing
-          : (await akroSupabase.from('profiles').update({pseudo}).eq('id', userId).select('*').single()).data;
+        const patch = {};
+        if (existing.pseudo !== pseudo) patch.pseudo = pseudo;
+        if (avatarUrl(existing.avatar_url) !== selectedAvatarUrl) patch.avatar_url = selectedAvatarUrl;
+        let nextProfile = existing;
+        if (Object.keys(patch).length > 0) {
+          const updated = await akroSupabase.from('profiles').update(patch).eq('id', userId).select('*').single();
+          if (updated.error) throw updated.error;
+          nextProfile = updated.data;
+        }
         akroProfile = nextProfile || existing;
         logSupabase('profil chargé', akroProfile);
         return akroProfile;
       }
       const created = await akroSupabase
         .from('profiles')
-        .insert({id: userId, pseudo})
+        .insert({id: userId, pseudo, avatar_url: selectedAvatarUrl})
         .select('*')
         .single();
       if (created.error) throw created.error;
@@ -1694,6 +1778,7 @@
         badge: badge.name,
         badge_icon: badge.icon,
         badges: akroBadges,
+        avatar_url: avatarUrl(akroProfile.avatar_url || selectedAvatarUrl),
         next_level_at: badge.next,
         history,
         recent_predictions: history.slice().sort((a, b) => String(b.created_at).localeCompare(String(a.created_at))).slice(0, 12)
@@ -1720,6 +1805,9 @@
       akroProfile = profileResult.data;
       if (akroProfile?.pseudo) {
         predictionPseudo.value = akroProfile.pseudo;
+        selectedAvatarUrl = avatarUrl(akroProfile.avatar_url);
+        saveSelectedAvatar();
+        renderAvatarPicker();
         savePseudo();
         logSupabase('profil chargé', akroProfile);
       }
@@ -2061,6 +2149,7 @@
         <div class="leaderboard-item ${index < 3 ? 'top-rank' : ''}">
           <button class="leaderboard-person" type="button" data-profile-pseudo="${escapeHtml(row.pseudo)}">
             <span class="leaderboard-rank">${row.rank || index + 1}</span>
+            ${avatarImage(row.avatar_url, 'leaderboard-avatar')}
             <span class="reward-badge" title="${escapeHtml(row.badge || 'Badge')}">${escapeHtml(row.badge_icon || '★')}</span>
             <span class="leaderboard-name"><strong>${escapeHtml(row.pseudo)}</strong><span class="leaderboard-meta">Niv. ${escapeHtml(row.level_index || 1)} · ${escapeHtml(row.level || 'Débutant')} · ${escapeHtml(row.predictions_count || 0)} pronos</span></span>
           </button>
@@ -2092,9 +2181,13 @@
       if (!modal || !body || !profile) return;
       title.textContent = profile.pseudo || pseudo;
       subtitle.textContent = `${profile.badge || 'Badge'} · niveau ${profile.level_index || 1} · ${profile.level || 'Débutant'}`;
-      badge.textContent = profile.badge_icon || '★';
+      badge.innerHTML = avatarImage(profile.avatar_url);
       const history = profile.recent_predictions || profile.history || [];
       body.innerHTML = `
+        <div class="profile-heading">
+          ${avatarImage(profile.avatar_url)}
+          <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(profile.badge || 'Badge')} · ${escapeHtml(profile.level || 'Débutant')}</div></div>
+        </div>
         <div class="profile-summary">
           <div class="profile-stat"><strong>${escapeHtml(profile.points || 0)}</strong><span>points</span></div>
           <div class="profile-stat"><strong>${escapeHtml(profile.predictions_count || 0)}</strong><span>pronostics</span></div>
@@ -2163,6 +2256,10 @@
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
     predictionPseudo.addEventListener('input', () => { savePseudo(); updatePredictionButton(); });
+    avatarGrid?.addEventListener('click', (event) => {
+      const option = event.target.closest('[data-avatar-url]');
+      if (option) setSelectedAvatar(option.dataset.avatarUrl);
+    });
     predictionForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!pseudoValue()) {
@@ -2194,6 +2291,7 @@
       }
     });
     predictionPseudo.value = localStorage.getItem('akrodufoot:pseudo') || '';
+    renderAvatarPicker();
     renderMatchOptions(DASHBOARD_MATCHES);
     (async function startCommunityApp() {
       await initSupabaseAccount();
