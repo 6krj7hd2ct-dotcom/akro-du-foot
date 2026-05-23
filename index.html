@@ -720,6 +720,7 @@
     .profile-gate { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.08)); }
     .profile-gate-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .profile-gate-copy { color: #d6e5f7; font-weight: 850; line-height: 1.35; }
+    .profile-auth-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .active-profile-card { display: none; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(50,211,162,0.24); border-radius: 16px; background: rgba(50,211,162,0.08); }
     .active-profile-card.is-visible { display: grid; }
     .active-profile-meta { display: grid; gap: 5px; min-width: 0; }
@@ -738,6 +739,7 @@
     .avatar-option img { width: 100%; height: 100%; }
     .profile-create-dialog { width: min(680px, 100%); max-height: min(88vh, 760px); overflow: hidden; }
     .profile-create-body { display: grid; gap: 13px; }
+    .profile-auth-note { color: #d6e5f7; font-size: 13px; line-height: 1.45; }
     .leaderboard-avatar { width: 36px; height: 36px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(255,255,255,0.16); }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     input, textarea, select { width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }
@@ -948,8 +950,11 @@
             <input id="predictionPseudo" type="hidden" maxlength="32" autocomplete="nickname">
             <div class="profile-gate" id="profileGate">
               <div class="profile-gate-top">
-                <div class="profile-gate-copy">Crée ton profil pour participer aux pronostics.</div>
-                <button class="action-button" type="button" id="openProfileCreate">Créer ton profil</button>
+                <div class="profile-gate-copy">Connecte-toi ou crée ton profil pour participer.</div>
+                <div class="profile-auth-actions">
+                  <button class="action-button" type="button" id="openProfileCreate">Créer ton profil</button>
+                  <button class="action-button" type="button" id="openProfileLogin">Se connecter</button>
+                </div>
               </div>
               <div class="active-profile-card" id="activeProfileCard"></div>
             </div>
@@ -1388,9 +1393,14 @@
         <button class="modal-close" type="button" id="profileCreateClose" aria-label="Fermer">×</button>
       </header>
       <div class="team-modal-body profile-create-body">
+        <div class="profile-auth-note">Crée un vrai compte Akro du Foot pour retrouver ta progression, tes badges et tes pronostics plus tard.</div>
         <div class="pseudo-row">
           <label for="profilePseudoInput">Pseudo</label>
           <input id="profilePseudoInput" type="text" maxlength="32" placeholder="Votre pseudo" autocomplete="nickname">
+        </div>
+        <div class="pseudo-row">
+          <label for="profilePasswordInput">Mot de passe</label>
+          <input id="profilePasswordInput" type="password" minlength="6" maxlength="72" placeholder="6 caractères minimum" autocomplete="new-password">
         </div>
         <div class="avatar-picker">
           <div class="avatar-picker-label">Avatar</div>
@@ -1398,6 +1408,31 @@
         </div>
         <button class="action-button" type="button" id="profileCreateSubmit">Créer mon profil</button>
         <div class="community-status" id="profileCreateStatus"></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="team-modal" id="profileLoginModal" aria-hidden="true">
+    <article class="team-dialog profile-create-dialog" role="dialog" aria-modal="true" aria-labelledby="profileLoginTitle">
+      <header class="team-modal-head">
+        <div class="alltime-rank">ID</div>
+        <div>
+          <div class="team-modal-title" id="profileLoginTitle">Se connecter</div>
+          <div class="subtle">Retrouve ton compte, tes points et tes pronostics.</div>
+        </div>
+        <button class="modal-close" type="button" id="profileLoginClose" aria-label="Fermer">×</button>
+      </header>
+      <div class="team-modal-body profile-create-body">
+        <div class="pseudo-row">
+          <label for="profileLoginIdentifier">Pseudo ou email</label>
+          <input id="profileLoginIdentifier" type="text" maxlength="80" placeholder="Ton pseudo ou ton email" autocomplete="username">
+        </div>
+        <div class="pseudo-row">
+          <label for="profileLoginPassword">Mot de passe</label>
+          <input id="profileLoginPassword" type="password" maxlength="72" placeholder="Ton mot de passe" autocomplete="current-password">
+        </div>
+        <button class="action-button" type="button" id="profileLoginSubmit">Connexion</button>
+        <div class="community-status" id="profileLoginStatus"></div>
       </div>
     </article>
   </div>
@@ -1650,9 +1685,15 @@
     const avatarGrid = document.getElementById('profileAvatarGrid');
     const profileCreateModal = document.getElementById('profileCreateModal');
     const profilePseudoInput = document.getElementById('profilePseudoInput');
+    const profilePasswordInput = document.getElementById('profilePasswordInput');
     const profileCreateStatus = document.getElementById('profileCreateStatus');
+    const profileLoginModal = document.getElementById('profileLoginModal');
+    const profileLoginIdentifier = document.getElementById('profileLoginIdentifier');
+    const profileLoginPassword = document.getElementById('profileLoginPassword');
+    const profileLoginStatus = document.getElementById('profileLoginStatus');
     const activeProfileCard = document.getElementById('activeProfileCard');
     const openProfileCreateButton = document.getElementById('openProfileCreate');
+    const openProfileLoginButton = document.getElementById('openProfileLogin');
     const predictionSubmit = predictionForm.querySelector('button[type="submit"]');
     let communityMatches = DASHBOARD_MATCHES;
     let communityProfiles = {};
@@ -1713,6 +1754,18 @@
       else localStorage.removeItem('akrodufoot:pseudo');
     }
 
+    function normalizeAuthPseudo(value) {
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '.').replace(/^\.+|\.+$/g, '').slice(0, 48);
+    }
+
+    function authEmailFromIdentifier(value) {
+      const raw = String(value || '').trim();
+      if (raw.includes('@')) return raw.toLowerCase();
+      const normalized = normalizeAuthPseudo(raw);
+      if (!normalized) return '';
+      return `${normalized}@akrodufoot.local`;
+    }
+
     function hasActiveProfile() {
       return Boolean(akroProfile && akroProfile.id && akroProfile.pseudo);
     }
@@ -1763,6 +1816,7 @@
 
     function openProfileCreateModal() {
       if (profilePseudoInput) profilePseudoInput.value = akroProfile?.pseudo || pseudoValue() || localStorage.getItem('akrodufoot:pseudo') || '';
+      if (profilePasswordInput) profilePasswordInput.value = '';
       if (profileCreateStatus) profileCreateStatus.textContent = '';
       renderAvatarPicker();
       profileCreateModal?.classList.add('is-open');
@@ -1775,6 +1829,20 @@
       profileCreateModal?.setAttribute('aria-hidden', 'true');
     }
 
+    function openProfileLoginModal() {
+      if (profileLoginIdentifier) profileLoginIdentifier.value = pseudoValue() || akroProfile?.pseudo || localStorage.getItem('akrodufoot:pseudo') || '';
+      if (profileLoginPassword) profileLoginPassword.value = '';
+      if (profileLoginStatus) profileLoginStatus.textContent = '';
+      profileLoginModal?.classList.add('is-open');
+      profileLoginModal?.setAttribute('aria-hidden', 'false');
+      setTimeout(() => profileLoginIdentifier?.focus(), 0);
+    }
+
+    function closeProfileLoginModal() {
+      profileLoginModal?.classList.remove('is-open');
+      profileLoginModal?.setAttribute('aria-hidden', 'true');
+    }
+
     function renderActiveProfile() {
       if (!activeProfileCard) return;
       const profile = profileFromSupabaseState();
@@ -1782,12 +1850,14 @@
       if (!profile) {
         activeProfileCard.classList.remove('is-visible');
         activeProfileCard.innerHTML = '';
-        if (gateCopy) gateCopy.textContent = 'Crée ton profil pour participer aux pronostics.';
+        if (gateCopy) gateCopy.textContent = 'Connecte-toi ou crée ton profil pour participer.';
         if (openProfileCreateButton) openProfileCreateButton.textContent = 'Créer ton profil';
+        if (openProfileLoginButton) openProfileLoginButton.style.display = '';
         return;
       }
-      if (gateCopy) gateCopy.textContent = 'Profil actif';
+      if (gateCopy) gateCopy.textContent = 'Compte connecté : progression sauvegardée.';
       if (openProfileCreateButton) openProfileCreateButton.textContent = 'Modifier ton profil';
+      if (openProfileLoginButton) openProfileLoginButton.style.display = 'none';
       activeProfileCard.classList.add('is-visible');
       activeProfileCard.innerHTML = `
         ${avatarImage(profile.avatar_url)}
@@ -1799,6 +1869,7 @@
             <span class="profile-pill">${escapeHtml(profile.predictions_count || 0)} pronos</span>
             <span class="profile-pill">${profile.rank ? `#${escapeHtml(profile.rank)}` : 'Non classé'}</span>
           </div>
+          <button class="search-secondary-button" type="button" id="profileLogoutButton">Se déconnecter</button>
         </div>
       `;
     }
@@ -1828,18 +1899,22 @@
             detectSessionInUrl: true
           }
         });
+        akroSupabase.auth.onAuthStateChange((event, session) => {
+          akroSession = session;
+          if (event === 'SIGNED_IN') logSupabase('utilisateur connecté', session?.user?.id || '');
+          if (event === 'SIGNED_OUT') logSupabase('utilisateur déconnecté');
+        });
         const {data: sessionData, error: sessionError} = await akroSupabase.auth.getSession();
         if (sessionError) throw sessionError;
         akroSession = sessionData.session;
         if (akroSession) {
           logSupabase('session restaurée', akroSession.user.id);
-        } else {
-          const {data, error} = await akroSupabase.auth.signInAnonymously();
-          if (error) throw error;
-          akroSession = data.session;
-          logSupabase('session créée', akroSession?.user?.id || '');
         }
-        await loadSupabaseUserData();
+        if (akroSession) await loadSupabaseUserData();
+        else {
+          renderActiveProfile();
+          updatePredictionButton();
+        }
         return true;
       } catch (error) {
         logSupabaseError('erreur Supabase', error);
@@ -1855,11 +1930,7 @@
         akroSession = data.session;
         return akroSession;
       }
-      const signed = await akroSupabase.auth.signInAnonymously();
-      if (signed.error) throw signed.error;
-      akroSession = signed.data.session;
-      logSupabase('session créée', akroSession?.user?.id || '');
-      return akroSession;
+      throw new Error('Connecte-toi ou crée ton profil pour participer.');
     }
 
     async function ensureSupabaseProfile() {
@@ -1892,7 +1963,7 @@
       }
       const created = await akroSupabase
         .from('profiles')
-        .insert({id: userId, pseudo, avatar_url: selectedAvatarUrl})
+        .insert({id: userId, pseudo, avatar_url: selectedAvatarUrl, focus_teams: currentLocalFocusTeams()})
         .select('*')
         .single();
       if (created.error) throw created.error;
@@ -2013,17 +2084,39 @@
 
     async function createProfileFromModal() {
       const pseudo = (profilePseudoInput?.value || '').trim();
+      const password = profilePasswordInput?.value || '';
       if (!pseudo) {
         if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un pseudo pour créer ton profil.';
         return;
       }
+      if (!hasActiveProfile() && password.length < 6) {
+        if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un mot de passe de 6 caractères minimum.';
+        return;
+      }
       if (profileCreateStatus) profileCreateStatus.textContent = 'Création du profil...';
       try {
-        await requireSupabaseSession();
         if (!akroSupabase) throw new Error('Supabase indisponible');
         predictionPseudo.value = pseudo;
         savePseudo();
         saveSelectedAvatar();
+        if (!akroSession?.user?.id) {
+          const email = authEmailFromIdentifier(pseudo);
+          const signed = await akroSupabase.auth.signUp({
+            email,
+            password,
+            options: {data: {pseudo, avatar_url: selectedAvatarUrl}}
+          });
+          if (signed.error) throw signed.error;
+          akroSession = signed.data.session;
+          if (!akroSession) {
+            const login = await akroSupabase.auth.signInWithPassword({email, password});
+            if (login.error) throw login.error;
+            akroSession = login.data.session;
+          }
+          logSupabase('utilisateur connecté', akroSession?.user?.id || '');
+        } else {
+          await requireSupabaseSession();
+        }
         await ensureSupabaseProfile();
         if (!akroProfile) throw new Error('Profil Supabase indisponible');
         await refreshSupabaseStats();
@@ -2031,9 +2124,52 @@
         predictionStatus.textContent = '';
         logSupabase('profil créé', akroProfile);
       } catch (error) {
-        logSupabaseError('erreur Supabase', error);
-        if (profileCreateStatus) profileCreateStatus.textContent = 'Création impossible pour le moment.';
+        logSupabaseError('erreur auth', error);
+        if (profileCreateStatus) profileCreateStatus.textContent = error.message || 'Création impossible pour le moment.';
       }
+    }
+
+    async function loginProfileFromModal() {
+      const identifier = (profileLoginIdentifier?.value || '').trim();
+      const password = profileLoginPassword?.value || '';
+      if (!identifier || !password) {
+        if (profileLoginStatus) profileLoginStatus.textContent = 'Entre ton pseudo/email et ton mot de passe.';
+        return;
+      }
+      if (profileLoginStatus) profileLoginStatus.textContent = 'Connexion...';
+      try {
+        if (!akroSupabase) throw new Error('Supabase indisponible');
+        const email = authEmailFromIdentifier(identifier);
+        const {data, error} = await akroSupabase.auth.signInWithPassword({email, password});
+        if (error) throw error;
+        akroSession = data.session;
+        logSupabase('utilisateur connecté', akroSession?.user?.id || '');
+        await loadSupabaseUserData();
+        if (!akroProfile) throw new Error('Profil introuvable pour ce compte.');
+        closeProfileLoginModal();
+        predictionStatus.textContent = '';
+      } catch (error) {
+        logSupabaseError('erreur auth', error);
+        if (profileLoginStatus) profileLoginStatus.textContent = error.message || 'Connexion impossible.';
+      }
+    }
+
+    async function logoutProfile() {
+      try {
+        if (akroSupabase) await akroSupabase.auth.signOut();
+        logSupabase('utilisateur déconnecté');
+      } catch (error) {
+        logSupabaseError('erreur auth', error);
+      }
+      akroSession = null;
+      akroProfile = null;
+      akroStats = null;
+      akroBadges = [];
+      akroPredictions = [];
+      renderActiveProfile();
+      renderFavoriteMatches(communityMatches);
+      updatePredictionButton();
+      predictionStatus.textContent = 'Connecte-toi ou crée ton profil pour participer.';
     }
 
     async function refreshSupabaseStats() {
@@ -2210,6 +2346,10 @@
           return uniqueTeams(raw.split(','));
         }
       }
+      return currentLocalFocusTeams();
+    }
+
+    function currentLocalFocusTeams() {
       const localFocus = [
         localStorage.getItem('akrodufoot:focus:worldcup'),
         localStorage.getItem('akrodufoot:focus:champions')
@@ -2218,6 +2358,24 @@
         localFocus.push(localStorage.getItem(`akrodufoot:league-focus:${key}`));
       });
       return uniqueTeams(localFocus);
+    }
+
+    async function saveFocusTeamsToSupabase() {
+      if (!akroSupabase || !akroProfile?.id) return;
+      const focus_teams = currentLocalFocusTeams();
+      try {
+        const {data, error} = await akroSupabase
+          .from('profiles')
+          .update({focus_teams})
+          .eq('id', akroProfile.id)
+          .select('*')
+          .single();
+        if (error) throw error;
+        akroProfile = data;
+        logSupabase('profil chargé', akroProfile);
+      } catch (error) {
+        logSupabaseError('erreur Supabase', error);
+      }
     }
 
     function isFavoriteMatch(match, teams) {
@@ -2352,7 +2510,7 @@
       } else if (!available) {
         predictionStatus.textContent = 'Tous les matchs de ce filtre sont terminés';
       } else if (!profileReady) {
-        predictionStatus.textContent = 'Crée ton profil pour participer aux pronostics.';
+        predictionStatus.textContent = 'Connecte-toi ou crée ton profil pour participer.';
       } else {
         predictionStatus.textContent = '';
       }
@@ -2569,16 +2727,23 @@
       if (profileTrigger) openUserProfile(profileTrigger.dataset.profilePseudo);
       if (event.target && event.target.id === 'userProfileModal') closeUserProfile();
       if (event.target && event.target.id === 'profileCreateModal') closeProfileCreateModal();
+      if (event.target && event.target.id === 'profileLoginModal') closeProfileLoginModal();
+      if (event.target && event.target.id === 'profileLogoutButton') logoutProfile();
     });
     document.getElementById('userProfileClose')?.addEventListener('click', closeUserProfile);
     document.getElementById('profileCreateClose')?.addEventListener('click', closeProfileCreateModal);
+    document.getElementById('profileLoginClose')?.addEventListener('click', closeProfileLoginModal);
     document.getElementById('profileCreateSubmit')?.addEventListener('click', createProfileFromModal);
+    document.getElementById('profileLoginSubmit')?.addEventListener('click', loginProfileFromModal);
     profilePseudoInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
+    profilePasswordInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
+    profileLoginPassword?.addEventListener('keydown', event => { if (event.key === 'Enter') loginProfileFromModal(); });
     openProfileCreateButton?.addEventListener('click', openProfileCreateModal);
+    openProfileLoginButton?.addEventListener('click', openProfileLoginModal);
     liveRefreshButton?.addEventListener('click', () => refreshCommunityLive(true));
-    document.addEventListener('akro:focus-change', () => renderFavoriteMatches(communityMatches));
-    document.addEventListener('akro:league-focus-change', () => renderFavoriteMatches(communityMatches));
-    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeUserProfile(); closeProfileCreateModal(); } });
+    document.addEventListener('akro:focus-change', () => { renderFavoriteMatches(communityMatches); saveFocusTeamsToSupabase(); });
+    document.addEventListener('akro:league-focus-change', () => { renderFavoriteMatches(communityMatches); saveFocusTeamsToSupabase(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeUserProfile(); closeProfileCreateModal(); closeProfileLoginModal(); } });
     shareButton.addEventListener('click', sharePage);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
@@ -2590,9 +2755,9 @@
     predictionForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!hasActiveProfile()) {
-        predictionStatus.textContent = 'Crée ton profil pour participer aux pronostics.';
+        predictionStatus.textContent = 'Connecte-toi ou crée ton profil pour participer.';
         updatePredictionButton();
-        openProfileCreateModal();
+        openProfileLoginModal();
         return;
       }
       if (!serverMode) return loadCommunity();

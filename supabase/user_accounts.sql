@@ -4,9 +4,13 @@ create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   pseudo text not null,
   avatar_url text,
+  focus_teams text[] not null default '{}',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.profiles
+  add column if not exists focus_teams text[] not null default '{}';
 
 create table if not exists public.predictions (
   id uuid primary key default gen_random_uuid(),
