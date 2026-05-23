@@ -78,6 +78,18 @@ if app:
     def watch_party():
         return watch_party_html()
 
+    @app.get("/manifest.json")
+    def manifest_file():
+        return send_file(BASE_DIR / "manifest.json", mimetype="application/manifest+json")
+
+    @app.get("/service-worker.js")
+    def service_worker_file():
+        return send_file(BASE_DIR / "service-worker.js", mimetype="application/javascript")
+
+    @app.get("/icons/<path:filename>")
+    def icon_file(filename: str):
+        return send_file(BASE_DIR / "icons" / filename)
+
 
 def _background_updates_enabled() -> bool:
     # Render must open the web port immediately. Background scraping is disabled
@@ -996,6 +1008,12 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_file(OUTPUT_HTML, "text/html; charset=utf-8")
         elif path == "/watch-party":
             self._send_html(watch_party_html())
+        elif path == "/manifest.json":
+            self._send_file(BASE_DIR / "manifest.json", "application/manifest+json")
+        elif path == "/service-worker.js":
+            self._send_file(BASE_DIR / "service-worker.js", "application/javascript; charset=utf-8")
+        elif path.startswith("/icons/"):
+            self._send_file(BASE_DIR / path.lstrip("/"), _icon_content_type(path))
         elif path == "/healthz":
             self._send_json({"status": "ok"})
         elif path == "/api/community":
@@ -1290,6 +1308,14 @@ def _ensure_supabase_badge(level: dict[str, Any]) -> dict[str, Any] | None:
         json={"name": name, "level": level.get("level_index"), "icon": level.get("badge_icon"), "min_predictions": max(0, (int(level.get("level_index", 1)) - 1) * 10)},
     )
     return created[0] if created else None
+
+
+def _icon_content_type(path: str) -> str:
+    if path.endswith(".png"):
+        return "image/png"
+    if path.endswith(".svg"):
+        return "image/svg+xml; charset=utf-8"
+    return "application/octet-stream"
 
 
 def _read_community() -> dict[str, Any]:

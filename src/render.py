@@ -95,8 +95,17 @@ def _page(data: dict[str, Any]) -> str:
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Centre de suivi Football</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Akro du Foot</title>
+  <meta name="description" content="Akro du Foot : actus, matchs, pronostics, Coach et communauté football.">
+  <meta name="theme-color" content="#06101e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Akro Foot">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
   <style>
     :root {{
       color-scheme: dark;
@@ -957,6 +966,13 @@ def _page(data: dict[str, Any]) -> str:
   {_leagues_script()}
   {_football_chatbot_script()}
   {_tabs_script(champions_data)}
+  <script>
+    if ('serviceWorker' in navigator) {{
+      window.addEventListener('load', () => {{
+        navigator.serviceWorker.register('/service-worker.js').catch(() => null);
+      }});
+    }}
+  </script>
 </body>
 </html>
 """
