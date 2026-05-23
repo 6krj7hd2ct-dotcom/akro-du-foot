@@ -5,12 +5,21 @@ create table if not exists public.profiles (
   pseudo text not null,
   avatar_url text,
   focus_teams text[] not null default '{}',
+  favorite_club text,
+  favorite_club_logo text,
+  favorite_nation text,
+  favorite_nation_flag text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 alter table public.profiles
   add column if not exists focus_teams text[] not null default '{}';
+alter table public.profiles
+  add column if not exists favorite_club text,
+  add column if not exists favorite_club_logo text,
+  add column if not exists favorite_nation text,
+  add column if not exists favorite_nation_flag text;
 
 create table if not exists public.predictions (
   id uuid primary key default gen_random_uuid(),

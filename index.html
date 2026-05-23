@@ -737,6 +737,17 @@
     .avatar-option.is-selected { border-color: rgba(245,201,107,0.9); box-shadow: 0 0 0 2px rgba(245,201,107,0.22), 0 14px 28px rgba(0,0,0,0.18); background: rgba(245,201,107,0.13); }
     .avatar-option img, .profile-avatar, .leaderboard-avatar, .history-avatar { display: block; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.08); }
     .avatar-option img { width: 100%; height: 100%; }
+    .profile-avatar-stack { position: relative; display: inline-grid; place-items: center; width: 62px; height: 62px; flex: 0 0 auto; border-radius: 50%; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.20)); }
+    .profile-avatar-stack .profile-avatar { width: 100%; height: 100%; box-shadow: 0 0 0 1px rgba(245,201,107,0.30), 0 0 16px rgba(245,201,107,0.14); transition: transform .16s ease, box-shadow .16s ease; }
+    .profile-avatar-stack:hover .profile-avatar { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(245,201,107,0.55), 0 0 24px rgba(245,201,107,0.22); }
+    .profile-avatar-badge { position: absolute; bottom: -2px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: rgba(7,17,31,0.92); border: 1px solid rgba(245,201,107,0.56); box-shadow: 0 7px 16px rgba(0,0,0,0.30); overflow: hidden; }
+    .profile-avatar-badge img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .profile-avatar-badge.club { left: -3px; }
+    .profile-avatar-badge.nation { right: -3px; }
+    .leaderboard-avatar.profile-avatar-stack { width: 38px; height: 38px; }
+    .leaderboard-avatar.profile-avatar-stack .profile-avatar-badge { width: 15px; height: 15px; bottom: -1px; }
+    .leaderboard-avatar.profile-avatar-stack .profile-avatar-badge.club { left: -2px; }
+    .leaderboard-avatar.profile-avatar-stack .profile-avatar-badge.nation { right: -2px; }
     .profile-create-dialog { width: min(680px, 100%); max-height: min(88vh, 760px); overflow: hidden; }
     .profile-create-body { display: grid; gap: 13px; }
     .profile-auth-note { color: #d6e5f7; font-size: 13px; line-height: 1.45; }
@@ -1406,6 +1417,16 @@
           <div class="avatar-picker-label">Avatar</div>
           <div class="avatar-grid" id="profileAvatarGrid" role="radiogroup" aria-label="Choix de l'avatar"></div>
         </div>
+        <div class="field-row">
+          <div class="pseudo-row">
+            <label for="profileFavoriteClub">Club favori</label>
+            <select id="profileFavoriteClub"></select>
+          </div>
+          <div class="pseudo-row">
+            <label for="profileFavoriteNation">Nation favorite</label>
+            <select id="profileFavoriteNation"></select>
+          </div>
+        </div>
         <button class="action-button" type="button" id="profileCreateSubmit">Créer mon profil</button>
         <div class="community-status" id="profileCreateStatus"></div>
       </div>
@@ -1686,6 +1707,8 @@
     const profileCreateModal = document.getElementById('profileCreateModal');
     const profilePseudoInput = document.getElementById('profilePseudoInput');
     const profilePasswordInput = document.getElementById('profilePasswordInput');
+    const profileFavoriteClub = document.getElementById('profileFavoriteClub');
+    const profileFavoriteNation = document.getElementById('profileFavoriteNation');
     const profileCreateStatus = document.getElementById('profileCreateStatus');
     const profileLoginModal = document.getElementById('profileLoginModal');
     const profileLoginIdentifier = document.getElementById('profileLoginIdentifier');
@@ -1742,6 +1765,39 @@
       '/avatars/avatar-shush.png'
     ];
     const DEFAULT_AVATAR_URL = PROFILE_AVATARS[0];
+    const FAVORITE_CLUBS = [
+      ['Paris Saint-Germain', 'PSG', 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png'],
+      ['Real Madrid', 'Real Madrid', 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'],
+      ['Arsenal', 'Arsenal', 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png'],
+      ['Manchester City', 'Manchester City', 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png'],
+      ['Barcelona', 'Barça', 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'],
+      ['Bayern Munich', 'Bayern Munich', 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'],
+      ['Liverpool', 'Liverpool', 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png'],
+      ['Chelsea', 'Chelsea', 'https://a.espncdn.com/i/teamlogos/soccer/500/363.png'],
+      ['Marseille', 'Marseille', 'https://a.espncdn.com/i/teamlogos/soccer/500/176.png'],
+      ['Juventus', 'Juventus', 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png'],
+      ['Internazionale', 'Inter', 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png'],
+      ['AC Milan', 'AC Milan', 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png'],
+      ['Napoli', 'Napoli', 'https://a.espncdn.com/i/teamlogos/soccer/500/114.png'],
+      ['Atlético Madrid', 'Atlético Madrid', 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png'],
+      ['Borussia Dortmund', 'Dortmund', 'https://a.espncdn.com/i/teamlogos/soccer/500/124.png']
+    ];
+    const FAVORITE_NATIONS = [
+      ['France', 'France', 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'],
+      ['Brazil', 'Brésil', 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'],
+      ['Argentina', 'Argentine', 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'],
+      ['Spain', 'Espagne', 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'],
+      ['England', 'Angleterre', 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'],
+      ['Portugal', 'Portugal', 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'],
+      ['Germany', 'Allemagne', 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'],
+      ['Italy', 'Italie', 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'],
+      ['Morocco', 'Maroc', 'https://a.espncdn.com/i/teamlogos/countries/500/mar.png'],
+      ['Senegal', 'Sénégal', 'https://a.espncdn.com/i/teamlogos/countries/500/sen.png'],
+      ['Belgium', 'Belgique', 'https://a.espncdn.com/i/teamlogos/countries/500/bel.png'],
+      ['Netherlands', 'Pays-Bas', 'https://a.espncdn.com/i/teamlogos/countries/500/ned.png'],
+      ['Mexico', 'Mexique', 'https://a.espncdn.com/i/teamlogos/countries/500/mex.png'],
+      ['United States', 'États-Unis', 'https://a.espncdn.com/i/teamlogos/countries/500/usa.png']
+    ];
     let selectedAvatarUrl = localStorage.getItem('akrodufoot:avatar_url') || DEFAULT_AVATAR_URL;
 
     function pseudoValue() {
@@ -1763,7 +1819,7 @@
       if (raw.includes('@')) return raw.toLowerCase();
       const normalized = normalizeAuthPseudo(raw);
       if (!normalized) return '';
-      return `${normalized}@akrodufoot.local`;
+      return `${normalized}@akrodufoot.app`;
     }
 
     function hasActiveProfile() {
@@ -1774,13 +1830,70 @@
       return PROFILE_AVATARS.includes(value) ? value : DEFAULT_AVATAR_URL;
     }
 
+    function favoriteClubConfig(value) {
+      return FAVORITE_CLUBS.find(item => item[0] === value) || FAVORITE_CLUBS[0];
+    }
+
+    function favoriteNationConfig(value) {
+      return FAVORITE_NATIONS.find(item => item[0] === value) || FAVORITE_NATIONS[0];
+    }
+
+    function renderFavoriteSelectors() {
+      if (profileFavoriteClub) {
+        const selected = akroProfile?.favorite_club || localStorage.getItem('akrodufoot:focus:champions') || FAVORITE_CLUBS[0][0];
+        profileFavoriteClub.innerHTML = FAVORITE_CLUBS.map(([value, label]) => `<option value="${escapeHtml(value)}"${value === selected ? ' selected' : ''}>${escapeHtml(label)}</option>`).join('');
+      }
+      if (profileFavoriteNation) {
+        const selected = akroProfile?.favorite_nation || localStorage.getItem('akrodufoot:focus:worldcup') || FAVORITE_NATIONS[0][0];
+        profileFavoriteNation.innerHTML = FAVORITE_NATIONS.map(([value, label]) => `<option value="${escapeHtml(value)}"${value === selected ? ' selected' : ''}>${escapeHtml(label)}</option>`).join('');
+      }
+    }
+
+    function selectedFavoritePayload() {
+      const club = favoriteClubConfig(profileFavoriteClub?.value || akroProfile?.favorite_club);
+      const nation = favoriteNationConfig(profileFavoriteNation?.value || akroProfile?.favorite_nation);
+      return {
+        favorite_club: club[0],
+        favorite_club_logo: club[2],
+        favorite_nation: nation[0],
+        favorite_nation_flag: nation[2]
+      };
+    }
+
+    function syncSelectedFavoritesToStorage() {
+      const favorites = selectedFavoritePayload();
+      localStorage.setItem('akrodufoot:focus:worldcup', favorites.favorite_nation);
+      localStorage.setItem('akrodufoot:focus:champions', favorites.favorite_club);
+      Object.keys((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(key => {
+        localStorage.setItem(`akrodufoot:league-focus:${key}`, favorites.favorite_club);
+      });
+      return favorites;
+    }
+
+    function applyProfileFavorites(profile = akroProfile) {
+      if (!profile) return;
+      if (profile.favorite_nation) localStorage.setItem('akrodufoot:focus:worldcup', profile.favorite_nation);
+      if (profile.favorite_club) {
+        localStorage.setItem('akrodufoot:focus:champions', profile.favorite_club);
+        Object.keys((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(key => {
+          localStorage.setItem(`akrodufoot:league-focus:${key}`, profile.favorite_club);
+        });
+      }
+    }
+
     function saveSelectedAvatar() {
       selectedAvatarUrl = avatarUrl(selectedAvatarUrl);
       localStorage.setItem('akrodufoot:avatar_url', selectedAvatarUrl);
     }
 
-    function avatarImage(url, className = 'profile-avatar') {
-      return `<img class="${className}" src="${escapeHtml(avatarUrl(url))}" alt="">`;
+    function avatarImage(url, className = 'profile-avatar', profile = null) {
+      const data = profile || profileFromSupabaseState() || {};
+      const stackClass = className.includes('leaderboard-avatar') ? 'profile-avatar-stack leaderboard-avatar' : 'profile-avatar-stack';
+      const clubLogo = data.favorite_club_logo || akroProfile?.favorite_club_logo || '';
+      const nationFlag = data.favorite_nation_flag || akroProfile?.favorite_nation_flag || '';
+      const clubBadge = clubLogo ? `<span class="profile-avatar-badge club"><img src="${escapeHtml(clubLogo)}" alt=""></span>` : '';
+      const nationBadge = nationFlag ? `<span class="profile-avatar-badge nation"><img src="${escapeHtml(nationFlag)}" alt=""></span>` : '';
+      return `<span class="${stackClass}"><img class="${className}" src="${escapeHtml(avatarUrl(url))}" alt="">${clubBadge}${nationBadge}</span>`;
     }
 
     function renderAvatarPicker() {
@@ -1819,6 +1932,7 @@
       if (profilePasswordInput) profilePasswordInput.value = '';
       if (profileCreateStatus) profileCreateStatus.textContent = '';
       renderAvatarPicker();
+      renderFavoriteSelectors();
       profileCreateModal?.classList.add('is-open');
       profileCreateModal?.setAttribute('aria-hidden', 'false');
       setTimeout(() => profilePseudoInput?.focus(), 0);
@@ -1860,12 +1974,14 @@
       if (openProfileLoginButton) openProfileLoginButton.style.display = 'none';
       activeProfileCard.classList.add('is-visible');
       activeProfileCard.innerHTML = `
-        ${avatarImage(profile.avatar_url)}
+        ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
         <div class="active-profile-meta">
           <div class="active-profile-name"><span>${escapeHtml(profile.pseudo)}</span><span class="reward-badge">${escapeHtml(profile.badge_icon || '★')}</span></div>
           <div class="active-profile-stats">
             <span class="profile-pill">Niv. ${escapeHtml(profile.level_index || 1)} · ${escapeHtml(profile.level || 'Débutant')}</span>
             <span class="profile-pill">${escapeHtml(profile.points || 0)} pts</span>
+            <span class="profile-pill">${escapeHtml(profile.favorite_club || 'Club favori')}</span>
+            <span class="profile-pill">${escapeHtml(profile.favorite_nation || 'Nation favorite')}</span>
             <span class="profile-pill">${escapeHtml(profile.predictions_count || 0)} pronos</span>
             <span class="profile-pill">${profile.rank ? `#${escapeHtml(profile.rank)}` : 'Non classé'}</span>
           </div>
@@ -1950,7 +2066,11 @@
       if (existing) {
         const patch = {};
         if (existing.pseudo !== pseudo) patch.pseudo = pseudo;
+        const favorites = selectedFavoritePayload();
         if (avatarUrl(existing.avatar_url) !== selectedAvatarUrl) patch.avatar_url = selectedAvatarUrl;
+        ['favorite_club', 'favorite_club_logo', 'favorite_nation', 'favorite_nation_flag'].forEach(key => {
+          if ((existing[key] || '') !== (favorites[key] || '')) patch[key] = favorites[key];
+        });
         let nextProfile = existing;
         if (Object.keys(patch).length > 0) {
           const updated = await akroSupabase.from('profiles').update(patch).eq('id', userId).select('*').single();
@@ -1963,7 +2083,7 @@
       }
       const created = await akroSupabase
         .from('profiles')
-        .insert({id: userId, pseudo, avatar_url: selectedAvatarUrl, focus_teams: currentLocalFocusTeams()})
+        .insert({id: userId, pseudo, avatar_url: selectedAvatarUrl, focus_teams: currentLocalFocusTeams(), ...selectedFavoritePayload()})
         .select('*')
         .single();
       if (created.error) throw created.error;
@@ -2031,6 +2151,10 @@
         badge_icon: badge.icon,
         badges: akroBadges,
         avatar_url: avatarUrl(akroProfile.avatar_url || selectedAvatarUrl),
+        favorite_club: akroProfile.favorite_club || '',
+        favorite_club_logo: akroProfile.favorite_club_logo || '',
+        favorite_nation: akroProfile.favorite_nation || '',
+        favorite_nation_flag: akroProfile.favorite_nation_flag || '',
         next_level_at: badge.next,
         history,
         recent_predictions: history.slice().sort((a, b) => String(b.created_at).localeCompare(String(a.created_at))).slice(0, 12)
@@ -2064,6 +2188,8 @@
         predictionPseudo.value = akroProfile.pseudo;
         selectedAvatarUrl = avatarUrl(akroProfile.avatar_url);
         saveSelectedAvatar();
+        applyProfileFavorites(akroProfile);
+        renderFavoriteSelectors();
         renderAvatarPicker();
         savePseudo();
         logSupabase('profil chargé', akroProfile);
@@ -2089,7 +2215,7 @@
         if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un pseudo pour créer ton profil.';
         return;
       }
-      if (!hasActiveProfile() && password.length < 6) {
+      if (!akroSession?.user?.id && password.length < 6) {
         if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un mot de passe de 6 caractères minimum.';
         return;
       }
@@ -2099,6 +2225,7 @@
         predictionPseudo.value = pseudo;
         savePseudo();
         saveSelectedAvatar();
+        syncSelectedFavoritesToStorage();
         if (!akroSession?.user?.id) {
           const email = authEmailFromIdentifier(pseudo);
           const signed = await akroSupabase.auth.signUp({
@@ -2602,7 +2729,7 @@
         <div class="leaderboard-item ${index < 3 ? 'top-rank' : ''}">
           <button class="leaderboard-person" type="button" data-profile-pseudo="${escapeHtml(row.pseudo)}">
             <span class="leaderboard-rank">${row.rank || index + 1}</span>
-            ${avatarImage(row.avatar_url, 'leaderboard-avatar')}
+            ${avatarImage(row.avatar_url, 'leaderboard-avatar', row)}
             <span class="reward-badge" title="${escapeHtml(row.badge || 'Badge')}">${escapeHtml(row.badge_icon || '★')}</span>
             <span class="leaderboard-name"><strong>${escapeHtml(row.pseudo)}</strong><span class="leaderboard-meta">Niv. ${escapeHtml(row.level_index || 1)} · ${escapeHtml(row.level || 'Débutant')} · ${escapeHtml(row.predictions_count || 0)} pronos</span></span>
           </button>
@@ -2634,11 +2761,11 @@
       if (!modal || !body || !profile) return;
       title.textContent = profile.pseudo || pseudo;
       subtitle.textContent = `${profile.badge || 'Badge'} · niveau ${profile.level_index || 1} · ${profile.level || 'Débutant'}`;
-      badge.innerHTML = avatarImage(profile.avatar_url);
+      badge.innerHTML = avatarImage(profile.avatar_url, 'profile-avatar', profile);
       const history = profile.recent_predictions || profile.history || [];
       body.innerHTML = `
         <div class="profile-heading">
-          ${avatarImage(profile.avatar_url)}
+          ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
           <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(profile.badge || 'Badge')} · ${escapeHtml(profile.level || 'Débutant')}</div></div>
         </div>
         <div class="profile-summary">
@@ -3292,6 +3419,17 @@
       return Number.isNaN(date.getTime()) ? 'date à déterminer' : date.toLocaleString('fr-FR', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'}).replace(',', '');
     }
 
+    function renameFocusLabelsToFavorites() {
+      document.querySelectorAll('.focus-pill').forEach(pill => {
+        pill.childNodes.forEach(node => {
+          if (node.nodeType === Node.TEXT_NODE) node.nodeValue = node.nodeValue.replace('Focus', 'Favoris');
+        });
+      });
+      document.getElementById('worldcupFocusSelect')?.setAttribute('aria-label', 'Nation favorite Coupe du Monde');
+      document.getElementById('championsFocusSelect')?.setAttribute('aria-label', 'Club favori Ligue des Champions');
+      document.getElementById('leagueClubSelect')?.setAttribute('aria-label', 'Club favori Championnats');
+    }
+
     function focusNextMatch(competition, team) {
       const now = Date.now();
       const candidates = FOCUS_MATCHES
@@ -3329,6 +3467,7 @@
       target.innerHTML = `${focusFlag(teamFlag || focusTeamIcon(team))}<span class="focus-match-text">${focusEscape(focusDisplayName(team))} vs ${focusEscape(focusDisplayName(opponent))} — ${focusEscape(focusDate(match.date))}</span>${focusFlag(opponentFlag || focusTeamIcon(opponent))}`;
     }
 
+    renameFocusLabelsToFavorites();
     ['worldcup', 'champions'].forEach(kind => {
       const select = document.getElementById(`${kind}FocusSelect`);
       if (!select) return;
