@@ -96,32 +96,9 @@
     .app-logo { width: clamp(76px, 9vw, 112px); height: clamp(76px, 9vw, 112px); border-radius: 24%; object-fit: cover; box-shadow: 0 18px 44px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.14), 0 0 34px rgba(31,111,235,0.28); background: #000; }
     .app-title { font-size: clamp(42px, 8vw, 92px); line-height: 0.9; }
     .app-copy { color: #c5d3e4; max-width: 650px; margin: 12px 0 0; font-size: 16px; line-height: 1.5; }
-    .global-controls {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 16px;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      max-width: min(1040px, 100%);
-    }
-    .global-actions {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 10px;
-      justify-content: flex-end;
-      align-items: center;
-      flex: 0 0 auto;
-      padding-left: 0;
-      white-space: nowrap;
-    }
-    .global-search {
-      position: relative;
-      flex: 1 1 auto;
-      min-width: 0;
-      max-width: none;
-    }
+    .global-controls { display: flex; flex-direction: row; flex-wrap: nowrap; gap: 16px; align-items: center; justify-content: space-between; width: 100%; max-width: min(1040px, 100%); }
+    .global-actions { display: flex; flex: 0 0 auto; flex-wrap: nowrap; gap: 10px; justify-content: flex-end; align-items: center; padding-left: 0; white-space: nowrap; }
+    .global-search { position: relative; flex: 1 1 auto; min-width: 0; max-width: none; }
     .search-input { width: 100%; padding: 14px 46px 14px 17px; border-radius: 999px; border-color: rgba(245,201,107,0.30); background: rgba(4,14,28,0.74); box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 16px 38px rgba(0,0,0,0.18); font-size: 15px; }
     .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); font-weight: 950; pointer-events: none; }
     .search-results { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; right: 0; display: none; max-height: min(430px, 70vh); overflow-y: auto; padding: 8px; border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; background: rgba(5,16,31,0.98); box-shadow: var(--shadow); backdrop-filter: blur(16px); }
@@ -748,19 +725,9 @@
     @media (max-width: 860px) {
       main { width: min(100% - 20px, 1240px); padding-top: 14px; }
       .app-top { grid-template-columns: 1fr; align-items: start; }
-      .global-controls {
-        width: 100%;
-        max-width: none;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
+      .global-controls { width: 100%; max-width: none; flex-direction: column; align-items: stretch; gap: 10px; }
       .global-search { width: 100%; }
-      .global-actions {
-        width: 100%;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-      }
+      .global-actions { width: 100%; flex-wrap: wrap; justify-content: flex-start; }
       .mercato-ticker { grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }
       .mercato-badge { min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }
       .mercato-track, .mercato-link, .mercato-item-break { height: 50px; }
@@ -2011,23 +1978,46 @@
   <script>
     const GLOBAL_SEARCH_NEWS = {"generated_at": "2026-05-22T21:06:25+00:00", "articles": [], "all_articles": [], "filter": "mercato", "sources": ["RMC Sport", "L'Équipe", "Goal France", "Eurosport France", "Foot Mercato", "SO FOOT", "Maxifoot", "LiveFoot", "France Football", "Football.fr", "Made In Foot", "Onze Mondial", "France Info Sport"], "errors": ["RMC Sport: ValueError", "L'Équipe: ValueError", "Goal France: ValueError", "Eurosport France: ValueError", "Foot Mercato: ValueError", "SO FOOT: ValueError", "Maxifoot: ValueError", "LiveFoot: ValueError", "France Football: ValueError", "Football.fr: ValueError", "Made In Foot: ValueError", "Onze Mondial: ValueError", "France Info Sport: ValueError"]};
     const SEARCH_ALIASES = {
-      'kylian mbappe': ['mbappe', 'mbappé'],
-      'lionel messi': ['messi', 'leo messi'],
-      'cristiano ronaldo': ['ronaldo', 'cr7'],
-      'erling haaland': ['haaland'],
+      'kylian mbappe': ['mbappe', 'mbappé', 'kiki', 'kyks'],
+      'lionel messi': ['messi', 'leo messi', 'la pulga'],
+      'cristiano ronaldo': ['ronaldo', 'cr7', 'cristiano'],
+      'erling haaland': ['haaland', 'halland'],
+      'neymar': ['neymar jr'],
+      'karim benzema': ['benzema'],
+      'antoine griezmann': ['griezmann'],
+      'jud bellingham': ['bellingham'],
+      'jude bellingham': ['bellingham'],
+      'lamine yamal': ['yamal'],
       'paris saint germain': ['psg', 'paris', 'paris sg'],
+      'psg': ['paris', 'paris saint germain', 'paris sg'],
       'marseille': ['om', 'olympique de marseille'],
-      'barcelona': ['barca', 'barça', 'fc barcelona'],
+      'om': ['marseille', 'olympique de marseille'],
+      'barcelona': ['barca', 'barça', 'fc barcelona', 'barcelone'],
+      'barca': ['barça', 'barcelona', 'barcelone'],
       'real madrid': ['real', 'madrid'],
-      'manchester city': ['man city', 'city'],
+      'manchester city': ['man city', 'city', 'mancity'],
+      'manchester united': ['man united', 'man utd', 'united'],
+      'bayern munich': ['bayern'],
+      'inter': ['internazionale', 'inter milan'],
+      'ac milan': ['milan'],
       'ligue des champions': ['champions league', 'ucl', 'ldc'],
-      'coupe du monde': ['mondial', 'world cup'],
-      'ligue 1': ['ligue un'],
-      'ballon d or': ['ballon d or', 'ballon dor', "ballon d'or"],
-      'france': ['equipe de france', 'bleus'],
-      'espagne': ['spain'],
-      'bresil': ['brésil', 'brazil'],
-      'maroc': ['morocco']
+      'coupe du monde': ['mondial', 'world cup', 'fifa world cup'],
+      'ligue 1': ['ligue un', 'l1'],
+      'premier league': ['pl', 'premierleague'],
+      'liga': ['la liga', 'laliga'],
+      'serie a': ['seriea'],
+      'bundesliga': ['buli'],
+      'euro': ['championnat d europe', 'europe'],
+      'ballon d or': ['ballon dor', "ballon d'or", 'ballondor'],
+      'france': ['equipe de france', 'bleus', 'edf'],
+      'espagne': ['spain', 'la roja'],
+      'bresil': ['brésil', 'brazil', 'selecao'],
+      'maroc': ['morocco', 'atlas'],
+      'argentine': ['argentina', 'albiceleste'],
+      'portugal': ['portugais'],
+      'allemagne': ['germany', 'mannschaft'],
+      'angleterre': ['england', 'three lions'],
+      'italie': ['italy', 'azzurri']
     };
     function searchNorm(value) { return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim(); }
     function searchTokens(value) { return searchNorm(value).split(' ').filter(Boolean); }
@@ -2051,39 +2041,46 @@
       const add = (kind, title, detail, action, extra = '', aliases = []) => {
         const canonical = searchNorm(title);
         const aliasList = [...aliases, ...(SEARCH_ALIASES[canonical] || [])].map(searchNorm).filter(Boolean);
-        const key = `${kind}:${canonical}:${extra}`;
+        const key = `${kind}:${searchNorm(title)}:${extra}`;
         if (!title || seen.has(key)) return;
         seen.add(key);
         items.push({kind, title, detail, action, extra, canonical, aliases: aliasList, haystack: searchNorm(`${title} ${detail} ${extra} ${aliasList.join(' ')}`)});
       };
       Object.entries(typeof TEAMS_DETAILS !== 'undefined' ? TEAMS_DETAILS : {}).forEach(([name, details]) => {
-        add('Club', details.name || name, 'Fiche équipe et effectif', 'team', name);
+        add('Club', details.name || name, 'Fiche équipe, forme récente et entraîneur si disponibles', 'team', name);
       });
       ((typeof TEAM_MATCHES !== 'undefined' ? TEAM_MATCHES : (typeof DASHBOARD_MATCHES !== 'undefined' ? DASHBOARD_MATCHES : []))).forEach(match => {
         add('Match', `${match.home_team} vs ${match.away_team}`, `${match.competition || ''} · ${match.status || 'À venir'} · ${match.date || ''}`, 'match', match.id || '');
-        add('Compétition', match.competition || '', 'Calendrier et résultats', 'competition', match.competition || '');
+        add('Compétition', match.competition || '', 'Calendrier, résultats et pronostics disponibles', 'competition', match.competition || '');
       });
-      ['Mbappé', 'Messi', 'Ronaldo', 'Haaland'].forEach(player => add('Joueur', player, 'Référence joueur', 'filter', player));
-      ['France', 'Espagne', 'Brésil', 'Maroc'].forEach(nation => add('Nation', nation, 'Sélection nationale', 'filter', nation));
-      ['PSG', 'OM', 'Real Madrid', 'Barça', 'Manchester City', 'Ligue des Champions', 'Coupe du Monde', 'Ligue 1', 'Euro', 'Ballon d’Or']
-        .forEach(topic => add('Focus rapide', topic, 'Recherche intelligente Akro du Foot', 'filter', topic));
+      ['Mbappé', 'Mbappe', 'Messi', 'Ronaldo', 'Haaland', 'Neymar', 'Benzema', 'Griezmann', 'Bellingham', 'Lamine Yamal', 'Vinicius'].forEach(player => add('Joueur', player, 'Recherche joueur et statistiques disponibles', 'filter', player));
+      ['France', 'Espagne', 'Brésil', 'Maroc', 'Argentine', 'Portugal', 'Allemagne', 'Angleterre', 'Italie', 'Sénégal'].forEach(nation => add('Nation', nation, 'Sélection nationale', 'filter', nation));
+      ['PSG', 'OM', 'Real Madrid', 'Barça', 'Manchester City', 'Manchester United', 'Bayern Munich', 'Liverpool', 'Arsenal', 'Chelsea', 'Juventus', 'Inter', 'AC Milan']
+        .forEach(club => add('Club', club, 'Recherche club Akro du Foot', 'filter', club));
+      ['Ligue des Champions', 'Ligue 1', 'Coupe du Monde', 'Euro', 'Ballon d’Or', 'Ballon d or', 'Premier League', 'Liga', 'Bundesliga', 'Serie A']
+        .forEach(topic => add('Compétition', topic, 'Recherche compétition Akro du Foot', 'filter', topic));
       (GLOBAL_SEARCH_NEWS.all_articles || GLOBAL_SEARCH_NEWS.articles || []).slice(0, 80).forEach(article => {
         add('Actualité', article.title || '', `${article.source_name || article.source || 'Source'} · ${article.summary || ''}`, 'news', article.url || '');
       });
       return items;
     }
-    function scoreSearchItem(item, queryWords) {
+    function scoreSearchItem(item, queryWords, normalizedQuery) {
       const targetWords = searchTokens(`${item.haystack} ${item.aliases.join(' ')}`);
+      const exactTargets = [item.canonical, ...item.aliases, item.haystack].filter(Boolean);
+      if (exactTargets.some(target => target === normalizedQuery || target.includes(normalizedQuery))) return -50;
+      const meaningfulWords = queryWords.filter(word => word.length > 2);
+      if (!meaningfulWords.length) return -1;
       let score = 0;
-      for (const word of queryWords) {
+      for (const word of meaningfulWords) {
         let best = 999;
         for (const target of targetWords) {
+          if (target.length <= 2) continue;
           if (!target) continue;
           if (target.includes(word) || word.includes(target)) { best = 0; break; }
-          const d = levenshtein(word, target);
-          if (d < best) best = d;
+          const distance = levenshtein(word, target);
+          if (distance < best) best = distance;
         }
-        const tolerance = word.length <= 4 ? 1 : 2;
+        const tolerance = word.length >= 6 ? 2 : 1;
         if (best > tolerance) return -1;
         score += best;
       }
@@ -2091,6 +2088,25 @@
     }
     function searchResultMarkup(item) {
       return `<button class="search-result" type="button" data-action="${escapeHtml(item.action)}" data-extra="${escapeHtml(item.extra || item.title)}"><span class="search-kind">${escapeHtml(item.kind)}</span><span class="search-title">${escapeHtml(item.title)}</span><span class="search-detail">${escapeHtml(item.detail || '')}</span></button>`;
+    }
+    function directSearchResults(normalized) {
+      const direct = [];
+      const add = (kind, title, detail, action = 'filter', extra = title) => direct.push({kind, title, detail, action, extra, canonical: searchNorm(title), aliases: [], haystack: searchNorm(`${title} ${detail} ${extra}`)});
+      if (normalized.includes('mbappe')) add('Joueur', 'Kylian Mbappé', 'Recherche joueur, club, sélection et statistiques disponibles');
+      if (normalized.includes('messi')) add('Joueur', 'Lionel Messi', 'Recherche joueur et palmarès');
+      if (normalized.includes('ronaldo') || normalized.includes('cr7')) add('Joueur', 'Cristiano Ronaldo', 'Recherche joueur et palmarès');
+      if (normalized.includes('haaland') || normalized.includes('haland')) add('Joueur', 'Erling Haaland', 'Recherche joueur, club et statistiques disponibles');
+      if (normalized.includes('psg') || normalized.includes('paris')) add('Club', 'PSG', 'Paris Saint-Germain');
+      if (normalized === 'om' || normalized.includes('marseille')) add('Club', 'OM', 'Olympique de Marseille');
+      if (normalized.includes('real') || normalized.includes('madrid')) add('Club', 'Real Madrid', 'Club et calendrier');
+      if (normalized.includes('barca') || normalized.includes('barcelone') || normalized.includes('barcelona')) add('Club', 'Barça', 'FC Barcelona');
+      if (normalized.includes('ballon')) add('Compétition', 'Ballon d’Or', 'Trophée et palmarès football');
+      if (normalized.includes('champions') || normalized.includes('ldc') || normalized.includes('ucl')) add('Compétition', 'Ligue des Champions', 'Calendrier, résultats et statistiques');
+      if (normalized.includes('coupe du monde') || normalized.includes('mondial') || normalized.includes('world cup')) add('Compétition', 'Coupe du Monde', 'Matchs, groupes et actualités');
+      if (normalized === 'france' || normalized.includes('equipe de france')) add('Nation', 'France', 'Sélection nationale');
+      if (normalized.includes('bresil') || normalized.includes('brazil')) add('Nation', 'Brésil', 'Sélection nationale');
+      if (normalized.includes('maroc') || normalized.includes('morocco')) add('Nation', 'Maroc', 'Sélection nationale');
+      return direct;
     }
     function coachFallbackMarkup(query, answer = '', loading = false, fullAnswer = '') {
       const loadingText = loading ? '<span class="search-detail">Coach réfléchit...</span>' : '';
@@ -2105,13 +2121,21 @@
       const normalized = searchNorm(query);
       if (normalized.length < 2) { panel.classList.remove('is-open'); panel.innerHTML = ''; return; }
       const words = normalized.split(' ').filter(Boolean);
-      const scored = buildSearchItems()
-        .map(item => ({item, score: scoreSearchItem(item, words)}))
+      const direct = directSearchResults(normalized);
+      const seenResults = new Set(direct.map(item => `${item.kind}:${searchNorm(item.title)}`));
+      const results = direct.concat(buildSearchItems()
+        .map(item => ({item, score: scoreSearchItem(item, words, normalized)}))
         .filter(entry => entry.score >= 0)
         .sort((a, b) => a.score - b.score)
-        .slice(0, 9)
-        .map(entry => entry.item);
-      panel.innerHTML = scored.length ? scored.map(searchResultMarkup).join('') : coachFallbackMarkup(query);
+        .map(entry => entry.item)
+        .filter(item => {
+          const key = `${item.kind}:${searchNorm(item.title)}`;
+          if (seenResults.has(key)) return false;
+          seenResults.add(key);
+          return true;
+        }))
+        .slice(0, 9);
+      panel.innerHTML = results.length ? results.map(searchResultMarkup).join('') : coachFallbackMarkup(query);
       panel.classList.add('is-open');
     }
     async function askCoachFromSearch(query) {
@@ -2527,16 +2551,19 @@
       else if (norm.includes('neymar')) { coachConversationMemory.lastEntity = 'Neymar'; coachConversationMemory.lastEntityType = 'player'; }
       else if (norm.includes('psg') || norm.includes('paris saint germain')) { coachConversationMemory.lastEntity = 'PSG'; coachConversationMemory.lastEntityType = 'club'; }
       else if (norm.includes('real madrid')) { coachConversationMemory.lastEntity = 'Real Madrid'; coachConversationMemory.lastEntityType = 'club'; }
+      else if (norm.includes('manchester city')) { coachConversationMemory.lastEntity = 'Manchester City'; coachConversationMemory.lastEntityType = 'club'; }
       if (norm.includes('ligue des champions') || norm.includes('champions league')) coachConversationMemory.lastCompetition = 'Ligue des Champions';
       else if (norm.includes('coupe du monde')) coachConversationMemory.lastCompetition = 'Coupe du Monde';
       else if (norm.includes('ligue 1')) coachConversationMemory.lastCompetition = 'Ligue 1';
       else if (norm.includes('euro')) coachConversationMemory.lastCompetition = 'Euro';
       if (norm.includes('cette saison')) coachConversationMemory.lastSeason = 'cette saison';
-      if (norm.includes('nombre de but') || norm.includes('buts') || norm.includes('but')) coachConversationMemory.lastIntent = 'goals';
-      else if (norm.includes('passe')) coachConversationMemory.lastIntent = 'assists';
-      else if (norm.includes('compare')) coachConversationMemory.lastIntent = 'compare';
+      const season = norm.match(/\b20\d{2}\b/);
+      if (season) coachConversationMemory.lastSeason = season[0];
+      if (norm.includes('nombre de but') || norm.includes('combien de but') || norm.includes('buts') || norm.includes('but')) coachConversationMemory.lastIntent = 'goals';
+      else if (norm.includes('passe') || norm.includes('assist')) coachConversationMemory.lastIntent = 'assists';
+      else if (norm.includes('compare') || norm.includes('compar')) coachConversationMemory.lastIntent = 'compare';
       else if (norm.includes('club')) coachConversationMemory.lastIntent = 'club';
-      else if (norm.includes('selection') || norm.includes('sélection')) coachConversationMemory.lastIntent = 'national_team';
+      else if (norm.includes('selection') || norm.includes('sélection') || norm.includes('nation')) coachConversationMemory.lastIntent = 'national_team';
       else if (norm.includes('stats') || norm.includes('stat')) coachConversationMemory.lastIntent = 'stats';
     }
 
