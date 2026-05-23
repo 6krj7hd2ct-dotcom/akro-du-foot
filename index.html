@@ -10,7 +10,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Akro Foot">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="/manifest.json">
+  <meta name="akro-build" content="__AKRO_BUILD_VERSION__">
+  <link rel="manifest" href="/manifest.json?v=__AKRO_BUILD_VERSION__">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
   <link rel="icon" type="image/png" sizes="64x64" href="/icons/icon-64.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
@@ -3398,9 +3399,10 @@
     });
   </script>
   <script>
+    window.AKRO_BUILD_VERSION = '__AKRO_BUILD_VERSION__';
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').catch(() => null);
+        navigator.serviceWorker.register(`/service-worker.js?v=${encodeURIComponent(window.AKRO_BUILD_VERSION || Date.now())}`, {updateViaCache: 'none'}).catch(() => null);
       });
     }
   </script>

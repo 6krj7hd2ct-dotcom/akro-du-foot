@@ -18,9 +18,10 @@ from typing import Any
 from urllib.parse import quote, urlparse
 
 try:
-    from flask import Flask, jsonify, request, send_file
+    from flask import Flask, Response, jsonify, request, send_file
 except ImportError:
     Flask = None
+    Response = None
     jsonify = None
     request = None
     send_file = None
@@ -63,6 +64,8 @@ SUPABASE_USER_COLUMNS = "id,pseudo,total_points,predictions_count,current_badge,
 SUPABASE_PREDICTION_COLUMNS = "id,user_id,pseudo,match_id,home_score,away_score,points,created_at,updated_at"
 SUPABASE_BADGE_COLUMNS = "id,name,level,icon,min_predictions"
 SUPABASE_COACH_COLUMNS = "id,session_id,role,content,detected_entity,detected_intent,created_at"
+BUILD_VERSION_TOKEN = "__AKRO_BUILD_VERSION__"
+NO_STORE_CACHE_CONTROL = "no-store, no-cache, must-revalidate, max-age=0"
 
 app = Flask(__name__) if Flask else None
 
@@ -70,7 +73,7 @@ app = Flask(__name__) if Flask else None
 if app:
     @app.get("/")
     def index():
-        return send_file(OUTPUT_HTML)
+        return _runtime_file_response(OUTPUT_HTML, "text/html; charset=utf-8", replace_build_version=True, no_store=True)
 
     @app.get("/healthz")
     def healthz():
@@ -82,11 +85,11 @@ if app:
 
     @app.get("/manifest.json")
     def manifest_file():
-        return send_file(BASE_DIR / "manifest.json", mimetype="application/manifest+json")
+        return _runtime_file_response(BASE_DIR / "manifest.json", "application/manifest+json", no_store=True)
 
     @app.get("/service-worker.js")
     def service_worker_file():
-        return send_file(BASE_DIR / "service-worker.js", mimetype="application/javascript")
+        return _runtime_file_response(BASE_DIR / "service-worker.js", "application/javascript; charset=utf-8", no_store=True)
 
     @app.get("/icons/<path:filename>")
     def icon_file(filename: str):
@@ -118,6 +121,46 @@ def _run_dashboard_update_loop() -> None:
 
 if app and _background_updates_enabled():
     threading.Thread(target=_run_dashboard_update_loop, daemon=True).start()
+
+
+def _build_version() -> str:
+    explicit = os.environ.get("AKRO_BUILD_VERSION", "").strip()
+    if explicit:
+        return explicit
+    render_commit = os.environ.get("RENDER_GIT_COMMIT", "").strip()
+    if render_commit:
+        return render_commit[:12]
+    try:
+        return str(int(OUTPUT_HTML.stat().st_mtime))
+    except OSError:
+        return str(int(time.time()))
+
+
+def _replace_build_version(raw: bytes, content_type: str, enabled: bool = False) -> bytes:
+    if not enabled:
+        return raw
+    if "text/html" not in content_type:
+        return raw
+    text = raw.decode("utf-8")
+    return text.replace(BUILD_VERSION_TOKEN, _build_version()).encode("utf-8")
+
+
+def _apply_cache_headers_to_flask_response(response: Any, no_store: bool = False) -> Any:
+    if no_store:
+        response.headers["Cache-Control"] = NO_STORE_CACHE_CONTROL
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    response.headers["X-Akro-Build"] = _build_version()
+    return response
+
+
+def _runtime_file_response(path: Path, content_type: str, replace_build_version: bool = False, no_store: bool = False) -> Any:
+    raw = path.read_bytes()
+    raw = _replace_build_version(raw, content_type, replace_build_version)
+    response = Response(raw, content_type=content_type)
+    response.headers["Content-Length"] = str(len(raw))
+    response.headers["X-Akro-Served-File"] = path.name
+    return _apply_cache_headers_to_flask_response(response, no_store=no_store)
 
 
 def news_payload(filter_key: str = "all") -> dict[str, Any]:
@@ -1275,13 +1318,13 @@ class CommunityHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         path = urlparse(self.path).path
         if path == "/":
-            self._send_file(OUTPUT_HTML, "text/html; charset=utf-8")
+            self._send_file(OUTPUT_HTML, "text/html; charset=utf-8", replace_build_version=True, no_store=True)
         elif path == "/watch-party":
             self._send_html(watch_party_html())
         elif path == "/manifest.json":
-            self._send_file(BASE_DIR / "manifest.json", "application/manifest+json")
+            self._send_file(BASE_DIR / "manifest.json", "application/manifest+json", no_store=True)
         elif path == "/service-worker.js":
-            self._send_file(BASE_DIR / "service-worker.js", "application/javascript; charset=utf-8")
+            self._send_file(BASE_DIR / "service-worker.js", "application/javascript; charset=utf-8", no_store=True)
         elif path.startswith("/icons/"):
             self._send_file(BASE_DIR / path.lstrip("/"), _icon_content_type(path))
         elif path.startswith("/avatars/"):
@@ -1370,22 +1413,36 @@ class CommunityHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(raw)
 
-    def _send_html(self, html: str, status: int = 200) -> None:
+    def _send_no_store_headers(self) -> None:
+        self.send_header("Cache-Control", NO_STORE_CACHE_CONTROL)
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+
+    def _send_html(self, html: str, status: int = 200, no_store: bool = False) -> None:
         raw = html.encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
+        self.send_header("X-Akro-Build", _build_version())
+        self.send_header("X-Akro-Served-File", "inline-html")
+        if no_store:
+            self._send_no_store_headers()
         self.end_headers()
         self.wfile.write(raw)
 
-    def _send_file(self, path: Path, content_type: str) -> None:
+    def _send_file(self, path: Path, content_type: str, replace_build_version: bool = False, no_store: bool = False) -> None:
         if not path.exists():
             self.send_error(404)
             return
         raw = path.read_bytes()
+        raw = _replace_build_version(raw, content_type, replace_build_version)
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(raw)))
+        self.send_header("X-Akro-Build", _build_version())
+        self.send_header("X-Akro-Served-File", path.name)
+        if no_store:
+            self._send_no_store_headers()
         self.end_headers()
         self.wfile.write(raw)
 

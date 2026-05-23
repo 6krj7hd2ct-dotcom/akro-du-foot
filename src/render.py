@@ -103,7 +103,8 @@ def _page(data: dict[str, Any]) -> str:
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Akro Foot">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="/manifest.json">
+  <meta name="akro-build" content="__AKRO_BUILD_VERSION__">
+  <link rel="manifest" href="/manifest.json?v=__AKRO_BUILD_VERSION__">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
   <link rel="icon" type="image/png" sizes="64x64" href="/icons/icon-64.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
@@ -242,6 +243,11 @@ def _page(data: dict[str, Any]) -> str:
       grid-template-columns: auto minmax(0, 1fr);
       align-items: stretch;
     }}
+    .mercato-under-tabs {{
+      margin: -4px 0 18px;
+      position: relative;
+      z-index: 30;
+    }}
     .mercato-badge {{
       min-height: 52px;
       max-height: 60px;
@@ -284,8 +290,8 @@ def _page(data: dict[str, Any]) -> str:
     @keyframes mercato-scroll {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .tabs-nav {{
       position: sticky;
-      top: 12px;
-      z-index: 20;
+      top: 74px;
+      z-index: 11000;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -782,6 +788,13 @@ def _page(data: dict[str, Any]) -> str:
     .reward-badge {{ display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(210,222,238,0.78)); color: #07111f; font-weight: 950; box-shadow: 0 0 0 1px rgba(245,201,107,0.22); }}
     .top-rank .reward-badge {{ background: linear-gradient(180deg, #ffe1a0, #d5a63a); }}
     .live-events-ticker {{ display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; min-height: 46px; max-height: 54px; overflow: hidden; border: 1px solid rgba(239,51,64,0.34); border-radius: 14px; background: linear-gradient(90deg, rgba(20,8,18,0.96), rgba(10,31,56,0.86)); box-shadow: 0 14px 28px rgba(0,0,0,0.18); }}
+    .live-main-ticker {{
+      position: sticky;
+      top: 10px;
+      z-index: 12000;
+      margin: 14px 0 22px;
+      backdrop-filter: blur(14px);
+    }}
     .live-events-badge {{ height: 100%; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; color: #fff; background: linear-gradient(180deg, #ff5a66, #c91525); font-size: 11px; line-height: 1; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; white-space: nowrap; }}
     .live-events-badge::before {{ content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 13px rgba(255,255,255,0.78); }}
     .live-events-window {{ overflow: hidden; min-width: 0; display: flex; align-items: center; }}
@@ -823,6 +836,9 @@ def _page(data: dict[str, Any]) -> str:
       .global-search {{ width: 100%; }}
       .global-actions {{ width: 100%; flex-wrap: wrap; justify-content: flex-start; }}
       .mercato-ticker {{ grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }}
+      .mercato-under-tabs {{ margin: -2px 0 16px; }}
+      .live-main-ticker {{ top: 8px; margin-bottom: 18px; }}
+      .tabs-nav {{ top: 68px; }}
       .mercato-badge {{ min-height: 50px; max-height: 56px; padding: 0 10px; font-size: 11px; }}
       .mercato-track, .mercato-link, .mercato-item-break {{ height: 50px; }}
       .mercato-marquee {{ animation-duration: 164s; }}
@@ -906,9 +922,10 @@ def _page(data: dict[str, Any]) -> str:
 <body>
   <main>
     {_app_header()}
-    {_mercato_ticker(mercato_data)}
+    <section class="live-events-ticker live-main-ticker" id="communityLiveTicker" aria-label="Notifications live communauté"></section>
     {_community_section()}
     {_tabs_nav(champions_data, leagues_data)}
+    {_mercato_ticker(mercato_data)}
     {_news_tab(news_data)}
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
     <section class="hero">
@@ -976,9 +993,10 @@ def _page(data: dict[str, Any]) -> str:
   {_football_chatbot_script()}
   {_tabs_script(champions_data)}
   <script>
+    window.AKRO_BUILD_VERSION = '__AKRO_BUILD_VERSION__';
     if ('serviceWorker' in navigator) {{
       window.addEventListener('load', () => {{
-        navigator.serviceWorker.register('/service-worker.js').catch(() => null);
+        navigator.serviceWorker.register(`/service-worker.js?v=${{encodeURIComponent(window.AKRO_BUILD_VERSION || Date.now())}}`, {{updateViaCache: 'none'}}).catch(() => null);
       }});
     }}
   </script>
@@ -1800,14 +1818,14 @@ def _mercato_ticker(mercato_data: dict[str, Any] | None) -> str:
     items = [item for item in data.get("items", []) if item.get("title") and item.get("url")]
     if not items:
         return """
-    <section class="mercato-ticker" aria-label="Mercato live">
+    <section class="mercato-ticker mercato-under-tabs" aria-label="Mercato live">
       <div class="mercato-badge">Mercato Live</div>
       <div class="mercato-empty">Mercato Live indisponible pour le moment</div>
     </section>
 """
     rendered = '<span class="mercato-item-break">•</span>'.join(_mercato_item(item) for item in items[:18])
     return f"""
-    <section class="mercato-ticker" aria-label="Mercato live">
+    <section class="mercato-ticker mercato-under-tabs" aria-label="Mercato live">
       <div class="mercato-badge">Mercato Live</div>
       <div class="mercato-track">
         <div class="mercato-marquee">
@@ -1851,7 +1869,6 @@ def _community_section() -> str:
       <article class="card community-panel follow-zone">
         <div class="section-title"><h3>Matchs à suivre</h3><span class="alltime-badge" id="followMode">Aujourd’hui</span></div>
         <div class="follow-list" id="communityFollowMatches"></div>
-        <div class="live-events-ticker" id="communityLiveTicker" aria-label="Notifications live communauté"></div>
       </article>
       <article class="card community-panel community-predictions">
         <div class="community-side">

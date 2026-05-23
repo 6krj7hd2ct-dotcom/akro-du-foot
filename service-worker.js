@@ -1,6 +1,6 @@
-const CACHE_NAME = 'akro-du-foot-v3';
+const BUILD_VERSION = new URL(self.location.href).searchParams.get('v') || 'local';
+const CACHE_NAME = `akro-du-foot-${BUILD_VERSION}`;
 const APP_SHELL = [
-  '/',
   '/manifest.json',
   '/icons/icon-32.png',
   '/icons/icon-64.png',
@@ -35,7 +35,7 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET' || url.pathname.startsWith('/api/')) return;
 
   if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).then(response => {
+    event.respondWith(fetch(request, {cache: 'no-store'}).then(response => {
       const copy = response.clone();
       caches.open(CACHE_NAME).then(cache => cache.put('/', copy)).catch(() => null);
       return response;

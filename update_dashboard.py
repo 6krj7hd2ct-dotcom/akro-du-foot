@@ -43,17 +43,27 @@ def main() -> None:
     LEAGUES_CACHE_FILE.write_text(json.dumps(leagues_data, ensure_ascii=False, indent=2), encoding="utf-8")
     MERCATO_LIVE_CACHE_FILE.write_text(json.dumps(mercato_data, ensure_ascii=False, indent=2), encoding="utf-8")
     NEWS_CACHE_FILE.write_text(json.dumps(news_data, ensure_ascii=False, indent=2), encoding="utf-8")
-    render_html(
-        {
-            "news": news_data,
-            "mercato_live": mercato_data,
-            "worldcup": worldcup_data,
-            "champions_league": champions_league_data,
-            "leagues": leagues_data,
-        },
-        OUTPUT_HTML,
-    )
-    print(f"Dashboard généré : {OUTPUT_HTML}")
+    if _should_render_html():
+        render_html(
+            {
+                "news": news_data,
+                "mercato_live": mercato_data,
+                "worldcup": worldcup_data,
+                "champions_league": champions_league_data,
+                "leagues": leagues_data,
+            },
+            OUTPUT_HTML,
+        )
+        print(f"Dashboard généré : {OUTPUT_HTML}")
+    else:
+        print(f"Dashboard HTML conservé sur Render : {OUTPUT_HTML}")
+
+
+def _should_render_html() -> bool:
+    explicit = os.environ.get("AKRO_RENDER_HTML_DURING_UPDATE", "").strip().lower()
+    if explicit:
+        return explicit in {"1", "true", "yes", "on"}
+    return not os.environ.get("RENDER")
 
 
 def _news_cache_for_render(previous: dict[str, Any] | None) -> dict[str, Any]:

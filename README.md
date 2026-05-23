@@ -90,6 +90,10 @@ python update_dashboard.py && AKRO_BACKGROUND_UPDATES=1 gunicorn app:app --bind 
 
 Render fournit automatiquement la variable `PORT`. `AKRO_BACKGROUND_UPDATES=1` active aussi la régénération horaire de `data/worldcup_dashboard.json`, `data/champions_league_dashboard.json` et `index.html` pendant que le serveur tourne.
 
+Render sert directement `index.html` via `app.py` : il n'y a pas de dossier `dist/` ou `build/` dans ce déploiement. Pour éviter qu'une ancienne PWA reste affichée après un déploiement, `app.py` envoie `index.html`, `manifest.json` et `service-worker.js` avec `Cache-Control: no-store` et remplace `__AKRO_BUILD_VERSION__` par `RENDER_GIT_COMMIT` quand Render fournit cette variable. Le navigateur enregistre donc `/service-worker.js?v=<version>` et recharge aussi `/manifest.json?v=<version>`.
+
+Sur Render, `update_dashboard.py` ne régénère plus `index.html` par défaut afin de ne pas écraser la version validée dans la branche déployée. Pour réactiver explicitement la génération HTML serveur, ajoute `AKRO_RENDER_HTML_DURING_UPDATE=1`.
+
 ### 3. Données communautaires et comptes
 
 Les comptes, profils, pronostics, statistiques et badges utilisent Supabase comme source principale de vérité. Applique le script SQL `supabase/user_accounts.sql` dans l'éditeur SQL Supabase, puis configure ces variables Render :
