@@ -764,16 +764,19 @@ def _page(data: dict[str, Any]) -> str:
     .leaderboard-rate {{ color: var(--muted); font-size: 11px; font-weight: 850; }}
     .reward-badge {{ display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(210,222,238,0.78)); color: #07111f; font-weight: 950; box-shadow: 0 0 0 1px rgba(245,201,107,0.22); }}
     .top-rank .reward-badge {{ background: linear-gradient(180deg, #ffe1a0, #d5a63a); }}
-    .live-events-ticker {{ display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; min-height: 46px; max-height: 54px; overflow: hidden; border: 1px solid rgba(77,224,180,0.24); border-radius: 14px; background: linear-gradient(90deg, rgba(7,24,45,0.96), rgba(10,37,64,0.78)); }}
-    .live-events-badge {{ height: 100%; min-height: 46px; display: grid; place-items: center; padding: 0 14px; color: #07111f; background: linear-gradient(180deg, #9af6d3, #32d3a2); font-size: 11px; font-weight: 950; text-transform: uppercase; white-space: nowrap; }}
-    .live-events-window {{ overflow: hidden; min-width: 0; }}
-    .live-events-track {{ display: inline-flex; align-items: center; gap: 28px; width: max-content; padding-left: 24px; white-space: nowrap; animation: liveTicker 96s linear infinite; }}
+    .live-events-ticker {{ display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; min-height: 46px; max-height: 54px; overflow: hidden; border: 1px solid rgba(239,51,64,0.34); border-radius: 14px; background: linear-gradient(90deg, rgba(20,8,18,0.96), rgba(10,31,56,0.86)); box-shadow: 0 14px 28px rgba(0,0,0,0.18); }}
+    .live-events-badge {{ height: 100%; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; color: #fff; background: linear-gradient(180deg, #ff5a66, #c91525); font-size: 11px; line-height: 1; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; white-space: nowrap; }}
+    .live-events-badge::before {{ content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 13px rgba(255,255,255,0.78); }}
+    .live-events-window {{ overflow: hidden; min-width: 0; display: flex; align-items: center; }}
+    .live-events-track {{ display: inline-flex; align-items: center; gap: 34px; width: max-content; padding-left: 28px; white-space: nowrap; animation: liveTicker 132s linear infinite; will-change: transform; }}
     .live-events-ticker:hover .live-events-track {{ animation-play-state: paused; }}
-    .live-event {{ display: inline-flex; align-items: center; gap: 8px; color: #dff7ff; font-size: 13px; font-weight: 850; white-space: nowrap; }}
-    .live-event::before {{ content: ''; width: 8px; height: 8px; border-radius: 50%; background: #32d3a2; box-shadow: 0 0 12px rgba(50,211,162,0.75); }}
+    .live-events-ticker.no-scroll .live-events-track {{ animation: none; width: 100%; padding-left: 18px; }}
+    .live-event {{ display: inline-flex; align-items: center; gap: 8px; color: #f4f8ff; font-size: 13px; line-height: 1; font-weight: 850; white-space: nowrap; }}
+    .live-event::before {{ content: ''; width: 8px; height: 8px; border-radius: 50%; background: #ff5a66; box-shadow: 0 0 12px rgba(239,51,64,0.75); }}
     .live-event.goal::before {{ background: var(--gold); box-shadow: 0 0 12px rgba(245,201,107,0.78); }}
     .live-event.red::before {{ background: var(--red); box-shadow: 0 0 12px rgba(239,51,64,0.78); }}
     .live-event.end::before {{ background: #b9c9dc; box-shadow: none; }}
+    .live-event.start::before {{ background: #32d3a2; box-shadow: 0 0 12px rgba(50,211,162,0.75); }}
     @keyframes liveTicker {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
     .profile-dialog {{ width: min(720px, 100%); max-height: min(88vh, 760px); overflow: hidden; }}
     .profile-summary {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }}
@@ -834,7 +837,7 @@ def _page(data: dict[str, Any]) -> str:
       .alltime-row {{ grid-template-columns: 38px 46px minmax(0, 1fr); }}
       .alltime-value {{ grid-column: 3; font-size: 20px; text-align: left; }}
       .community-grid, .community-predictions, .field-row, .follow-list, .profile-summary {{ grid-template-columns: 1fr; }}
-      .live-events-track {{ animation-duration: 128s; }}
+      .live-events-track {{ animation-duration: 164s; }}
       .prediction-scoreboard {{ grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); gap: 8px; }}
     }}
     @media (max-width: 480px) {{
@@ -3453,10 +3456,10 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
     }}
 
     function liveEventLabel(match) {{
-      const score = matchCenter(match);
-      if (match.status === 'LIVE') return {{type: 'goal', text: `LIVE · ${{match.home_team}} ${{score}} ${{match.away_team}}`}};
+      const score = matchCenter(match).replace(' - ', '-');
+      if (match.status === 'LIVE') return {{type: 'goal', text: `LIVE · ${{match.home_team}} · ${{score}} · ${{match.away_team}}`}};
       if (match.completed || match.status === 'Terminé') return {{type: 'end', text: `FIN · ${{match.home_team}} ${{score}} ${{match.away_team}}`}};
-      return {{type: 'start', text: `Début prévu · ${{match.home_team}} vs ${{match.away_team}} · ${{shortDate(match.date)}}`}};
+      return {{type: 'start', text: `DÉBUT · ${{match.home_team}} vs ${{match.away_team}} · ${{shortDate(match.date)}}`}};
     }}
 
     function renderLiveEventsTicker(matches) {{
@@ -3464,11 +3467,13 @@ def _community_script(matches: list[dict[str, Any]]) -> str:
       const today = (matches || []).filter(isTodayMatch).sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
       const events = today.map(liveEventLabel);
       if (!events.length) {{
-        communityLiveTicker.innerHTML = '<div class="live-events-badge">Live</div><div class="live-events-window"><div class="live-events-track"><span class="live-event">Aucune notification live aujourd’hui</span></div></div>';
+        communityLiveTicker.classList.add('no-scroll');
+        communityLiveTicker.innerHTML = '<div class="live-events-badge">LIVE</div><div class="live-events-window"><div class="live-events-track"><span class="live-event">Aucune notification live aujourd’hui</span></div></div>';
         return;
       }}
+      communityLiveTicker.classList.remove('no-scroll');
       const items = [...events, ...events].map(event => `<span class="live-event ${{event.type}}">${{escapeHtml(event.text)}}</span>`).join('');
-      communityLiveTicker.innerHTML = `<div class="live-events-badge">Live</div><div class="live-events-window"><div class="live-events-track">${{items}}</div></div>`;
+      communityLiveTicker.innerHTML = `<div class="live-events-badge">LIVE</div><div class="live-events-window"><div class="live-events-track">${{items}}</div></div>`;
     }}
 
     async function sharePage() {{
