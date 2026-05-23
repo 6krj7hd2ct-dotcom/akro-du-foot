@@ -3,9 +3,13 @@ create table if not exists public.search_ai_answers (
   query text not null,
   normalized_query text not null,
   answer text not null,
+  entity_type text,
   created_at timestamptz not null default now(),
   usage_count integer not null default 1
 );
+
+alter table public.search_ai_answers
+  add column if not exists entity_type text;
 
 create index if not exists idx_search_ai_answers_normalized_query
   on public.search_ai_answers (normalized_query);

@@ -437,6 +437,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
 
 def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     query = _clean(payload.get("query", ""), 500)
+    entity_type = _clean(payload.get("entity_type", ""), 60)
     normalized_query = _normalize_football_text(query)
     if not query or not normalized_query:
         return {"error": "Question vide."}, 400
@@ -452,13 +453,14 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
             "source": "supabase",
             "cached": True,
             "normalized_query": normalized_query,
+            "entity_type": cached.get("entity_type") or entity_type,
         }, 200
 
     local_answer = _local_coach_answer(query, [])
     if local_answer:
-        answer = _search_short_answer(local_answer)
-        _search_ai_answer_upsert(query, normalized_query, answer)
-        return {"answer": answer, "source": "local", "cached": False, "normalized_query": normalized_query}, 200
+        answer = _format_coach_answer(local_answer)
+        _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
+        return {"answer": answer, "source": "local", "cached": False, "normalized_query": normalized_query, "entity_type": entity_type}, 200
 
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
@@ -480,13 +482,14 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
                         "role": "system",
                         "content": (
                             "Tu es Coach Akro du Foot. Réponds en français, court, clair, utile. "
-                            "Réponse maximum 3 phrases. Reste 100% football."
+                            "Donne une fiche claire avec résumé, club ou sélection si pertinent, statistiques disponibles, infos importantes. "
+                            "Reste 100% football et n'invente pas d'actualité si elle n'est pas dans les données."
                         ),
                     },
                     {"role": "user", "content": query},
                 ],
                 "temperature": 0.25,
-                "max_output_tokens": 220,
+                "max_output_tokens": 700,
             },
             timeout=10,
         )
@@ -494,9 +497,9 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
             print(f"[search-coach] OpenAI error status={response.status_code}")
             return {"error": COACH_UNAVAILABLE}, 503
         data = response.json()
-        answer = _search_short_answer(_format_coach_answer(_openai_response_text(data)) or COACH_UNAVAILABLE)
-        _search_ai_answer_upsert(query, normalized_query, answer)
-        return {"answer": answer, "source": "openai", "cached": False, "normalized_query": normalized_query}, 200
+        answer = _format_coach_answer(_openai_response_text(data)) or COACH_UNAVAILABLE
+        _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
+        return {"answer": answer, "source": "openai", "cached": False, "normalized_query": normalized_query, "entity_type": entity_type}, 200
     except Exception as exc:
         print(f"[search-coach] OpenAI request error: {exc}")
         return {"error": COACH_UNAVAILABLE}, 503
@@ -1479,8 +1482,13 @@ def _search_ai_answer_get(normalized_query: str) -> dict[str, Any] | None:
         return None
     row = _supabase_request(
         "GET",
-        f"search_ai_answers?select=id,answer,usage_count&normalized_query=eq.{quote(normalized_query, safe='')}&order=created_at.desc&limit=1",
+        f"search_ai_answers?select=id,answer,usage_count,entity_type&normalized_query=eq.{quote(normalized_query, safe='')}&order=created_at.desc&limit=1",
     )
+    if row is None:
+        row = _supabase_request(
+            "GET",
+            f"search_ai_answers?select=id,answer,usage_count&normalized_query=eq.{quote(normalized_query, safe='')}&order=created_at.desc&limit=1",
+        )
     if isinstance(row, list) and row:
         return row[0]
     return None
@@ -1496,17 +1504,21 @@ def _search_ai_answer_increment_usage(answer_id: Any) -> None:
     _supabase_request("PATCH", f"search_ai_answers?id=eq.{quote(str(answer_id), safe='')}", json={"usage_count": count})
 
 
-def _search_ai_answer_upsert(query: str, normalized_query: str, answer: str) -> None:
+def _search_ai_answer_upsert(query: str, normalized_query: str, answer: str, entity_type: str = "") -> None:
     if not _supabase_enabled() or not answer:
         return
     payload = {
         "query": query,
         "normalized_query": normalized_query,
         "answer": answer,
+        "entity_type": entity_type or None,
         "usage_count": 1,
         "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     saved = _supabase_request("POST", "search_ai_answers", json=payload)
+    if saved is None and entity_type:
+        payload.pop("entity_type", None)
+        saved = _supabase_request("POST", "search_ai_answers", json=payload)
     if saved is None:
         print(f"[search-coach] Supabase save failed for normalized_query='{normalized_query}'")
 
