@@ -1890,6 +1890,8 @@
     const activeProfileCard = document.getElementById('activeProfileCard');
     const openProfileCreateButton = document.getElementById('openProfileCreate');
     const openProfileLoginButton = document.getElementById('openProfileLogin');
+    const profileCreateSubmit = document.getElementById('profileCreateSubmit');
+    const profileLoginSubmit = document.getElementById('profileLoginSubmit');
     const predictionSubmit = predictionForm.querySelector('button[type="submit"]');
 
     function syncMainLiveTickerPosition() {
@@ -1967,23 +1969,39 @@
   pseudo text,
   avatar_url text,
   favorite_club text,
+  favorite_club_logo text,
   favorite_nation text,
+  favorite_nation_flag text,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
 
+alter table public.profiles
+  add column if not exists email text,
+  add column if not exists pseudo text,
+  add column if not exists avatar_url text,
+  add column if not exists favorite_club text,
+  add column if not exists favorite_club_logo text,
+  add column if not exists favorite_nation text,
+  add column if not exists favorite_nation_flag text,
+  add column if not exists created_at timestamptz default now(),
+  add column if not exists updated_at timestamptz default now();
+
 alter table public.profiles enable row level security;
 
+drop policy if exists "profiles_select_own" on public.profiles;
 create policy "profiles_select_own"
 on public.profiles for select
 to authenticated
 using (auth.uid() = id);
 
+drop policy if exists "profiles_insert_own" on public.profiles;
 create policy "profiles_insert_own"
 on public.profiles for insert
 to authenticated
 with check (auth.uid() = id);
 
+drop policy if exists "profiles_update_own" on public.profiles;
 create policy "profiles_update_own"
 on public.profiles for update
 to authenticated
@@ -2152,12 +2170,12 @@ grant select, insert, update on public.profiles to authenticated;`;
       renderAvatarPicker();
       if (!persist || !akroSupabase || !akroProfile?.id) return;
       try {
-        const {data, error} = await akroSupabase
+        const {data, error} = await supabaseStep('update profile avatar', akroSupabase
           .from('profiles')
           .update({avatar_url: selectedAvatarUrl})
           .eq('id', akroProfile.id)
           .select(PROFILE_SELECT_COLUMNS)
-          .single();
+          .single());
         if (error) throw error;
         akroProfile = data;
         mergeSupabaseProfileIntoUi();
@@ -2250,6 +2268,52 @@ grant select, insert, update on public.profiles to authenticated;`;
       console.error(`[supabase] ${message}`, error);
     }
 
+    function serializeSupabaseError(error) {
+      if (!error) return null;
+      return {
+        message: String(error.message || error),
+        code: error.code || error.status || error.name || '',
+        details: error.details || '',
+        hint: error.hint || ''
+      };
+    }
+
+    async function supabaseStep(label, promise, timeoutMs = 9000) {
+      logSupabase(`${label} démarré`);
+      let timer;
+      try {
+        const timeout = new Promise((_, reject) => {
+          timer = setTimeout(() => reject(new Error(`${label} : Supabase ne répond pas après ${Math.round(timeoutMs / 1000)} secondes.`)), timeoutMs);
+        });
+        const result = await Promise.race([Promise.resolve(promise), timeout]);
+        const error = result?.error;
+        if (error) {
+          logSupabaseError(`${label} erreur`, serializeSupabaseError(error));
+        } else {
+          logSupabase(`${label} success`, result?.data ?? result);
+        }
+        return result;
+      } catch (error) {
+        logSupabaseError(`${label} exception`, serializeSupabaseError(error));
+        throw error;
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    function setProfileActionLoading(type, loading, message = '') {
+      const isCreate = type === 'create';
+      const button = isCreate ? profileCreateSubmit : profileLoginSubmit;
+      const status = isCreate ? profileCreateStatus : profileLoginStatus;
+      if (button) {
+        button.disabled = loading;
+        button.textContent = loading
+          ? (isCreate ? 'Patiente...' : 'Connexion...')
+          : (isCreate ? (akroSession?.user?.id ? 'Mettre à jour' : 'Créer mon profil') : 'Connexion');
+      }
+      if (status && message) status.textContent = message;
+    }
+
     async function initSupabaseAccount() {
       if (!serverMode) return false;
       try {
@@ -2268,6 +2332,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         });
         akroSupabase.auth.onAuthStateChange(async (event, session) => {
           akroSession = session;
+          logSupabase('auth state change', {event, user_id: session?.user?.id || '', email: session?.user?.email || ''});
           if (event === 'SIGNED_IN') logSupabase('utilisateur connecté', session?.user?.id || '');
           if (event === 'SIGNED_OUT') logSupabase('utilisateur déconnecté');
           if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
@@ -2278,7 +2343,7 @@ grant select, insert, update on public.profiles to authenticated;`;
             }
           }
         });
-        const {data: sessionData, error: sessionError} = await akroSupabase.auth.getSession();
+        const {data: sessionData, error: sessionError} = await supabaseStep('session auth initiale', akroSupabase.auth.getSession(), 7000);
         if (sessionError) throw sessionError;
         akroSession = sessionData.session;
         if (akroSession) {
@@ -2298,7 +2363,7 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     async function requireSupabaseSession() {
       if (!akroSupabase) return null;
-      const {data, error} = await akroSupabase.auth.getSession();
+      const {data, error} = await supabaseStep('session auth', akroSupabase.auth.getSession(), 7000);
       if (error) throw error;
       if (data.session) {
         akroSession = data.session;
@@ -2316,11 +2381,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       const email = normalizeAuthEmail(session?.user?.email || profileEmailInput?.value || profileLoginIdentifier?.value || '');
       selectedAvatarUrl = avatarUrl(selectedAvatarUrl);
       saveSelectedAvatar();
-      const {data: existing, error: readError} = await akroSupabase
+      const {data: existing, error: readError} = await supabaseStep('select profile', akroSupabase
         .from('profiles')
         .select(PROFILE_SELECT_COLUMNS)
         .eq('id', userId)
-        .maybeSingle();
+        .maybeSingle());
       if (readError) throw readError;
       if (existing) {
         const patch = {};
@@ -2333,7 +2398,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         });
         let nextProfile = existing;
         if (Object.keys(patch).length > 0) {
-          const updated = await akroSupabase.from('profiles').update(patch).eq('id', userId).select(PROFILE_SELECT_COLUMNS).single();
+          const updated = await supabaseStep('update profile', akroSupabase.from('profiles').update(patch).eq('id', userId).select(PROFILE_SELECT_COLUMNS).single());
           if (updated.error) throw updated.error;
           nextProfile = updated.data;
         }
@@ -2342,11 +2407,11 @@ grant select, insert, update on public.profiles to authenticated;`;
         return akroProfile;
       }
       const payload = {id: userId, email, pseudo, avatar_url: selectedAvatarUrl, ...selectedFavoritePayload()};
-      const created = await akroSupabase
+      const created = await supabaseStep('insert profile', akroSupabase
         .from('profiles')
         .upsert(payload, {onConflict: 'id'})
         .select(PROFILE_SELECT_COLUMNS)
-        .single();
+        .single());
       if (created.error) throw created.error;
       akroProfile = created.data;
       logSupabase('profil créé', akroProfile);
@@ -2442,7 +2507,8 @@ grant select, insert, update on public.profiles to authenticated;`;
     async function loadSupabaseUserData() {
       if (!akroSupabase || !akroSession?.user?.id) return;
       const userId = akroSession.user.id;
-      const profileResult = await akroSupabase.from('profiles').select(PROFILE_SELECT_COLUMNS).eq('id', userId).maybeSingle();
+      logSupabase('chargement données utilisateur', {user_id: userId, email: akroSession.user.email || ''});
+      const profileResult = await supabaseStep('select profile connecté', akroSupabase.from('profiles').select(PROFILE_SELECT_COLUMNS).eq('id', userId).maybeSingle());
       if (profileResult.error) {
         if (isMissingProfilesTableError(profileResult.error)) throw new Error(`${profilesSetupMessage()}\n\n${SUPABASE_PROFILES_SQL}`);
         throw profileResult.error;
@@ -2459,9 +2525,9 @@ grant select, insert, update on public.profiles to authenticated;`;
         logSupabase('profil chargé', akroProfile);
       }
       const [statsResult, badgesResult, predictionsResult] = await Promise.all([
-        akroSupabase.from('profile_stats').select('*').eq('profile_id', userId).maybeSingle(),
-        akroSupabase.from('profile_badges').select('*').eq('profile_id', userId).order('unlocked_at', {ascending: true}),
-        akroSupabase.from('predictions').select('*').eq('profile_id', userId).order('created_at', {ascending: false})
+        supabaseStep('select profile_stats', akroSupabase.from('profile_stats').select('*').eq('profile_id', userId).maybeSingle()),
+        supabaseStep('select profile_badges', akroSupabase.from('profile_badges').select('*').eq('profile_id', userId).order('unlocked_at', {ascending: true})),
+        supabaseStep('select predictions', akroSupabase.from('predictions').select('*').eq('profile_id', userId).order('created_at', {ascending: false}))
       ]);
       if (statsResult.error) throw statsResult.error;
       if (badgesResult.error) throw badgesResult.error;
@@ -2489,7 +2555,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (profileCreateStatus) profileCreateStatus.textContent = 'Choisis un mot de passe de 6 caractères minimum.';
         return;
       }
-      if (profileCreateStatus) profileCreateStatus.textContent = editingExistingProfile ? 'Mise à jour du profil...' : 'Création du compte...';
+      setProfileActionLoading('create', true, editingExistingProfile ? 'Mise à jour du profil...' : 'Création du compte...');
       try {
         if (!akroSupabase) throw new Error('Supabase indisponible');
         predictionPseudo.value = pseudo;
@@ -2497,16 +2563,17 @@ grant select, insert, update on public.profiles to authenticated;`;
         saveSelectedAvatar();
         syncSelectedFavoritesToStorage();
         if (!editingExistingProfile) {
-          const {data, error} = await akroSupabase.auth.signUp({email, password});
+          const {data, error} = await supabaseStep('signUp', akroSupabase.auth.signUp({email, password}), 10000);
           if (error) throw error;
+          logSupabase('signUp user/session', {user: data?.user || null, session: data?.session || null});
           const identities = data?.user?.identities;
           if (Array.isArray(identities) && identities.length === 0) {
-            await akroSupabase.auth.signOut();
+            await supabaseStep('signOut email déjà existant', akroSupabase.auth.signOut(), 7000);
             throw new Error('Cet email possède déjà un compte. Utilise “Se connecter”.');
           }
           akroSession = data?.session || null;
           if (!akroSession?.user?.id) {
-            const login = await akroSupabase.auth.signInWithPassword({email, password});
+            const login = await supabaseStep('signInWithPassword après signUp', akroSupabase.auth.signInWithPassword({email, password}), 10000);
             if (login.error) throw login.error;
             akroSession = login.data?.session || null;
           }
@@ -2524,8 +2591,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         predictionStatus.textContent = '';
         logSupabase('profil créé', akroProfile);
       } catch (error) {
-        logSupabaseError('erreur auth', {message: publicAuthErrorMessage(error, 'Création impossible pour le moment.')});
+        logSupabaseError('erreur création profil', serializeSupabaseError(error));
         if (profileCreateStatus) profileCreateStatus.textContent = publicAuthErrorMessage(error, 'Création impossible pour le moment.');
+      } finally {
+        setProfileActionLoading('create', false);
       }
     }
 
@@ -2536,11 +2605,12 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (profileLoginStatus) profileLoginStatus.textContent = 'Entre ton email et ton mot de passe.';
         return;
       }
-      if (profileLoginStatus) profileLoginStatus.textContent = 'Connexion...';
+      setProfileActionLoading('login', true, 'Connexion...');
       try {
         if (!akroSupabase) throw new Error('Supabase indisponible');
-        const {data, error} = await akroSupabase.auth.signInWithPassword({email, password});
+        const {data, error} = await supabaseStep('signInWithPassword', akroSupabase.auth.signInWithPassword({email, password}), 10000);
         if (error) throw error;
+        logSupabase('signInWithPassword user/session', {user: data?.user || null, session: data?.session || null});
         akroSession = data?.session || null;
         if (!akroSession?.user?.id) throw new Error('Session Supabase introuvable après connexion.');
         await loadSupabaseUserData();
@@ -2559,17 +2629,19 @@ grant select, insert, update on public.profiles to authenticated;`;
         closeProfileLoginModal();
         predictionStatus.textContent = '';
       } catch (error) {
-        logSupabaseError('erreur auth', {message: publicAuthErrorMessage(error, 'Connexion impossible.')});
+        logSupabaseError('erreur connexion profil', serializeSupabaseError(error));
         if (profileLoginStatus) profileLoginStatus.textContent = publicAuthErrorMessage(error, 'Connexion impossible.');
+      } finally {
+        setProfileActionLoading('login', false);
       }
     }
 
     async function logoutProfile() {
       try {
-        if (akroSupabase) await akroSupabase.auth.signOut();
+        if (akroSupabase) await supabaseStep('signOut', akroSupabase.auth.signOut(), 7000);
         logSupabase('utilisateur déconnecté');
       } catch (error) {
-        logSupabaseError('erreur auth', error);
+        logSupabaseError('erreur auth', serializeSupabaseError(error));
       }
       akroSession = null;
       akroProfile = null;
@@ -2586,11 +2658,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       const profile = akroProfile;
       if (!profile) return null;
       const profileId = profile.id;
-      const predictionsResult = await akroSupabase
+      const predictionsResult = await supabaseStep('select predictions pour stats', akroSupabase
         .from('predictions')
         .select('*')
         .eq('profile_id', profileId)
-        .order('created_at', {ascending: false});
+        .order('created_at', {ascending: false}));
       if (predictionsResult.error) throw predictionsResult.error;
       akroPredictions = predictionsResult.data || [];
       const statsPayload = {
@@ -2601,28 +2673,28 @@ grant select, insert, update on public.profiles to authenticated;`;
         total_points: akroPredictions.reduce((sum, item) => sum + Number(item.points || 0), 0),
         updated_at: new Date().toISOString()
       };
-      const statsResult = await akroSupabase
+      const statsResult = await supabaseStep('upsert profile_stats', akroSupabase
         .from('profile_stats')
         .upsert(statsPayload, {onConflict: 'profile_id'})
         .select('*')
-        .single();
+        .single());
       if (statsResult.error) throw statsResult.error;
       akroStats = statsResult.data;
       logSupabase('stats mises à jour', akroStats);
       const badge = supabaseBadgeLevel(statsPayload.total_predictions);
       const existed = akroBadges.some(item => item.badge_key === badge.key);
-      const badgeResult = await akroSupabase
+      const badgeResult = await supabaseStep('upsert profile_badges', akroSupabase
         .from('profile_badges')
         .upsert({profile_id: profileId, badge_key: badge.key, badge_name: badge.name}, {onConflict: 'profile_id,badge_key'})
         .select('*')
-        .single();
+        .single());
       if (badgeResult.error) throw badgeResult.error;
       if (!existed) logSupabase('badge débloqué', badgeResult.data);
-      const badgesResult = await akroSupabase
+      const badgesResult = await supabaseStep('select profile_badges après stats', akroSupabase
         .from('profile_badges')
         .select('*')
         .eq('profile_id', profileId)
-        .order('unlocked_at', {ascending: true});
+        .order('unlocked_at', {ascending: true}));
       if (badgesResult.error) throw badgesResult.error;
       akroBadges = badgesResult.data || [];
       mergeSupabaseProfileIntoUi();
