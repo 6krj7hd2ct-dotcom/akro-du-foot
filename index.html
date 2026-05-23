@@ -385,14 +385,20 @@
     .player-card.big5-card > * { position: relative; z-index: 1; }
     .big5-ticker {
       position: relative;
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08);
       border: 1px solid rgba(245,201,107,0.22);
       border-radius: 18px;
       background: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(18,43,70,0.72));
       box-shadow: 0 18px 44px rgba(0,0,0,0.22);
     }
-    .big5-track { display: flex; width: max-content; animation: big5-scroll 62s linear infinite; will-change: transform; }
-    .big5-ticker:hover .big5-track { animation-play-state: paused; }
+    .big5-ticker::-webkit-scrollbar { height: 8px; }
+    .big5-ticker::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
+    .big5-ticker::-webkit-scrollbar-thumb { background: rgba(245,201,107,0.55); border-radius: 999px; }
+    .big5-track { display: flex; width: max-content; min-width: 100%; }
     .big5-items { display: flex; align-items: stretch; gap: 10px; padding: 10px; white-space: nowrap; }
     .big5-item { width: min(278px, 76vw); flex: 0 0 auto; min-height: 112px; }
     .big5-item .player-card { height: 100%; padding: 11px 12px; grid-template-columns: 50px minmax(0, 1fr); gap: 10px; }
@@ -671,6 +677,30 @@
     .community-predictions { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(240px, 0.52fr); gap: 16px; align-items: start; }
     .community-side { min-width: 0; }
     .follow-zone { display: grid; gap: 12px; }
+    .live-section-title { align-items: center; }
+    .live-title-actions { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .live-refresh-button {
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: #dfeeff;
+      background: rgba(255,255,255,0.07);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 950;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .live-refresh-button:hover, .live-refresh-button:focus-visible { border-color: rgba(245,201,107,0.48); background: rgba(245,201,107,0.13); outline: none; }
+    .live-refresh-button.is-loading { animation: liveRefreshSpin .8s linear infinite; pointer-events: none; }
+    @keyframes liveRefreshSpin { to { transform: rotate(360deg); } }
+    .live-update-meta { min-height: 16px; color: var(--muted); font-size: 12px; font-weight: 850; }
+    .live-update-meta.is-error { color: #ffb4bd; }
     .follow-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .follow-card { padding: 13px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: radial-gradient(circle at center, rgba(245,201,107,0.10), transparent 18rem), rgba(255,255,255,0.055); }
     .follow-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 850; text-transform: uppercase; }
@@ -682,6 +712,10 @@
     .follow-status { display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; padding: 4px 8px; border-radius: 999px; color: #b9d7ff; background: rgba(31,111,235,0.18); font-size: 12px; font-weight: 900; }
     .follow-status.done { color: #9ff0d5; background: rgba(50,211,162,0.18); }
     .follow-status.live { color: #ffb8bf; background: rgba(239,51,64,0.22); box-shadow: 0 0 0 1px rgba(239,51,64,0.45); }
+    .favorite-matches-block { display: grid; gap: 10px; margin-top: 4px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.10); }
+    .favorite-matches-block h4 { margin: 0; font-size: 16px; line-height: 1.2; }
+    .favorite-match-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .favorite-match-list .empty { grid-column: 1 / -1; }
     .community-form { display: grid; gap: 10px; margin-top: 12px; }
     .profile-gate { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.08)); }
     .profile-gate-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -813,7 +847,7 @@
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
-      .community-grid, .community-predictions, .field-row, .follow-list, .profile-summary { grid-template-columns: 1fr; }
+      .community-grid, .community-predictions, .field-row, .follow-list, .favorite-match-list, .profile-summary { grid-template-columns: 1fr; }
       .avatar-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
       .live-events-track { animation-duration: 164s; }
       .prediction-scoreboard { grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); gap: 8px; }
@@ -899,8 +933,13 @@
     </div>
     <section class="community-grid">
       <article class="card community-panel follow-zone">
-        <div class="section-title"><h3>Matchs à suivre</h3><span class="alltime-badge" id="followMode">Aujourd’hui</span></div>
+        <div class="section-title live-section-title"><h3>Match en direct</h3><div class="live-title-actions"><span class="alltime-badge" id="followMode">Aujourd’hui</span><button class="live-refresh-button" type="button" id="liveRefreshButton" aria-label="Rafraîchir les scores" title="Rafraîchir les scores">↻</button></div></div>
+        <div class="live-update-meta" id="liveUpdateMeta">Dernière mise à jour : chargement...</div>
         <div class="follow-list" id="communityFollowMatches"></div>
+        <div class="favorite-matches-block" aria-label="Prochains matchs favoris">
+          <h4>Prochains matchs favoris</h4>
+          <div class="favorite-match-list" id="favoriteMatchesList"><div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div></div>
+        </div>
       </article>
       <article class="card community-panel community-predictions">
         <div class="community-side">
@@ -1592,8 +1631,11 @@
     const shareButton = document.getElementById('shareButton');
     const predictionForm = document.getElementById('predictionForm');
     const communityFollowMatches = document.getElementById('communityFollowMatches');
+    const favoriteMatchesList = document.getElementById('favoriteMatchesList');
     const communityLiveTicker = document.getElementById('communityLiveTicker');
     const followMode = document.getElementById('followMode');
+    const liveRefreshButton = document.getElementById('liveRefreshButton');
+    const liveUpdateMeta = document.getElementById('liveUpdateMeta');
     const competitionFilter = document.getElementById('competitionFilter');
     const predictionMatch = document.getElementById('predictionMatch');
     const predictionTeams = document.getElementById('predictionTeams');
@@ -1621,6 +1663,10 @@
     let akroStats = null;
     let akroBadges = [];
     let akroPredictions = [];
+    let liveRefreshInFlight = false;
+    let lastLiveRefreshAt = 0;
+    const LIVE_AUTO_REFRESH_MS = 45000;
+    const LIVE_MIN_MANUAL_REFRESH_MS = 30000;
     const AKRO_BADGE_LEVELS = [
       ['debutant', 'Débutant', '🥉'],
       ['supporter', 'Supporter', '🥉'],
@@ -2137,6 +2183,87 @@
       </article>`;
     }
 
+    function normalizeTeamName(value) {
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[-_.]/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    function uniqueTeams(values) {
+      const seen = new Set();
+      return (values || []).map(value => String(value || '').trim()).filter(value => {
+        const key = normalizeTeamName(value);
+        if (!key || key === 'a determiner' || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function profileFocusTeams() {
+      if (!hasActiveProfile()) return [];
+      const profile = akroProfile || {};
+      const raw = profile.focus_teams || profile.favorite_teams || profile.favorites || profile.teams_focus;
+      if (Array.isArray(raw) && raw.length) return uniqueTeams(raw);
+      if (typeof raw === 'string' && raw.trim()) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return uniqueTeams(parsed);
+        } catch (error) {
+          return uniqueTeams(raw.split(','));
+        }
+      }
+      const localFocus = [
+        localStorage.getItem('akrodufoot:focus:worldcup'),
+        localStorage.getItem('akrodufoot:focus:champions')
+      ];
+      Object.keys((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(key => {
+        localFocus.push(localStorage.getItem(`akrodufoot:league-focus:${key}`));
+      });
+      return uniqueTeams(localFocus);
+    }
+
+    function isFavoriteMatch(match, teams) {
+      const home = normalizeTeamName(match.home_team);
+      const away = normalizeTeamName(match.away_team);
+      return teams.some(team => {
+        const normalized = normalizeTeamName(team);
+        return normalized && (home === normalized || away === normalized);
+      });
+    }
+
+    function renderFavoriteMatches(matches) {
+      if (!favoriteMatchesList) return;
+      if (!hasActiveProfile()) {
+        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div>';
+        return;
+      }
+      const teams = profileFocusTeams();
+      if (!teams.length) {
+        favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes en focus pour voir leurs prochains matchs.</div>';
+        return;
+      }
+      const now = Date.now();
+      const upcoming = (matches || [])
+        .filter(match => !match.completed && matchTimestamp(match) >= now)
+        .filter(match => isFavoriteMatch(match, teams))
+        .sort((a, b) => matchTimestamp(a) - matchTimestamp(b))
+        .slice(0, 3);
+      favoriteMatchesList.innerHTML = upcoming.length
+        ? upcoming.map(followMatchCard).join('')
+        : '<div class="empty">Aucun prochain match favori disponible.</div>';
+    }
+
+    function liveUpdatedText(date = new Date()) {
+      return `Dernière mise à jour : ${date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit', second:'2-digit'})}`;
+    }
+
+    function setLiveRefreshState(loading, message = '', isError = false) {
+      liveRefreshButton?.classList.toggle('is-loading', loading);
+      if (liveRefreshButton) liveRefreshButton.disabled = loading;
+      if (liveUpdateMeta) {
+        liveUpdateMeta.textContent = message || liveUpdatedText();
+        liveUpdateMeta.classList.toggle('is-error', Boolean(isError));
+      }
+    }
+
     function renderFollowMatches(matches) {
       const source = matches && matches.length ? matches : DASHBOARD_MATCHES;
       const selected = source
@@ -2147,6 +2274,7 @@
         ? selected.map(followMatchCard).join('')
         : '<div class="empty">Aucun match aujourd’hui</div>';
       renderLiveEventsTicker(selected);
+      renderFavoriteMatches(source);
     }
 
     function liveEventLabel(match) {
@@ -2381,23 +2509,47 @@
         predictionStatus.textContent = 'Mode fichier statique : pronostics désactivés.';
         renderMatchOptions(DASHBOARD_MATCHES);
         renderFollowMatches(DASHBOARD_MATCHES);
+        setLiveRefreshState(false, 'Mode fichier statique : scores en cache');
         return;
       }
       try {
-        const response = await fetch('/api/community');
+        const response = await fetch(`/api/community?ts=${Date.now()}`, {cache: 'no-store'});
+        if (!response.ok) throw new Error('community refresh failed');
         const data = await response.json();
         renderMatchOptions(data.matches);
         renderFollowMatches(data.matches);
         communityProfiles = data.profiles || {};
         renderLeaderboard(data.leaderboard);
         if (akroSupabase) await loadSupabaseUserData();
+        renderFavoriteMatches(communityMatches);
         updatePredictionButton();
+        setLiveRefreshState(false, liveUpdatedText());
       } catch (error) {
+        console.error('[community] refresh error', error);
         if (akroSupabase) {
           await loadSupabaseUserData();
+          setLiveRefreshState(false, 'Scores en cache : serveur indisponible', true);
           return;
         }
         predictionStatus.textContent = 'Serveur communautaire indisponible.';
+        setLiveRefreshState(false, 'Actualisation impossible pour le moment', true);
+      }
+    }
+
+    async function refreshCommunityLive(force = false) {
+      const now = Date.now();
+      if (liveRefreshInFlight) return;
+      const minDelay = force ? 5000 : LIVE_MIN_MANUAL_REFRESH_MS;
+      if (now - lastLiveRefreshAt < minDelay) return;
+      liveRefreshInFlight = true;
+      lastLiveRefreshAt = now;
+      setLiveRefreshState(true, 'Actualisation des scores...');
+      try {
+        await loadCommunity();
+      } finally {
+        liveRefreshInFlight = false;
+        liveRefreshButton?.classList.remove('is-loading');
+        if (liveRefreshButton) liveRefreshButton.disabled = false;
       }
     }
 
@@ -2423,6 +2575,9 @@
     document.getElementById('profileCreateSubmit')?.addEventListener('click', createProfileFromModal);
     profilePseudoInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
     openProfileCreateButton?.addEventListener('click', openProfileCreateModal);
+    liveRefreshButton?.addEventListener('click', () => refreshCommunityLive(true));
+    document.addEventListener('akro:focus-change', () => renderFavoriteMatches(communityMatches));
+    document.addEventListener('akro:league-focus-change', () => renderFavoriteMatches(communityMatches));
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeUserProfile(); closeProfileCreateModal(); } });
     shareButton.addEventListener('click', sharePage);
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
@@ -2459,6 +2614,7 @@
     (async function startCommunityApp() {
       await initSupabaseAccount();
       await loadCommunity();
+      setInterval(() => refreshCommunityLive(false), LIVE_AUTO_REFRESH_MS);
     })();
   </script>
   <script>
@@ -3180,7 +3336,7 @@
       if (honoursButton) honoursButton.dataset.alltime = `league-history-${key}`;
       document.getElementById('leagueUpcoming').innerHTML = (league.upcoming_matches || []).slice(0,3).map(leagueMatchCard).join('') || '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong></article>';
       const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
-      document.getElementById('big5TopScorers').innerHTML = big5Items ? `<div class="big5-track"><div class="big5-items">${big5Items}</div><div class="big5-items" aria-hidden="true">${big5Items}</div></div>` : '<div class="empty">Buteurs indisponibles.</div>';
+      document.getElementById('big5TopScorers').innerHTML = big5Items ? `<div class="big5-track"><div class="big5-items">${big5Items}</div></div>` : '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,5).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopAssists').innerHTML = (league.top_assists || []).slice(0,5).map(player => leaguePlayerCard(player, 'passes', 'club')).join('') || '<div class="empty">Passeurs indisponibles.</div>';
       document.getElementById('leagueStandings').innerHTML = (league.standings || []).map(leagueGroupCard).join('') || '<div class="empty">Classement indisponible.</div>';

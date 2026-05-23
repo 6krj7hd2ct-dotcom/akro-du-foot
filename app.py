@@ -66,6 +66,11 @@ SUPABASE_BADGE_COLUMNS = "id,name,level,icon,min_predictions"
 SUPABASE_COACH_COLUMNS = "id,session_id,role,content,detected_entity,detected_intent,created_at"
 BUILD_VERSION_TOKEN = "__AKRO_BUILD_VERSION__"
 NO_STORE_CACHE_CONTROL = "no-store, no-cache, must-revalidate, max-age=0"
+LIVE_SCORE_REFRESH_INTERVAL = 60
+LIVE_SCORE_REFRESH_LOCK = threading.Lock()
+LIVE_SCORE_LAST_REFRESH_AT = 0.0
+LIVE_SCORE_REFRESHING = False
+LIVE_SCORE_LAST_ERROR = ""
 
 app = Flask(__name__) if Flask else None
 
@@ -303,18 +308,62 @@ def community_payload() -> dict[str, Any]:
     profiles = _community_profiles(predictions, matches, supabase.get("badges", {}))
     leaderboard = _leaderboard(predictions, matches, supabase.get("badges", {}))
     return {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "messages": community.get("messages", [])[-100:],
         "predictions": predictions,
         "leaderboard": leaderboard,
         "profiles": profiles,
         "matches": list(matches.values()),
+        "live_refreshing": LIVE_SCORE_REFRESHING,
+        "live_refresh_error": LIVE_SCORE_LAST_ERROR,
         "storage": "supabase" if supabase.get("available") else "json",
     }
+
+
+def _live_score_refresh_enabled() -> bool:
+    return os.environ.get("AKRO_DISABLE_LIVE_SCORE_REFRESH", "").strip().lower() not in {"1", "true", "yes", "on"}
+
+
+def _schedule_live_score_refresh(force: bool = False) -> None:
+    global LIVE_SCORE_LAST_REFRESH_AT, LIVE_SCORE_REFRESHING
+    if not _live_score_refresh_enabled():
+        return
+    now = time.time()
+    with LIVE_SCORE_REFRESH_LOCK:
+        if LIVE_SCORE_REFRESHING:
+            return
+        if not force and now - LIVE_SCORE_LAST_REFRESH_AT < LIVE_SCORE_REFRESH_INTERVAL:
+            return
+        LIVE_SCORE_REFRESHING = True
+        LIVE_SCORE_LAST_REFRESH_AT = now
+    threading.Thread(target=_refresh_live_score_caches, daemon=True).start()
+
+
+def _refresh_live_score_caches() -> None:
+    global LIVE_SCORE_REFRESHING, LIVE_SCORE_LAST_ERROR
+    env = dict(os.environ)
+    env["AKRO_RENDER_HTML_DURING_UPDATE"] = "0"
+    try:
+        result = subprocess.run(
+            [env.get("PYTHON_BIN", sys.executable), str(BASE_DIR / "update_dashboard.py")],
+            cwd=BASE_DIR,
+            env=env,
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=180,
+        )
+        LIVE_SCORE_LAST_ERROR = "" if result.returncode == 0 else (result.stderr or result.stdout or "refresh failed")[-240:]
+    except Exception as error:
+        LIVE_SCORE_LAST_ERROR = str(error)
+    finally:
+        LIVE_SCORE_REFRESHING = False
 
 
 if app:
     @app.get("/api/community")
     def get_community():
+        _schedule_live_score_refresh()
         return jsonify(community_payload())
 
     @app.get("/api/supabase-public-config")
@@ -1332,6 +1381,7 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/healthz":
             self._send_json({"status": "ok"})
         elif path == "/api/community":
+            _schedule_live_score_refresh()
             self._send_json(community_payload())
         elif path == "/api/supabase-public-config":
             url, key = _supabase_config()
