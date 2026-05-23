@@ -1,10 +1,13 @@
-const CACHE_NAME = 'akro-du-foot-v1';
+const CACHE_NAME = 'akro-du-foot-v2';
 const APP_SHELL = [
   '/',
   '/manifest.json',
+  '/icons/icon-32.png',
+  '/icons/icon-64.png',
+  '/icons/icon-180.png',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
-  '/icons/icon.svg'
+  '/icons/splash-1170x2532.png'
 ];
 
 self.addEventListener('install', event => {

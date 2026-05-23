@@ -104,8 +104,12 @@ def _page(data: dict[str, Any]) -> str:
   <meta name="apple-mobile-web-app-title" content="Akro Foot">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/icons/icon-64.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png">
+  <link rel="apple-touch-startup-image" href="/icons/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="/icons/splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
   <style>
     :root {{
       color-scheme: dark;
@@ -181,6 +185,8 @@ def _page(data: dict[str, Any]) -> str:
       opacity: 0.8;
     }}
     .app-top {{ position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }}
+    .app-brand {{ display: grid; grid-template-columns: clamp(76px, 9vw, 112px) minmax(0, 1fr); gap: 18px; align-items: center; }}
+    .app-logo {{ width: clamp(76px, 9vw, 112px); height: clamp(76px, 9vw, 112px); border-radius: 24%; object-fit: cover; box-shadow: 0 18px 44px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.14), 0 0 34px rgba(31,111,235,0.28); background: #000; }}
     .app-title {{ font-size: clamp(42px, 8vw, 92px); line-height: 0.9; }}
     .app-copy {{ color: #c5d3e4; max-width: 650px; margin: 12px 0 0; font-size: 16px; line-height: 1.5; }}
     .global-controls {{ display: grid; gap: 12px; justify-items: start; align-items: start; max-width: min(760px, 100%); }}
@@ -855,6 +861,8 @@ def _page(data: dict[str, Any]) -> str:
       h1 {{ font-size: 40px; }}
       .next-match-pill {{ width: 100%; justify-content: center; gap: 5px; padding-inline: 8px; font-size: clamp(8px, 2.65vw, 11px); }}
       .next-match-pill .flag, .pill .flag {{ width: 15px; height: 15px; }}
+      .app-brand {{ grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }}
+      .app-logo {{ width: 64px; height: 64px; border-radius: 22%; }}
       .app-title {{ font-size: clamp(34px, 12vw, 44px); }}
       .app-copy {{ font-size: 14px; }}
       .global-controls {{ width: 100%; }}
@@ -1202,10 +1210,13 @@ def _app_header() -> str:
     return """
     <header class="app-header">
       <div class="app-top">
-        <div>
-          <div class="kicker"><span class="ball"></span> Plateforme football</div>
-          <h1 class="app-title">Akro du Foot</h1>
-          <p class="app-copy">Un espace unique pour suivre les compétitions, discuter entre amis, faire des pronostics fictifs sans argent et lancer une Watch Party.</p>
+        <div class="app-brand">
+          <img class="app-logo" src="/icons/icon-192.png" alt="Logo Akro du Foot" width="192" height="192" loading="eager">
+          <div>
+            <div class="kicker"><span class="ball"></span> Plateforme football</div>
+            <h1 class="app-title">Akro du Foot</h1>
+            <p class="app-copy">Un espace unique pour suivre les compétitions, discuter entre amis, faire des pronostics fictifs sans argent et lancer une Watch Party.</p>
+          </div>
         </div>
         <div class="global-controls">
           <div class="global-search" role="search">
