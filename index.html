@@ -671,6 +671,11 @@
     .chatbot-message ul { margin: 8px 0 0; padding-left: 18px; }
     .chatbot-message.user { justify-self: end; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }
     .chatbot-message.bot { justify-self: start; }
+    .coach-verification { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 0 7px; color: #c9dcf2; font-size: 11px; font-weight: 850; }
+    .coach-verify-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 7px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.08); }
+    .coach-verify-pill.verified { color: #9af6d3; border-color: rgba(50,211,162,0.34); background: rgba(50,211,162,0.12); }
+    .coach-verify-pill.limited { color: #ffe1a0; border-color: rgba(245,201,107,0.34); background: rgba(245,201,107,0.12); }
+    .coach-verify-pill.local { color: #bdd7ff; border-color: rgba(31,111,235,0.34); background: rgba(31,111,235,0.12); }
     .chatbot-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
     .alltime-row { display: grid; grid-template-columns: 44px 52px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.06); }
     .alltime-rank { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-weight: 950; }
@@ -3588,7 +3593,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         const data = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(data.error || 'Coach indisponible');
         const answer = String(data.answer || data.error || 'Coach n’a pas pu répondre pour le moment.').trim();
-        coachBox.innerHTML = `<div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>${escapeHtml(data.cached ? 'Réponse sauvegardée' : 'Réponse Coach')}</span></div><div class="chatbot-message bot">${formatChatbotContent(answer)}</div>`;
+        coachBox.innerHTML = `<div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>${escapeHtml(data.cached ? 'Réponse sauvegardée' : 'Réponse Coach')}</span></div><div class="chatbot-message bot">${coachVerificationMarkup(data.verification || null)}${formatChatbotContent(answer)}</div>`;
       } catch (error) {
         console.error('[search] coach error', error);
         coachBox.innerHTML = '<div class="chatbot-message bot">Coach indisponible pour le moment. Réessaie dans quelques instants.</div>';
@@ -4397,18 +4402,35 @@ grant select, insert, update on public.profiles to authenticated;`;
       return `<p>${clean.replace(/\n/g, '<br>')}</p>`;
     }
 
-    function setChatbotMessage(node, text) {
-      node.innerHTML = formatChatbotContent(text);
+    function coachVerificationMarkup(verification) {
+      if (!verification || typeof verification !== 'object') return '';
+      const status = String(verification.status || '').toLowerCase();
+      const label = verification.label || (status === 'verified' ? 'Vérifié' : status === 'limited' ? 'À vérifier' : status === 'local' ? 'Local' : '');
+      if (!label) return '';
+      const confidence = Number(verification.confidence || 0);
+      const checkedAt = verification.checked_at ? ` · ${chatbotEscape(verification.checked_at)}` : '';
+      const sources = Array.isArray(verification.sources) && verification.sources.length ? ` · ${chatbotEscape(verification.sources.slice(0, 2).join(', '))}` : '';
+      const confidenceText = confidence ? `Confiance ${confidence}%` : 'Confiance prudente';
+      return `
+        <div class="coach-verification">
+          <span class="coach-verify-pill ${chatbotEscape(status)}">${chatbotEscape(label)}</span>
+          <span>${chatbotEscape(confidenceText)}${checkedAt}${sources}</span>
+        </div>
+      `;
     }
 
-    function addChatbotMessage(role, text, save = true) {
+    function setChatbotMessage(node, text, verification = null) {
+      node.innerHTML = `${coachVerificationMarkup(verification)}${formatChatbotContent(text)}`;
+    }
+
+    function addChatbotMessage(role, text, save = true, verification = null) {
       const node = document.createElement('div');
       node.className = `chatbot-message ${role}`;
-      setChatbotMessage(node, text);
+      setChatbotMessage(node, text, verification);
       footballChatbotMessages.appendChild(node);
       if (save) {
         footballChatbotHistory.push({role: role === 'user' ? 'user' : 'assistant', content: text});
-        if (footballChatbotHistory.length > 12) footballChatbotHistory.shift();
+        if (footballChatbotHistory.length > 20) footballChatbotHistory.shift();
       }
       footballChatbotMessages.scrollTop = footballChatbotMessages.scrollHeight;
       return node;
@@ -4461,7 +4483,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (coachHistoryLoaded) return;
       coachHistoryLoaded = true;
       try {
-        const response = await fetch(`/api/coach/messages?session_id=${encodeURIComponent(coachSessionId)}&limit=12`);
+        const response = await fetch(`/api/coach/messages?session_id=${encodeURIComponent(coachSessionId)}&limit=20`);
         if (!response.ok) return;
         const data = await response.json().catch(() => ({}));
         const messages = Array.isArray(data.messages) ? data.messages : [];
@@ -4513,23 +4535,23 @@ grant select, insert, update on public.profiles to authenticated;`;
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             message: question,
-            history: footballChatbotHistory.slice(-12),
+            history: footballChatbotHistory.slice(-20),
             context: coachConversationMemory,
             session_id: coachSessionId
           })
         });
         const data = await response.json().catch(() => ({}));
         const answer = data.answer || data.error || 'Coach indisponible : clé OpenAI absente ou invalide.';
-        setChatbotMessage(pending, answer);
+        setChatbotMessage(pending, answer, data.verification || null);
         updateCoachMemoryFromDetectedContext(data.detected_context || {});
         updateCoachMemoryFromText(answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
-        if (footballChatbotHistory.length > 12) footballChatbotHistory.shift();
+        if (footballChatbotHistory.length > 20) footballChatbotHistory.shift();
       } catch (error) {
         const answer = 'Coach indisponible : clé OpenAI absente ou invalide.';
         setChatbotMessage(pending, answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
-        if (footballChatbotHistory.length > 12) footballChatbotHistory.shift();
+        if (footballChatbotHistory.length > 20) footballChatbotHistory.shift();
       }
     });
   </script>

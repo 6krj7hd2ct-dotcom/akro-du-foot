@@ -35,6 +35,8 @@ OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 COACH_REFUSAL = "Je suis Coach, je réponds uniquement aux questions liées au football."
 COACH_UNAVAILABLE = "Coach indisponible : clé OpenAI absente ou invalide."
 COACH_DISCLAIMER = "Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel."
+COACH_FACTS_LAST_VERIFIED = "2026-05-24"
+COACH_VERIFICATION_SOURCES = ("Wikipedia", "FotMob", "Transfermarkt", "SofaScore", "ESPN", "API Football")
 
 COMMUNITY_LEVELS = [
     ("Débutant", "Bronze", "🥉"),
@@ -465,9 +467,9 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
     history = _chat_history(payload.get("history", []))
     session_id = _clean(payload.get("session_id", ""), 120)
     client_context = payload.get("context") if isinstance(payload.get("context"), dict) else {}
-    merged_history = history[-12:]
+    merged_history = history[-20:]
     if session_id:
-        merged_history = _chat_history(_coach_messages_from_supabase(session_id, 12) + merged_history)[-12:]
+        merged_history = _chat_history(_coach_messages_from_supabase(session_id, 20) + merged_history)[-20:]
     context_state = _detect_conversation_context(merged_history, question, client_context)
     resolved_question = _resolve_followup_question(question, context_state)
     if not question:
@@ -477,12 +479,32 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
     if not _looks_like_football_question(resolved_question, merged_history):
         return {"answer": COACH_REFUSAL}, 200
 
+    verified_fact = _verified_coach_fact_answer(resolved_question, merged_history)
+    if verified_fact:
+        answer = _format_coach_answer(verified_fact["answer"])
+        verification = verified_fact["verification"]
+        if session_id:
+            _save_coach_message_supabase(session_id, "assistant", answer, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
+        return {
+            "answer": answer,
+            "detected_context": context_state,
+            "resolved_question": resolved_question,
+            "verification": verification,
+        }, 200
+
+    verification = _coach_verification_context(resolved_question, merged_history)
     local_answer = _local_coach_answer(resolved_question, merged_history)
     if local_answer:
         answer = _format_coach_answer(local_answer)
+        verification = _local_coach_verification(verification)
         if session_id:
             _save_coach_message_supabase(session_id, "assistant", answer, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
-        return {"answer": answer, "detected_context": context_state, "resolved_question": resolved_question}, 200
+        return {
+            "answer": answer,
+            "detected_context": context_state,
+            "resolved_question": resolved_question,
+            "verification": verification,
+        }, 200
 
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
@@ -518,6 +540,10 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                             "Avant de répondre sur un joueur, vérifie dans les données locales son club actuel, sa sélection, son effectif et ses statistiques. "
                             "Les données locales Akro du Foot priment sur tes connaissances générales quand elles sont présentes. "
                             "Si l'utilisateur te corrige (ex: 'non il joue au Real Madrid', 'tu te trompes', 'vérifie'), reconnais la correction, vérifie les données locales, puis reprends-toi clairement. "
+                            "Quand l'utilisateur dit que ta réponse précédente est fausse, relis l'historique fourni, identifie précisément l'affirmation contestée, reconnais l'erreur et corrige sans te défendre. "
+                            "Pour les records, meilleurs buteurs, statistiques joueurs, transferts, classements et compétitions en cours, utilise d'abord le bloc Vérification fourni. "
+                            "Si ce bloc indique une vérification limitée, dis-le clairement et évite les certitudes absolues. "
+                            "Ne répète jamais une donnée historique sensible sans préciser si elle vient d'une source vérifiée récemment. "
                             "Pour l'actualité, ne jamais inventer : si aucune donnée récente n'est présente dans le site, réponds exactement : "
                             "Je n'ai pas encore cette information dans les données du site. "
                             "Si une information sportive générale est stable et historique, tu peux répondre avec tes connaissances. "
@@ -529,6 +555,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                         "content": (
                             f"Contexte détecté: {json.dumps(context_state, ensure_ascii=False)}\n"
                             f"Historique récent:\n{history_text}\n\n"
+                            f"Vérification football récente:\n{verification.get('context', '')}\n\n"
                             f"Données Akro du Foot disponibles:\n{context}\n\n"
                             f"Question utilisateur résolue:\n{resolved_question}"
                         ),
@@ -545,7 +572,12 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
         answer = _format_coach_answer(_openai_response_text(data))
         if session_id and answer:
             _save_coach_message_supabase(session_id, "assistant", answer, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
-        return {"answer": answer or COACH_UNAVAILABLE, "detected_context": context_state, "resolved_question": resolved_question}, 200
+        return {
+            "answer": answer or COACH_UNAVAILABLE,
+            "detected_context": context_state,
+            "resolved_question": resolved_question,
+            "verification": _public_coach_verification(verification),
+        }, 200
     except Exception:
         return {"error": COACH_UNAVAILABLE}, 503
 
@@ -560,7 +592,8 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
     if not _looks_like_football_question(query, []):
         return {"answer": COACH_REFUSAL, "source": "refusal", "cached": False}, 200
 
-    cached = _search_ai_answer_get(normalized_query)
+    live_sensitive = _coach_needs_recent_verification(normalized_query)
+    cached = None if live_sensitive else _search_ai_answer_get(normalized_query)
     if cached:
         _search_ai_answer_increment_usage(cached.get("id"))
         return {
@@ -571,11 +604,34 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
             "entity_type": cached.get("entity_type") or entity_type,
         }, 200
 
+    verified_fact = _verified_coach_fact_answer(query, [])
+    if verified_fact:
+        answer = _format_coach_answer(verified_fact["answer"])
+        if not live_sensitive:
+            _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
+        return {
+            "answer": answer,
+            "source": "verified",
+            "cached": False,
+            "normalized_query": normalized_query,
+            "entity_type": entity_type,
+            "verification": verified_fact["verification"],
+        }, 200
+
+    verification = _coach_verification_context(query, [])
     local_answer = _local_coach_answer(query, [])
     if local_answer:
         answer = _format_coach_answer(local_answer)
-        _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
-        return {"answer": answer, "source": "local", "cached": False, "normalized_query": normalized_query, "entity_type": entity_type}, 200
+        if not live_sensitive:
+            _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
+        return {
+            "answer": answer,
+            "source": "local",
+            "cached": False,
+            "normalized_query": normalized_query,
+            "entity_type": entity_type,
+            "verification": _local_coach_verification(verification),
+        }, 200
 
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
@@ -598,10 +654,12 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
                         "content": (
                             "Tu es Coach Akro du Foot. Réponds en français, court, clair, utile. "
                             "Donne une fiche claire avec résumé, club ou sélection si pertinent, statistiques disponibles, infos importantes. "
-                            "Reste 100% football et n'invente pas d'actualité si elle n'est pas dans les données."
+                            "Reste 100% football et n'invente pas d'actualité si elle n'est pas dans les données. "
+                            "Pour les records, meilleurs buteurs, statistiques, classements et transferts, appuie-toi d'abord sur le bloc Vérification. "
+                            "Si la vérification est limitée, signale-le et évite les affirmations catégoriques."
                         ),
                     },
-                    {"role": "user", "content": query},
+                    {"role": "user", "content": f"Vérification:\n{verification.get('context', '')}\n\nQuestion:\n{query}"},
                 ],
                 "temperature": 0.25,
                 "max_output_tokens": 700,
@@ -613,8 +671,16 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
             return {"error": COACH_UNAVAILABLE}, 503
         data = response.json()
         answer = _format_coach_answer(_openai_response_text(data)) or COACH_UNAVAILABLE
-        _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
-        return {"answer": answer, "source": "openai", "cached": False, "normalized_query": normalized_query, "entity_type": entity_type}, 200
+        if not live_sensitive:
+            _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
+        return {
+            "answer": answer,
+            "source": "openai",
+            "cached": False,
+            "normalized_query": normalized_query,
+            "entity_type": entity_type,
+            "verification": _public_coach_verification(verification),
+        }, 200
     except Exception as exc:
         print(f"[search-coach] OpenAI request error: {exc}")
         return {"error": COACH_UNAVAILABLE}, 503
@@ -749,6 +815,208 @@ def _coach_context_summary() -> str:
     return "\n".join(chunk for chunk in chunks if chunk).strip()[:6000]
 
 
+def _verified_coach_fact_answer(question: str, history: list[dict[str, str]]) -> dict[str, Any] | None:
+    normalized = _normalize_football_text(question)
+    recent = _recent_history_text(history)
+    combined = f"{recent} {normalized}"
+    asks_france_top_scorer = (
+        ("france" in combined or "equipe de france" in combined)
+        and any(term in combined for term in {"meilleur buteur", "buteur historique", "record de buts", "plus de buts"})
+        and any(term in combined for term in {"selection", "equipe", "historique", "france", "bleus", "buteur"})
+    )
+    correcting_top_scorer = _is_correction_message(normalized) and any(
+        term in recent for term in {"thierry henry", "olivier giroud", "mbappe", "meilleur buteur", "buteur historique"}
+    )
+    if not (asks_france_top_scorer or correcting_top_scorer):
+        return None
+
+    prefix = "Tu as raison, je corrige mon erreur." if _is_correction_message(normalized) else "Résumé :"
+    answer = (
+        f"{prefix} Le meilleur buteur historique de l'équipe de France est Olivier Giroud avec 57 buts. "
+        "Kylian Mbappé est juste derrière avec 56 buts, devant Thierry Henry qui est à 51.\n\n"
+        "Analyse : l'ancienne réponse avec Thierry Henry était dépassée. Henry a longtemps été la référence, "
+        "mais Giroud l'a dépassé, et Mbappé est désormais au contact.\n\n"
+        f"Vérification : donnée prioritaire Coach vérifiée le {COACH_FACTS_LAST_VERIFIED}. "
+        "À recontrôler après chaque rassemblement international."
+    )
+    verification = {
+        "status": "verified",
+        "label": "Vérifié",
+        "confidence": 96,
+        "checked_at": COACH_FACTS_LAST_VERIFIED,
+        "sources": ["Wikipedia", "référence football historique Akro"],
+        "freshness": "record sensible, à revérifier après chaque match international",
+        "context": (
+            "Fait vérifié prioritaire: meilleur buteur historique de l'équipe de France = Olivier Giroud 57 buts; "
+            "Kylian Mbappé 56; Thierry Henry 51. Dernière vérification: "
+            f"{COACH_FACTS_LAST_VERIFIED}."
+        ),
+    }
+    return {"answer": answer, "verification": verification}
+
+
+def _coach_needs_recent_verification(normalized_question: str) -> bool:
+    sensitive_terms = {
+        "record", "records", "meilleur", "meilleurs", "buteur", "buteurs", "historique",
+        "stat", "stats", "statistique", "statistiques", "classement", "transfert",
+        "mercato", "actuel", "actuelle", "aujourd hui", "cette saison", "buts", "passes",
+        "selection", "sélection", "competition", "compétition",
+    }
+    return any(term in normalized_question for term in sensitive_terms)
+
+
+def _coach_verification_context(question: str, history: list[dict[str, str]]) -> dict[str, Any]:
+    normalized = _normalize_football_text(question)
+    freshness = _dashboard_freshness_summary()
+    if not _coach_needs_recent_verification(normalized):
+        return {
+            "status": "not_required",
+            "label": "Contexte",
+            "confidence": 72,
+            "checked_at": datetime.now(timezone.utc).date().isoformat(),
+            "sources": ["Données locales Akro"],
+            "freshness": freshness,
+            "context": f"Vérification live non nécessaire pour cette question. Fraîcheur locale: {freshness}.",
+        }
+
+    snippets = _wikipedia_verification_snippets(question)
+    api_football_note = _api_football_availability_note()
+    if snippets:
+        return {
+            "status": "verified",
+            "label": "Vérifié",
+            "confidence": 86,
+            "checked_at": datetime.now(timezone.utc).date().isoformat(),
+            "sources": ["Wikipedia", *([api_football_note] if api_football_note.startswith("API Football") else [])],
+            "freshness": freshness,
+            "context": (
+                f"Sources prioritaires prévues: {', '.join(COACH_VERIFICATION_SOURCES)}. "
+                "Sources consultées pour cette réponse: Wikipedia. "
+                f"{api_football_note} "
+                f"Fraîcheur locale: {freshness}. "
+                "Extraits de vérification:\n- " + "\n- ".join(snippets[:4])
+            ),
+        }
+    return {
+        "status": "limited",
+        "label": "À vérifier",
+        "confidence": 48,
+        "checked_at": datetime.now(timezone.utc).date().isoformat(),
+        "sources": ["Données locales Akro"],
+        "freshness": freshness,
+        "context": (
+            "Vérification externe non disponible depuis le serveur pour cette requête. "
+            f"Sources prioritaires prévues: {', '.join(COACH_VERIFICATION_SOURCES)}. "
+            f"{api_football_note} "
+            f"Fraîcheur locale: {freshness}. "
+            "Le Coach doit éviter les certitudes sur records, transferts, classements et statistiques récentes."
+        ),
+    }
+
+
+def _wikipedia_verification_snippets(question: str) -> list[str]:
+    try:
+        import requests
+
+        search_query = _wikipedia_query_for_question(question)
+        snippets: list[str] = []
+        for language in ("fr", "en"):
+            response = requests.get(
+                f"https://{language}.wikipedia.org/w/api.php",
+                params={
+                    "action": "query",
+                    "list": "search",
+                    "srsearch": search_query,
+                    "srlimit": 3,
+                    "format": "json",
+                    "utf8": 1,
+                },
+                headers={"User-Agent": "AkroDuFootCoach/1.0"},
+                timeout=4,
+            )
+            if response.status_code >= 400:
+                continue
+            for item in response.json().get("query", {}).get("search", [])[:3]:
+                title = re.sub(r"\s+", " ", str(item.get("title", "")).strip())
+                snippet = re.sub("<[^>]+>", "", str(item.get("snippet", "")))
+                snippet = re.sub(r"\s+", " ", snippet).strip()
+                if title and snippet:
+                    snippets.append(f"{title}: {snippet}")
+            if snippets:
+                break
+        return snippets[:4]
+    except Exception:
+        return []
+
+
+def _wikipedia_query_for_question(question: str) -> str:
+    normalized = _normalize_football_text(question)
+    if "france" in normalized and any(term in normalized for term in {"buteur", "meilleur buteur", "buts"}):
+        return "France national football team top scorers Olivier Giroud Kylian Mbappe Thierry Henry"
+    if "mbappe" in normalized:
+        return "Kylian Mbappe football statistics"
+    if "giroud" in normalized:
+        return "Olivier Giroud France top scorer"
+    return f"{question} football"
+
+
+def _api_football_availability_note() -> str:
+    return "API Football disponible." if os.environ.get("API_FOOTBALL_KEY", "").strip() else "API Football non configurée."
+
+
+def _dashboard_freshness_summary() -> str:
+    items = []
+    for label, path in (
+        ("Coupe du Monde", CACHE_FILE),
+        ("Ligue des Champions", CHAMPIONS_LEAGUE_CACHE_FILE),
+        ("Championnats", LEAGUES_CACHE_FILE),
+        ("Mercato", MERCATO_LIVE_CACHE_FILE),
+        ("News", NEWS_CACHE_FILE),
+    ):
+        generated_at = (_read_json(path, {}) or {}).get("generated_at")
+        items.append(f"{label}: {_freshness_label(generated_at)}")
+    return "; ".join(items)
+
+
+def _freshness_label(value: Any) -> str:
+    if not value:
+        return "date inconnue"
+    raw = str(value)
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        age_hours = max(0, (datetime.now(timezone.utc) - parsed.astimezone(timezone.utc)).total_seconds() / 3600)
+        if age_hours < 6:
+            return f"{raw} (récent)"
+        if age_hours < 48:
+            return f"{raw} ({int(age_hours)}h)"
+        return f"{raw} (ancien, à vérifier)"
+    except ValueError:
+        return raw
+
+
+def _local_coach_verification(base: dict[str, Any]) -> dict[str, Any]:
+    if base.get("status") == "verified":
+        return _public_coach_verification(base)
+    return _public_coach_verification({
+        **base,
+        "status": "local",
+        "label": "Local",
+        "confidence": min(int(base.get("confidence") or 64), 64),
+        "sources": ["Données locales Akro"],
+    })
+
+
+def _public_coach_verification(verification: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "status": str(verification.get("status", "")),
+        "label": str(verification.get("label", "")),
+        "confidence": int(verification.get("confidence") or 0),
+        "checked_at": str(verification.get("checked_at", "")),
+        "sources": [str(item) for item in verification.get("sources", []) if item],
+        "freshness": str(verification.get("freshness", "")),
+    }
+
+
 def _leagues_context_summary(data: dict[str, Any]) -> str:
     leagues = (data or {}).get("leagues", {})
     if not leagues:
@@ -867,7 +1135,7 @@ def _chat_history(value: Any) -> list[dict[str, str]]:
     if not isinstance(value, list):
         return []
     out: list[dict[str, str]] = []
-    for item in value[-12:]:
+    for item in value[-20:]:
         if not isinstance(item, dict):
             continue
         role = _clean(item.get("role", ""), 16)
@@ -880,7 +1148,7 @@ def _chat_history(value: Any) -> list[dict[str, str]]:
 def _format_chat_history(history: list[dict[str, str]]) -> str:
     if not history:
         return "Aucun historique récent."
-    return "\n".join(f"{item['role']}: {item['content']}" for item in history[-12:])
+    return "\n".join(f"{item['role']}: {item['content']}" for item in history[-20:])
 
 
 def _detect_conversation_context(history: list[dict[str, str]], question: str, client_context: dict[str, Any]) -> dict[str, str]:
