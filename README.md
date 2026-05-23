@@ -5,7 +5,7 @@ Akro du Foot génère automatiquement `index.html` pour suivre plusieurs compét
 ## Installation
 
 ```bash
-cd "/Users/akro/Documents/Coupe du Monde 2026"
+cd "/Users/akro/akro-du-foot"
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -36,7 +36,7 @@ Tu peux aussi ouvrir directement `index.html` dans le navigateur intégré de Co
 Le tchat et les pronostics ont besoin d'un petit serveur local.
 
 ```bash
-cd "/Users/akro/Documents/Coupe du Monde 2026"
+cd "/Users/akro/akro-du-foot"
 source .venv/bin/activate
 python update_dashboard.py
 python app.py
