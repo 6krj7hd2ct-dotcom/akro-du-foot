@@ -127,8 +127,12 @@
     .search-fact-value { color: var(--ink); font-weight: 850; line-height: 1.35; }
     .search-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
     .search-secondary-button { appearance: none; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 10px 13px; color: #d7e7fb; background: rgba(255,255,255,0.07); font: inherit; font-weight: 900; cursor: pointer; }
-    .search-coach-answer { display: none; gap: 9px; max-height: min(38vh, 360px); overflow-y: auto; padding: 12px 12px 22px; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); }
-    .search-coach-answer.is-open { display: grid; }
+    .search-coach-answer { display: none; min-height: 260px; max-height: min(44vh, 390px); overflow: hidden; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); }
+    .search-coach-answer.is-open { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+    .search-coach-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .search-coach-messages { display: grid; align-content: start; gap: 9px; min-height: 0; overflow-y: auto; padding: 12px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
+    .search-coach-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.10); background: rgba(5,16,31,0.62); }
+    .search-coach-form input { min-width: 0; }
     .search-coach-answer .chatbot-message { margin: 0; }
     .hero.champions {
       background:
@@ -959,7 +963,8 @@
       #searchDetailModal { padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom)); }
       .search-detail-dialog { width: 100%; max-height: calc(100vh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); border-radius: 16px; }
       .search-detail-body { padding: 14px 12px 30px; }
-      .search-coach-answer { max-height: 48vh; padding-bottom: 24px; }
+      .search-coach-answer { max-height: 48vh; }
+      .search-coach-form { grid-template-columns: 1fr; }
       .chatbot-dialog { width: 100%; max-height: calc(100vh - var(--live-bar-height) - 22px); }
       .quiz-dialog { width: 100%; max-height: calc(100vh - var(--live-bar-height) - 22px); }
       .quiz-body { overflow-y: auto; padding: 12px; }
@@ -3547,6 +3552,9 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
     };
     let currentSearchDetail = null;
+    let searchCoachHistory = [];
+    let searchCoachSessionId = '';
+    let searchCoachBusy = false;
 
     function entityTypeLabel(kind) {
       const normalized = searchNorm(kind);
@@ -3614,6 +3622,113 @@ grant select, insert, update on public.profiles to authenticated;`;
       };
     }
 
+    function resetSearchCoachConversation() {
+      searchCoachHistory = [];
+      searchCoachSessionId = `search-coach-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+      searchCoachBusy = false;
+    }
+
+    function searchCoachLocalContext(detail = currentSearchDetail) {
+      const facts = (detail?.facts || []).map(([label, value]) => `${label}: ${value || 'Information non disponible'}`).join('\n');
+      return [
+        `Recherche initiale: ${detail?.query || detail?.title || ''}`,
+        `Type: ${detail?.type || entityTypeLabel(detail?.kind || 'sujet')}`,
+        `Résumé fiche locale: ${detail?.summary || 'Aucun résumé local.'}`,
+        facts ? `Faits locaux:\n${facts}` : 'Faits locaux: aucun.'
+      ].join('\n');
+    }
+
+    function renderSearchCoachShell() {
+      const coachBox = document.getElementById('searchCoachAnswer');
+      if (!coachBox) return null;
+      coachBox.classList.add('is-open');
+      coachBox.innerHTML = `
+        <div class="search-coach-head">
+          <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Conversation contextuelle</span></div>
+        </div>
+        <div class="search-coach-messages" id="searchCoachMessages"></div>
+        <form class="search-coach-form" id="searchCoachForm">
+          <input id="searchCoachInput" type="text" maxlength="500" placeholder="Répondre au Coach…" autocomplete="off">
+          <button class="action-button" type="submit" id="searchCoachSend">Envoyer</button>
+        </form>
+      `;
+      return coachBox;
+    }
+
+    function searchCoachMessagesNode() {
+      return document.getElementById('searchCoachMessages');
+    }
+
+    function appendSearchCoachMessage(role, text, verification = null, save = true) {
+      const messages = searchCoachMessagesNode();
+      if (!messages) return null;
+      const node = document.createElement('div');
+      node.className = `chatbot-message ${role === 'user' ? 'user' : 'bot'}`;
+      node.innerHTML = `${role === 'assistant' ? coachVerificationMarkup(verification) : ''}${formatChatbotContent(text)}`;
+      messages.appendChild(node);
+      if (save) {
+        searchCoachHistory.push({role: role === 'user' ? 'user' : 'assistant', content: text});
+        if (searchCoachHistory.length > 20) searchCoachHistory.shift();
+      }
+      messages.scrollTop = messages.scrollHeight;
+      return node;
+    }
+
+    function setSearchCoachBusy(loading) {
+      searchCoachBusy = loading;
+      const input = document.getElementById('searchCoachInput');
+      const send = document.getElementById('searchCoachSend');
+      if (input) input.disabled = loading;
+      if (send) {
+        send.disabled = loading;
+        send.textContent = loading ? 'Envoi…' : 'Envoyer';
+      }
+    }
+
+    async function sendSearchCoachMessage(message, {visible = true, initial = false} = {}) {
+      const question = String(message || '').trim();
+      if (!question || searchCoachBusy) return;
+      if (!searchCoachSessionId) searchCoachSessionId = `search-coach-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+      if (visible) appendSearchCoachMessage('user', question);
+      else {
+        searchCoachHistory.push({role: 'user', content: question});
+        if (searchCoachHistory.length > 20) searchCoachHistory.shift();
+      }
+      const pending = appendSearchCoachMessage('assistant', initial ? 'Coach analyse la fiche locale...' : 'Coach réfléchit...', null, false);
+      setSearchCoachBusy(true);
+      try {
+        const response = await fetch('/api/football-chatbot', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            message: question,
+            history: searchCoachHistory.slice(-20),
+            context: {
+              lastEntity: currentSearchDetail?.title || currentSearchDetail?.query || '',
+              lastEntityType: currentSearchDetail?.type || '',
+              lastIntent: 'search_context'
+            },
+            session_id: searchCoachSessionId
+          })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || 'Coach indisponible');
+        const answer = String(data.answer || data.error || 'Coach n’a pas pu répondre pour le moment.').trim();
+        if (pending) pending.innerHTML = `${coachVerificationMarkup(data.verification || null)}${formatChatbotContent(answer)}`;
+        searchCoachHistory.push({role: 'assistant', content: answer});
+        if (searchCoachHistory.length > 20) searchCoachHistory.shift();
+      } catch (error) {
+        console.error('[search] coach chat error', error);
+        const answer = 'Coach indisponible pour le moment. Réessaie dans quelques instants.';
+        if (pending) pending.innerHTML = formatChatbotContent(answer);
+        searchCoachHistory.push({role: 'assistant', content: answer});
+        if (searchCoachHistory.length > 20) searchCoachHistory.shift();
+      } finally {
+        setSearchCoachBusy(false);
+        document.getElementById('searchCoachInput')?.focus();
+      }
+    }
+
     function renderSearchDetail(detail) {
       const title = document.getElementById('searchDetailTitle');
       const subtitle = document.getElementById('searchDetailSubtitle');
@@ -3633,6 +3748,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         coachBox.classList.remove('is-open');
         coachBox.innerHTML = '';
       }
+      resetSearchCoachConversation();
     }
 
     function openSearchDetail(button) {
@@ -3654,22 +3770,16 @@ grant select, insert, update on public.profiles to authenticated;`;
     async function askCoachFromSearch(query, entityType = '') {
       const coachBox = document.getElementById('searchCoachAnswer');
       if (!coachBox) return;
-      coachBox.classList.add('is-open');
-      coachBox.innerHTML = '<div class="chatbot-message bot">Coach prépare une réponse...</div>';
-      try {
-        const response = await fetch('/api/search/coach', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({query, entity_type: entityType})
-        });
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(data.error || 'Coach indisponible');
-        const answer = String(data.answer || data.error || 'Coach n’a pas pu répondre pour le moment.').trim();
-        coachBox.innerHTML = `<div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>${escapeHtml(data.cached ? 'Réponse sauvegardée' : 'Réponse Coach')}</span></div><div class="chatbot-message bot">${coachVerificationMarkup(data.verification || null)}${formatChatbotContent(answer)}</div>`;
-      } catch (error) {
-        console.error('[search] coach error', error);
-        coachBox.innerHTML = '<div class="chatbot-message bot">Coach indisponible pour le moment. Réessaie dans quelques instants.</div>';
-      }
+      resetSearchCoachConversation();
+      renderSearchCoachShell();
+      const detail = currentSearchDetail || {query, type: entityType || 'sujet', summary: '', facts: []};
+      const initialPrompt = [
+        searchCoachLocalContext(detail),
+        '',
+        `Question utilisateur: ${query || detail.query || detail.title || ''}`,
+        'Réponds en tenant compte de la fiche locale. Si l’utilisateur corrige ensuite, relis cette conversation avant de répondre.'
+      ].join('\n');
+      await sendSearchCoachMessage(initialPrompt, {visible: false, initial: true});
     }
 
     function seeRelatedNewsFromSearch(detail) {
@@ -3709,6 +3819,16 @@ grant select, insert, update on public.profiles to authenticated;`;
     document.getElementById('searchAskCoachButton')?.addEventListener('click', () => {
       const detail = currentSearchDetail || {query: document.getElementById('globalSearchInput')?.value || '', type: 'sujet'};
       askCoachFromSearch(detail.query || detail.title || '', detail.type || '');
+    });
+    document.addEventListener('submit', event => {
+      if (event.target && event.target.id === 'searchCoachForm') {
+        event.preventDefault();
+        const input = document.getElementById('searchCoachInput');
+        const message = input?.value.trim() || '';
+        if (!message) return;
+        input.value = '';
+        sendSearchCoachMessage(message, {visible: true});
+      }
     });
     document.getElementById('searchRelatedNewsButton')?.addEventListener('click', () => seeRelatedNewsFromSearch(currentSearchDetail));
     document.addEventListener('keydown', event => { if (event.key === 'Escape') closeSearchDetail(); });
