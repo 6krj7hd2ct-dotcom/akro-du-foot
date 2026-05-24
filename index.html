@@ -890,33 +890,36 @@
     .coach-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
     .coach-reason { color: #d6e5f7; font-size: 13px; line-height: 1.4; }
     .coach-disclaimer { color: var(--muted); font-size: 11px; font-weight: 800; }
-    .quiz-dialog { width: min(700px, 100%); max-height: min(74vh, 650px); display: flex; flex-direction: column; overflow: hidden; }
+    .quiz-dialog { width: min(720px, 100%); max-height: min(86vh, 720px); display: flex; flex-direction: column; overflow: hidden; }
     .quiz-dialog .team-modal-head { padding-block: 12px; }
     .quiz-dialog .team-modal-title { font-size: clamp(20px, 3vw, 30px); }
     .quiz-dialog .subtle { font-size: 12px; line-height: 1.25; }
-    .quiz-body { overflow-y: visible; min-height: 0; padding: 12px 14px 14px; }
-    .quiz-setup, .quiz-stage, .quiz-result { display: grid; gap: 9px; }
+    .quiz-body { overflow-y: auto; min-height: 0; padding: 10px 14px 12px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
+    .quiz-setup, .quiz-result { display: grid; gap: 8px; }
+    .quiz-stage { min-height: 0; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 8px; }
     .quiz-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-    .quiz-theme-selectors { display: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-    .quiz-theme-selectors.is-visible { display: grid; }
+    .quiz-theme-selectors { display: none; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    .quiz-theme-selectors.is-visible { display: block; }
+    .quiz-theme-selectors .pseudo-row { margin: 0; }
     .quiz-progress { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 900; text-transform: uppercase; }
-    .quiz-score-pill { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; padding: 4px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
-    .quiz-progress-bar { height: 5px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
+    .quiz-score-pill { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; padding: 4px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
+    .quiz-progress-bar { height: 4px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
     .quiz-progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--gold), var(--green)); transition: width .25s ease; }
-    .quiz-card { display: grid; gap: 9px; padding: 12px; border: 1px solid rgba(245,201,107,0.22); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }
+    .quiz-card { min-height: 0; display: grid; gap: 8px; padding: 11px; border: 1px solid rgba(245,201,107,0.22); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }
     .quiz-card .coach-badge { width: max-content; padding: 4px 8px; font-size: 11px; }
-    .quiz-question { font-size: clamp(16px, 2vw, 21px); line-height: 1.16; font-weight: 950; }
-    .quiz-answers { display: grid; gap: 7px; }
-    .quiz-answer { appearance: none; width: 100%; padding: 9px 11px; min-height: 40px; border: 1px solid rgba(255,255,255,0.12); border-radius: 11px; color: var(--ink); background: rgba(255,255,255,0.07); font: inherit; font-size: 14px; line-height: 1.25; font-weight: 850; text-align: left; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .quiz-question { font-size: clamp(15px, 1.8vw, 19px); line-height: 1.14; font-weight: 950; }
+    .quiz-answers { display: grid; gap: 6px; }
+    .quiz-answer { appearance: none; width: 100%; padding: 8px 10px; min-height: 36px; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: var(--ink); background: rgba(255,255,255,0.07); font: inherit; font-size: 13px; line-height: 1.22; font-weight: 850; text-align: left; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .quiz-answer:hover, .quiz-answer:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.42); outline: none; }
     .quiz-answer.is-correct { border-color: rgba(50,211,162,0.72); background: rgba(50,211,162,0.18); animation: quizPulse .28s ease; }
     .quiz-answer.is-wrong { border-color: rgba(239,51,64,0.72); background: rgba(239,51,64,0.18); animation: quizShake .28s ease; }
-    .quiz-feedback { min-height: 18px; color: #d6e5f7; font-size: 13px; line-height: 1.32; font-weight: 850; }
+    .quiz-feedback { min-height: 17px; color: #d6e5f7; font-size: 12px; line-height: 1.28; font-weight: 850; }
     .quiz-feedback.good { color: #9ff0d5; }
     .quiz-feedback.bad { color: #ffb4bd; }
     .quiz-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+    .quiz-stage > .quiz-actions { position: sticky; bottom: 0; z-index: 2; padding-top: 7px; background: linear-gradient(180deg, rgba(7,17,31,0), rgba(7,17,31,0.98) 35%); }
     .quiz-actions .action-button, .quiz-actions .search-secondary-button { padding-block: 8px; }
-    .quiz-result-score { justify-self: start; color: var(--gold); font-size: clamp(26px, 5vw, 42px); line-height: 1; font-weight: 950; }
+    .quiz-result-score { justify-self: start; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); border-radius: 999px; padding: 5px 10px; font-size: 13px; line-height: 1; font-weight: 950; }
     .quiz-badge-list { display: flex; flex-wrap: wrap; gap: 6px; }
     .quiz-badge-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
     @keyframes quizPulse { 50% { transform: scale(1.015); } }
@@ -1654,17 +1657,22 @@
                 <option value="general">Football général</option>
                 <option value="club">Club</option>
                 <option value="nation">Nation</option>
+                <option value="worldcup">Coupe du Monde</option>
+                <option value="euro">Coupe d’Europe</option>
+                <option value="champions">Ligue des Champions</option>
               </select>
             </div>
           </div>
           <div class="quiz-theme-selectors" id="quizThemeSelectors">
             <div class="pseudo-row" id="quizClubRow">
               <label for="quizClubSelect">Club</label>
-              <select id="quizClubSelect"></select>
+              <input id="quizClubSelect" list="quizClubOptions" type="search" autocomplete="off" placeholder="Rechercher un club">
+              <datalist id="quizClubOptions"></datalist>
             </div>
             <div class="pseudo-row" id="quizNationRow">
               <label for="quizNationSelect">Nation</label>
-              <select id="quizNationSelect"></select>
+              <input id="quizNationSelect" list="quizNationOptions" type="search" autocomplete="off" placeholder="Rechercher une nation">
+              <datalist id="quizNationOptions"></datalist>
             </div>
           </div>
           <div class="quiz-actions">
@@ -1685,7 +1693,7 @@
           </article>
           <div class="quiz-actions">
             <button class="action-button" type="button" id="quizNextButton" disabled>Question suivante</button>
-            <button class="search-secondary-button" type="button" id="quizChangeButton">Changer de niveau</button>
+            <button class="search-secondary-button" type="button" id="quizChangeButton">Recommencer</button>
           </div>
         </div>
         <div class="quiz-result" id="quizResult" hidden>
@@ -1694,7 +1702,6 @@
           <div class="quiz-badge-list" id="quizBadgeList"></div>
           <div class="quiz-actions">
             <button class="action-button" type="button" id="quizRestartButton">Recommencer</button>
-            <button class="search-secondary-button" type="button" id="quizResetButton">Changer de niveau</button>
           </div>
         </div>
       </div>
@@ -4695,6 +4702,8 @@ grant select, insert, update on public.profiles to authenticated;`;
     const quizNationRow = document.getElementById('quizNationRow');
     const quizClubSelect = document.getElementById('quizClubSelect');
     const quizNationSelect = document.getElementById('quizNationSelect');
+    const quizClubOptions = document.getElementById('quizClubOptions');
+    const quizNationOptions = document.getElementById('quizNationOptions');
     const quizStartButton = document.getElementById('quizStartButton');
     const quizProgressText = document.getElementById('quizProgressText');
     const quizScoreText = document.getElementById('quizScoreText');
@@ -4712,6 +4721,8 @@ grant select, insert, update on public.profiles to authenticated;`;
     const quizResetButton = document.getElementById('quizResetButton');
     const QUIZ_DIFFICULTIES = Object.fromEntries(QUIZ_LEVELS.map(([key, label, badge, badgeKey]) => [key, {label, badge, key: badgeKey}]));
     let quizState = {questions: [], index: 0, score: 0, answered: false, config: null};
+    let quizClubChoices = [];
+    let quizNationChoices = [];
 
     function quizEscape(value) {
       return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -4721,31 +4732,103 @@ grant select, insert, update on public.profiles to authenticated;`;
       return (source || []).map(item => ({value: item[0], label: item[1] || item[0]}));
     }
 
+    function quizChoiceKey(value) {
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+    }
+
+    function quizChoiceLabel(value) {
+      return (TEAMS_DETAILS[value] && TEAMS_DETAILS[value].name) || value;
+    }
+
+    function quizUniqueChoices(values) {
+      const seen = new Set();
+      return (values || []).map(value => String(value || '').trim()).filter(value => {
+        const key = quizChoiceKey(value);
+        if (!key || key === 'a determiner' || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }).sort((a, b) => quizChoiceLabel(a).localeCompare(quizChoiceLabel(b), 'fr'));
+    }
+
+    function quizBuildClubChoices() {
+      const clubs = [];
+      if (typeof FAVORITE_CLUBS !== 'undefined') clubs.push(...FAVORITE_CLUBS.map(item => item[0]));
+      Object.values((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(league => {
+        clubs.push(...(league.clubs || []));
+        (league.standings || []).forEach(group => clubs.push(...((group.teams || group.standings || []).map(item => item.team || item.name))));
+      });
+      Object.values((typeof CHAMPIONS_DATA !== 'undefined' && CHAMPIONS_DATA) || {}).forEach(value => {
+        if (Array.isArray(value)) value.forEach(item => {
+          if (item && typeof item === 'object') clubs.push(item.team || item.name || item.home_team || item.away_team);
+        });
+      });
+      Object.entries(typeof TEAMS_DETAILS !== 'undefined' ? TEAMS_DETAILS : {}).forEach(([key, details]) => {
+        const flag = String(details.flag_url || '');
+        if (!flag.includes('/countries/')) clubs.push(key);
+      });
+      return quizUniqueChoices(clubs);
+    }
+
+    function quizBuildNationChoices() {
+      const nations = [];
+      if (typeof FAVORITE_NATIONS !== 'undefined') nations.push(...FAVORITE_NATIONS.map(item => item[0]));
+      (typeof TEAM_MATCHES !== 'undefined' ? TEAM_MATCHES : []).forEach(match => {
+        const homeFlag = String(match.home_flag_url || '');
+        const awayFlag = String(match.away_flag_url || '');
+        if (homeFlag.includes('/countries/')) nations.push(match.home_team);
+        if (awayFlag.includes('/countries/')) nations.push(match.away_team);
+      });
+      Object.entries(typeof TEAMS_DETAILS !== 'undefined' ? TEAMS_DETAILS : {}).forEach(([key, details]) => {
+        const flag = String(details.flag_url || '');
+        if (flag.includes('/countries/')) nations.push(key);
+      });
+      return quizUniqueChoices(nations);
+    }
+
+    function quizRenderDatalist(node, choices) {
+      if (!node) return;
+      node.innerHTML = (choices || []).map(value => `<option value="${quizEscape(quizChoiceLabel(value))}"></option>`).join('');
+    }
+
+    function quizResolveChoice(input, choices, fallback) {
+      const raw = String(input?.value || '').trim();
+      if (!raw) return fallback;
+      const normalized = quizChoiceKey(raw);
+      const match = (choices || []).find(value => quizChoiceKey(value) === normalized || quizChoiceKey(quizChoiceLabel(value)) === normalized);
+      return match || raw;
+    }
+
     function initQuizSelectors() {
-      if (quizClubSelect && typeof FAVORITE_CLUBS !== 'undefined') {
-        quizClubSelect.innerHTML = quizOptions(FAVORITE_CLUBS).map(item => `<option value="${quizEscape(item.value)}">${quizEscape(item.label)}</option>`).join('');
-      }
-      if (quizNationSelect && typeof FAVORITE_NATIONS !== 'undefined') {
-        quizNationSelect.innerHTML = quizOptions(FAVORITE_NATIONS).map(item => `<option value="${quizEscape(item.value)}">${quizEscape(item.label)}</option>`).join('');
-      }
+      quizClubChoices = quizBuildClubChoices();
+      quizNationChoices = quizBuildNationChoices();
+      quizRenderDatalist(quizClubOptions, quizClubChoices);
+      quizRenderDatalist(quizNationOptions, quizNationChoices);
+      if (quizClubSelect && !quizClubSelect.value) quizClubSelect.value = quizChoiceLabel((typeof akroProfile !== 'undefined' && akroProfile?.favorite_club) || 'Paris Saint-Germain');
+      if (quizNationSelect && !quizNationSelect.value) quizNationSelect.value = quizChoiceLabel((typeof akroProfile !== 'undefined' && akroProfile?.favorite_nation) || 'France');
     }
 
     function updateQuizThemeControls() {
       const type = quizThemeType?.value || 'general';
-      quizThemeSelectors?.classList.toggle('is-visible', type !== 'general');
+      quizThemeSelectors?.classList.toggle('is-visible', type === 'club' || type === 'nation');
       if (quizClubRow) quizClubRow.hidden = type !== 'club';
       if (quizNationRow) quizNationRow.hidden = type !== 'nation';
     }
 
     function quizThemeValue() {
-      if (quizThemeType?.value === 'club') return quizClubSelect?.value || 'Paris Saint-Germain';
-      if (quizThemeType?.value === 'nation') return quizNationSelect?.value || 'France';
+      if (quizThemeType?.value === 'club') return quizResolveChoice(quizClubSelect, quizClubChoices, 'Paris Saint-Germain');
+      if (quizThemeType?.value === 'nation') return quizResolveChoice(quizNationSelect, quizNationChoices, 'France');
+      if (quizThemeType?.value === 'worldcup') return 'Coupe du Monde';
+      if (quizThemeType?.value === 'euro') return 'Coupe d’Europe';
+      if (quizThemeType?.value === 'champions') return 'Ligue des Champions';
       return 'Football général';
     }
 
     function quizContextLabel(config) {
       if (config.themeType === 'club') return `${config.difficultyLabel} · Club · ${config.themeValue}`;
       if (config.themeType === 'nation') return `${config.difficultyLabel} · Nation · ${config.themeValue}`;
+      if (config.themeType === 'worldcup') return `${config.difficultyLabel} · Coupe du Monde`;
+      if (config.themeType === 'euro') return `${config.difficultyLabel} · Coupe d’Europe`;
+      if (config.themeType === 'champions') return `${config.difficultyLabel} · Ligue des Champions`;
       return `${config.difficultyLabel} · Football général`;
     }
 
@@ -4848,18 +4931,27 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function themedQuizPool(difficulty, type, value) {
-      const subject = value || (type === 'club' ? 'ce club' : 'cette nation');
-      const label = type === 'club' ? 'club' : 'nation';
+      const themeMeta = {
+        club: {fallback: 'ce club', label: 'club', follow: 'ses matchs et résultats'},
+        nation: {fallback: 'cette nation', label: 'nation', follow: 'ses matchs et résultats'},
+        worldcup: {fallback: 'la Coupe du Monde', label: 'thème', follow: 'les groupes, résultats et phases finales'},
+        euro: {fallback: 'la Coupe d’Europe', label: 'thème', follow: 'les groupes, résultats et phases finales'},
+        champions: {fallback: 'la Ligue des Champions', label: 'thème', follow: 'les clubs, affiches et phases finales'}
+      };
+      const meta = themeMeta[type] || themeMeta.club;
+      const subject = value || meta.fallback;
+      const label = meta.label;
+      const followText = meta.follow;
       const pools = {
         amateur: [
-          makeQuizQuestion(`Dans ce quiz, toutes les questions doivent concerner quel ${label} ?`, subject, ['Football général', 'Un autre thème', 'La Ligue entière'], `Thème verrouillé : ${subject}.`),
-          makeQuizQuestion(`${subject} est utilisé ici comme...`, type === 'club' ? 'un club' : 'une nation', [type === 'club' ? 'une nation' : 'un club', 'un stade', 'un arbitre'], `Le thème choisi est ${subject}.`),
-          makeQuizQuestion(`Pour suivre ${subject}, quelle information est la plus utile ?`, 'ses matchs et résultats', ['la météo uniquement', 'la taille du ballon', 'les numéros des tribunes'], 'Matchs et résultats structurent le suivi.'),
-          makeQuizQuestion(`Un supporter de ${subject} regarde d’abord...`, 'les prochains matchs', ['les règles du handball', 'la couleur des crampons adverses', 'le prix des maillots uniquement'], 'Le calendrier donne le rythme.'),
+          makeQuizQuestion(`Dans ce quiz, toutes les questions doivent concerner quel ${label} ?`, subject, ['Football général', 'Un autre thème', 'La météo'], `Thème verrouillé : ${subject}.`),
+          makeQuizQuestion(`${subject} est utilisé ici comme...`, type === 'club' ? 'un club choisi' : type === 'nation' ? 'une nation choisie' : 'une compétition choisie', ['un stade', 'un arbitre', 'un autre sport'], `Le thème choisi est ${subject}.`),
+          makeQuizQuestion(`Pour suivre ${subject}, quelle information est la plus utile ?`, followText, ['la météo uniquement', 'la taille du ballon', 'les numéros des tribunes'], 'Les données de match structurent le suivi.'),
+          makeQuizQuestion(`Un quiz sur ${subject} doit parler surtout...`, 'du thème sélectionné', ['d’un thème différent', 'de tennis', 'de la couleur des crampons uniquement'], 'Le thème reste strict.'),
           makeQuizQuestion(`Si ${subject} gagne, le résultat rapporte généralement...`, '3 points en championnat', ['0 point', '1 carton', '10 corners automatiques'], 'Une victoire de championnat vaut 3 points.'),
-          makeQuizQuestion(`Dans une fiche de ${subject}, l’avatar favori sert à...`, 'personnaliser le profil du supporter', ['changer le score', 'annuler un match', 'déplacer le stade'], 'Le profil rend l’expérience communautaire.'),
+          makeQuizQuestion(`Une fiche utile sur ${subject} met en avant...`, 'résultats, contexte et faits clés', ['uniquement les couleurs', 'le hasard', 'les règles d’un autre sport'], 'Le contexte rend la fiche utile.'),
           makeQuizQuestion(`Une question sur ${subject} doit éviter...`, 'de parler d’un autre thème', ['le nom de l’équipe', 'le calendrier', 'les résultats'], 'Le thème reste strict.'),
-          makeQuizQuestion(`${subject} peut être suivi dans Akro via...`, 'les favoris', ['le chronomètre uniquement', 'la météo', 'le tirage au sort local'], 'Les favoris personnalisent les contenus.'),
+          makeQuizQuestion(`${subject} peut être suivi dans Akro via...`, type === 'club' || type === 'nation' ? 'les favoris' : 'l’onglet compétition', ['le chronomètre uniquement', 'la météo', 'le tirage au sort local'], 'L’app garde le suivi centré sur le thème.'),
           makeQuizQuestion(`Le score exact d’un match de ${subject} dans les pronostics vaut...`, '3 points', ['1 point', '0 point', '7 points'], 'Le barème du jeu donne 3 points au score exact.'),
           makeQuizQuestion(`Le quiz ${subject} est terminé après...`, '10 questions', ['3 questions', '45 questions', '1 seule question'], 'Le format demandé contient 10 questions.')
         ],
@@ -5105,7 +5197,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     quizStartButton?.addEventListener('click', startQuiz);
     quizAnswers?.addEventListener('click', event => answerQuiz(event.target.closest('.quiz-answer')));
     quizNextButton?.addEventListener('click', nextQuizQuestion);
-    quizChangeButton?.addEventListener('click', showQuizSetup);
+    quizChangeButton?.addEventListener('click', startQuiz);
     quizRestartButton?.addEventListener('click', startQuiz);
     quizResetButton?.addEventListener('click', showQuizSetup);
   </script>
