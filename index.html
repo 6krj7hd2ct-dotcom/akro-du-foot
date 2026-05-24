@@ -436,8 +436,13 @@
     .club-logo.placeholder { display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }
     .club-logo.placeholder::before { content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }
     .euro-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }
-    .euro-summary-card { padding: 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.12), rgba(142,75,255,0.08)); box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
+    .euro-summary-card { position: relative; overflow: hidden; min-height: 132px; padding: 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.12), rgba(142,75,255,0.08)); box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
+    .euro-summary-card::before { content: ""; position: absolute; inset: 0; background-image: var(--summary-bg); background-repeat: no-repeat; background-position: calc(100% - 14px) center; background-size: min(110px, 45%) auto; opacity: 0.13; filter: saturate(1.18) contrast(1.08); pointer-events: none; }
+    .euro-summary-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }
+    .euro-summary-card > * { position: relative; z-index: 1; }
     .euro-summary-value { margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }
+    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .recent-honour-card { min-height: 108px; }
     .euro-group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 14px; }
     .euro-group-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .euro-team-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,0.08); }
@@ -1235,9 +1240,6 @@
             <button class="alltime-badge history-badge" type="button" data-alltime="worldcup-history">Palmarès</button>
             <span class="pill france-pill focus-pill"><span id="worldcupFocusIcon"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""></span>Focus <select class="focus-select" id="worldcupFocusSelect" aria-label="Pays à suivre Coupe du Monde"><option value="South Africa">Afrique du Sud</option><option value="Algeria">Algeria</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Belgium">Belgium</option><option value="Bosnia-Herzegovina">Bosnie-Herzégovine</option><option value="Brazil">Brazil</option><option value="Canada">Canada</option><option value="Cape Verde">Cape Verde</option><option value="Colombia">Colombia</option><option value="Congo DR">Congo DR</option><option value="Croatia">Croatia</option><option value="Curacao">Curacao</option><option value="Czechia">Czechia</option><option value="Ecuador">Ecuador</option><option value="Egypt">Egypt</option><option value="England">England</option><option value="France" selected>France</option><option value="Germany">Germany</option><option value="Ghana">Ghana</option><option value="Haiti">Haiti</option><option value="Iran">Iran</option><option value="Iraq">Iraq</option><option value="Ivory Coast">Ivory Coast</option><option value="Japan">Japan</option><option value="Jordan">Jordan</option><option value="Mexico">Mexico</option><option value="Morocco">Morocco</option><option value="Netherlands">Netherlands</option><option value="New Zealand">New Zealand</option><option value="Norway">Norway</option><option value="Panama">Panama</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="Qatar">Qatar</option><option value="Saudi Arabia">Saudi Arabia</option><option value="Scotland">Scotland</option><option value="South Korea">South Korea</option><option value="Spain">Spain</option><option value="Sweden">Sweden</option><option value="Switzerland">Switzerland</option><option value="Senegal">Sénégal</option><option value="Tunisia">Tunisia</option><option value="Türkiye">Türkiye</option><option value="United States">United States</option><option value="Uruguay">Uruguay</option><option value="Uzbekistan">Uzbekistan</option></select></span>
           </div>
-          <div class="hero-row focus-match-row">
-            <span class="pill next-match-pill" id="worldcupFocusNext" data-default-focus="France"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt="">France vs Sénégal <img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/sen.png" alt="">— 16/06/2026 21:00</span>
-          </div>
           <div class="hero-row">
             <span class="pill">72/72 matchs de poules</span>
             <span class="pill">32/32 matchs à élimination</span>
@@ -1252,11 +1254,17 @@
       <span class="season-tabs-label">Année</span>
       <button class="tab-button is-active" type="button" data-season-value="2026">2026</button>
     </nav>
-    
 
-    
+    <section class="euro-summary-grid" aria-label="Résumé Coupe du Monde">
+      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Argentine</div><p class="subtle">Tenant du titre 2022.</p></article>
+      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">France</div><p class="subtle">Finaliste de la dernière édition.</p></article>
+      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">Lionel Messi</div><p class="subtle">Ballon d’Or du Mondial 2022.</p></article>
+      <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Nation favorite</div><div class="euro-summary-value">France</div><p class="subtle">Focus utilisateur par défaut.</p></article>
+    </section>
 
-    <section class="today-strip" aria-label="Matchs du jour"><article class="today-tile"><div class="subtle today-meta">11/06/2026 · 21:00</div><div class="today-teams"><div class="today-team"><button class="team team-button" type="button" data-team="Mexico"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/mex.png" alt="">Mexico</button></div><div class="today-score">21:00<br><span class="status">À venir</span></div><div class="today-team"><button class="team team-button" type="button" data-team="South Africa"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/rsa.png" alt="">South Africa</button></div></div><div class="subtle" style="text-align:center;margin-top:12px">Estadio Banorte, Mexico City</div></article></section>
+    <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Coupe du Monde.</div></div>
+    <section class="recent-honours-grid"><article class="card recent-honour-card"><h3>2022</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/arg.png" alt="">Argentine</p></article><article class="card recent-honour-card"><h3>2018</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt="">France</p></article><article class="card recent-honour-card"><h3>2014</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt="">Allemagne</p></article><article class="card recent-honour-card"><h3>2010</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article></section>
+
 
     <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2><button class="alltime-badge" type="button" data-alltime="scorers">Top 10 all-time</button></div><div class="section-note">Top 3</div></div>
     <section class="leaders"><div class="empty">Aucune donnée publiée pour le moment.</div></section>
@@ -1427,10 +1435,28 @@
       </nav>
 
       <section class="euro-summary-grid" aria-label="Résumé Coupe d’Europe">
-        <article class="euro-summary-card"><div class="subtle">Champion</div><div class="euro-summary-value">Espagne</div><p class="subtle">Victoire 2-1 contre l’Angleterre en finale à Berlin.</p></article>
-        <article class="euro-summary-card"><div class="subtle">Finaliste</div><div class="euro-summary-value">Angleterre</div><p class="subtle">Deuxième finale européenne consécutive.</p></article>
-        <article class="euro-summary-card"><div class="subtle">Format</div><div class="euro-summary-value">6 groupes</div><p class="subtle">Les deux premiers et quatre meilleurs troisièmes qualifiés.</p></article>
-        <article class="euro-summary-card euro-focus-card"><div class="subtle">Nation favorite</div><div class="euro-summary-value" id="euroFocusTitle">France</div><p class="subtle" id="euroFocusSummary">Demi-finaliste, éliminée par l’Espagne.</p></article>
+        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Espagne</div><p class="subtle">Victoire 2-1 contre l’Angleterre en finale à Berlin.</p></article>
+        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/eng.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">Angleterre</div><p class="subtle">Deuxième finale européenne consécutive.</p></article>
+        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">Rodri</div><p class="subtle">Élu meilleur joueur de l’Euro 2024.</p></article>
+        <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Nation favorite</div><div class="euro-summary-value" id="euroFocusTitle">France</div><p class="subtle" id="euroFocusSummary">Demi-finaliste, éliminée par l’Espagne.</p></article>
+      </section>
+
+      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Coupe d’Europe.</div></div>
+      <section class="recent-honours-grid"><article class="card recent-honour-card"><h3>2024</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card recent-honour-card"><h3>2020</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ita.png" alt="">Italie</p></article><article class="card recent-honour-card"><h3>2016</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt="">Portugal</p></article><article class="card recent-honour-card"><h3>2012</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article></section>
+
+      <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2></div><div class="section-note">Top 3 affiché, plusieurs joueurs ont terminé à 3 buts.</div></div>
+      <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Dani Olmo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Cody Gakpo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Harry Kane</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="club-name">Angleterre</span></div><div class="player-stat">3 buts</div></div></article></section>
+
+      <div class="section-head"><div class="section-title"><h2>Meilleurs passeurs</h2></div><div class="section-note">Top 3 de la compétition 2024.</div></div>
+      <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Lamine Yamal</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">4 passes</div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Xavi Simons</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 passes</div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Arda Güler</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/tur.png" alt=""><span class="club-name">Turquie</span></div><div class="player-stat">2 passes</div></div></article></section>
+
+      <div class="section-head"><div class="section-title"><h2>Phase finale</h2></div><div class="section-note">Le dernier carré et les quarts majeurs de l’Euro 2024.</div></div>
+      <section class="bracket-wrap">
+        <div class="bracket-stage">
+          <div class="bracket-wing left"><article class="round"><div class="round-title">Quarts</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt=""><span class="bracket-team-name">Allemagne</span></span><span class="ko-score">1</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt=""><span class="bracket-team-name">Portugal</span></span><span class="ko-score">0</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="bracket-team-name">France</span></span><span class="ko-score">0 tab</span></div></div></article></div>
+          <div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy euro-trophy"><svg viewBox="0 0 220 300" aria-hidden="true"><defs><linearGradient id="euroMiniChrome" x1="18%" x2="86%" y1="4%" y2="96%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.45" stop-color="#8da3bf"/><stop offset="0.72" stop-color="#f8fdff"/><stop offset="1" stop-color="#7790ad"/></linearGradient></defs><path d="M58 54h104l-10 104c-4 42-23 68-42 68s-38-26-42-68L58 54Z" fill="url(#euroMiniChrome)" stroke="rgba(255,255,255,.72)" stroke-width="3"/><path d="M50 73c-28 12-42 38-38 68 4 33 27 54 60 62M170 73c28 12 42 38 38 68-4 33-27 54-60 62" fill="none" stroke="url(#euroMiniChrome)" stroke-width="14" stroke-linecap="round"/><path d="M110 225v34" stroke="url(#euroMiniChrome)" stroke-width="18" stroke-linecap="round"/><path d="M66 269h88l16 19H50l16-19Z" fill="url(#euroMiniChrome)"/></svg></div><div class="subtle">Champion 2024</div><h3>Espagne</h3><div class="subtle">4e titre européen</div></div></div>
+          <div class="bracket-wing right"><article class="round"><div class="round-title">Demies / finale</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="bracket-team-name">France</span></span><span class="ko-score">1</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="bracket-team-name">Pays-Bas</span></span><span class="ko-score">1</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="bracket-team-name">Angleterre</span></span><span class="ko-score">2</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="bracket-team-name">Angleterre</span></span><span class="ko-score">1</span></div></div></article></div>
+        </div>
       </section>
 
       <div class="section-head"><div class="section-title"><h2>Groupes Euro 2024</h2></div><div class="section-note">Classements finaux de la phase de groupes.</div></div>
@@ -1449,27 +1475,6 @@
         <article class="card"><h3>Meilleur match</h3><div class="euro-match-list"><div class="euro-match-row"><span class="euro-match-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</span><span class="score">2 - 1</span><span class="euro-match-team away"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt="">Allemagne</span></div></div></article>
         <article class="card"><h3>Finale</h3><div class="euro-match-list"><div class="euro-match-row"><span class="euro-match-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</span><span class="score">2 - 1</span><span class="euro-match-team away"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt="">Angleterre</span></div></div></article>
       </section>
-
-      <div class="section-head"><div class="section-title"><h2>Phase finale</h2></div><div class="section-note">Le dernier carré et les quarts majeurs de l’Euro 2024.</div></div>
-      <section class="bracket-wrap">
-        <div class="bracket-stage">
-          <div class="bracket-wing left"><article class="round"><div class="round-title">Quarts</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt=""><span class="bracket-team-name">Allemagne</span></span><span class="ko-score">1</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt=""><span class="bracket-team-name">Portugal</span></span><span class="ko-score">0</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="bracket-team-name">France</span></span><span class="ko-score">0 tab</span></div></div></article></div>
-          <div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy euro-trophy"><svg viewBox="0 0 220 300" aria-hidden="true"><defs><linearGradient id="euroMiniChrome" x1="18%" x2="86%" y1="4%" y2="96%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.45" stop-color="#8da3bf"/><stop offset="0.72" stop-color="#f8fdff"/><stop offset="1" stop-color="#7790ad"/></linearGradient></defs><path d="M58 54h104l-10 104c-4 42-23 68-42 68s-38-26-42-68L58 54Z" fill="url(#euroMiniChrome)" stroke="rgba(255,255,255,.72)" stroke-width="3"/><path d="M50 73c-28 12-42 38-38 68 4 33 27 54 60 62M170 73c28 12 42 38 38 68-4 33-27 54-60 62" fill="none" stroke="url(#euroMiniChrome)" stroke-width="14" stroke-linecap="round"/><path d="M110 225v34" stroke="url(#euroMiniChrome)" stroke-width="18" stroke-linecap="round"/><path d="M66 269h88l16 19H50l16-19Z" fill="url(#euroMiniChrome)"/></svg></div><div class="subtle">Champion 2024</div><h3>Espagne</h3><div class="subtle">4e titre européen</div></div></div>
-          <div class="bracket-wing right"><article class="round"><div class="round-title">Demies / finale</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="bracket-team-name">France</span></span><span class="ko-score">1</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="bracket-team-name">Pays-Bas</span></span><span class="ko-score">1</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="bracket-team-name">Angleterre</span></span><span class="ko-score">2</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="bracket-team-name">Angleterre</span></span><span class="ko-score">1</span></div></div></article></div>
-        </div>
-      </section>
-
-      <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2></div><div class="section-note">Top 3 affiché, plusieurs joueurs ont terminé à 3 buts.</div></div>
-      <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Dani Olmo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Cody Gakpo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Harry Kane</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="club-name">Angleterre</span></div><div class="player-stat">3 buts</div></div></article></section>
-
-      <div class="section-head"><div class="section-title"><h2>Meilleurs passeurs</h2></div><div class="section-note">Top 3 de la compétition 2024.</div></div>
-      <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Lamine Yamal</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">4 passes</div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Xavi Simons</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 passes</div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Arda Güler</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/tur.png" alt=""><span class="club-name">Turquie</span></div><div class="player-stat">2 passes</div></div></article></section>
-
-      <div class="section-head"><div class="section-title"><h2>Actualités liées</h2></div><div class="section-note">Repères utiles pour suivre la bascule 2024 vers 2028.</div></div>
-      <section class="news"><article class="card"><h3>Euro 2024 terminé</h3><p class="empty">L’Espagne a gagné le tournoi avec sept victoires en sept matchs.</p></article><article class="card"><h3>Euro 2028 préparé</h3><p class="empty">La structure est prête pour ajouter qualifications, groupes, calendrier et favoris nation.</p></article><article class="card"><h3>Focus nation</h3><p class="empty">Le sélecteur reprend la nation favorite et affiche son parcours Euro.</p></article></section>
-
-      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Coupe d’Europe.</div></div>
-      <section class="grid"><article class="card"><h3>2024</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card"><h3>2020</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ita.png" alt="">Italie</p></article><article class="card"><h3>2016</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt="">Portugal</p></article><article class="card"><h3>2012</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card"><h3>2008</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card"><h3>2028</h3><p class="empty">Prochain cycle : qualifications, calendrier et groupes à brancher.</p></article></section>
 
       <nav class="sources" aria-label="Sources Euro"><a href="https://www.uefa.com/euro2024/" target="_blank" rel="noreferrer">UEFA Euro 2024</a><a href="https://www.espn.com/soccer/league/_/name/uefa.euro" target="_blank" rel="noreferrer">ESPN - Euro</a><a href="https://www.fotmob.com/leagues/50/overview/euro" target="_blank" rel="noreferrer">FotMob - Euro</a></nav>
     </section>
@@ -1508,9 +1513,6 @@
               <button class="alltime-badge history-badge" type="button" data-alltime="champions-history">Palmarès</button>
               <span class="pill psg-pill focus-pill"><span id="championsFocusIcon"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt=""></span>Focus <select class="focus-select" id="championsFocusSelect" aria-label="Club à suivre Ligue des Champions"><option value="Ajax Amsterdam">Ajax Amsterdam</option><option value="Arsenal">Arsenal</option><option value="AS Monaco">AS Monaco</option><option value="Atalanta">Atalanta</option><option value="Athletic Club">Athletic Club</option><option value="Atlético Madrid">Atlético Madrid</option><option value="Barcelona">Barcelona</option><option value="Bayer Leverkusen">Bayer Leverkusen</option><option value="Bayern Munich">Bayern Munich</option><option value="Benfica">Benfica</option><option value="Bodo/Glimt">Bodo/Glimt</option><option value="Borussia Dortmund">Borussia Dortmund</option><option value="Chelsea">Chelsea</option><option value="Club Brugge">Club Brugge</option><option value="Eintracht Frankfurt">Eintracht Frankfurt</option><option value="F.C. København">F.C. København</option><option value="FK Qarabag">FK Qarabag</option><option value="Galatasaray">Galatasaray</option><option value="Internazionale">Internazionale</option><option value="Juventus">Juventus</option><option value="Kairat Almaty">Kairat Almaty</option><option value="Liverpool">Liverpool</option><option value="Manchester City">Manchester City</option><option value="Marseille">Marseille</option><option value="Napoli">Napoli</option><option value="Newcastle United">Newcastle United</option><option value="Olympiacos">Olympiacos</option><option value="Pafos">Pafos</option><option value="Paris Saint-Germain" selected>PSG</option><option value="PSV Eindhoven">PSV Eindhoven</option><option value="Real Madrid">Real Madrid</option><option value="Slavia Prague">Slavia Prague</option><option value="Sporting CP">Sporting CP</option><option value="Tottenham Hotspur">Tottenham Hotspur</option><option value="Union St.-Gilloise">Union St.-Gilloise</option><option value="Villarreal">Villarreal</option></select></span>
             </div>
-            <div class="hero-row focus-match-row">
-              <span class="pill next-match-pill" id="championsFocusNext" data-default-focus="Paris Saint-Germain"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt="">PSG vs Arsenal <img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt="">— 30/05/2026 18:00</span>
-            </div>
             <div class="hero-row">
               <span class="pill">0/144 matchs de phase de ligue</span>
               <span class="pill">1/45 matchs à élimination</span>
@@ -1525,11 +1527,17 @@
       <span class="season-tabs-label">Saison</span>
       <button class="tab-button is-active" type="button" data-season-value="2025-2026">2025-2026</button>
     </nav>
-    
 
-      
+      <section class="euro-summary-grid" aria-label="Résumé Ligue des Champions">
+        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/160.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Paris Saint-Germain</div><p class="subtle">Tenant du titre européen récent.</p></article>
+        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/110.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">Internazionale</div><p class="subtle">Finaliste de la dernière finale complète.</p></article>
+        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">Ousmane Dembélé</div><p class="subtle">Référence offensive du PSG champion.</p></article>
+        <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/160.png)"><div class="subtle">Club favori</div><div class="euro-summary-value">PSG</div><p class="subtle">Focus utilisateur par défaut.</p></article>
+      </section>
 
-      <section class="today-strip" aria-label="Matchs du jour Ligue des Champions"><article class="today-tile"><div class="subtle today-meta">30/05/2026 · 18:00</div><div class="today-teams"><div class="today-team"><button class="team team-button" type="button" data-team="Paris Saint-Germain"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt="">Paris Saint-Germain</button></div><div class="today-score">18:00<br><span class="status">À venir</span></div><div class="today-team"><button class="team team-button" type="button" data-team="Arsenal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt="">Arsenal</button></div></div><div class="subtle" style="text-align:center;margin-top:12px">Puskás Aréna, Budapest</div></article></section>
+      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Ligue des Champions.</div></div>
+      <section class="recent-honours-grid"><article class="card recent-honour-card"><h3>2025</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt="">Paris Saint-Germain</p></article><article class="card recent-honour-card"><h3>2024</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" alt="">Real Madrid</p></article><article class="card recent-honour-card"><h3>2023</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png" alt="">Manchester City</p></article><article class="card recent-honour-card"><h3>2022</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" alt="">Real Madrid</p></article></section>
+
 
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2><button class="alltime-badge" type="button" data-alltime="champions-scorers">Top 10 all-time</button></div><div class="section-note">Top 3</div></div>
       <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><img class="avatar" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""></div><div><div class="team">Kylian Mbappé</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/8633.png" alt=""><span class="club-name">Real Madrid</span></div><div class="player-stat">15 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><img class="avatar" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""></div><div><div class="team">Harry Kane</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9823.png" alt=""><span class="club-name">Bayern München</span></div><div class="player-stat">14 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><img class="avatar" src="https://a.espncdn.com/i/teamlogos/countries/500/geo.png" alt=""></div><div><div class="team">Khvicha Kvaratskhelia</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">10 <span class="subtle">buts</span></div></div></article></section>
@@ -1591,9 +1599,6 @@
               <span class="pill focus-pill">Championnat <select class="focus-select" id="leagueSelect" aria-label="Championnat à suivre"><option value="ligue1" selected>Ligue 1</option><option value="laliga">Liga</option><option value="bundesliga">Bundesliga</option><option value="premierleague">Premier League</option><option value="seriea">Serie A</option></select></span>
               <span class="pill focus-pill"><span id="leagueFocusIcon"></span>Focus <select class="focus-select" id="leagueClubSelect" aria-label="Club à suivre"></select></span>
             </div>
-            <div class="hero-row focus-match-row">
-              <span class="pill next-match-pill" id="leagueFocusNext">Prochain match à déterminer</span>
-            </div>
           </div>
         </div>
       </section>
@@ -1603,11 +1608,10 @@
       <span class="season-tabs-label">Saison</span>
       <button class="tab-button is-active" type="button" data-season-value="2025-2026">2025-2026</button>
     </nav>
-    
+      <section class="euro-summary-grid" id="leagueSummaryCards" aria-label="Résumé championnat"></section>
 
-      
-
-      <section class="today-strip" id="leagueUpcoming" aria-label="Matchs à venir championnat"></section>
+      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers champions du championnat sélectionné.</div></div>
+      <section class="recent-honours-grid" id="leagueRecentHonours"></section>
 
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs des 5 grands championnats</h2></div><div class="section-note">Le meilleur buteur publié pour chaque championnat.</div></div>
       <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
@@ -4486,7 +4490,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const competition = kind === 'worldcup' ? 'Coupe du Monde' : kind === 'euro' ? 'Coupe d’Europe' : 'Ligue des Champions';
       const select = document.getElementById(`${kind}FocusSelect`);
       const target = document.getElementById(`${kind}FocusNext`);
-      if (!select || !target) return;
+      if (!select) return;
       const saved = localStorage.getItem(FOCUS_KEYS[kind]);
       if (saved && Array.from(select.options).some(option => option.value === saved)) select.value = saved;
       const team = select.value || FOCUS_DEFAULTS[kind];
@@ -4500,6 +4504,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (summary) summary.textContent = text.replace(`${focusDisplayName(team)} : `, '');
         return;
       }
+      if (!target) return;
       const match = focusNextMatch(competition, team);
       if (!match) {
         target.innerHTML = `${focusFlag(focusTeamIcon(team))}<span class="focus-match-text">${focusEscape(focusDisplayName(team))} : prochain match à déterminer</span>`;
@@ -4578,6 +4583,23 @@ grant select, insert, update on public.profiles to authenticated;`;
       return url ? `<img class="flag" src="${leagueEscape(url)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
     }
 
+    function leagueSummaryCard(label, value, detail, imageUrl = '', extraClass = '') {
+      const style = imageUrl ? ` style="--summary-bg:url(${leagueEscape(imageUrl)})"` : '';
+      return `<article class="euro-summary-card ${extraClass}"${style}>
+        <div class="subtle">${leagueEscape(label)}</div>
+        <div class="euro-summary-value">${leagueEscape(value || 'À déterminer')}</div>
+        <p class="subtle">${leagueEscape(detail || '')}</p>
+      </article>`;
+    }
+
+    const LEAGUE_RECENT_HONOURS = {
+      ligue1: [['2025', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2024', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2023', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2022', 'Paris Saint-Germain', 'Paris Saint-Germain']],
+      laliga: [['2025', 'Barcelona', 'Barcelona'], ['2024', 'Real Madrid', 'Real Madrid'], ['2023', 'Barcelona', 'Barcelona'], ['2022', 'Real Madrid', 'Real Madrid']],
+      bundesliga: [['2025', 'Bayern Munich', 'Bayern Munich'], ['2024', 'Bayer Leverkusen', 'Bayer Leverkusen'], ['2023', 'Bayern Munich', 'Bayern Munich'], ['2022', 'Bayern Munich', 'Bayern Munich']],
+      premierleague: [['2025', 'Liverpool', 'Liverpool'], ['2024', 'Manchester City', 'Manchester City'], ['2023', 'Manchester City', 'Manchester City'], ['2022', 'Manchester City', 'Manchester City']],
+      seriea: [['2025', 'Napoli', 'Napoli'], ['2024', 'Internazionale', 'Internazionale'], ['2023', 'Napoli', 'Napoli'], ['2022', 'AC Milan', 'AC Milan']]
+    };
+
     function leagueClubLogo(name) {
       const key = String(name || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
       return LEAGUE_CLUB_LOGOS[key] || '';
@@ -4587,6 +4609,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       const safeLogo = logo || leagueClubLogo(name);
       const content = reverse ? `${leagueEscape(name)}${leagueFlag(safeLogo)}` : `${leagueFlag(safeLogo)}${leagueEscape(name)}`;
       return `<button class="team team-button" type="button" data-team="${leagueEscape(name)}">${content}</button>`;
+    }
+
+    function leagueStandingsTeams(league) {
+      const group = (league.standings || [])[0] || {};
+      return group.teams || group.standings || [];
     }
 
     function leagueMatchScore(match) {
@@ -4729,7 +4756,26 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (updated) updated.textContent = leagueDate(league.generated_at || LEAGUES_DATA.generated_at || '');
       const honoursButton = document.getElementById('leagueHonoursButton');
       if (honoursButton) honoursButton.dataset.alltime = `league-history-${key}`;
-      document.getElementById('leagueUpcoming').innerHTML = (league.upcoming_matches || []).slice(0,3).map(leagueMatchCard).join('') || '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong></article>';
+      const standingTeams = leagueStandingsTeams(league);
+      const champion = standingTeams[0] || {};
+      const runnerUp = standingTeams[1] || {};
+      const bestPlayer = (league.top_scorers || [])[0] || {};
+      const summaryNode = document.getElementById('leagueSummaryCards');
+      if (summaryNode) {
+        summaryNode.innerHTML = [
+          leagueSummaryCard('Champion', champion.team || 'À déterminer', `Leader actuel de ${league.name || 'ce championnat'}.`, champion.flag_url || leagueClubLogo(champion.team)),
+          leagueSummaryCard('Dauphin', runnerUp.team || 'À déterminer', 'Deuxième du classement publié.', runnerUp.flag_url || leagueClubLogo(runnerUp.team)),
+          leagueSummaryCard('Meilleur joueur de la compétition', bestPlayer.name || 'À déterminer', bestPlayer.team ? `${bestPlayer.team} · ${bestPlayer.value || 0} buts` : 'Donnée joueur à compléter.', bestPlayer.photo_url || bestPlayer.country_flag_url || bestPlayer.team_logo_url || leagueClubLogo(bestPlayer.team)),
+          leagueSummaryCard('Club favori', focus || 'À déterminer', 'Focus utilisateur pour ce championnat.', focusLogo, 'euro-focus-card')
+        ].join('');
+      }
+      const honoursNode = document.getElementById('leagueRecentHonours');
+      if (honoursNode) {
+        honoursNode.innerHTML = (LEAGUE_RECENT_HONOURS[key] || []).map(([year, winner, logoKey]) => {
+          const logo = leagueClubLogo(logoKey || winner);
+          return `<article class="card recent-honour-card"><h3>${leagueEscape(year)}</h3><p class="empty">${leagueFlag(logo)}${leagueEscape(winner)}</p></article>`;
+        }).join('') || '<article class="card recent-honour-card"><h3>Palmarès</h3><p class="empty">Données à compléter.</p></article>';
+      }
       const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
       document.getElementById('big5TopScorers').innerHTML = big5Items || '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,3).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';

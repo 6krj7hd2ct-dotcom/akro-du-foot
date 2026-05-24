@@ -415,6 +415,14 @@ def _page(data: dict[str, Any]) -> str:
     .action-button:hover, .action-button:focus-visible {{ background: rgba(255,255,255,0.17); outline: 1px solid rgba(255,255,255,0.28); }}
     .today-strip, .leaders, .news, .grid, .matches, .calendar-days {{ display: grid; gap: 16px; }}
     .today-strip {{ grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }}
+    .euro-summary-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }}
+    .euro-summary-card {{ position: relative; overflow: hidden; min-height: 132px; padding: 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.12), rgba(142,75,255,0.08)); box-shadow: 0 14px 34px rgba(0,0,0,0.18); }}
+    .euro-summary-card::before {{ content: ""; position: absolute; inset: 0; background-image: var(--summary-bg); background-repeat: no-repeat; background-position: calc(100% - 14px) center; background-size: min(110px, 45%) auto; opacity: 0.13; filter: saturate(1.18) contrast(1.08); pointer-events: none; }}
+    .euro-summary-card::after {{ content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }}
+    .euro-summary-card > * {{ position: relative; z-index: 1; }}
+    .euro-summary-value {{ margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }}
+    .recent-honours-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }}
+    .recent-honour-card {{ min-height: 108px; }}
     .leaders {{ grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }}
     .news {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     .news-hero {{ min-height: 340px; }}
@@ -981,9 +989,6 @@ def _page(data: dict[str, Any]) -> str:
             <button class="alltime-badge history-badge" type="button" data-alltime="worldcup-history">Palmarès</button>
             <span class="pill france-pill focus-pill"><span id="worldcupFocusIcon">{_flag(_focus_icon(data, "France"))}</span>Focus <select class="focus-select" id="worldcupFocusSelect" aria-label="Pays à suivre Coupe du Monde">{_focus_options(data, "France")}</select></span>
           </div>
-          <div class="hero-row focus-match-row">
-            <span class="pill next-match-pill" id="worldcupFocusNext" data-default-focus="France">{_france_next_match_badge(france_next_match)}</span>
-          </div>
           <div class="hero-row">
             <span class="pill">{group_remaining}/{group_total} matchs de poules</span>
             <span class="pill">{knockout_remaining}/{knockout_total} matchs à élimination</span>
@@ -997,7 +1002,19 @@ def _page(data: dict[str, Any]) -> str:
 
     {_errors(data.get("errors", []))}
 
-    <section class="today-strip" aria-label="Matchs du jour">{_today_matches(today_matches, group_matches, knockout)}</section>
+    {_summary_grid("Résumé Coupe du Monde", [
+        _summary_card("Champion", "Argentine", "Tenant du titre 2022.", "https://a.espncdn.com/i/teamlogos/countries/500/arg.png"),
+        _summary_card("Finaliste", "France", "Finaliste de la dernière édition.", "https://a.espncdn.com/i/teamlogos/countries/500/fra.png"),
+        _summary_card("Meilleur joueur de la compétition", "Lionel Messi", "Ballon d’Or du Mondial 2022.", "https://a.espncdn.com/i/teamlogos/countries/500/arg.png"),
+        _summary_card("Nation favorite", "France", "Focus utilisateur par défaut.", "https://a.espncdn.com/i/teamlogos/countries/500/fra.png", "euro-focus-card"),
+    ])}
+
+    {_recent_honours("Derniers vainqueurs de la Coupe du Monde.", [
+        ("2022", "Argentine", "https://a.espncdn.com/i/teamlogos/countries/500/arg.png"),
+        ("2018", "France", "https://a.espncdn.com/i/teamlogos/countries/500/fra.png"),
+        ("2014", "Allemagne", "https://a.espncdn.com/i/teamlogos/countries/500/ger.png"),
+        ("2010", "Espagne", "https://a.espncdn.com/i/teamlogos/countries/500/esp.png"),
+    ])}
 
     {_section_head("Meilleurs buteurs", "Top 3", _all_time_badge("scorers"))}
     <section class="leaders">{_player_cards(scorers, "buts")}</section>
@@ -1057,6 +1074,35 @@ def _section_head(title: str, note: str, action: str = "") -> str:
 
 def _all_time_badge(kind: str) -> str:
     return f'<button class="alltime-badge" type="button" data-alltime="{escape(kind, quote=True)}">Top 10 all-time</button>'
+
+
+def _summary_card(label: str, value: str, detail: str, image_url: str = "", css_class: str = "", value_id: str = "", detail_id: str = "") -> str:
+    style = f' style="--summary-bg:url({escape(image_url, quote=True)})"' if image_url else ""
+    value_attr = f' id="{escape(value_id, quote=True)}"' if value_id else ""
+    detail_attr = f' id="{escape(detail_id, quote=True)}"' if detail_id else ""
+    classes = f"euro-summary-card {css_class}".strip()
+    return (
+        f'<article class="{escape(classes, quote=True)}"{style}>'
+        f'<div class="subtle">{escape(label)}</div>'
+        f'<div class="euro-summary-value"{value_attr}>{escape(value)}</div>'
+        f'<p class="subtle"{detail_attr}>{escape(detail)}</p>'
+        "</article>"
+    )
+
+
+def _summary_grid(label: str, cards: list[str]) -> str:
+    return f'<section class="euro-summary-grid" aria-label="{escape(label, quote=True)}">{"".join(cards)}</section>'
+
+
+def _recent_honours(title_note: str, honours: list[tuple[str, str, str]]) -> str:
+    cards = []
+    for year, winner, image_url in honours:
+        icon = _flag(image_url) if image_url else '<span class="flag placeholder" aria-hidden="true"></span>'
+        cards.append(
+            f'<article class="card recent-honour-card"><h3>{escape(year)}</h3>'
+            f'<p class="empty">{icon}{escape(winner)}</p></article>'
+        )
+    return _section_head("Palmarès récent", title_note) + f'<section class="recent-honours-grid">{"".join(cards)}</section>'
 
 
 def _france_header_news_placeholder() -> str:
@@ -1498,9 +1544,6 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
               <button class="alltime-badge history-badge" type="button" data-alltime="champions-history">Palmarès</button>
               <span class="pill psg-pill focus-pill"><span id="championsFocusIcon">{_logo_or_placeholder(_focus_icon(data, "Paris Saint-Germain") or _psg_logo(data))}</span>Focus <select class="focus-select" id="championsFocusSelect" aria-label="Club à suivre Ligue des Champions">{_focus_options(data, "Paris Saint-Germain")}</select></span>
             </div>
-            <div class="hero-row focus-match-row">
-              <span class="pill next-match-pill" id="championsFocusNext" data-default-focus="Paris Saint-Germain">{_psg_next_match_badge(psg_next_match)}</span>
-            </div>
             <div class="hero-row">
               <span class="pill">{phase_remaining}/{phase_total} matchs de phase de ligue</span>
               <span class="pill">{knockout_remaining}/{knockout_total} matchs à élimination</span>
@@ -1514,7 +1557,19 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
 
       {_errors(data.get("errors", []))}
 
-      <section class="today-strip" aria-label="Matchs du jour Ligue des Champions">{_today_matches(today_matches, matches, knockout)}</section>
+      {_summary_grid("Résumé Ligue des Champions", [
+        _summary_card("Champion", "Paris Saint-Germain", "Tenant du titre européen récent.", "https://a.espncdn.com/i/teamlogos/soccer/500/160.png"),
+        _summary_card("Finaliste", "Internazionale", "Finaliste de la dernière finale complète.", "https://a.espncdn.com/i/teamlogos/soccer/500/110.png"),
+        _summary_card("Meilleur joueur de la compétition", "Ousmane Dembélé", "Référence offensive du PSG champion.", "https://a.espncdn.com/i/teamlogos/countries/500/fra.png"),
+        _summary_card("Club favori", "PSG", "Focus utilisateur par défaut.", "https://a.espncdn.com/i/teamlogos/soccer/500/160.png", "euro-focus-card"),
+      ])}
+
+      {_recent_honours("Derniers vainqueurs de la Ligue des Champions.", [
+        ("2025", "Paris Saint-Germain", "https://a.espncdn.com/i/teamlogos/soccer/500/160.png"),
+        ("2024", "Real Madrid", "https://a.espncdn.com/i/teamlogos/soccer/500/86.png"),
+        ("2023", "Manchester City", "https://a.espncdn.com/i/teamlogos/soccer/500/382.png"),
+        ("2022", "Real Madrid", "https://a.espncdn.com/i/teamlogos/soccer/500/86.png"),
+      ])}
 
       {_section_head("Meilleurs buteurs", "Top 3", _all_time_badge("champions-scorers"))}
       <section class="leaders">{_player_cards(scorers, "buts", prefer_country_flag=True)}</section>
@@ -1562,9 +1617,6 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
               <span class="pill focus-pill">Championnat <select class="focus-select" id="leagueSelect" aria-label="Championnat à suivre">{options}</select></span>
               <span class="pill focus-pill"><span id="leagueFocusIcon"></span>Focus <select class="focus-select" id="leagueClubSelect" aria-label="Club à suivre"></select></span>
             </div>
-            <div class="hero-row focus-match-row">
-              <span class="pill next-match-pill" id="leagueFocusNext">Prochain match à déterminer</span>
-            </div>
           </div>
         </div>
       </section>
@@ -1573,7 +1625,10 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
 
       {_errors(data.get("errors", []))}
 
-      <section class="today-strip" id="leagueUpcoming" aria-label="Matchs à venir championnat"></section>
+      <section class="euro-summary-grid" id="leagueSummaryCards" aria-label="Résumé championnat"></section>
+
+      {_section_head("Palmarès récent", "Derniers champions du championnat sélectionné.")}
+      <section class="recent-honours-grid" id="leagueRecentHonours"></section>
 
       {_section_head("Meilleurs buteurs des 5 grands championnats", "Le meilleur buteur publié pour chaque championnat.")}
       <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
@@ -2812,11 +2867,12 @@ def _focus_script(matches: list[dict[str, Any]], teams_details: dict[str, Any]) 
       const competition = kind === 'worldcup' ? 'Coupe du Monde' : 'Ligue des Champions';
       const select = document.getElementById(`${{kind}}FocusSelect`);
       const target = document.getElementById(`${{kind}}FocusNext`);
-      if (!select || !target) return;
+      if (!select) return;
       const saved = localStorage.getItem(FOCUS_KEYS[kind]);
       if (saved && Array.from(select.options).some(option => option.value === saved)) select.value = saved;
       const team = select.value || FOCUS_DEFAULTS[kind];
       updateFocusPillIcon(kind, team);
+      if (!target) return;
       const match = focusNextMatch(competition, team);
       if (!match) {{
         target.innerHTML = `${{focusFlag(focusTeamIcon(team))}}<span class="focus-match-text">${{focusEscape(focusDisplayName(team))}} : prochain match à déterminer</span>`;
@@ -2897,6 +2953,23 @@ def _leagues_script() -> str:
       return url ? `<img class="flag" src="${leagueEscape(url)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
     }
 
+    function leagueSummaryCard(label, value, detail, imageUrl = '', extraClass = '') {
+      const style = imageUrl ? ` style="--summary-bg:url(${leagueEscape(imageUrl)})"` : '';
+      return `<article class="euro-summary-card ${extraClass}"${style}>
+        <div class="subtle">${leagueEscape(label)}</div>
+        <div class="euro-summary-value">${leagueEscape(value || 'À déterminer')}</div>
+        <p class="subtle">${leagueEscape(detail || '')}</p>
+      </article>`;
+    }
+
+    const LEAGUE_RECENT_HONOURS = {
+      ligue1: [['2025', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2024', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2023', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2022', 'Paris Saint-Germain', 'Paris Saint-Germain']],
+      laliga: [['2025', 'Barcelona', 'Barcelona'], ['2024', 'Real Madrid', 'Real Madrid'], ['2023', 'Barcelona', 'Barcelona'], ['2022', 'Real Madrid', 'Real Madrid']],
+      bundesliga: [['2025', 'Bayern Munich', 'Bayern Munich'], ['2024', 'Bayer Leverkusen', 'Bayer Leverkusen'], ['2023', 'Bayern Munich', 'Bayern Munich'], ['2022', 'Bayern Munich', 'Bayern Munich']],
+      premierleague: [['2025', 'Liverpool', 'Liverpool'], ['2024', 'Manchester City', 'Manchester City'], ['2023', 'Manchester City', 'Manchester City'], ['2022', 'Manchester City', 'Manchester City']],
+      seriea: [['2025', 'Napoli', 'Napoli'], ['2024', 'Internazionale', 'Internazionale'], ['2023', 'Napoli', 'Napoli'], ['2022', 'AC Milan', 'AC Milan']]
+    };
+
     function leagueClubLogo(name) {
       const key = String(name || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
       return LEAGUE_CLUB_LOGOS[key] || '';
@@ -2906,6 +2979,11 @@ def _leagues_script() -> str:
       const safeLogo = logo || leagueClubLogo(name);
       const content = reverse ? `${leagueEscape(name)}${leagueFlag(safeLogo)}` : `${leagueFlag(safeLogo)}${leagueEscape(name)}`;
       return `<button class="team team-button" type="button" data-team="${leagueEscape(name)}">${content}</button>`;
+    }
+
+    function leagueStandingsTeams(league) {
+      const group = (league.standings || [])[0] || {};
+      return group.teams || group.standings || [];
     }
 
     function leagueMatchScore(match) {
@@ -3048,7 +3126,26 @@ def _leagues_script() -> str:
       if (updated) updated.textContent = leagueDate(league.generated_at || LEAGUES_DATA.generated_at || '');
       const honoursButton = document.getElementById('leagueHonoursButton');
       if (honoursButton) honoursButton.dataset.alltime = `league-history-${key}`;
-      document.getElementById('leagueUpcoming').innerHTML = (league.upcoming_matches || []).slice(0,3).map(leagueMatchCard).join('') || '<article class="today-tile" style="grid-column:1/-1"><strong>Aucun match à venir disponible</strong></article>';
+      const standingTeams = leagueStandingsTeams(league);
+      const champion = standingTeams[0] || {};
+      const runnerUp = standingTeams[1] || {};
+      const bestPlayer = (league.top_scorers || [])[0] || {};
+      const summaryNode = document.getElementById('leagueSummaryCards');
+      if (summaryNode) {
+        summaryNode.innerHTML = [
+          leagueSummaryCard('Champion', champion.team || 'À déterminer', `Leader actuel de ${league.name || 'ce championnat'}.`, champion.flag_url || leagueClubLogo(champion.team)),
+          leagueSummaryCard('Dauphin', runnerUp.team || 'À déterminer', 'Deuxième du classement publié.', runnerUp.flag_url || leagueClubLogo(runnerUp.team)),
+          leagueSummaryCard('Meilleur joueur de la compétition', bestPlayer.name || 'À déterminer', bestPlayer.team ? `${bestPlayer.team} · ${bestPlayer.value || 0} buts` : 'Donnée joueur à compléter.', bestPlayer.photo_url || bestPlayer.country_flag_url || bestPlayer.team_logo_url || leagueClubLogo(bestPlayer.team)),
+          leagueSummaryCard('Club favori', focus || 'À déterminer', 'Focus utilisateur pour ce championnat.', focusLogo, 'euro-focus-card')
+        ].join('');
+      }
+      const honoursNode = document.getElementById('leagueRecentHonours');
+      if (honoursNode) {
+        honoursNode.innerHTML = (LEAGUE_RECENT_HONOURS[key] || []).map(([year, winner, logoKey]) => {
+          const logo = leagueClubLogo(logoKey || winner);
+          return `<article class="card recent-honour-card"><h3>${leagueEscape(year)}</h3><p class="empty">${leagueFlag(logo)}${leagueEscape(winner)}</p></article>`;
+        }).join('') || '<article class="card recent-honour-card"><h3>Palmarès</h3><p class="empty">Données à compléter.</p></article>';
+      }
       const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
       document.getElementById('big5TopScorers').innerHTML = big5Items || '<div class="empty">Buteurs indisponibles.</div>';
       document.getElementById('leagueTopScorers').innerHTML = (league.top_scorers || []).slice(0,3).map(player => leaguePlayerCard(player, 'buts', 'club')).join('') || '<div class="empty">Buteurs indisponibles.</div>';
