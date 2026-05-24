@@ -652,11 +652,20 @@
     .team-modal-flag { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); }
     .team-modal-title { font-size: clamp(24px, 4vw, 38px); font-weight: 950; line-height: 1; }
     .modal-close { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.08); color: var(--ink); font-size: 24px; cursor: pointer; }
+    .team-modal-tabs { position: sticky; top: 95px; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 18px; background: rgba(8,23,43,0.96); border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .team-tab-button { appearance: none; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; background: rgba(255,255,255,0.06); color: var(--text); padding: 9px 13px; font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+    .team-tab-button:hover { transform: translateY(-1px); border-color: rgba(245,201,107,0.52); background: rgba(245,201,107,0.10); }
+    .team-tab-button.is-active { color: #08172b; border-color: rgba(245,201,107,0.85); background: linear-gradient(135deg, var(--gold), #fff2b7); }
     .team-modal-body { padding: 18px; display: grid; gap: 18px; }
+    .team-panel { display: none; gap: 18px; }
+    .team-panel.is-active { display: grid; }
     .team-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
     .team-info { padding: 13px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.06); }
     .team-info-label { color: var(--muted); font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; }
     .team-info-value { font-weight: 850; }
+    .team-info-actions { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .coach-ask-button { appearance: none; border: 1px solid rgba(245,201,107,0.38); border-radius: 999px; background: rgba(245,201,107,0.12); color: #fff6d8; padding: 8px 12px; font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; transition: transform .18s ease, background .18s ease; }
+    .coach-ask-button:hover { transform: translateY(-1px); background: rgba(245,201,107,0.20); }
     .coach-card { display: grid; gap: 14px; padding: 14px; border: 1px solid rgba(245,201,107,0.20); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }
     .coach-profile { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 12px; align-items: center; }
     .coach-photo { width: 62px; height: 62px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.18); background: radial-gradient(circle at 35% 30%, #dbe7f7, #708196); }
@@ -681,6 +690,7 @@
     .mini-player-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 750; }
     .mini-player-flag { width: 18px; height: 18px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.18); }
     .mini-player-number { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); border-radius: 999px; padding: 2px 7px; font-size: 11px; font-weight: 950; }
+    .form-analysis { padding: 13px; border: 1px solid rgba(50,211,162,0.20); border-radius: 14px; background: linear-gradient(135deg, rgba(50,211,162,0.10), rgba(31,111,235,0.08)); color: #e8fff8; font-weight: 800; line-height: 1.45; }
     .alltime-list { display: grid; gap: 10px; }
     .chatbot-dialog { width: min(520px, 100%); max-height: 80vh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; }
     .chatbot-messages { padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 220px; max-height: none; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
@@ -743,6 +753,8 @@
     .follow-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 850; text-transform: uppercase; }
     .follow-teams { display: grid; grid-template-columns: minmax(0, 1.25fr) clamp(62px, 9vw, 84px) minmax(0, 1.25fr); align-items: center; gap: 10px; margin-top: 12px; }
     .follow-team { min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 950; line-height: 1.18; overflow-wrap: normal; word-break: normal; }
+    .follow-team-button { width: 100%; appearance: none; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; border-radius: 999px; padding: 4px 6px; transition: color .18s ease, background .18s ease, transform .18s ease; }
+    .follow-team-button:hover { color: var(--gold); background: rgba(245,201,107,0.10); transform: translateY(-1px); }
     .follow-team.away { justify-content: flex-end; text-align: right; }
     .follow-team span:last-child { white-space: normal; overflow-wrap: normal; word-break: normal; }
     .follow-center { min-width: 62px; text-align: center; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); border-radius: 10px; padding: 7px 9px; font-weight: 950; }
@@ -847,6 +859,8 @@
     .live-event.red::before { background: var(--red); box-shadow: 0 0 12px rgba(239,51,64,0.78); }
     .live-event.end::before { background: #b9c9dc; box-shadow: none; }
     .live-event.start::before { background: #32d3a2; box-shadow: 0 0 12px rgba(50,211,162,0.75); }
+    .live-event-team { appearance: none; border: 0; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-weight: 950; cursor: pointer; padding: 2px 5px; transition: color .18s ease, background .18s ease; }
+    .live-event-team:hover { color: var(--gold); background: rgba(245,201,107,0.12); }
     @keyframes liveTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .profile-dialog { width: min(720px, 100%); max-height: min(88vh, 760px); overflow: hidden; }
     #userProfileBadge { width: 42px; height: 42px; padding: 0; overflow: visible; background: transparent; border: 0; }
@@ -1550,14 +1564,26 @@
         </div>
         <button class="modal-close" type="button" id="teamModalClose" aria-label="Fermer">×</button>
       </header>
+      <div class="team-modal-tabs" id="teamModalTabs" role="tablist" aria-label="Fiche équipe">
+        <button class="team-tab-button is-active" type="button" data-team-tab="summary">Résumé</button>
+        <button class="team-tab-button" type="button" data-team-tab="honors">Palmarès</button>
+        <button class="team-tab-button" type="button" data-team-tab="squad">Effectif</button>
+      </div>
       <div class="team-modal-body">
-        <div class="team-info">
-          <div class="team-info-label">Forme récente</div>
-          <div class="team-info-value">10 derniers résultats disponibles dans Akro du Foot</div>
-        </div>
-        <div id="teamCoach"></div>
-        <div id="teamHonors"></div>
-        <div id="teamRecent"></div>
+        <section class="team-panel is-active" data-team-panel="summary">
+          <div class="team-info">
+            <div class="team-info-label">Forme récente</div>
+            <div class="team-info-value">10 derniers résultats disponibles dans Akro du Foot</div>
+          </div>
+          <div id="teamCoach"></div>
+          <div id="teamRecent"></div>
+        </section>
+        <section class="team-panel" data-team-panel="honors">
+          <div id="teamHonors"></div>
+        </section>
+        <section class="team-panel" data-team-panel="squad">
+          <div id="teamSquad"></div>
+        </section>
       </div>
     </article>
   </div>
@@ -1802,6 +1828,8 @@
     const teamRecent = document.getElementById('teamRecent');
     const teamCoach = document.getElementById('teamCoach');
     const teamHonors = document.getElementById('teamHonors');
+    const teamSquad = document.getElementById('teamSquad');
+    const teamTabs = document.getElementById('teamModalTabs');
     const closeModal = document.getElementById('teamModalClose');
 
     function escapeHtml(value) {
@@ -1860,6 +1888,35 @@
         .slice(0, 10);
     }
 
+    function recentCoachAnalysis(matches, team) {
+      const played = (matches || []).filter(match => match.completed && match.home_score !== '' && match.away_score !== '').slice(0, 5);
+      if (!played.length) {
+        return '<div class="form-analysis">Coach n’a pas assez de résultats locaux pour dégager une tendance fiable.</div>';
+      }
+      let wins = 0;
+      let draws = 0;
+      let losses = 0;
+      let goalsFor = 0;
+      let goalsAgainst = 0;
+      played.forEach(match => {
+        const home = Number(match.home_score);
+        const away = Number(match.away_score);
+        const isHome = match.home_team === team;
+        const scored = isHome ? home : away;
+        const conceded = isHome ? away : home;
+        goalsFor += scored;
+        goalsAgainst += conceded;
+        if (scored > conceded) wins += 1;
+        else if (scored < conceded) losses += 1;
+        else draws += 1;
+      });
+      const dynamic = wins >= losses + 2 ? 'une bonne dynamique' : losses >= wins + 2 ? 'une période plus compliquée' : 'une dynamique équilibrée';
+      const attack = goalsFor >= played.length * 1.4 ? 'marque régulièrement' : goalsFor ? 'reste capable de marquer' : 'manque encore de tranchant offensif';
+      const defense = goalsAgainst <= played.length * 0.8 ? 'garde une base défensive solide' : 'encaisse encore quelques buts';
+      const label = teamDisplayName(team);
+      return `<div class="form-analysis">${escapeHtml(label)} reste sur ${escapeHtml(dynamic)} avec ${wins} victoire${wins > 1 ? 's' : ''}, ${draws} nul${draws > 1 ? 's' : ''} et ${losses} défaite${losses > 1 ? 's' : ''} sur ses ${played.length} derniers matchs. L’équipe ${attack} et ${defense}.</div>`;
+    }
+
     function coachPhoto(info) {
       return info.coach_country_flag
         ? `<img class="coach-photo" src="${escapeHtml(info.coach_country_flag)}" alt="">`
@@ -1900,8 +1957,56 @@
 
     function honorsCard(details) {
       const honors = details.honors || details.palmares || [];
-      if (!honors.length) return '<div class="team-info"><div class="team-info-label">Palmarès</div><div class="team-info-value">Information non disponible</div></div>';
+      if (!honors.length) return `<div class="team-info"><div class="team-info-label">Palmarès</div><div class="team-info-value">Aucune donnée locale disponible.</div><div class="team-info-actions"><button class="coach-ask-button" type="button" data-team-coach-topic="palmarès" data-team-name="${escapeHtml(details.name || details.key || '')}">Demander au Coach</button></div></div>`;
       return `<section class="team-info"><div class="team-info-label">Palmarès Foot Mercato</div><div class="honors-list">${honors.map(item => `<article class="honor-row"><div><strong>${escapeHtml(item.competition || '')}</strong><div class="subtle">${escapeHtml(item.years || 'Années non disponibles')}</div></div><div class="honor-value">${escapeHtml(item.titles || '')} titre${Number(item.titles) > 1 ? 's' : ''}</div></article>`).join('')}</div></section>`;
+    }
+
+    function playerLabel(player) {
+      if (typeof player === 'string') return player;
+      if (!player || typeof player !== 'object') return '';
+      const number = player.number || player.jersey || player.shirt_number || '';
+      const name = player.name || player.player || player.full_name || '';
+      const position = player.position || player.role || '';
+      return [number ? `#${number}` : '', name, position ? `· ${position}` : ''].filter(Boolean).join(' ');
+    }
+
+    function playerGrid(title, players) {
+      const list = (players || []).map(playerLabel).filter(Boolean);
+      if (!list.length) return '';
+      return `<section class="team-info"><div class="team-info-label">${escapeHtml(title)}</div><div class="player-grid">${list.map(player => `<div class="mini-player"><div class="mini-avatar placeholder" aria-hidden="true">${escapeHtml(player.charAt(0) || 'J')}</div><strong>${escapeHtml(player)}</strong></div>`).join('')}</div></section>`;
+    }
+
+    function squadCard(details) {
+      const coachName = details.coach_info?.coach_name || details.coach_name || details.coach || '';
+      const formation = details.formation || details.last_formation || '';
+      const starters = details.starters || details.lineup || [];
+      const substitutes = details.substitutes || details.bench || [];
+      const squad = details.squad || details.roster || [];
+      const hasLocalSquad = coachName || formation || starters.length || substitutes.length || squad.length;
+      if (!hasLocalSquad) {
+        return `<div class="team-info"><div class="team-info-label">Effectif</div><div class="team-info-value">Aucune donnée locale disponible pour l’effectif ou la composition.</div><div class="team-info-actions"><button class="coach-ask-button" type="button" data-team-coach-topic="effectif" data-team-name="${escapeHtml(details.name || details.key || '')}">Demander au Coach</button></div></div>`;
+      }
+      return `
+        <section class="team-info">
+          <div class="team-info-label">Staff et composition</div>
+          <div class="team-info-value">Entraîneur / sélectionneur : ${escapeHtml(coachName || 'Non disponible')}</div>
+          <div class="subtle">Composition du dernier match : ${escapeHtml(formation || 'Non disponible')}</div>
+        </section>
+        ${playerGrid('Titulaires / composition du dernier match', starters)}
+        ${playerGrid('Remplaçants', substitutes)}
+        ${playerGrid('Effectif', squad)}
+      `;
+    }
+
+    function setTeamTab(tab = 'summary') {
+      document.querySelectorAll('[data-team-panel]').forEach(panel => {
+        panel.classList.toggle('is-active', panel.dataset.teamPanel === tab);
+      });
+      teamTabs?.querySelectorAll('[data-team-tab]').forEach(button => {
+        const active = button.dataset.teamTab === tab;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
     }
 
     function openTeam(name) {
@@ -1911,10 +2016,12 @@
       modalSources.textContent = details.coach_info && details.coach_info.source ? `Source entraîneur : ${details.coach_info.source}` : 'Résultats disponibles dans les calendriers du dashboard';
       teamCoach.innerHTML = coachCard(details);
       teamHonors.innerHTML = honorsCard(details);
+      teamSquad.innerHTML = squadCard(details);
       const matches = recentMatches(name);
       teamRecent.innerHTML = matches.length
-        ? `<div class="recent-list">${matches.map(match => recentCard(match, name)).join('')}</div>`
+        ? `${recentCoachAnalysis(matches, name)}<div class="recent-list">${matches.map(match => recentCard(match, name)).join('')}</div>`
         : '<div class="empty">Forme récente non disponible pour cette équipe.</div>';
+      setTeamTab('summary');
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       closeModal.focus();
@@ -1926,9 +2033,27 @@
     }
 
     document.addEventListener('click', (event) => {
+      const coachTrigger = event.target.closest('[data-team-coach-topic]');
+      if (coachTrigger) {
+        const team = coachTrigger.dataset.teamName || modalTitle.textContent || 'cette équipe';
+        const topic = coachTrigger.dataset.teamCoachTopic || 'fiche';
+        hideTeam();
+        if (typeof openFootballChatbot === 'function') openFootballChatbot();
+        const coachInput = document.getElementById('footballChatbotInput');
+        if (coachInput) {
+          coachInput.value = `Prépare une fiche ${topic} fiable et récente pour ${team}. Si tu n’es pas sûr, indique les limites et les points à vérifier.`;
+          coachInput.focus();
+          window.setTimeout(() => document.getElementById('footballChatbotForm')?.requestSubmit(), 0);
+        }
+        return;
+      }
       const trigger = event.target.closest('[data-team]');
       if (trigger) openTeam(trigger.dataset.team);
       if (event.target === modal) hideTeam();
+    });
+    teamTabs?.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-team-tab]');
+      if (button) setTeamTab(button.dataset.teamTab || 'summary');
     });
     closeModal.addEventListener('click', hideTeam);
     document.addEventListener('keydown', (event) => {
@@ -3065,13 +3190,20 @@ grant select, insert, update on public.profiles to authenticated;`;
       return hasScore ? `${match.home_score} - ${match.away_score}` : shortDate(match.date).split(' ').pop() || 'VS';
     }
 
+    function followTeamButton(name, flagUrl, away = false) {
+      if (!name || normalizeTeamName(name) === 'a determiner') {
+        return `<div class="follow-team ${away ? 'away' : ''}">${away ? `<span>${escapeHtml(name || 'À déterminer')}</span>${flagMarkup(flagUrl)}` : `${flagMarkup(flagUrl)}<span>${escapeHtml(name || 'À déterminer')}</span>`}</div>`;
+      }
+      return `<button class="follow-team follow-team-button ${away ? 'away' : ''}" type="button" data-team="${escapeHtml(name)}">${away ? `<span>${escapeHtml(name)}</span>${flagMarkup(flagUrl)}` : `${flagMarkup(flagUrl)}<span>${escapeHtml(name)}</span>`}</button>`;
+    }
+
     function followMatchCard(match) {
       return `<article class="follow-card">
         <div class="follow-meta"><span>${escapeHtml(match.competition || 'Compétition')}</span><span>${escapeHtml(shortDate(match.date))}</span></div>
         <div class="follow-teams">
-          <div class="follow-team">${flagMarkup(match.home_flag_url)}<span>${escapeHtml(match.home_team)}</span></div>
+          ${followTeamButton(match.home_team, match.home_flag_url)}
           <div class="follow-center">${escapeHtml(matchCenter(match))}</div>
-          <div class="follow-team away"><span>${escapeHtml(match.away_team)}</span>${flagMarkup(match.away_flag_url)}</div>
+          ${followTeamButton(match.away_team, match.away_flag_url, true)}
         </div>
         <span class="follow-status ${statusClass(match)}">${escapeHtml(match.status || 'À venir')}</span>
       </article>`;
@@ -3205,9 +3337,24 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function liveEventLabel(match) {
       const score = matchCenter(match).replace(' - ', '-');
-      if (match.status === 'LIVE') return {type: 'goal', text: `LIVE · ${match.home_team} · ${score} · ${match.away_team}`};
-      if (match.completed || match.status === 'Terminé') return {type: 'end', text: `FIN · ${match.home_team} ${score} ${match.away_team}`};
-      return {type: 'start', text: `DÉBUT · ${match.home_team} vs ${match.away_team} · ${shortDate(match.date)}`};
+      if (match.status === 'LIVE') return {type: 'goal', prefix: 'LIVE', home: match.home_team, center: score, away: match.away_team};
+      if (match.completed || match.status === 'Terminé') return {type: 'end', prefix: 'FIN', home: match.home_team, center: score, away: match.away_team};
+      return {type: 'start', prefix: 'DÉBUT', home: match.home_team, center: `vs · ${shortDate(match.date)}`, away: match.away_team};
+    }
+
+    function liveEventMarkup(event) {
+      const home = normalizeTeamName(event.home) === 'a determiner'
+        ? `<span>${escapeHtml(event.home)}</span>`
+        : `<button class="live-event-team" type="button" data-team="${escapeHtml(event.home)}">${escapeHtml(event.home)}</button>`;
+      const away = normalizeTeamName(event.away) === 'a determiner'
+        ? `<span>${escapeHtml(event.away)}</span>`
+        : `<button class="live-event-team" type="button" data-team="${escapeHtml(event.away)}">${escapeHtml(event.away)}</button>`;
+      return `<span class="live-event ${event.type}">
+        <span>${escapeHtml(event.prefix)}</span>
+        ${home}
+        <span>${escapeHtml(event.center)}</span>
+        ${away}
+      </span>`;
     }
 
     function renderLiveEventsTicker(matches) {
@@ -3220,7 +3367,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         return;
       }
       communityLiveTicker.classList.remove('no-scroll');
-      const items = [...events, ...events].map(event => `<span class="live-event ${event.type}">${escapeHtml(event.text)}</span>`).join('');
+      const items = [...events, ...events].map(liveEventMarkup).join('');
       communityLiveTicker.innerHTML = `<div class="live-events-badge">LIVE</div><div class="live-events-window"><div class="live-events-track">${items}</div></div>`;
     }
 
@@ -3418,7 +3565,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           <div class="profile-stat"><strong>${escapeHtml(profile.exact_scores || 0)}</strong><span>scores exacts</span></div>
           <div class="profile-stat"><strong>${escapeHtml(profile.success_rate || 0)}%</strong><span>réussite</span></div>
         </div>
-        <div class="team-info"><div class="team-info-label">Progression</div><div class="team-info-value">Pronostics : ${escapeHtml(profile.level || 'Débutant')} — prochain palier à ${escapeHtml(profile.next_level_at || 10)} pronostics<br>Quiz : ${escapeHtml(quizLevel || 'Non classé')}</div></div>
+        <div class="team-info"><div class="team-info-label">Progression</div><div class="team-info-value">Pronostics : ${escapeHtml(profile.level || 'Débutant')}<br>Quiz : ${escapeHtml(quizLevel || 'Non classé')}</div></div>
         <h3>Derniers pronostics</h3>
         <div class="profile-history">${history.length ? history.map(profileHistoryRow).join('') : '<div class="empty">Aucun pronostic enregistré.</div>'}</div>
       `;
