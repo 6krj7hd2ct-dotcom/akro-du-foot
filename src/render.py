@@ -2047,7 +2047,7 @@ def _normalize_team_label(value: str) -> str:
 
 def _group_card(group: dict[str, Any]) -> str:
     rows = []
-    for team in group.get("teams", []):
+    for team in group.get("teams", []) or group.get("standings", []) or []:
         rows.append(
             "<tr>"
             f"<td>{escape(str(team.get('rank', '')))}</td>"
