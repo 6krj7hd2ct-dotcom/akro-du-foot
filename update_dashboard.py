@@ -34,17 +34,17 @@ def main() -> None:
     else:
         print("[source] fallback externe activé: Mercato Live", flush=True)
         mercato_items = fetch_mercato_live()
-    mercado_generated = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    mercado_fallback = mercado_cache_fresh or (not bool(mercato_items) and bool(previous_mercato.get("items")))
-    mercado_failed_fallback = not mercado_cache_fresh and not bool(mercato_items) and bool(previous_mercato.get("items"))
-    mercado_source_items = mercato_items or previous_mercato.get("items", [])
+    mercato_generated = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    mercato_fallback = mercato_cache_fresh or (not bool(mercato_items) and bool(previous_mercato.get("items")))
+    mercato_failed_fallback = not mercato_cache_fresh and not bool(mercato_items) and bool(previous_mercato.get("items"))
+    mercato_source_items = mercato_items or previous_mercato.get("items", [])
     mercato_data = {
-        "items": mercado_source_items,
+        "items": mercato_source_items,
         "source": "Mercato Live",
         "url": "https://www.mercatolive.fr/",
-        "generated_at": previous_mercato.get("generated_at") if mercado_fallback else mercado_generated,
-        "fallback": mercado_fallback,
-        "errors": ["Mercato Live indisponible : conservation du dernier cache valide."] if mercado_failed_fallback else [],
+        "generated_at": previous_mercato.get("generated_at") if mercato_fallback else mercato_generated,
+        "fallback": mercato_fallback,
+        "errors": ["Mercato Live indisponible : conservation du dernier cache valide."] if mercato_failed_fallback else [],
     }
     _clear_competition_news(worldcup_data)
     _clear_competition_news(champions_league_data)
