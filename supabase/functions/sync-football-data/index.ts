@@ -59,6 +59,33 @@ function pick<T = unknown>(obj: Json, paths: string[], fallback: T): T {
   return fallback;
 }
 
+function dedupeRows(table: string, rows: Json[], keyForRow: (row: Json) => string) {
+  const byKey = new Map<string, Json>();
+  let missingKey = 0;
+  for (const row of rows) {
+    const key = keyForRow(row).trim();
+    if (!key) {
+      missingKey += 1;
+      continue;
+    }
+    byKey.set(key, row);
+  }
+  const deduped = Array.from(byKey.values());
+  const removed = rows.length - deduped.length;
+  console.log("[sync-football-data] dedupe before upsert", {
+    table,
+    input: rows.length,
+    output: deduped.length,
+    removed,
+    missingKey,
+  });
+  return deduped;
+}
+
+function apiIdKey(row: Json) {
+  return String(row.api_id ?? "");
+}
+
 async function withRetry(url: string, attempt = 1): Promise<Json[]> {
   console.log("[sync-football-data] football api request", {url, attempt, header: API_KEY_HEADER, hasApiKey: Boolean(API_KEY)});
   const res = await fetch(url, {headers: {[API_KEY_HEADER]: API_KEY, "Accept": "application/json"}});
@@ -162,20 +189,21 @@ Deno.serve(async () => {
     console.log("[sync-football-data] step countries start");
     const countries = await football("countries");
     console.log("[sync-football-data] step countries fetched", {count: countries.length});
-    counts.countries = await upsert("countries", countries.map(item => ({
+    const countryRows = dedupeRows("countries", countries.map(item => ({
       api_id: String(pick(item, ["code", "name"], "")),
       name: String(pick(item, ["name", "country.name"], "Information non disponible")),
       code: String(pick(item, ["code"], "")),
       flag_url: String(pick(item, ["flag", "country.flag"], "")),
       updated_at: new Date().toISOString(),
-    })).filter(row => row.api_id && row.name));
+    })).filter(row => row.api_id && row.name), row => apiIdKey(row) || `${row.code ?? ""}:${row.name ?? ""}`);
+    counts.countries = await upsert("countries", countryRows);
     console.log("[sync-football-data] step countries done", {inserted: counts.countries});
 
     console.log("[sync-football-data] step competitions start");
     const countryMap = await readIdMap("countries");
     const competitions = await football("leagues", {current: "true"});
     console.log("[sync-football-data] step competitions fetched", {count: competitions.length});
-    counts.competitions = await upsert("competitions", competitions.map(item => {
+    const competitionRows = dedupeRows("competitions", competitions.map(item => {
       const league = pick<Json>(item, ["league"], {});
       const country = pick<Json>(item, ["country"], {});
       const seasons = pick<Json[]>(item, ["seasons"], []);
@@ -190,7 +218,8 @@ Deno.serve(async () => {
         raw_data: item,
         updated_at: new Date().toISOString(),
       };
-    }).filter(row => row.api_id && row.name));
+    }).filter(row => row.api_id && row.name), apiIdKey);
+    counts.competitions = await upsert("competitions", competitionRows);
     console.log("[sync-football-data] step competitions done", {inserted: counts.competitions});
 
     console.log("[sync-football-data] step teams start");
@@ -202,7 +231,7 @@ Deno.serve(async () => {
       console.log("[sync-football-data] fetch teams", {leagueId});
       const teams = await football("teams", {league: leagueId, season: new Date().getUTCFullYear()});
       console.log("[sync-football-data] teams fetched", {leagueId, count: teams.length});
-      counts.teams = Number(counts.teams) + await upsert("teams", teams.map(item => {
+      const teamRows = dedupeRows("teams", teams.map(item => {
         const team = pick<Json>(item, ["team"], {});
         const venue = pick<Json>(item, ["venue"], {});
         const countryName = String(pick(team, ["country"], ""));
@@ -218,7 +247,8 @@ Deno.serve(async () => {
           raw_data: item,
           updated_at: new Date().toISOString(),
         };
-      }).filter(row => row.api_id && row.name));
+      }).filter(row => row.api_id && row.name), apiIdKey);
+      counts.teams = Number(counts.teams) + await upsert("teams", teamRows);
       console.log("[sync-football-data] teams upserted cumulative", {teams: counts.teams});
     }
 
@@ -232,7 +262,7 @@ Deno.serve(async () => {
       const squad = await football("players/squads", {team: teamApiId});
       const players = squad.flatMap(item => asArray((item as Json).players));
       console.log("[sync-football-data] squad fetched", {teamApiId, squadRows: squad.length, players: players.length});
-      counts.players = Number(counts.players) + await upsert("players", players.map(item => ({
+      const playerRows = dedupeRows("players", players.map(item => ({
         api_id: String(pick(item, ["id"], "")),
         name: String(pick(item, ["name"], "Information non disponible")),
         position: String(pick(item, ["position"], "")),
@@ -240,11 +270,12 @@ Deno.serve(async () => {
         is_active: true,
         raw_data: item,
         updated_at: new Date().toISOString(),
-      })).filter(row => row.api_id && row.name));
+      })).filter(row => row.api_id && row.name), apiIdKey);
+      counts.players = Number(counts.players) + await upsert("players", playerRows);
 
       const playerMap = await readIdMap("players");
       console.log("[sync-football-data] upsert team_players", {teamApiId, players: players.length});
-      counts.team_players = Number(counts.team_players) + await upsert("team_players", players.map(item => {
+      const teamPlayerRows = dedupeRows("team_players", players.map(item => {
         const playerId = playerMap.get(String(pick(item, ["id"], "")));
         return {
           api_id: `${teamApiId}:${pick(item, ["id"], "")}:${new Date().getUTCFullYear()}`,
@@ -257,12 +288,13 @@ Deno.serve(async () => {
           raw_data: item,
           updated_at: new Date().toISOString(),
         };
-      }).filter(row => row.team_id && row.player_id), "api_id");
+      }).filter(row => row.team_id && row.player_id), row => apiIdKey(row) || `${row.team_id ?? ""}:${row.player_id ?? ""}:${row.season ?? ""}`);
+      counts.team_players = Number(counts.team_players) + await upsert("team_players", teamPlayerRows, "api_id");
 
       console.log("[sync-football-data] fetch coaches", {teamApiId});
       const coaches = await football("coachs", {team: teamApiId});
       console.log("[sync-football-data] coaches fetched", {teamApiId, count: coaches.length});
-      counts.coaches = Number(counts.coaches) + await upsert("coaches", coaches.map(item => ({
+      const coachRows = dedupeRows("coaches", coaches.map(item => ({
         api_id: String(pick(item, ["id"], "")),
         name: String(pick(item, ["name"], "Information non disponible")),
         firstname: String(pick(item, ["firstname"], "")),
@@ -273,11 +305,12 @@ Deno.serve(async () => {
         is_active: true,
         raw_data: item,
         updated_at: new Date().toISOString(),
-      })).filter(row => row.api_id && row.name));
+      })).filter(row => row.api_id && row.name), apiIdKey);
+      counts.coaches = Number(counts.coaches) + await upsert("coaches", coachRows);
 
       const coachMap = await readIdMap("coaches");
       console.log("[sync-football-data] upsert team_coaches", {teamApiId, coaches: coaches.length});
-      counts.team_coaches = Number(counts.team_coaches) + await upsert("team_coaches", coaches.map(item => ({
+      const teamCoachRows = dedupeRows("team_coaches", coaches.map(item => ({
         api_id: `${teamApiId}:${pick(item, ["id"], "")}:${new Date().getUTCFullYear()}`,
         team_id: teamMap.get(teamApiId),
         coach_id: coachMap.get(String(pick(item, ["id"], ""))),
@@ -286,7 +319,8 @@ Deno.serve(async () => {
         is_active: true,
         raw_data: item,
         updated_at: new Date().toISOString(),
-      })).filter(row => row.team_id && row.coach_id), "api_id");
+      })).filter(row => row.team_id && row.coach_id), row => apiIdKey(row) || `${row.team_id ?? ""}:${row.coach_id ?? ""}:${row.season ?? ""}:${row.role ?? ""}`);
+      counts.team_coaches = Number(counts.team_coaches) + await upsert("team_coaches", teamCoachRows, "api_id");
     }
 
     console.log("[sync-football-data] step matches start");
@@ -294,7 +328,7 @@ Deno.serve(async () => {
       console.log("[sync-football-data] fetch fixtures", {leagueId});
       const fixtures = await football("fixtures", {league: leagueId, season: new Date().getUTCFullYear()});
       console.log("[sync-football-data] fixtures fetched", {leagueId, count: fixtures.length});
-      counts.matches = Number(counts.matches) + await upsert("matches", fixtures.map(item => {
+      const matchRows = dedupeRows("matches", fixtures.map(item => {
         const fixture = pick<Json>(item, ["fixture"], {});
         const teams = pick<Json>(item, ["teams"], {});
         const goals = pick<Json>(item, ["goals"], {});
@@ -315,7 +349,8 @@ Deno.serve(async () => {
           raw_data: item,
           updated_at: new Date().toISOString(),
         };
-      }).filter(row => row.api_id));
+      }).filter(row => row.api_id), apiIdKey);
+      counts.matches = Number(counts.matches) + await upsert("matches", matchRows);
       console.log("[sync-football-data] fixtures upserted cumulative", {matches: counts.matches});
     }
 
