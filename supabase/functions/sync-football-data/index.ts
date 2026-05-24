@@ -8,10 +8,11 @@ const API_KEY = Deno.env.get("FOOTBALL_API_KEY") ?? "";
 const API_BASE_URL = (Deno.env.get("FOOTBALL_API_BASE_URL") ?? "").replace(/\/$/, "");
 const API_KEY_HEADER = Deno.env.get("FOOTBALL_API_KEY_HEADER") ?? "x-apisports-key";
 const DEFAULT_LEAGUE_LIMIT = 1;
-const DEFAULT_TEAM_LIMIT = 1;
+const DEFAULT_TEAM_LIMIT = 3;
 const DEFAULT_TEAMS_TOTAL_LIMIT = 50;
-const INCLUDE_DETAILS = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_DETAILS") ?? "false").toLowerCase() === "true";
-const INCLUDE_MATCHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_MATCHES") ?? "false").toLowerCase() === "true";
+const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
+const INCLUDE_DETAILS = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_DETAILS") ?? "true").toLowerCase() === "true";
+const INCLUDE_MATCHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_MATCHES") ?? "true").toLowerCase() === "true";
 
 console.log("[sync-football-data] boot", {
   hasSupabaseUrl: Boolean(SUPABASE_URL),
@@ -23,6 +24,7 @@ console.log("[sync-football-data] boot", {
   leagueLimit: Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(DEFAULT_LEAGUE_LIMIT),
   teamLimit: Deno.env.get("FOOTBALL_SYNC_TEAM_LIMIT") ?? String(DEFAULT_TEAM_LIMIT),
   teamsTotalLimit: Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT),
+  matchesTotalLimit: Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT),
   includeDetails: INCLUDE_DETAILS,
   includeMatches: INCLUDE_MATCHES,
 });
@@ -262,6 +264,7 @@ Deno.serve(async () => {
     const leagueLimit = Number(Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(DEFAULT_LEAGUE_LIMIT));
     const teamsTotalLimit = Number(Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT));
     const leagueIds = Array.from(competitionMap.keys()).slice(0, leagueLimit);
+    const syncedTeamApiIds: string[] = [];
     console.log("[sync-football-data] league ids selected", {leagueLimit, teamsTotalLimit, leagueIds});
     for (const leagueId of leagueIds) {
       if (Number(counts.teams) >= teamsTotalLimit) {
@@ -292,6 +295,7 @@ Deno.serve(async () => {
       const remaining = Math.max(0, teamsTotalLimit - Number(counts.teams));
       const limitedTeamRows = teamRows.slice(0, remaining);
       const linkedCountries = limitedTeamRows.filter(row => row.country_id).length;
+      syncedTeamApiIds.push(...limitedTeamRows.map(row => String(row.api_id ?? "")).filter(Boolean));
       console.log("[sync-football-data] teams prepared", {
         leagueId,
         fetched: teams.length,
@@ -313,8 +317,12 @@ Deno.serve(async () => {
     console.log("[sync-football-data] step squads/coaches start");
     const teamMap = await readIdMap("teams");
     const teamLimit = Number(Deno.env.get("FOOTBALL_SYNC_TEAM_LIMIT") ?? String(DEFAULT_TEAM_LIMIT));
-    const teamApiIds = Array.from(teamMap.keys()).slice(0, teamLimit);
-    console.log("[sync-football-data] team ids selected", {teamLimit, teamApiIds});
+    const teamApiIds = syncedTeamApiIds.slice(0, teamLimit);
+    console.log("[sync-football-data] team ids selected", {
+      teamLimit,
+      teamApiIds,
+      source: "teams synchronized in this run only",
+    });
     for (const teamApiId of teamApiIds) {
       console.log("[sync-football-data] fetch squad", {teamApiId});
       const squad = await football("players/squads", {team: teamApiId});
@@ -329,6 +337,7 @@ Deno.serve(async () => {
         raw_data: item,
         updated_at: new Date().toISOString(),
       })).filter(row => row.api_id && row.name), apiIdKey);
+      console.log("[sync-football-data] players prepared", {teamApiId, fetched: players.length, deduped: playerRows.length});
       counts.players = Number(counts.players) + await upsert("players", playerRows);
 
       const playerMap = await readIdMap("players");
@@ -364,6 +373,7 @@ Deno.serve(async () => {
         raw_data: item,
         updated_at: new Date().toISOString(),
       })).filter(row => row.api_id && row.name), apiIdKey);
+      console.log("[sync-football-data] coaches prepared", {teamApiId, fetched: coaches.length, deduped: coachRows.length});
       counts.coaches = Number(counts.coaches) + await upsert("coaches", coachRows);
 
       const coachMap = await readIdMap("coaches");
@@ -388,7 +398,13 @@ Deno.serve(async () => {
     }
 
     console.log("[sync-football-data] step matches start");
+    const matchesTotalLimit = Number(Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT));
+    console.log("[sync-football-data] matches limit", {matchesTotalLimit});
     for (const leagueId of leagueIds) {
+      if (Number(counts.matches) >= matchesTotalLimit) {
+        console.log("[sync-football-data] matches total limit reached before league", {matches: counts.matches, matchesTotalLimit});
+        break;
+      }
       console.log("[sync-football-data] fetch fixtures", {leagueId});
       const fixtures = await football("fixtures", {league: leagueId, season: new Date().getUTCFullYear()});
       console.log("[sync-football-data] fixtures fetched", {leagueId, count: fixtures.length});
@@ -414,8 +430,17 @@ Deno.serve(async () => {
           updated_at: new Date().toISOString(),
         };
       }).filter(row => row.api_id), apiIdKey);
-      counts.matches = Number(counts.matches) + await upsert("matches", matchRows);
-      console.log("[sync-football-data] fixtures upserted cumulative", {matches: counts.matches});
+      const remainingMatches = Math.max(0, matchesTotalLimit - Number(counts.matches));
+      const limitedMatchRows = matchRows.slice(0, remainingMatches);
+      console.log("[sync-football-data] matches prepared", {
+        leagueId,
+        fetched: fixtures.length,
+        deduped: matchRows.length,
+        limited: limitedMatchRows.length,
+        matchesTotalLimit,
+      });
+      counts.matches = Number(counts.matches) + await upsert("matches", limitedMatchRows);
+      console.log("[sync-football-data] fixtures upserted cumulative", {matches: counts.matches, matchesTotalLimit});
     }
 
     console.log("[sync-football-data] sync success", {counts});
