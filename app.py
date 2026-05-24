@@ -439,6 +439,10 @@ if app:
         print(f"[championnats] cache utilisé: leagues={len(leagues)} big5={len(payload.get('big5_top_scorers') or [])} rendered={rendered}", flush=True)
         return jsonify(payload)
 
+    @app.get("/api/football-supabase")
+    def football_supabase_data():
+        return jsonify(_football_supabase_payload())
+
     @app.post("/api/football-chatbot")
     def football_chatbot():
         payload = request.get_json(silent=True) or {}
@@ -529,6 +533,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
 
     context = _coach_context_summary()
     entity_profile_context = _coach_entity_profile_context(resolved_question)
+    supabase_football_context = _coach_supabase_context(resolved_question)
     history_text = _format_chat_history(merged_history)
     try:
         import requests
@@ -574,6 +579,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                             f"Contexte détecté: {json.dumps(context_state, ensure_ascii=False)}\n"
                             f"Historique récent:\n{history_text}\n\n"
                             f"Vérification football récente:\n{verification.get('context', '')}\n\n"
+                            f"Données Supabase/API-Football synchronisées:\n{supabase_football_context or 'Aucune donnée Supabase pertinente trouvée pour cette question.'}\n\n"
                             f"Profils football Supabase pertinents:\n{entity_profile_context or 'Aucun profil vectoriel pertinent disponible.'}\n\n"
                             f"Données Akro du Foot disponibles:\n{context}\n\n"
                             f"Question utilisateur résolue:\n{resolved_question}"
@@ -656,6 +662,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
     if not api_key:
         return {"error": COACH_UNAVAILABLE}, 503
 
+    supabase_football_context = _coach_supabase_context(query)
     try:
         import requests
 
@@ -678,7 +685,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
                             "Si la vérification est limitée, signale-le et évite les affirmations catégoriques."
                         ),
                     },
-                    {"role": "user", "content": f"Vérification:\n{verification.get('context', '')}\n\nQuestion:\n{query}"},
+                    {"role": "user", "content": f"Vérification:\n{verification.get('context', '')}\n\nDonnées Supabase/API-Football:\n{supabase_football_context or 'Aucune donnée Supabase pertinente.'}\n\nQuestion:\n{query}"},
                 ],
                 "temperature": 0.25,
                 "max_output_tokens": 700,
@@ -1278,6 +1285,9 @@ def _is_correction_message(normalized_text: str) -> bool:
 def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
     normalized = _normalize_football_text(question)
     recent = _recent_history_text(history)
+    supabase_answer = _supabase_local_answer(normalized)
+    if supabase_answer:
+        return supabase_answer
     if _is_correction_message(normalized):
         if "mbappe" in recent or "mbappe" in normalized:
             player = _find_player_fact("mbappe")
@@ -1736,6 +1746,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
             }
             print(f"[championnats] cache utilisé: leagues={len(leagues)} big5={len(payload.get('big5_top_scorers') or [])} rendered={rendered}", flush=True)
             self._send_json(payload)
+        elif path == "/api/football-supabase":
+            self._send_json(_football_supabase_payload())
         elif path == "/api/coach/messages":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             session_id = _clean(_url_decode(query.get("session_id", "")), 120)
@@ -1880,6 +1892,198 @@ def _supabase_service_request(method: str, path: str, **kwargs: Any) -> Any:
     except Exception as exc:
         print(f"[supabase-service] {method} {path} error: {exc}")
         return None
+
+
+def _football_supabase_payload() -> dict[str, Any]:
+    if not _supabase_service_enabled():
+        return {"configured": False, "teams": [], "countries": [], "competitions": [], "matches": [], "source": "fallback"}
+
+    countries = _supabase_service_request("GET", "countries?select=id,api_id,name,code,flag_url&order=name.asc&limit=300") or []
+    competitions = _supabase_service_request("GET", "competitions?select=id,api_id,country_id,name,type,logo_url,season,updated_at&is_active=eq.true&order=name.asc&limit=300") or []
+    teams = _supabase_service_request("GET", "teams?select=id,api_id,country_id,name,short_name,code,type,logo_url,venue_name,updated_at&is_active=eq.true&order=updated_at.desc&limit=500") or []
+    players = _supabase_service_request("GET", "players?select=id,api_id,name,position,photo_url,updated_at&is_active=eq.true&order=updated_at.desc&limit=1200") or []
+    coaches = _supabase_service_request("GET", "coaches?select=id,api_id,name,photo_url,nationality,updated_at&is_active=eq.true&order=updated_at.desc&limit=500") or []
+    team_players = _supabase_service_request("GET", "team_players?select=team_id,player_id,season,shirt_number,position,updated_at&is_active=eq.true&order=updated_at.desc&limit=1200") or []
+    team_coaches = _supabase_service_request("GET", "team_coaches?select=team_id,coach_id,season,role,updated_at&is_active=eq.true&order=updated_at.desc&limit=500") or []
+    matches = _supabase_service_request("GET", "matches?select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,updated_at&order=match_date.desc&limit=500") or []
+
+    country_by_id = {str(row.get("id")): row for row in countries if row.get("id")}
+    team_by_id = {str(row.get("id")): row for row in teams if row.get("id")}
+    player_by_id = {str(row.get("id")): row for row in players if row.get("id")}
+    coach_by_id = {str(row.get("id")): row for row in coaches if row.get("id")}
+    competition_by_id = {str(row.get("id")): row for row in competitions if row.get("id")}
+
+    players_by_team: dict[str, list[dict[str, Any]]] = {}
+    for link in team_players:
+        team_id = str(link.get("team_id") or "")
+        player = player_by_id.get(str(link.get("player_id") or ""))
+        if not team_id or not player:
+            continue
+        players_by_team.setdefault(team_id, []).append({
+            "name": player.get("name") or "",
+            "position": link.get("position") or player.get("position") or "",
+            "shirt_number": link.get("shirt_number"),
+            "photo_url": player.get("photo_url") or "",
+            "season": link.get("season") or "",
+        })
+
+    coaches_by_team: dict[str, list[dict[str, Any]]] = {}
+    for link in team_coaches:
+        team_id = str(link.get("team_id") or "")
+        coach = coach_by_id.get(str(link.get("coach_id") or ""))
+        if not team_id or not coach:
+            continue
+        coaches_by_team.setdefault(team_id, []).append({
+            "name": coach.get("name") or "",
+            "role": link.get("role") or "coach",
+            "photo_url": coach.get("photo_url") or "",
+            "nationality": coach.get("nationality") or "",
+            "season": link.get("season") or "",
+        })
+
+    public_matches = []
+    competition_for_team: dict[str, str] = {}
+    for match in matches:
+        home = team_by_id.get(str(match.get("home_team_id") or ""))
+        away = team_by_id.get(str(match.get("away_team_id") or ""))
+        competition = competition_by_id.get(str(match.get("competition_id") or ""))
+        competition_name = competition.get("name") if competition else ""
+        if home and competition_name:
+            competition_for_team.setdefault(str(home.get("id")), str(competition_name))
+        if away and competition_name:
+            competition_for_team.setdefault(str(away.get("id")), str(competition_name))
+        public_matches.append({
+            "id": match.get("api_id") or match.get("id") or "",
+            "competition": competition_name or "Compétition",
+            "phase": match.get("round") or "",
+            "date": match.get("match_date") or "",
+            "status": match.get("status") or "",
+            "venue": match.get("venue_name") or "",
+            "home_team": home.get("name") if home else "Équipe à compléter",
+            "away_team": away.get("name") if away else "Équipe à compléter",
+            "home_flag_url": home.get("logo_url") if home else "",
+            "away_flag_url": away.get("logo_url") if away else "",
+            "home_score": "" if match.get("home_score") is None else str(match.get("home_score")),
+            "away_score": "" if match.get("away_score") is None else str(match.get("away_score")),
+            "completed": str(match.get("status") or "").lower() in {"ft", "aet", "pen", "terminé", "match finished"},
+        })
+
+    public_teams = []
+    for row in teams:
+        country = country_by_id.get(str(row.get("country_id") or ""))
+        team_id = str(row.get("id") or "")
+        squad = players_by_team.get(team_id, [])
+        coaches_list = coaches_by_team.get(team_id, [])
+        public_teams.append({
+            "id": team_id,
+            "api_id": row.get("api_id") or "",
+            "name": row.get("name") or "",
+            "short_name": row.get("short_name") or "",
+            "code": row.get("code") or "",
+            "type": row.get("type") or "club",
+            "logo_url": row.get("logo_url") or "",
+            "venue_name": row.get("venue_name") or "",
+            "country": country.get("name") if country else "",
+            "country_code": country.get("code") if country else "",
+            "country_flag_url": country.get("flag_url") if country else "",
+            "competition": competition_for_team.get(team_id, ""),
+            "coach": coaches_list[0]["name"] if coaches_list else "",
+            "coaches": coaches_list,
+            "squad": squad,
+            "updated_at": row.get("updated_at") or "",
+        })
+
+    print(
+        "[football-supabase] "
+        f"countries={len(countries)} competitions={len(competitions)} teams={len(public_teams)} "
+        f"players={len(players)} coaches={len(coaches)} matches={len(public_matches)}",
+        flush=True,
+    )
+    return {
+        "configured": True,
+        "source": "supabase",
+        "countries": countries,
+        "competitions": competitions,
+        "teams": public_teams,
+        "matches": public_matches,
+        "counts": {
+            "countries": len(countries),
+            "competitions": len(competitions),
+            "teams": len(public_teams),
+            "players": len(players),
+            "coaches": len(coaches),
+            "matches": len(public_matches),
+        },
+    }
+
+
+def _coach_supabase_context(question: str) -> str:
+    if not question or not _supabase_service_enabled():
+        return ""
+    normalized = _normalize_football_text(question)
+    payload = _football_supabase_payload()
+    snippets = []
+    for team in payload.get("teams", [])[:120]:
+      haystack = _normalize_football_text(f"{team.get('name', '')} {team.get('short_name', '')} {team.get('code', '')} {team.get('country', '')}")
+      if normalized and any(word in haystack for word in normalized.split() if len(word) > 2):
+          parts = [team.get("name") or "Équipe"]
+          if team.get("country"):
+              parts.append(f"pays: {team['country']}")
+          if team.get("competition"):
+              parts.append(f"compétition: {team['competition']}")
+          if team.get("coach"):
+              parts.append(f"coach: {team['coach']}")
+          squad = team.get("squad") or []
+          if squad:
+              parts.append("joueurs: " + ", ".join(player.get("name", "") for player in squad[:8] if player.get("name")))
+          snippets.append("- " + " · ".join(parts))
+    if not snippets:
+        for competition in payload.get("competitions", [])[:80]:
+            haystack = _normalize_football_text(f"{competition.get('name', '')} {competition.get('season', '')}")
+            if normalized and any(word in haystack for word in normalized.split() if len(word) > 2):
+                snippets.append(f"- Compétition: {competition.get('name')} · saison {competition.get('season') or 'non précisée'}")
+    if not snippets:
+        for match in payload.get("matches", [])[:80]:
+            haystack = _normalize_football_text(f"{match.get('home_team', '')} {match.get('away_team', '')} {match.get('competition', '')}")
+            if normalized and any(word in haystack for word in normalized.split() if len(word) > 2):
+                snippets.append(f"- Match: {match.get('home_team')} vs {match.get('away_team')} · {match.get('competition')} · {match.get('status')}")
+    return "\n".join(snippets[:8])
+
+
+def _supabase_local_answer(normalized_question: str) -> str:
+    if not normalized_question or not _supabase_service_enabled():
+        return ""
+    if not any(term in normalized_question for term in {"coach", "entraineur", "effectif", "joueur", "joueurs", "match", "calendrier", "club", "equipe"}):
+        return ""
+    payload = _football_supabase_payload()
+    words = [word for word in normalized_question.split() if len(word) > 2]
+    team = None
+    for candidate in payload.get("teams", []):
+        haystack = _normalize_football_text(f"{candidate.get('name', '')} {candidate.get('short_name', '')} {candidate.get('code', '')}")
+        if haystack and any(word in haystack for word in words):
+            team = candidate
+            break
+    if not team:
+        return ""
+    name = team.get("name") or "cette équipe"
+    if any(term in normalized_question for term in {"coach", "entraineur", "selectionneur"}):
+        coach = team.get("coach")
+        if coach:
+            return f"Résumé : {name} est entraîné par {coach}.\n\nSource locale : Supabase/API-Football synchronisé."
+    if any(term in normalized_question for term in {"effectif", "joueur", "joueurs"}):
+        squad = team.get("squad") or []
+        if squad:
+            names = ", ".join(player.get("name", "") for player in squad[:12] if player.get("name"))
+            return f"Résumé : l’effectif synchronisé de {name} contient notamment {names}.\n\nSource locale : Supabase/API-Football synchronisé."
+    if any(term in normalized_question for term in {"match", "calendrier", "resultat", "résultat"}):
+        matches = [
+            match for match in payload.get("matches", [])
+            if name in {match.get("home_team"), match.get("away_team")}
+        ][:5]
+        if matches:
+            lines = "; ".join(f"{match.get('home_team')} vs {match.get('away_team')} ({match.get('competition')}, {match.get('status')})" for match in matches)
+            return f"Résumé : voici les matchs synchronisés pour {name} : {lines}.\n\nSource locale : Supabase/API-Football synchronisé."
+    return ""
 
 
 def _sync_admin_authorized(payload: dict[str, Any]) -> bool:

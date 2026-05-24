@@ -1925,17 +1925,115 @@
     const teamSquad = document.getElementById('teamSquad');
     const teamTabs = document.getElementById('teamModalTabs');
     const closeModal = document.getElementById('teamModalClose');
+    const AKRO_SUPABASE_FOOTBALL = {teams: [], countries: [], competitions: [], matches: [], counts: {}};
 
     function escapeHtml(value) {
       return String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
     }
+
+    function normalizeFootballName(value) {
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    function supabaseTeamFromName(name) {
+      const target = normalizeFootballName(name);
+      return (AKRO_SUPABASE_FOOTBALL.teams || []).find(team => {
+        const aliases = [team.name, team.short_name, team.code].map(normalizeFootballName).filter(Boolean);
+        return aliases.includes(target);
+      }) || null;
+    }
+
+    function supabaseTeamDetails(name) {
+      const team = supabaseTeamFromName(name);
+      if (!team) return null;
+      const squad = (team.squad || []).map(player => ({
+        name: player.name,
+        position: player.position,
+        shirt_number: player.shirt_number,
+        photo_url: player.photo_url
+      }));
+      return {
+        key: team.name,
+        name: team.name,
+        original_name: team.name,
+        api_id: team.api_id,
+        flag_url: team.logo_url || team.country_flag_url || '',
+        country_code: team.country_code || team.code || '',
+        country: team.country || '',
+        competition: team.competition || '',
+        venue_name: team.venue_name || '',
+        coach: team.coach || '',
+        coaches: team.coaches || [],
+        formation: '',
+        starters: [],
+        substitutes: [],
+        squad,
+        sources: ['Supabase/API-Football']
+      };
+    }
+
+    function mergeTeamDetails(name) {
+      const local = TEAMS_DETAILS[name] || {};
+      const synced = supabaseTeamDetails(name) || supabaseTeamDetails(local.name) || null;
+      if (!synced) return local.name ? local : {name};
+      return {
+        ...local,
+        ...synced,
+        flag_url: synced.flag_url || local.flag_url || '',
+        coach: synced.coach || local.coach || '',
+        squad: synced.squad?.length ? synced.squad : (local.squad || []),
+        sources: Array.from(new Set([...(synced.sources || []), ...(local.sources || [])]))
+      };
+    }
+
+    function applySupabaseFootballData(data) {
+      if (!data || !Array.isArray(data.teams)) return;
+      AKRO_SUPABASE_FOOTBALL.teams = data.teams || [];
+      AKRO_SUPABASE_FOOTBALL.countries = data.countries || [];
+      AKRO_SUPABASE_FOOTBALL.competitions = data.competitions || [];
+      AKRO_SUPABASE_FOOTBALL.matches = data.matches || [];
+      AKRO_SUPABASE_FOOTBALL.counts = data.counts || {};
+      AKRO_SUPABASE_FOOTBALL.teams.forEach(team => {
+        if (!team.name) return;
+        TEAMS_DETAILS[team.name] = mergeTeamDetails(team.name);
+      });
+      if (typeof TEAM_MATCHES !== 'undefined' && Array.isArray(TEAM_MATCHES)) {
+        const seen = new Set(TEAM_MATCHES.map(match => String(match.id || `${match.home_team}-${match.away_team}-${match.date}`)));
+        (AKRO_SUPABASE_FOOTBALL.matches || []).forEach(match => {
+          const key = String(match.id || `${match.home_team}-${match.away_team}-${match.date}`);
+          if (!seen.has(key)) {
+            seen.add(key);
+            TEAM_MATCHES.push(match);
+          }
+        });
+      }
+      if (typeof renderGlobalSearch === 'function') {
+        const input = document.getElementById('globalSearchInput');
+        if (input?.value) renderGlobalSearch(input.value);
+      }
+      if (typeof initQuizSelectors === 'function') initQuizSelectors();
+      if (typeof renderLeague === 'function') renderLeague();
+      console.log('[football-supabase] données appliquées', AKRO_SUPABASE_FOOTBALL.counts);
+    }
+
+    async function loadSupabaseFootballData() {
+      try {
+        const response = await fetch('/api/football-supabase');
+        if (!response.ok) return;
+        const data = await response.json();
+        applySupabaseFootballData(data);
+      } catch (error) {
+        console.warn('[football-supabase] fallback données locales', error);
+      }
+    }
+    window.addEventListener('load', loadSupabaseFootballData, {once: true});
 
     function flagHtml(url) {
       return url ? `<img class="team-modal-flag" src="${escapeHtml(url)}" alt="">` : '<div class="team-modal-flag flag placeholder" aria-hidden="true"></div>';
     }
 
     function teamDisplayName(name) {
-      const details = TEAMS_DETAILS[name] || {};
+      const details = mergeTeamDetails(name);
       return details.name || name || 'Équipe';
     }
 
@@ -2099,10 +2197,10 @@
     }
 
     function openTeam(name) {
-      const details = TEAMS_DETAILS[name] || {name};
+      const details = mergeTeamDetails(name);
       modalTitle.textContent = details.name || name;
       modalFlag.innerHTML = flagHtml(details.flag_url || '');
-      modalSources.textContent = 'Résultats disponibles dans les calendriers du dashboard';
+      modalSources.textContent = (details.sources || []).join(', ') || 'Résultats disponibles dans les calendriers du dashboard';
       teamHonors.innerHTML = honorsCard(details);
       teamSquad.innerHTML = squadCard(details);
       const matches = recentMatches(name);
@@ -3958,6 +4056,14 @@ grant select, insert, update on public.profiles to authenticated;`;
       Object.entries(typeof TEAMS_DETAILS !== 'undefined' ? TEAMS_DETAILS : {}).forEach(([name, details]) => {
         add('Club', details.name || name, 'Fiche équipe, forme récente et entraîneur si disponibles', 'team', name);
       });
+      (AKRO_SUPABASE_FOOTBALL.teams || []).forEach(team => {
+        const kind = team.type === 'nation' ? 'Nation' : 'Club';
+        const detail = [team.country, team.competition, team.coach ? `Coach : ${team.coach}` : ''].filter(Boolean).join(' · ') || 'Données Supabase/API-Football';
+        add(kind, team.name, detail, 'team', team.name, [team.short_name, team.code].filter(Boolean));
+      });
+      (AKRO_SUPABASE_FOOTBALL.competitions || []).forEach(competition => {
+        add('Compétition', competition.name, `Saison ${competition.season || 'non précisée'} · Supabase`, 'competition', competition.api_id || competition.name);
+      });
       ((typeof TEAM_MATCHES !== 'undefined' ? TEAM_MATCHES : (typeof DASHBOARD_MATCHES !== 'undefined' ? DASHBOARD_MATCHES : []))).forEach(match => {
         add('Match', `${match.home_team} vs ${match.away_team}`, `${match.competition || ''} · ${match.status || 'À venir'} · ${match.date || ''}`, 'match', match.id || '');
         add('Compétition', match.competition || '', 'Calendrier, résultats et pronostics disponibles', 'competition', match.competition || '');
@@ -4085,6 +4191,11 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function findSearchTeam(title, extra) {
       const target = searchNorm(extra || title);
+      const synced = (AKRO_SUPABASE_FOOTBALL.teams || []).find(team => {
+        const aliases = [team.name, team.short_name, team.code].map(searchNorm).filter(Boolean);
+        return aliases.includes(target);
+      });
+      if (synced) return [synced.name, mergeTeamDetails(synced.name)];
       const entries = Object.entries(typeof TEAMS_DETAILS !== 'undefined' ? TEAMS_DETAILS : {});
       return entries.find(([name, details]) => searchNorm(name) === target || searchNorm(details.name || '') === target || searchNorm(details.original_name || '') === target);
     }
@@ -4112,11 +4223,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         summary = known.summary;
         facts.push(['Club actuel', known.club], ['Sélection', known.nation], ['Statistiques disponibles', known.stats], ['Infos importantes', known.important]);
       } else if (teamDetails) {
-        summary = `Fiche locale disponible pour ${teamDetails.name || title}. Les infos d'effectif, d'entraîneur et de contexte dépendent des données présentes dans Akro du Foot.`;
+        summary = `Fiche disponible pour ${teamDetails.name || title}. Les données Supabase/API-Football sont utilisées en priorité quand elles existent.`;
         facts.push(
           ['Nom', teamDetails.name || title],
           ['Type', kind],
+          ['Pays', teamDetails.country || 'Information non disponible'],
+          ['Compétition', teamDetails.competition || 'Information non disponible'],
           ['Entraîneur / sélectionneur', teamDetails.coach || 'Information non disponible'],
+          ['Joueurs liés', (teamDetails.squad || []).length ? `${teamDetails.squad.length} joueur(s)` : 'Information non disponible'],
           ['Sources locales', (teamDetails.sources || []).join(', ') || 'Référentiel Akro du Foot']
         );
       } else if (matches.length) {
@@ -4689,6 +4803,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       return Array.from(byDate.entries()).sort((a,b)=>a[0].localeCompare(b[0])).map(([date, items]) => `<article class="card calendar-day"><h3>${leagueEscape(date === 'date-inconnue' ? 'Date inconnue' : leagueDate(items[0].date, false))}</h3><div class="matches">${items.map(match => `<div class="calendar-match league-calendar-match"><div class="date">${leagueEscape(leagueDate(match.date))}</div><div>${leagueTeam(match.home_team || 'À déterminer', match.home_flag_url || '')}</div><div class="score">${leagueEscape(match.home_score !== '' && match.away_score !== '' ? `${match.home_score} - ${match.away_score}` : '0 - 0')}</div><div class="away">${leagueTeam(match.away_team || 'À déterminer', match.away_flag_url || '', true)}</div><div class="match-meta"><div class="match-group">${leagueEscape(match.group || '')}</div><div class="subtle">${leagueEscape(match.venue || '')}</div><span class="status">${leagueEscape(match.status || 'À venir')}</span></div></div>`).join('')}</div></article>`).join('') || '<div class="empty">Calendrier indisponible.</div>';
     }
 
+    function leagueSupabaseMatchGroups(league) {
+      const competitionName = normalizeFootballName(league?.name || '');
+      const matches = (AKRO_SUPABASE_FOOTBALL.matches || []).filter(match => {
+        const matchCompetition = normalizeFootballName(match.competition || '');
+        return matchCompetition && competitionName && (matchCompetition.includes(competitionName) || competitionName.includes(matchCompetition));
+      });
+      return matches.length ? [{name: 'Supabase/API-Football', matches}] : [];
+    }
+
     function leagueRenderStats(data) {
       const leagues = Object.values((data && data.leagues) || {});
       return {
@@ -4757,7 +4880,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (icon) icon.innerHTML = leagueFlag(focusLogo);
       const backdrop = document.getElementById('leagueFocusBackdrop');
       if (backdrop) backdrop.innerHTML = focusLogo ? `<img src="${leagueEscape(focusLogo)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
-      const matchGroups = (league.group_matches && league.group_matches.length ? league.group_matches : league.fixtures) || [];
+      const supabaseMatchGroups = leagueSupabaseMatchGroups(league);
+      const matchGroups = supabaseMatchGroups.length ? supabaseMatchGroups : ((league.group_matches && league.group_matches.length ? league.group_matches : league.fixtures) || []);
       const matches = matchGroups.flatMap(group => group.matches || []);
       const next = matches.filter(match => !match.completed && [match.home_team, match.away_team].includes(focus)).sort((a,b)=>String(a.date || '').localeCompare(String(b.date || '')))[0];
       const nextNode = document.getElementById('leagueFocusNext');
@@ -4896,6 +5020,7 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function quizBuildClubChoices() {
       const clubs = [];
+      clubs.push(...(AKRO_SUPABASE_FOOTBALL.teams || []).filter(team => team.type !== 'nation').map(team => team.name));
       if (typeof FAVORITE_CLUBS !== 'undefined') clubs.push(...FAVORITE_CLUBS.map(item => item[0]));
       Object.values((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(league => {
         clubs.push(...(league.clubs || []));
@@ -4915,6 +5040,8 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function quizBuildNationChoices() {
       const nations = [];
+      nations.push(...(AKRO_SUPABASE_FOOTBALL.countries || []).map(country => country.name));
+      nations.push(...(AKRO_SUPABASE_FOOTBALL.teams || []).filter(team => team.type === 'nation').map(team => team.name));
       if (typeof FAVORITE_NATIONS !== 'undefined') nations.push(...FAVORITE_NATIONS.map(item => item[0]));
       (typeof TEAM_MATCHES !== 'undefined' ? TEAM_MATCHES : []).forEach(match => {
         const homeFlag = String(match.home_flag_url || '');
