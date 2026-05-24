@@ -140,11 +140,19 @@
         radial-gradient(circle at 75% 35%, rgba(132,173,255,0.32), transparent 14rem);
     }
     .hero.champions::after { display: none; }
+    .hero.euro-hero {
+      background:
+        radial-gradient(circle at 78% 20%, rgba(99,232,255,0.30), transparent 17rem),
+        radial-gradient(circle at 30% 105%, rgba(142,75,255,0.24), transparent 19rem),
+        linear-gradient(135deg, rgba(13,18,63,0.98), rgba(18,58,104,0.88) 48%, rgba(80,42,128,0.78));
+    }
+    .hero.euro-hero::after { display: none; }
     .leagues-hero::after { display: none; }
     .hero-logo-mark { position: absolute; z-index: 0; right: clamp(26px, 8vw, 110px); top: 50%; transform: translateY(-50%); width: clamp(150px, 21vw, 260px); aspect-ratio: 0.74; display: grid; place-items: center; opacity: 0.96; pointer-events: none; }
     .premium-trophy svg { width: 100%; height: 100%; display: block; overflow: visible; }
     .worldcup-trophy { filter: drop-shadow(0 0 22px rgba(245,201,107,0.32)) drop-shadow(0 18px 34px rgba(0,0,0,0.30)); }
     .ucl-trophy { filter: drop-shadow(0 0 24px rgba(180,210,255,0.30)) drop-shadow(0 18px 34px rgba(0,0,0,0.32)); }
+    .euro-trophy { filter: drop-shadow(0 0 26px rgba(99,232,255,0.34)) drop-shadow(0 18px 36px rgba(0,0,0,0.32)); }
     .hero.champions .hero-logo-mark { opacity: 0.96; }
     .league-focus-backdrop {
       position: absolute;
@@ -427,6 +435,23 @@
     .club-logo { width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; padding: 2px; background: rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.18); }
     .club-logo.placeholder { display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }
     .club-logo.placeholder::before { content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }
+    .euro-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }
+    .euro-summary-card { padding: 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.12), rgba(142,75,255,0.08)); box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
+    .euro-summary-value { margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }
+    .euro-group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 14px; }
+    .euro-group-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .euro-team-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .euro-team-row:first-of-type { margin-top: 12px; }
+    .euro-team-row .team { min-width: 0; display: inline-flex; align-items: center; }
+    .euro-points { color: #ffe1a0; font-weight: 950; }
+    .euro-match-list { display: grid; gap: 10px; padding: 14px; }
+    .euro-match-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); }
+    .euro-match-row .score { min-width: 60px; text-align: center; font-size: 18px; }
+    .euro-match-team.away { text-align: right; }
+    .euro-focus-card { border-color: rgba(99,232,255,0.30); background: linear-gradient(135deg, rgba(99,232,255,0.14), rgba(31,111,235,0.10), rgba(142,75,255,0.10)); }
+    .euro-focus-card .club-line { margin-top: 10px; }
+    .euro-roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+    .euro-roadmap .notice { padding: 14px; }
     .club-name { white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.18; }
     .player-country-flag { position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(7,17,31,0.92); background: rgba(255,255,255,0.14); }
     .player-stat { color: var(--gold); font-size: 28px; font-weight: 950; line-height: 1; margin-top: 8px; }
@@ -1089,6 +1114,7 @@
     <nav class="tabs-nav" aria-label="Navigation principale">
       <button class="tab-button is-active" type="button" data-tab-target="news">Actus</button>
       <button class="tab-button" type="button" data-tab-target="worldcup">Coupe du Monde</button>
+      <button class="tab-button" type="button" data-tab-target="euro">Coupe d’Europe</button>
       <button class="tab-button" type="button" data-tab-target="champions">Champions League</button>
       <button class="tab-button" type="button" data-tab-target="leagues">Championnats</button>
     </nav>
@@ -1258,6 +1284,105 @@
 <a href="https://www.statbunker.com/alltimestats/AllTimeCompetitionMostAssists?comp_code=WC" target="_blank" rel="noreferrer">StatBunker - passeurs all-time</a></nav>
     </section>
     
+    <section class="tab-panel" id="tab-euro" data-tab-panel="euro">
+      <section class="hero euro-hero">
+        <div class="hero-logo-mark premium-trophy euro-trophy hero-trophy" aria-hidden="true">
+          <svg viewBox="0 0 220 300" role="img" focusable="false">
+            <defs>
+              <linearGradient id="euroChrome" x1="18%" x2="86%" y1="4%" y2="96%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#d9f4ff"/><stop offset="0.50" stop-color="#7f98b8"/><stop offset="0.72" stop-color="#f8fdff"/><stop offset="1" stop-color="#7790ad"/></linearGradient>
+              <linearGradient id="euroBlue" x1="0" x2="1"><stop offset="0" stop-color="#49d6ff"/><stop offset="0.55" stop-color="#3867ff"/><stop offset="1" stop-color="#8a56ff"/></linearGradient>
+              <radialGradient id="euroGlow" cx="50%" cy="34%" r="72%"><stop offset="0" stop-color="#bff6ff" stop-opacity=".92"/><stop offset=".55" stop-color="#5de0ff" stop-opacity=".24"/><stop offset="1" stop-color="#07111f" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="110" cy="150" rx="92" ry="122" fill="url(#euroGlow)"/>
+            <path d="M58 54h104l-10 104c-4 42-23 68-42 68s-38-26-42-68L58 54Z" fill="url(#euroChrome)" stroke="rgba(255,255,255,.72)" stroke-width="3"/>
+            <path d="M50 73c-28 12-42 38-38 68 4 33 27 54 60 62" fill="none" stroke="url(#euroChrome)" stroke-width="14" stroke-linecap="round"/>
+            <path d="M170 73c28 12 42 38 38 68-4 33-27 54-60 62" fill="none" stroke="url(#euroChrome)" stroke-width="14" stroke-linecap="round"/>
+            <path d="M83 82h54l-7 73c-3 28-12 45-20 45s-17-17-20-45L83 82Z" fill="rgba(255,255,255,.22)"/>
+            <path d="M73 122c21-18 53-23 79-6-5 18-14 33-27 45-16-11-34-13-55-6 0-12 1-23 3-33Z" fill="url(#euroBlue)" opacity=".74"/>
+            <circle cx="110" cy="118" r="29" fill="none" stroke="#f8fdff" stroke-opacity=".62" stroke-width="5"/>
+            <path d="M110 91l8 18h20l-16 12 6 20-18-11-18 11 6-20-16-12h20l8-18Z" fill="#f8fdff" fill-opacity=".78"/>
+            <path d="M110 225v34" stroke="url(#euroChrome)" stroke-width="18" stroke-linecap="round"/>
+            <path d="M66 269h88l16 19H50l16-19Z" fill="url(#euroChrome)"/>
+            <path d="M80 289h60" stroke="#ffffff" stroke-opacity=".62" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="hero-content">
+          <div class="kicker"><span class="ball"></span> Coupe d’Europe 2024</div>
+          <h1>Coupe d’Europe</h1>
+          <p class="hero-copy">Suivi des groupes, matchs, buteurs, passeurs, actualités et phases finales. Base Euro 2024 terminée, structure prête pour l’Euro 2028.</p>
+          <div class="hero-badges">
+            <div class="hero-row">
+              <span class="pill">Année : 2024</span>
+              <button class="alltime-badge history-badge" type="button" data-alltime="euro-history">Palmarès</button>
+              <span class="pill france-pill focus-pill"><span id="euroFocusIcon"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""></span>Favoris <select class="focus-select" id="euroFocusSelect" aria-label="Nation favorite Coupe d’Europe"><option value="Austria">Autriche</option><option value="Belgium">Belgique</option><option value="Croatia">Croatie</option><option value="Czechia">Tchéquie</option><option value="Denmark">Danemark</option><option value="England">Angleterre</option><option value="France" selected>France</option><option value="Georgia">Géorgie</option><option value="Germany">Allemagne</option><option value="Hungary">Hongrie</option><option value="Italy">Italie</option><option value="Netherlands">Pays-Bas</option><option value="Portugal">Portugal</option><option value="Romania">Roumanie</option><option value="Scotland">Écosse</option><option value="Serbia">Serbie</option><option value="Slovakia">Slovaquie</option><option value="Slovenia">Slovénie</option><option value="Spain">Espagne</option><option value="Switzerland">Suisse</option><option value="Türkiye">Turquie</option><option value="Ukraine">Ukraine</option></select></span>
+            </div>
+            <div class="hero-row focus-match-row">
+              <span class="pill next-match-pill" id="euroFocusNext" data-default-focus="France"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="focus-match-text">France : demi-finaliste en 2024, éliminée par l’Espagne (2-1)</span></span>
+            </div>
+            <div class="hero-row">
+              <span class="pill">24 équipes</span>
+              <span class="pill">51 matchs</span>
+              <span class="pill">Vainqueur : Espagne</span>
+              <span class="pill">Préparation Euro 2028</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <nav class="season-tabs" data-season-tabs="euro" aria-label="Année Coupe d’Europe">
+        <span class="season-tabs-label">Année</span>
+        <button class="tab-button is-active" type="button" data-season-value="2024">2024</button>
+        <button class="tab-button" type="button" data-season-value="2028" disabled>2028 bientôt</button>
+      </nav>
+
+      <section class="euro-summary-grid" aria-label="Résumé Coupe d’Europe">
+        <article class="euro-summary-card"><div class="subtle">Champion</div><div class="euro-summary-value">Espagne</div><p class="subtle">Victoire 2-1 contre l’Angleterre en finale à Berlin.</p></article>
+        <article class="euro-summary-card"><div class="subtle">Finaliste</div><div class="euro-summary-value">Angleterre</div><p class="subtle">Deuxième finale européenne consécutive.</p></article>
+        <article class="euro-summary-card"><div class="subtle">Format</div><div class="euro-summary-value">6 groupes</div><p class="subtle">Les deux premiers et quatre meilleurs troisièmes qualifiés.</p></article>
+        <article class="euro-summary-card euro-focus-card"><div class="subtle">Nation favorite</div><div class="euro-summary-value" id="euroFocusTitle">France</div><p class="subtle" id="euroFocusSummary">Demi-finaliste, éliminée par l’Espagne.</p></article>
+      </section>
+
+      <div class="section-head"><div class="section-title"><h2>Groupes Euro 2024</h2></div><div class="section-note">Classements finaux de la phase de groupes.</div></div>
+      <section class="euro-group-grid">
+        <article class="card euro-group-card"><h3>Groupe A <span class="subtle">Allemagne qualifiée</span></h3><div class="euro-team-row"><span>1</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt="">Allemagne</span><span class="euro-points">7 pts</span></div><div class="euro-team-row"><span>2</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/sui.png" alt="">Suisse</span><span class="euro-points">5 pts</span></div><div class="euro-team-row"><span>3</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/hun.png" alt="">Hongrie</span><span class="euro-points">3 pts</span></div><div class="euro-team-row"><span>4</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/sco.png" alt="">Écosse</span><span class="euro-points">1 pt</span></div></article>
+        <article class="card euro-group-card"><h3>Groupe B <span class="subtle">Espagne parfaite</span></h3><div class="euro-team-row"><span>1</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</span><span class="euro-points">9 pts</span></div><div class="euro-team-row"><span>2</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ita.png" alt="">Italie</span><span class="euro-points">4 pts</span></div><div class="euro-team-row"><span>3</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/cro.png" alt="">Croatie</span><span class="euro-points">2 pts</span></div><div class="euro-team-row"><span>4</span><span class="team"><span class="flag placeholder" aria-hidden="true"></span>Albanie</span><span class="euro-points">1 pt</span></div></article>
+        <article class="card euro-group-card"><h3>Groupe C <span class="subtle">Angleterre première</span></h3><div class="euro-team-row"><span>1</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt="">Angleterre</span><span class="euro-points">5 pts</span></div><div class="euro-team-row"><span>2</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/den.png" alt="">Danemark</span><span class="euro-points">3 pts</span></div><div class="euro-team-row"><span>3</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/svn.png" alt="">Slovénie</span><span class="euro-points">3 pts</span></div><div class="euro-team-row"><span>4</span><span class="team"><span class="flag placeholder" aria-hidden="true"></span>Serbie</span><span class="euro-points">2 pts</span></div></article>
+        <article class="card euro-group-card"><h3>Groupe D <span class="subtle">France deuxième</span></h3><div class="euro-team-row"><span>1</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/aut.png" alt="">Autriche</span><span class="euro-points">6 pts</span></div><div class="euro-team-row"><span>2</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt="">France</span><span class="euro-points">5 pts</span></div><div class="euro-team-row"><span>3</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt="">Pays-Bas</span><span class="euro-points">4 pts</span></div><div class="euro-team-row"><span>4</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/pol.png" alt="">Pologne</span><span class="euro-points">1 pt</span></div></article>
+        <article class="card euro-group-card"><h3>Groupe E <span class="subtle">Égalité à 4 points</span></h3><div class="euro-team-row"><span>1</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/rou.png" alt="">Roumanie</span><span class="euro-points">4 pts</span></div><div class="euro-team-row"><span>2</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/bel.png" alt="">Belgique</span><span class="euro-points">4 pts</span></div><div class="euro-team-row"><span>3</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/svk.png" alt="">Slovaquie</span><span class="euro-points">4 pts</span></div><div class="euro-team-row"><span>4</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ukr.png" alt="">Ukraine</span><span class="euro-points">4 pts</span></div></article>
+        <article class="card euro-group-card"><h3>Groupe F <span class="subtle">Portugal et Turquie</span></h3><div class="euro-team-row"><span>1</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt="">Portugal</span><span class="euro-points">6 pts</span></div><div class="euro-team-row"><span>2</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/tur.png" alt="">Turquie</span><span class="euro-points">6 pts</span></div><div class="euro-team-row"><span>3</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/geo.png" alt="">Géorgie</span><span class="euro-points">4 pts</span></div><div class="euro-team-row"><span>4</span><span class="team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/cze.png" alt="">Tchéquie</span><span class="euro-points">1 pt</span></div></article>
+      </section>
+
+      <div class="section-head"><div class="section-title"><h2>Calendrier / résultats</h2></div><div class="section-note">Sélection des matchs décisifs et du parcours final.</div></div>
+      <section class="grid">
+        <article class="card"><h3>Match d’ouverture</h3><div class="euro-match-list"><div class="euro-match-row"><span class="euro-match-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt="">Allemagne</span><span class="score">5 - 1</span><span class="euro-match-team away"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/sco.png" alt="">Écosse</span></div></div></article>
+        <article class="card"><h3>Meilleur match</h3><div class="euro-match-list"><div class="euro-match-row"><span class="euro-match-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</span><span class="score">2 - 1</span><span class="euro-match-team away"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt="">Allemagne</span></div></div></article>
+        <article class="card"><h3>Finale</h3><div class="euro-match-list"><div class="euro-match-row"><span class="euro-match-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</span><span class="score">2 - 1</span><span class="euro-match-team away"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt="">Angleterre</span></div></div></article>
+      </section>
+
+      <div class="section-head"><div class="section-title"><h2>Phase finale</h2></div><div class="section-note">Le dernier carré et les quarts majeurs de l’Euro 2024.</div></div>
+      <section class="bracket-wrap">
+        <div class="bracket-stage">
+          <div class="bracket-wing left"><article class="round"><div class="round-title">Quarts</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt=""><span class="bracket-team-name">Allemagne</span></span><span class="ko-score">1</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt=""><span class="bracket-team-name">Portugal</span></span><span class="ko-score">0</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="bracket-team-name">France</span></span><span class="ko-score">0 tab</span></div></div></article></div>
+          <div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy euro-trophy"><svg viewBox="0 0 220 300" aria-hidden="true"><defs><linearGradient id="euroMiniChrome" x1="18%" x2="86%" y1="4%" y2="96%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.45" stop-color="#8da3bf"/><stop offset="0.72" stop-color="#f8fdff"/><stop offset="1" stop-color="#7790ad"/></linearGradient></defs><path d="M58 54h104l-10 104c-4 42-23 68-42 68s-38-26-42-68L58 54Z" fill="url(#euroMiniChrome)" stroke="rgba(255,255,255,.72)" stroke-width="3"/><path d="M50 73c-28 12-42 38-38 68 4 33 27 54 60 62M170 73c28 12 42 38 38 68-4 33-27 54-60 62" fill="none" stroke="url(#euroMiniChrome)" stroke-width="14" stroke-linecap="round"/><path d="M110 225v34" stroke="url(#euroMiniChrome)" stroke-width="18" stroke-linecap="round"/><path d="M66 269h88l16 19H50l16-19Z" fill="url(#euroMiniChrome)"/></svg></div><div class="subtle">Champion 2024</div><h3>Espagne</h3><div class="subtle">4e titre européen</div></div></div>
+          <div class="bracket-wing right"><article class="round"><div class="round-title">Demies / finale</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="bracket-team-name">France</span></span><span class="ko-score">1</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="bracket-team-name">Pays-Bas</span></span><span class="ko-score">1</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="bracket-team-name">Angleterre</span></span><span class="ko-score">2</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="bracket-team-name">Angleterre</span></span><span class="ko-score">1</span></div></div></article></div>
+        </div>
+      </section>
+
+      <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2></div><div class="section-note">Top 3 affiché, plusieurs joueurs ont terminé à 3 buts.</div></div>
+      <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Dani Olmo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Cody Gakpo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Harry Kane</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="club-name">Angleterre</span></div><div class="player-stat">3 buts</div></div></article></section>
+
+      <div class="section-head"><div class="section-title"><h2>Meilleurs passeurs</h2></div><div class="section-note">Top 3 de la compétition 2024.</div></div>
+      <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Lamine Yamal</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">4 passes</div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Xavi Simons</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 passes</div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Arda Güler</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/tur.png" alt=""><span class="club-name">Turquie</span></div><div class="player-stat">2 passes</div></div></article></section>
+
+      <div class="section-head"><div class="section-title"><h2>Actualités liées</h2></div><div class="section-note">Repères utiles pour suivre la bascule 2024 vers 2028.</div></div>
+      <section class="news"><article class="card"><h3>Euro 2024 terminé</h3><p class="empty">L’Espagne a gagné le tournoi avec sept victoires en sept matchs.</p></article><article class="card"><h3>Euro 2028 préparé</h3><p class="empty">La structure est prête pour ajouter qualifications, groupes, calendrier et favoris nation.</p></article><article class="card"><h3>Focus nation</h3><p class="empty">Le sélecteur reprend la nation favorite et affiche son parcours Euro.</p></article></section>
+
+      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Coupe d’Europe.</div></div>
+      <section class="grid"><article class="card"><h3>2024</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card"><h3>2020</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ita.png" alt="">Italie</p></article><article class="card"><h3>2016</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt="">Portugal</p></article><article class="card"><h3>2012</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card"><h3>2008</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card"><h3>2028</h3><p class="empty">Prochain cycle : qualifications, calendrier et groupes à brancher.</p></article></section>
+
+      <nav class="sources" aria-label="Sources Euro"><a href="https://www.uefa.com/euro2024/" target="_blank" rel="noreferrer">UEFA Euro 2024</a><a href="https://www.espn.com/soccer/league/_/name/uefa.euro" target="_blank" rel="noreferrer">ESPN - Euro</a><a href="https://www.fotmob.com/leagues/50/overview/euro" target="_blank" rel="noreferrer">FotMob - Euro</a></nav>
+    </section>
+
     <section class="tab-panel" id="tab-champions" data-tab-panel="champions">
       <section class="hero champions">
         
@@ -1821,6 +1946,21 @@
         label: 'buts'
       }
     }, HONOURS_LISTS);
+    ALL_TIME_LISTS['euro-history'] = {
+      players: [
+        {rank: 1, name: 'Espagne', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png', value: '4', years: '1964, 2008, 2012, 2024'},
+        {rank: 2, name: 'Allemagne', country: 'Allemagne', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png', value: '3', years: '1972, 1980, 1996'},
+        {rank: 3, name: 'Italie', country: 'Italie', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png', value: '2', years: '1968, 2020'},
+        {rank: 3, name: 'France', country: 'France', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png', value: '2', years: '1984, 2000'},
+        {rank: 5, name: 'Portugal', country: 'Portugal', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', value: '1', years: '2016'},
+        {rank: 5, name: 'Pays-Bas', country: 'Pays-Bas', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ned.png', value: '1', years: '1988'},
+        {rank: 5, name: 'Danemark', country: 'Danemark', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/den.png', value: '1', years: '1992'},
+        {rank: 5, name: 'Grèce', country: 'Grèce', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/gre.png', value: '1', years: '2004'}
+      ],
+      title: 'Palmarès Coupe d’Europe',
+      empty: 'Palmarès Coupe d’Europe indisponible',
+      label: 'titres'
+    };
     const allTimeModal = document.getElementById('allTimeModal');
     const allTimeTitle = document.getElementById('allTimeTitle');
     const allTimeBody = document.getElementById('allTimeBody');
@@ -2212,6 +2352,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     function syncSelectedFavoritesToStorage() {
       const favorites = selectedFavoritePayload();
       localStorage.setItem('akrodufoot:focus:worldcup', favorites.favorite_nation);
+      localStorage.setItem('akrodufoot:focus:euro', favorites.favorite_nation);
       localStorage.setItem('akrodufoot:focus:champions', favorites.favorite_club);
       Object.keys((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(key => {
         localStorage.setItem(`akrodufoot:league-focus:${key}`, favorites.favorite_club);
@@ -2222,7 +2363,10 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function applyProfileFavorites(profile = akroProfile) {
       if (!profile) return;
-      if (profile.favorite_nation) localStorage.setItem('akrodufoot:focus:worldcup', profile.favorite_nation);
+      if (profile.favorite_nation) {
+        localStorage.setItem('akrodufoot:focus:worldcup', profile.favorite_nation);
+        localStorage.setItem('akrodufoot:focus:euro', profile.favorite_nation);
+      }
       if (profile.favorite_club) {
         localStorage.setItem('akrodufoot:focus:champions', profile.favorite_club);
         Object.keys((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(key => {
@@ -2953,6 +3097,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     function currentLocalFocusTeams() {
       const localFocus = [
         localStorage.getItem('akrodufoot:focus:worldcup'),
+        localStorage.getItem('akrodufoot:focus:euro'),
         localStorage.getItem('akrodufoot:focus:champions')
       ];
       Object.keys((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(key => {
@@ -3959,9 +4104,34 @@ grant select, insert, update on public.profiles to authenticated;`;
     const FOCUS_TEAMS = {"Algeria": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png", "name": "Algeria"}, "Argentina": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png", "name": "Argentina"}, "Australia": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png", "name": "Australia"}, "Austria": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png", "name": "Austria"}, "Belgium": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png", "name": "Belgium"}, "Bosnia-Herzegovina": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png", "name": "Bosnie-Herzégovine"}, "Brazil": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png", "name": "Brazil"}, "Canada": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/can.png", "name": "Canada"}, "Cape Verde": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png", "name": "Cape Verde"}, "Colombia": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png", "name": "Colombia"}, "Congo DR": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png", "name": "Congo DR"}, "Croatia": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png", "name": "Croatia"}, "Curacao": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png", "name": "Curaçao"}, "Czechia": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png", "name": "Tchéquie"}, "Ecuador": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png", "name": "Ecuador"}, "Egypt": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png", "name": "Egypt"}, "England": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png", "name": "England"}, "France": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png", "name": "France"}, "Germany": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png", "name": "Germany"}, "Ghana": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png", "name": "Ghana"}, "Haiti": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png", "name": "Haiti"}, "Iran": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png", "name": "Iran"}, "Iraq": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png", "name": "Iraq"}, "Ivory Coast": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png", "name": "Côte d'Ivoire"}, "Japan": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png", "name": "Japan"}, "Jordan": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png", "name": "Jordan"}, "Mexico": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png", "name": "Mexico"}, "Morocco": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png", "name": "Morocco"}, "Netherlands": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png", "name": "Netherlands"}, "New Zealand": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png", "name": "New Zealand"}, "Norway": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png", "name": "Norway"}, "Panama": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png", "name": "Panama"}, "Paraguay": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/par.png", "name": "Paraguay"}, "Portugal": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png", "name": "Portugal"}, "Qatar": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png", "name": "Qatar"}, "Saudi Arabia": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png", "name": "Saudi Arabia"}, "Scotland": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png", "name": "Scotland"}, "Senegal": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png", "name": "Sénégal"}, "South Africa": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png", "name": "South Africa"}, "South Korea": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png", "name": "Corée du Sud"}, "Spain": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png", "name": "Spain"}, "Sweden": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png", "name": "Sweden"}, "Switzerland": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png", "name": "Switzerland"}, "Tunisia": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png", "name": "Tunisia"}, "Türkiye": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png", "name": "Turquie"}, "United States": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png", "name": "États-Unis"}, "Uruguay": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png", "name": "Uruguay"}, "Uzbekistan": {"flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png", "name": "Uzbekistan"}, "AS Monaco": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png", "name": "AS Monaco"}, "Ajax Amsterdam": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/139.png", "name": "Ajax Amsterdam"}, "Arsenal": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png", "name": "Arsenal"}, "Atalanta": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/105.png", "name": "Atalanta"}, "Athletic Club": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/93.png", "name": "Athletic Club"}, "Atlético Madrid": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png", "name": "Atlético Madrid"}, "Barcelona": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png", "name": "Barcelona"}, "Bayer Leverkusen": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/131.png", "name": "Bayer Leverkusen"}, "Bayern Munich": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png", "name": "Bayern Munich"}, "Benfica": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/1929.png", "name": "Benfica"}, "Bodo/Glimt": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2980.png", "name": "Bodo/Glimt"}, "Borussia Dortmund": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png", "name": "Borussia Dortmund"}, "Chelsea": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png", "name": "Chelsea"}, "Club Brugge": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/570.png", "name": "Club Brugge"}, "Eintracht Frankfurt": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/125.png", "name": "Eintracht Frankfurt"}, "F.C. København": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/909.png", "name": "F.C. København"}, "FK Qarabag": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/10414.png", "name": "FK Qarabag"}, "Galatasaray": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/432.png", "name": "Galatasaray"}, "Internazionale": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png", "name": "Internazionale"}, "Juventus": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/111.png", "name": "Juventus"}, "Kairat Almaty": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2528.png", "name": "Kairat Almaty"}, "Liverpool": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png", "name": "Liverpool"}, "Manchester City": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png", "name": "Manchester City"}, "Marseille": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png", "name": "Marseille"}, "Napoli": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/114.png", "name": "Napoli"}, "Newcastle United": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png", "name": "Newcastle United"}, "Olympiacos": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/435.png", "name": "Olympiacos"}, "PSV Eindhoven": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/148.png", "name": "PSV Eindhoven"}, "Pafos": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/22281.png", "name": "Pafos"}, "Paris Saint-Germain": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png", "name": "Paris Saint-Germain"}, "Real Madrid": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png", "name": "Real Madrid"}, "Slavia Prague": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/494.png", "name": "Slavia Prague"}, "Sporting CP": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2250.png", "name": "Sporting CP"}, "Tottenham Hotspur": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/367.png", "name": "Tottenham Hotspur"}, "Union St.-Gilloise": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/5807.png", "name": "Union St.-Gilloise"}, "Villarreal": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/102.png", "name": "Villarreal"}, "Lyon": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/167.png", "name": "Lyon"}, "AC Milan": {"flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/103.png", "name": "AC Milan"}};
     const FOCUS_KEYS = {
       worldcup: 'akrodufoot:focus:worldcup',
+      euro: 'akrodufoot:focus:euro',
       champions: 'akrodufoot:focus:champions'
     };
-    const FOCUS_DEFAULTS = {worldcup: 'France', champions: 'Paris Saint-Germain'};
+    const FOCUS_DEFAULTS = {worldcup: 'France', euro: 'France', champions: 'Paris Saint-Germain'};
+    const EURO_FOCUS_SUMMARIES = {
+      Austria: 'Autriche : 8e de finale, éliminée par la Turquie (2-1).',
+      Belgium: 'Belgique : 8e de finale, éliminée par la France (1-0).',
+      Croatia: 'Croatie : 3e du groupe B, éliminée en phase de groupes.',
+      Czechia: 'Tchéquie : 4e du groupe F, éliminée en phase de groupes.',
+      Denmark: 'Danemark : 8e de finale, éliminé par l’Allemagne (2-0).',
+      England: 'Angleterre : finaliste, battue par l’Espagne (2-1).',
+      France: 'France : demi-finaliste, éliminée par l’Espagne (2-1).',
+      Georgia: 'Géorgie : 8e de finale, éliminée par l’Espagne (4-1).',
+      Germany: 'Allemagne : quart de finale, éliminée par l’Espagne (2-1 ap).',
+      Hungary: 'Hongrie : 3e du groupe A, éliminée en phase de groupes.',
+      Italy: 'Italie : 8e de finale, éliminée par la Suisse (2-0).',
+      Netherlands: 'Pays-Bas : demi-finaliste, éliminés par l’Angleterre (2-1).',
+      Portugal: 'Portugal : quart de finale, éliminé par la France aux tirs au but.',
+      Romania: 'Roumanie : 8e de finale, éliminée par les Pays-Bas (3-0).',
+      Scotland: 'Écosse : 4e du groupe A, éliminée en phase de groupes.',
+      Serbia: 'Serbie : 4e du groupe C, éliminée en phase de groupes.',
+      Slovakia: 'Slovaquie : 8e de finale, éliminée par l’Angleterre (2-1 ap).',
+      Slovenia: 'Slovénie : 8e de finale, éliminée par le Portugal aux tirs au but.',
+      Spain: 'Espagne : championne d’Europe 2024, 7 victoires en 7 matchs.',
+      Switzerland: 'Suisse : quart de finale, éliminée par l’Angleterre aux tirs au but.',
+      Türkiye: 'Turquie : quart de finale, éliminée par les Pays-Bas (2-1).',
+      Ukraine: 'Ukraine : 4e du groupe E, éliminée en phase de groupes.'
+    };
 
     function focusEscape(value) {
       return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -3971,10 +4141,30 @@ grant select, insert, update on public.profiles to authenticated;`;
       const aliases = {
         'Paris Saint-Germain': 'PSG',
         'Paris SG': 'PSG',
+        'Austria': 'Autriche',
+        'Belgium': 'Belgique',
+        'Croatia': 'Croatie',
+        'Czechia': 'Tchéquie',
+        'Denmark': 'Danemark',
         'England': 'Angleterre',
+        'Georgia': 'Géorgie',
+        'Germany': 'Allemagne',
+        'Hungary': 'Hongrie',
+        'Italy': 'Italie',
+        'Netherlands': 'Pays-Bas',
+        'Portugal': 'Portugal',
+        'Romania': 'Roumanie',
+        'Scotland': 'Écosse',
         'Senegal': 'Sénégal',
+        'Serbia': 'Serbie',
+        'Slovakia': 'Slovaquie',
+        'Slovenia': 'Slovénie',
+        'Spain': 'Espagne',
+        'Switzerland': 'Suisse',
         'Bosnia-Herzegovina': 'Bosnie-Herzégovine',
-        'South Africa': 'Afrique du Sud'
+        'South Africa': 'Afrique du Sud',
+        'Türkiye': 'Turquie',
+        'Ukraine': 'Ukraine'
       };
       return aliases[name] || (FOCUS_TEAMS[name] && FOCUS_TEAMS[name].name) || name || 'À déterminer';
     }
@@ -4002,8 +4192,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       };
       const countries = {
         'afrique du sud': 'rsa', 'allemagne': 'ger', 'angleterre': 'eng', 'argentine': 'arg',
-        'bresil': 'bra', 'bosnie herzegovine': 'bih', 'espagne': 'esp', 'france': 'fra',
-        'italie': 'ita', 'maroc': 'mar', 'mexique': 'mex', 'senegal': 'sen', 'uruguay': 'uru'
+        'austria': 'aut', 'autriche': 'aut', 'belgium': 'bel', 'belgique': 'bel', 'bresil': 'bra',
+        'bosnie herzegovine': 'bih', 'croatia': 'cro', 'croatie': 'cro', 'czechia': 'cze',
+        'danemark': 'den', 'denmark': 'den', 'ecosse': 'sco', 'espagne': 'esp', 'france': 'fra',
+        'georgia': 'geo', 'georgie': 'geo', 'germany': 'ger', 'hungary': 'hun', 'hongrie': 'hun',
+        'italie': 'ita', 'italy': 'ita', 'maroc': 'mar', 'mexique': 'mex', 'netherlands': 'ned',
+        'pays bas': 'ned', 'portugal': 'por', 'romania': 'rou', 'roumanie': 'rou', 'scotland': 'sco',
+        'senegal': 'sen', 'serbia': 'srb', 'serbie': 'srb', 'slovakia': 'svk', 'slovaquie': 'svk',
+        'slovenia': 'svn', 'slovenie': 'svn', 'spain': 'esp', 'suisse': 'sui', 'switzerland': 'sui',
+        'tchequie': 'cze', 'turkiye': 'tur', 'turquie': 'tur', 'ukraine': 'ukr', 'uruguay': 'uru'
       };
       return clubs[key] || (countries[key] ? `https://a.espncdn.com/i/teamlogos/countries/500/${countries[key]}.png` : '');
     }
@@ -4033,6 +4230,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         });
       });
       document.getElementById('worldcupFocusSelect')?.setAttribute('aria-label', 'Nation favorite Coupe du Monde');
+      document.getElementById('euroFocusSelect')?.setAttribute('aria-label', 'Nation favorite Coupe d’Europe');
       document.getElementById('championsFocusSelect')?.setAttribute('aria-label', 'Club favori Ligue des Champions');
       document.getElementById('leagueClubSelect')?.setAttribute('aria-label', 'Club favori Championnats');
     }
@@ -4054,7 +4252,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function renderFocus(kind) {
-      const competition = kind === 'worldcup' ? 'Coupe du Monde' : 'Ligue des Champions';
+      const competition = kind === 'worldcup' ? 'Coupe du Monde' : kind === 'euro' ? 'Coupe d’Europe' : 'Ligue des Champions';
       const select = document.getElementById(`${kind}FocusSelect`);
       const target = document.getElementById(`${kind}FocusNext`);
       if (!select || !target) return;
@@ -4062,6 +4260,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (saved && Array.from(select.options).some(option => option.value === saved)) select.value = saved;
       const team = select.value || FOCUS_DEFAULTS[kind];
       updateFocusPillIcon(kind, team);
+      if (kind === 'euro') {
+        const title = document.getElementById('euroFocusTitle');
+        const summary = document.getElementById('euroFocusSummary');
+        const text = EURO_FOCUS_SUMMARIES[team] || `${focusDisplayName(team)} : parcours Euro à compléter.`;
+        target.innerHTML = `${focusFlag(focusTeamIcon(team))}<span class="focus-match-text">${focusEscape(text)}</span>`;
+        if (title) title.textContent = focusDisplayName(team);
+        if (summary) summary.textContent = text.replace(`${focusDisplayName(team)} : `, '');
+        return;
+      }
       const match = focusNextMatch(competition, team);
       if (!match) {
         target.innerHTML = `${focusFlag(focusTeamIcon(team))}<span class="focus-match-text">${focusEscape(focusDisplayName(team))} : prochain match à déterminer</span>`;
@@ -4075,7 +4282,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     renameFocusLabelsToFavorites();
-    ['worldcup', 'champions'].forEach(kind => {
+    ['worldcup', 'euro', 'champions'].forEach(kind => {
       const select = document.getElementById(`${kind}FocusSelect`);
       if (!select) return;
       select.addEventListener('change', () => {
