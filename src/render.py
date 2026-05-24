@@ -417,12 +417,23 @@ def _page(data: dict[str, Any]) -> str:
     .today-strip {{ grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }}
     .euro-summary-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }}
     .euro-summary-card {{ position: relative; overflow: hidden; min-height: 132px; padding: 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.12), rgba(142,75,255,0.08)); box-shadow: 0 14px 34px rgba(0,0,0,0.18); }}
-    .euro-summary-card::before {{ content: ""; position: absolute; inset: 0; background-image: var(--summary-bg); background-repeat: no-repeat; background-position: calc(100% - 14px) center; background-size: min(110px, 45%) auto; opacity: 0.13; filter: saturate(1.18) contrast(1.08); pointer-events: none; }}
+    .euro-summary-card::before {{ content: ""; position: absolute; inset: 0; background-image: var(--summary-bg); background-repeat: no-repeat; background-position: calc(100% - 10px) center; background-size: min(136px, 54%) auto; opacity: 0.21; filter: saturate(1.20) contrast(1.08); pointer-events: none; }}
     .euro-summary-card::after {{ content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }}
     .euro-summary-card > * {{ position: relative; z-index: 1; }}
     .euro-summary-value {{ margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }}
-    .recent-honours-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }}
-    .recent-honour-card {{ min-height: 108px; }}
+    .recent-honours-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }}
+    .recent-honour-card {{ min-height: 0; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; }}
+    .recent-honour-card h3 {{ margin: 0; color: #ffe1a0; font-size: 13px; line-height: 1; white-space: nowrap; }}
+    .recent-honour-card .empty {{ margin: 0; display: inline-flex; align-items: center; gap: 7px; color: #eef6ff; font-size: 13px; font-weight: 900; line-height: 1.12; }}
+    .recent-honour-card .flag {{ width: 20px; height: 20px; flex: 0 0 20px; }}
+    .historical-match-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; width: 100%; }}
+    .historical-match-card {{ display: grid; gap: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.055); }}
+    .historical-match-row {{ display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; }}
+    .historical-match-row .team:last-child {{ justify-content: end; text-align: right; }}
+    .historical-score {{ color: var(--gold); font-weight: 950; white-space: nowrap; }}
+    .historical-group-card .euro-team-row {{ grid-template-columns: 28px minmax(0, 1fr) repeat(6, auto); }}
+    .historical-group-stat {{ min-width: 22px; color: #dce9f7; text-align: right; font-size: 12px; font-weight: 850; }}
+    .historical-unavailable {{ padding: 14px; border: 1px dashed rgba(255,255,255,0.18); border-radius: 14px; color: var(--muted); background: rgba(255,255,255,0.045); }}
     .leaders {{ grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }}
     .news {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     .news-hero {{ min-height: 340px; }}
@@ -998,7 +1009,7 @@ def _page(data: dict[str, Any]) -> str:
       </div>
     </section>
 
-    {_season_tabs("worldcup", "Année", [("2026", "2026")])}
+    {_season_tabs("worldcup", "Année", [("2018", "2018"), ("2022", "2022"), ("2026", "2026"), ("2030", "2030 à venir")], active_value="2026")}
 
     {_errors(data.get("errors", []))}
 
@@ -1553,7 +1564,7 @@ def _champions_tab(data: dict[str, Any] | None) -> str:
         </div>
       </section>
 
-      {_season_tabs("champions", "Saison", [("2025-2026", "2025-2026")])}
+      {_season_tabs("champions", "Saison", [("2024-2025", "2024-2025"), ("2025-2026", "2025-2026"), ("2026-2027", "2026-2027 bientôt")], active_value="2025-2026")}
 
       {_errors(data.get("errors", []))}
 
@@ -1621,7 +1632,7 @@ def _leagues_tab(data: dict[str, Any] | None) -> str:
         </div>
       </section>
 
-      {_season_tabs("leagues", "Saison", [("2025-2026", "2025-2026")])}
+      {_season_tabs("leagues", "Saison", [("2025-2026", "2025-2026"), ("2026-2027", "2026-2027 bientôt")])}
 
       {_errors(data.get("errors", []))}
 
@@ -1752,9 +1763,9 @@ def _known_country_flag(name: str) -> str:
     return f"https://a.espncdn.com/i/teamlogos/countries/500/{slug}.png" if slug else ""
 
 
-def _season_tabs(kind: str, label: str, options: list[tuple[str, str]]) -> str:
+def _season_tabs(kind: str, label: str, options: list[tuple[str, str]], active_value: str | None = None) -> str:
     buttons = "".join(
-        f'<button class="tab-button{" is-active" if index == 0 else ""}" type="button" data-season-value="{escape(value, quote=True)}">{escape(text)}</button>'
+        f'<button class="tab-button{" is-active" if (active_value == value if active_value else index == 0) else ""}" type="button" data-season-value="{escape(value, quote=True)}">{escape(text)}</button>'
         for index, (value, text) in enumerate(options)
     )
     return f"""
@@ -1783,10 +1794,13 @@ def _tabs_script(champions_data: dict[str, Any] | None) -> str:
       const key = `akrodufoot:season:${nav.dataset.seasonTabs}`;
       const buttons = Array.from(nav.querySelectorAll('[data-season-value]'));
       const applySeason = (value) => {
-        const selected = buttons.find((button) => button.dataset.seasonValue === value) || buttons[0];
+        const selected = buttons.find((button) => button.dataset.seasonValue === value) || buttons.find((button) => button.classList.contains('is-active')) || buttons[0];
         if (!selected) return;
         buttons.forEach((button) => button.classList.toggle('is-active', button === selected));
         localStorage.setItem(key, selected.dataset.seasonValue || '');
+        if (typeof window.renderCompetitionSeason === 'function') {
+          window.renderCompetitionSeason(nav.dataset.seasonTabs, selected.dataset.seasonValue || '');
+        }
       };
       applySeason(localStorage.getItem(key));
       buttons.forEach((button) => {

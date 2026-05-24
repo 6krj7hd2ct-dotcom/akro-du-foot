@@ -437,12 +437,23 @@
     .club-logo.placeholder::before { content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }
     .euro-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }
     .euro-summary-card { position: relative; overflow: hidden; min-height: 132px; padding: 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.12), rgba(142,75,255,0.08)); box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
-    .euro-summary-card::before { content: ""; position: absolute; inset: 0; background-image: var(--summary-bg); background-repeat: no-repeat; background-position: calc(100% - 14px) center; background-size: min(110px, 45%) auto; opacity: 0.13; filter: saturate(1.18) contrast(1.08); pointer-events: none; }
+    .euro-summary-card::before { content: ""; position: absolute; inset: 0; background-image: var(--summary-bg); background-repeat: no-repeat; background-position: calc(100% - 10px) center; background-size: min(136px, 54%) auto; opacity: 0.21; filter: saturate(1.20) contrast(1.08); pointer-events: none; }
     .euro-summary-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }
     .euro-summary-card > * { position: relative; z-index: 1; }
     .euro-summary-value { margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }
-    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
-    .recent-honour-card { min-height: 108px; }
+    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+    .recent-honour-card { min-height: 0; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; }
+    .recent-honour-card h3 { margin: 0; color: #ffe1a0; font-size: 13px; line-height: 1; white-space: nowrap; }
+    .recent-honour-card .empty { margin: 0; display: inline-flex; align-items: center; gap: 7px; color: #eef6ff; font-size: 13px; font-weight: 900; line-height: 1.12; }
+    .recent-honour-card .flag { width: 20px; height: 20px; flex: 0 0 20px; }
+    .historical-match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; width: 100%; }
+    .historical-match-card { display: grid; gap: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.055); }
+    .historical-match-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; }
+    .historical-match-row .team:last-child { justify-content: end; text-align: right; }
+    .historical-score { color: var(--gold); font-weight: 950; white-space: nowrap; }
+    .historical-group-card .euro-team-row { grid-template-columns: 28px minmax(0, 1fr) repeat(6, auto); }
+    .historical-group-stat { min-width: 22px; color: #dce9f7; text-align: right; font-size: 12px; font-weight: 850; }
+    .historical-unavailable { padding: 14px; border: 1px dashed rgba(255,255,255,0.18); border-radius: 14px; color: var(--muted); background: rgba(255,255,255,0.045); }
     .euro-group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 14px; }
     .euro-group-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .euro-team-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,0.08); }
@@ -1257,7 +1268,10 @@
     
     <nav class="season-tabs" data-season-tabs="worldcup" aria-label="Année">
       <span class="season-tabs-label">Année</span>
+      <button class="tab-button" type="button" data-season-value="2018">2018</button>
+      <button class="tab-button" type="button" data-season-value="2022">2022</button>
       <button class="tab-button is-active" type="button" data-season-value="2026">2026</button>
+      <button class="tab-button" type="button" data-season-value="2030">2030 à venir</button>
     </nav>
 
     <section class="euro-summary-grid" aria-label="Résumé Coupe du Monde">
@@ -1435,8 +1449,9 @@
 
       <nav class="season-tabs" data-season-tabs="euro" aria-label="Année Coupe d’Europe">
         <span class="season-tabs-label">Année</span>
+        <button class="tab-button" type="button" data-season-value="2020">2020</button>
         <button class="tab-button is-active" type="button" data-season-value="2024">2024</button>
-        <button class="tab-button" type="button" data-season-value="2028" disabled>2028 bientôt</button>
+        <button class="tab-button" type="button" data-season-value="2028">2028 bientôt</button>
       </nav>
 
       <section class="euro-summary-grid" aria-label="Résumé Coupe d’Europe">
@@ -1530,7 +1545,9 @@
       
     <nav class="season-tabs" data-season-tabs="champions" aria-label="Saison">
       <span class="season-tabs-label">Saison</span>
+      <button class="tab-button" type="button" data-season-value="2024-2025">2024-2025</button>
       <button class="tab-button is-active" type="button" data-season-value="2025-2026">2025-2026</button>
+      <button class="tab-button" type="button" data-season-value="2026-2027">2026-2027 bientôt</button>
     </nav>
 
       <section class="euro-summary-grid" aria-label="Résumé Ligue des Champions">
@@ -1612,6 +1629,7 @@
     <nav class="season-tabs" data-season-tabs="leagues" aria-label="Saison">
       <span class="season-tabs-label">Saison</span>
       <button class="tab-button is-active" type="button" data-season-value="2025-2026">2025-2026</button>
+      <button class="tab-button" type="button" data-season-value="2026-2027">2026-2027 bientôt</button>
     </nav>
       <section class="euro-summary-grid" id="leagueSummaryCards" aria-label="Résumé championnat"></section>
 
@@ -4183,6 +4201,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
     }
 
+    function competitionHistoricalContext() {
+      return window.AKRO_COACH_HISTORICAL_CONTEXT || window.AKRO_HISTORICAL_COMPETITIONS || null;
+    }
+
     async function sendSearchCoachMessage(message, {visible = true, initial = false} = {}) {
       const question = String(message || '').trim();
       if (!question || searchCoachBusy) return;
@@ -4204,7 +4226,8 @@ grant select, insert, update on public.profiles to authenticated;`;
             context: {
               lastEntity: currentSearchDetail?.title || currentSearchDetail?.query || '',
               lastEntityType: currentSearchDetail?.type || '',
-              lastIntent: 'search_context'
+              lastIntent: 'search_context',
+              historicalCompetitions: competitionHistoricalContext()
             },
             session_id: searchCoachSessionId
           })
@@ -5614,7 +5637,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           body: JSON.stringify({
             message: question,
             history: footballChatbotHistory.slice(-20),
-            context: coachConversationMemory,
+            context: {...coachConversationMemory, historicalCompetitions: competitionHistoricalContext()},
             session_id: coachSessionId
           })
         });
@@ -5634,6 +5657,213 @@ grant select, insert, update on public.profiles to authenticated;`;
     });
   </script>
   <script>
+    (() => {
+      const flag = code => code ? `https://a.espncdn.com/i/teamlogos/countries/500/${code}.png` : '';
+      const logo = id => id ? `https://a.espncdn.com/i/teamlogos/soccer/500/${id}.png` : '';
+      const info = 'Information non disponible';
+      const team = (name, img = '', pts = '', stats = {}) => ({name, img, pts, ...stats});
+      const group = (name, teams) => ({name, teams});
+      const match = (phase, home, away, score, homeImg = '', awayImg = '', note = '') => ({phase, home, away, score, homeImg, awayImg, note});
+      const player = (name, teamName, value, img = '', note = '') => ({name, team: teamName, value, img, note});
+      const futureSeason = (competition, favouriteLabel) => ({
+        future: true,
+        summary: [
+          ['Champion', info, 'Données à venir.', ''],
+          ['Finaliste', info, 'Données à venir.', ''],
+          ['Meilleur joueur de la compétition', info, 'Données à venir.', ''],
+          [favouriteLabel, info, 'Focus utilisateur prêt à être branché.', '']
+        ],
+        honours: [],
+        scorers: [],
+        assists: [],
+        bracket: [],
+        groups: [],
+        calendar: [],
+        notice: `${competition} : données à venir. La structure est prête pour les groupes, le calendrier, les classements et les statistiques.`
+      });
+
+      const HISTORICAL_COMPETITIONS = {
+        worldcup: {
+          current: '2026',
+          seasons: {
+            '2018': {
+              summary: [
+                ['Champion', 'France', 'Victoire 4-2 contre la Croatie en finale.', flag('fra')],
+                ['Finaliste', 'Croatie', 'Premier finaliste mondial de son histoire.', flag('cro')],
+                ['Meilleur joueur de la compétition', 'Luka Modric', 'Ballon d’Or du Mondial 2018.', flag('cro')],
+                ['Nation favorite', 'France', 'Parcours champion en Russie.', flag('fra')]
+              ],
+              honours: [['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')]],
+              scorers: [player('Harry Kane', 'Angleterre', '6 buts', flag('eng')), player('Antoine Griezmann', 'France', '4 buts', flag('fra'), 'à égalité'), player('Romelu Lukaku', 'Belgique', '4 buts', flag('bel'), 'à égalité')],
+              assists: [player('Antoine Griezmann', 'France', '2 passes', flag('fra'), 'donnée partagée'), player('Kevin De Bruyne', 'Belgique', '2 passes', flag('bel'), 'donnée partagée'), player('James Rodriguez', 'Colombie', '2 passes', flag('col'), 'donnée partagée')],
+              bracket: [match('Finale', 'France', 'Croatie', '4 - 2', flag('fra'), flag('cro'), 'Moscou'), match('Demi-finale', 'France', 'Belgique', '1 - 0', flag('fra'), flag('bel')), match('Demi-finale', 'Croatie', 'Angleterre', '2 - 1 ap', flag('cro'), flag('eng')), match('3e place', 'Belgique', 'Angleterre', '2 - 0', flag('bel'), flag('eng'))],
+              groups: [
+                group('Groupe A', [team('Uruguay', flag('uru'), '9'), team('Russie', flag('rus'), '6'), team('Arabie saoudite', flag('ksa'), '3'), team('Egypte', flag('egy'), '0')]),
+                group('Groupe B', [team('Espagne', flag('esp'), '5'), team('Portugal', flag('por'), '5'), team('Iran', flag('irn'), '4'), team('Maroc', flag('mar'), '1')]),
+                group('Groupe C', [team('France', flag('fra'), '7'), team('Danemark', flag('den'), '5'), team('Pérou', flag('per'), '3'), team('Australie', flag('aus'), '1')]),
+                group('Groupe D', [team('Croatie', flag('cro'), '9'), team('Argentine', flag('arg'), '4'), team('Nigeria', flag('nga'), '3'), team('Islande', flag('isl'), '1')]),
+                group('Groupe E', [team('Brésil', flag('bra'), '7'), team('Suisse', flag('sui'), '5'), team('Serbie', flag('srb'), '3'), team('Costa Rica', flag('crc'), '1')]),
+                group('Groupe F', [team('Suède', flag('swe'), '6'), team('Mexique', flag('mex'), '6'), team('Corée du Sud', flag('kors'), '3'), team('Allemagne', flag('ger'), '3')]),
+                group('Groupe G', [team('Belgique', flag('bel'), '9'), team('Angleterre', flag('eng'), '6'), team('Tunisie', flag('tun'), '3'), team('Panama', flag('pan'), '0')]),
+                group('Groupe H', [team('Colombie', flag('col'), '6'), team('Japon', flag('jpn'), '4'), team('Sénégal', flag('sen'), '4'), team('Pologne', flag('pol'), '3')])
+              ],
+              calendar: [match('Finale', 'France', 'Croatie', '4 - 2', flag('fra'), flag('cro')), match('Quart', 'France', 'Uruguay', '2 - 0', flag('fra'), flag('uru')), match('8e', 'France', 'Argentine', '4 - 3', flag('fra'), flag('arg'))]
+            },
+            '2022': {
+              summary: [
+                ['Champion', 'Argentine', 'Victoire aux tirs au but contre la France.', flag('arg')],
+                ['Finaliste', 'France', 'Finaliste après un 3-3 spectaculaire.', flag('fra')],
+                ['Meilleur joueur de la compétition', 'Lionel Messi', 'Ballon d’Or du Mondial 2022.', flag('arg')],
+                ['Nation favorite', 'France', 'Finaliste, portée par Mbappé.', flag('fra')]
+              ],
+              honours: [['2022', 'Argentine', flag('arg')], ['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')]],
+              scorers: [player('Kylian Mbappé', 'France', '8 buts', flag('fra')), player('Lionel Messi', 'Argentine', '7 buts', flag('arg')), player('Olivier Giroud', 'France', '4 buts', flag('fra'))],
+              assists: [player('Bruno Fernandes', 'Portugal', '3 passes', flag('por'), 'à égalité'), player('Harry Kane', 'Angleterre', '3 passes', flag('eng'), 'à égalité'), player('Antoine Griezmann', 'France', '3 passes', flag('fra'), 'à égalité')],
+              bracket: [match('Finale', 'Argentine', 'France', '3 - 3 tab 4-2', flag('arg'), flag('fra'), 'Lusail'), match('Demi-finale', 'Argentine', 'Croatie', '3 - 0', flag('arg'), flag('cro')), match('Demi-finale', 'France', 'Maroc', '2 - 0', flag('fra'), flag('mar')), match('3e place', 'Croatie', 'Maroc', '2 - 1', flag('cro'), flag('mar'))],
+              groups: [
+                group('Groupe A', [team('Pays-Bas', flag('ned'), '7'), team('Sénégal', flag('sen'), '6'), team('Equateur', flag('ecu'), '4'), team('Qatar', flag('qat'), '0')]),
+                group('Groupe B', [team('Angleterre', flag('eng'), '7'), team('Etats-Unis', flag('usa'), '5'), team('Iran', flag('irn'), '3'), team('Pays de Galles', flag('wal'), '1')]),
+                group('Groupe C', [team('Argentine', flag('arg'), '6'), team('Pologne', flag('pol'), '4'), team('Mexique', flag('mex'), '4'), team('Arabie saoudite', flag('ksa'), '3')]),
+                group('Groupe D', [team('France', flag('fra'), '6'), team('Australie', flag('aus'), '6'), team('Tunisie', flag('tun'), '4'), team('Danemark', flag('den'), '1')]),
+                group('Groupe E', [team('Japon', flag('jpn'), '6'), team('Espagne', flag('esp'), '4'), team('Allemagne', flag('ger'), '4'), team('Costa Rica', flag('crc'), '3')]),
+                group('Groupe F', [team('Maroc', flag('mar'), '7'), team('Croatie', flag('cro'), '5'), team('Belgique', flag('bel'), '4'), team('Canada', flag('can'), '0')]),
+                group('Groupe G', [team('Brésil', flag('bra'), '6'), team('Suisse', flag('sui'), '6'), team('Cameroun', flag('cmr'), '4'), team('Serbie', flag('srb'), '1')]),
+                group('Groupe H', [team('Portugal', flag('por'), '6'), team('Corée du Sud', flag('kors'), '4'), team('Uruguay', flag('uru'), '4'), team('Ghana', flag('gha'), '3')])
+              ],
+              calendar: [match('Finale', 'Argentine', 'France', '3 - 3 tab 4-2', flag('arg'), flag('fra')), match('Quart', 'France', 'Angleterre', '2 - 1', flag('fra'), flag('eng')), match('Quart', 'Maroc', 'Portugal', '1 - 0', flag('mar'), flag('por'))]
+            },
+            '2030': futureSeason('Coupe du Monde 2030', 'Nation favorite')
+          }
+        },
+        euro: {
+          current: '2024',
+          seasons: {
+            '2020': {
+              summary: [
+                ['Champion', 'Italie', 'Victoire aux tirs au but contre l’Angleterre.', flag('ita')],
+                ['Finaliste', 'Angleterre', 'Finale à Wembley.', flag('eng')],
+                ['Meilleur joueur de la compétition', 'Gianluigi Donnarumma', 'Elu joueur du tournoi par l’UEFA.', flag('ita')],
+                ['Nation favorite', 'France', 'Eliminée en 8e par la Suisse.', flag('fra')]
+              ],
+              honours: [['2020', 'Italie', flag('ita')], ['2016', 'Portugal', flag('por')], ['2012', 'Espagne', flag('esp')], ['2008', 'Espagne', flag('esp')]],
+              scorers: [player('Cristiano Ronaldo', 'Portugal', '5 buts', flag('por')), player('Patrik Schick', 'Tchéquie', '5 buts', flag('cze')), player('Karim Benzema', 'France', '4 buts', flag('fra'))],
+              assists: [player('Steven Zuber', 'Suisse', '4 passes', flag('sui')), player('Dani Olmo', 'Espagne', '3 passes', flag('esp')), player('Luke Shaw', 'Angleterre', '3 passes', flag('eng'))],
+              bracket: [match('Finale', 'Italie', 'Angleterre', '1 - 1 tab 3-2', flag('ita'), flag('eng'), 'Wembley'), match('Demi-finale', 'Italie', 'Espagne', '1 - 1 tab 4-2', flag('ita'), flag('esp')), match('Demi-finale', 'Angleterre', 'Danemark', '2 - 1 ap', flag('eng'), flag('den'))],
+              groups: [
+                group('Groupe A', [team('Italie', flag('ita'), '9'), team('Pays de Galles', flag('wal'), '4'), team('Suisse', flag('sui'), '4'), team('Turquie', flag('tur'), '0')]),
+                group('Groupe B', [team('Belgique', flag('bel'), '9'), team('Danemark', flag('den'), '3'), team('Finlande', flag('fin'), '3'), team('Russie', flag('rus'), '3')]),
+                group('Groupe C', [team('Pays-Bas', flag('ned'), '9'), team('Autriche', flag('aut'), '6'), team('Ukraine', flag('ukr'), '3'), team('Macédoine du Nord', '', '0')]),
+                group('Groupe D', [team('Angleterre', flag('eng'), '7'), team('Croatie', flag('cro'), '4'), team('Tchéquie', flag('cze'), '4'), team('Ecosse', flag('sco'), '1')]),
+                group('Groupe E', [team('Suède', flag('swe'), '7'), team('Espagne', flag('esp'), '5'), team('Slovaquie', flag('svk'), '3'), team('Pologne', flag('pol'), '1')]),
+                group('Groupe F', [team('France', flag('fra'), '5'), team('Allemagne', flag('ger'), '4'), team('Portugal', flag('por'), '4'), team('Hongrie', flag('hun'), '2')])
+              ],
+              calendar: [match('Finale', 'Italie', 'Angleterre', '1 - 1 tab 3-2', flag('ita'), flag('eng')), match('8e', 'Suisse', 'France', '3 - 3 tab 5-4', flag('sui'), flag('fra')), match('Quart', 'Italie', 'Belgique', '2 - 1', flag('ita'), flag('bel'))]
+            },
+            '2028': futureSeason('Euro 2028', 'Nation favorite')
+          }
+        },
+        champions: {
+          current: '2025-2026',
+          seasons: {
+            '2024-2025': {
+              summary: [
+                ['Champion', 'Paris Saint-Germain', 'Premier sacre européen, 5-0 contre l’Inter.', logo('160')],
+                ['Finaliste', 'Internazionale', 'Finaliste à Munich.', logo('110')],
+                ['Meilleur joueur de la compétition', 'Ousmane Dembélé', 'Joueur de la saison UEFA 2024-2025.', flag('fra')],
+                ['Club favori', 'PSG', 'Champion de l’édition 2024-2025.', logo('160')]
+              ],
+              honours: [['2025', 'Paris Saint-Germain', logo('160')], ['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')]],
+              scorers: [player('Raphinha', 'Barcelona', '13 buts', logo('83')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', logo('124')), player('Harry Kane', 'Bayern Munich', '11 buts', logo('132'))],
+              assists: [player('Raphinha', 'Barcelona', '9 passes', logo('83')), player('Ousmane Dembélé', 'Paris Saint-Germain', '6 passes', logo('160')), player('Achraf Hakimi', 'Paris Saint-Germain', '5 passes', logo('160'))],
+              bracket: [match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110'), 'Munich'), match('Demi-finale', 'Paris Saint-Germain', 'Arsenal', '3 - 1 cumulé', logo('160'), logo('359')), match('Demi-finale', 'Internazionale', 'Barcelona', '7 - 6 cumulé', logo('110'), logo('83'))],
+              groups: [group('Phase de ligue - Top 8', [team('Liverpool', logo('364'), '21'), team('Barcelona', logo('83'), '19'), team('Arsenal', logo('359'), '19'), team('Internazionale', logo('110'), '19'), team('Atlético Madrid', logo('1068'), '18'), team('Bayer Leverkusen', logo('131'), '16'), team('Lille', logo('166'), '16'), team('Aston Villa', logo('362'), '16')])],
+              calendar: [match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110')), match('Quart', 'Paris Saint-Germain', 'Aston Villa', '5 - 4 cumulé', logo('160'), logo('362')), match('Barrage', 'Paris Saint-Germain', 'Brest', '10 - 0 cumulé', logo('160'), logo('6997'))]
+            },
+            '2026-2027': futureSeason('Ligue des Champions 2026-2027', 'Club favori')
+          }
+        },
+        leagues: {
+          current: '2025-2026',
+          seasons: {
+            '2026-2027': futureSeason('Championnats 2026-2027', 'Club favori')
+          }
+        }
+      };
+
+      const defaults = new Map();
+      const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
+      const img = url => url ? `<img class="flag" src="${escape(url)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
+      const panel = kind => document.querySelector(`[data-tab-panel="${kind}"]`);
+      const sectionAfter = (root, labels) => {
+        const wanted = labels.map(label => label.toLocaleLowerCase('fr-FR'));
+        const head = Array.from(root.querySelectorAll('.section-head')).find(node => {
+          const text = node.textContent.toLocaleLowerCase('fr-FR');
+          return wanted.some(label => text.includes(label));
+        });
+        return head ? head.nextElementSibling : null;
+      };
+      const nodesFor = kind => {
+        const root = panel(kind);
+        if (!root) return {};
+        const leaders = Array.from(root.querySelectorAll('.leaders'));
+        return {
+          root,
+          summary: root.querySelector('.euro-summary-grid'),
+          honours: root.querySelector('.recent-honours-grid'),
+          scorers: leaders[0],
+          assists: leaders[1],
+          big5: root.querySelector('#big5TopScorers'),
+          bracket: sectionAfter(root, ['arbre', 'phase finale']),
+          groups: sectionAfter(root, ['classements des groupes', 'groupes euro', 'classement de la phase', 'classement du championnat']),
+          calendar: sectionAfter(root, ['résultats et calendrier', 'calendrier / résultats'])
+        };
+      };
+      const capture = kind => {
+        const nodes = nodesFor(kind);
+        defaults.set(kind, Object.fromEntries(Object.entries(nodes).filter(([, node]) => node && node.innerHTML !== undefined).map(([key, node]) => [key, node.innerHTML])));
+      };
+      const restore = kind => {
+        const saved = defaults.get(kind);
+        const nodes = nodesFor(kind);
+        if (!saved) return;
+        Object.entries(saved).forEach(([key, html]) => {
+          if (nodes[key]) nodes[key].innerHTML = html;
+        });
+        if (kind === 'leagues' && typeof renderLeague === 'function') renderLeague();
+      };
+      const summaryHtml = cards => (cards || []).map(([label, value, detail, image], index) => `<article class="euro-summary-card ${index === 3 ? 'euro-focus-card' : ''}"${image ? ` style="--summary-bg:url(${escape(image)})"` : ''}><div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p></article>`).join('');
+      const honoursHtml = honours => (honours || []).map(([year, winner, image]) => `<article class="card recent-honour-card"><h3>${escape(year)}</h3><p class="empty">${img(image)}${escape(winner)}</p></article>`).join('') || `<article class="card recent-honour-card"><h3>A venir</h3><p class="empty">${info}</p></article>`;
+      const playersHtml = players => (players || []).map((item, index) => `<article class="card player-card rank-${index + 1}"><div class="avatar-wrap">${item.img ? `<img class="avatar" src="${escape(item.img)}" alt="">` : '<div class="avatar placeholder" aria-hidden="true"></div>'}</div><div><div class="team">${escape(item.name)}</div><div class="club-line">${img(item.img)}<span class="club-name">${escape(item.team)}</span></div><div class="player-stat">${escape(item.value)}</div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</div></article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
+      const matchesHtml = matches => (matches || []).map(item => `<article class="historical-match-card"><div class="subtle">${escape(item.phase)}</div><div class="historical-match-row"><span class="team">${img(item.homeImg)}${escape(item.home)}</span><span class="historical-score">${escape(item.score)}</span><span class="team">${escape(item.away)}${img(item.awayImg)}</span></div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</article>`).join('');
+      const bracketHtml = matches => matches?.length ? `<div class="historical-match-grid">${matchesHtml(matches)}</div>` : `<div class="historical-unavailable">${info}</div>`;
+      const groupsHtml = groups => (groups || []).map(item => `<article class="card euro-group-card historical-group-card"><h3>${escape(item.name)}</h3>${(item.teams || []).map((row, index) => `<div class="euro-team-row"><span>${index + 1}</span><span class="team">${img(row.img)}${escape(row.name)}</span><span class="historical-group-stat">J ${escape(row.played || '-')}</span><span class="historical-group-stat">G ${escape(row.wins || '-')}</span><span class="historical-group-stat">N ${escape(row.draws || '-')}</span><span class="historical-group-stat">P ${escape(row.losses || '-')}</span><span class="historical-group-stat">Diff ${escape(row.goal_diff || '-')}</span><span class="euro-points">${escape(row.pts || '-')} pts</span></div>`).join('')}</article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
+      const calendarHtml = matches => matches?.length ? `<div class="historical-match-grid">${matchesHtml(matches)}</div>` : `<div class="historical-unavailable">${info}</div>`;
+
+      window.AKRO_HISTORICAL_COMPETITIONS = HISTORICAL_COMPETITIONS;
+      window.AKRO_COACH_HISTORICAL_CONTEXT = HISTORICAL_COMPETITIONS;
+      window.renderCompetitionSeason = (kind, value) => {
+        const config = HISTORICAL_COMPETITIONS[kind];
+        if (!config) return;
+        const selected = value || config.current;
+        const data = config.seasons[selected];
+        if (!data || selected === config.current) {
+          restore(kind);
+          return;
+        }
+        const nodes = nodesFor(kind);
+        if (nodes.summary) nodes.summary.innerHTML = summaryHtml(data.summary);
+        if (nodes.honours) nodes.honours.innerHTML = honoursHtml(data.honours);
+        if (nodes.scorers) nodes.scorers.innerHTML = playersHtml(data.scorers);
+        if (nodes.assists) nodes.assists.innerHTML = playersHtml(data.assists);
+        if (nodes.big5) nodes.big5.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : '';
+        if (nodes.bracket) nodes.bracket.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : bracketHtml(data.bracket);
+        if (nodes.groups) nodes.groups.innerHTML = groupsHtml(data.groups);
+        if (nodes.calendar) nodes.calendar.innerHTML = calendarHtml(data.calendar);
+      };
+      ['worldcup', 'euro', 'champions', 'leagues'].forEach(capture);
+    })();
+  </script>
+  <script>
     document.querySelectorAll('[data-tab-target]').forEach((button) => {
       button.addEventListener('click', () => {
         const target = button.dataset.tabTarget;
@@ -5650,10 +5880,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       const key = `akrodufoot:season:${nav.dataset.seasonTabs}`;
       const buttons = Array.from(nav.querySelectorAll('[data-season-value]'));
       const applySeason = (value) => {
-        const selected = buttons.find((button) => button.dataset.seasonValue === value) || buttons[0];
+        const selected = buttons.find((button) => button.dataset.seasonValue === value) || buttons.find((button) => button.classList.contains('is-active')) || buttons[0];
         if (!selected) return;
         buttons.forEach((button) => button.classList.toggle('is-active', button === selected));
         localStorage.setItem(key, selected.dataset.seasonValue || '');
+        if (typeof window.renderCompetitionSeason === 'function') {
+          window.renderCompetitionSeason(nav.dataset.seasonTabs, selected.dataset.seasonValue || '');
+        }
       };
       applySeason(localStorage.getItem(key));
       buttons.forEach((button) => {
