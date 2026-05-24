@@ -111,6 +111,134 @@ Les avatars prédéfinis sont servis depuis `public/avatars/`. Supabase stocke u
 
 `data/community.json` reste seulement un filet de secours local pour les anciens messages/pronostics si Supabase est indisponible.
 
+### 3bis. Base football Supabase, IA et synchronisation
+
+Applique d'abord les scripts existants, puis la migration progressive :
+
+```sql
+-- Editeur SQL Supabase
+-- 1. supabase/user_accounts.sql
+-- 2. supabase/coach_messages.sql
+-- 3. supabase/search_ai_answers.sql
+-- 4. supabase/football_core.sql
+```
+
+`supabase/football_core.sql` ajoute uniquement des tables/colonnes manquantes. Il ne supprime pas, ne renomme pas et ne vide aucune table existante. Les nouvelles tables sont :
+
+- `countries`
+- `teams`
+- `players`
+- `coaches`
+- `competitions`
+- `matches`
+- `team_players`
+- `team_coaches`
+- `entity_profiles`
+- `sync_logs`
+
+Le script active aussi `pgvector` avec :
+
+```sql
+create extension if not exists vector;
+```
+
+Variables serveur à configurer sur Render et dans les secrets Supabase :
+
+```bash
+SUPABASE_URL="https://TON-PROJET.supabase.co"
+SUPABASE_ANON_KEY="TA_CLE_ANON_PUBLIC"
+SUPABASE_SERVICE_ROLE_KEY="TA_CLE_SERVICE_ROLE_PRIVEE"
+FOOTBALL_API_KEY="TA_CLE_API_FOOTBALL"
+FOOTBALL_API_BASE_URL="https://v3.football.api-sports.io"
+OPENAI_API_KEY="TA_CLE_OPENAI"
+```
+
+Ne mets jamais `SUPABASE_SERVICE_ROLE_KEY`, `FOOTBALL_API_KEY` ou `OPENAI_API_KEY` côté frontend.
+
+Déployer les Edge Functions Supabase :
+
+```bash
+supabase functions deploy sync-football-data
+supabase functions deploy update-entity-profiles
+supabase functions deploy search-entity-profiles
+```
+
+Ajouter les secrets Edge Functions :
+
+```bash
+supabase secrets set SUPABASE_URL="https://TON-PROJET.supabase.co"
+supabase secrets set SUPABASE_SERVICE_ROLE_KEY="TA_CLE_SERVICE_ROLE_PRIVEE"
+supabase secrets set FOOTBALL_API_KEY="TA_CLE_API_FOOTBALL"
+supabase secrets set FOOTBALL_API_BASE_URL="https://v3.football.api-sports.io"
+supabase secrets set OPENAI_API_KEY="TA_CLE_OPENAI"
+```
+
+Lancer une synchronisation manuelle :
+
+```bash
+supabase functions invoke sync-football-data --no-verify-jwt
+```
+
+Depuis l'application, ouvre :
+
+```bash
+/admin/sync
+```
+
+La page affiche la dernière synchronisation, les 20 derniers logs `sync_logs`, un message si les données sont anciennes, et un bouton `Mettre à jour maintenant`. Si `WATCH_PARTY_ADMIN_KEY` est configurée, la même clé est demandée avant de déclencher la sync.
+
+Vérifier les logs :
+
+```sql
+select *
+from public.sync_logs
+where job_name = 'sync-football-data'
+order by started_at desc
+limit 20;
+```
+
+Mode offline :
+
+- si `FOOTBALL_API_KEY` ou `FOOTBALL_API_BASE_URL` manque, `sync-football-data` écrit un log d'erreur propre et ne vide aucune table ;
+- si l'API football échoue ou atteint un quota, les données déjà stockées restent disponibles ;
+- la page `/admin/sync` signale les données absentes ou anciennes ;
+- quand une clé API active est ajoutée, relance une grosse synchronisation depuis `/admin/sync`.
+
+Cron quotidien Supabase :
+
+Supabase planifie généralement en UTC. Pour lancer vers 06:00 en France métropolitaine, utilise :
+
+- hiver : `0 5 * * *`
+- été : `0 4 * * *`
+
+Si tu veux garder l'expression demandée telle quelle, `0 6 * * *` lance à 06:00 UTC, donc 07:00 en hiver et 08:00 en été en France.
+
+Exemple avec `pg_cron` et `pg_net` si disponibles dans ton projet Supabase :
+
+```sql
+select cron.schedule(
+  'sync-football-data-daily',
+  '0 5 * * *',
+  $$
+  select net.http_post(
+    url := 'https://TON-PROJET.supabase.co/functions/v1/sync-football-data',
+    headers := jsonb_build_object(
+      'Authorization', 'Bearer TA_CLE_SERVICE_ROLE_PRIVEE',
+      'Content-Type', 'application/json'
+    ),
+    body := jsonb_build_object('source', 'cron')
+  );
+  $$
+);
+```
+
+Limites connues :
+
+- les quotas et formats varient selon l'API football choisie ;
+- la fonction `sync-football-data` fait des upserts et ne supprime jamais brutalement une entité absente de l'API ;
+- `update-entity-profiles` recalcule uniquement les entités modifiées récemment, puis remplit `entity_profiles` pour la recherche IA ;
+- `search-entity-profiles` prépare la recherche pgvector pour enrichir ensuite les réponses du Coach.
+
 ### 4. Tester en ligne
 
 Une fois déployé, ouvre l’URL Render.

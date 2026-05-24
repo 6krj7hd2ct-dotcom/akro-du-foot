@@ -91,6 +91,10 @@ if app:
     def watch_party():
         return watch_party_html()
 
+    @app.get("/admin/sync")
+    def admin_sync_page_route():
+        return Response(admin_sync_html(), mimetype="text/html")
+
     @app.get("/manifest.json")
     def manifest_file():
         return _runtime_file_response(BASE_DIR / "manifest.json", "application/manifest+json", no_store=True)
@@ -463,6 +467,17 @@ if app:
             limit = 12
         return jsonify({"messages": _coach_messages_from_supabase(session_id, limit) if session_id else []})
 
+    @app.get("/api/admin/sync/logs")
+    def admin_sync_logs_route():
+        body, status = admin_sync_logs_response()
+        return jsonify(body), status
+
+    @app.post("/api/admin/sync/run")
+    def admin_sync_run_route():
+        payload = request.get_json(silent=True) or {}
+        body, status = admin_sync_run_response(payload)
+        return jsonify(body), status
+
 
 def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     question = _clean(payload.get("message", ""), 500)
@@ -513,6 +528,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
         return {"error": COACH_UNAVAILABLE}, 503
 
     context = _coach_context_summary()
+    entity_profile_context = _coach_entity_profile_context(resolved_question)
     history_text = _format_chat_history(merged_history)
     try:
         import requests
@@ -558,6 +574,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                             f"Contexte détecté: {json.dumps(context_state, ensure_ascii=False)}\n"
                             f"Historique récent:\n{history_text}\n\n"
                             f"Vérification football récente:\n{verification.get('context', '')}\n\n"
+                            f"Profils football Supabase pertinents:\n{entity_profile_context or 'Aucun profil vectoriel pertinent disponible.'}\n\n"
                             f"Données Akro du Foot disponibles:\n{context}\n\n"
                             f"Question utilisateur résolue:\n{resolved_question}"
                         ),
@@ -1663,6 +1680,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_file(OUTPUT_HTML, "text/html; charset=utf-8", replace_build_version=True, no_store=True)
         elif path == "/watch-party":
             self._send_html(watch_party_html())
+        elif path == "/admin/sync":
+            self._send_html(admin_sync_html(), no_store=True)
         elif path == "/manifest.json":
             self._send_file(BASE_DIR / "manifest.json", "application/manifest+json", no_store=True)
         elif path == "/service-worker.js":
@@ -1726,6 +1745,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
             except ValueError:
                 limit = 12
             self._send_json({"messages": _coach_messages_from_supabase(session_id, limit) if session_id else []})
+        elif path == "/api/admin/sync/logs":
+            body, status = admin_sync_logs_response()
+            self._send_json(body, status)
         else:
             self.send_error(404)
 
@@ -1749,6 +1771,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json(body, status)
         elif path == "/api/search/coach":
             body, status = search_coach_response(payload)
+            self._send_json(body, status)
+        elif path == "/api/admin/sync/run":
+            body, status = admin_sync_run_response(payload)
             self._send_json(body, status)
         elif path == "/api/profile-password/hash":
             body, status = make_profile_password_hash(payload)
@@ -1811,6 +1836,248 @@ class CommunityHandler(BaseHTTPRequestHandler):
 
 def _supabase_config() -> tuple[str, str]:
     return os.environ.get("SUPABASE_URL", "").rstrip("/"), os.environ.get("SUPABASE_ANON_KEY", "").strip()
+
+
+def _supabase_service_config() -> tuple[str, str]:
+    return os.environ.get("SUPABASE_URL", "").rstrip("/"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+
+
+def _supabase_service_enabled() -> bool:
+    url, key = _supabase_service_config()
+    return bool(url and key)
+
+
+def _supabase_service_headers(prefer: str = "return=representation") -> dict[str, str]:
+    _, key = _supabase_service_config()
+    return {
+        "apikey": key,
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "Prefer": prefer,
+    }
+
+
+def _supabase_service_request(method: str, path: str, **kwargs: Any) -> Any:
+    if not _supabase_service_enabled():
+        return None
+    try:
+        import requests
+
+        url, _ = _supabase_service_config()
+        response = requests.request(
+            method,
+            f"{url}/rest/v1/{path.lstrip('/')}",
+            headers=_supabase_service_headers(kwargs.pop("prefer", "return=representation")),
+            timeout=SUPABASE_TIMEOUT,
+            **kwargs,
+        )
+        if response.status_code >= 400:
+            print(f"[supabase-service] {method} {path} failed status={response.status_code} body={response.text[:280]}")
+            return None
+        if not response.content:
+            return []
+        return response.json()
+    except Exception as exc:
+        print(f"[supabase-service] {method} {path} error: {exc}")
+        return None
+
+
+def _sync_admin_authorized(payload: dict[str, Any]) -> bool:
+    admin_key = os.environ.get("WATCH_PARTY_ADMIN_KEY", "").strip()
+    if not admin_key:
+        return True
+    return hmac.compare_digest(str(payload.get("admin_key", "")), admin_key)
+
+
+def _sync_log_public(row: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "id": row.get("id"),
+        "job_name": row.get("job_name"),
+        "status": row.get("status"),
+        "started_at": row.get("started_at"),
+        "finished_at": row.get("finished_at"),
+        "message": row.get("message") or "",
+        "processed_counts": row.get("processed_counts") or {},
+        "error_detail": row.get("error_detail") or "",
+    }
+
+
+def admin_sync_logs_response() -> tuple[dict[str, Any], int]:
+    if not _supabase_service_enabled():
+        return {"configured": False, "logs": [], "message": "SUPABASE_SERVICE_ROLE_KEY manquante côté serveur."}, 200
+    rows = _supabase_service_request(
+        "GET",
+        "sync_logs?select=id,job_name,status,started_at,finished_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&order=started_at.desc&limit=20",
+    )
+    if rows is None:
+        return {"configured": True, "logs": [], "message": "Impossible de lire sync_logs. Vérifie que supabase/football_core.sql est appliqué."}, 200
+    logs = [_sync_log_public(row) for row in rows]
+    latest = logs[0] if logs else None
+    stale = True
+    if latest and latest.get("finished_at"):
+        try:
+            finished = datetime.fromisoformat(str(latest["finished_at"]).replace("Z", "+00:00"))
+            stale = (datetime.now(timezone.utc) - finished).total_seconds() > 36 * 3600
+        except ValueError:
+            stale = True
+    return {"configured": True, "logs": logs, "latest": latest, "stale": stale}, 200
+
+
+def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
+    if not _sync_admin_authorized(payload):
+        return {"error": "Clé admin invalide."}, 403
+    if not _supabase_service_enabled():
+        return {"error": "SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY manquant côté serveur."}, 500
+    try:
+        import requests
+
+        url, key = _supabase_service_config()
+        response = requests.post(
+            f"{url}/functions/v1/sync-football-data",
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+            json={"source": "admin-sync", "manual": True},
+            timeout=60,
+        )
+        data = response.json() if response.content else {}
+        return {"ok": response.ok, "result": data}, response.status_code if response.status_code < 500 else 502
+    except Exception as exc:
+        return {"error": f"Impossible d'appeler sync-football-data : {exc}"}, 502
+
+
+def _coach_entity_profile_context(question: str) -> str:
+    if not question or not _supabase_service_enabled():
+        return ""
+    try:
+        import requests
+
+        url, key = _supabase_service_config()
+        response = requests.post(
+            f"{url}/functions/v1/search-entity-profiles",
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+            json={"question": question, "match_count": 6},
+            timeout=8,
+        )
+        if response.status_code >= 400:
+            return ""
+        data = response.json()
+        rows = data.get("results") or []
+        snippets = []
+        for row in rows[:6]:
+            summary = _clean(str(row.get("summary") or ""), 260)
+            entity_type = _clean(str(row.get("entity_type") or ""), 40)
+            similarity = row.get("similarity")
+            score = f" · confiance {float(similarity):.2f}" if isinstance(similarity, (int, float)) else ""
+            if summary:
+                snippets.append(f"- {entity_type}: {summary}{score}")
+        return "\n".join(snippets)
+    except Exception as exc:
+        print(f"[entity-profiles] search skipped: {exc}")
+        return ""
+
+
+def admin_sync_html() -> str:
+    admin_required = bool(os.environ.get("WATCH_PARTY_ADMIN_KEY", "").strip())
+    admin_input = '<input id="adminKey" type="password" placeholder="Clé admin">' if admin_required else ""
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Sync Football - Akro du Foot</title>
+  <style>
+    :root {{ color-scheme: dark; --bg:#07111f; --panel:#101d2f; --gold:#f5c96b; --muted:#9fb0c6; --ok:#32d3a2; --err:#ff7373; }}
+    body {{ margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at top, #163052, var(--bg)); color:#edf6ff; }}
+    main {{ width:min(980px, calc(100% - 28px)); margin:0 auto; padding:32px 0; display:grid; gap:18px; }}
+    .hero, .card {{ border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(16,29,47,.82); box-shadow:0 18px 46px rgba(0,0,0,.26); }}
+    .hero {{ padding:22px; }}
+    h1 {{ margin:0 0 8px; font-size:clamp(28px,5vw,46px); }}
+    h2 {{ margin:0 0 12px; font-size:18px; }}
+    p {{ color:var(--muted); line-height:1.55; }}
+    .grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }}
+    .card {{ padding:16px; }}
+    .status {{ display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px; font-weight:900; background:rgba(255,255,255,.08); }}
+    .success {{ color:var(--ok); }} .error {{ color:var(--err); }} .running {{ color:var(--gold); }}
+    button {{ border:0; border-radius:999px; padding:11px 16px; font-weight:950; color:#07111f; background:linear-gradient(180deg,#ffe1a0,#d5a63a); cursor:pointer; }}
+    button:disabled {{ opacity:.58; cursor:wait; }}
+    input {{ min-width:220px; border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:11px 12px; background:rgba(255,255,255,.08); color:#fff; }}
+    .actions {{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }}
+    table {{ width:100%; border-collapse:collapse; }}
+    th, td {{ padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.08); text-align:left; vertical-align:top; }}
+    th {{ color:var(--gold); font-size:12px; text-transform:uppercase; }}
+    code {{ color:#ffe1a0; }}
+    .muted {{ color:var(--muted); }}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>Synchronisation football</h1>
+      <p>Cette page déclenche uniquement la Edge Function serveur <code>sync-football-data</code>. Les clés Supabase et API football restent côté serveur.</p>
+      <div class="actions">
+        {admin_input}
+        <button id="run">Mettre à jour maintenant</button>
+        <span id="state" class="status running">Chargement des logs...</span>
+      </div>
+    </section>
+    <section class="grid">
+      <article class="card"><h2>Dernière synchronisation</h2><div id="latest" class="muted">Chargement...</div></article>
+      <article class="card"><h2>Données</h2><div id="freshness" class="muted">Chargement...</div></article>
+    </section>
+    <section class="card">
+      <h2>Historique</h2>
+      <div style="overflow:auto"><table><thead><tr><th>Date</th><th>Statut</th><th>Message</th><th>Compteurs</th></tr></thead><tbody id="logs"></tbody></table></div>
+    </section>
+  </main>
+  <script>
+    const state = document.getElementById('state');
+    const latest = document.getElementById('latest');
+    const freshness = document.getElementById('freshness');
+    const logsBody = document.getElementById('logs');
+    const button = document.getElementById('run');
+    const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}}[c]));
+    const fmt = value => value ? new Date(value).toLocaleString('fr-FR') : 'Non disponible';
+    function renderLog(log) {{
+      return `<tr><td>${{escapeHtml(fmt(log.started_at))}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(log.status)}}</span></td><td>${{escapeHtml(log.message || log.error_detail || '')}}</td><td><code>${{escapeHtml(JSON.stringify(log.processed_counts || {{}}))}}</code></td></tr>`;
+    }}
+    async function loadLogs() {{
+      const res = await fetch('/api/admin/sync/logs', {{cache:'no-store'}});
+      const data = await res.json();
+      if (!data.configured) {{
+        state.textContent = 'Configuration Supabase service manquante';
+        latest.textContent = data.message || 'Non configuré';
+        logsBody.innerHTML = '';
+        return;
+      }}
+      const last = data.latest;
+      state.textContent = last ? last.status : 'Aucune synchronisation';
+      state.className = `status ${{last?.status || 'running'}}`;
+      latest.innerHTML = last ? `<strong>${{escapeHtml(last.status)}}</strong><br>${{escapeHtml(fmt(last.finished_at || last.started_at))}}<br><span class="muted">${{escapeHtml(last.message || '')}}</span>` : 'Aucun log.';
+      freshness.textContent = data.stale ? 'Données absentes ou anciennes : relance recommandée.' : 'Données synchronisées récemment.';
+      logsBody.innerHTML = (data.logs || []).map(renderLog).join('') || '<tr><td colspan="4" class="muted">Aucune synchronisation enregistrée.</td></tr>';
+    }}
+    button.addEventListener('click', async () => {{
+      button.disabled = true;
+      state.textContent = 'Synchronisation en cours...';
+      state.className = 'status running';
+      try {{
+        const res = await fetch('/api/admin/sync/run', {{
+          method:'POST',
+          headers:{{'Content-Type':'application/json'}},
+          body: JSON.stringify({{admin_key: document.getElementById('adminKey')?.value || ''}})
+        }});
+        const data = await res.json();
+        state.textContent = data.ok ? 'Synchronisation terminée' : (data.error || data.result?.error || 'Erreur de synchronisation');
+      }} catch (error) {{
+        state.textContent = 'Erreur réseau pendant la synchronisation';
+      }} finally {{
+        button.disabled = false;
+        await loadLogs();
+      }}
+    }});
+    loadLogs();
+  </script>
+</body>
+</html>"""
 
 
 def make_profile_password_hash(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
