@@ -441,11 +441,11 @@
     .euro-summary-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }
     .euro-summary-card > * { position: relative; z-index: 1; }
     .euro-summary-value { margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }
-    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
-    .recent-honour-card { min-height: 0; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; }
+    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
+    .recent-honour-card { min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(99,232,255,0.06)); }
     .recent-honour-card h3 { margin: 0; color: #ffe1a0; font-size: 13px; line-height: 1; white-space: nowrap; }
-    .recent-honour-card .empty { margin: 0; display: inline-flex; align-items: center; gap: 7px; color: #eef6ff; font-size: 13px; font-weight: 900; line-height: 1.12; }
-    .recent-honour-card .flag { width: 20px; height: 20px; flex: 0 0 20px; }
+    .recent-honour-card .empty { margin: 0; min-width: 0; display: inline-flex; align-items: center; gap: 7px; color: #eef6ff; font-size: 13px; font-weight: 900; line-height: 1.12; }
+    .recent-honour-card .flag { width: 22px; height: 22px; flex: 0 0 22px; }
     .historical-match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; width: 100%; }
     .historical-match-card { display: grid; gap: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.055); }
     .historical-match-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; }
@@ -906,13 +906,13 @@
     .coach-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
     .coach-reason { color: #d6e5f7; font-size: 13px; line-height: 1.4; }
     .coach-disclaimer { color: var(--muted); font-size: 11px; font-weight: 800; }
-    .quiz-dialog { width: min(720px, 100%); max-height: min(80vh, 700px); display: flex; flex-direction: column; overflow: hidden; }
+    .quiz-dialog { width: min(720px, 100%); max-height: min(84vh, 720px); display: flex; flex-direction: column; overflow: hidden; }
     .quiz-dialog .team-modal-head { padding-block: 12px; }
     .quiz-dialog .team-modal-title { font-size: clamp(20px, 3vw, 30px); }
     .quiz-dialog .subtle { font-size: 12px; line-height: 1.25; }
-    .quiz-body { overflow-y: auto; min-height: 0; padding: 9px 14px 12px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
+    .quiz-body { overflow-y: auto; min-height: 0; padding: 9px 14px 18px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .quiz-setup, .quiz-result { display: grid; gap: 8px; }
-    .quiz-stage { min-height: 0; display: grid; grid-template-rows: auto auto minmax(0, auto) auto; gap: 8px; padding-bottom: 2px; }
+    .quiz-stage { min-height: 0; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 8px; padding-bottom: 2px; }
     .quiz-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
     .quiz-theme-selectors { display: none; grid-template-columns: minmax(0, 1fr); gap: 8px; }
     .quiz-theme-selectors.is-visible { display: grid; }
@@ -927,7 +927,7 @@
     .quiz-score-pill { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; padding: 4px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
     .quiz-progress-bar { height: 4px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
     .quiz-progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--gold), var(--green)); transition: width .25s ease; }
-    .quiz-card { min-height: 0; display: grid; gap: 7px; padding: 10px; border: 1px solid rgba(245,201,107,0.22); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }
+    .quiz-card { min-height: 0; display: grid; gap: 7px; padding: 10px; border: 1px solid rgba(245,201,107,0.22); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); overflow-y: auto; }
     .quiz-card .coach-badge { width: max-content; padding: 4px 8px; font-size: 11px; }
     .quiz-question { font-size: clamp(15px, 1.8vw, 19px); line-height: 1.14; font-weight: 950; }
     .quiz-answers { display: grid; gap: 6px; }
@@ -939,7 +939,7 @@
     .quiz-feedback.good { color: #9ff0d5; }
     .quiz-feedback.bad { color: #ffb4bd; }
     .quiz-actions { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
-    .quiz-stage > .quiz-actions { position: relative; z-index: 2; padding-top: 2px; background: transparent; }
+    .quiz-stage > .quiz-actions { position: sticky; bottom: 0; z-index: 2; padding-top: 6px; background: linear-gradient(180deg, rgba(7,17,31,0), rgba(7,17,31,0.92) 30%); }
     .quiz-actions .action-button, .quiz-actions .search-secondary-button { padding-block: 8px; }
     .quiz-badge-list { display: flex; flex-wrap: wrap; gap: 6px; }
     .quiz-badge-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
@@ -1794,6 +1794,10 @@
         <div class="quiz-result" id="quizResult" hidden>
           <div class="quiz-feedback" id="quizFinalMessage"></div>
           <div class="quiz-badge-list" id="quizBadgeList"></div>
+          <div class="quiz-actions">
+            <button class="action-button" type="button" id="quizRetryButton">Recommencer</button>
+            <button class="search-secondary-button" type="button" id="quizResetButton">Changer de thème</button>
+          </div>
         </div>
       </div>
     </article>
@@ -4977,6 +4981,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     const quizChangeButton = document.getElementById('quizChangeButton');
     const quizFinalMessage = document.getElementById('quizFinalMessage');
     const quizBadgeList = document.getElementById('quizBadgeList');
+    const quizRetryButton = document.getElementById('quizRetryButton');
     const quizResetButton = document.getElementById('quizResetButton');
     const QUIZ_DIFFICULTIES = Object.fromEntries(QUIZ_LEVELS.map(([key, label, badge, badgeKey]) => [key, {label, badge, key: badgeKey}]));
     const QUIZ_THEME_LABELS = {
@@ -5040,6 +5045,7 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function quizBuildNationChoices() {
       const nations = [];
+      nations.push('France', 'Maroc', 'Sénégal', 'Belgique', 'Pays-Bas', 'Espagne', 'Allemagne', 'Angleterre', 'Italie', 'Portugal', 'Brésil', 'Argentine', 'Croatie', 'Suisse', 'Autriche', 'Danemark', 'Turquie', 'Ukraine', 'Roumanie', 'Slovaquie', 'Slovénie', 'Serbie', 'Pologne', 'Hongrie', 'Géorgie', 'Tchéquie', 'Écosse', 'États-Unis', 'Mexique', 'Canada', 'Japon', 'Corée du Sud', 'Australie', 'Uruguay', 'Colombie', 'Équateur', 'Ghana', 'Tunisie', 'Algérie', 'Côte d’Ivoire', 'Nigeria', 'Cameroun', 'Égypte', 'Qatar', 'Arabie saoudite');
       nations.push(...(AKRO_SUPABASE_FOOTBALL.countries || []).map(country => country.name));
       nations.push(...(AKRO_SUPABASE_FOOTBALL.teams || []).filter(team => team.type === 'nation').map(team => team.name));
       if (typeof FAVORITE_NATIONS !== 'undefined') nations.push(...FAVORITE_NATIONS.map(item => item[0]));
@@ -5595,6 +5601,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     quizAnswers?.addEventListener('click', event => answerQuiz(event.target.closest('.quiz-answer')));
     quizNextButton?.addEventListener('click', nextQuizQuestion);
     quizChangeButton?.addEventListener('click', startQuiz);
+    quizRetryButton?.addEventListener('click', startQuiz);
     quizResetButton?.addEventListener('click', showQuizSetup);
   </script>
 
@@ -5886,6 +5893,46 @@ grant select, insert, update on public.profiles to authenticated;`;
               ],
               calendar: [match('Finale', 'Italie', 'Angleterre', '1 - 1 tab 3-2', flag('ita'), flag('eng')), match('8e', 'Suisse', 'France', '3 - 3 tab 5-4', flag('sui'), flag('fra')), match('Quart', 'Italie', 'Belgique', '2 - 1', flag('ita'), flag('bel'))]
             },
+            '2024': {
+              summary: [
+                ['Champion', 'Espagne', 'Victoire 2-1 contre l’Angleterre à Berlin.', flag('esp')],
+                ['Finaliste', 'Angleterre', 'Deuxième finale européenne consécutive.', flag('eng')],
+                ['Meilleur joueur de la compétition', 'Rodri', 'Élu meilleur joueur de l’Euro 2024.', flag('esp')],
+                ['Nation favorite', 'France', 'Demi-finaliste, éliminée par l’Espagne.', flag('fra')]
+              ],
+              honours: [['2024', 'Espagne', flag('esp')], ['2020', 'Italie', flag('ita')], ['2016', 'Portugal', flag('por')], ['2012', 'Espagne', flag('esp')]],
+              scorers: [player('Dani Olmo', 'Espagne', '3 buts', flag('esp'), 'à égalité'), player('Cody Gakpo', 'Pays-Bas', '3 buts', flag('ned'), 'à égalité'), player('Harry Kane', 'Angleterre', '3 buts', flag('eng'), 'à égalité')],
+              assists: [player('Lamine Yamal', 'Espagne', '4 passes', flag('esp')), player('Xavi Simons', 'Pays-Bas', '3 passes', flag('ned')), player('Arda Güler', 'Turquie', '2 passes', flag('tur'))],
+              bracket: [
+                match('Quarts', 'Espagne', 'Allemagne', '2 - 1 ap', flag('esp'), flag('ger'), '05/07/2024'),
+                match('Quarts', 'Portugal', 'France', '0 - 0 tab 3-5', flag('por'), flag('fra'), '05/07/2024'),
+                match('Quarts', 'Angleterre', 'Suisse', '1 - 1 tab 5-3', flag('eng'), flag('sui'), '06/07/2024'),
+                match('Quarts', 'Pays-Bas', 'Turquie', '2 - 1', flag('ned'), flag('tur'), '06/07/2024'),
+                match('Demi-finales', 'Espagne', 'France', '2 - 1', flag('esp'), flag('fra'), '09/07/2024'),
+                match('Demi-finales', 'Pays-Bas', 'Angleterre', '1 - 2', flag('ned'), flag('eng'), '10/07/2024'),
+                match('Finale', 'Espagne', 'Angleterre', '2 - 1', flag('esp'), flag('eng'), '14/07/2024 · Espagne championne')
+              ],
+              groups: [
+                group('Groupe A', [team('Allemagne', flag('ger'), '7', {played: 3, wins: 2, draws: 1, losses: 0, goal_diff: '+6'}), team('Suisse', flag('sui'), '5', {played: 3, wins: 1, draws: 2, losses: 0, goal_diff: '+2'}), team('Hongrie', flag('hun'), '3', {played: 3, wins: 1, draws: 0, losses: 2, goal_diff: '-3'}), team('Écosse', flag('sco'), '1', {played: 3, wins: 0, draws: 1, losses: 2, goal_diff: '-5'})]),
+                group('Groupe B', [team('Espagne', flag('esp'), '9', {played: 3, wins: 3, draws: 0, losses: 0, goal_diff: '+5'}), team('Italie', flag('ita'), '4', {played: 3, wins: 1, draws: 1, losses: 1, goal_diff: '0'}), team('Croatie', flag('cro'), '2', {played: 3, wins: 0, draws: 2, losses: 1, goal_diff: '-3'}), team('Albanie', '', '1', {played: 3, wins: 0, draws: 1, losses: 2, goal_diff: '-2'})]),
+                group('Groupe C', [team('Angleterre', flag('eng'), '5', {played: 3, wins: 1, draws: 2, losses: 0, goal_diff: '+1'}), team('Danemark', flag('den'), '3', {played: 3, wins: 0, draws: 3, losses: 0, goal_diff: '0'}), team('Slovénie', flag('svn'), '3', {played: 3, wins: 0, draws: 3, losses: 0, goal_diff: '0'}), team('Serbie', '', '2', {played: 3, wins: 0, draws: 2, losses: 1, goal_diff: '-1'})]),
+                group('Groupe D', [team('Autriche', flag('aut'), '6', {played: 3, wins: 2, draws: 0, losses: 1, goal_diff: '+2'}), team('France', flag('fra'), '5', {played: 3, wins: 1, draws: 2, losses: 0, goal_diff: '+1'}), team('Pays-Bas', flag('ned'), '4', {played: 3, wins: 1, draws: 1, losses: 1, goal_diff: '0'}), team('Pologne', flag('pol'), '1', {played: 3, wins: 0, draws: 1, losses: 2, goal_diff: '-3'})]),
+                group('Groupe E', [team('Roumanie', flag('rou'), '4', {played: 3, wins: 1, draws: 1, losses: 1, goal_diff: '+1'}), team('Belgique', flag('bel'), '4', {played: 3, wins: 1, draws: 1, losses: 1, goal_diff: '+1'}), team('Slovaquie', flag('svk'), '4', {played: 3, wins: 1, draws: 1, losses: 1, goal_diff: '0'}), team('Ukraine', flag('ukr'), '4', {played: 3, wins: 1, draws: 1, losses: 1, goal_diff: '-2'})]),
+                group('Groupe F', [team('Portugal', flag('por'), '6', {played: 3, wins: 2, draws: 0, losses: 1, goal_diff: '+2'}), team('Turquie', flag('tur'), '6', {played: 3, wins: 2, draws: 0, losses: 1, goal_diff: '0'}), team('Géorgie', flag('geo'), '4', {played: 3, wins: 1, draws: 1, losses: 1, goal_diff: '0'}), team('Tchéquie', flag('cze'), '1', {played: 3, wins: 0, draws: 1, losses: 2, goal_diff: '-2'})])
+              ],
+              calendar: [
+                match('Groupe A', 'Allemagne', 'Écosse', '5 - 1', flag('ger'), flag('sco'), '14/06/2024 · Terminé'),
+                match('Groupe B', 'Espagne', 'Croatie', '3 - 0', flag('esp'), flag('cro'), '15/06/2024 · Terminé'),
+                match('Groupe D', 'Autriche', 'France', '0 - 1', flag('aut'), flag('fra'), '17/06/2024 · Terminé'),
+                match('Groupe E', 'Belgique', 'Slovaquie', '0 - 1', flag('bel'), flag('svk'), '17/06/2024 · Terminé'),
+                match('Groupe D', 'France', 'Pays-Bas', '0 - 0', flag('fra'), flag('ned'), '21/06/2024 · Terminé'),
+                match('Groupe D', 'France', 'Pologne', '1 - 1', flag('fra'), flag('pol'), '25/06/2024 · Terminé'),
+                match('8es', 'France', 'Belgique', '1 - 0', flag('fra'), flag('bel'), '01/07/2024 · Terminé'),
+                match('Quarts', 'Portugal', 'France', '0 - 0 tab 3-5', flag('por'), flag('fra'), '05/07/2024 · Terminé'),
+                match('Demi-finales', 'Espagne', 'France', '2 - 1', flag('esp'), flag('fra'), '09/07/2024 · Terminé'),
+                match('Finale', 'Espagne', 'Angleterre', '2 - 1', flag('esp'), flag('eng'), '14/07/2024 · Terminé')
+              ]
+            },
             '2028': futureSeason('Euro 2028', 'Nation favorite')
           }
         },
@@ -5903,7 +5950,44 @@ grant select, insert, update on public.profiles to authenticated;`;
               scorers: [player('Raphinha', 'Barcelona', '13 buts', logo('83')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', logo('124')), player('Harry Kane', 'Bayern Munich', '11 buts', logo('132'))],
               assists: [player('Raphinha', 'Barcelona', '9 passes', logo('83')), player('Ousmane Dembélé', 'Paris Saint-Germain', '6 passes', logo('160')), player('Achraf Hakimi', 'Paris Saint-Germain', '5 passes', logo('160'))],
               bracket: [match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110'), 'Munich'), match('Demi-finale', 'Paris Saint-Germain', 'Arsenal', '3 - 1 cumulé', logo('160'), logo('359')), match('Demi-finale', 'Internazionale', 'Barcelona', '7 - 6 cumulé', logo('110'), logo('83'))],
-              groups: [group('Phase de ligue - Top 8', [team('Liverpool', logo('364'), '21'), team('Barcelona', logo('83'), '19'), team('Arsenal', logo('359'), '19'), team('Internazionale', logo('110'), '19'), team('Atlético Madrid', logo('1068'), '18'), team('Bayer Leverkusen', logo('131'), '16'), team('Lille', logo('166'), '16'), team('Aston Villa', logo('362'), '16')])],
+              groups: [group('Phase de ligue 2024-2025', [
+                team('Liverpool', logo('364'), '21', {played: 8, wins: 7, draws: 0, losses: 1, goal_diff: '+12'}),
+                team('Barcelona', logo('83'), '19', {played: 8, wins: 6, draws: 1, losses: 1, goal_diff: '+15'}),
+                team('Arsenal', logo('359'), '19', {played: 8, wins: 6, draws: 1, losses: 1, goal_diff: '+13'}),
+                team('Internazionale', logo('110'), '19', {played: 8, wins: 6, draws: 1, losses: 1, goal_diff: '+10'}),
+                team('Atlético Madrid', logo('1068'), '18', {played: 8, wins: 6, draws: 0, losses: 2, goal_diff: '+8'}),
+                team('Bayer Leverkusen', logo('131'), '16', {played: 8, wins: 5, draws: 1, losses: 2, goal_diff: '+8'}),
+                team('Lille', logo('166'), '16', {played: 8, wins: 5, draws: 1, losses: 2, goal_diff: '+7'}),
+                team('Aston Villa', logo('362'), '16', {played: 8, wins: 5, draws: 1, losses: 2, goal_diff: '+7'}),
+                team('Atalanta', logo('105'), '15', {played: 8, wins: 4, draws: 3, losses: 1, goal_diff: '+14'}),
+                team('Borussia Dortmund', logo('124'), '15', {played: 8, wins: 5, draws: 0, losses: 3, goal_diff: '+10'}),
+                team('Real Madrid', logo('86'), '15', {played: 8, wins: 5, draws: 0, losses: 3, goal_diff: '+8'}),
+                team('Bayern Munich', logo('132'), '15', {played: 8, wins: 5, draws: 0, losses: 3, goal_diff: '+8'}),
+                team('AC Milan', logo('103'), '15', {played: 8, wins: 5, draws: 0, losses: 3, goal_diff: '+3'}),
+                team('PSV Eindhoven', logo('148'), '14', {played: 8, wins: 4, draws: 2, losses: 2, goal_diff: '+4'}),
+                team('Paris Saint-Germain', logo('160'), '13', {played: 8, wins: 4, draws: 1, losses: 3, goal_diff: '+5'}),
+                team('Benfica', logo('1929'), '13', {played: 8, wins: 4, draws: 1, losses: 3, goal_diff: '+4'}),
+                team('Monaco', logo('174'), '13', {played: 8, wins: 4, draws: 1, losses: 3, goal_diff: '0'}),
+                team('Brest', logo('6997'), '13', {played: 8, wins: 4, draws: 1, losses: 3, goal_diff: '-1'}),
+                team('Feyenoord', '', '13', {played: 8, wins: 4, draws: 1, losses: 3, goal_diff: '-3'}),
+                team('Juventus', logo('111'), '12', {played: 8, wins: 3, draws: 3, losses: 2, goal_diff: '+2'}),
+                team('Celtic', '', '12', {played: 8, wins: 3, draws: 3, losses: 2, goal_diff: '-1'}),
+                team('Manchester City', logo('382'), '11', {played: 8, wins: 3, draws: 2, losses: 3, goal_diff: '+4'}),
+                team('Sporting CP', '', '11', {played: 8, wins: 3, draws: 2, losses: 3, goal_diff: '+1'}),
+                team('Club Brugge', '', '11', {played: 8, wins: 3, draws: 2, losses: 3, goal_diff: '-4'}),
+                team('Dinamo Zagreb', '', '11', {played: 8, wins: 3, draws: 2, losses: 3, goal_diff: '-7'}),
+                team('VfB Stuttgart', '', '10', {played: 8, wins: 3, draws: 1, losses: 4, goal_diff: '-4'}),
+                team('Shakhtar Donetsk', '', '7', {played: 8, wins: 2, draws: 1, losses: 5, goal_diff: '-8'}),
+                team('Bologna', logo('107'), '6', {played: 8, wins: 1, draws: 3, losses: 4, goal_diff: '-5'}),
+                team('Red Star Belgrade', '', '6', {played: 8, wins: 2, draws: 0, losses: 6, goal_diff: '-9'}),
+                team('Sturm Graz', '', '6', {played: 8, wins: 2, draws: 0, losses: 6, goal_diff: '-9'}),
+                team('Sparta Prague', '', '4', {played: 8, wins: 1, draws: 1, losses: 6, goal_diff: '-14'}),
+                team('RB Leipzig', '', '3', {played: 8, wins: 1, draws: 0, losses: 7, goal_diff: '-7'}),
+                team('Girona', '', '3', {played: 8, wins: 1, draws: 0, losses: 7, goal_diff: '-8'}),
+                team('Red Bull Salzburg', '', '3', {played: 8, wins: 1, draws: 0, losses: 7, goal_diff: '-22'}),
+                team('Slovan Bratislava', '', '0', {played: 8, wins: 0, draws: 0, losses: 8, goal_diff: '-20'}),
+                team('Young Boys', '', '0', {played: 8, wins: 0, draws: 0, losses: 8, goal_diff: '-21'})
+              ])],
               calendar: [match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110')), match('Quart', 'Paris Saint-Germain', 'Aston Villa', '5 - 4 cumulé', logo('160'), logo('362')), match('Barrage', 'Paris Saint-Germain', 'Brest', '10 - 0 cumulé', logo('160'), logo('6997'))]
             },
             '2026-2027': futureSeason('Ligue des Champions 2026-2027', 'Club favori')
@@ -5973,7 +6057,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (!config) return;
         const selected = value || config.current;
         const data = config.seasons[selected];
-        if (!data || selected === config.current) {
+        if (!data) {
           restore(kind);
           return;
         }
