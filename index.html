@@ -758,7 +758,7 @@
     .profile-gate-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .profile-gate-copy { color: #d6e5f7; font-weight: 850; line-height: 1.35; }
     .profile-auth-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .active-profile-card { position: relative; display: none; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid color-mix(in srgb, var(--profile-accent, #ffe1a0) 48%, transparent); border-radius: 16px; background: linear-gradient(135deg, var(--profile-primary, rgba(50,211,162,0.18)), var(--profile-secondary, rgba(31,111,235,0.14))); overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,0.11); }
+    .active-profile-card { position: relative; display: none; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid color-mix(in srgb, var(--profile-accent, #ffe1a0) 48%, transparent); border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--profile-primary, #1f6feb) 78%, #07111f), color-mix(in srgb, var(--profile-secondary, #ef3340) 72%, #07111f)); overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,0.11); }
     .active-profile-card.is-visible { display: grid; }
     .profile-banner-logo { position: absolute; right: 10px; top: 50%; width: 92px; height: 92px; transform: translateY(-50%); object-fit: contain; opacity: .16; filter: drop-shadow(0 16px 26px rgba(0,0,0,.28)); pointer-events: none; }
     .active-profile-card > :not(.profile-banner-logo), .leaderboard-item > :not(.profile-banner-logo) { position: relative; z-index: 1; }
@@ -849,10 +849,12 @@
     .live-event.start::before { background: #32d3a2; box-shadow: 0 0 12px rgba(50,211,162,0.75); }
     @keyframes liveTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .profile-dialog { width: min(720px, 100%); max-height: min(88vh, 760px); overflow: hidden; }
-    #userProfileBadge { padding: 0; overflow: hidden; background: transparent; border: 1px solid rgba(245,201,107,0.38); }
+    #userProfileBadge { width: 42px; height: 42px; padding: 0; overflow: visible; background: transparent; border: 0; }
+    #userProfileBadge .profile-avatar-stack { width: 42px; height: 42px; }
     #userProfileBadge img { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .profile-heading { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 14px; text-align: center; }
-    .profile-heading .profile-avatar-stack { width: 76px; height: 76px; }
+    .profile-heading { display: grid; justify-items: center; gap: 10px; margin-bottom: 14px; text-align: center; }
+    .profile-heading .profile-avatar-stack { width: 86px; height: 86px; }
+    .profile-heading strong { display: block; font-size: 20px; line-height: 1.1; }
     .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
     .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
@@ -1619,6 +1621,9 @@
                 <option value="pro">Pro</option>
                 <option value="expert">Expert</option>
                 <option value="legende">Légende</option>
+                <option value="crack">Crack</option>
+                <option value="consultant">Consultant</option>
+                <option value="coach">Coach</option>
               </select>
             </div>
             <div class="pseudo-row">
@@ -2098,6 +2103,15 @@
       ['immortel', 'Immortel', '✦'],
       ['hall_of_fame', 'Hall of Fame', '✦']
     ];
+    const QUIZ_LEVELS = [
+      ['amateur', 'Amateur', 'Quiz Amateur', 'quiz_amateur'],
+      ['pro', 'Pro', 'Quiz Pro', 'quiz_pro'],
+      ['expert', 'Expert', 'Quiz Expert', 'quiz_expert'],
+      ['legende', 'Légende', 'Quiz Légende', 'quiz_legende'],
+      ['crack', 'Crack', 'Quiz Crack', 'quiz_crack'],
+      ['consultant', 'Consultant', 'Quiz Consultant', 'quiz_consultant'],
+      ['coach', 'Coach', 'Quiz Coach', 'quiz_coach']
+    ];
     const PROFILE_AVATARS = [
       '/avatars/avatar-cool.png',
       '/avatars/avatar-cry.png',
@@ -2456,8 +2470,8 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function highestQuizLevel(badges = [], results = []) {
-      const order = ['amateur', 'pro', 'expert', 'legende'];
-      const labels = {amateur: 'Amateur', pro: 'Pro', expert: 'Expert', legende: 'Légende'};
+      const order = QUIZ_LEVELS.map(item => item[0]);
+      const labels = Object.fromEntries(QUIZ_LEVELS.map(item => [item[0], item[1]]));
       let best = -1;
       (badges || []).forEach(item => {
         const key = searchNorm(`${item.badge_key || ''} ${item.badge_name || item.name || ''}`);
@@ -4558,12 +4572,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     const quizBadgeList = document.getElementById('quizBadgeList');
     const quizRestartButton = document.getElementById('quizRestartButton');
     const quizResetButton = document.getElementById('quizResetButton');
-    const QUIZ_DIFFICULTIES = {
-      amateur: {label: 'Amateur', badge: 'Quiz Amateur', key: 'quiz_amateur'},
-      pro: {label: 'Pro', badge: 'Quiz Pro', key: 'quiz_pro'},
-      expert: {label: 'Expert', badge: 'Quiz Expert', key: 'quiz_expert'},
-      legende: {label: 'Légende', badge: 'Quiz Légende', key: 'quiz_legende'}
-    };
+    const QUIZ_DIFFICULTIES = Object.fromEntries(QUIZ_LEVELS.map(([key, label, badge, badgeKey]) => [key, {label, badge, key: badgeKey}]));
     let quizState = {questions: [], index: 0, score: 0, answered: false, config: null};
 
     function quizEscape(value) {
@@ -4659,6 +4668,42 @@ grant select, insert, update on public.profiles to authenticated;`;
           makeQuizQuestion('Un appui-remise-soutien sert à...', 'progresser par combinaison courte', ['jouer sans partenaire', 'remplacer la touche', 'annuler le hors-jeu'], 'C’est un enchaînement de passes pour fixer et sortir.'),
           makeQuizQuestion('Un pressing en piège cherche à...', 'orienter l’adversaire vers une zone ciblée', ['laisser toutes les lignes ouvertes', 'refuser les duels', 'éviter toute récupération'], 'Le piège prépare la récupération.'),
           makeQuizQuestion('Une supériorité qualitative signifie...', 'un duel favorable exploité tactiquement', ['plus de joueurs sur le terrain', 'plus de cartons', 'plus de ballons'], 'On isole un joueur fort face à un adversaire ciblé.')
+        ],
+        crack: [
+          makeQuizQuestion('Une équipe qui attire le pressing avant de jouer long cherche souvent...', 'à attaquer la profondeur libérée', ['à garder le ballon immobile', 'à défendre plus bas', 'à provoquer une touche volontaire'], 'Le pressing aspiré ouvre l’espace derrière.'),
+          makeQuizQuestion('Une fixation intérieure sert surtout à...', 'ouvrir une ligne extérieure ou un troisième homme', ['réduire les angles', 'empêcher les permutations', 'supprimer les appuis'], 'Fixer attire pour libérer ailleurs.'),
+          makeQuizQuestion('Un latéral inversé vient principalement...', 'densifier le milieu à la possession', ['remplacer le gardien', 'jouer uniquement ailier', 'défendre sur la ligne de but'], 'Il ajoute une solution centrale.'),
+          makeQuizQuestion('Le marquage en zone orientée ballon privilégie...', 'les espaces et les distances collectives', ['un duel fixe partout', 'la position du public', 'les numéros de maillot'], 'La zone défend les espaces en bloc.'),
+          makeQuizQuestion('Une équipe qui défend en 4-4-2 mais attaque en 3-2-5 utilise...', 'une animation asymétrique', ['un règlement différent', 'un joueur en moins', 'un match arrêté'], 'La structure change selon les phases.'),
+          makeQuizQuestion('La couverture du côté faible protège surtout...', 'le renversement adverse', ['le banc', 'la zone média', 'le point de penalty uniquement'], 'Le danger peut venir à l’opposé.'),
+          makeQuizQuestion('Un appel de rupture vise à...', 'casser la ligne défensive', ['ralentir la possession', 'sortir du terrain', 'éviter la profondeur'], 'La rupture attaque le dos de la ligne.'),
+          makeQuizQuestion('Une attaque placée performante combine souvent...', 'largeur, occupation des intervalles et rythme', ['uniquement des tirs lointains', 'aucune mobilité', 'un bloc séparé'], 'Les trois dimensions créent des décalages.'),
+          makeQuizQuestion('Un pressing en 4-2-4 cherche souvent à...', 'bloquer la première relance', ['laisser le gardien libre', 'protéger uniquement les corners', 'refuser les courses'], 'Les quatre joueurs hauts ferment les sorties.'),
+          makeQuizQuestion('Le badge Crack récompense...', 'un quiz réussi à 7/10 ou plus', ['un simple lancement', 'un score de 0/10', 'un changement de thème'], 'Tous les badges quiz se débloquent à partir de 7/10.')
+        ],
+        consultant: [
+          makeQuizQuestion('Un consultant qui lit une finale commence par observer...', 'les rapports de force sans ballon', ['la météo seulement', 'la couleur des filets', 'le tirage des maillots'], 'Le sans-ballon explique beaucoup de dynamiques.'),
+          makeQuizQuestion('Une baisse de PPDA indique généralement...', 'un pressing plus agressif', ['moins de pressing', 'plus de tirs cadrés automatiquement', 'moins de possession obligatoire'], 'Moins de passes autorisées signifie plus d’intensité.'),
+          makeQuizQuestion('Une équipe peut surperformer son xG si...', 'sa finition est très efficace sur peu d’occasions', ['elle ne tire jamais', 'elle prend plus de touches', 'elle gagne le toss'], 'L’écart xG/buts parle de finition ou variance.'),
+          makeQuizQuestion('Le meilleur angle pour juger un milieu sentinelle est...', 'sa capacité à orienter et couvrir', ['son numéro uniquement', 'sa célébration', 'sa taille de chaussures'], 'La sentinelle équilibre et oriente.'),
+          makeQuizQuestion('Un changement tactique à la pause doit répondre...', 'à un problème identifié du match', ['au hasard', 'à la couleur du ciel', 'à une tradition fixe'], 'L’ajustement vient d’un diagnostic.'),
+          makeQuizQuestion('Un ailier pied opposé cherche souvent...', 'à rentrer pour frapper ou combiner', ['à jouer gardien', 'à rester hors-jeu', 'à refuser l’intérieur'], 'Le pied opposé ouvre l’axe.'),
+          makeQuizQuestion('Une équipe très haute doit protéger...', 'la profondeur derrière sa ligne', ['la ligne médiane uniquement', 'les tribunes', 'le banc adverse'], 'Le dos de la défense devient vulnérable.'),
+          makeQuizQuestion('Dans un résumé d’après-match, la donnée la plus trompeuse seule est...', 'la possession sans contexte', ['le score final', 'les buts marqués', 'les cartons rouges'], 'La possession doit être liée aux occasions.'),
+          makeQuizQuestion('Un coach qui inverse ses latéraux veut souvent...', 'créer une supériorité au milieu', ['doubler les gardiens', 'éviter toute relance', 'jouer sans largeur'], 'C’est une solution de construction.'),
+          makeQuizQuestion('Le badge Consultant indique...', 'une lecture avancée validée par le score', ['un profil non connecté', 'un quiz abandonné', 'un prono supprimé'], 'Le niveau vient du meilleur résultat sauvegardé.')
+        ],
+        coach: [
+          makeQuizQuestion('Avant de choisir un plan de match, un coach priorise...', 'les forces de son équipe et les failles adverses', ['le hasard', 'la longueur des noms', 'la météo uniquement'], 'Le plan part du rapport forces/faiblesses.'),
+          makeQuizQuestion('Une consigne de pressing efficace précise...', 'déclencheur, orientation et couverture', ['seulement courir', 'ne jamais parler', 'changer tous les postes'], 'Le pressing doit être coordonné.'),
+          makeQuizQuestion('Pour protéger un score, le coach ajuste d’abord...', 'équilibre, distances et zones à fermer', ['le logo', 'la musique', 'les lacets'], 'La gestion du score est structurelle.'),
+          makeQuizQuestion('Si l’adversaire trouve toujours le pivot, le coach peut...', 'fermer la ligne de passe ou serrer la zone', ['ouvrir l’axe', 'retirer le milieu', 'ignorer le problème'], 'Il faut couper l’alimentation du pivot.'),
+          makeQuizQuestion('Un changement de système pertinent doit conserver...', 'des repères collectifs clairs', ['aucune consigne', 'plus de confusion', 'moins de couverture'], 'Les joueurs doivent comprendre les rôles.'),
+          makeQuizQuestion('Un coach demande une largeur maximale pour...', 'étirer le bloc adverse', ['réduire l’espace', 'jouer tous au centre', 'empêcher les appels'], 'La largeur ouvre des intervalles.'),
+          makeQuizQuestion('Le meilleur moment pour presser peut être...', 'une mauvaise orientation du receveur', ['un ballon arrêté dans les tribunes', 'la fin du match uniquement', 'un coup d’envoi fictif'], 'Le corps du receveur crée le déclencheur.'),
+          makeQuizQuestion('Une défense qui recule trop doit retrouver...', 'pression sur porteur et compacité', ['plus d’écarts', 'moins de communication', 'aucun duel'], 'Sans pression, le bloc subit.'),
+          makeQuizQuestion('Un coaching offensif réussi combine...', 'profils adaptés et espaces ciblés', ['remplacements au hasard', 'aucune adaptation', 'moins de solutions'], 'Les remplaçants doivent attaquer les bonnes zones.'),
+          makeQuizQuestion('Le badge Coach est le niveau quiz le plus haut et s’affiche...', 'seul comme meilleur niveau acquis', ['avec tous les anciens niveaux', 'uniquement dans la console', 'sans sauvegarde possible'], 'Le profil affiche seulement le plus haut niveau.')
         ]
       };
       return pools[difficulty] || pools.amateur;
@@ -4715,6 +4760,42 @@ grant select, insert, update on public.profiles to authenticated;`;
           makeQuizQuestion(`Une animation en losange autour du porteur aide ${subject} à...`, 'multiplier les angles de passe', ['supprimer les solutions', 'ralentir chaque action', 'éviter la progression'], 'Les angles soutiennent la possession.'),
           makeQuizQuestion(`Le contre-pressing de ${subject} doit être coordonné avec...`, 'la couverture derrière le ballon', ['aucune structure', 'le public uniquement', 'la météo'], 'Presser sans couverture expose trop.'),
           makeQuizQuestion(`Le badge Légende sur ${subject} récompense...`, 'un score de 7/10 ou plus', ['un score de 1/10', 'une question passée', 'une déconnexion'], 'Les badges quiz se débloquent à partir de 7/10.')
+        ],
+        crack: [
+          makeQuizQuestion(`${subject} peut aspirer le pressing pour...`, 'attaquer la profondeur libérée', ['figer le jeu', 'défendre plus bas sans ballon', 'annuler le match'], 'Aspirer libère l’espace derrière.'),
+          makeQuizQuestion(`Le latéral inversé de ${subject} sert surtout à...`, 'densifier le milieu', ['remplacer le gardien', 'jouer hors du terrain', 'éviter les passes'], 'Il aide la construction intérieure.'),
+          makeQuizQuestion(`Une fixation côté fort de ${subject} prépare souvent...`, 'un renversement côté faible', ['un arrêt du jeu', 'moins de largeur', 'un changement de règle'], 'Fixer puis renverser est un principe fort.'),
+          makeQuizQuestion(`${subject} doit protéger le côté faible contre...`, 'les renversements rapides', ['les célébrations', 'les interviews', 'les tirs impossibles'], 'Le danger arrive souvent à l’opposé.'),
+          makeQuizQuestion(`Une attaque en 3-2-5 de ${subject} cherche...`, 'occupation rationnelle des couloirs et intervalles', ['moins de solutions', 'trois gardiens', 'aucune présence axiale'], 'La structure donne cinq hauteurs offensives.'),
+          makeQuizQuestion(`Un appel de rupture de ${subject} vise...`, 'le dos de la ligne', ['la zone technique', 'le banc', 'le rond central uniquement'], 'La rupture attaque la profondeur.'),
+          makeQuizQuestion(`${subject} face à un bloc compact doit varier...`, 'rythme, largeur et courses', ['toujours le même tempo', 'aucune passe', 'moins de mobilité'], 'La variation crée l’ouverture.'),
+          makeQuizQuestion(`Le pressing haut contre ${subject} devient dangereux si...`, 'la couverture est absente', ['tout le monde coulisse', 'le bloc reste compact', 'le gardien couvre'], 'Presser sans couverture expose.'),
+          makeQuizQuestion(`Un duel favorable pour ${subject} doit être...`, 'isolé et servi au bon moment', ['ignoré', 'éloigné du ballon', 'remplacé par le hasard'], 'Le timing rend le duel utile.'),
+          makeQuizQuestion(`Le badge Crack sur ${subject} demande...`, '7/10 ou plus', ['2/10', 'un seul clic', 'aucune réponse'], 'Le seuil badge reste 7/10.')
+        ],
+        consultant: [
+          makeQuizQuestion(`Pour commenter ${subject}, la possession seule doit être reliée...`, 'aux occasions créées', ['aux chants', 'aux couleurs', 'au hasard'], 'La possession sans danger peut tromper.'),
+          makeQuizQuestion(`Si ${subject} surperforme son xG, cela peut signaler...`, 'une finition efficace ou de la variance', ['un règlement différent', 'aucun tir', 'une erreur de maillot'], 'L’écart buts/xG se lit avec prudence.'),
+          makeQuizQuestion(`Un consultant observe d’abord chez ${subject}...`, 'les distances entre les lignes', ['la police du logo', 'le prix du maillot', 'la météo seule'], 'Les distances expliquent l’équilibre.'),
+          makeQuizQuestion(`${subject} qui perd les seconds ballons risque...`, 'de subir des attaques répétées', ['de gagner automatiquement', 'de réduire le temps', 'de changer de sport'], 'Les seconds ballons maintiennent la pression.'),
+          makeQuizQuestion(`Une adaptation à la pause pour ${subject} doit être...`, 'liée au problème du match', ['aléatoire', 'cosmétique uniquement', 'sans consigne'], 'L’ajustement répond au diagnostic.'),
+          makeQuizQuestion(`Si ${subject} attaque avec des ailiers pied opposé, le danger est...`, 'rentrée intérieure et frappe ou combinaison', ['sortie immédiate', 'aucune option', 'hors-jeu automatique'], 'Le pied opposé ouvre l’axe.'),
+          makeQuizQuestion(`${subject} en bloc haut doit gérer...`, 'la profondeur', ['les tribunes', 'le banc uniquement', 'les interviews'], 'La profondeur est le risque principal.'),
+          makeQuizQuestion(`Le rôle d’une sentinelle contre ${subject} est surtout...`, 'orienter, couvrir et couper les lignes', ['marquer tous les buts', 'jouer gardien', 'rester hors du jeu'], 'La sentinelle stabilise.'),
+          makeQuizQuestion(`Une analyse Consultant de ${subject} doit éviter...`, 'les affirmations sans contexte', ['les données utiles', 'les séquences vidéo', 'les exemples'], 'Le contexte rend l’analyse fiable.'),
+          makeQuizQuestion(`Le badge Consultant pour ${subject} affiche...`, 'uniquement le meilleur niveau acquis', ['tous les niveaux précédents', 'aucun niveau', 'un niveau au hasard'], 'Le profil affiche le niveau maximal.')
+        ],
+        coach: [
+          makeQuizQuestion(`Le plan de match de ${subject} doit partir...`, 'des forces propres et failles adverses', ['du hasard', 'du nom du stade', 'de la couleur du ballon'], 'Le plan vient du rapport de force.'),
+          makeQuizQuestion(`Une consigne de pressing pour ${subject} doit définir...`, 'déclencheur, orientation et couverture', ['courir seulement', 'changer de maillot', 'ne jamais couvrir'], 'Le pressing est collectif.'),
+          makeQuizQuestion(`Pour protéger un avantage, ${subject} doit maîtriser...`, 'distances, tempo et zones dangereuses', ['uniquement la possession', 'le public', 'la météo'], 'La gestion exige équilibre.'),
+          makeQuizQuestion(`Si ${subject} ne trouve plus son pivot, le coach peut...`, 'modifier les angles de soutien', ['supprimer les passes', 'ouvrir son axe', 'jouer sans milieu'], 'Les angles libèrent le pivot.'),
+          makeQuizQuestion(`Un changement de système pour ${subject} doit garder...`, 'des rôles compréhensibles', ['une confusion maximale', 'aucun repère', 'moins de couverture'], 'Les repères protègent l’équipe.'),
+          makeQuizQuestion(`La largeur demandée à ${subject} sert à...`, 'étirer le bloc adverse', ['resserrer tous les joueurs', 'réduire les couloirs', 'éviter le ballon'], 'Étirer crée des intervalles.'),
+          makeQuizQuestion(`Le bon déclencheur de pressing contre ${subject} peut être...`, 'un contrôle orienté vers la ligne', ['une action loin du ballon', 'un arrêt de jeu terminé', 'un supporter debout'], 'L’orientation du receveur compte.'),
+          makeQuizQuestion(`${subject} qui recule trop doit retrouver...`, 'pression sur porteur', ['plus d’écarts', 'moins de duels', 'aucune communication'], 'Sans pression, le bloc est exposé.'),
+          makeQuizQuestion(`Un coaching offensif pour ${subject} doit cibler...`, 'les espaces que les remplaçants peuvent attaquer', ['des zones fermées', 'le banc adverse', 'aucune course'], 'Les profils changent les espaces attaqués.'),
+          makeQuizQuestion(`Le badge Coach sur ${subject} représente...`, 'le plus haut niveau quiz', ['un niveau débutant', 'un badge non sauvegardé', 'une erreur de score'], 'Coach est le sommet de la progression quiz.')
         ]
       };
       return pools[difficulty] || pools.amateur;
