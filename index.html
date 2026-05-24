@@ -1930,6 +1930,7 @@
     const teamTabs = document.getElementById('teamModalTabs');
     const closeModal = document.getElementById('teamModalClose');
     const AKRO_SUPABASE_FOOTBALL = {teams: [], countries: [], competitions: [], matches: [], counts: {}};
+    let akroSupabaseFootballPromise = null;
 
     function escapeHtml(value) {
       return String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -2017,18 +2018,27 @@
       }
       if (typeof initQuizSelectors === 'function') initQuizSelectors();
       if (typeof renderLeague === 'function') renderLeague();
-      console.log('[football-supabase] données appliquées', AKRO_SUPABASE_FOOTBALL.counts);
+      console.info('[football-supabase] source utilisée', AKRO_SUPABASE_FOOTBALL.counts);
     }
 
     async function loadSupabaseFootballData() {
-      try {
-        const response = await fetch('/api/football-supabase');
-        if (!response.ok) return;
-        const data = await response.json();
-        applySupabaseFootballData(data);
-      } catch (error) {
-        console.warn('[football-supabase] fallback données locales', error);
+      if ((AKRO_SUPABASE_FOOTBALL.teams || []).length || (AKRO_SUPABASE_FOOTBALL.matches || []).length) {
+        return AKRO_SUPABASE_FOOTBALL;
       }
+      if (akroSupabaseFootballPromise) return akroSupabaseFootballPromise;
+      akroSupabaseFootballPromise = (async () => {
+        try {
+          const response = await fetch('/api/football-supabase', {cache: 'default'});
+          if (!response.ok) return AKRO_SUPABASE_FOOTBALL;
+          const data = await response.json();
+          applySupabaseFootballData(data);
+          return AKRO_SUPABASE_FOOTBALL;
+        } catch (error) {
+          console.warn('[football-supabase] fallback données locales', error);
+          return AKRO_SUPABASE_FOOTBALL;
+        }
+      })();
+      return akroSupabaseFootballPromise;
     }
     window.addEventListener('load', loadSupabaseFootballData, {once: true});
 
@@ -4671,6 +4681,7 @@ grant select, insert, update on public.profiles to authenticated;`;
   <script>
     const leaguesDataNode = document.getElementById('leaguesData');
     let LEAGUES_DATA = leaguesDataNode ? JSON.parse(leaguesDataNode.textContent || '{}') : null;
+    let leagueDataFallbackPromise = null;
     const LEAGUE_KEY = 'akrodufoot:selected-league';
     const LEAGUE_FOCUS_KEY = 'akrodufoot:league-focus:';
     const LEAGUE_CLUB_LOGOS = {
@@ -4843,20 +4854,26 @@ grant select, insert, update on public.profiles to authenticated;`;
         console.info('[championnats] données chargées', leagueRenderStats(LEAGUES_DATA));
         return LEAGUES_DATA;
       }
-      try {
-        console.warn('[championnats] données HTML vides, fallback cache demandé', leagueRenderStats(LEAGUES_DATA));
-        const response = await fetch('/api/leagues-dashboard', {cache: 'no-store'});
-        if (!response.ok) throw new Error(`status=${response.status}`);
-        const payload = await response.json();
-        if (leagueHasRenderableData(payload)) {
-          LEAGUES_DATA = payload;
-          console.info('[championnats] fallback utilisé', leagueRenderStats(LEAGUES_DATA));
-        } else {
-          console.warn('[championnats] fallback vide', leagueRenderStats(payload));
-        }
-      } catch (error) {
-        console.warn('[championnats] source échouée: fallback cache indisponible', error);
+      if (!leagueDataFallbackPromise) {
+        leagueDataFallbackPromise = (async () => {
+          try {
+            console.warn('[championnats] données HTML vides, fallback cache demandé', leagueRenderStats(LEAGUES_DATA));
+            const response = await fetch('/api/leagues-dashboard', {cache: 'default'});
+            if (!response.ok) throw new Error(`status=${response.status}`);
+            const payload = await response.json();
+            if (leagueHasRenderableData(payload)) {
+              LEAGUES_DATA = payload;
+              console.info('[championnats] fallback utilisé', leagueRenderStats(LEAGUES_DATA));
+            } else {
+              console.warn('[championnats] fallback vide', leagueRenderStats(payload));
+            }
+          } catch (error) {
+            console.warn('[championnats] source échouée: fallback cache indisponible', error);
+          }
+          return LEAGUES_DATA;
+        })();
       }
+      await leagueDataFallbackPromise;
       return LEAGUES_DATA;
     }
 

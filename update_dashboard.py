@@ -15,18 +15,28 @@ def main() -> None:
     previous_worldcup = _read_cache(CACHE_FILE)
     previous_champions = _read_cache(CHAMPIONS_LEAGUE_CACHE_FILE)
     previous_leagues = _read_cache(LEAGUES_CACHE_FILE)
-    worldcup_data = _preserve_news_cache(_merge_refresh(previous_worldcup, fetch_dashboard_data()), previous_worldcup)
-    champions_league_data = _preserve_news_cache(_merge_refresh(previous_champions, fetch_champions_league_data()), previous_champions)
-    leagues_data = _preserve_leagues_news_cache(_merge_leagues_refresh(previous_leagues, fetch_leagues_data()), previous_leagues)
+    worldcup_data = _cached_or_fetch("Coupe du Monde", previous_worldcup, fetch_dashboard_data, _merge_refresh)
+    worldcup_data = _preserve_news_cache(worldcup_data, previous_worldcup)
+    champions_league_data = _cached_or_fetch("Ligue des Champions", previous_champions, fetch_champions_league_data, _merge_refresh)
+    champions_league_data = _preserve_news_cache(champions_league_data, previous_champions)
+    leagues_data = _cached_or_fetch("Championnats", previous_leagues, fetch_leagues_data, _merge_leagues_refresh)
+    leagues_data = _preserve_leagues_news_cache(leagues_data, previous_leagues)
     _log_leagues_payload("données championnats chargées", leagues_data)
     previous_news = _read_cache(NEWS_CACHE_FILE) or {}
     news_data = _news_cache_for_render(previous_news)
     if os.environ.get("AKRO_FETCH_NEWS_DURING_UPDATE", "").strip().lower() in {"1", "true", "yes", "on"}:
         news_data = fetch_all_news(previous=previous_news.get("all_articles") or previous_news.get("articles") or [])
     previous_mercato = _read_cache(MERCATO_LIVE_CACHE_FILE) or {}
-    mercato_items = fetch_mercato_live()
+    mercato_cache_fresh = _cache_timestamp_fresh(previous_mercato, _cache_ttl_seconds("AKRO_MERCATO_CACHE_TTL_SECONDS", 900)) and bool(previous_mercato.get("items"))
+    if mercato_cache_fresh and not _env_enabled("AKRO_FORCE_EXTERNAL_REFRESH"):
+        print("[source] cache utilisé: Mercato Live", flush=True)
+        mercato_items = previous_mercato.get("items", [])
+    else:
+        print("[source] fallback externe activé: Mercato Live", flush=True)
+        mercato_items = fetch_mercato_live()
     mercado_generated = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    mercado_fallback = not bool(mercato_items) and bool(previous_mercato.get("items"))
+    mercado_fallback = mercado_cache_fresh or (not bool(mercato_items) and bool(previous_mercato.get("items")))
+    mercado_failed_fallback = not mercado_cache_fresh and not bool(mercato_items) and bool(previous_mercato.get("items"))
     mercado_source_items = mercato_items or previous_mercato.get("items", [])
     mercato_data = {
         "items": mercado_source_items,
@@ -34,7 +44,7 @@ def main() -> None:
         "url": "https://www.mercatolive.fr/",
         "generated_at": previous_mercato.get("generated_at") if mercado_fallback else mercado_generated,
         "fallback": mercado_fallback,
-        "errors": ["Mercato Live indisponible : conservation du dernier cache valide."] if mercado_fallback else [],
+        "errors": ["Mercato Live indisponible : conservation du dernier cache valide."] if mercado_failed_fallback else [],
     }
     _clear_competition_news(worldcup_data)
     _clear_competition_news(champions_league_data)
@@ -76,6 +86,47 @@ def _should_render_html() -> bool:
     if explicit:
         return explicit in {"1", "true", "yes", "on"}
     return not os.environ.get("RENDER")
+
+
+def _env_enabled(name: str) -> bool:
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _cache_ttl_seconds(name: str, default: int) -> int:
+    try:
+        return max(60, int(os.environ.get(name, str(default))))
+    except ValueError:
+        return default
+
+
+def _cache_is_fresh(payload: dict[str, Any] | None, ttl_seconds: int) -> bool:
+    if not payload or not _has_core_data(payload):
+        return False
+    return _cache_timestamp_fresh(payload, ttl_seconds)
+
+
+def _cache_timestamp_fresh(payload: dict[str, Any] | None, ttl_seconds: int) -> bool:
+    if not payload:
+        return False
+    generated = str(payload.get("generated_at") or "")
+    if not generated:
+        return False
+    try:
+        generated_at = datetime.fromisoformat(generated.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if generated_at.tzinfo is None:
+        generated_at = generated_at.replace(tzinfo=timezone.utc)
+    return (datetime.now(timezone.utc) - generated_at).total_seconds() < ttl_seconds
+
+
+def _cached_or_fetch(label: str, previous: dict[str, Any] | None, fetcher, merger) -> dict[str, Any]:
+    ttl = _cache_ttl_seconds("AKRO_DASHBOARD_CACHE_TTL_SECONDS", 900)
+    if not _env_enabled("AKRO_FORCE_EXTERNAL_REFRESH") and _cache_is_fresh(previous, ttl):
+        print(f"[source] cache utilisé: {label}", flush=True)
+        return previous or {}
+    print(f"[source] fallback externe activé: {label}", flush=True)
+    return merger(previous, fetcher())
 
 
 def _news_cache_for_render(previous: dict[str, Any] | None) -> dict[str, Any]:
@@ -414,6 +465,12 @@ def _is_failed_refresh(data: dict[str, Any]) -> bool:
 
 
 def _has_core_data(data: dict[str, Any]) -> bool:
+    leagues = data.get("leagues") or {}
+    if leagues:
+        return any(
+            league.get("standings") or league.get("group_matches") or league.get("fixtures") or league.get("top_scorers")
+            for league in leagues.values()
+        )
     standings = data.get("standings", [])
     group_matches = data.get("group_matches", [])
     knockout = data.get("knockout", [])

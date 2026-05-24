@@ -62,6 +62,8 @@ COMMUNITY_LEVELS = [
 ]
 
 SUPABASE_TIMEOUT = 8
+SUPABASE_FOOTBALL_CACHE_TTL = max(30, int(os.environ.get("AKRO_SUPABASE_FOOTBALL_CACHE_TTL", "300")))
+SUPABASE_FAILURE_TTL = max(30, int(os.environ.get("AKRO_SUPABASE_FAILURE_TTL", "120")))
 SUPABASE_PROFILE_COLUMNS = "id,pseudo,avatar_url,favorite_club,favorite_club_logo,favorite_nation,favorite_nation_flag,created_at,updated_at"
 SUPABASE_PROFILE_STATS_COLUMNS = "id,profile_id,total_predictions,correct_scores,correct_results,total_points,rank,updated_at"
 SUPABASE_PREDICTION_COLUMNS = "id,profile_id,match_id,home_team,away_team,predicted_home_score,predicted_away_score,actual_home_score,actual_away_score,status,points,created_at"
@@ -74,6 +76,9 @@ LIVE_SCORE_REFRESH_LOCK = threading.Lock()
 LIVE_SCORE_LAST_REFRESH_AT = 0.0
 LIVE_SCORE_REFRESHING = False
 LIVE_SCORE_LAST_ERROR = ""
+FOOTBALL_SUPABASE_CACHE_LOCK = threading.Lock()
+FOOTBALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
+SUPABASE_FAILED_PATHS: dict[str, float] = {}
 
 app = Flask(__name__) if Flask else None
 
@@ -1872,6 +1877,9 @@ def _supabase_service_headers(prefer: str = "return=representation") -> dict[str
 def _supabase_service_request(method: str, path: str, **kwargs: Any) -> Any:
     if not _supabase_service_enabled():
         return None
+    cache_key = f"{method.upper()} {path}"
+    if SUPABASE_FAILED_PATHS.get(cache_key, 0) > time.time():
+        return None
     try:
         import requests
 
@@ -1884,19 +1892,25 @@ def _supabase_service_request(method: str, path: str, **kwargs: Any) -> Any:
             **kwargs,
         )
         if response.status_code >= 400:
-            print(f"[supabase-service] {method} {path} failed status={response.status_code} body={response.text[:280]}")
+            SUPABASE_FAILED_PATHS[cache_key] = time.time() + SUPABASE_FAILURE_TTL
+            print(f"[supabase-service] fallback activé {method} {path} status={response.status_code} body={response.text[:220]}", flush=True)
             return None
         if not response.content:
             return []
         return response.json()
     except Exception as exc:
-        print(f"[supabase-service] {method} {path} error: {exc}")
+        SUPABASE_FAILED_PATHS[cache_key] = time.time() + SUPABASE_FAILURE_TTL
+        print(f"[supabase-service] fallback activé {method} {path}: {exc}", flush=True)
         return None
 
 
 def _football_supabase_payload() -> dict[str, Any]:
     if not _supabase_service_enabled():
         return {"configured": False, "teams": [], "countries": [], "competitions": [], "matches": [], "source": "fallback"}
+    with FOOTBALL_SUPABASE_CACHE_LOCK:
+        cached_payload = FOOTBALL_SUPABASE_CACHE.get("payload")
+        if cached_payload and FOOTBALL_SUPABASE_CACHE.get("expires_at", 0) > time.time():
+            return cached_payload
 
     countries = _supabase_service_request("GET", "countries?select=id,api_id,name,code,flag_url&order=name.asc&limit=300") or []
     competitions = _supabase_service_request("GET", "competitions?select=id,api_id,country_id,name,type,logo_url,season,updated_at&is_active=eq.true&order=name.asc&limit=300") or []
@@ -1993,13 +2007,7 @@ def _football_supabase_payload() -> dict[str, Any]:
             "updated_at": row.get("updated_at") or "",
         })
 
-    print(
-        "[football-supabase] "
-        f"countries={len(countries)} competitions={len(competitions)} teams={len(public_teams)} "
-        f"players={len(players)} coaches={len(coaches)} matches={len(public_matches)}",
-        flush=True,
-    )
-    return {
+    payload = {
         "configured": True,
         "source": "supabase",
         "countries": countries,
@@ -2015,6 +2023,11 @@ def _football_supabase_payload() -> dict[str, Any]:
             "matches": len(public_matches),
         },
     }
+    with FOOTBALL_SUPABASE_CACHE_LOCK:
+        FOOTBALL_SUPABASE_CACHE["payload"] = payload
+        FOOTBALL_SUPABASE_CACHE["expires_at"] = time.time() + SUPABASE_FOOTBALL_CACHE_TTL
+    print(f"[football-supabase] source=supabase counts={payload['counts']}", flush=True)
+    return payload
 
 
 def _coach_supabase_context(question: str) -> str:
