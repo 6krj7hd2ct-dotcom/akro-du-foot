@@ -537,8 +537,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
         return {"error": COACH_UNAVAILABLE}, 503
 
     context = _coach_context_summary()
-    entity_profile_context = _coach_entity_profile_context(resolved_question)
-    supabase_football_context = _coach_supabase_context(resolved_question)
+    coach_data_context = _coach_relevant_supabase_context(resolved_question)
     history_text = _format_chat_history(merged_history)
     try:
         import requests
@@ -584,8 +583,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                             f"Contexte détecté: {json.dumps(context_state, ensure_ascii=False)}\n"
                             f"Historique récent:\n{history_text}\n\n"
                             f"Vérification football récente:\n{verification.get('context', '')}\n\n"
-                            f"Données Supabase/API-Football synchronisées:\n{supabase_football_context or 'Aucune donnée Supabase pertinente trouvée pour cette question.'}\n\n"
-                            f"Profils football Supabase pertinents:\n{entity_profile_context or 'Aucun profil vectoriel pertinent disponible.'}\n\n"
+                            f"Données football pertinentes ({coach_data_context['source']}):\n{coach_data_context['context'] or 'Aucune donnée Supabase pertinente trouvée pour cette question.'}\n\n"
                             f"Données Akro du Foot disponibles:\n{context}\n\n"
                             f"Question utilisateur résolue:\n{resolved_question}"
                         ),
@@ -606,6 +604,7 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
             "answer": answer or COACH_UNAVAILABLE,
             "detected_context": context_state,
             "resolved_question": resolved_question,
+            "context_source": coach_data_context["source"],
             "verification": _public_coach_verification(verification),
         }, 200
     except Exception:
@@ -667,7 +666,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
     if not api_key:
         return {"error": COACH_UNAVAILABLE}, 503
 
-    supabase_football_context = _coach_supabase_context(query)
+    coach_data_context = _coach_relevant_supabase_context(query)
     try:
         import requests
 
@@ -690,7 +689,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
                             "Si la vérification est limitée, signale-le et évite les affirmations catégoriques."
                         ),
                     },
-                    {"role": "user", "content": f"Vérification:\n{verification.get('context', '')}\n\nDonnées Supabase/API-Football:\n{supabase_football_context or 'Aucune donnée Supabase pertinente.'}\n\nQuestion:\n{query}"},
+                    {"role": "user", "content": f"Vérification:\n{verification.get('context', '')}\n\nDonnées football pertinentes ({coach_data_context['source']}):\n{coach_data_context['context'] or 'Aucune donnée Supabase pertinente.'}\n\nQuestion:\n{query}"},
                 ],
                 "temperature": 0.25,
                 "max_output_tokens": 700,
@@ -707,6 +706,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
         return {
             "answer": answer,
             "source": "openai",
+            "context_source": coach_data_context["source"],
             "cached": False,
             "normalized_query": normalized_query,
             "entity_type": entity_type,
@@ -1983,10 +1983,14 @@ def _football_supabase_payload() -> dict[str, Any]:
         })
 
     public_teams = []
+    player_team_names: dict[str, list[str]] = {}
     for row in teams:
         country = country_by_id.get(str(row.get("country_id") or ""))
         team_id = str(row.get("id") or "")
         squad = players_by_team.get(team_id, [])
+        for player in squad:
+            if player.get("name"):
+                player_team_names.setdefault(player["name"], []).append(row.get("name") or "")
         coaches_list = coaches_by_team.get(team_id, [])
         public_teams.append({
             "id": team_id,
@@ -2006,6 +2010,19 @@ def _football_supabase_payload() -> dict[str, Any]:
             "squad": squad,
             "updated_at": row.get("updated_at") or "",
         })
+    public_players = [{
+        "name": row.get("name") or "",
+        "position": row.get("position") or "",
+        "photo_url": row.get("photo_url") or "",
+        "teams": player_team_names.get(row.get("name") or "", [])[:3],
+        "updated_at": row.get("updated_at") or "",
+    } for row in players if row.get("name")]
+    public_coaches = [{
+        "name": row.get("name") or "",
+        "nationality": row.get("nationality") or "",
+        "photo_url": row.get("photo_url") or "",
+        "updated_at": row.get("updated_at") or "",
+    } for row in coaches if row.get("name")]
 
     payload = {
         "configured": True,
@@ -2013,6 +2030,8 @@ def _football_supabase_payload() -> dict[str, Any]:
         "countries": countries,
         "competitions": competitions,
         "teams": public_teams,
+        "players": public_players,
+        "coaches": public_coaches,
         "matches": public_matches,
         "counts": {
             "countries": len(countries),
@@ -2050,6 +2069,28 @@ def _coach_supabase_context(question: str) -> str:
           if squad:
               parts.append("joueurs: " + ", ".join(player.get("name", "") for player in squad[:8] if player.get("name")))
           snippets.append("- " + " · ".join(parts))
+    if not snippets:
+        for player in payload.get("players", [])[:200]:
+            haystack = _normalize_football_text(f"{player.get('name', '')} {player.get('position', '')} {' '.join(player.get('teams') or [])}")
+            if normalized and any(word in haystack for word in normalized.split() if len(word) > 2):
+                parts = [player.get("name") or "Joueur"]
+                if player.get("position"):
+                    parts.append(f"poste: {player['position']}")
+                if player.get("teams"):
+                    parts.append("club/équipe: " + ", ".join(player.get("teams")[:3]))
+                snippets.append("- " + " · ".join(parts))
+                if len(snippets) >= 8:
+                    break
+    if not snippets:
+        for coach in payload.get("coaches", [])[:120]:
+            haystack = _normalize_football_text(f"{coach.get('name', '')} {coach.get('nationality', '')}")
+            if normalized and any(word in haystack for word in normalized.split() if len(word) > 2):
+                parts = [coach.get("name") or "Coach"]
+                if coach.get("nationality"):
+                    parts.append(f"nationalité: {coach['nationality']}")
+                snippets.append("- " + " · ".join(parts))
+                if len(snippets) >= 8:
+                    break
     if not snippets:
         for competition in payload.get("competitions", [])[:80]:
             haystack = _normalize_football_text(f"{competition.get('name', '')} {competition.get('season', '')}")
@@ -2161,6 +2202,19 @@ def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], in
         return {"error": f"Impossible d'appeler sync-football-data : {exc}"}, 502
 
 
+def _coach_relevant_supabase_context(question: str) -> dict[str, str]:
+    profile_context = _coach_entity_profile_context(question)
+    if profile_context:
+        return {"source": "Supabase entity_profiles", "context": profile_context}
+    simple_context = _coach_entity_profile_text_context(question)
+    if simple_context:
+        return {"source": "Supabase entity_profiles texte", "context": simple_context}
+    football_context = _coach_supabase_context(question)
+    if football_context:
+        return {"source": "Supabase football_core", "context": football_context}
+    return {"source": "cache/fallback", "context": ""}
+
+
 def _coach_entity_profile_context(question: str) -> str:
     if not question or not _supabase_service_enabled():
         return ""
@@ -2188,8 +2242,32 @@ def _coach_entity_profile_context(question: str) -> str:
                 snippets.append(f"- {entity_type}: {summary}{score}")
         return "\n".join(snippets)
     except Exception as exc:
-        print(f"[entity-profiles] search skipped: {exc}")
+        print(f"[entity-profiles] fallback texte activé: {exc}", flush=True)
         return ""
+
+
+def _coach_entity_profile_text_context(question: str) -> str:
+    if not question or not _supabase_service_enabled():
+        return ""
+    words = [word for word in _normalize_football_text(question).split() if len(word) > 2]
+    if not words:
+        return ""
+    rows = _supabase_service_request(
+        "GET",
+        "entity_profiles?select=entity_type,summary,searchable_text,updated_at&order=updated_at.desc&limit=120",
+    ) or []
+    snippets = []
+    for row in rows:
+        text = _normalize_football_text(f"{row.get('summary', '')} {row.get('searchable_text', '')}")
+        if not text or not any(word in text for word in words):
+            continue
+        summary = _clean(str(row.get("summary") or row.get("searchable_text") or ""), 280)
+        entity_type = _clean(str(row.get("entity_type") or "entité"), 40)
+        if summary:
+            snippets.append(f"- {entity_type}: {summary}")
+        if len(snippets) >= 6:
+            break
+    return "\n".join(snippets)
 
 
 def admin_sync_html() -> str:
