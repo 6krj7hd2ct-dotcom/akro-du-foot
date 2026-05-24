@@ -1570,12 +1570,8 @@
         <button class="team-tab-button" type="button" data-team-tab="squad">Effectif</button>
       </div>
       <div class="team-modal-body">
+        <div id="teamAnalysis"></div>
         <section class="team-panel is-active" data-team-panel="summary">
-          <div class="team-info">
-            <div class="team-info-label">Forme récente</div>
-            <div class="team-info-value">10 derniers résultats disponibles dans Akro du Foot</div>
-          </div>
-          <div id="teamCoach"></div>
           <div id="teamRecent"></div>
         </section>
         <section class="team-panel" data-team-panel="honors">
@@ -1825,8 +1821,8 @@
     const modalTitle = document.getElementById('teamModalTitle');
     const modalFlag = document.getElementById('teamModalFlag');
     const modalSources = document.getElementById('teamModalSources');
+    const teamAnalysis = document.getElementById('teamAnalysis');
     const teamRecent = document.getElementById('teamRecent');
-    const teamCoach = document.getElementById('teamCoach');
     const teamHonors = document.getElementById('teamHonors');
     const teamSquad = document.getElementById('teamSquad');
     const teamTabs = document.getElementById('teamModalTabs');
@@ -1977,21 +1973,16 @@
     }
 
     function squadCard(details) {
-      const coachName = details.coach_info?.coach_name || details.coach_name || details.coach || '';
       const formation = details.formation || details.last_formation || '';
       const starters = details.starters || details.lineup || [];
       const substitutes = details.substitutes || details.bench || [];
       const squad = details.squad || details.roster || [];
-      const hasLocalSquad = coachName || formation || starters.length || substitutes.length || squad.length;
+      const hasLocalSquad = formation || starters.length || substitutes.length || squad.length;
       if (!hasLocalSquad) {
         return `<div class="team-info"><div class="team-info-label">Effectif</div><div class="team-info-value">Aucune donnée locale disponible pour l’effectif ou la composition.</div><div class="team-info-actions"><button class="coach-ask-button" type="button" data-team-coach-topic="effectif" data-team-name="${escapeHtml(details.name || details.key || '')}">Demander au Coach</button></div></div>`;
       }
       return `
-        <section class="team-info">
-          <div class="team-info-label">Staff et composition</div>
-          <div class="team-info-value">Entraîneur / sélectionneur : ${escapeHtml(coachName || 'Non disponible')}</div>
-          <div class="subtle">Composition du dernier match : ${escapeHtml(formation || 'Non disponible')}</div>
-        </section>
+        ${formation ? `<section class="team-info"><div class="team-info-label">Composition du dernier match</div><div class="team-info-value">${escapeHtml(formation)}</div></section>` : ''}
         ${playerGrid('Titulaires / composition du dernier match', starters)}
         ${playerGrid('Remplaçants', substitutes)}
         ${playerGrid('Effectif', squad)}
@@ -2013,14 +2004,14 @@
       const details = TEAMS_DETAILS[name] || {name};
       modalTitle.textContent = details.name || name;
       modalFlag.innerHTML = flagHtml(details.flag_url || '');
-      modalSources.textContent = details.coach_info && details.coach_info.source ? `Source entraîneur : ${details.coach_info.source}` : 'Résultats disponibles dans les calendriers du dashboard';
-      teamCoach.innerHTML = coachCard(details);
+      modalSources.textContent = 'Résultats disponibles dans les calendriers du dashboard';
       teamHonors.innerHTML = honorsCard(details);
       teamSquad.innerHTML = squadCard(details);
       const matches = recentMatches(name);
+      teamAnalysis.innerHTML = recentCoachAnalysis(matches, name);
       teamRecent.innerHTML = matches.length
-        ? `${recentCoachAnalysis(matches, name)}<div class="recent-list">${matches.map(match => recentCard(match, name)).join('')}</div>`
-        : '<div class="empty">Forme récente non disponible pour cette équipe.</div>';
+        ? `<div class="recent-list">${matches.map(match => recentCard(match, name)).join('')}</div>`
+        : '<div class="empty">Aucun match récent disponible pour cette équipe.</div>';
       setTeamTab('summary');
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
