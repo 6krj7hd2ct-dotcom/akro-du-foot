@@ -9,6 +9,9 @@ const API_BASE_URL = (Deno.env.get("FOOTBALL_API_BASE_URL") ?? "").replace(/\/$/
 const API_KEY_HEADER = Deno.env.get("FOOTBALL_API_KEY_HEADER") ?? "x-apisports-key";
 const DEFAULT_LEAGUE_LIMIT = 1;
 const DEFAULT_TEAM_LIMIT = 1;
+const DEFAULT_TEAMS_TOTAL_LIMIT = 50;
+const INCLUDE_DETAILS = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_DETAILS") ?? "false").toLowerCase() === "true";
+const INCLUDE_MATCHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_MATCHES") ?? "false").toLowerCase() === "true";
 
 console.log("[sync-football-data] boot", {
   hasSupabaseUrl: Boolean(SUPABASE_URL),
@@ -19,6 +22,9 @@ console.log("[sync-football-data] boot", {
   footballApiKeyHeader: API_KEY_HEADER,
   leagueLimit: Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(DEFAULT_LEAGUE_LIMIT),
   teamLimit: Deno.env.get("FOOTBALL_SYNC_TEAM_LIMIT") ?? String(DEFAULT_TEAM_LIMIT),
+  teamsTotalLimit: Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT),
+  includeDetails: INCLUDE_DETAILS,
+  includeMatches: INCLUDE_MATCHES,
 });
 
 const supabase = createClient(SUPABASE_URL, SERVICE_KEY, {
@@ -84,6 +90,15 @@ function dedupeRows(table: string, rows: Json[], keyForRow: (row: Json) => strin
 
 function apiIdKey(row: Json) {
   return String(row.api_id ?? "");
+}
+
+function norm(value: unknown) {
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 async function withRetry(url: string, attempt = 1): Promise<Json[]> {
@@ -168,6 +183,26 @@ async function readIdMap(table: string) {
   return map;
 }
 
+async function readCountryLookup() {
+  console.log("[sync-football-data] read country lookup start");
+  const {data, error} = await supabase.from("countries").select("id,api_id,name,code");
+  if (error) {
+    console.error("[sync-football-data] read country lookup error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
+    throw new Error(`countries lookup: ${error.message}`);
+  }
+  const map = new Map<string, string>();
+  for (const row of data ?? []) {
+    const record = row as Json;
+    const id = String(record.id ?? "");
+    [record.api_id, record.name, record.code].forEach(value => {
+      const key = norm(value);
+      if (key && id) map.set(key, id);
+    });
+  }
+  console.log("[sync-football-data] read country lookup success", {keys: map.size, rows: data?.length ?? 0});
+  return map;
+}
+
 Deno.serve(async () => {
   console.log("[sync-football-data] request received");
   if (!SUPABASE_URL || !SERVICE_KEY) {
@@ -200,7 +235,7 @@ Deno.serve(async () => {
     console.log("[sync-football-data] step countries done", {inserted: counts.countries});
 
     console.log("[sync-football-data] step competitions start");
-    const countryMap = await readIdMap("countries");
+    const countryLookup = await readCountryLookup();
     const competitions = await football("leagues", {current: "true"});
     console.log("[sync-football-data] step competitions fetched", {count: competitions.length});
     const competitionRows = dedupeRows("competitions", competitions.map(item => {
@@ -209,7 +244,7 @@ Deno.serve(async () => {
       const seasons = pick<Json[]>(item, ["seasons"], []);
       return {
         api_id: String(pick(league, ["id"], "")),
-        country_id: countryMap.get(String(pick(country, ["code", "name"], ""))) ?? null,
+        country_id: countryLookup.get(norm(pick(country, ["code"], ""))) ?? countryLookup.get(norm(pick(country, ["name"], ""))) ?? null,
         name: String(pick(league, ["name"], "Information non disponible")),
         type: String(pick(league, ["type"], "")),
         logo_url: String(pick(league, ["logo"], "")),
@@ -225,9 +260,14 @@ Deno.serve(async () => {
     console.log("[sync-football-data] step teams start");
     const competitionMap = await readIdMap("competitions");
     const leagueLimit = Number(Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(DEFAULT_LEAGUE_LIMIT));
+    const teamsTotalLimit = Number(Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT));
     const leagueIds = Array.from(competitionMap.keys()).slice(0, leagueLimit);
-    console.log("[sync-football-data] league ids selected", {leagueLimit, leagueIds});
+    console.log("[sync-football-data] league ids selected", {leagueLimit, teamsTotalLimit, leagueIds});
     for (const leagueId of leagueIds) {
+      if (Number(counts.teams) >= teamsTotalLimit) {
+        console.log("[sync-football-data] teams total limit reached before league", {teams: counts.teams, teamsTotalLimit});
+        break;
+      }
       console.log("[sync-football-data] fetch teams", {leagueId});
       const teams = await football("teams", {league: leagueId, season: new Date().getUTCFullYear()});
       console.log("[sync-football-data] teams fetched", {leagueId, count: teams.length});
@@ -235,9 +275,10 @@ Deno.serve(async () => {
         const team = pick<Json>(item, ["team"], {});
         const venue = pick<Json>(item, ["venue"], {});
         const countryName = String(pick(team, ["country"], ""));
+        const countryKey = norm(countryName);
         return {
           api_id: String(pick(team, ["id"], "")),
-          country_id: countryMap.get(countryName) ?? null,
+          country_id: countryLookup.get(countryKey) ?? null,
           name: String(pick(team, ["name"], "Information non disponible")),
           code: String(pick(team, ["code"], "")),
           type: "club",
@@ -248,8 +289,25 @@ Deno.serve(async () => {
           updated_at: new Date().toISOString(),
         };
       }).filter(row => row.api_id && row.name), apiIdKey);
-      counts.teams = Number(counts.teams) + await upsert("teams", teamRows);
-      console.log("[sync-football-data] teams upserted cumulative", {teams: counts.teams});
+      const remaining = Math.max(0, teamsTotalLimit - Number(counts.teams));
+      const limitedTeamRows = teamRows.slice(0, remaining);
+      const linkedCountries = limitedTeamRows.filter(row => row.country_id).length;
+      console.log("[sync-football-data] teams prepared", {
+        leagueId,
+        fetched: teams.length,
+        deduped: teamRows.length,
+        limited: limitedTeamRows.length,
+        linkedCountries,
+        teamsTotalLimit,
+      });
+      counts.teams = Number(counts.teams) + await upsert("teams", limitedTeamRows);
+      console.log("[sync-football-data] teams upserted cumulative", {teams: counts.teams, teamsTotalLimit});
+    }
+
+    if (!INCLUDE_DETAILS) {
+      console.log("[sync-football-data] details skipped", {reason: "FOOTBALL_SYNC_INCLUDE_DETAILS is not true"});
+      await finishLog(logId, "success", "Synchronisation football équipes terminée. Joueurs/coachs ignorés en mode petit volume.", counts);
+      return response({ok: true, counts, skipped: {details: true, matches: !INCLUDE_MATCHES}});
     }
 
     console.log("[sync-football-data] step squads/coaches start");
@@ -321,6 +379,12 @@ Deno.serve(async () => {
         updated_at: new Date().toISOString(),
       })).filter(row => row.team_id && row.coach_id), row => apiIdKey(row) || `${row.team_id ?? ""}:${row.coach_id ?? ""}:${row.season ?? ""}:${row.role ?? ""}`);
       counts.team_coaches = Number(counts.team_coaches) + await upsert("team_coaches", teamCoachRows, "api_id");
+    }
+
+    if (!INCLUDE_MATCHES) {
+      console.log("[sync-football-data] matches skipped", {reason: "FOOTBALL_SYNC_INCLUDE_MATCHES is not true"});
+      await finishLog(logId, "success", "Synchronisation football terminée. Matchs ignorés en mode petit volume.", counts);
+      return response({ok: true, counts, skipped: {matches: true}});
     }
 
     console.log("[sync-football-data] step matches start");
