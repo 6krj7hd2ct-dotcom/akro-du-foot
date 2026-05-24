@@ -75,6 +75,8 @@ create table if not exists public.quiz_results (
   theme_value text not null,
   score int not null,
   total_questions int not null default 10,
+  passed boolean not null default false,
+  level_reached text,
   created_at timestamptz not null default now()
 );
 
@@ -99,6 +101,14 @@ begin
     execute 'update public.predictions set profile_id = user_id where profile_id is null and user_id is not null';
   end if;
 end $$;
+
+alter table public.quiz_results
+  add column if not exists passed boolean not null default false,
+  add column if not exists level_reached text;
+
+update public.quiz_results
+set passed = score >= 7
+where passed is distinct from (score >= 7);
 
 do $$
 begin
