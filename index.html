@@ -733,9 +733,11 @@
     .profile-gate-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .profile-gate-copy { color: #d6e5f7; font-weight: 850; line-height: 1.35; }
     .profile-auth-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .active-profile-card { display: none; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(50,211,162,0.24); border-radius: 16px; background: rgba(50,211,162,0.08); }
+    .active-profile-card { position: relative; display: none; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid color-mix(in srgb, var(--profile-accent, #ffe1a0) 48%, transparent); border-radius: 16px; background: linear-gradient(135deg, var(--profile-primary, rgba(50,211,162,0.18)), var(--profile-secondary, rgba(31,111,235,0.14))); overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,0.11); }
     .active-profile-card.is-visible { display: grid; }
-    .active-profile-meta { display: grid; gap: 5px; min-width: 0; }
+    .profile-banner-logo { position: absolute; right: 10px; top: 50%; width: 92px; height: 92px; transform: translateY(-50%); object-fit: contain; opacity: .16; filter: drop-shadow(0 16px 26px rgba(0,0,0,.28)); pointer-events: none; }
+    .active-profile-card > :not(.profile-banner-logo), .leaderboard-item > :not(.profile-banner-logo) { position: relative; z-index: 1; }
+    .active-profile-meta { display: grid; gap: 6px; min-width: 0; }
     .active-profile-name { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 950; }
     .active-profile-stats { display: flex; flex-wrap: wrap; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 850; }
     .profile-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 999px; background: rgba(255,255,255,0.075); border: 1px solid rgba(255,255,255,0.09); }
@@ -765,6 +767,7 @@
     .profile-auth-note { color: #d6e5f7; font-size: 13px; line-height: 1.45; }
     .leaderboard-avatar { width: 36px; height: 36px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(255,255,255,0.16); }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
     input, textarea, select { width: 100%; color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 11px; font: inherit; }
     textarea { min-height: 82px; resize: vertical; }
     .message-list, .prediction-list, .leaderboard-list { display: grid; gap: 10px; margin-top: 14px; }
@@ -774,7 +777,8 @@
     .leaderboard-list::-webkit-scrollbar-thumb { background: rgba(245,201,107,0.55); border-radius: 999px; }
     .message-item, .prediction-item, .leaderboard-item { padding: 11px; border-radius: 12px; background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09); }
     .message-top, .prediction-top, .leaderboard-item { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
-    .leaderboard-item.top-rank { border-color: rgba(245,201,107,0.34); background: linear-gradient(90deg, rgba(245,201,107,0.14), rgba(255,255,255,0.055)); }
+    .leaderboard-item { position: relative; overflow: hidden; border-color: color-mix(in srgb, var(--profile-accent, #ffe1a0) 32%, rgba(255,255,255,0.09)); background: linear-gradient(90deg, color-mix(in srgb, var(--profile-primary, #1f6feb) 28%, rgba(255,255,255,0.05)), color-mix(in srgb, var(--profile-secondary, #07111f) 22%, rgba(255,255,255,0.055))); }
+    .leaderboard-item.top-rank { border-color: color-mix(in srgb, var(--profile-accent, #ffe1a0) 58%, rgba(255,255,255,0.14)); }
     .leaderboard-rank { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-right: 8px; border-radius: 50%; color: #07111f; background: linear-gradient(180deg, #ffffff, #b9c9dc); font-weight: 950; }
     .top-rank .leaderboard-rank { background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
     .leaderboard-person { min-width: 0; display: flex; align-items: center; gap: 8px; color: inherit; background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-align: left; }
@@ -822,7 +826,8 @@
     .profile-dialog { width: min(720px, 100%); max-height: min(88vh, 760px); overflow: hidden; }
     #userProfileBadge { padding: 0; overflow: hidden; background: transparent; border: 1px solid rgba(245,201,107,0.38); }
     #userProfileBadge img { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .profile-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .profile-heading { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 14px; text-align: center; }
+    .profile-heading .profile-avatar-stack { width: 76px; height: 76px; }
     .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
     .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
@@ -924,7 +929,7 @@
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
-      .community-grid, .community-predictions, .field-row, .follow-list, .favorite-match-list, .profile-summary { grid-template-columns: 1fr; }
+      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary { grid-template-columns: 1fr; }
       .avatar-grid { grid-template-columns: repeat(auto-fill, minmax(54px, 1fr)); max-height: 220px; }
       .live-events-track { animation-duration: 164s; }
       .prediction-scoreboard { grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); gap: 8px; }
@@ -1593,7 +1598,7 @@
           <div class="avatar-picker-label">Avatar</div>
           <div class="avatar-grid" id="profileAvatarGrid" role="radiogroup" aria-label="Choix de l'avatar"></div>
         </div>
-        <div class="field-row">
+        <div class="field-row three">
           <div class="pseudo-row">
             <label for="profileFavoriteClub">Club favori</label>
             <select id="profileFavoriteClub"></select>
@@ -1601,6 +1606,13 @@
           <div class="pseudo-row">
             <label for="profileFavoriteNation">Nation favorite</label>
             <select id="profileFavoriteNation"></select>
+          </div>
+          <div class="pseudo-row">
+            <label for="profileBannerStyle">Style bannière</label>
+            <select id="profileBannerStyle">
+              <option value="club">Club</option>
+              <option value="nation">Nation</option>
+            </select>
           </div>
         </div>
         <button class="action-button" type="button" id="profileCreateSubmit">Créer mon profil</button>
@@ -1887,6 +1899,7 @@
     const profilePasswordInput = document.getElementById('profilePasswordInput');
     const profileFavoriteClub = document.getElementById('profileFavoriteClub');
     const profileFavoriteNation = document.getElementById('profileFavoriteNation');
+    const profileBannerStyle = document.getElementById('profileBannerStyle');
     const profileCreateStatus = document.getElementById('profileCreateStatus');
     const profileLoginModal = document.getElementById('profileLoginModal');
     const profileLoginIdentifier = document.getElementById('profileLoginIdentifier');
@@ -1918,6 +1931,7 @@
     let akroStats = null;
     let akroBadges = [];
     let akroPredictions = [];
+    let akroQuizResults = [];
     let liveRefreshInFlight = false;
     let lastLiveRefreshAt = 0;
     const LIVE_AUTO_REFRESH_MS = 45000;
@@ -2020,6 +2034,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       ['Arsenal', 'Arsenal', 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png'],
       ['Manchester City', 'Manchester City', 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png'],
       ['Barcelona', 'Barça', 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'],
+      ['Lens', 'Lens', 'https://a.espncdn.com/i/teamlogos/soccer/500/175.png'],
+      ['Nantes', 'Nantes', 'https://a.espncdn.com/i/teamlogos/soccer/500/165.png'],
       ['Bayern Munich', 'Bayern Munich', 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'],
       ['Liverpool', 'Liverpool', 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png'],
       ['Chelsea', 'Chelsea', 'https://a.espncdn.com/i/teamlogos/soccer/500/363.png'],
@@ -2101,6 +2117,75 @@ grant select, insert, update on public.profiles to authenticated;`;
       return FAVORITE_NATIONS.find(item => item[0] === value) || FAVORITE_NATIONS[0];
     }
 
+    function profileBannerMode(profile = akroProfile) {
+      const key = `akrodufoot:profile-banner-style:${profile?.id || profile?.pseudo || 'local'}`;
+      const saved = localStorage.getItem(key) || localStorage.getItem('akrodufoot:profile-banner-style') || '';
+      return saved === 'nation' ? 'nation' : 'club';
+    }
+
+    function saveProfileBannerMode(value, profile = akroProfile) {
+      const mode = value === 'nation' ? 'nation' : 'club';
+      localStorage.setItem('akrodufoot:profile-banner-style', mode);
+      if (profile?.id || profile?.pseudo) localStorage.setItem(`akrodufoot:profile-banner-style:${profile.id || profile.pseudo}`, mode);
+      return mode;
+    }
+
+    function profileIdentityTheme(profile = {}) {
+      const mode = profile.banner_style || profileBannerMode(profile);
+      const club = String(profile.favorite_club || '');
+      const nation = String(profile.favorite_nation || '');
+      const clubThemes = {
+        'Paris Saint-Germain': ['#073a8d', '#e30613', '#ffffff'],
+        'Marseille': ['#8ed8ff', '#ffffff', '#00a3e0'],
+        'Lens': ['#d71920', '#ffd100', '#07111f'],
+        'Nantes': ['#ffd500', '#00843d', '#07111f'],
+        'Real Madrid': ['#ffffff', '#c9a646', '#07111f'],
+        'Barcelona': ['#004d98', '#a50044', '#ffcb00'],
+        'Arsenal': ['#db0007', '#ffffff', '#063672'],
+        'Manchester City': ['#6cabdd', '#ffffff', '#1c2c5b'],
+        'Bayern Munich': ['#dc052d', '#0066b2', '#ffffff'],
+        'Liverpool': ['#c8102e', '#00b2a9', '#ffffff'],
+        'Chelsea': ['#034694', '#ffffff', '#dba111'],
+        'Juventus': ['#ffffff', '#111111', '#d5a63a'],
+        'Internazionale': ['#0068a8', '#010e80', '#ffffff'],
+        'AC Milan': ['#fb090b', '#111111', '#ffffff'],
+        'Napoli': ['#12a0d7', '#ffffff', '#07111f'],
+        'Atlético Madrid': ['#cb3524', '#ffffff', '#272e61'],
+        'Borussia Dortmund': ['#fde100', '#111111', '#07111f']
+      };
+      const nationThemes = {
+        'France': ['#0055a4', '#ffffff', '#ef4135'],
+        'Brazil': ['#ffdf00', '#009c3b', '#002776'],
+        'Argentina': ['#75aadb', '#ffffff', '#f6b40e'],
+        'Spain': ['#aa151b', '#f1bf00', '#07111f'],
+        'England': ['#ffffff', '#cf142b', '#00247d'],
+        'Portugal': ['#006600', '#ff0000', '#ffcc00'],
+        'Germany': ['#111111', '#dd0000', '#ffce00'],
+        'Italy': ['#008c45', '#f4f5f0', '#cd212a'],
+        'Morocco': ['#c1272d', '#006233', '#ffffff'],
+        'Senegal': ['#00853f', '#fdef42', '#e31b23'],
+        'Belgium': ['#000000', '#fae042', '#ed2939'],
+        'Netherlands': ['#ff4f00', '#ffffff', '#21468b'],
+        'Mexico': ['#006847', '#ffffff', '#ce1126'],
+        'United States': ['#3c3b6e', '#b22234', '#ffffff']
+      };
+      const palette = mode === 'nation' ? (nationThemes[nation] || nationThemes.France) : (clubThemes[club] || clubThemes['Paris Saint-Germain']);
+      const logo = mode === 'nation'
+        ? (profile.favorite_nation_flag || favoriteNationConfig(nation)[2])
+        : (profile.favorite_club_logo || favoriteClubConfig(club)[2]);
+      return {mode, primary: palette[0], secondary: palette[1], accent: palette[2], logo};
+    }
+
+    function profileThemeStyle(profile = {}) {
+      const theme = profileIdentityTheme(profile);
+      return `--profile-primary:${theme.primary};--profile-secondary:${theme.secondary};--profile-accent:${theme.accent};`;
+    }
+
+    function profileBannerLogo(profile = {}) {
+      const logo = profileIdentityTheme(profile).logo;
+      return logo ? `<img class="profile-banner-logo" src="${escapeHtml(logo)}" alt="">` : '';
+    }
+
     function renderFavoriteSelectors() {
       if (profileFavoriteClub) {
         const selected = akroProfile?.favorite_club || localStorage.getItem('akrodufoot:focus:champions') || FAVORITE_CLUBS[0][0];
@@ -2110,6 +2195,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         const selected = akroProfile?.favorite_nation || localStorage.getItem('akrodufoot:focus:worldcup') || FAVORITE_NATIONS[0][0];
         profileFavoriteNation.innerHTML = FAVORITE_NATIONS.map(([value, label]) => `<option value="${escapeHtml(value)}"${value === selected ? ' selected' : ''}>${escapeHtml(label)}</option>`).join('');
       }
+      if (profileBannerStyle) profileBannerStyle.value = profileBannerMode(akroProfile);
     }
 
     function selectedFavoritePayload() {
@@ -2130,6 +2216,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       Object.keys((typeof LEAGUES_DATA !== 'undefined' && LEAGUES_DATA.leagues) || {}).forEach(key => {
         localStorage.setItem(`akrodufoot:league-focus:${key}`, favorites.favorite_club);
       });
+      saveProfileBannerMode(profileBannerStyle?.value || 'club', akroProfile);
       return favorites;
     }
 
@@ -2224,10 +2311,25 @@ grant select, insert, update on public.profiles to authenticated;`;
       profileLoginModal?.setAttribute('aria-hidden', 'true');
     }
 
-    function quizBadgesHtml(badges = []) {
-      const quizBadges = (badges || []).filter(item => String(item.badge_key || '').startsWith('quiz_'));
-      if (!quizBadges.length) return '';
-      return quizBadges.map(item => `<span class="profile-pill">${escapeHtml(item.badge_name || 'Quiz')}</span>`).join('');
+    function highestQuizLevel(badges = [], results = []) {
+      const order = ['amateur', 'pro', 'expert', 'legende'];
+      const labels = {amateur: 'Amateur', pro: 'Pro', expert: 'Expert', legende: 'Légende'};
+      let best = -1;
+      (badges || []).forEach(item => {
+        const key = searchNorm(`${item.badge_key || ''} ${item.badge_name || item.name || ''}`);
+        order.forEach((level, index) => { if (key.includes(level)) best = Math.max(best, index); });
+      });
+      (results || []).forEach(item => {
+        if (Number(item.score || 0) < 7) return;
+        const key = searchNorm(item.difficulty || '');
+        order.forEach((level, index) => { if (key.includes(level)) best = Math.max(best, index); });
+      });
+      return best >= 0 ? labels[order[best]] : '';
+    }
+
+    function quizLevelPill(profile) {
+      const level = highestQuizLevel(profile?.badges || [], profile?.quiz_results || []);
+      return level ? `<span class="profile-pill">Quiz ${escapeHtml(level)}</span>` : '<span class="profile-pill">Quiz non classé</span>';
     }
 
     function renderActiveProfile() {
@@ -2236,6 +2338,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const gateCopy = document.querySelector('.profile-gate-copy');
       if (!profile) {
         activeProfileCard.classList.remove('is-visible');
+        activeProfileCard.removeAttribute('style');
         activeProfileCard.innerHTML = '';
         if (gateCopy) gateCopy.textContent = 'Connecte-toi ou crée ton profil pour participer.';
         if (openProfileCreateButton) openProfileCreateButton.textContent = 'Créer ton profil';
@@ -2246,18 +2349,20 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (openProfileCreateButton) openProfileCreateButton.textContent = 'Modifier ton profil';
       if (openProfileLoginButton) openProfileLoginButton.style.display = 'none';
       activeProfileCard.classList.add('is-visible');
+      activeProfileCard.setAttribute('style', profileThemeStyle(profile));
       activeProfileCard.innerHTML = `
+        ${profileBannerLogo(profile)}
         ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
         <div class="active-profile-meta">
           <div class="active-profile-name"><span>${escapeHtml(profile.pseudo)}</span><span class="reward-badge">${escapeHtml(profile.badge_icon || '★')}</span></div>
           <div class="active-profile-stats">
-            <span class="profile-pill">Niv. ${escapeHtml(profile.level_index || 1)} · ${escapeHtml(profile.level || 'Débutant')}</span>
-            <span class="profile-pill">${escapeHtml(profile.points || 0)} pts</span>
             <span class="profile-pill">${escapeHtml(profile.favorite_club || 'Club favori')}</span>
             <span class="profile-pill">${escapeHtml(profile.favorite_nation || 'Nation favorite')}</span>
+            ${quizLevelPill(profile)}
+            <span class="profile-pill">Pronos ${escapeHtml(profile.level || 'Débutant')}</span>
+            <span class="profile-pill">${escapeHtml(profile.points || 0)} pts</span>
             <span class="profile-pill">${escapeHtml(profile.predictions_count || 0)} pronos</span>
             <span class="profile-pill">${profile.rank ? `#${escapeHtml(profile.rank)}` : 'Non classé'}</span>
-            ${quizBadgesHtml(profile.badges)}
           </div>
           <button class="search-secondary-button" type="button" id="profileLogoutButton">Se déconnecter</button>
         </div>
@@ -2481,11 +2586,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         badge: badge.name,
         badge_icon: badge.icon,
         badges: akroBadges,
+        quiz_results: akroQuizResults,
+        quiz_level: highestQuizLevel(akroBadges, akroQuizResults),
         avatar_url: avatarUrl(akroProfile.avatar_url || selectedAvatarUrl),
         favorite_club: akroProfile.favorite_club || '',
         favorite_club_logo: akroProfile.favorite_club_logo || '',
         favorite_nation: akroProfile.favorite_nation || '',
         favorite_nation_flag: akroProfile.favorite_nation_flag || '',
+        banner_style: profileBannerMode(akroProfile),
         next_level_at: badge.next,
         history,
         recent_predictions: history.slice().sort((a, b) => String(b.created_at).localeCompare(String(a.created_at))).slice(0, 12)
@@ -2503,7 +2611,9 @@ grant select, insert, update on public.profiles to authenticated;`;
       const currentRows = Object.values(communityProfiles)
         .filter(item => item && item.pseudo)
         .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
-      currentRows.forEach((row, index) => { row.rank = row.rank || index + 1; });
+      currentRows.forEach((row, index) => { row.rank = index + 1; });
+      const activeRow = currentRows.find(row => row.pseudo === profile.pseudo);
+      if (activeRow) akroStats = {...(akroStats || {}), rank: activeRow.rank};
       renderLeaderboard(currentRows);
       renderActiveProfile();
       updatePredictionButton();
@@ -2540,6 +2650,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       akroStats = statsResult.data;
       akroBadges = badgesResult.data || [];
       akroPredictions = predictionsResult.data || [];
+      const quizResult = await supabaseStep('select quiz_results', akroSupabase.from('quiz_results').select('*').eq('profile_id', userId).order('created_at', {ascending: false}), 9000);
+      akroQuizResults = quizResult.error ? [] : (quizResult.data || []);
       mergeSupabaseProfileIntoUi();
     }
 
@@ -2653,6 +2765,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       akroStats = null;
       akroBadges = [];
       akroPredictions = [];
+      akroQuizResults = [];
       renderActiveProfile();
       renderFavoriteMatches(communityMatches);
       updatePredictionButton();
@@ -2868,6 +2981,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (error) throw error;
         akroProfile = data;
         logSupabase('profil chargé', akroProfile);
+        mergeSupabaseProfileIntoUi();
       } catch (error) {
         logSupabaseError('erreur Supabase', error);
       }
@@ -3094,12 +3208,13 @@ grant select, insert, update on public.profiles to authenticated;`;
     function renderLeaderboard(rows) {
       const list = document.getElementById('leaderboardList');
       list.innerHTML = rows && rows.length ? rows.map((row, index) => `
-        <div class="leaderboard-item ${index < 3 ? 'top-rank' : ''}">
+        <div class="leaderboard-item ${index < 3 ? 'top-rank' : ''}" style="${profileThemeStyle(row)}">
+          ${profileBannerLogo(row)}
           <button class="leaderboard-person" type="button" data-profile-pseudo="${escapeHtml(row.pseudo)}">
             <span class="leaderboard-rank">${row.rank || index + 1}</span>
             ${avatarImage(row.avatar_url, 'leaderboard-avatar', row)}
             <span class="reward-badge" title="${escapeHtml(row.badge || 'Badge')}">${escapeHtml(row.badge_icon || '★')}</span>
-            <span class="leaderboard-name"><strong>${escapeHtml(row.pseudo)}</strong><span class="leaderboard-meta">Niv. ${escapeHtml(row.level_index || 1)} · ${escapeHtml(row.level || 'Débutant')} · ${escapeHtml(row.predictions_count || 0)} pronos</span></span>
+            <span class="leaderboard-name"><strong>${escapeHtml(row.pseudo)}</strong><span class="leaderboard-meta">${escapeHtml(row.favorite_club || 'Club')} · ${escapeHtml(row.favorite_nation || 'Nation')} · ${escapeHtml(row.predictions_count || 0)} pronos</span></span>
           </button>
           <span class="leaderboard-points">${escapeHtml(row.points || 0)} pts<span class="leaderboard-rate">${escapeHtml(row.success_rate || 0)}% réussite</span></span>
         </div>
@@ -3127,14 +3242,16 @@ grant select, insert, update on public.profiles to authenticated;`;
       const close = document.getElementById('userProfileClose');
       const profile = communityProfiles[pseudo];
       if (!modal || !body || !profile) return;
+      const quizLevel = highestQuizLevel(profile.badges || [], profile.quiz_results || []);
+      const rankText = profile.rank ? (Number(profile.rank) <= 10 ? `Top 10 · classé #${profile.rank}` : `Classé #${profile.rank}`) : 'Non classé';
       title.textContent = profile.pseudo || pseudo;
-      subtitle.textContent = `${profile.badge || 'Badge'} · niveau ${profile.level_index || 1} · ${profile.level || 'Débutant'}`;
+      subtitle.textContent = `${rankText} · ${profile.level || 'Débutant'}`;
       badge.innerHTML = avatarImage(profile.avatar_url, 'profile-avatar', profile);
       const history = profile.recent_predictions || profile.history || [];
       body.innerHTML = `
         <div class="profile-heading">
           ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
-          <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(profile.badge || 'Badge')} · ${escapeHtml(profile.level || 'Débutant')}</div></div>
+          <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(rankText)}</div></div>
         </div>
         <div class="profile-summary">
           <div class="profile-stat"><strong>${escapeHtml(profile.points || 0)}</strong><span>points</span></div>
@@ -3142,8 +3259,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           <div class="profile-stat"><strong>${escapeHtml(profile.exact_scores || 0)}</strong><span>scores exacts</span></div>
           <div class="profile-stat"><strong>${escapeHtml(profile.success_rate || 0)}%</strong><span>réussite</span></div>
         </div>
-        <div class="team-info"><div class="team-info-label">Progression</div><div class="team-info-value">${escapeHtml(profile.badge_icon || '★')} ${escapeHtml(profile.level || 'Débutant')} · prochain palier à ${escapeHtml(profile.next_level_at || 10)} pronostics</div></div>
-        ${quizBadgesHtml(profile.badges) ? `<div class="team-info"><div class="team-info-label">Badges quiz</div><div class="quiz-badge-list">${quizBadgesHtml(profile.badges).replaceAll('profile-pill', 'quiz-badge-pill')}</div></div>` : ''}
+        <div class="team-info"><div class="team-info-label">Progression</div><div class="team-info-value">Pronostics : ${escapeHtml(profile.level || 'Débutant')} — prochain palier à ${escapeHtml(profile.next_level_at || 10)} pronostics<br>Quiz : ${escapeHtml(quizLevel || 'Non classé')}</div></div>
         <h3>Derniers pronostics</h3>
         <div class="profile-history">${history.length ? history.map(profileHistoryRow).join('') : '<div class="empty">Aucun pronostic enregistré.</div>'}</div>
       `;
@@ -3231,6 +3347,11 @@ grant select, insert, update on public.profiles to authenticated;`;
     document.getElementById('profileLoginClose')?.addEventListener('click', closeProfileLoginModal);
     document.getElementById('profileCreateSubmit')?.addEventListener('click', createProfileFromModal);
     document.getElementById('profileLoginSubmit')?.addEventListener('click', loginProfileFromModal);
+    profileBannerStyle?.addEventListener('change', () => {
+      saveProfileBannerMode(profileBannerStyle.value, akroProfile);
+      renderActiveProfile();
+      renderLeaderboard(Object.values(communityProfiles).filter(item => item && item.pseudo).sort((a, b) => Number(b.points || 0) - Number(a.points || 0)));
+    });
     profileEmailInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
     profilePseudoInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
     profilePasswordInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
@@ -4523,7 +4644,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           .single();
         if (error) throw error;
         badgeSaved = true;
-        if (Array.isArray(akroBadges) && !akroBadges.some(item => item.badge_key === data.badge_key)) akroBadges.push(data);
+      if (Array.isArray(akroBadges) && !akroBadges.some(item => item.badge_key === data.badge_key)) akroBadges.push(data);
+      akroQuizResults.unshift(payload);
         if (typeof mergeSupabaseProfileIntoUi === 'function') mergeSupabaseProfileIntoUi();
       }
       return {saved: resultSaved, badgeSaved, message: badgeSaved ? `${quizState.config.badgeName} débloqué.` : 'Résultat sauvegardé.'};

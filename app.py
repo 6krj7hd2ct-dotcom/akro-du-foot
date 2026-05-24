@@ -309,7 +309,9 @@ def community_payload() -> dict[str, Any]:
     source_predictions = supabase.get("predictions") if supabase.get("available") else community.get("predictions", [])
     predictions = _predictions_with_points(source_predictions or [], matches)
     profiles = _community_profiles(predictions, matches, supabase.get("badges", {}))
-    leaderboard = _leaderboard(predictions, matches, supabase.get("badges", {}))
+    if supabase.get("available"):
+        _enrich_profiles_with_supabase_users(profiles, supabase.get("users", []))
+    leaderboard = _leaderboard(predictions, matches, supabase.get("badges", {}), supabase.get("users", []) if supabase.get("available") else None)
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "messages": community.get("messages", [])[-100:],
@@ -2186,8 +2188,10 @@ def _predictions_with_points(predictions: list[dict[str, Any]], matches: dict[st
     return [{**prediction, "points": _points(prediction, matches.get(prediction.get("match_id", "")))} for prediction in predictions]
 
 
-def _leaderboard(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]] | None = None, badges: dict[str, list[dict[str, Any]]] | None = None) -> list[dict[str, Any]]:
+def _leaderboard(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]] | None = None, badges: dict[str, list[dict[str, Any]]] | None = None, users: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
     profiles = _community_profiles(predictions, matches or {}, badges)
+    if users:
+        _enrich_profiles_with_supabase_users(profiles, users)
     rows = sorted(profiles.values(), key=lambda item: (-int(item.get("points", 0)), -int(item.get("exact_scores", 0)), str(item.get("pseudo", "")).lower()))
     for index, row in enumerate(rows, start=1):
         row["rank"] = index
@@ -2220,6 +2224,17 @@ def _community_profiles(predictions: list[dict[str, Any]], matches: dict[str, di
         profile.update(level)
         profile["recent_predictions"] = sorted(profile["history"], key=lambda item: str(item.get("created_at", "")), reverse=True)[:12]
     return profiles
+
+
+def _enrich_profiles_with_supabase_users(profiles: dict[str, dict[str, Any]], users: list[dict[str, Any]]) -> None:
+    for user in users or []:
+        pseudo = _clean(user.get("pseudo", ""), 32)
+        if not pseudo or pseudo not in profiles:
+            continue
+        profile = profiles[pseudo]
+        for key in ("avatar_url", "favorite_club", "favorite_club_logo", "favorite_nation", "favorite_nation_flag"):
+            if user.get(key):
+                profile[key] = user.get(key)
 
 
 def _empty_profile(pseudo: str) -> dict[str, Any]:
