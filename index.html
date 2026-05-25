@@ -441,12 +441,12 @@
     .euro-summary-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }
     .euro-summary-card > * { position: relative; z-index: 1; }
     .euro-summary-value { margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }
-    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
-    .recent-honour-card { min-height: 0; display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(99,232,255,0.07)); cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 10px; align-items: stretch; }
+    .recent-honour-card { min-height: 54px; display: grid; grid-template-columns: 54px minmax(0, 1fr); align-items: center; gap: 9px; padding: 9px 11px; border-radius: 12px; background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(99,232,255,0.07)); cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .recent-honour-card:hover, .recent-honour-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.38); background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(99,232,255,0.08)); outline: none; }
-    .recent-honour-card h3 { margin: 0; color: #ffe1a0; font-size: 13px; line-height: 1; white-space: nowrap; text-align: center; }
-    .recent-honour-card .empty { margin: 0; min-width: 0; display: inline-flex; align-items: center; gap: 7px; color: #eef6ff; font-size: 13px; font-weight: 900; line-height: 1.12; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .recent-honour-card .flag { width: 22px; height: 22px; flex: 0 0 22px; }
+    .recent-honour-card h3 { margin: 0; min-height: 34px; display: grid; place-items: center; color: #ffe1a0; font-size: 14px; line-height: 1; white-space: nowrap; text-align: center; border-radius: 10px; background: rgba(245,201,107,0.10); border: 1px solid rgba(245,201,107,0.14); }
+    .recent-honour-card .empty { margin: 0; min-width: 0; display: inline-flex; align-items: center; gap: 9px; color: #f6fbff; font-size: 15px; font-weight: 950; line-height: 1.12; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .recent-honour-card .flag { width: 27px; height: 27px; flex: 0 0 27px; }
     .annual-awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 18px; }
     .award-card { position: relative; overflow: hidden; min-height: 118px; display: grid; align-content: space-between; gap: 9px; padding: 14px; border-radius: 16px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(245,201,107,0.08)); border: 1px solid rgba(255,255,255,0.10); }
     .award-card::after { content: attr(data-mark); position: absolute; right: 12px; bottom: -8px; font-size: 54px; line-height: 1; opacity: .14; pointer-events: none; }
@@ -1046,6 +1046,10 @@
       .league-calendar-match .away, .league-calendar-match .away .team-button { justify-content: center; text-align: center; }
       .league-calendar-match .team-button { justify-content: center; }
       .calendar-match .date, .calendar-match .match-meta { grid-column: 1 / -1; }
+      .recent-honours-grid { grid-template-columns: 1fr; gap: 8px; }
+      .recent-honour-card { grid-template-columns: 52px minmax(0, 1fr); min-height: 52px; padding: 8px 10px; }
+      .recent-honour-card .empty { font-size: 14px; }
+      .recent-honour-card .flag { width: 24px; height: 24px; flex-basis: 24px; }
       .standings-wide table { min-width: 620px; }
       .bracket-stage { padding: 10px; min-width: 1040px; }
       .bracket-stage.ucl-official { min-width: 1040px; }
@@ -5896,6 +5900,64 @@ grant select, insert, update on public.profiles to authenticated;`;
         worldcup: {
           current: '2026',
           seasons: {
+            '2010': {
+              summary: [
+                ['Champion', 'Espagne', 'Victoire 1-0 après prolongation contre les Pays-Bas.', flag('esp')],
+                ['Finaliste', 'Pays-Bas', 'Finaliste à Johannesburg.', flag('ned')],
+                ['Meilleur joueur de la compétition', 'Diego Forlan', 'Ballon d’Or du Mondial 2010.', flag('uru')],
+                ['Meilleur buteur de la compétition', 'Thomas Müller', 'Soulier d’Or 2010 avec 5 buts.', flag('ger')]
+              ],
+              honours: [['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')], ['2002', 'Brésil', flag('bra')], ['1998', 'France', flag('fra')]],
+              awards: [
+                {title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Diego Forlan', note: 'Edition 2010', flag: flag('uru'), initials: 'DF'},
+                {title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'Thomas Müller', note: '5 buts', flag: flag('ger'), initials: 'TM'},
+                {title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'Iker Casillas', note: 'Edition 2010', flag: flag('esp'), initials: 'IC'},
+                {title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'Thomas Müller', note: 'Edition 2010', flag: flag('ger'), initials: 'TM'}
+              ],
+              scorers: [player('Thomas Müller', 'Allemagne', '5 buts', flag('ger')), player('David Villa', 'Espagne', '5 buts', flag('esp'), 'à égalité'), player('Wesley Sneijder', 'Pays-Bas', '5 buts', flag('ned'), 'à égalité')],
+              assists: [player('Thomas Müller', 'Allemagne', '3 passes', flag('ger')), player('Mesut Özil', 'Allemagne', '3 passes', flag('ger'), 'à égalité'), player('Kaká', 'Brésil', '3 passes', flag('bra'), 'à égalité')],
+              bracket: [match('Finale', 'Pays-Bas', 'Espagne', '0 - 1 ap', flag('ned'), flag('esp'), 'Johannesburg'), match('Demi-finale', 'Uruguay', 'Pays-Bas', '2 - 3', flag('uru'), flag('ned')), match('Demi-finale', 'Allemagne', 'Espagne', '0 - 1', flag('ger'), flag('esp')), match('3e place', 'Uruguay', 'Allemagne', '2 - 3', flag('uru'), flag('ger'))],
+              groups: [
+                group('Groupe A', [team('Uruguay', flag('uru'), '7'), team('Mexique', flag('mex'), '4'), team('Afrique du Sud', flag('rsa'), '4'), team('France', flag('fra'), '1')]),
+                group('Groupe B', [team('Argentine', flag('arg'), '9'), team('Corée du Sud', flag('kors'), '4'), team('Grèce', flag('gre'), '3'), team('Nigeria', flag('nga'), '1')]),
+                group('Groupe C', [team('Etats-Unis', flag('usa'), '5'), team('Angleterre', flag('eng'), '5'), team('Slovénie', flag('svn'), '4'), team('Algérie', flag('alg'), '1')]),
+                group('Groupe D', [team('Allemagne', flag('ger'), '6'), team('Ghana', flag('gha'), '4'), team('Australie', flag('aus'), '4'), team('Serbie', flag('srb'), '3')]),
+                group('Groupe E', [team('Pays-Bas', flag('ned'), '9'), team('Japon', flag('jpn'), '6'), team('Danemark', flag('den'), '3'), team('Cameroun', flag('cmr'), '0')]),
+                group('Groupe F', [team('Paraguay', flag('par'), '5'), team('Slovaquie', flag('svk'), '4'), team('Nouvelle-Zélande', flag('nzl'), '3'), team('Italie', flag('ita'), '2')]),
+                group('Groupe G', [team('Brésil', flag('bra'), '7'), team('Portugal', flag('por'), '5'), team('Côte d’Ivoire', flag('civ'), '4'), team('Corée du Nord', '', '0')]),
+                group('Groupe H', [team('Espagne', flag('esp'), '6'), team('Chili', flag('chi'), '6'), team('Suisse', flag('sui'), '4'), team('Honduras', flag('hon'), '0')])
+              ],
+              calendar: [match('Finale', 'Pays-Bas', 'Espagne', '0 - 1 ap', flag('ned'), flag('esp')), match('Demi-finale', 'Allemagne', 'Espagne', '0 - 1', flag('ger'), flag('esp')), match('Quart', 'Uruguay', 'Ghana', '1 - 1 tab 4-2', flag('uru'), flag('gha'))]
+            },
+            '2014': {
+              summary: [
+                ['Champion', 'Allemagne', 'Victoire 1-0 après prolongation contre l’Argentine.', flag('ger')],
+                ['Finaliste', 'Argentine', 'Finaliste au Maracanã.', flag('arg')],
+                ['Meilleur joueur de la compétition', 'Lionel Messi', 'Ballon d’Or du Mondial 2014.', flag('arg')],
+                ['Meilleur buteur de la compétition', 'James Rodriguez', 'Soulier d’Or 2014 avec 6 buts.', flag('col')]
+              ],
+              honours: [['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')], ['2002', 'Brésil', flag('bra')]],
+              awards: [
+                {title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Lionel Messi', note: 'Edition 2014', flag: flag('arg'), photo: photo('30981'), initials: 'LM'},
+                {title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'James Rodriguez', note: '6 buts', flag: flag('col'), initials: 'JR'},
+                {title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'Manuel Neuer', note: 'Edition 2014', flag: flag('ger'), initials: 'MN'},
+                {title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'Paul Pogba', note: 'Edition 2014', flag: flag('fra'), initials: 'PP'}
+              ],
+              scorers: [player('James Rodriguez', 'Colombie', '6 buts', flag('col')), player('Thomas Müller', 'Allemagne', '5 buts', flag('ger')), player('Neymar', 'Brésil', '4 buts', flag('bra'), 'à égalité')],
+              assists: [player('Juan Cuadrado', 'Colombie', '4 passes', flag('col')), player('Toni Kroos', 'Allemagne', '4 passes', flag('ger'), 'à égalité'), player('Karim Benzema', 'France', '3 passes', flag('fra'))],
+              bracket: [match('Finale', 'Allemagne', 'Argentine', '1 - 0 ap', flag('ger'), flag('arg'), 'Rio de Janeiro'), match('Demi-finale', 'Brésil', 'Allemagne', '1 - 7', flag('bra'), flag('ger')), match('Demi-finale', 'Pays-Bas', 'Argentine', '0 - 0 tab 2-4', flag('ned'), flag('arg')), match('3e place', 'Brésil', 'Pays-Bas', '0 - 3', flag('bra'), flag('ned'))],
+              groups: [
+                group('Groupe A', [team('Brésil', flag('bra'), '7'), team('Mexique', flag('mex'), '7'), team('Croatie', flag('cro'), '3'), team('Cameroun', flag('cmr'), '0')]),
+                group('Groupe B', [team('Pays-Bas', flag('ned'), '9'), team('Chili', flag('chi'), '6'), team('Espagne', flag('esp'), '3'), team('Australie', flag('aus'), '0')]),
+                group('Groupe C', [team('Colombie', flag('col'), '9'), team('Grèce', flag('gre'), '4'), team('Côte d’Ivoire', flag('civ'), '3'), team('Japon', flag('jpn'), '1')]),
+                group('Groupe D', [team('Costa Rica', flag('crc'), '7'), team('Uruguay', flag('uru'), '6'), team('Italie', flag('ita'), '3'), team('Angleterre', flag('eng'), '1')]),
+                group('Groupe E', [team('France', flag('fra'), '7'), team('Suisse', flag('sui'), '6'), team('Equateur', flag('ecu'), '4'), team('Honduras', flag('hon'), '0')]),
+                group('Groupe F', [team('Argentine', flag('arg'), '9'), team('Nigeria', flag('nga'), '4'), team('Bosnie-Herzégovine', flag('bih'), '3'), team('Iran', flag('irn'), '1')]),
+                group('Groupe G', [team('Allemagne', flag('ger'), '7'), team('Etats-Unis', flag('usa'), '4'), team('Portugal', flag('por'), '4'), team('Ghana', flag('gha'), '1')]),
+                group('Groupe H', [team('Belgique', flag('bel'), '9'), team('Algérie', flag('alg'), '4'), team('Russie', flag('rus'), '2'), team('Corée du Sud', flag('kors'), '1')])
+              ],
+              calendar: [match('Finale', 'Allemagne', 'Argentine', '1 - 0 ap', flag('ger'), flag('arg')), match('Demi-finale', 'Brésil', 'Allemagne', '1 - 7', flag('bra'), flag('ger')), match('Quart', 'France', 'Allemagne', '0 - 1', flag('fra'), flag('ger'))]
+            },
             '2018': {
               summary: [
                 ['Champion', 'France', 'Victoire 4-2 contre la Croatie en finale.', flag('fra')],
@@ -6027,6 +6089,29 @@ grant select, insert, update on public.profiles to authenticated;`;
         champions: {
           current: '2025-2026',
           seasons: {
+            '2023-2024': {
+              summary: [
+                ['Champion', 'Real Madrid', 'Victoire 2-0 contre Dortmund à Wembley.', logo('86')],
+                ['Finaliste', 'Borussia Dortmund', 'Finaliste de la saison 2023-2024.', logo('124')],
+                ['Meilleur joueur de la compétition', 'Vinicius Junior', 'Joueur majeur du parcours madrilène.', logo('86')],
+                ['Meilleur buteur de la compétition', 'Harry Kane', '8 buts avec le Bayern Munich.', logo('132')]
+              ],
+              honours: [['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')], ['2021', 'Chelsea', logo('363')]],
+              scorers: [player('Harry Kane', 'Bayern Munich', '8 buts', logo('132')), player('Kylian Mbappé', 'Paris Saint-Germain', '8 buts', logo('160'), 'à égalité'), player('Erling Haaland', 'Manchester City', '6 buts', logo('382'))],
+              assists: [player('Marcel Sabitzer', 'Borussia Dortmund', '5 passes', logo('124')), player('Jude Bellingham', 'Real Madrid', '5 passes', logo('86'), 'à égalité'), player('Bukayo Saka', 'Arsenal', '4 passes', logo('359'))],
+              bracket: [match('Finale', 'Borussia Dortmund', 'Real Madrid', '0 - 2', logo('124'), logo('86'), 'Wembley'), match('Demi-finale', 'Real Madrid', 'Bayern Munich', '4 - 3 cumulé', logo('86'), logo('132')), match('Demi-finale', 'Borussia Dortmund', 'Paris Saint-Germain', '2 - 0 cumulé', logo('124'), logo('160'))],
+              groups: [
+                group('Groupe A 2023-2024', [team('Bayern Munich', logo('132'), '16'), team('F.C. København', logo('909'), '8'), team('Galatasaray', logo('432'), '5'), team('Manchester United', logo('360'), '4')]),
+                group('Groupe B 2023-2024', [team('Arsenal', logo('359'), '13'), team('PSV Eindhoven', logo('148'), '9'), team('Lens', logo('175'), '8'), team('Sevilla', logo('243'), '2')]),
+                group('Groupe C 2023-2024', [team('Real Madrid', logo('86'), '18'), team('Napoli', logo('114'), '10'), team('Braga', '', '4'), team('Union Berlin', '', '2')]),
+                group('Groupe D 2023-2024', [team('Real Sociedad', logo('89'), '12'), team('Internazionale', logo('110'), '12'), team('Benfica', logo('1929'), '4'), team('Salzburg', '', '4')]),
+                group('Groupe E 2023-2024', [team('Atlético Madrid', logo('1068'), '14'), team('Lazio', logo('112'), '10'), team('Feyenoord', '', '6'), team('Celtic', '', '4')]),
+                group('Groupe F 2023-2024', [team('Borussia Dortmund', logo('124'), '11'), team('Paris Saint-Germain', logo('160'), '8'), team('AC Milan', logo('103'), '8'), team('Newcastle United', logo('361'), '5')]),
+                group('Groupe G 2023-2024', [team('Manchester City', logo('382'), '18'), team('RB Leipzig', '', '12'), team('Young Boys', '', '4'), team('Red Star Belgrade', '', '1')]),
+                group('Groupe H 2023-2024', [team('Barcelona', logo('83'), '12'), team('Porto', '', '12'), team('Shakhtar Donetsk', '', '9'), team('Antwerp', '', '3')])
+              ],
+              calendar: [match('Finale', 'Borussia Dortmund', 'Real Madrid', '0 - 2', logo('124'), logo('86')), match('Quart', 'Manchester City', 'Real Madrid', '4 - 4 tab 3-4', logo('382'), logo('86')), match('Quart', 'Barcelona', 'Paris Saint-Germain', '4 - 6 cumulé', logo('83'), logo('160'))]
+            },
             '2024-2025': {
               summary: [
                 ['Champion', 'Paris Saint-Germain', 'Premier sacre européen, 5-0 contre l’Inter.', logo('160')],
@@ -6184,7 +6269,24 @@ grant select, insert, update on public.profiles to authenticated;`;
       });
     });
 
+    const seasonCatalog = window.AKRO_HISTORICAL_COMPETITIONS || {};
     document.querySelectorAll('[data-season-tabs]').forEach((nav) => {
+      const config = seasonCatalog[nav.dataset.seasonTabs];
+      if (config) {
+        const label = nav.querySelector('.season-tabs-label');
+        const existingLabels = new Map(Array.from(nav.querySelectorAll('[data-season-value]')).map((button) => [button.dataset.seasonValue, button.textContent.trim()]));
+        const values = Array.from(new Set([...Object.keys(config.seasons || {}), config.current].filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr-FR', {numeric: true}));
+        nav.replaceChildren();
+        if (label) nav.appendChild(label);
+        values.forEach((value) => {
+          const button = document.createElement('button');
+          button.className = `tab-button${value === config.current ? ' is-active' : ''}`;
+          button.type = 'button';
+          button.dataset.seasonValue = value;
+          button.textContent = existingLabels.get(value) || `${value}${config.seasons?.[value]?.future ? ' à venir' : ''}`;
+          nav.appendChild(button);
+        });
+      }
       const key = `akrodufoot:season:${nav.dataset.seasonTabs}`;
       const buttons = Array.from(nav.querySelectorAll('[data-season-value]'));
       const applySeason = (value) => {
