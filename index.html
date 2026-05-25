@@ -2247,12 +2247,97 @@
       return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
     }
 
+    const FOOTBALL_TEAM_ALIASES = {
+      suisse: ['switzerland'],
+      switzerland: ['suisse'],
+      danemark: ['denmark'],
+      denmark: ['danemark'],
+      pologne: ['poland'],
+      poland: ['pologne'],
+      cameroun: ['cameroon'],
+      cameroon: ['cameroun'],
+      allemagne: ['germany'],
+      germany: ['allemagne'],
+      espagne: ['spain'],
+      spain: ['espagne'],
+      angleterre: ['england'],
+      england: ['angleterre'],
+      pays bas: ['netherlands'],
+      netherlands: ['pays bas', 'holland'],
+      belgique: ['belgium'],
+      belgium: ['belgique'],
+      croatie: ['croatia'],
+      croatia: ['croatie'],
+      maroc: ['morocco'],
+      morocco: ['maroc'],
+      senegal: ['sénégal'],
+      mexique: ['mexico'],
+      mexico: ['mexique'],
+      etats unis: ['united states', 'usa'],
+      united states: ['etats unis', 'usa'],
+      usa: ['united states', 'etats unis'],
+      japon: ['japan'],
+      japan: ['japon'],
+      coree du sud: ['south korea', 'korea republic'],
+      south korea: ['coree du sud', 'korea republic'],
+      korea republic: ['south korea', 'coree du sud'],
+      colombie: ['colombia'],
+      colombia: ['colombie'],
+      algerie: ['algeria'],
+      algeria: ['algerie'],
+      egypte: ['egypt'],
+      egypt: ['egypte'],
+      tunisie: ['tunisia'],
+      tunisia: ['tunisie'],
+      cote d ivoire: ['ivory coast'],
+      ivory coast: ['cote d ivoire'],
+      afrique du sud: ['south africa'],
+      south africa: ['afrique du sud'],
+      arabie saoudite: ['saudi arabia'],
+      saudi arabia: ['arabie saoudite'],
+      irak: ['iraq'],
+      iraq: ['irak'],
+      ouzbekistan: ['uzbekistan'],
+      uzbekistan: ['ouzbekistan'],
+      australie: ['australia'],
+      australia: ['australie'],
+      autriche: ['austria'],
+      austria: ['autriche'],
+      suede: ['sweden'],
+      sweden: ['suede'],
+      norvege: ['norway'],
+      norway: ['norvege'],
+      turquie: ['turkiye', 'turkey'],
+      turkiye: ['turquie', 'turkey'],
+      turkey: ['turquie', 'turkiye'],
+      republique tcheque: ['czechia', 'czech republic'],
+      czechia: ['republique tcheque', 'czech republic'],
+      chili: ['chile'],
+      chile: ['chili'],
+      perou: ['peru'],
+      peru: ['perou'],
+      equateur: ['ecuador'],
+      ecuador: ['equateur']
+    };
+
+    function footballAliasSet(value) {
+      const base = normalizeFootballName(value);
+      const aliases = new Set(base ? [base] : []);
+      (FOOTBALL_TEAM_ALIASES[base] || []).forEach(alias => aliases.add(normalizeFootballName(alias)));
+      return aliases;
+    }
+
     function supabaseTeamFromName(name) {
-      const target = normalizeFootballName(name);
-      return (AKRO_SUPABASE_FOOTBALL.teams || []).find(team => {
-        const aliases = [team.name, team.short_name, team.code].map(normalizeFootballName).filter(Boolean);
-        return aliases.includes(target);
-      }) || null;
+      const targets = footballAliasSet(name);
+      if (!targets.size) return null;
+      const matches = (AKRO_SUPABASE_FOOTBALL.teams || []).filter(team => {
+        const aliases = new Set();
+        [team.name, team.short_name, team.code, team.country].forEach(value => {
+          footballAliasSet(value).forEach(alias => aliases.add(alias));
+        });
+        return Array.from(targets).some(target => aliases.has(target));
+      });
+      return matches.sort((a, b) => (b.squad?.length || 0) - (a.squad?.length || 0))[0] || null;
     }
 
     function supabaseTeamDetails(name) {

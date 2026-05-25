@@ -159,6 +159,12 @@ function priorityIndexForTeam(name: unknown) {
     .findIndex(priorityName => teamName === priorityName);
 }
 
+function priorityAliasForTeam(name: unknown) {
+  const teamName = norm(name);
+  if (!teamName) return "";
+  return configuredPriorityTeams().find(priorityName => norm(priorityName) === teamName) ?? "";
+}
+
 function teamRowFromApi(item: Json, countryLookup: Map<string, string>) {
   const team = pick<Json>(item, ["team"], {});
   const venue = pick<Json>(item, ["venue"], {});
@@ -383,6 +389,7 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
     type: String(row.type ?? ""),
     linkedPlayers: options.rosterCounts?.get(String(row.id ?? "")) ?? 0,
     priorityIndex: priorityIndexForTeam(row.name),
+    priorityAlias: priorityAliasForTeam(row.name),
   })).filter(row => row.id && row.api_id);
   const enriched = rows.map(row => ({...row, priority: row.priorityIndex >= 0}));
   const completeRosterSize = options.completeRosterSize ?? DEFAULT_COMPLETE_ROSTER_SIZE;
@@ -683,6 +690,10 @@ Deno.serve(async () => {
         counts.team_players_upserted = teamPlayersUpserted;
         teamLogs.push({
           name: teamTarget.name,
+          requested_name: teamTarget.priorityAlias || teamTarget.name,
+          api_alias_used: teamTarget.name,
+          api_football_id: teamTarget.api_id,
+          supabase_team_id: teamTarget.id,
           type: teamTarget.type,
           priority: teamTarget.priority,
           linked_before: teamTarget.linkedPlayers,
