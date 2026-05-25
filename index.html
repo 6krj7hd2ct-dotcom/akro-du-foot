@@ -1065,7 +1065,7 @@
     .who-player-panel { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 1fr); gap: 10px; align-items: stretch; }
     .who-photo-card { position: relative; min-height: 190px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(245,201,107,0.22); background: radial-gradient(circle at 70% 25%, rgba(245,201,107,0.22), transparent 12rem), rgba(7,17,31,0.76); }
     .who-player-photo { width: 100%; height: 100%; min-height: 190px; display: block; object-fit: cover; object-position: center top; transform: scale(1.02); }
-    .who-photo-card.is-silhouette .who-player-photo { filter: brightness(0.08) saturate(0) contrast(1.55) drop-shadow(0 0 18px rgba(245,201,107,0.16)); opacity: .92; }
+    .who-photo-card.is-silhouette .who-player-photo { filter: brightness(var(--who-brightness, 0.08)) saturate(var(--who-saturation, 0)) contrast(var(--who-contrast, 1.55)) drop-shadow(0 0 18px rgba(245,201,107,0.16)); opacity: var(--who-opacity, .92); }
     .who-photo-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,17,31,0.04), rgba(7,17,31,0.64)); pointer-events: none; }
     .who-photo-card.is-silhouette::after { background: radial-gradient(circle at 50% 22%, rgba(255,255,255,0.08), transparent 7rem), linear-gradient(180deg, rgba(7,17,31,0.12), rgba(7,17,31,0.72)); }
     .who-photo-chip { position: absolute; z-index: 2; min-width: 32px; min-height: 26px; display: inline-grid; place-items: center; padding: 5px 7px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.18); background: rgba(5,16,31,0.72); color: #f7fbff; font-size: 11px; font-weight: 950; box-shadow: 0 10px 24px rgba(0,0,0,0.24); backdrop-filter: blur(8px); }
@@ -6560,6 +6560,44 @@ grant select, insert, update on public.profiles to authenticated;`;
       return String(value || '').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '--';
     }
 
+    function whoNameParts(value) {
+      const parts = String(value || '').split(/\s+/).filter(Boolean);
+      return {first: parts[0] || '', last: parts.slice(1).join(' ') || parts[0] || ''};
+    }
+
+    function whoNameFamily(value) {
+      const {last} = whoNameParts(value);
+      return whoPlayerKey(last).slice(0, 5);
+    }
+
+    function whoOptionScore(correct, candidate) {
+      if (!candidate || whoPlayerKey(candidate.name) === whoPlayerKey(correct.name)) return -999;
+      let score = 0;
+      const correctParts = whoNameParts(correct.name);
+      const candidateParts = whoNameParts(candidate.name);
+      if (whoInitialsForName(candidate.name) === whoInitialsForName(correct.name)) score += 8;
+      if (whoPlayerKey(candidateParts.first).slice(0, 1) === whoPlayerKey(correctParts.first).slice(0, 1)) score += 3;
+      if (whoPlayerKey(candidateParts.last).slice(0, 1) === whoPlayerKey(correctParts.last).slice(0, 1)) score += 3;
+      if (whoNameFamily(candidate.name) && whoNameFamily(candidate.name) === whoNameFamily(correct.name)) score += 5;
+      if (candidate.nation && correct.nation && searchNorm(candidate.nation) === searchNorm(correct.nation)) score += 7;
+      if (candidate.position && correct.position && candidate.position === correct.position) score += 4;
+      if (candidate.club && correct.club && searchNorm(candidate.club) === searchNorm(correct.club)) score += 4;
+      if (Math.abs(Number(candidate.tier || 4) - Number(correct.tier || 4)) <= 1) score += 3;
+      if ((candidate.categories || []).some(category => (correct.categories || []).includes(category))) score += 2;
+      return score + Math.random();
+    }
+
+    function whoSmartWrongOptions(correct, pool) {
+      return pool
+        .filter(player => whoPlayerKey(player.name) !== whoPlayerKey(correct.name))
+        .map(player => ({player, score: whoOptionScore(correct, player)}))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 8)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3)
+        .map(item => item.player.name);
+    }
+
     function whoPositionCode(value) {
       const raw = String(value || '').toUpperCase().trim();
       const map = {GK: 'G', G: 'G', CB: 'DC', LB: 'DG', RB: 'DD', DM: 'MDC', CM: 'MC', AM: 'MO', LW: 'AG', RW: 'AD', LM: 'MG', RM: 'MD', ST: 'BU', CF: 'BU'};
@@ -6663,7 +6701,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const pool = shuffled(whoPoolForConfig(config));
       if (pool.length < 8) return [];
       return pool.slice(0, 10).map(correct => {
-        const wrong = shuffled(pool.filter(player => whoPlayerKey(player.name) !== whoPlayerKey(correct.name))).slice(0, 3).map(player => player.name);
+        const wrong = whoSmartWrongOptions(correct, pool);
         return {
           player: correct,
           correct: correct.name,
@@ -6680,6 +6718,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       const ratio = Math.max(0, whoState.timeLeft) / Math.max(1, whoState.duration);
       if (whoTimerText) whoTimerText.textContent = `${Math.max(0, whoState.timeLeft)}s`;
       if (whoTimerFill) whoTimerFill.style.width = `${ratio * 100}%`;
+      if (whoPhotoCard && whoState.config?.mode === 'silhouette') {
+        const reveal = whoState.timeLeft <= 5 ? 1 : 1 - ratio;
+        whoPhotoCard.style.setProperty('--who-brightness', String(0.08 + reveal * 0.92));
+        whoPhotoCard.style.setProperty('--who-saturation', String(reveal));
+        whoPhotoCard.style.setProperty('--who-contrast', String(1.55 - reveal * 0.55));
+        whoPhotoCard.style.setProperty('--who-opacity', String(0.90 + reveal * 0.10));
+      }
     }
 
     function startWhoTimer() {
@@ -6791,6 +6836,12 @@ grant select, insert, update on public.profiles to authenticated;`;
         whoNextButton.textContent = 'Question suivante';
       }
       if (whoPhotoCard) whoPhotoCard.classList.toggle('is-silhouette', whoState.config.mode === 'silhouette');
+      if (whoPhotoCard) {
+        whoPhotoCard.style.removeProperty('--who-brightness');
+        whoPhotoCard.style.removeProperty('--who-saturation');
+        whoPhotoCard.style.removeProperty('--who-contrast');
+        whoPhotoCard.style.removeProperty('--who-opacity');
+      }
       if (whoPlayerPhoto) {
         whoPlayerPhoto.hidden = false;
         whoPlayerPhoto.src = current.player.photo;
@@ -6992,7 +7043,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       });
       if (!replacement || !whoState.questions[whoState.index]) return;
       const pool = whoPoolForConfig(whoState.config);
-      const wrong = shuffled(pool.filter(player => whoPlayerKey(player.name) !== whoPlayerKey(replacement.name))).slice(0, 3).map(player => player.name);
+      const wrong = whoSmartWrongOptions(replacement, pool);
       whoState.questions[whoState.index] = {
         player: replacement,
         correct: replacement.name,
