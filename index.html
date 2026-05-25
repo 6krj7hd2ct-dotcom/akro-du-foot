@@ -984,6 +984,9 @@
     .profile-heading .profile-avatar-stack { width: 86px; height: 86px; }
     .profile-heading strong { display: block; font-size: 20px; line-height: 1.1; }
     .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
+    .profile-avatar-button { appearance: none; border: 0; padding: 0; margin: 0; background: transparent; border-radius: 999px; cursor: pointer; line-height: 0; transition: transform .16s ease, filter .16s ease; }
+    .profile-avatar-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .profile-avatar-button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
     .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
     .profile-stat strong { display: block; color: var(--gold); font-size: 22px; }
@@ -3248,7 +3251,9 @@ grant select, insert, update on public.profiles to authenticated;`;
       activeProfileCard.setAttribute('style', profileThemeStyle(profile));
       activeProfileCard.innerHTML = `
         ${profileBannerLogo(profile)}
-        ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
+        <button class="profile-avatar-button" type="button" data-open-active-profile aria-label="Ouvrir ma fiche profil">
+          ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
+        </button>
         <div class="active-profile-meta">
           <div class="active-profile-name"><span>${escapeHtml(profile.pseudo)}</span></div>
           <div class="active-profile-stats">
@@ -3448,6 +3453,12 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function predictionRowFromSupabase(row) {
       const match = communityMatches.find(item => item.id === row.match_id) || {};
+      const matchHomeScore = match.home_score !== '' && match.home_score !== null && match.home_score !== undefined ? Number(match.home_score) : null;
+      const matchAwayScore = match.away_score !== '' && match.away_score !== null && match.away_score !== undefined ? Number(match.away_score) : null;
+      const actualHome = row.actual_home_score !== null && row.actual_home_score !== undefined ? row.actual_home_score : matchHomeScore;
+      const actualAway = row.actual_away_score !== null && row.actual_away_score !== undefined ? row.actual_away_score : matchAwayScore;
+      const hasActualScore = actualHome !== null && actualHome !== undefined && !Number.isNaN(Number(actualHome)) && actualAway !== null && actualAway !== undefined && !Number.isNaN(Number(actualAway));
+      const completed = hasActualScore && (row.status === 'Terminé' || match.completed || statusClass(match) === 'done');
       return {
         match_id: row.match_id,
         competition: match.competition || '',
@@ -3456,12 +3467,12 @@ grant select, insert, update on public.profiles to authenticated;`;
         away_team: row.away_team || match.away_team || '',
         predicted_home_score: row.predicted_home_score,
         predicted_away_score: row.predicted_away_score,
-        actual_home_score: row.actual_home_score,
-        actual_away_score: row.actual_away_score,
+        actual_home_score: actualHome,
+        actual_away_score: actualAway,
         prediction: `${row.predicted_home_score} - ${row.predicted_away_score}`,
-        real_score: row.actual_home_score !== null && row.actual_home_score !== undefined && row.actual_away_score !== null && row.actual_away_score !== undefined ? `${row.actual_home_score} - ${row.actual_away_score}` : '',
+        real_score: completed ? `${actualHome} - ${actualAway}` : '',
         status: row.status || match.status || '',
-        completed: row.actual_home_score !== null && row.actual_home_score !== undefined && row.actual_away_score !== null && row.actual_away_score !== undefined,
+        completed,
         points: row.points === null || row.points === undefined ? null : Number(row.points),
         created_at: row.created_at || ''
       };
@@ -3725,6 +3736,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (!profile) throw new Error('Profil Supabase indisponible');
       const actualHome = match.home_score !== '' && match.home_score !== null && match.home_score !== undefined ? Number(match.home_score) : null;
       const actualAway = match.away_score !== '' && match.away_score !== null && match.away_score !== undefined ? Number(match.away_score) : null;
+      const finished = match.completed || statusClass(match) === 'done';
       const payload = {
         profile_id: profile.id,
         match_id: match.id,
@@ -3732,11 +3744,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         away_team: match.away_team || 'À déterminer',
         predicted_home_score: Number(homeScore),
         predicted_away_score: Number(awayScore),
-        actual_home_score: Number.isNaN(actualHome) ? null : actualHome,
-        actual_away_score: Number.isNaN(actualAway) ? null : actualAway,
         status: match.status || 'À venir'
       };
-      payload.points = scorePoints(payload);
+      payload.points = finished ? scorePoints({
+        predicted_home_score: payload.predicted_home_score,
+        predicted_away_score: payload.predicted_away_score,
+        actual_home_score: Number.isNaN(actualHome) ? null : actualHome,
+        actual_away_score: Number.isNaN(actualAway) ? null : actualAway
+      }) : 0;
       const result = await akroSupabase
         .from('predictions')
         .upsert(payload, {onConflict: 'profile_id,match_id'})
@@ -4374,6 +4389,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const profile = communityProfiles[pseudo];
       if (!modal || !body || !profile) return;
       const quizLevel = highestQuizLevel(profile.badges || [], profile.quiz_results || []);
+      const whoLevel = highestWhoLevel(profile.badges || [], profile.quiz_results || []);
       const rankText = profile.rank ? (Number(profile.rank) <= 10 ? `Top 10 · classé #${profile.rank}` : `Classé #${profile.rank}`) : 'Non classé';
       title.textContent = profile.pseudo || pseudo;
       subtitle.textContent = `${rankText} · ${profile.level || 'Débutant'}`;
@@ -4390,7 +4406,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           <div class="profile-stat"><strong>${escapeHtml(profile.exact_scores || 0)}</strong><span>scores exacts</span></div>
           <div class="profile-stat"><strong>${escapeHtml(profile.success_rate || 0)}%</strong><span>réussite</span></div>
         </div>
-        <div class="team-info"><div class="team-info-label">Progression</div><div class="team-info-value">Pronostics : ${escapeHtml(profile.level || 'Débutant')}<br>Quiz : ${escapeHtml(quizLevel || 'Non classé')}</div></div>
+        <div class="team-info"><div class="team-info-label">Progression</div><div class="team-info-value">Pronos : ${escapeHtml(profile.level || 'Débutant')}<br>Quiz : ${escapeHtml(quizLevel || 'Non commencé')}<br>Qui est-ce ? : ${escapeHtml(whoLevel || 'Non commencé')}<br>Je suis ? : bientôt<br>Dream Team : bientôt</div></div>
         <h3>Derniers pronostics</h3>
         <div class="profile-history">${history.length ? history.map(item => profileHistoryRow(item, profile.pseudo || pseudo)).join('') : '<div class="empty">Aucun pronostic enregistré.</div>'}</div>
       `;
@@ -4493,12 +4509,25 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     document.addEventListener('click', (event) => {
+      const activeProfileTrigger = event.target.closest('[data-open-active-profile]');
+      if (activeProfileTrigger) {
+        const profile = profileFromSupabaseState();
+        if (profile?.pseudo) {
+          communityProfiles[profile.pseudo] = {...(communityProfiles[profile.pseudo] || {}), ...profile};
+          openUserProfile(profile.pseudo);
+        }
+        return;
+      }
       const profileTrigger = event.target.closest('[data-profile-pseudo]');
-      if (profileTrigger) openUserProfile(profileTrigger.dataset.profilePseudo);
+      if (profileTrigger) {
+        openUserProfile(profileTrigger.dataset.profilePseudo);
+        return;
+      }
       const editablePrediction = event.target.closest('[data-edit-prediction]');
       if (editablePrediction && !event.target.closest('.profile-edit-form')) {
         editablePrediction.classList.toggle('is-editing');
         editablePrediction.querySelector('input')?.focus();
+        return;
       }
       if (event.target && event.target.id === 'userProfileModal') closeUserProfile();
       if (event.target && event.target.id === 'profileCreateModal') closeProfileCreateModal();
