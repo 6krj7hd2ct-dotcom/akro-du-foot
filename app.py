@@ -2314,19 +2314,27 @@ def admin_sync_html() -> str:
     h2 {{ margin:0 0 12px; font-size:18px; }}
     p {{ color:var(--muted); line-height:1.55; }}
     .grid {{ display:grid; grid-template-columns:minmax(260px,.8fr) minmax(320px,1.2fr); gap:12px; align-items:start; }}
-    .card {{ padding:16px; }}
+    .card {{ padding:14px; }}
     .status {{ display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px; font-weight:900; background:rgba(255,255,255,.08); }}
     .success {{ color:var(--ok); }} .error {{ color:var(--err); }} .running {{ color:var(--gold); }}
     button {{ border:0; border-radius:999px; padding:11px 16px; font-weight:950; color:#07111f; background:linear-gradient(180deg,#ffe1a0,#d5a63a); cursor:pointer; }}
     button:disabled {{ opacity:.58; cursor:wait; }}
     input {{ min-width:220px; border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:11px 12px; background:rgba(255,255,255,.08); color:#fff; }}
     .actions {{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }}
-    table {{ width:100%; border-collapse:collapse; }}
-    th, td {{ padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.08); text-align:left; vertical-align:top; }}
+    .history-table-wrap {{ width:100%; overflow-x:hidden; }}
+    table {{ width:100%; table-layout:fixed; border-collapse:collapse; }}
+    th, td {{ padding:10px 7px; border-bottom:1px solid rgba(255,255,255,.08); text-align:left; vertical-align:top; }}
+    th:nth-child(1), td:nth-child(1) {{ width:18%; }}
+    th:nth-child(2), td:nth-child(2) {{ width:12%; }}
+    th:nth-child(3), td:nth-child(3) {{ width:27%; }}
+    th:nth-child(4), td:nth-child(4) {{ width:43%; }}
     th {{ color:var(--gold); font-size:12px; text-transform:uppercase; }}
-    code {{ color:#ffe1a0; }}
+    code {{ color:#ffe1a0; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; }}
+    .counts-cell {{ display:grid; gap:8px; min-width:0; }}
+    .counts-list {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:4px 10px; min-width:0; }}
+    .counts-json {{ display:block; max-width:100%; padding:8px; border-radius:10px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.08); line-height:1.45; }}
     .muted {{ color:var(--muted); }}
-    @media (max-width:800px) {{ main {{ width:min(980px, calc(100% - 24px)); margin:0 auto; padding:22px 0; }} .grid {{ grid-template-columns:1fr; }} }}
+    @media (max-width:800px) {{ main {{ width:min(980px, calc(100% - 24px)); margin:0 auto; padding:22px 0; }} .grid {{ grid-template-columns:1fr; }} th, td {{ padding:9px 5px; font-size:12px; }} .counts-list {{ grid-template-columns:1fr; }} }}
   </style>
 </head>
 <body>
@@ -2346,7 +2354,7 @@ def admin_sync_html() -> str:
     </section>
     <section class="card">
       <h2>Historique</h2>
-      <div style="overflow:auto"><table><thead><tr><th>Date</th><th>Statut</th><th>Message</th><th>Compteurs</th></tr></thead><tbody id="logs"></tbody></table></div>
+      <div class="history-table-wrap"><table><thead><tr><th>Date</th><th>Statut</th><th>Message</th><th>Compteurs</th></tr></thead><tbody id="logs"></tbody></table></div>
     </section>
   </main>
   <script>
@@ -2367,7 +2375,7 @@ def admin_sync_html() -> str:
         ['relations total', c.team_players || 0],
         ['erreurs API', c.api_errors || 0],
       ];
-      return `<div style="display:grid;gap:4px">${{items.map(([label, value]) => `<span><strong>${{escapeHtml(label)}}:</strong> ${{escapeHtml(value)}}</span>`).join('')}}</div><code>${{escapeHtml(JSON.stringify(c))}}</code>`;
+      return `<div class="counts-cell"><div class="counts-list">${{items.map(([label, value]) => `<span><strong>${{escapeHtml(label)}}:</strong> ${{escapeHtml(value)}}</span>`).join('')}}</div><code class="counts-json">${{escapeHtml(JSON.stringify(c, null, 2))}}</code></div>`;
     }}
     function renderLog(log) {{
       return `<tr><td>${{escapeHtml(fmt(log.started_at))}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(log.status)}}</span></td><td>${{escapeHtml(log.message || log.error_detail || '')}}</td><td>${{countsHtml(log.processed_counts)}}</td></tr>`;
