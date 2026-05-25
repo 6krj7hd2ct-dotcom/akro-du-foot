@@ -379,7 +379,7 @@
     .subtle { color: var(--muted); font-size: 12px; }
     .card h3 { padding: 16px 16px 0; font-size: 17px; }
     .card.france { border-color: rgba(255,255,255,0.22); background: linear-gradient(90deg, rgba(31,111,235,0.28), rgba(255,255,255,0.08), rgba(239,51,64,0.22)), linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.06)); }
-    .flag { width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }
+    .flag { width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; object-fit: contain; object-position: center; vertical-align: middle; margin-right: 8px; padding: 2px; background: rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.14); }
     .flag.placeholder { display: inline-grid; place-items: center; color: #9fb0c2; font-size: 11px; }
     .team { font-weight: 850; }
     .team-button { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; display: inline-flex; align-items: center; gap: 0; max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.18; padding: 2px 3px; margin: -2px -3px; border-radius: 999px; cursor: pointer; text-align: inherit; }
@@ -1386,27 +1386,27 @@
     </nav>
 
     <section class="euro-summary-grid" aria-label="Résumé Coupe du Monde">
-      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Argentine</div><p class="subtle">Tenant du titre 2022.</p></article>
-      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">France</div><p class="subtle">Finaliste de la dernière édition.</p></article>
-      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Meilleure équipe en attaque</div><div class="euro-summary-value">France</div><p class="subtle">16 buts inscrits en 2022.</p></article>
-      <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/mar.png)"><div class="subtle">Meilleure équipe en défense</div><div class="euro-summary-value">Maroc</div><p class="subtle">Parcours très solide, 5 buts encaissés.</p></article>
+      <article class="euro-summary-card"><div class="subtle">Champion</div><div class="euro-summary-value">À déterminer</div><p class="subtle">La Coupe du Monde 2026 n’a pas encore commencé.</p></article>
+      <article class="euro-summary-card"><div class="subtle">Finaliste</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Donnée publiée après la phase finale.</p></article>
+      <article class="euro-summary-card"><div class="subtle">Meilleure équipe en attaque</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Statistique disponible dès les premiers matchs.</p></article>
+      <article class="euro-summary-card euro-focus-card"><div class="subtle">Meilleure équipe en défense</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Statistique disponible pendant le tournoi.</p></article>
     </section>
     <section class="annual-awards-grid tournament-awards-grid" aria-label="Récompenses Coupe du Monde">
-      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)">
-        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/30981.png" alt="Lionel Messi" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>LM</span></div>
-        <div class="award-copy"><strong>Ballon d'Or Adidas</strong><p>Meilleur joueur du tournoi.</p><div class="winner">Lionel Messi</div><p>Edition 2022</p></div>
+      <article class="award-card">
+        <div class="award-photo"><span class="award-photo-fallback">—</span></div>
+        <div class="award-copy"><strong>Ballon d'Or Adidas</strong><p>Meilleur joueur du tournoi.</p><div class="winner">À déterminer</div><p>Edition 2026 à venir</p></div>
       </article>
-      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)">
-        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>KM</span></div>
-        <div class="award-copy"><strong>Soulier d'Or Adidas</strong><p>Meilleur buteur du tournoi.</p><div class="winner">Kylian Mbappé</div><p>8 buts</p></div>
+      <article class="award-card">
+        <div class="award-photo"><span class="award-photo-fallback">—</span></div>
+        <div class="award-copy"><strong>Soulier d'Or Adidas</strong><p>Meilleur buteur du tournoi.</p><div class="winner">À déterminer</div><p>Stats à venir</p></div>
       </article>
-      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)">
-        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/268375.png" alt="Emiliano Martínez" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>EM</span></div>
-        <div class="award-copy"><strong>Gant d'Or</strong><p>Meilleur gardien.</p><div class="winner">Emiliano Martínez</div><p>Edition 2022</p></div>
+      <article class="award-card">
+        <div class="award-photo"><span class="award-photo-fallback">—</span></div>
+        <div class="award-copy"><strong>Gant d'Or</strong><p>Meilleur gardien.</p><div class="winner">À déterminer</div><p>Edition 2026 à venir</p></div>
       </article>
-      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)">
-        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/1137705.png" alt="Enzo Fernández" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>EF</span></div>
-        <div class="award-copy"><strong>Meilleur jeune joueur</strong><p>Révélation du tournoi.</p><div class="winner">Enzo Fernández</div><p>Edition 2022</p></div>
+      <article class="award-card">
+        <div class="award-photo"><span class="award-photo-fallback">—</span></div>
+        <div class="award-copy"><strong>Meilleur jeune joueur</strong><p>Révélation du tournoi.</p><div class="winner">À déterminer</div><p>Edition 2026 à venir</p></div>
       </article>
     </section>
 
@@ -6158,27 +6158,37 @@ grant select, insert, update on public.profiles to authenticated;`;
       const photo = id => id ? `https://images.fotmob.com/image_resources/playerimages/${id}.png` : '';
       const PLAYER_PHOTOS = {
         'diego forlan': photo('38229'),
-        'thomas muller': photo('181291'),
+        'mesut ozil': photo('27556'),
+        'kaka': photo('10884'),
         'lionel messi': photo('30981'),
-        'james rodriguez': photo('281024'),
-        'luka modric': photo('357633'),
+        'james rodriguez': photo('164684'),
+        'toni kroos': photo('95078'),
+        'luka modric': photo('31097'),
         'harry kane': photo('194165'),
         'kylian mbappe': photo('701154'),
+        'antoine griezmann': photo('184138'),
+        'romelu lukaku': photo('172321'),
+        'kevin de bruyne': photo('169200'),
+        'olivier giroud': photo('89260'),
+        'bruno fernandes': photo('422685'),
+        'steven zuber': photo('183185'),
         'gianluigi donnarumma': photo('618878'),
         'cristiano ronaldo': photo('30893'),
         'rodri': photo('675088'),
         'dani olmo': photo('614834'),
         'vinicius junior': photo('846033'),
         'ousmane dembele': photo('692984'),
-        'raphinha': photo('802695'),
-        'serhou guirassy': photo('209421'),
+        'raphinha': photo('696679'),
+        'serhou guirassy': photo('448540'),
         'cody gakpo': photo('806552'),
         'lamine yamal': photo('1467236'),
         'xavi simons': photo('1173787'),
         'arda guler': photo('1253890'),
         'khvicha kvaratskhelia': photo('900433'),
         'michael olise': photo('1029063'),
-        'achraf hakimi': photo('770881')
+        'achraf hakimi': photo('770881'),
+        'marcel sabitzer': photo('178121'),
+        'erling haaland': photo('737066')
       };
       const playerPhoto = name => PLAYER_PHOTOS[String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()] || '';
       const upgradeVisiblePlayerCards = () => {
@@ -6282,7 +6292,7 @@ grant select, insert, update on public.profiles to authenticated;`;
               ],
               honours: [['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')]],
               awards: [
-                {title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Luka Modric', note: 'Edition 2018', flag: flag('cro'), photo: photo('357633'), initials: 'LM'},
+                {title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Luka Modric', note: 'Edition 2018', flag: flag('cro'), initials: 'LM'},
                 {title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'Harry Kane', note: '6 buts', flag: flag('eng'), photo: photo('194165'), initials: 'HK'},
                 {title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'Thibaut Courtois', note: 'Edition 2018', flag: flag('bel'), photo: photo('172649'), initials: 'TC'},
                 {title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'Kylian Mbappé', note: 'Edition 2018', flag: flag('fra'), photo: photo('701154'), initials: 'KM'}
@@ -6330,6 +6340,28 @@ grant select, insert, update on public.profiles to authenticated;`;
                 group('Groupe H', [team('Portugal', flag('por'), '6'), team('Corée du Sud', flag('kors'), '4'), team('Uruguay', flag('uru'), '4'), team('Ghana', flag('gha'), '3')])
               ],
               calendar: [match('Finale', 'Argentine', 'France', '3 - 3 tab 4-2', flag('arg'), flag('fra')), match('Quart', 'France', 'Angleterre', '2 - 1', flag('fra'), flag('eng')), match('Quart', 'Maroc', 'Portugal', '1 - 0', flag('mar'), flag('por'))]
+            },
+            '2026': {
+              future: true,
+              summary: [
+                ['Champion', 'À déterminer', 'La Coupe du Monde 2026 n’a pas encore commencé.', ''],
+                ['Finaliste', 'À déterminer', 'Donnée publiée après la phase finale.', ''],
+                ['Meilleure équipe en attaque', 'À déterminer', 'Statistique disponible dès les premiers matchs.', ''],
+                ['Meilleure équipe en défense', 'À déterminer', 'Statistique disponible pendant le tournoi.', '']
+              ],
+              honours: [['2022', 'Argentine', flag('arg')], ['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')]],
+              awards: [
+                {title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'À déterminer', note: 'Edition 2026 à venir', flag: '', initials: '—'},
+                {title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'À déterminer', note: 'Stats à venir', flag: '', initials: '—'},
+                {title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'À déterminer', note: 'Edition 2026 à venir', flag: '', initials: '—'},
+                {title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'À déterminer', note: 'Edition 2026 à venir', flag: '', initials: '—'}
+              ],
+              scorers: [],
+              assists: [],
+              bracket: [],
+              groups: [],
+              calendar: [],
+              notice: 'Coupe du Monde 2026 : les données de champion, finaliste, récompenses, buteurs et passeurs seront publiées dès disponibilité.'
             },
             '2030': {
               ...futureSeason('Coupe du Monde 2030', 'Meilleure équipe en défense'),
