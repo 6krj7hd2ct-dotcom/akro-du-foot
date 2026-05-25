@@ -945,14 +945,17 @@
     .quiz-setup, .quiz-result { display: grid; gap: 8px; }
     .quiz-setup[hidden], .quiz-stage[hidden], .quiz-result[hidden] { display: none !important; }
     .quiz-stage { min-height: auto; display: grid; grid-template-rows: auto auto auto; gap: 8px; padding-bottom: 2px; }
-    .quiz-controls { display: grid; grid-template-columns: minmax(118px, 150px) minmax(150px, 210px) minmax(180px, 1fr); gap: 9px; align-items: end; }
-    .quiz-controls .pseudo-row, .quiz-controls select, .quiz-controls input { min-height: 42px; }
+    .quiz-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; align-items: end; }
+    .quiz-controls > .pseudo-row, .quiz-theme-selectors { min-width: 0; align-self: stretch; }
+    .quiz-controls .pseudo-row { grid-template-rows: auto 42px; }
+    .quiz-controls select, .quiz-controls input { height: 42px; min-height: 42px; border-radius: 10px; }
     .quiz-theme-selectors { display: none; grid-template-columns: minmax(0, 1fr); gap: 8px; }
     .quiz-theme-selectors.is-visible { display: grid; }
     .quiz-theme-selectors .pseudo-row { margin: 0; }
     .quiz-bottom-actions { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
     .quiz-next-box { display: inline-grid; justify-items: end; gap: 4px; }
     #quizStartButton { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
+    #quizStartButton.is-result-ready { color: #fff; background: linear-gradient(180deg, #ff5a66, #c91525); }
     #quizNextButton { color: #041611; background: linear-gradient(180deg, #9ff0d5, #32d3a2); }
     .quiz-progression { display: grid; gap: 6px; padding: 9px 10px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); }
     .quiz-progress-tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1854,6 +1857,10 @@
             </div>
           </div>
           <div class="quiz-progression" id="quizProgression" aria-live="polite"></div>
+          <div class="quiz-result" id="quizResult" hidden>
+            <div class="quiz-feedback" id="quizFinalMessage"></div>
+            <div class="quiz-badge-list" id="quizBadgeList"></div>
+          </div>
         </div>
         <div class="quiz-stage" id="quizStage" hidden>
           <div class="quiz-progress">
@@ -1866,10 +1873,6 @@
             <div class="quiz-answers" id="quizAnswers"></div>
             <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
           </article>
-        </div>
-        <div class="quiz-result" id="quizResult" hidden>
-          <div class="quiz-feedback" id="quizFinalMessage"></div>
-          <div class="quiz-badge-list" id="quizBadgeList"></div>
         </div>
         <div class="quiz-bottom-actions">
           <button class="action-button" type="button" id="quizStartButton">Lancer le quiz</button>
@@ -5131,7 +5134,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       champions: 'Champions League'
     };
     const QUIZ_REQUIRED_THEMES = QUIZ_REQUIRED_THEME_KEYS;
-    let quizState = {questions: [], index: 0, score: 0, answered: false, config: null};
+    let quizState = {questions: [], index: 0, score: 0, answered: false, pendingResult: false, config: null};
     let quizClubChoices = [];
     let quizNationChoices = [];
 
@@ -5567,12 +5570,35 @@ grant select, insert, update on public.profiles to authenticated;`;
         quizNextButton.disabled = true;
         quizNextButton.textContent = 'Question suivante';
       }
+      if (quizStartButton) {
+        quizStartButton.disabled = false;
+        quizStartButton.textContent = 'Lancer le quiz';
+        quizStartButton.classList.remove('is-result-ready');
+      }
       if (quizScoreText) quizScoreText.textContent = '0/10';
+      quizState.pendingResult = false;
       updateQuizThemeControls();
       updateQuizProfileNote();
     }
 
+    function setQuizResultActionReady() {
+      quizState.pendingResult = true;
+      if (quizStartButton) {
+        quizStartButton.disabled = false;
+        quizStartButton.textContent = 'Afficher le résultat';
+        quizStartButton.classList.add('is-result-ready');
+      }
+      if (quizNextButton) {
+        quizNextButton.disabled = true;
+        quizNextButton.textContent = 'Quiz terminé';
+      }
+    }
+
     function startQuiz() {
+      if (quizState.pendingResult) {
+        finishQuiz();
+        return;
+      }
       const difficulty = quizDifficulty?.value || 'amateur';
       const requestedIndex = QUIZ_LEVELS.findIndex(item => item[0] === difficulty);
       const unlocked = quizUnlockedIndex();
@@ -5591,11 +5617,13 @@ grant select, insert, update on public.profiles to authenticated;`;
         themeType: quizThemeType?.value || 'general',
         themeValue: quizThemeValue()
       };
-      quizState = {questions: buildQuizQuestions(config), index: 0, score: 0, answered: false, config};
+      quizState = {questions: buildQuizQuestions(config), index: 0, score: 0, answered: false, pendingResult: false, config};
       quizSetup.hidden = true;
       quizResult.hidden = true;
       quizStage.hidden = false;
       quizScoreText.textContent = '0/10';
+      quizStartButton.textContent = 'Lancer le quiz';
+      quizStartButton.classList.remove('is-result-ready');
       renderQuizQuestion();
     }
 
@@ -5610,7 +5638,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       quizFeedback.textContent = '';
       quizFeedback.className = 'quiz-feedback';
       quizNextButton.disabled = true;
-      quizNextButton.textContent = quizState.index === 9 ? 'Voir le score' : 'Question suivante';
+      quizNextButton.textContent = 'Question suivante';
       quizAnswers.innerHTML = current.answers.map(answer => `<button class="quiz-answer" type="button" data-answer="${quizEscape(answer)}">${quizEscape(answer)}</button>`).join('');
     }
 
@@ -5630,13 +5658,14 @@ grant select, insert, update on public.profiles to authenticated;`;
       quizFeedback.className = `quiz-feedback ${isCorrect ? 'good' : 'bad'}`;
       quizScoreText.textContent = `${quizState.score}/10`;
       quizProgressFill.style.width = `${((quizState.index + 1) / 10) * 100}%`;
-      quizNextButton.disabled = false;
+      if (quizState.index >= quizState.questions.length - 1) setQuizResultActionReady();
+      else quizNextButton.disabled = false;
     }
 
     function nextQuizQuestion() {
       if (!quizState.answered) return;
       if (quizState.index >= quizState.questions.length - 1) {
-        finishQuiz();
+        setQuizResultActionReady();
         return;
       }
       quizState.index += 1;
@@ -5719,23 +5748,47 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     async function finishQuiz() {
+      if (!quizState.config) return;
+      quizState.pendingResult = false;
+      const config = quizState.config;
+      const themeLabel = QUIZ_THEME_LABELS[config.themeType] || 'Thème';
+      const choiceLabel = (config.themeType === 'club' || config.themeType === 'nation') ? config.themeValue : '';
+      const reachedBefore = quizUnlockedLevel()[1];
       quizStage.hidden = true;
+      quizSetup.hidden = false;
       quizResult.hidden = false;
       quizNextButton.disabled = true;
       quizNextButton.textContent = 'Question suivante';
+      quizStartButton.textContent = 'Lancer le quiz';
+      quizStartButton.classList.remove('is-result-ready');
       quizBadgeList.innerHTML = '';
       const passed = quizState.score >= 7;
-      quizFinalMessage.textContent = passed
-        ? `Bravo, ${quizState.score}/10. ${QUIZ_THEME_LABELS[quizState.config.themeType] || 'Thème'} validé. Sauvegarde en cours...`
-        : `${quizState.score}/10. Il faut 7/10 ou plus pour valider ce thème.`;
+      quizFinalMessage.innerHTML = `
+        <strong>Résultat final : ${quizEscape(String(quizState.score))}/10</strong><br>
+        Niveau joué : ${quizEscape(config.difficultyLabel)}<br>
+        Thème joué : ${quizEscape(themeLabel)}${choiceLabel ? ` · ${quizEscape(choiceLabel)}` : ''}<br>
+        ${passed ? 'Thème validé. Sauvegarde en cours...' : 'Aucun nouveau badge débloqué : il faut 7/10 ou plus.'}
+      `;
       try {
         const saved = await saveQuizResult();
+        const reachedMeta = QUIZ_DIFFICULTIES[quizLevelReachedAfterCurrent()] || QUIZ_DIFFICULTIES[config.difficulty] || QUIZ_DIFFICULTIES.amateur;
+        const reachedAfter = reachedMeta.label || reachedBefore;
+        const badgeMessage = !saved.saved && !saved.badgeSaved
+          ? (saved.message || 'Crée ou connecte ton profil pour sauvegarder tes badges.')
+          : passed
+            ? (reachedAfter !== reachedBefore ? `${reachedMeta.badge} débloqué.` : 'Progression sauvegardée, aucun nouveau niveau débloqué.')
+            : 'Aucun nouveau badge débloqué.';
         if (passed) {
-          const reachedMeta = QUIZ_DIFFICULTIES[quizLevelReachedAfterCurrent()] || QUIZ_DIFFICULTIES[quizState.config.difficulty] || QUIZ_DIFFICULTIES.amateur;
           quizBadgeList.innerHTML = `<span class="quiz-badge-pill">${quizEscape(reachedMeta.badge)}</span>`;
         }
-        quizFinalMessage.textContent = saved.message || quizFinalMessage.textContent;
         updateQuizThemeControls();
+        quizFinalMessage.innerHTML = `
+          <strong>Résultat final : ${quizEscape(String(quizState.score))}/10</strong><br>
+          Niveau joué : ${quizEscape(config.difficultyLabel)}<br>
+          Thème joué : ${quizEscape(themeLabel)}${choiceLabel ? ` · ${quizEscape(choiceLabel)}` : ''}<br>
+          ${quizEscape(badgeMessage)}<br>
+          <span class="subtle">${quizEscape(saved.message || '')}</span>
+        `;
       } catch (error) {
         quizFinalMessage.textContent = publicAuthErrorMessage(error, 'Badge non sauvegardé pour le moment.');
       }
