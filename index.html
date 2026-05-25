@@ -452,12 +452,6 @@
     .player-summary-photo { position: absolute; z-index: 1; right: 8px; bottom: 0; width: 96px; height: 116px; object-fit: contain; object-position: bottom right; opacity: .85; filter: drop-shadow(0 18px 22px rgba(0,0,0,0.42)); pointer-events: none; }
     .player-summary-card .subtle:first-child { color: #9fe9ff; font-size: 11px; letter-spacing: .02em; text-transform: uppercase; }
     .player-summary-card .euro-summary-value { max-width: 82%; font-size: 25px; }
-    .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 10px; align-items: stretch; }
-    .recent-honour-card { min-height: 54px; display: grid; grid-template-columns: 54px minmax(0, 1fr); align-items: center; gap: 9px; padding: 9px 11px; border-radius: 12px; background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(99,232,255,0.07)); cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
-    .recent-honour-card:hover, .recent-honour-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.38); background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(99,232,255,0.08)); outline: none; }
-    .recent-honour-card h3 { margin: 0; min-height: 34px; display: grid; place-items: center; color: #ffe1a0; font-size: 14px; line-height: 1; white-space: nowrap; text-align: center; border-radius: 10px; background: rgba(245,201,107,0.10); border: 1px solid rgba(245,201,107,0.14); }
-    .recent-honour-card .empty { margin: 0; min-width: 0; display: inline-flex; align-items: center; gap: 9px; color: #f6fbff; font-size: 15px; font-weight: 950; line-height: 1.12; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .recent-honour-card .flag { width: 27px; height: 27px; flex: 0 0 27px; }
     .annual-awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 18px; }
     .award-card { position: relative; overflow: hidden; min-height: 118px; display: grid; align-content: space-between; gap: 9px; padding: 14px; border-radius: 16px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(245,201,107,0.08)); border: 1px solid rgba(255,255,255,0.10); }
     .award-card::after { content: attr(data-mark); position: absolute; right: 12px; bottom: -8px; font-size: 54px; line-height: 1; opacity: .14; pointer-events: none; }
@@ -1065,10 +1059,6 @@
       .league-calendar-match .away, .league-calendar-match .away .team-button { justify-content: center; text-align: center; }
       .league-calendar-match .team-button { justify-content: center; }
       .calendar-match .date, .calendar-match .match-meta { grid-column: 1 / -1; }
-      .recent-honours-grid { grid-template-columns: 1fr; gap: 8px; }
-      .recent-honour-card { grid-template-columns: 52px minmax(0, 1fr); min-height: 52px; padding: 8px 10px; }
-      .recent-honour-card .empty { font-size: 14px; }
-      .recent-honour-card .flag { width: 24px; height: 24px; flex-basis: 24px; }
       .standings-wide table { min-width: 620px; }
       .bracket-stage { padding: 10px; min-width: 1040px; }
       .bracket-stage.ucl-official { min-width: 1040px; }
@@ -1371,10 +1361,6 @@
       </article>
     </section>
 
-    <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Coupe du Monde.</div></div>
-      <section class="recent-honours-grid"><article class="card recent-honour-card" role="button" tabindex="0" data-team="Argentine"><h3>2022</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/arg.png" alt="">Argentine</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="France"><h3>2018</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt="">France</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Allemagne"><h3>2014</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt="">Allemagne</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Espagne"><h3>2010</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article></section>
-
-
     <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2><button class="alltime-badge" type="button" data-alltime="scorers">Top 10 all-time</button></div><div class="section-note">Top 3</div></div>
     <section class="leaders"><div class="empty">Aucune donnée publiée pour le moment.</div></section>
 
@@ -1551,9 +1537,6 @@
         <article class="euro-summary-card euro-focus-card player-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><img class="player-summary-photo" src="https://images.fotmob.com/image_resources/playerimages/1100438.png" alt="Dani Olmo"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Dani Olmo</div><p class="subtle">Co-meilleur buteur 2024 avec 3 buts.</p></article>
       </section>
 
-      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de l’Euro.</div></div>
-      <section class="recent-honours-grid"><article class="card recent-honour-card" role="button" tabindex="0" data-team="Espagne"><h3>2024</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Italie"><h3>2020</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ita.png" alt="">Italie</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Portugal"><h3>2016</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt="">Portugal</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Espagne"><h3>2012</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt="">Espagne</p></article></section>
-
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2></div><div class="section-note">Top 3 affiché, plusieurs joueurs ont terminé à 3 buts.</div></div>
       <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Dani Olmo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Cody Gakpo</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 buts</div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><div class="avatar placeholder"></div></div><div><div class="team">Harry Kane</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""><span class="club-name">Angleterre</span></div><div class="player-stat">3 buts</div></div></article></section>
 
@@ -1647,10 +1630,6 @@
         <article class="euro-summary-card euro-focus-card player-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><img class="player-summary-photo" src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Kylian Mbappé</div><p class="subtle">15 buts en 2025-2026.</p></article>
       </section>
 
-      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Champions League.</div></div>
-      <section class="recent-honours-grid"><article class="card recent-honour-card" role="button" tabindex="0" data-team="Paris Saint-Germain"><h3>2025</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/160.png" alt="">Paris Saint-Germain</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Real Madrid"><h3>2024</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" alt="">Real Madrid</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Manchester City"><h3>2023</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png" alt="">Manchester City</p></article><article class="card recent-honour-card" role="button" tabindex="0" data-team="Real Madrid"><h3>2022</h3><p class="empty"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" alt="">Real Madrid</p></article></section>
-
-
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2><button class="alltime-badge" type="button" data-alltime="champions-scorers">Top 10 all-time</button></div><div class="section-note">Top 3</div></div>
       <section class="leaders"><article class="card player-card rank-1"><div class="avatar-wrap"><img class="avatar" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""></div><div><div class="team">Kylian Mbappé</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/8633.png" alt=""><span class="club-name">Real Madrid</span></div><div class="player-stat">15 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-2"><div class="avatar-wrap"><img class="avatar" src="https://a.espncdn.com/i/teamlogos/countries/500/eng.png" alt=""></div><div><div class="team">Harry Kane</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9823.png" alt=""><span class="club-name">Bayern München</span></div><div class="player-stat">14 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-3"><div class="avatar-wrap"><img class="avatar" src="https://a.espncdn.com/i/teamlogos/countries/500/geo.png" alt=""></div><div><div class="team">Khvicha Kvaratskhelia</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">10 <span class="subtle">buts</span></div></div></article></section>
 
@@ -1722,9 +1701,6 @@
       <button class="tab-button" type="button" data-season-value="2026-2027">2026-2027 bientôt</button>
     </nav>
       <section class="euro-summary-grid" id="leagueSummaryCards" aria-label="Résumé championnat"></section>
-
-      <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers champions du championnat sélectionné.</div></div>
-      <section class="recent-honours-grid" id="leagueRecentHonours"></section>
 
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2></div><div class="section-note">Top 3</div></div>
       <section class="leaders" id="leagueTopScorers"></section>
@@ -4831,14 +4807,6 @@ grant select, insert, update on public.profiles to authenticated;`;
       </article>`;
     }
 
-    const LEAGUE_RECENT_HONOURS = {
-      ligue1: [['2025', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2024', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2023', 'Paris Saint-Germain', 'Paris Saint-Germain'], ['2022', 'Paris Saint-Germain', 'Paris Saint-Germain']],
-      laliga: [['2025', 'Barcelona', 'Barcelona'], ['2024', 'Real Madrid', 'Real Madrid'], ['2023', 'Barcelona', 'Barcelona'], ['2022', 'Real Madrid', 'Real Madrid']],
-      bundesliga: [['2025', 'Bayern Munich', 'Bayern Munich'], ['2024', 'Bayer Leverkusen', 'Bayer Leverkusen'], ['2023', 'Bayern Munich', 'Bayern Munich'], ['2022', 'Bayern Munich', 'Bayern Munich']],
-      premierleague: [['2025', 'Liverpool', 'Liverpool'], ['2024', 'Manchester City', 'Manchester City'], ['2023', 'Manchester City', 'Manchester City'], ['2022', 'Manchester City', 'Manchester City']],
-      seriea: [['2025', 'Napoli', 'Napoli'], ['2024', 'Internazionale', 'Internazionale'], ['2023', 'Napoli', 'Napoli'], ['2022', 'AC Milan', 'AC Milan']]
-    };
-
     function leagueClubLogo(name) {
       const key = String(name || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
       return LEAGUE_CLUB_LOGOS[key] || '';
@@ -5026,13 +4994,6 @@ grant select, insert, update on public.profiles to authenticated;`;
           leagueSummaryCard('Dauphin', runnerUp.team || 'À déterminer', 'Deuxième du classement publié.', runnerUp.flag_url || leagueClubLogo(runnerUp.team)),
           leagueSummaryCard('Meilleur buteur de la compétition', bestPlayer.name || 'À déterminer', scorerDetails, bestPlayer.country_flag_url || bestPlayer.flag_url || '', 'euro-focus-card player-summary-card', bestPlayer.photo_url || '')
         ].join('');
-      }
-      const honoursNode = document.getElementById('leagueRecentHonours');
-      if (honoursNode) {
-        honoursNode.innerHTML = (LEAGUE_RECENT_HONOURS[key] || []).map(([year, winner, logoKey]) => {
-          const logo = leagueClubLogo(logoKey || winner);
-          return `<article class="card recent-honour-card" role="button" tabindex="0" data-team="${leagueEscape(winner)}"><h3>${leagueEscape(year)}</h3><p class="empty">${leagueFlag(logo)}${leagueEscape(winner)}</p></article>`;
-        }).join('') || '<article class="card recent-honour-card"><h3>Palmarès</h3><p class="empty">Données à compléter.</p></article>';
       }
       const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
       const big5Node = document.getElementById('big5TopScorers');
@@ -6257,7 +6218,6 @@ grant select, insert, update on public.profiles to authenticated;`;
         return {
           root,
           summary: root.querySelector('.euro-summary-grid'),
-          honours: root.querySelector('.recent-honours-grid'),
           scorers: leaders[0],
           assists: leaders[1],
           awards: root.querySelector('.tournament-awards-grid'),
@@ -6287,7 +6247,6 @@ grant select, insert, update on public.profiles to authenticated;`;
         const photoHtml = isPlayerCard && playerPhoto(value) ? `<img class="player-summary-photo" src="${escape(playerPhoto(value))}" alt="${escape(value)}">` : '';
         return `<article class="euro-summary-card ${klass}"${style}>${photoHtml}<div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p></article>`;
       }).join('');
-      const honoursHtml = honours => (honours || []).map(([year, winner, image]) => `<article class="card recent-honour-card" role="button" tabindex="0" data-team="${escape(winner)}"><h3>${escape(year)}</h3><p class="empty">${img(image)}${escape(winner)}</p></article>`).join('') || `<article class="card recent-honour-card"><h3>A venir</h3><p class="empty">${info}</p></article>`;
       const initials = value => String(value || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
       const awardsHtml = awards => (awards || []).map(item => {
         const flagStyle = item.flag ? ` style="--award-flag:url(${escape(item.flag)})"` : '';
@@ -6315,7 +6274,6 @@ grant select, insert, update on public.profiles to authenticated;`;
         }
         const nodes = nodesFor(kind);
         if (nodes.summary) nodes.summary.innerHTML = summaryHtml(data.summary);
-        if (nodes.honours) nodes.honours.innerHTML = honoursHtml(data.honours);
         if (nodes.scorers) nodes.scorers.innerHTML = playersHtml(data.scorers);
         if (nodes.assists) nodes.assists.innerHTML = playersHtml(data.assists);
         if (nodes.awards) nodes.awards.innerHTML = awardsHtml(data.awards);
