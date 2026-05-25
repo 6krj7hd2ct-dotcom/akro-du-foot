@@ -2282,13 +2282,13 @@ def admin_sync_html() -> str:
   <style>
     :root {{ color-scheme: dark; --bg:#07111f; --panel:#101d2f; --gold:#f5c96b; --muted:#9fb0c6; --ok:#32d3a2; --err:#ff7373; }}
     body {{ margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at top, #163052, var(--bg)); color:#edf6ff; }}
-    main {{ width:min(980px, calc(100% - 28px)); margin:0 auto; padding:32px 0; display:grid; gap:18px; }}
+    main {{ width:min(1280px, calc(100% - 32px)); margin:0 auto 0 max(16px, calc((100vw - 1280px) / 2)); padding:32px 0; display:grid; gap:18px; }}
     .hero, .card {{ border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(16,29,47,.82); box-shadow:0 18px 46px rgba(0,0,0,.26); }}
     .hero {{ padding:22px; }}
     h1 {{ margin:0 0 8px; font-size:clamp(28px,5vw,46px); }}
     h2 {{ margin:0 0 12px; font-size:18px; }}
     p {{ color:var(--muted); line-height:1.55; }}
-    .grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }}
+    .grid {{ display:grid; grid-template-columns:minmax(260px,.8fr) minmax(320px,1.2fr); gap:12px; align-items:start; }}
     .card {{ padding:16px; }}
     .status {{ display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px; font-weight:900; background:rgba(255,255,255,.08); }}
     .success {{ color:var(--ok); }} .error {{ color:var(--err); }} .running {{ color:var(--gold); }}
@@ -2301,6 +2301,7 @@ def admin_sync_html() -> str:
     th {{ color:var(--gold); font-size:12px; text-transform:uppercase; }}
     code {{ color:#ffe1a0; }}
     .muted {{ color:var(--muted); }}
+    @media (max-width:800px) {{ main {{ width:min(980px, calc(100% - 24px)); margin:0 auto; padding:22px 0; }} .grid {{ grid-template-columns:1fr; }} }}
   </style>
 </head>
 <body>

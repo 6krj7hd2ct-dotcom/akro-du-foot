@@ -7,7 +7,7 @@ const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 const API_KEY = Deno.env.get("FOOTBALL_API_KEY") ?? "";
 const API_BASE_URL = (Deno.env.get("FOOTBALL_API_BASE_URL") ?? "").replace(/\/$/, "");
 const API_KEY_HEADER = Deno.env.get("FOOTBALL_API_KEY_HEADER") ?? "x-apisports-key";
-const DEFAULT_LEAGUE_LIMIT = 1;
+const DEFAULT_LEAGUE_LIMIT = 5;
 const DEFAULT_TEAMS_TOTAL_LIMIT = 50;
 const DEFAULT_PLAYER_TEAMS_LIMIT = 3;
 const DEFAULT_COACH_TEAMS_LIMIT = 3;
@@ -24,7 +24,7 @@ console.log("[sync-football-data] boot", {
   hasFootballApiBaseUrl: Boolean(API_BASE_URL),
   footballApiBaseUrl: API_BASE_URL || "(missing)",
   footballApiKeyHeader: API_KEY_HEADER,
-  leagueLimit: Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(DEFAULT_LEAGUE_LIMIT),
+  leagueLimit: Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(Math.max(DEFAULT_LEAGUE_LIMIT, (Deno.env.get("FOOTBALL_SYNC_TEAM_LEAGUES") ?? DEFAULT_TEAM_LEAGUES).split(",").map(value => value.trim()).filter(Boolean).length)),
   teamsTotalLimit: Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT),
   playerTeamsLimit: Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT),
   coachTeamsLimit: Deno.env.get("FOOTBALL_SYNC_COACH_TEAMS_LIMIT") ?? String(DEFAULT_COACH_TEAMS_LIMIT),
@@ -327,7 +327,8 @@ Deno.serve(async () => {
     console.log("[sync-football-data] step competitions done", {inserted: counts.competitions});
 
     console.log("[sync-football-data] step teams start");
-    const leagueLimit = Number(Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(DEFAULT_LEAGUE_LIMIT));
+    const configuredTeamLeagueCount = configuredLeagueIds().length;
+    const leagueLimit = Number(Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(Math.max(DEFAULT_LEAGUE_LIMIT, configuredTeamLeagueCount)));
     const teamsTotalLimit = Number(Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT));
     const competitionTargets = (await readCompetitionTargets()).slice(0, leagueLimit);
     const competitionMap = new Map(competitionTargets.map(target => [target.api_id, target.id]).filter(([, id]) => Boolean(id)));
