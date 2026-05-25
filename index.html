@@ -2580,10 +2580,10 @@
 
     function playerPositionGroup(player) {
       const position = normalizeFootballName(player?.position || player?.role || '');
-      if (/goal|keeper|gardien|gk/.test(position)) return 'Gardiens';
-      if (/def|back|arriere|stoppeur|dc|df/.test(position)) return 'Défenseurs';
-      if (/mid|milieu|mc|md|mg|dm|cm|am/.test(position)) return 'Milieux';
-      if (/att|forward|wing|ailier|buteur|striker|fw|st/.test(position)) return 'Attaquants';
+      if (/\b(goalkeeper|keeper|gardien|gk|goal)\b/.test(position)) return 'Gardiens';
+      if (/\b(defender|defence|defense|defenseur|defenseur|back|arriere|stoppeur|centre back|center back|left back|right back|dc|dl|dr|df)\b/.test(position)) return 'Défenseurs';
+      if (/\b(midfielder|midfield|milieu|defensive midfielder|central midfielder|attacking midfielder|dm|cm|am|mc|md|mg)\b/.test(position)) return 'Milieux';
+      if (/\b(attacker|forward|striker|winger|attaquant|ailier|buteur|fw|st|bu|ad|ag)\b/.test(position)) return 'Attaquants';
       return 'Autres joueurs';
     }
 

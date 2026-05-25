@@ -12,8 +12,9 @@ const DEFAULT_TEAMS_TOTAL_LIMIT = 50;
 const DEFAULT_PLAYER_TEAMS_LIMIT = 3;
 const DEFAULT_COACH_TEAMS_LIMIT = 3;
 const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
+const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
-const DEFAULT_PRIORITY_TEAMS = "Paris Saint-Germain,PSG,Arsenal,Real Madrid,Barcelona,Bayern Munich,Inter,Internazionale,Manchester City,Liverpool,France,Argentina,Brazil,Spain,England,Portugal,Germany,Italy,Morocco,Netherlands,Belgium";
+const DEFAULT_PRIORITY_TEAMS = "Paris Saint-Germain,PSG,Arsenal,Real Madrid,Barcelona,Barcelone,Bayern Munich,Bayern München,Bayern Munchen,Inter,Internazionale,Manchester City,Liverpool,Atletico Madrid,Atlético Madrid,Borussia Dortmund,France,Argentina,Argentine,Brazil,Brésil,Spain,Espagne,England,Angleterre,Portugal,Germany,Allemagne,Italy,Italie,Morocco,Maroc,Netherlands,Pays-Bas,Belgium,Belgique,Croatia,Croatie";
 const INCLUDE_PLAYERS = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_PLAYERS") ?? "false").toLowerCase() === "true";
 const INCLUDE_COACHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_COACHES") ?? "false").toLowerCase() === "true";
 const INCLUDE_MATCHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_MATCHES") ?? "false").toLowerCase() === "true";
@@ -29,6 +30,7 @@ console.log("[sync-football-data] boot", {
   teamsTotalLimit: Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT),
   playerTeamsLimit: Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT),
   coachTeamsLimit: Deno.env.get("FOOTBALL_SYNC_COACH_TEAMS_LIMIT") ?? String(DEFAULT_COACH_TEAMS_LIMIT),
+  completeRosterSize: Deno.env.get("FOOTBALL_SYNC_COMPLETE_ROSTER_SIZE") ?? String(DEFAULT_COMPLETE_ROSTER_SIZE),
   teamLeagues: Deno.env.get("FOOTBALL_SYNC_TEAM_LEAGUES") ?? DEFAULT_TEAM_LEAGUES,
   priorityTeams: Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS,
   matchesTotalLimit: Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT),
@@ -136,6 +138,15 @@ function countryIdForName(countryLookup: Map<string, string>, name: unknown) {
   return key ? countryLookup.get(key) ?? null : null;
 }
 
+function priorityIndexForTeam(name: unknown) {
+  const teamName = norm(name);
+  if (!teamName) return -1;
+  return configuredPriorityTeams()
+    .map(norm)
+    .filter(Boolean)
+    .findIndex(priorityName => teamName === priorityName);
+}
+
 function teamRowFromApi(item: Json, countryLookup: Map<string, string>) {
   const team = pick<Json>(item, ["team"], {});
   const venue = pick<Json>(item, ["venue"], {});
@@ -149,6 +160,33 @@ function teamRowFromApi(item: Json, countryLookup: Map<string, string>) {
     type: national ? "nation" : "club",
     logo_url: String(pick(team, ["logo"], "")),
     venue_name: String(pick(venue, ["name"], "")),
+    is_active: true,
+    raw_data: item,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+function normalizePlayerItem(item: Json, countryLookup: Map<string, string>) {
+  const nestedPlayer = pick<Json>(item, ["player"], {});
+  const stats = pick<Json[]>(item, ["statistics"], []);
+  const firstStats = stats[0] ?? {};
+  const games = pick<Json>(firstStats, ["games"], {});
+  const birth = pick<Json>(item, ["birth"], pick<Json>(nestedPlayer, ["birth"], {}));
+  const apiId = String(pick(item, ["id"], pick(nestedPlayer, ["id"], "")));
+  const name = String(pick(item, ["name"], pick(nestedPlayer, ["name"], "Information non disponible")));
+  const nationality = String(pick(item, ["nationality"], pick(nestedPlayer, ["nationality"], "")));
+  const position = String(pick(item, ["position"], pick(nestedPlayer, ["position"], pick(games, ["position"], ""))));
+  return {
+    api_id: apiId,
+    name,
+    firstname: String(pick(item, ["firstname"], pick(nestedPlayer, ["firstname"], ""))),
+    lastname: String(pick(item, ["lastname"], pick(nestedPlayer, ["lastname"], ""))),
+    birth_date: pick(item, ["birth.date", "birth_date"], pick(nestedPlayer, ["birth.date", "birth_date"], pick(birth, ["date"], null))),
+    nationality,
+    country_id: countryIdForName(countryLookup, nationality),
+    position,
+    photo_url: String(pick(item, ["photo"], pick(nestedPlayer, ["photo"], ""))),
+    shirt_number: pick<number | null>(item, ["number"], pick<number | null>(games, ["number"], null)),
     is_active: true,
     raw_data: item,
     updated_at: new Date().toISOString(),
@@ -294,15 +332,34 @@ async function readCompetitionTargets() {
   return targets;
 }
 
-async function readTeamTargets(limit: number) {
-  console.log("[sync-football-data] read team targets start", {limit});
-  const priorityNames = configuredPriorityTeams().map(norm).filter(Boolean);
+async function readTeamPlayerCounts() {
+  console.log("[sync-football-data] read team player counts start");
+  const counts = new Map<string, number>();
+  const {data, error} = await supabase
+    .from("team_players")
+    .select("team_id")
+    .eq("is_active", true)
+    .limit(20000);
+  if (error) {
+    console.error("[sync-football-data] read team player counts error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
+    throw new Error(`team_players counts: ${error.message}`);
+  }
+  for (const row of data ?? []) {
+    const teamId = String((row as Json).team_id ?? "");
+    if (teamId) counts.set(teamId, (counts.get(teamId) ?? 0) + 1);
+  }
+  console.log("[sync-football-data] read team player counts success", {relations: data?.length ?? 0, teams: counts.size});
+  return counts;
+}
+
+async function readTeamTargets(limit: number, options: {rosterCounts?: Map<string, number>; completeRosterSize?: number; skipComplete?: boolean} = {}) {
+  console.log("[sync-football-data] read team targets start", {limit, skipComplete: Boolean(options.skipComplete), completeRosterSize: options.completeRosterSize ?? 0});
   const {data, error} = await supabase
     .from("teams")
     .select("id,api_id,name,type,updated_at")
     .not("api_id", "is", null)
     .order("updated_at", {ascending: true})
-    .limit(1000);
+    .limit(5000);
   if (error) {
     console.error("[sync-football-data] read team targets error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`teams targets: ${error.message}`);
@@ -312,18 +369,29 @@ async function readTeamTargets(limit: number) {
     api_id: String(row.api_id ?? ""),
     name: String(row.name ?? ""),
     type: String(row.type ?? ""),
-    priority: priorityNames.some(name => norm(row.name).includes(name) || name.includes(norm(row.name))),
+    linkedPlayers: options.rosterCounts?.get(String(row.id ?? "")) ?? 0,
+    priorityIndex: priorityIndexForTeam(row.name),
   })).filter(row => row.id && row.api_id);
-  const priority = rows.filter(row => row.priority);
-  const regular = rows.filter(row => !row.priority);
+  const enriched = rows.map(row => ({...row, priority: row.priorityIndex >= 0}));
+  const completeRosterSize = options.completeRosterSize ?? DEFAULT_COMPLETE_ROSTER_SIZE;
+  const completeRows = options.skipComplete ? enriched.filter(row => row.linkedPlayers >= completeRosterSize) : [];
+  const availableRows = options.skipComplete ? enriched.filter(row => row.linkedPlayers < completeRosterSize) : enriched;
+  const priority = availableRows
+    .filter(row => row.priority)
+    .sort((a, b) => a.priorityIndex - b.priorityIndex || a.linkedPlayers - b.linkedPlayers || a.name.localeCompare(b.name));
+  const regular = availableRows
+    .filter(row => !row.priority)
+    .sort((a, b) => a.linkedPlayers - b.linkedPlayers || a.name.localeCompare(b.name));
   const targets = [...priority, ...regular].slice(0, limit);
   console.log("[sync-football-data] read team targets success", {
     rows: targets.length,
     priorityRows: priority.length,
+    skippedComplete: completeRows.length,
+    skippedCompleteSample: completeRows.slice(0, 8).map(row => ({name: row.name, type: row.type, linkedPlayers: row.linkedPlayers})),
     limit,
     targets,
   });
-  return targets;
+  return {targets, skippedComplete: completeRows};
 }
 
 async function readCountryLookup() {
@@ -431,7 +499,7 @@ Deno.serve(async () => {
           const apiTeam = pick<Json>(item, ["team"], {});
           const apiName = norm(pick(apiTeam, ["name"], ""));
           const wanted = norm(teamName);
-          return Boolean(apiName && wanted) && (apiName.includes(wanted) || wanted.includes(apiName));
+          return Boolean(apiName && wanted) && apiName === wanted;
         });
         const selected = exact.length ? exact : found.slice(0, 2);
         priorityItems.push(...selected);
@@ -494,51 +562,80 @@ Deno.serve(async () => {
     if (INCLUDE_PLAYERS) {
       console.log("[sync-football-data] step players start");
       const playerTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT));
-      const playerTeamTargets = await readTeamTargets(playerTeamsLimit);
+      const completeRosterSize = Number(Deno.env.get("FOOTBALL_SYNC_COMPLETE_ROSTER_SIZE") ?? String(DEFAULT_COMPLETE_ROSTER_SIZE));
+      const rosterCounts = await readTeamPlayerCounts();
+      const {targets: playerTeamTargets, skippedComplete} = await readTeamTargets(playerTeamsLimit, {rosterCounts, completeRosterSize, skipComplete: true});
       let playerTeamsVisited = 0;
       let playersFound = 0;
       let teamPlayersUpserted = 0;
       let relationCandidates = 0;
       let missingPlayerLinks = 0;
-      console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length});
+      let apiErrors = 0;
+      let priorityTeamsProcessed = 0;
+      let clubsProcessed = 0;
+      let nationsProcessed = 0;
+      const teamLogs: Json[] = [];
+      console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length, completeRosterSize, skippedComplete: skippedComplete.length});
       for (const teamTarget of playerTeamTargets) {
         playerTeamsVisited += 1;
-        console.log("[sync-football-data] fetch squad", {teamApiId: teamTarget.api_id, teamName: teamTarget.name});
-        const squad = await football("players/squads", {team: teamTarget.api_id});
-        const players = squad.flatMap(item => asArray((item as Json).players));
+        if (teamTarget.priority) priorityTeamsProcessed += 1;
+        if (teamTarget.type === "nation") nationsProcessed += 1;
+        else clubsProcessed += 1;
+        console.log("[sync-football-data] fetch squad", {teamApiId: teamTarget.api_id, teamName: teamTarget.name, teamType: teamTarget.type, priority: teamTarget.priority, linkedPlayers: teamTarget.linkedPlayers});
+        let squad: Json[] = [];
+        let fallbackPlayers: Json[] = [];
+        try {
+          squad = await football("players/squads", {team: teamTarget.api_id});
+        } catch (error) {
+          apiErrors += 1;
+          console.error("[sync-football-data] squad fetch failed", {teamApiId: teamTarget.api_id, teamName: teamTarget.name, message: error instanceof Error ? error.message : String(error)});
+        }
+        let players = squad.flatMap(item => asArray((item as Json).players));
+        if (players.length < 18) {
+          try {
+            console.log("[sync-football-data] fetch players fallback", {teamApiId: teamTarget.api_id, teamName: teamTarget.name, reason: "squad below 18", squadPlayers: players.length, season: syncSeason});
+            fallbackPlayers = await football("players", {team: teamTarget.api_id, season: syncSeason});
+            players = [...players, ...fallbackPlayers];
+          } catch (error) {
+            apiErrors += 1;
+            console.error("[sync-football-data] players fallback failed", {teamApiId: teamTarget.api_id, teamName: teamTarget.name, message: error instanceof Error ? error.message : String(error)});
+          }
+        }
+        const normalizedPlayers = dedupeRows("players_normalized", players.map(item => normalizePlayerItem(item, countryLookup)).filter(row => row.api_id && row.name), apiIdKey);
         playersFound += players.length;
-        console.log("[sync-football-data] squad fetched", {teamApiId: teamTarget.api_id, squadRows: squad.length, players: players.length});
-        const playerRows = dedupeRows("players", players.map(item => ({
-          api_id: String(pick(item, ["id"], "")),
-          name: String(pick(item, ["name"], "Information non disponible")),
-          firstname: String(pick(item, ["firstname"], "")),
-          lastname: String(pick(item, ["lastname"], "")),
-          birth_date: pick(item, ["birth.date", "birth_date"], null),
-          nationality: String(pick(item, ["nationality"], "")),
-          country_id: countryIdForName(countryLookup, pick(item, ["nationality"], "")),
-          position: String(pick(item, ["position"], "")),
-          photo_url: String(pick(item, ["photo"], "")),
+        const positionsDetected = Array.from(new Set(normalizedPlayers.map(item => String(item.position ?? "")).filter(Boolean))).sort();
+        console.log("[sync-football-data] squad fetched", {teamApiId: teamTarget.api_id, squadRows: squad.length, squadPlayers: players.length - fallbackPlayers.length, fallbackPlayers: fallbackPlayers.length, normalizedPlayers: normalizedPlayers.length, positionsDetected});
+        const playerRows = normalizedPlayers.map(item => ({
+          api_id: item.api_id,
+          name: item.name,
+          firstname: item.firstname,
+          lastname: item.lastname,
+          birth_date: item.birth_date,
+          nationality: item.nationality,
+          country_id: item.country_id,
+          position: item.position,
+          photo_url: item.photo_url,
           is_active: true,
-          raw_data: item,
+          raw_data: item.raw_data,
           updated_at: new Date().toISOString(),
-        })).filter(row => row.api_id && row.name), apiIdKey);
+        }));
         console.log("[sync-football-data] players prepared", {teamApiId: teamTarget.api_id, fetched: players.length, deduped: playerRows.length});
         counts.players = Number(counts.players) + await upsert("players", playerRows);
 
-        const playerApiIds = players.map(item => String(pick(item, ["id"], ""))).filter(Boolean);
+        const playerApiIds = normalizedPlayers.map(item => String(item.api_id)).filter(Boolean);
         const playerMap = await readIdMapForApiIds("players", playerApiIds);
-        const teamPlayerCandidates = players.map(item => {
-          const playerApiId = String(pick(item, ["id"], ""));
+        const teamPlayerCandidates = normalizedPlayers.map(item => {
+          const playerApiId = String(item.api_id);
           const playerId = playerMap.get(playerApiId);
           return {
-            api_id: `${teamTarget.api_id}:${pick(item, ["id"], "")}:${syncSeason}`,
+            api_id: `${teamTarget.api_id}:${playerApiId}:${syncSeason}`,
             team_id: teamTarget.id,
             player_id: playerId,
             season: syncSeason,
-            shirt_number: pick<number | null>(item, ["number"], null),
-            position: String(pick(item, ["position"], "")),
+            shirt_number: item.shirt_number,
+            position: String(item.position ?? ""),
             is_active: true,
-            raw_data: item,
+            raw_data: item.raw_data,
             updated_at: new Date().toISOString(),
           };
         });
@@ -550,17 +647,33 @@ Deno.serve(async () => {
           teamName: teamTarget.name,
           teamId: teamTarget.id,
           teamApiId: teamTarget.api_id,
+          teamType: teamTarget.type,
+          priority: teamTarget.priority,
           playersFoundForTeam: players.length,
+          normalizedPlayers: normalizedPlayers.length,
           playerRowsUpserted: playerRows.length,
           playerIdsResolved: playerMap.size,
           relationCandidates: teamPlayerCandidates.length,
           validRelations: validCandidates.length,
           missingPlayerIds: missingForTeam,
+          positionsDetected,
         });
         const teamPlayerRows = dedupeRows("team_players", validCandidates, row => apiIdKey(row) || `${row.team_id ?? ""}:${row.player_id ?? ""}:${row.season ?? ""}`);
         const upsertedTeamPlayers = await upsert("team_players", teamPlayerRows, "api_id");
         teamPlayersUpserted += upsertedTeamPlayers;
         counts.team_players_upserted = teamPlayersUpserted;
+        teamLogs.push({
+          name: teamTarget.name,
+          type: teamTarget.type,
+          priority: teamTarget.priority,
+          linked_before: teamTarget.linkedPlayers,
+          players_found: players.length,
+          normalized_players: normalizedPlayers.length,
+          relation_candidates: teamPlayerCandidates.length,
+          relations_upserted: upsertedTeamPlayers,
+          missing_player_ids: missingForTeam,
+          positions: positionsDetected,
+        });
         console.log("[sync-football-data] players cumulative", {
           players: counts.players,
           team_players_upserted: teamPlayersUpserted,
@@ -575,14 +688,26 @@ Deno.serve(async () => {
       counts.players_found = playersFound;
       counts.team_player_relation_candidates = relationCandidates;
       counts.team_player_missing_player_ids = missingPlayerLinks;
+      counts.roster_priority_teams_processed = priorityTeamsProcessed;
+      counts.roster_clubs_processed = clubsProcessed;
+      counts.roster_nations_processed = nationsProcessed;
+      counts.roster_teams_skipped_complete = skippedComplete.length;
+      counts.roster_team_logs = teamLogs;
+      counts.api_errors = apiErrors;
       counts.players_total = await tableCount("players");
       counts.team_players = await tableCount("team_players");
       console.log("[sync-football-data] players step done", {
         teamsVisited: playerTeamsVisited,
+        priorityTeamsProcessed,
+        clubsProcessed,
+        nationsProcessed,
+        skippedComplete: skippedComplete.length,
         playersFound,
         teamPlayersUpserted,
         relationCandidates,
         missingPlayerLinks,
+        apiErrors,
+        teamLogs,
         playersTotal: counts.players_total,
         teamPlayersTotal: counts.team_players,
         deletedRelations: 0,
@@ -597,7 +722,7 @@ Deno.serve(async () => {
     if (INCLUDE_COACHES) {
       console.log("[sync-football-data] step coaches start");
       const coachTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_COACH_TEAMS_LIMIT") ?? String(DEFAULT_COACH_TEAMS_LIMIT));
-      const coachTeamTargets = await readTeamTargets(coachTeamsLimit);
+      const {targets: coachTeamTargets} = await readTeamTargets(coachTeamsLimit);
       let coachTeamsVisited = 0;
       for (const teamTarget of coachTeamTargets) {
         coachTeamsVisited += 1;
