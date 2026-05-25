@@ -121,9 +121,12 @@ def _cache_timestamp_fresh(payload: dict[str, Any] | None, ttl_seconds: int) -> 
 
 
 def _cached_or_fetch(label: str, previous: dict[str, Any] | None, fetcher, merger) -> dict[str, Any]:
-    ttl = _cache_ttl_seconds("AKRO_DASHBOARD_CACHE_TTL_SECONDS", 900)
+    ttl = _cache_ttl_seconds("AKRO_DASHBOARD_CACHE_TTL_SECONDS", 21600)
     if not _env_enabled("AKRO_FORCE_EXTERNAL_REFRESH") and _cache_is_fresh(previous, ttl):
         print(f"[source] cache utilisé: {label}", flush=True)
+        return previous or {}
+    if not _env_enabled("AKRO_FORCE_EXTERNAL_REFRESH") and not _env_enabled("AKRO_ENABLE_LEGACY_SOURCE_REFRESH") and _has_core_data(previous):
+        print(f"[source] cache conservé: {label} (refresh ESPN/FotMob désactivé, Supabase/API-Football prioritaire)", flush=True)
         return previous or {}
     print(f"[source] fallback externe activé: {label}", flush=True)
     return merger(previous, fetcher())

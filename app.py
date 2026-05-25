@@ -79,6 +79,8 @@ LIVE_SCORE_LAST_ERROR = ""
 FOOTBALL_SUPABASE_CACHE_LOCK = threading.Lock()
 FOOTBALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
 SUPABASE_FAILED_PATHS: dict[str, float] = {}
+WIKIPEDIA_VERIFICATION_CACHE: dict[str, tuple[float, list[str]]] = {}
+WIKIPEDIA_VERIFICATION_CACHE_TTL = max(300, int(os.environ.get("AKRO_WIKIPEDIA_CACHE_TTL", "21600")))
 
 app = Flask(__name__) if Flask else None
 
@@ -950,8 +952,14 @@ def _wikipedia_verification_snippets(question: str) -> list[str]:
         import requests
 
         search_query = _wikipedia_query_for_question(question)
+        cache_key = _normalize_football_text(search_query)
+        cached = WIKIPEDIA_VERIFICATION_CACHE.get(cache_key)
+        if cached and time.time() - cached[0] <= WIKIPEDIA_VERIFICATION_CACHE_TTL:
+            print("[coach] cache Wikipedia utilisé", flush=True)
+            return cached[1]
         snippets: list[str] = []
         for language in ("fr", "en"):
+            print(f"[coach] fallback vérification Wikipedia appelé: {language}", flush=True)
             response = requests.get(
                 f"https://{language}.wikipedia.org/w/api.php",
                 params={
@@ -975,7 +983,9 @@ def _wikipedia_verification_snippets(question: str) -> list[str]:
                     snippets.append(f"{title}: {snippet}")
             if snippets:
                 break
-        return snippets[:4]
+        snippets = snippets[:4]
+        WIKIPEDIA_VERIFICATION_CACHE[cache_key] = (time.time(), snippets)
+        return snippets
     except Exception:
         return []
 

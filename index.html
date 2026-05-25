@@ -1210,6 +1210,7 @@
     <script>
       (() => {
         const ticker = document.querySelector('.mercato-under-tabs');
+        let loaded = false;
         const clean = value => String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
         const itemMarkup = item => {
           const title = clean(String(item.title || 'Info mercato').replace(/\bSuivant\b/gi, '').replace(/\s{2,}/g, ' ').trim());
@@ -1219,15 +1220,31 @@
           const entity = item.club || item.player ? `<span class="mercato-entity">${clean(item.club || item.player)}</span><span class="mercato-sep">·</span>` : '';
           return `<a class="mercato-link" href="${url}" target="_blank" rel="noreferrer" title="${title}">${time}${entity}<span class="mercato-title">Mercato : ${title}</span><span class="mercato-sep">·</span><span class="mercato-source">${source}</span></a>`;
         };
-        fetch('/api/mercato-live', {cache: 'no-store'})
-          .then(response => response.ok ? response.json() : null)
-          .then(data => {
-            const items = (data && Array.isArray(data.items) ? data.items : []).filter(item => item && item.title && item.url).slice(0, 18);
-            if (!ticker || !items.length) return;
-            const rendered = items.map(itemMarkup).join('<span class="mercato-item-break">•</span>');
-            ticker.innerHTML = `<div class="mercato-badge">Mercato Live</div><div class="mercato-track"><div class="mercato-marquee"><div class="mercato-items">${rendered}</div><div class="mercato-items" aria-hidden="true">${rendered}</div></div></div>`;
-          })
-          .catch(error => console.warn('[mercato-live] cache indisponible', error));
+        const loadMercato = () => {
+          if (loaded || !ticker) return;
+          loaded = true;
+          console.info('[mercato-live] cache demandé quand la section devient visible');
+          fetch('/api/mercato-live', {cache: 'no-store'})
+            .then(response => response.ok ? response.json() : null)
+            .then(data => {
+              const items = (data && Array.isArray(data.items) ? data.items : []).filter(item => item && item.title && item.url).slice(0, 18);
+              if (!items.length) return;
+              const rendered = items.map(itemMarkup).join('<span class="mercato-item-break">•</span>');
+              ticker.innerHTML = `<div class="mercato-badge">Mercato Live</div><div class="mercato-track"><div class="mercato-marquee"><div class="mercato-items">${rendered}</div><div class="mercato-items" aria-hidden="true">${rendered}</div></div></div>`;
+            })
+            .catch(error => console.warn('[mercato-live] cache indisponible', error));
+        };
+        if ('IntersectionObserver' in window && ticker) {
+          const observer = new IntersectionObserver(entries => {
+            if (entries.some(entry => entry.isIntersecting)) {
+              observer.disconnect();
+              loadMercato();
+            }
+          }, {rootMargin: '160px'});
+          observer.observe(ticker);
+        } else {
+          window.addEventListener('load', loadMercato, {once: true});
+        }
       })();
     </script>
 
@@ -2080,7 +2097,7 @@
         if (input?.value) renderGlobalSearch(input.value);
       }
       if (typeof initQuizSelectors === 'function') initQuizSelectors();
-      if (typeof renderLeague === 'function') renderLeague();
+      if (typeof renderLeague === 'function' && document.querySelector('[data-tab-panel="leagues"]')?.classList.contains('is-active')) renderLeague();
       console.info('[football-supabase] source utilisée', AKRO_SUPABASE_FOOTBALL.counts);
     }
 
@@ -5014,7 +5031,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       leagueFocusNews('leagues', focus);
     }
 
-    document.addEventListener('DOMContentLoaded', renderLeague);
+    function leagueTabIsActive() {
+      return document.querySelector('[data-tab-panel="leagues"]')?.classList.contains('is-active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (leagueTabIsActive()) renderLeague();
+    });
     document.addEventListener('change', event => {
       if (event.target && event.target.id === 'leagueSelect') {
         localStorage.setItem(LEAGUE_KEY, event.target.value);
@@ -5026,7 +5049,6 @@ grant select, insert, update on public.profiles to authenticated;`;
         renderLeague();
       }
     });
-    renderLeague();
   </script>
   <script>
     const quizButton = document.getElementById('quizButton');
@@ -6323,6 +6345,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         document.querySelectorAll('[data-tab-panel]').forEach((panel) => {
           panel.classList.toggle('is-active', panel.dataset.tabPanel === target);
         });
+        if (target === 'leagues' && typeof renderLeague === 'function') renderLeague();
       });
     });
 

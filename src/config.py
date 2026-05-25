@@ -112,11 +112,6 @@ EXTRA_FOOTBALL_NEWS_FEEDS = [
     {"source": "Goal.com", "url": "https://www.goal.com/feeds/fr/news?fmt=rss", "trusted_section": False},
     {"source": "Eurosport", "url": "https://www.eurosport.fr/rss.xml", "trusted_section": False},
     {"source": "Foot Mercato", "url": "https://www.footmercato.net/rss.xml", "trusted_section": False},
-    {"source": "SO FOOT", "url": "https://www.sofoot.com/rss", "trusted_section": False},
-    {"source": "Maxifoot", "url": "https://www.maxifoot.fr/rss.xml", "trusted_section": False},
-    {"source": "LiveFoot", "url": "https://www.livefoot.fr/rss.xml", "trusted_section": False},
-    {"source": "France Football", "url": "https://www.francefootball.fr/rss/actu_rss.xml", "trusted_section": False},
-    {"source": "Le Phocéen", "url": "https://www.lephoceen.fr/rss", "trusted_section": False},
 ]
 
 

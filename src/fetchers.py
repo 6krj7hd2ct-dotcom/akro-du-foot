@@ -28,12 +28,9 @@ from .config import (
     FOTMOB_TEAM_SQUAD_URL,
     LEAGUE_CONFIGS,
     LEAGUE_SCOREBOARD_DATES,
-    FOOTBALL_NEWS_FEEDS,
-    FRANCE_NEWS_FEEDS,
     REQUEST_HEADERS,
     STATBUNKER_ALL_TIME_ASSISTS_URL,
     STATBUNKER_ALL_TIME_SCORERS_URL,
-    CHAMPIONS_LEAGUE_NEWS_FEEDS,
     UCL_ESPN_ASSISTS_URL,
     UCL_ESPN_SCOREBOARD_URL,
     UCL_ESPN_SCORING_URL,
@@ -43,7 +40,6 @@ from .config import (
     UCL_ESPN_TEAM_SQUAD_URL,
     UCL_FOTMOB_STATS_URL,
     UEFA_UCL_ALL_TIME_SCORERS_URL,
-    WORLD_CUP_NEWS_FEEDS,
 )
 
 ROUND_LABELS = {
@@ -336,14 +332,6 @@ GLOBAL_NEWS_FEEDS = [
     {"source": "Goal France", "url": "https://www.goal.com/feeds/fr/news?fmt=rss", "trusted_section": True},
     {"source": "Eurosport France", "url": "https://www.eurosport.fr/rss.xml", "trusted_section": False},
     {"source": "Foot Mercato", "url": "https://www.footmercato.net/rss.xml", "trusted_section": False},
-    {"source": "SO FOOT", "url": "https://www.sofoot.com/rss", "trusted_section": True},
-    {"source": "Maxifoot", "url": "https://www.maxifoot.fr/rss.xml", "trusted_section": True},
-    {"source": "LiveFoot", "url": "https://www.livefoot.fr/rss.xml", "trusted_section": True},
-    {"source": "France Football", "url": "https://www.francefootball.fr/rss/actu_rss.xml", "trusted_section": True},
-    {"source": "Football.fr", "url": "https://www.football.fr/feed", "trusted_section": True},
-    {"source": "Made In Foot", "url": "https://www.madeinfoot.com/rss/actualites.xml", "trusted_section": True},
-    {"source": "Onze Mondial", "url": "https://www.onzemondial.com/rss.xml", "trusted_section": True},
-    {"source": "France Info Sport", "url": "https://www.francetvinfo.fr/sports/foot.rss", "trusted_section": True},
 ]
 
 NEWS_FILTERS = {
@@ -480,6 +468,13 @@ ESPN_RETRY_COUNT = min(2, max(1, int(os.environ.get("AKRO_ESPN_RETRIES", "2"))))
 _HTTP_TEXT_CACHE: dict[str, tuple[float, str]] = {}
 _HTTP_JSON_CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
 _ESPN_SKIP_CACHE: dict[str, tuple[float, str]] = {}
+
+
+def _external_source_enabled(name: str, default: bool = False) -> bool:
+    raw = os.environ.get(name, "")
+    if not raw:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
 class ESPNUnavailable(ValueError):
@@ -629,7 +624,11 @@ def fetch_dashboard_data() -> dict[str, Any]:
     france_header_news: list[dict[str, Any]] = []
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
-    all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
+    if _external_source_enabled("AKRO_ENABLE_LIVE_HISTORICAL_SOURCES"):
+        all_time_top_scorers = _safe_fetch("buteurs all-time StatBunker", fetch_all_time_top_scorers, errors)
+    else:
+        print("[source] cache historique utilisé: buteurs all-time Coupe du Monde", flush=True)
+        all_time_top_scorers = _with_country_flags(FALLBACK_ALL_TIME_SCORERS)
     all_time_top_assisters: list[dict[str, Any]] = []
     focused_team_news: dict[str, list[dict[str, Any]]] = {}
 
@@ -709,11 +708,15 @@ def fetch_champions_league_data() -> dict[str, Any]:
     news: list[dict[str, Any]] = []
     football_news_pool: list[dict[str, Any]] = []
     focused_club_news: dict[str, list[dict[str, Any]]] = {}
-    all_time_top_scorers = _safe_fetch(
-        "buteurs all-time Ligue des Champions UEFA",
-        fetch_champions_league_all_time_top_scorers,
-        errors,
-    )
+    if _external_source_enabled("AKRO_ENABLE_LIVE_HISTORICAL_SOURCES"):
+        all_time_top_scorers = _safe_fetch(
+            "buteurs all-time Ligue des Champions UEFA",
+            fetch_champions_league_all_time_top_scorers,
+            errors,
+        )
+    else:
+        print("[source] cache historique utilisé: buteurs all-time Champions League", flush=True)
+        all_time_top_scorers = _with_country_flags(FALLBACK_UCL_ALL_TIME_SCORERS)
     if not scorers:
         scorers = _safe_fetch("buteurs Ligue des Champions FotMob", lambda: fetch_fotmob_player_stats_from_url(UCL_FOTMOB_STATS_URL, "goals"), errors)
     else:
@@ -1273,6 +1276,9 @@ def enrich_teams_with_footmercato_coaches(
     teams_details: dict[str, dict[str, Any]],
     max_teams: int = 16,
 ) -> dict[str, dict[str, Any]]:
+    if not _external_source_enabled("AKRO_ENABLE_FOOTMERCATO_ENRICHMENT"):
+        print("[source] fallback FootMercato désactivé: coachs/palmarès attendus depuis Supabase/API-Football ou cache local", flush=True)
+        return teams_details
     enriched = {name: dict(details) for name, details in teams_details.items()}
     candidates: list[tuple[str, str]] = []
     for name in enriched:
