@@ -361,6 +361,22 @@
     .news-filter { min-width: min(260px, 100%); padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.92); color: #07111f; font-weight: 900; }
     .news-status { color: #c5d3e4; font-size: 13px; font-weight: 800; }
     .news-board { margin-top: 18px; }
+    .upcoming-news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .upcoming-news-grid .empty { grid-column: 1 / -1; }
+    .upcoming-news-card { position: relative; display: grid; gap: 12px; min-height: 164px; padding: 15px; border-radius: 16px; border: 1px solid rgba(99,232,255,0.28); background: linear-gradient(145deg, rgba(7,17,31,0.95), rgba(13,37,61,0.88)); box-shadow: 0 18px 44px rgba(0,0,0,0.20); overflow: hidden; }
+    .upcoming-news-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(99,232,255,0.16), transparent 34%), radial-gradient(circle at left bottom, rgba(245,201,107,0.12), transparent 34%); pointer-events: none; }
+    .upcoming-news-card > * { position: relative; z-index: 1; }
+    .upcoming-match-top, .upcoming-match-date, .upcoming-match-team { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
+    .upcoming-match-competition { color: #9fe9ff; font-size: 11px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }
+    .upcoming-match-date { color: #d6e5f7; font-size: 13px; font-weight: 850; }
+    .upcoming-match-date strong { color: #fff; }
+    .upcoming-match-status { flex: 0 0 auto; border-radius: 999px; padding: 5px 8px; background: rgba(245,201,107,0.16); border: 1px solid rgba(245,201,107,0.30); color: #ffe1a0; font-size: 11px; font-weight: 950; }
+    .upcoming-match-teams { display: grid; gap: 8px; }
+    .upcoming-match-team { justify-content: flex-start; color: #fff; font-size: 17px; font-weight: 950; line-height: 1.1; }
+    .upcoming-match-team span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .upcoming-match-logo { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%; object-fit: contain; object-position: center; padding: 3px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
+    .upcoming-match-logo.placeholder { display: grid; place-items: center; color: #9fb0c2; font-size: 11px; font-weight: 950; }
+    .upcoming-match-vs { width: fit-content; border-radius: 999px; padding: 3px 8px; background: rgba(255,255,255,0.08); color: #9fb0c2; font-size: 11px; font-weight: 950; text-transform: uppercase; }
     .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .article-tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 8px; background: rgba(245,201,107,0.12); border: 1px solid rgba(245,201,107,0.22); color: #ffe1a0; font-size: 11px; font-weight: 900; }
     .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -1032,7 +1048,7 @@
       .section-head { align-items: start; flex-direction: column; }
       .section-note { text-align: left; }
       .today-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .news, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .news, .grid, .upcoming-news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #leagueSummaryCards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       #tab-euro .euro-group-grid, #tab-euro .grid, #tab-euro .historical-calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .matches { grid-template-columns: 1fr; }
@@ -1077,7 +1093,7 @@
       .france-header-items { gap: 10px; padding: 8px 10px; }
       .france-header-card { width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }
       .france-header-image { width: 56px; height: 48px; }
-      .today-strip, .leaders, .news, .grid, .matches { grid-template-columns: 1fr; }
+      .today-strip, .leaders, .news, .grid, .matches, .upcoming-news-grid { grid-template-columns: 1fr; }
       #tab-euro .euro-group-grid, #tab-euro .grid, #tab-euro .historical-calendar-grid { grid-template-columns: 1fr; }
       #leagueSummaryCards { grid-template-columns: 1fr; }
       .calendar-match { grid-template-columns: 1fr auto 1fr; }
@@ -1309,6 +1325,10 @@
             <span class="news-status" id="newsStatus"></span>
           </div>
         </div>
+      </section>
+      <div class="section-head"><div class="section-title"><h2>Prochains Matchs</h2></div><div class="section-note">Les 6 prochaines affiches programmées, toutes compétitions confondues.</div></div>
+      <section class="upcoming-news-grid" id="newsUpcomingMatches" aria-label="Prochains Matchs">
+        <div class="empty">Chargement des prochains matchs...</div>
       </section>
       <div class="section-head"><div class="section-title"><h2>Récompenses annuelles</h2></div><div class="section-note">Lauréats majeurs, mise à jour annuelle.</div></div>
       <section class="annual-awards-grid news-awards-grid" aria-label="Récompenses annuelles">
@@ -2129,6 +2149,7 @@
       if (typeof initQuizSelectors === 'function') initQuizSelectors();
       if (typeof renderLeague === 'function' && document.querySelector('[data-tab-panel="leagues"]')?.classList.contains('is-active')) renderLeague();
       if (typeof renderFollowMatches === 'function') renderFollowMatches(communityMatches);
+      if (typeof renderNewsUpcomingMatches === 'function') renderNewsUpcomingMatches();
       console.info('[football-supabase] source utilisée', AKRO_SUPABASE_FOOTBALL.counts);
     }
 
@@ -2152,6 +2173,70 @@
       return akroSupabaseFootballPromise;
     }
     window.addEventListener('load', loadSupabaseFootballData, {once: true});
+
+    function newsUpcomingCompetition(match) {
+      const competition = String(match?.competition || '');
+      const normalized = normalizeFootballName(competition);
+      if (normalized.includes('champions league') || normalized.includes('ligue des champions')) return 'Champions League';
+      if (normalized.includes('coupe du monde') || normalized.includes('world cup')) return 'Coupe du Monde';
+      if (normalized === 'euro' || normalized.includes('coupe d europe') || normalized.includes('european championship')) return 'Euro';
+      return '';
+    }
+
+    function renderNewsUpcomingMatches() {
+      const container = document.getElementById('newsUpcomingMatches');
+      if (!container) return;
+      const source = Array.isArray(TEAM_MATCHES) ? TEAM_MATCHES : [];
+      const now = new Date();
+      const seen = new Set();
+      const upcoming = source
+        .map(match => ({...match, competitionLabel: newsUpcomingCompetition(match), matchDate: new Date(match.date)}))
+        .filter(match => match.competitionLabel && match.date && !Number.isNaN(match.matchDate.getTime()))
+        .filter(match => !match.completed && match.matchDate.getTime() >= now.getTime() - (3 * 60 * 60 * 1000))
+        .sort((a, b) => a.matchDate - b.matchDate)
+        .filter(match => {
+          const key = [
+            match.competitionLabel,
+            match.matchDate.toISOString().slice(0, 16),
+            normalizeFootballName(match.home_team),
+            normalizeFootballName(match.away_team)
+          ].join('|');
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+        .slice(0, 6);
+
+      if (!upcoming.length) {
+        container.innerHTML = '<div class="empty">Aucun match programmé disponible pour le moment.</div>';
+        return;
+      }
+
+      const dateFormat = new Intl.DateTimeFormat('fr-FR', {timeZone: 'Europe/Paris', day: '2-digit', month: '2-digit', year: 'numeric'});
+      const timeFormat = new Intl.DateTimeFormat('fr-FR', {timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit'});
+      const logo = url => url
+        ? `<img class="upcoming-match-logo" src="${escapeHtml(url)}" alt="">`
+        : '<span class="upcoming-match-logo placeholder" aria-hidden="true">?</span>';
+
+      container.innerHTML = upcoming.map(match => `
+        <article class="upcoming-news-card">
+          <div class="upcoming-match-top">
+            <span class="upcoming-match-competition">${escapeHtml(match.competitionLabel)}</span>
+            <span class="upcoming-match-status">À venir</span>
+          </div>
+          <div class="upcoming-match-date">
+            <strong>${escapeHtml(dateFormat.format(match.matchDate))}</strong>
+            <span>${escapeHtml(timeFormat.format(match.matchDate))}</span>
+          </div>
+          <div class="upcoming-match-teams">
+            <div class="upcoming-match-team">${logo(match.home_flag_url)}<span>${escapeHtml(match.home_team || 'À déterminer')}</span></div>
+            <div class="upcoming-match-vs">vs</div>
+            <div class="upcoming-match-team">${logo(match.away_flag_url)}<span>${escapeHtml(match.away_team || 'À déterminer')}</span></div>
+          </div>
+        </article>
+      `).join('');
+    }
+    window.addEventListener('DOMContentLoaded', renderNewsUpcomingMatches);
 
     function flagHtml(url) {
       return url ? `<img class="team-modal-flag" src="${escapeHtml(url)}" alt="">` : '<div class="team-modal-flag flag placeholder" aria-hidden="true"></div>';
