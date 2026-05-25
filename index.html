@@ -593,7 +593,8 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 24px 70px rgba(0,0,0,0.26);
     }
     .bracket-stage.ucl-official {
-      grid-template-columns: minmax(0, 1.25fr) clamp(170px, 17vw, 230px) minmax(0, 1.25fr);
+      grid-template-columns: minmax(0, 1.22fr) clamp(180px, 18vw, 240px) minmax(0, 1.22fr);
+      gap: clamp(14px, 1.9vw, 24px);
       border-color: rgba(132,173,255,0.28);
       background:
         radial-gradient(circle at 50% 16%, rgba(132,173,255,0.18), transparent 24rem),
@@ -608,7 +609,8 @@
       min-width: 0;
     }
     .bracket-wing.ucl-wing {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: clamp(10px, 1.2vw, 16px);
     }
     .bracket-wing.left::after, .bracket-wing.right::before {
       content: "";
@@ -697,6 +699,23 @@
         linear-gradient(180deg, rgba(17,39,64,0.94), rgba(7,17,31,0.95));
       box-shadow: 0 0 46px rgba(245,201,107,0.18), inset 0 0 0 1px rgba(255,255,255,0.05);
     }
+    .ucl-official .round { gap: 10px; }
+    .ucl-official .round-title { position: relative; z-index: 2; padding-block: 6px; background: rgba(245,201,107,0.12); }
+    .ucl-official .ko-match { position: relative; z-index: 2; min-height: 112px; display: grid; align-content: center; padding: 10px; overflow: hidden; }
+    .ucl-official .ko-line { grid-template-columns: minmax(0, 1fr) 28px; gap: 6px; margin: 5px 0; font-size: clamp(11px, 0.86vw, 13px); }
+    .ucl-official .bracket-team { grid-template-columns: 24px minmax(0, 1fr); align-items: center; justify-items: start; text-align: left; gap: 7px; }
+    .ucl-official .bracket-team .flag { width: 22px; height: 22px; flex-basis: 22px; }
+    .ucl-official .bracket-team-name { -webkit-line-clamp: 2; line-height: 1.1; }
+    .ucl-official .ko-score { min-width: 28px; font-size: 14px; }
+    .ucl-official .ko-match .subtle { font-size: 11px; line-height: 1.25; }
+    .ucl-official .ko-match::before { z-index: 0; width: 10px; right: -11px; opacity: .42; }
+    .ucl-official .bracket-wing.right .ko-match::before { right: auto; left: -11px; }
+    .ucl-official .round::after { width: 10px; right: -11px; opacity: .38; }
+    .ucl-official .bracket-wing.right .round::after { right: auto; left: -11px; }
+    .ucl-official .bracket-wing.left::after { right: -17px; width: 18px; opacity: .46; }
+    .ucl-official .bracket-wing.right::before { left: -17px; width: 18px; opacity: .46; }
+    .ucl-official .trophy-card { min-height: clamp(205px, 22vw, 260px); display: grid; align-content: center; padding: clamp(14px, 1.5vw, 20px); border-color: rgba(132,173,255,0.34); background: radial-gradient(circle at 50% 28%, rgba(210,230,255,0.30), transparent 8rem), linear-gradient(180deg, rgba(17,39,76,0.95), rgba(5,12,35,0.96)); box-shadow: 0 0 42px rgba(132,173,255,0.18), inset 0 0 0 1px rgba(255,255,255,0.06); }
+    .ucl-official .bracket-logo { width: clamp(96px, 10vw, 140px); margin-bottom: 10px; }
     .bracket-logo { width: clamp(88px, 9vw, 132px); aspect-ratio: 0.74; margin: 0 auto 12px; display: grid; place-items: center; }
     .trophy {
       width: clamp(58px, 6.5vw, 86px);
@@ -6708,7 +6727,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         const rightSemi = semis.slice(1, 2);
         const round = (title, items) => `<article class="round"><div class="round-title">${title}</div>${items.length ? items.map(bracketMatchHtml).join('') : `<div class="historical-unavailable">${info}</div>`}</article>`;
         const finalHtml = final ? bracketMatchHtml(final).replace('ko-match', 'ko-match final-card') : `<div class="ko-match final-card"><div class="subtle">${info}</div><span class="status">À venir</span></div>`;
-        return `<div class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left">${round('Quarts', leftQuarters)}${round('Demies', leftSemi)}</div><div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy ucl-trophy bracket-trophy" aria-hidden="true"><div class="trophy"></div></div><div class="trophy-title">Champions League</div></div><div class="round-title">Finale</div>${finalHtml}</div><div class="bracket-wing ucl-wing right">${round('Demies', rightSemi)}${round('Quarts', rightQuarters)}</div></div></div>`;
+        const trophySvg = `<svg viewBox="0 0 220 300" role="img" focusable="false"><defs><linearGradient id="uclChromeHist" x1="20%" x2="82%" y1="8%" y2="92%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#cfd8e8"/><stop offset="0.48" stop-color="#7f91ad"/><stop offset="0.72" stop-color="#eef5ff"/><stop offset="1" stop-color="#92a5c4"/></linearGradient><linearGradient id="uclStemHist" x1="0" x2="1"><stop offset="0" stop-color="#75879f"/><stop offset="0.48" stop-color="#f7fbff"/><stop offset="1" stop-color="#6c7d97"/></linearGradient><radialGradient id="uclGlowHist" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#ddebff" stop-opacity="0.90"/><stop offset="0.52" stop-color="#7ba9ff" stop-opacity="0.22"/><stop offset="1" stop-color="#0b1735" stop-opacity="0"/></radialGradient></defs><ellipse cx="110" cy="151" rx="92" ry="122" fill="url(#uclGlowHist)"/><path d="M52 71c-29 13-43 41-38 73 5 31 27 51 57 58" fill="none" stroke="url(#uclChromeHist)" stroke-width="13" stroke-linecap="round"/><path d="M168 71c29 13 43 41 38 73-5 31-27 51-57 58" fill="none" stroke="url(#uclChromeHist)" stroke-width="13" stroke-linecap="round"/><path d="M58 48h104l-12 124c-3 35-22 57-40 57s-37-22-40-57L58 48Z" fill="url(#uclChromeHist)" stroke="rgba(255,255,255,.72)" stroke-width="3"/><path d="M82 71h56l-7 92c-2 24-11 39-21 39s-19-15-21-39L82 71Z" fill="rgba(255,255,255,.20)"/><path d="M110 226v33" stroke="url(#uclStemHist)" stroke-width="18" stroke-linecap="round"/><path d="M68 269h84l15 18H53l15-18Z" fill="url(#uclStemHist)"/><path d="M82 288h56" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="118" r="31" fill="none" stroke="#f8fbff" stroke-opacity=".64" stroke-width="5"/><path d="M110 86l10 23h25l-20 15 8 24-23-14-22 14 8-24-20-15h25l9-23Z" fill="#f8fbff" fill-opacity=".74"/></svg>`;
+        return `<div class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left">${round('Quarts', leftQuarters)}${round('Demies', leftSemi)}</div><div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy ucl-trophy bracket-trophy" aria-hidden="true">${trophySvg}</div><div class="trophy-title">Champions League</div></div><div class="round-title">Finale</div>${finalHtml}</div><div class="bracket-wing ucl-wing right">${round('Demies', rightSemi)}${round('Quarts', rightQuarters)}</div></div></div>`;
       };
       const euroBracketHtml = matches => {
         const phaseMatches = label => (matches || []).filter(item => normalizeTeamName(item.phase).includes(label));
