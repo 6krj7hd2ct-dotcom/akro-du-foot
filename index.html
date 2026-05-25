@@ -702,11 +702,11 @@
     .ucl-official .round { gap: 10px; }
     .ucl-official .round-title { position: relative; z-index: 2; padding-block: 6px; background: rgba(245,201,107,0.12); }
     .ucl-official .ko-match { position: relative; z-index: 2; min-height: 112px; display: grid; align-content: center; padding: 10px; overflow: hidden; }
-    .ucl-official .ko-line { grid-template-columns: minmax(0, 1fr) 28px; gap: 6px; margin: 5px 0; font-size: clamp(11px, 0.86vw, 13px); }
-    .ucl-official .bracket-team { grid-template-columns: 24px minmax(0, 1fr); align-items: center; justify-items: start; text-align: left; gap: 7px; }
-    .ucl-official .bracket-team .flag { width: 22px; height: 22px; flex-basis: 22px; }
-    .ucl-official .bracket-team-name { -webkit-line-clamp: 2; line-height: 1.1; }
-    .ucl-official .ko-score { min-width: 28px; font-size: 14px; }
+    .ucl-official .ko-line { grid-template-columns: minmax(0, 1fr) 34px; gap: 8px; margin: 5px 0; font-size: clamp(11px, 0.86vw, 13px); }
+    .ucl-official .bracket-team { grid-template-columns: 24px minmax(0, 1fr); align-items: center; justify-items: start; text-align: left; gap: 7px; min-width: 0; overflow: hidden; }
+    .ucl-official .bracket-team .flag { width: 22px; height: 22px; flex-basis: 22px; object-fit: contain; }
+    .ucl-official .bracket-team-name { min-width: 0; max-width: 100%; -webkit-line-clamp: 2; line-height: 1.1; overflow-wrap: anywhere; }
+    .ucl-official .ko-score { min-width: 34px; justify-self: end; text-align: right; font-size: 14px; font-variant-numeric: tabular-nums; }
     .ucl-official .ko-match .subtle { font-size: 11px; line-height: 1.25; }
     .ucl-official .ko-match::before { z-index: 0; width: 10px; right: -11px; opacity: .42; }
     .ucl-official .bracket-wing.right .ko-match::before { right: auto; left: -11px; }
@@ -6730,6 +6730,24 @@ grant select, insert, update on public.profiles to authenticated;`;
         const trophySvg = `<svg viewBox="0 0 220 300" role="img" focusable="false"><defs><linearGradient id="uclChromeHist" x1="20%" x2="82%" y1="8%" y2="92%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#cfd8e8"/><stop offset="0.48" stop-color="#7f91ad"/><stop offset="0.72" stop-color="#eef5ff"/><stop offset="1" stop-color="#92a5c4"/></linearGradient><linearGradient id="uclStemHist" x1="0" x2="1"><stop offset="0" stop-color="#75879f"/><stop offset="0.48" stop-color="#f7fbff"/><stop offset="1" stop-color="#6c7d97"/></linearGradient><radialGradient id="uclGlowHist" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#ddebff" stop-opacity="0.90"/><stop offset="0.52" stop-color="#7ba9ff" stop-opacity="0.22"/><stop offset="1" stop-color="#0b1735" stop-opacity="0"/></radialGradient></defs><ellipse cx="110" cy="151" rx="92" ry="122" fill="url(#uclGlowHist)"/><path d="M52 71c-29 13-43 41-38 73 5 31 27 51 57 58" fill="none" stroke="url(#uclChromeHist)" stroke-width="13" stroke-linecap="round"/><path d="M168 71c29 13 43 41 38 73-5 31-27 51-57 58" fill="none" stroke="url(#uclChromeHist)" stroke-width="13" stroke-linecap="round"/><path d="M58 48h104l-12 124c-3 35-22 57-40 57s-37-22-40-57L58 48Z" fill="url(#uclChromeHist)" stroke="rgba(255,255,255,.72)" stroke-width="3"/><path d="M82 71h56l-7 92c-2 24-11 39-21 39s-19-15-21-39L82 71Z" fill="rgba(255,255,255,.20)"/><path d="M110 226v33" stroke="url(#uclStemHist)" stroke-width="18" stroke-linecap="round"/><path d="M68 269h84l15 18H53l15-18Z" fill="url(#uclStemHist)"/><path d="M82 288h56" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="118" r="31" fill="none" stroke="#f8fbff" stroke-opacity=".64" stroke-width="5"/><path d="M110 86l10 23h25l-20 15 8 24-23-14-22 14 8-24-20-15h25l9-23Z" fill="#f8fbff" fill-opacity=".74"/></svg>`;
         return `<div class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left">${round('Quarts', leftQuarters)}${round('Demies', leftSemi)}</div><div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy ucl-trophy bracket-trophy" aria-hidden="true">${trophySvg}</div><div class="trophy-title">Champions League</div></div><div class="round-title">Finale</div>${finalHtml}</div><div class="bracket-wing ucl-wing right">${round('Demies', rightSemi)}${round('Quarts', rightQuarters)}</div></div></div>`;
       };
+      const premiumBracketHtml = (matches, title) => {
+        const phaseMatches = label => (matches || []).filter(item => normalizeTeamName(item.phase).includes(label));
+        const quarters = phaseMatches('quart');
+        const semis = phaseMatches('demi');
+        const final = phaseMatches('finale').filter(item => !normalizeTeamName(item.phase).includes('demi'))[0];
+        const thirdPlace = (matches || []).find(item => {
+          const phase = normalizeTeamName(item.phase);
+          return phase.includes('3e') || phase.includes('3eme') || phase.includes('troisieme') || phase.includes('3e place');
+        });
+        if (!quarters.length && !semis.length && !final && !thirdPlace) return `<div class="historical-unavailable">${info}</div>`;
+        const split = items => [items.slice(0, Math.ceil(items.length / 2)), items.slice(Math.ceil(items.length / 2))];
+        const [leftQuarters, rightQuarters] = split(quarters);
+        const [leftSemis, rightSemis] = split(semis);
+        const round = (roundTitle, items) => items.length ? `<article class="round"><div class="round-title">${roundTitle}</div>${items.map(bracketMatchHtml).join('')}</article>` : '';
+        const finalHtml = final ? bracketMatchHtml(final).replace('ko-match', 'ko-match final-card') : `<div class="ko-match final-card"><div class="subtle">${info}</div><span class="status">À venir</span></div>`;
+        const thirdHtml = thirdPlace ? `<div class="round-title">3e place</div>${bracketMatchHtml(thirdPlace).replace('ko-match', 'ko-match third-place-card')}` : '';
+        return `<div class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left">${round('Quarts', leftQuarters)}${round('Demies', leftSemis)}</div><div class="bracket-center"><div class="trophy-card"><div class="bracket-logo bracket-trophy" aria-hidden="true"><div class="trophy"></div></div><div class="trophy-title">${escape(title)}</div></div><div class="round-title">Finale</div>${finalHtml}${thirdHtml}</div><div class="bracket-wing ucl-wing right">${round('Demies', rightSemis)}${round('Quarts', rightQuarters)}</div></div></div>`;
+      };
       const euroBracketHtml = matches => {
         const phaseMatches = label => (matches || []).filter(item => normalizeTeamName(item.phase).includes(label));
         const quarters = phaseMatches('quart');
@@ -6838,7 +6856,17 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (nodes.assists) nodes.assists.innerHTML = playersHtml(data.assists);
         if (nodes.awards) nodes.awards.innerHTML = awardsHtml(data.awards);
         if (nodes.big5) nodes.big5.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : '';
-        if (nodes.bracket) nodes.bracket.innerHTML = data.bracket?.length ? (kind === 'euro' ? euroBracketHtml(data.bracket) : kind === 'champions' ? championsBracketHtml(data.bracket) : bracketHtml(data.bracket)) : fallbackCurrentHtml('bracket');
+        if (nodes.bracket) {
+          const premiumEuroBracket = kind === 'euro' && ['2020', '2024'].includes(selected);
+          const premiumWorldCupBracket = kind === 'worldcup' && ['2018', '2022'].includes(selected);
+          nodes.bracket.innerHTML = data.bracket?.length
+            ? (premiumEuroBracket ? premiumBracketHtml(data.bracket, `Euro ${selected}`)
+              : premiumWorldCupBracket ? premiumBracketHtml(data.bracket, `Coupe du Monde ${selected}`)
+              : kind === 'euro' ? euroBracketHtml(data.bracket)
+              : kind === 'champions' ? championsBracketHtml(data.bracket)
+              : bracketHtml(data.bracket))
+            : fallbackCurrentHtml('bracket');
+        }
         if (nodes.groups) nodes.groups.innerHTML = data.groups?.length ? groupsHtml(data.groups) : (derivedChampionsGroups.length ? groupsHtml(derivedChampionsGroups) : fallbackCurrentHtml('groups'));
         if (nodes.calendar) nodes.calendar.innerHTML = data.calendar?.length ? calendarHtml(data.calendar) : fallbackCurrentHtml('calendar');
         upgradeVisiblePlayerCards();
