@@ -101,13 +101,22 @@
       opacity: 0.8;
     }
     .app-top { position: relative; z-index: 101; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+    .header-icon-actions { position: absolute; top: 0; right: 0; z-index: 120; display: flex; gap: 8px; align-items: center; }
+    .header-icon-button { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; background: rgba(5,16,31,0.54); color: var(--ink); font: inherit; font-size: 16px; cursor: pointer; text-decoration: none; box-shadow: 0 14px 30px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+    .header-icon-button:hover, .header-icon-button:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.50); background: rgba(245,201,107,0.13); outline: none; }
     .app-brand { display: grid; grid-template-columns: clamp(76px, 9vw, 112px) minmax(0, 1fr); gap: 18px; align-items: center; }
     .app-logo { width: clamp(76px, 9vw, 112px); height: clamp(76px, 9vw, 112px); border-radius: 24%; object-fit: cover; box-shadow: 0 18px 44px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.14), 0 0 34px rgba(31,111,235,0.28); background: #000; }
     .app-title { font-size: clamp(42px, 8vw, 92px); line-height: 0.9; }
     .app-copy { color: #c5d3e4; max-width: 650px; margin: 12px 0 0; font-size: 16px; line-height: 1.5; }
-    .global-controls { position: relative; z-index: 102; display: flex; flex-direction: row; flex-wrap: nowrap; gap: 16px; align-items: center; justify-content: space-between; width: 100%; max-width: min(1040px, 100%); }
-    .global-actions { display: flex; flex: 0 0 auto; flex-wrap: nowrap; gap: 10px; justify-content: flex-end; align-items: center; padding-left: 0; white-space: nowrap; }
-    .global-search { position: relative; z-index: 2500; flex: 1 1 auto; min-width: 0; max-width: none; }
+    .global-controls { position: relative; z-index: 102; display: grid; grid-template-columns: minmax(240px, 520px) auto minmax(0, 1fr); gap: 9px; align-items: center; width: 100%; max-width: min(1120px, 100%); }
+    .global-actions { display: flex; flex: 0 0 auto; flex-wrap: nowrap; gap: 10px; justify-content: flex-end; align-items: center; padding-left: clamp(10px, 2vw, 26px); white-space: nowrap; }
+    .global-search { position: relative; z-index: 2500; min-width: 0; max-width: none; }
+    .coach-header-button { color: #08172b; border-color: rgba(245,201,107,0.86); background: linear-gradient(135deg, var(--gold), #fff2b7); box-shadow: 0 14px 30px rgba(245,201,107,0.18), inset 0 1px 0 rgba(255,255,255,0.35); }
+    .coach-header-button:hover, .coach-header-button:focus-visible { background: linear-gradient(135deg, #ffe58c, #fff8d6); outline: 1px solid rgba(245,201,107,0.55); }
+    .game-header-button { color: #e8fff8; border-color: rgba(50,211,162,0.42); background: rgba(50,211,162,0.13); box-shadow: 0 14px 30px rgba(50,211,162,0.10), inset 0 1px 0 rgba(255,255,255,0.08); }
+    .game-header-button:hover, .game-header-button:focus-visible { background: rgba(50,211,162,0.22); border-color: rgba(50,211,162,0.70); outline: 1px solid rgba(50,211,162,0.45); }
+    .mini-game-status { display: none; width: fit-content; max-width: min(620px, 100%); margin-top: -6px; padding: 9px 12px; border: 1px solid rgba(245,201,107,0.28); border-radius: 999px; background: rgba(245,201,107,0.10); color: #ffe1a0; font-size: 12px; font-weight: 900; }
+    .mini-game-status.is-visible { display: inline-flex; }
     .search-input { width: 100%; padding: 14px 46px 14px 17px; border-radius: 999px; border-color: rgba(245,201,107,0.30); background: rgba(4,14,28,0.74); box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 16px 38px rgba(0,0,0,0.18); font-size: 15px; }
     .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); font-weight: 950; pointer-events: none; }
     .search-results { position: absolute; z-index: 2501; top: calc(100% + 10px); left: 0; right: 0; width: 100%; display: none; max-height: min(430px, calc(100vh - var(--live-bar-height) - 140px)); overflow-y: auto; padding: 8px; border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; background: rgba(5,16,31,0.98); box-shadow: var(--shadow); backdrop-filter: blur(16px); }
@@ -1050,9 +1059,10 @@
       }
       main { width: min(100% - 20px, 1240px); padding-top: 14px; }
       .app-top { grid-template-columns: 1fr; align-items: start; }
-      .global-controls { width: 100%; max-width: none; flex-direction: column; align-items: stretch; gap: 10px; }
-      .global-search { width: 100%; }
-      .global-actions { width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+      .header-icon-actions { top: -4px; right: -4px; }
+      .global-controls { width: 100%; max-width: none; display: grid; grid-template-columns: 1fr; align-items: stretch; gap: 10px; }
+      .global-search { width: 100%; max-width: none; min-width: 0; }
+      .global-actions { width: 100%; flex-wrap: wrap; justify-content: flex-start; padding-left: 0; }
       .mercato-ticker { grid-template-columns: auto minmax(0, 1fr); min-height: 50px; max-height: 56px; }
       .mercato-under-tabs { margin: -2px 0 16px; }
       .live-main-ticker, .live-main-ticker.is-fixed { width: min(100% - 20px, 1240px); }
@@ -1104,12 +1114,13 @@
       .next-match-pill { width: 100%; justify-content: center; gap: 5px; padding-inline: 8px; font-size: clamp(8px, 2.65vw, 11px); }
       .next-match-pill .flag, .pill .flag { width: 15px; height: 15px; }
       .app-brand { grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }
+      .header-icon-button { width: 34px; height: 34px; font-size: 14px; }
       .app-logo { width: 64px; height: 64px; border-radius: 22%; }
       .app-title { font-size: clamp(34px, 12vw, 44px); }
       .app-copy { font-size: 14px; }
       .global-controls { width: 100%; }
       .global-actions { width: 100%; }
-      .action-button { flex: 1 1 130px; text-align: center; }
+      .global-actions .action-button { flex: 1 1 120px; text-align: center; }
       .mercato-link { font-size: 12px; max-width: 78vw; }
       .mercato-title { font-size: 12px; max-width: 48vw; }
       .mercato-time, .mercato-entity, .mercato-source, .mercato-sep { font-size: 12px; }
@@ -1171,6 +1182,10 @@
     
     <header class="app-header">
       <div class="app-top">
+        <div class="header-icon-actions" aria-label="Actions rapides secondaires">
+          <button class="header-icon-button" type="button" id="shareButton" aria-label="Partager" title="Partager">🔗</button>
+          <a class="header-icon-button" href="/watch-party" aria-label="Watch Party" title="Watch Party">🖥️</a>
+        </div>
         <div class="app-brand">
           <img class="app-logo" src="/icons/icon-192.png" alt="Logo Akro du Foot" width="192" height="192" loading="eager">
           <div>
@@ -1185,13 +1200,15 @@
             <span class="search-icon" aria-hidden="true">⌕</span>
             <div class="search-results" id="globalSearchResults" role="listbox" aria-label="Résultats de recherche"></div>
           </div>
+          <button class="action-button coach-header-button" type="button" id="chatbotButton">Coach</button>
           <div class="global-actions" aria-label="Actions rapides">
-            <button class="action-button" type="button" id="shareButton">Partager</button>
-            <button class="action-button" type="button" id="chatbotButton">Coach</button>
-            <button class="action-button" type="button" id="quizButton">Quiz</button>
-            <a class="action-button" href="/watch-party">Watch Party</a>
+            <button class="action-button game-header-button" type="button" id="quizButton">Quiz</button>
+            <button class="action-button game-header-button" type="button" data-mini-game="Qui est-ce ?">Qui est-ce ?</button>
+            <button class="action-button game-header-button" type="button" data-mini-game="Je suis ?">Je suis ?</button>
+            <button class="action-button game-header-button" type="button" data-mini-game="Dream Team">Dream Team</button>
           </div>
         </div>
+        <div class="mini-game-status" id="miniGameStatus" role="status" aria-live="polite"></div>
       </div>
     </header>
 
@@ -3939,11 +3956,25 @@ grant select, insert, update on public.profiles to authenticated;`;
           return;
         }
         await navigator.clipboard.writeText(url);
-        shareButton.textContent = 'Lien copié';
+        shareButton.textContent = '✓';
+        shareButton.setAttribute('aria-label', 'Lien copié');
       } catch (error) {
-        shareButton.textContent = 'Copie impossible';
+        shareButton.textContent = '!';
+        shareButton.setAttribute('aria-label', 'Copie impossible');
       }
-      setTimeout(() => shareButton.textContent = 'Partager', 1800);
+      setTimeout(() => {
+        shareButton.textContent = '🔗';
+        shareButton.setAttribute('aria-label', 'Partager');
+      }, 1800);
+    }
+
+    function showMiniGameSoon(name) {
+      const status = document.getElementById('miniGameStatus');
+      if (!status) return;
+      status.textContent = `${name} · Mini-jeu bientôt disponible`;
+      status.classList.add('is-visible');
+      clearTimeout(showMiniGameSoon.timer);
+      showMiniGameSoon.timer = setTimeout(() => status.classList.remove('is-visible'), 2600);
     }
 
     function renderMatchOptions(matches) {
@@ -4228,7 +4259,10 @@ grant select, insert, update on public.profiles to authenticated;`;
     document.addEventListener('akro:focus-change', () => { renderFavoriteMatches(communityMatches); saveFocusTeamsToSupabase(); });
     document.addEventListener('akro:league-focus-change', () => { renderFavoriteMatches(communityMatches); saveFocusTeamsToSupabase(); });
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeUserProfile(); closeProfileCreateModal(); closeProfileLoginModal(); } });
-    shareButton.addEventListener('click', sharePage);
+    shareButton?.addEventListener('click', sharePage);
+    document.querySelectorAll('[data-mini-game]').forEach(button => {
+      button.addEventListener('click', () => showMiniGameSoon(button.dataset.miniGame || 'Mini-jeu'));
+    });
     competitionFilter.addEventListener('change', () => renderMatchOptions(communityMatches));
     predictionMatch.addEventListener('change', updatePredictionTeams);
     predictionPseudo.addEventListener('input', () => { savePseudo(); updatePredictionButton(); });
