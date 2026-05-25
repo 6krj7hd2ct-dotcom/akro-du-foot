@@ -1024,6 +1024,9 @@
     #quizStartButton { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
     #quizStartButton.is-result-ready { color: #fff; background: linear-gradient(180deg, #ff5a66, #c91525); }
     #quizNextButton { color: #041611; background: linear-gradient(180deg, #9ff0d5, #32d3a2); }
+    #whoStartButton { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
+    #whoStartButton.is-result-ready { color: #fff; background: linear-gradient(180deg, #ff5a66, #c91525); }
+    #whoNextButton { color: #041611; background: linear-gradient(180deg, #9ff0d5, #32d3a2); }
     .quiz-progression { display: grid; gap: 6px; padding: 9px 10px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); }
     .quiz-progress-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .quiz-progress-tag { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.07); color: #d6e5f7; font-size: 11px; font-weight: 900; }
@@ -1045,6 +1048,17 @@
     .quiz-feedback { min-height: 17px; color: #d6e5f7; font-size: 12px; line-height: 1.28; font-weight: 850; }
     .quiz-feedback.good { color: #9ff0d5; }
     .quiz-feedback.bad { color: #ffb4bd; }
+    .who-player-panel { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 1fr); gap: 10px; align-items: stretch; }
+    .who-photo-card { position: relative; min-height: 190px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(245,201,107,0.22); background: radial-gradient(circle at 70% 25%, rgba(245,201,107,0.22), transparent 12rem), rgba(7,17,31,0.76); }
+    .who-player-photo { width: 100%; height: 100%; min-height: 190px; display: block; object-fit: cover; object-position: center top; transform: scale(1.02); }
+    .who-photo-card.is-silhouette .who-player-photo { filter: brightness(0) saturate(0) contrast(1.35); opacity: .86; }
+    .who-photo-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(7,17,31,0.54)); pointer-events: none; }
+    .who-photo-fallback { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,0.76); font-size: 40px; font-weight: 950; background: linear-gradient(135deg, rgba(31,111,235,0.22), rgba(245,201,107,0.14)); }
+    .who-stage-copy { display: grid; gap: 7px; align-content: start; }
+    .who-timer { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #ffe1a0; font-size: 12px; font-weight: 950; }
+    .who-timer-track { height: 5px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
+    .who-timer-fill { height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, #32d3a2, #ffe1a0, #ef3340); transition: width .2s linear; }
+    .who-result-summary { display: grid; gap: 5px; padding: 10px; border-radius: 12px; background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.10); color: #d6e5f7; font-size: 13px; font-weight: 850; }
     .quiz-actions { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
     .quiz-actions .action-button, .quiz-actions .search-secondary-button { padding-block: 8px; }
     .quiz-next-inline { padding: 7px 10px; font-size: 12px; }
@@ -1158,6 +1172,8 @@
       .quiz-controls, .quiz-theme-selectors { grid-template-columns: 1fr; }
       .quiz-bottom-actions { grid-template-columns: 1fr; }
       .quiz-next-box { justify-items: stretch; }
+      .who-player-panel { grid-template-columns: 1fr; }
+      .who-photo-card, .who-player-photo { min-height: 210px; }
       .euro-summary-card.player-summary-card { padding-right: 86px; }
       .player-summary-photo { width: 78px; height: 96px; }
       .news-awards-grid .award-card, .tournament-awards-grid .award-card { grid-template-columns: minmax(0, 1fr) 74px; }
@@ -1203,7 +1219,7 @@
           <button class="action-button coach-header-button" type="button" id="chatbotButton">Coach</button>
           <div class="global-actions" aria-label="Actions rapides">
             <button class="action-button game-header-button" type="button" id="quizButton">Quiz</button>
-            <button class="action-button game-header-button" type="button" data-mini-game="Qui est-ce ?">Qui est-ce ?</button>
+            <button class="action-button game-header-button" type="button" id="whoButton">Qui est-ce ?</button>
             <button class="action-button game-header-button" type="button" data-mini-game="Je suis ?">Je suis ?</button>
             <button class="action-button game-header-button" type="button" data-mini-game="Dream Team">Dream Team</button>
           </div>
@@ -1973,6 +1989,82 @@
     </article>
   </div>
 
+  <div class="team-modal" id="whoModal" aria-hidden="true">
+    <article class="team-dialog quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="whoTitle">
+      <header class="team-modal-head">
+        <div class="alltime-rank">?</div>
+        <div>
+          <div class="team-modal-title" id="whoTitle">Qui est-ce ?</div>
+          <div class="subtle">Devine le joueur en 10 photos, avec mode silhouette et timer.</div>
+        </div>
+        <button class="modal-close" type="button" id="whoClose" aria-label="Fermer">×</button>
+      </header>
+      <div class="team-modal-body quiz-body">
+        <div class="quiz-setup" id="whoSetup">
+          <div class="profile-auth-note" id="whoProfileNote">Crée ou connecte ton profil pour sauvegarder tes badges.</div>
+          <div class="quiz-controls">
+            <div class="pseudo-row">
+              <label for="whoDifficulty">Niveau</label>
+              <select id="whoDifficulty">
+                <option value="amateur">Amateur</option>
+                <option value="pro">Pro</option>
+                <option value="expert">Expert</option>
+                <option value="legende">Légende</option>
+                <option value="crack">Crack</option>
+                <option value="consultant">Consultant</option>
+                <option value="coach">Coach</option>
+              </select>
+            </div>
+            <div class="pseudo-row">
+              <label for="whoMode">Mode</label>
+              <select id="whoMode">
+                <option value="simple">Simple</option>
+                <option value="silhouette">Silhouette</option>
+              </select>
+            </div>
+            <div class="pseudo-row">
+              <label>Questions</label>
+              <input type="text" value="10 photos" readonly aria-label="10 questions">
+            </div>
+          </div>
+          <div class="quiz-progression" id="whoProgression" aria-live="polite"></div>
+          <div class="quiz-result" id="whoResult" hidden>
+            <div class="quiz-feedback" id="whoFinalMessage"></div>
+            <div class="quiz-badge-list" id="whoBadgeList"></div>
+          </div>
+        </div>
+        <div class="quiz-stage" id="whoStage" hidden>
+          <div class="quiz-progress">
+            <span id="whoProgressText">Question 1/10</span>
+            <span id="whoModeBadge">Simple</span>
+          </div>
+          <div class="who-timer-track" aria-hidden="true"><div class="who-timer-fill" id="whoTimerFill"></div></div>
+          <article class="quiz-card">
+            <div class="who-timer"><span id="whoTimerText">15s</span><span id="whoContextBadge">Amateur · Simple</span></div>
+            <div class="who-player-panel">
+              <div class="who-photo-card" id="whoPhotoCard">
+                <img class="who-player-photo" id="whoPlayerPhoto" src="" alt="Joueur à deviner">
+                <div class="who-photo-fallback" id="whoPhotoFallback" hidden>?</div>
+              </div>
+              <div class="who-stage-copy">
+                <div class="quiz-question" id="whoQuestion">Qui est ce joueur ?</div>
+                <div class="quiz-answers" id="whoAnswers"></div>
+                <div class="quiz-feedback" id="whoFeedback" aria-live="polite"></div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="quiz-bottom-actions">
+          <button class="action-button" type="button" id="whoStartButton">Lancer le jeu</button>
+          <div class="quiz-next-box">
+            <button class="action-button quiz-next-inline" type="button" id="whoNextButton" disabled>Question suivante</button>
+            <span class="quiz-score-pill" id="whoScoreText">0/10</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
   <div class="team-modal" id="searchDetailModal" aria-hidden="true">
     <article class="team-dialog search-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="searchDetailTitle">
       <header class="team-modal-head">
@@ -2681,6 +2773,12 @@
       ['coach', 'Coach', 'Quiz Coach', 'quiz_coach']
     ];
     const QUIZ_REQUIRED_THEME_KEYS = ['general', 'club', 'nation', 'worldcup', 'euro', 'champions'];
+    const WHO_REQUIRED_MODE_KEYS = ['simple', 'silhouette'];
+    const WHO_MODE_LABELS = {simple: 'Simple', silhouette: 'Silhouette'};
+    const WHO_TIMER_SECONDS = {
+      simple: {amateur: 15, pro: 15, expert: 15, legende: 20, crack: 20, consultant: 20, coach: 20},
+      silhouette: {amateur: 20, pro: 20, expert: 20, legende: 30, crack: 30, consultant: 30, coach: 30}
+    };
     const PROFILE_AVATARS = [
       '/avatars/avatar-cool.png',
       '/avatars/avatar-cry.png',
@@ -3057,9 +3155,51 @@ grant select, insert, update on public.profiles to authenticated;`;
       return level ? labels[level] : '';
     }
 
+    function whoResultMode(item = {}) {
+      const raw = String(item.theme_type || item.mode || '');
+      if (raw === 'simple' || raw.endsWith(':simple') || raw.endsWith('_simple')) return 'simple';
+      if (raw === 'silhouette' || raw.endsWith(':silhouette') || raw.endsWith('_silhouette')) return 'silhouette';
+      return '';
+    }
+
+    function whoPassedResults(results = []) {
+      return (results || []).filter(item => {
+        const mode = whoResultMode(item);
+        return mode && (Number(item.score || 0) >= 7 || item.passed === true);
+      });
+    }
+
+    function whoLevelCompleteFromResults(results = [], difficulty = 'amateur') {
+      const passed = whoPassedResults(results);
+      return WHO_REQUIRED_MODE_KEYS.every(mode => passed.some(item => String(item.difficulty || '') === difficulty && whoResultMode(item) === mode));
+    }
+
+    function whoUnlockedLevelKeyFromResults(results = []) {
+      const passed = whoPassedResults(results);
+      if (!passed.length) return '';
+      const order = QUIZ_LEVELS.map(item => item[0]);
+      let unlocked = 0;
+      for (let index = 0; index < QUIZ_LEVELS.length - 1; index += 1) {
+        if (whoLevelCompleteFromResults(results, order[index])) unlocked = index + 1;
+        else break;
+      }
+      return order[unlocked] || '';
+    }
+
+    function highestWhoLevel(badges = [], results = []) {
+      const labels = Object.fromEntries(QUIZ_LEVELS.map(item => [item[0], item[1]]));
+      const level = whoUnlockedLevelKeyFromResults(results);
+      return level ? labels[level] : '';
+    }
+
     function quizLevelPill(profile) {
       const level = highestQuizLevel(profile?.badges || [], profile?.quiz_results || []);
       return level ? `<span class="profile-pill">Quiz ${escapeHtml(level)}</span>` : '<span class="profile-pill">Quiz non classé</span>';
+    }
+
+    function whoLevelPill(profile) {
+      const level = highestWhoLevel(profile?.badges || [], profile?.quiz_results || []);
+      return level ? `<span class="profile-pill">Qui est-ce ? ${escapeHtml(level)}</span>` : '';
     }
 
     function renderActiveProfile() {
@@ -3089,9 +3229,9 @@ grant select, insert, update on public.profiles to authenticated;`;
             <span class="profile-pill">${escapeHtml(profile.favorite_club || 'Club favori')}</span>
             <span class="profile-pill">${escapeHtml(profile.favorite_nation || 'Nation favorite')}</span>
             ${quizLevelPill(profile)}
+            ${whoLevelPill(profile)}
             <span class="profile-pill">Pronos ${escapeHtml(profile.level || 'Débutant')}</span>
             <span class="profile-pill">${escapeHtml(profile.points || 0)} pts</span>
-            <span class="profile-pill">${escapeHtml(profile.predictions_count || 0)} pronos</span>
             <span class="profile-pill">${profile.rank ? `#${escapeHtml(profile.rank)}` : 'Non classé'}</span>
           </div>
           <button class="search-secondary-button" type="button" id="profileLogoutButton">Se déconnecter</button>
@@ -3318,6 +3458,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         badges: akroBadges,
         quiz_results: akroQuizResults,
         quiz_level: highestQuizLevel(akroBadges, akroQuizResults),
+        who_level: highestWhoLevel(akroBadges, akroQuizResults),
         avatar_url: avatarUrl(akroProfile.avatar_url || selectedAvatarUrl),
         favorite_club: akroProfile.favorite_club || '',
         favorite_club_logo: akroProfile.favorite_club_logo || '',
@@ -6103,6 +6244,503 @@ grant select, insert, update on public.profiles to authenticated;`;
     quizStartButton?.addEventListener('click', startQuiz);
     quizAnswers?.addEventListener('click', event => answerQuiz(event.target.closest('.quiz-answer')));
     quizNextButton?.addEventListener('click', nextQuizQuestion);
+  </script>
+
+  <script>
+    const whoButton = document.getElementById('whoButton');
+    const whoModal = document.getElementById('whoModal');
+    const whoClose = document.getElementById('whoClose');
+    const whoSetup = document.getElementById('whoSetup');
+    const whoStage = document.getElementById('whoStage');
+    const whoResult = document.getElementById('whoResult');
+    const whoProfileNote = document.getElementById('whoProfileNote');
+    const whoDifficulty = document.getElementById('whoDifficulty');
+    const whoMode = document.getElementById('whoMode');
+    const whoProgression = document.getElementById('whoProgression');
+    const whoStartButton = document.getElementById('whoStartButton');
+    const whoNextButton = document.getElementById('whoNextButton');
+    const whoScoreText = document.getElementById('whoScoreText');
+    const whoProgressText = document.getElementById('whoProgressText');
+    const whoModeBadge = document.getElementById('whoModeBadge');
+    const whoTimerText = document.getElementById('whoTimerText');
+    const whoTimerFill = document.getElementById('whoTimerFill');
+    const whoContextBadge = document.getElementById('whoContextBadge');
+    const whoPhotoCard = document.getElementById('whoPhotoCard');
+    const whoPlayerPhoto = document.getElementById('whoPlayerPhoto');
+    const whoPhotoFallback = document.getElementById('whoPhotoFallback');
+    const whoQuestion = document.getElementById('whoQuestion');
+    const whoAnswers = document.getElementById('whoAnswers');
+    const whoFeedback = document.getElementById('whoFeedback');
+    const whoFinalMessage = document.getElementById('whoFinalMessage');
+    const whoBadgeList = document.getElementById('whoBadgeList');
+    const WHO_DIFFICULTIES = Object.fromEntries(QUIZ_LEVELS.map(([key, label]) => [key, {label, badge: `Qui est-ce ? ${label}`, key: `who_${key}`}]));
+    const WHO_FALLBACK_PLAYERS = [
+      ['Kylian Mbappé', 'Real Madrid', 'France', 'https://images.fotmob.com/image_resources/playerimages/701154.png'],
+      ['Lionel Messi', 'Inter Miami', 'Argentine', 'https://images.fotmob.com/image_resources/playerimages/30981.png'],
+      ['Cristiano Ronaldo', 'Al Nassr', 'Portugal', 'https://images.fotmob.com/image_resources/playerimages/30893.png'],
+      ['Erling Haaland', 'Manchester City', 'Norvège', 'https://images.fotmob.com/image_resources/playerimages/737066.png'],
+      ['Harry Kane', 'Bayern Munich', 'Angleterre', 'https://images.fotmob.com/image_resources/playerimages/194165.png'],
+      ['Lamine Yamal', 'Barcelona', 'Espagne', 'https://images.fotmob.com/image_resources/playerimages/1467236.png'],
+      ['Jude Bellingham', 'Real Madrid', 'Angleterre', 'https://images.fotmob.com/image_resources/playerimages/1077894.png'],
+      ['Vinícius Júnior', 'Real Madrid', 'Brésil', 'https://images.fotmob.com/image_resources/playerimages/846033.png'],
+      ['Mohamed Salah', 'Liverpool', 'Égypte', 'https://images.fotmob.com/image_resources/playerimages/292462.png'],
+      ['Michael Olise', 'Bayern Munich', 'France', 'https://images.fotmob.com/image_resources/playerimages/1029063.png'],
+      ['Ousmane Dembélé', 'Paris Saint-Germain', 'France', 'https://images.fotmob.com/image_resources/playerimages/692984.png'],
+      ['Désiré Doué', 'Paris Saint-Germain', 'France', 'https://images.fotmob.com/image_resources/playerimages/1339208.png']
+    ];
+    let whoState = {questions: [], index: 0, score: 0, answered: false, pendingResult: false, config: null, timerId: null, duration: 15, timeLeft: 15, autoAdvanceId: null};
+
+    function whoClearTimers() {
+      if (whoState.timerId) clearInterval(whoState.timerId);
+      if (whoState.autoAdvanceId) clearTimeout(whoState.autoAdvanceId);
+      whoState.timerId = null;
+      whoState.autoAdvanceId = null;
+    }
+
+    function whoPassedForLevelMode(difficulty, mode) {
+      return whoPassedResults(Array.isArray(akroQuizResults) ? akroQuizResults : []).some(item => String(item.difficulty || '') === difficulty && whoResultMode(item) === mode);
+    }
+
+    function whoLevelComplete(difficulty) {
+      return whoLevelCompleteFromResults(Array.isArray(akroQuizResults) ? akroQuizResults : [], difficulty);
+    }
+
+    function whoUnlockedIndex() {
+      const key = whoUnlockedLevelKeyFromResults(Array.isArray(akroQuizResults) ? akroQuizResults : []);
+      const index = QUIZ_LEVELS.findIndex(item => item[0] === key);
+      return Math.max(0, index);
+    }
+
+    function updateWhoDifficultyOptions() {
+      if (!whoDifficulty) return;
+      const unlocked = whoUnlockedIndex();
+      Array.from(whoDifficulty.options).forEach((option, index) => {
+        const done = whoLevelComplete(option.value);
+        option.disabled = index > unlocked;
+        option.textContent = `${WHO_DIFFICULTIES[option.value]?.label || option.value}${done ? ' ✓' : index > unlocked ? ' 🔒' : ''}`;
+      });
+      if (whoDifficulty.selectedOptions[0]?.disabled) whoDifficulty.value = QUIZ_LEVELS[unlocked][0];
+    }
+
+    function updateWhoModeOptions() {
+      if (!whoMode) return;
+      const difficulty = whoDifficulty?.value || 'amateur';
+      Array.from(whoMode.options).forEach(option => {
+        const label = WHO_MODE_LABELS[option.value] || option.value;
+        option.textContent = `${label}${whoPassedForLevelMode(difficulty, option.value) ? ' ✓' : ''}`;
+      });
+    }
+
+    function renderWhoProgression() {
+      if (!whoProgression) return;
+      const unlocked = whoUnlockedIndex();
+      const current = whoDifficulty?.value || QUIZ_LEVELS[unlocked][0];
+      const levelTags = QUIZ_LEVELS.map(([key, label], index) => {
+        const done = whoLevelComplete(key);
+        const klass = done ? 'is-done' : key === current ? 'is-current' : index > unlocked ? 'is-locked' : '';
+        const icon = done ? '✓' : index > unlocked ? '🔒' : '•';
+        return `<span class="quiz-progress-tag ${klass}">${icon} ${quizEscape(label)}</span>`;
+      }).join('');
+      const modeTags = WHO_REQUIRED_MODE_KEYS.map(mode => {
+        const done = whoPassedForLevelMode(current, mode);
+        return `<span class="quiz-progress-tag ${done ? 'is-done' : ''}">${done ? '✓' : '•'} ${quizEscape(WHO_MODE_LABELS[mode])}</span>`;
+      }).join('');
+      const unlockedLabel = QUIZ_LEVELS[unlocked]?.[1] || 'Amateur';
+      whoProgression.innerHTML = `
+        <div class="subtle">Niveau débloqué : <strong>${quizEscape(unlockedLabel)}</strong>. Valide Simple et Silhouette pour ouvrir le niveau suivant.</div>
+        <div class="quiz-progress-tags">${levelTags}</div>
+        <div class="quiz-progress-tags">${modeTags}</div>
+      `;
+    }
+
+    function updateWhoControls() {
+      updateWhoDifficultyOptions();
+      updateWhoModeOptions();
+      renderWhoProgression();
+      updateWhoProfileNote();
+    }
+
+    function updateWhoProfileNote() {
+      if (!whoProfileNote) return;
+      whoProfileNote.textContent = (typeof akroProfile !== 'undefined' && akroProfile?.id)
+        ? 'Profil connecté : ta progression Qui est-ce ? sera sauvegardée.'
+        : 'Crée ou connecte ton profil pour sauvegarder tes badges.';
+    }
+
+    function whoPlayerKey(value) {
+      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+    }
+
+    function whoAddPlayer(pool, seen, player) {
+      const name = String(player?.name || player?.player_name || '').trim();
+      const photo = String(player?.photo_url || player?.photo || player?.image_url || '').trim();
+      const key = whoPlayerKey(name);
+      if (!name || !photo || seen.has(key)) return;
+      seen.add(key);
+      pool.push({
+        name,
+        club: player.team || player.club || player.current_team || '',
+        nation: player.country || player.nationality || player.team_country || '',
+        photo
+      });
+    }
+
+    function whoCollectPlayers(value, pool, seen) {
+      if (!value) return;
+      if (Array.isArray(value)) {
+        value.forEach(item => whoCollectPlayers(item, pool, seen));
+        return;
+      }
+      if (typeof value !== 'object') return;
+      const photo = String(value.photo_url || value.photo || value.image_url || '');
+      if (photo && /playerimages|players|media/i.test(photo)) whoAddPlayer(pool, seen, value);
+      const playerKeys = ['leagues', 'seasons', 'editions', 'top_scorers', 'top_assists', 'big5_top_scorers', 'players', 'squad', 'awards', 'tournament_awards', 'summary_cards'];
+      let followedKnownKey = false;
+      Object.keys(value).forEach(key => {
+        if (playerKeys.includes(key)) {
+          followedKnownKey = true;
+          whoCollectPlayers(value[key], pool, seen);
+        }
+      });
+      if (!followedKnownKey && !('home_team' in value) && !('away_team' in value) && !('date' in value)) {
+        Object.values(value).forEach(child => {
+          if (child && typeof child === 'object') whoCollectPlayers(child, pool, seen);
+        });
+      }
+    }
+
+    function buildWhoPlayerPool() {
+      const pool = [];
+      const seen = new Set();
+      (AKRO_SUPABASE_FOOTBALL.players || []).forEach(player => whoAddPlayer(pool, seen, player));
+      if (typeof LEAGUES_DATA !== 'undefined') whoCollectPlayers(LEAGUES_DATA, pool, seen);
+      if (typeof CHAMPIONS_DATA !== 'undefined') whoCollectPlayers(CHAMPIONS_DATA, pool, seen);
+      if (typeof EURO_DATA !== 'undefined') whoCollectPlayers(EURO_DATA, pool, seen);
+      if (typeof WORLD_CUP_DATA !== 'undefined') whoCollectPlayers(WORLD_CUP_DATA, pool, seen);
+      WHO_FALLBACK_PLAYERS.forEach(([name, club, nation, photo]) => whoAddPlayer(pool, seen, {name, club, country: nation, photo_url: photo}));
+      return pool.filter(player => player.photo).slice(0, 120);
+    }
+
+    function buildWhoQuestions() {
+      const pool = shuffled(buildWhoPlayerPool());
+      if (pool.length < 8) return [];
+      return pool.slice(0, 10).map(correct => {
+        const wrong = shuffled(pool.filter(player => whoPlayerKey(player.name) !== whoPlayerKey(correct.name))).slice(0, 3).map(player => player.name);
+        return {
+          player: correct,
+          correct: correct.name,
+          answers: shuffled([correct.name, ...wrong]).slice(0, 4)
+        };
+      });
+    }
+
+    function whoTimerDuration(config) {
+      return WHO_TIMER_SECONDS[config.mode]?.[config.difficulty] || 15;
+    }
+
+    function updateWhoTimerUi() {
+      const ratio = Math.max(0, whoState.timeLeft) / Math.max(1, whoState.duration);
+      if (whoTimerText) whoTimerText.textContent = `${Math.max(0, whoState.timeLeft)}s`;
+      if (whoTimerFill) whoTimerFill.style.width = `${ratio * 100}%`;
+    }
+
+    function startWhoTimer() {
+      whoClearTimers();
+      whoState.duration = whoTimerDuration(whoState.config);
+      whoState.timeLeft = whoState.duration;
+      updateWhoTimerUi();
+      whoState.timerId = setInterval(() => {
+        whoState.timeLeft -= 1;
+        updateWhoTimerUi();
+        if (whoState.timeLeft <= 0) {
+          whoClearTimers();
+          answerWho(null, true);
+        }
+      }, 1000);
+    }
+
+    function openWhoModal() {
+      updateWhoControls();
+      showWhoSetup();
+      whoModal?.classList.add('is-open');
+      whoModal?.setAttribute('aria-hidden', 'false');
+      setTimeout(() => whoDifficulty?.focus(), 0);
+    }
+
+    function closeWhoModal() {
+      whoClearTimers();
+      whoModal?.classList.remove('is-open');
+      whoModal?.setAttribute('aria-hidden', 'true');
+    }
+
+    function showWhoSetup() {
+      whoClearTimers();
+      whoSetup.hidden = false;
+      whoStage.hidden = true;
+      whoResult.hidden = true;
+      whoState.pendingResult = false;
+      if (whoNextButton) {
+        whoNextButton.disabled = true;
+        whoNextButton.textContent = 'Question suivante';
+      }
+      if (whoStartButton) {
+        whoStartButton.disabled = false;
+        whoStartButton.textContent = 'Lancer le jeu';
+        whoStartButton.classList.remove('is-result-ready');
+      }
+      if (whoScoreText) whoScoreText.textContent = '0/10';
+      updateWhoControls();
+    }
+
+    function setWhoResultActionReady() {
+      whoClearTimers();
+      whoState.pendingResult = true;
+      if (whoStartButton) {
+        whoStartButton.disabled = false;
+        whoStartButton.textContent = 'Afficher le résultat';
+        whoStartButton.classList.add('is-result-ready');
+      }
+      if (whoNextButton) {
+        whoNextButton.disabled = true;
+        whoNextButton.textContent = 'Jeu terminé';
+      }
+    }
+
+    function startWhoGame() {
+      if (whoState.pendingResult) {
+        finishWhoGame();
+        return;
+      }
+      const difficulty = whoDifficulty?.value || 'amateur';
+      const requestedIndex = QUIZ_LEVELS.findIndex(item => item[0] === difficulty);
+      const unlocked = whoUnlockedIndex();
+      if (requestedIndex > unlocked) {
+        if (whoProfileNote) whoProfileNote.textContent = `Niveau verrouillé. Valide ${QUIZ_LEVELS[unlocked]?.[1] || 'Amateur'} pour progresser.`;
+        updateWhoControls();
+        return;
+      }
+      const difficultyMeta = WHO_DIFFICULTIES[difficulty] || WHO_DIFFICULTIES.amateur;
+      const config = {difficulty, difficultyLabel: difficultyMeta.label, badgeName: difficultyMeta.badge, badgeKey: difficultyMeta.key, mode: whoMode?.value || 'simple'};
+      const questions = buildWhoQuestions();
+      if (questions.length < 10) {
+        if (whoProfileNote) whoProfileNote.textContent = 'Pas assez de joueurs avec photo pour lancer le jeu proprement.';
+        return;
+      }
+      whoState = {questions, index: 0, score: 0, answered: false, pendingResult: false, config, timerId: null, duration: whoTimerDuration(config), timeLeft: whoTimerDuration(config), autoAdvanceId: null};
+      whoSetup.hidden = true;
+      whoResult.hidden = true;
+      whoStage.hidden = false;
+      whoStartButton.textContent = 'Lancer le jeu';
+      whoStartButton.classList.remove('is-result-ready');
+      renderWhoQuestion();
+    }
+
+    function renderWhoQuestion() {
+      const current = whoState.questions[whoState.index];
+      if (!current) return;
+      whoState.answered = false;
+      if (whoProgressText) whoProgressText.textContent = `Question ${whoState.index + 1}/10`;
+      if (whoModeBadge) whoModeBadge.textContent = WHO_MODE_LABELS[whoState.config.mode] || 'Simple';
+      if (whoContextBadge) whoContextBadge.textContent = `${whoState.config.difficultyLabel} · ${WHO_MODE_LABELS[whoState.config.mode] || 'Simple'}`;
+      if (whoQuestion) whoQuestion.textContent = 'Qui est ce joueur ?';
+      if (whoScoreText) whoScoreText.textContent = `${whoState.score}/10`;
+      if (whoFeedback) {
+        whoFeedback.textContent = '';
+        whoFeedback.className = 'quiz-feedback';
+      }
+      if (whoNextButton) {
+        whoNextButton.disabled = true;
+        whoNextButton.textContent = 'Question suivante';
+      }
+      if (whoPhotoCard) whoPhotoCard.classList.toggle('is-silhouette', whoState.config.mode === 'silhouette');
+      if (whoPlayerPhoto) {
+        whoPlayerPhoto.hidden = false;
+        whoPlayerPhoto.src = current.player.photo;
+        whoPlayerPhoto.alt = whoState.config.mode === 'silhouette' ? 'Silhouette du joueur à deviner' : `Photo de ${current.player.name}`;
+      }
+      if (whoPhotoFallback) {
+        whoPhotoFallback.hidden = true;
+        whoPhotoFallback.textContent = current.player.name.split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
+      }
+      if (whoAnswers) whoAnswers.innerHTML = current.answers.map(answer => `<button class="quiz-answer" type="button" data-answer="${quizEscape(answer)}">${quizEscape(answer)}</button>`).join('');
+      startWhoTimer();
+    }
+
+    function answerWho(button, timedOut = false) {
+      if (whoState.answered) return;
+      whoState.answered = true;
+      whoClearTimers();
+      const current = whoState.questions[whoState.index];
+      const selected = button?.dataset.answer || '';
+      const isCorrect = !timedOut && selected === current.correct;
+      if (isCorrect) whoState.score += 1;
+      Array.from(whoAnswers?.querySelectorAll('.quiz-answer') || []).forEach(item => {
+        item.disabled = true;
+        if ((item.dataset.answer || '') === current.correct) item.classList.add('is-correct');
+      });
+      if (button && !isCorrect) button.classList.add('is-wrong');
+      if (whoFeedback) {
+        const detail = [current.player.club, current.player.nation].filter(Boolean).join(' · ');
+        whoFeedback.textContent = timedOut
+          ? `Temps écoulé. C’était ${current.correct}${detail ? ` (${detail})` : ''}.`
+          : isCorrect
+            ? `Bonne réponse. ${detail}`
+            : `Mauvaise réponse. C’était ${current.correct}${detail ? ` (${detail})` : ''}.`;
+        whoFeedback.className = `quiz-feedback ${isCorrect ? 'good' : 'bad'}`;
+      }
+      if (whoScoreText) whoScoreText.textContent = `${whoState.score}/10`;
+      if (whoState.index >= whoState.questions.length - 1) {
+        setWhoResultActionReady();
+      } else {
+        if (whoNextButton) whoNextButton.disabled = false;
+        if (timedOut) whoState.autoAdvanceId = setTimeout(nextWhoQuestion, 900);
+      }
+    }
+
+    function nextWhoQuestion() {
+      if (!whoState.answered) return;
+      if (whoState.index >= whoState.questions.length - 1) {
+        setWhoResultActionReady();
+        return;
+      }
+      whoState.index += 1;
+      renderWhoQuestion();
+    }
+
+    function whoLevelReachedAfterCurrent() {
+      const synthetic = [...(Array.isArray(akroQuizResults) ? akroQuizResults : [])];
+      synthetic.unshift({
+        difficulty: whoState.config.difficulty,
+        theme_type: `who:${whoState.config.mode}`,
+        score: whoState.score,
+        passed: whoState.score >= 7
+      });
+      return whoUnlockedLevelKeyFromResults(synthetic) || whoState.config.difficulty;
+    }
+
+    async function saveWhoResult() {
+      if (typeof akroSupabase === 'undefined' || typeof akroProfile === 'undefined' || !akroSupabase || !akroProfile?.id) {
+        return {saved: false, badgeSaved: false, message: 'Crée ou connecte ton profil pour sauvegarder tes badges.'};
+      }
+      const payload = {
+        profile_id: akroProfile.id,
+        difficulty: whoState.config.difficulty,
+        theme_type: `who:${whoState.config.mode}`,
+        theme_value: WHO_MODE_LABELS[whoState.config.mode] || whoState.config.mode,
+        score: whoState.score,
+        total_questions: whoState.questions.length,
+        passed: whoState.score >= 7,
+        level_reached: whoLevelReachedAfterCurrent()
+      };
+      let resultSaved = false;
+      try {
+        let {error} = await akroSupabase.from('quiz_results').insert(payload);
+        if (error && /passed|level_reached|schema cache|column/i.test(error.message || '')) {
+          const fallbackPayload = {...payload};
+          delete fallbackPayload.passed;
+          delete fallbackPayload.level_reached;
+          ({error} = await akroSupabase.from('quiz_results').insert(fallbackPayload));
+        }
+        if (error) throw error;
+        resultSaved = true;
+      } catch (error) {
+        console.warn('[qui-est-ce] sauvegarde quiz_results impossible', error);
+      }
+      let badgeSaved = false;
+      let badgeName = WHO_DIFFICULTIES[whoState.config.difficulty]?.badge || 'Qui est-ce ?';
+      if (whoState.score >= 7) {
+        const reachedMeta = WHO_DIFFICULTIES[payload.level_reached] || WHO_DIFFICULTIES[whoState.config.difficulty] || WHO_DIFFICULTIES.amateur;
+        badgeName = reachedMeta.badge;
+        try {
+          const {data, error} = await akroSupabase
+            .from('profile_badges')
+            .upsert({profile_id: akroProfile.id, badge_key: reachedMeta.key, badge_name: reachedMeta.badge}, {onConflict: 'profile_id,badge_key'})
+            .select('*')
+            .single();
+          if (error) throw error;
+          badgeSaved = true;
+          if (Array.isArray(akroBadges) && !akroBadges.some(item => item.badge_key === data.badge_key)) akroBadges.push(data);
+        } catch (error) {
+          console.warn('[qui-est-ce] sauvegarde badge impossible', error);
+        }
+      }
+      if (resultSaved && Array.isArray(akroQuizResults)) {
+        akroQuizResults.unshift(payload);
+        if (Array.isArray(akroBadges)) {
+          const reachedKey = (WHO_DIFFICULTIES[payload.level_reached] || {}).key;
+          akroBadges = akroBadges.filter(item => !String(item.badge_key || '').startsWith('who_') || item.badge_key === reachedKey);
+        }
+        if (typeof mergeSupabaseProfileIntoUi === 'function') mergeSupabaseProfileIntoUi();
+      }
+      return {saved: resultSaved, badgeSaved, message: badgeSaved ? `${badgeName} débloqué.` : resultSaved ? 'Résultat sauvegardé.' : 'Résultat non sauvegardé.'};
+    }
+
+    async function finishWhoGame() {
+      if (!whoState.config) return;
+      whoClearTimers();
+      const config = whoState.config;
+      const reachedBefore = highestWhoLevel(akroBadges, akroQuizResults);
+      const passed = whoState.score >= 7;
+      whoState.pendingResult = false;
+      whoStage.hidden = true;
+      whoSetup.hidden = false;
+      whoResult.hidden = false;
+      if (whoNextButton) {
+        whoNextButton.disabled = true;
+        whoNextButton.textContent = 'Question suivante';
+      }
+      if (whoStartButton) {
+        whoStartButton.textContent = 'Lancer le jeu';
+        whoStartButton.classList.remove('is-result-ready');
+      }
+      if (whoBadgeList) whoBadgeList.innerHTML = '';
+      if (whoFinalMessage) {
+        whoFinalMessage.innerHTML = `
+          <div class="who-result-summary">
+            <strong>Score final : ${quizEscape(String(whoState.score))}/10</strong>
+            <span>Niveau joué : ${quizEscape(config.difficultyLabel)}</span>
+            <span>Mode joué : ${quizEscape(WHO_MODE_LABELS[config.mode] || config.mode)}</span>
+            <span>${passed ? 'Badge ou progression validable. Sauvegarde en cours...' : 'Aucun nouveau badge débloqué : il faut 7/10 ou plus.'}</span>
+          </div>
+        `;
+      }
+      try {
+        const saved = await saveWhoResult();
+        const reachedAfter = highestWhoLevel(akroBadges, akroQuizResults) || reachedBefore;
+        const badgeText = passed
+          ? (reachedAfter && reachedAfter !== reachedBefore ? `Qui est-ce ? ${reachedAfter} débloqué.` : 'Progression validée, aucun nouveau niveau débloqué.')
+          : 'Aucun nouveau badge débloqué.';
+        if (passed && reachedAfter && whoBadgeList) whoBadgeList.innerHTML = `<span class="quiz-badge-pill">Qui est-ce ? ${quizEscape(reachedAfter)}</span>`;
+        updateWhoControls();
+        if (whoFinalMessage) {
+          whoFinalMessage.innerHTML = `
+            <div class="who-result-summary">
+              <strong>Score final : ${quizEscape(String(whoState.score))}/10</strong>
+              <span>Niveau joué : ${quizEscape(config.difficultyLabel)}</span>
+              <span>Mode joué : ${quizEscape(WHO_MODE_LABELS[config.mode] || config.mode)}</span>
+              <span>${quizEscape(badgeText)}</span>
+              <span class="subtle">${quizEscape(saved.message || '')}</span>
+            </div>
+          `;
+        }
+      } catch (error) {
+        if (whoFinalMessage) whoFinalMessage.textContent = publicAuthErrorMessage(error, 'Progression non sauvegardée pour le moment.');
+      }
+    }
+
+    whoButton?.addEventListener('click', openWhoModal);
+    whoClose?.addEventListener('click', closeWhoModal);
+    whoModal?.addEventListener('click', event => { if (event.target === whoModal) closeWhoModal(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && whoModal?.classList.contains('is-open')) closeWhoModal(); });
+    whoDifficulty?.addEventListener('change', updateWhoControls);
+    whoMode?.addEventListener('change', updateWhoControls);
+    whoStartButton?.addEventListener('click', startWhoGame);
+    whoNextButton?.addEventListener('click', nextWhoQuestion);
+    whoAnswers?.addEventListener('click', event => answerWho(event.target.closest('.quiz-answer')));
+    whoPlayerPhoto?.addEventListener('error', () => {
+      if (whoPlayerPhoto) whoPlayerPhoto.hidden = true;
+      if (whoPhotoFallback) whoPhotoFallback.hidden = false;
+    });
   </script>
 
   <script>
