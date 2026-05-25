@@ -15,15 +15,18 @@ const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
 const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
 const DEFAULT_PRIORITY_TEAMS = [
-  "France", "Argentina", "Argentine", "Brazil", "Brésil", "Spain", "Espagne", "England", "Angleterre", "Portugal", "Germany", "Allemagne", "Italy", "Italie",
-  "Netherlands", "Pays-Bas", "Belgium", "Belgique", "Croatia", "Croatie", "Morocco", "Maroc", "Senegal", "Sénégal", "Mexico", "Mexique",
-  "United States", "USA", "Canada", "Japan", "Japon", "South Korea", "Korea Republic", "Corée du Sud", "Uruguay", "Colombia", "Colombie",
-  "Australia", "Australie", "Austria", "Autriche", "Switzerland", "Suisse", "Denmark", "Danemark", "Serbia", "Serbie", "Poland", "Pologne",
-  "Ukraine", "Sweden", "Suède", "Scotland", "Écosse", "Norway", "Norvège",
-  "Algeria", "Algérie", "Egypt", "Égypte", "Nigeria", "Cameroon", "Cameroun", "Tunisia", "Tunisie", "Ghana", "Ivory Coast", "Côte d'Ivoire", "Mali", "South Africa", "Afrique du Sud",
-  "Cape Verde", "Cap-Vert", "Congo DR", "DR Congo", "Qatar", "Saudi Arabia", "Arabie Saoudite", "Iran", "Iraq", "Irak", "Jordan", "Jordanie",
-  "Uzbekistan", "Ouzbékistan", "New Zealand", "Nouvelle-Zélande", "Chile", "Chili", "Peru", "Pérou", "Venezuela", "Costa Rica", "Panama", "Paraguay", "Ecuador", "Équateur", "Haiti", "Haïti", "Curacao", "Curaçao",
-  "Türkiye", "Turkey", "Turquie", "Czechia", "Czech Republic", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Hungary", "Hongrie",
+  "Mexico", "Mexique", "South Africa", "Afrique du Sud", "South Korea", "Korea Republic", "Corée du Sud", "Czechia", "Czech Republic", "République Tchèque",
+  "Canada", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Bosnie-Herzégovine", "Qatar", "Switzerland", "Suisse",
+  "Brazil", "Brésil", "Morocco", "Maroc", "Haiti", "Haïti", "Scotland", "Écosse",
+  "United States", "USA", "États-Unis", "Paraguay", "Australia", "Australie", "Türkiye", "Turkey", "Turquie",
+  "Germany", "Allemagne", "Curacao", "Curaçao", "Ivory Coast", "Côte d'Ivoire", "Ecuador", "Équateur",
+  "Netherlands", "Pays-Bas", "Japan", "Japon", "Sweden", "Suède", "Tunisia", "Tunisie",
+  "Belgium", "Belgique", "Egypt", "Égypte", "Iran", "New Zealand", "Nouvelle-Zélande",
+  "Spain", "Espagne", "Cape Verde", "Cap-Vert", "Saudi Arabia", "Arabie Saoudite", "Uruguay",
+  "France", "Senegal", "Sénégal", "Iraq", "Irak", "Norway", "Norvège",
+  "Argentina", "Argentine", "Algeria", "Algérie", "Austria", "Autriche", "Jordan", "Jordanie",
+  "Portugal", "Congo DR", "DR Congo", "Uzbekistan", "Ouzbékistan", "Colombia", "Colombie",
+  "England", "Angleterre", "Croatia", "Croatie", "Ghana", "Panama",
   "Paris Saint-Germain", "PSG", "Arsenal", "Real Madrid", "Barcelona", "Barcelone", "Bayern Munich", "Bayern München", "Bayern Munchen",
   "Inter", "Internazionale", "Manchester City", "Liverpool", "Atletico Madrid", "Atlético Madrid", "Borussia Dortmund",
 ].join(",");
