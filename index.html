@@ -2504,6 +2504,7 @@
       ['consultant', 'Consultant', 'Quiz Consultant', 'quiz_consultant'],
       ['coach', 'Coach', 'Quiz Coach', 'quiz_coach']
     ];
+    const QUIZ_REQUIRED_THEME_KEYS = ['general', 'club', 'nation', 'worldcup', 'euro', 'champions'];
     const PROFILE_AVATARS = [
       '/avatars/avatar-cool.png',
       '/avatars/avatar-cry.png',
@@ -2861,20 +2862,23 @@ grant select, insert, update on public.profiles to authenticated;`;
       profileLoginModal?.setAttribute('aria-hidden', 'true');
     }
 
-    function highestQuizLevel(badges = [], results = []) {
+    function quizUnlockedLevelKeyFromResults(results = []) {
       const order = QUIZ_LEVELS.map(item => item[0]);
+      const passed = (results || []).filter(item => Number(item.score || 0) >= 7 || item.passed === true);
+      if (!passed.length) return '';
+      const done = (difficulty, themeType) => passed.some(item => String(item.difficulty || '') === difficulty && String(item.theme_type || '') === themeType);
+      let unlocked = 0;
+      for (let index = 0; index < QUIZ_LEVELS.length - 1; index += 1) {
+        if (QUIZ_REQUIRED_THEME_KEYS.every(themeType => done(order[index], themeType))) unlocked = index + 1;
+        else break;
+      }
+      return order[unlocked] || '';
+    }
+
+    function highestQuizLevel(badges = [], results = []) {
       const labels = Object.fromEntries(QUIZ_LEVELS.map(item => [item[0], item[1]]));
-      let best = -1;
-      (badges || []).forEach(item => {
-        const key = searchNorm(`${item.badge_key || ''} ${item.badge_name || item.name || ''}`);
-        order.forEach((level, index) => { if (key.includes(level)) best = Math.max(best, index); });
-      });
-      (results || []).forEach(item => {
-        if (Number(item.score || 0) < 7) return;
-        const key = searchNorm(item.difficulty || '');
-        order.forEach((level, index) => { if (key.includes(level)) best = Math.max(best, index); });
-      });
-      return best >= 0 ? labels[order[best]] : '';
+      const level = quizUnlockedLevelKeyFromResults(results);
+      return level ? labels[level] : '';
     }
 
     function quizLevelPill(profile) {
@@ -5071,7 +5075,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       euro: 'Euro',
       champions: 'Champions League'
     };
-    const QUIZ_REQUIRED_THEMES = ['general', 'club', 'nation', 'worldcup', 'euro', 'champions'];
+    const QUIZ_REQUIRED_THEMES = QUIZ_REQUIRED_THEME_KEYS;
     let quizState = {questions: [], index: 0, score: 0, answered: false, config: null};
     let quizClubChoices = [];
     let quizNationChoices = [];
@@ -5633,6 +5637,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
       if (resultSaved && Array.isArray(akroQuizResults)) {
         akroQuizResults.unshift(payload);
+        if (Array.isArray(akroBadges)) {
+          const reachedKey = (QUIZ_DIFFICULTIES[payload.level_reached] || {}).key;
+          akroBadges = akroBadges.filter(item => !String(item.badge_key || '').startsWith('quiz_') || item.badge_key === reachedKey);
+        }
         if (typeof mergeSupabaseProfileIntoUi === 'function') mergeSupabaseProfileIntoUi();
       }
       return {saved: resultSaved, badgeSaved, message: badgeSaved ? `${badgeName} débloqué.` : 'Résultat sauvegardé.'};
