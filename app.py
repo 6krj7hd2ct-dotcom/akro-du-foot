@@ -2324,15 +2324,18 @@ def admin_sync_html() -> str:
     .history-table-wrap {{ width:100%; overflow-x:hidden; }}
     table {{ width:100%; table-layout:fixed; border-collapse:collapse; }}
     th, td {{ padding:10px 7px; border-bottom:1px solid rgba(255,255,255,.08); text-align:left; vertical-align:top; }}
-    th:nth-child(1), td:nth-child(1) {{ width:18%; }}
+    th:nth-child(1), td:nth-child(1) {{ width:12%; }}
     th:nth-child(2), td:nth-child(2) {{ width:12%; }}
-    th:nth-child(3), td:nth-child(3) {{ width:27%; }}
-    th:nth-child(4), td:nth-child(4) {{ width:43%; }}
+    th:nth-child(3), td:nth-child(3) {{ width:18%; }}
+    th:nth-child(4), td:nth-child(4) {{ width:58%; }}
     th {{ color:var(--gold); font-size:12px; text-transform:uppercase; }}
     code {{ color:#ffe1a0; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; }}
     .counts-cell {{ display:grid; gap:8px; min-width:0; }}
     .counts-list {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:4px 10px; min-width:0; }}
     .counts-json {{ display:block; max-width:100%; padding:8px; border-radius:10px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.08); line-height:1.45; }}
+    .history-date, .history-message {{ display:grid; gap:3px; min-width:0; }}
+    .history-date strong, .history-message strong {{ color:#edf6ff; font-size:13px; line-height:1.2; overflow-wrap:anywhere; }}
+    .history-date span, .history-message span {{ color:var(--muted); font-size:12px; line-height:1.2; overflow-wrap:anywhere; }}
     .muted {{ color:var(--muted); }}
     @media (max-width:800px) {{ main {{ width:min(980px, calc(100% - 24px)); margin:0 auto; padding:22px 0; }} .grid {{ grid-template-columns:1fr; }} th, td {{ padding:9px 5px; font-size:12px; }} .counts-list {{ grid-template-columns:1fr; }} }}
   </style>
@@ -2365,6 +2368,19 @@ def admin_sync_html() -> str:
     const button = document.getElementById('run');
     const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}}[c]));
     const fmt = value => value ? new Date(value).toLocaleString('fr-FR') : 'Non disponible';
+    function dateCell(value) {{
+      if (!value) return '<div class="history-date"><strong>Non disponible</strong><span></span></div>';
+      const date = new Date(value);
+      return `<div class="history-date"><strong>${{escapeHtml(date.toLocaleDateString('fr-FR'))}}</strong><span>${{escapeHtml(date.toLocaleTimeString('fr-FR', {{hour:'2-digit', minute:'2-digit'}}))}}</span></div>`;
+    }}
+    function messageCell(value) {{
+      const text = String(value || '').trim();
+      if (!text) return '<div class="history-message"><strong>Synchronisation</strong><span>football</span></div>';
+      const parts = text.split(/\\s+/);
+      const first = parts.slice(0, 1).join(' ') || 'Synchronisation';
+      const second = parts.slice(1).join(' ') || 'football';
+      return `<div class="history-message"><strong>${{escapeHtml(first)}}</strong><span>${{escapeHtml(second)}}</span></div>`;
+    }}
     function countsHtml(counts) {{
       const c = counts || {{}};
       const items = [
@@ -2378,7 +2394,7 @@ def admin_sync_html() -> str:
       return `<div class="counts-cell"><div class="counts-list">${{items.map(([label, value]) => `<span><strong>${{escapeHtml(label)}}:</strong> ${{escapeHtml(value)}}</span>`).join('')}}</div><code class="counts-json">${{escapeHtml(JSON.stringify(c, null, 2))}}</code></div>`;
     }}
     function renderLog(log) {{
-      return `<tr><td>${{escapeHtml(fmt(log.started_at))}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(log.status)}}</span></td><td>${{escapeHtml(log.message || log.error_detail || '')}}</td><td>${{countsHtml(log.processed_counts)}}</td></tr>`;
+      return `<tr><td>${{dateCell(log.started_at)}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(log.status)}}</span></td><td>${{messageCell(log.message || log.error_detail || '')}}</td><td>${{countsHtml(log.processed_counts)}}</td></tr>`;
     }}
     async function loadLogs() {{
       const res = await fetch('/api/admin/sync/logs', {{cache:'no-store'}});
