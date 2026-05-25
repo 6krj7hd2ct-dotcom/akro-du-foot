@@ -2601,7 +2601,6 @@ def _save_prediction_supabase(pseudo: str, match_id: str, home_score: int, away_
     existing = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&profile_id=eq.{quote(profile_id, safe='')}&match_id=eq.{quote(match_id, safe='')}&limit=1")
     payload = {
         "profile_id": profile_id,
-        "user_id": profile_id,
         "pseudo": pseudo or "Utilisateur",
         "match_id": match_id,
         "home_team": str((match or {}).get("home_team") or ""),
@@ -2618,12 +2617,6 @@ def _save_prediction_supabase(pseudo: str, match_id: str, home_score: int, away_
     else:
         payload["created_at"] = now
         saved = _supabase_request("POST", "predictions", json=payload)
-    if saved is None and "user_id" in payload:
-        payload.pop("user_id", None)
-        if existing:
-            saved = _supabase_request("PATCH", f"predictions?id=eq.{quote(str(existing[0].get('id')), safe='')}", json=payload)
-        else:
-            saved = _supabase_request("POST", "predictions", json=payload)
     if saved is None:
         return False
     _sync_supabase_user_totals(profile_id, pseudo, matches)
