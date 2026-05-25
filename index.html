@@ -3753,12 +3753,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       const profile = akroProfile;
       if (!profile) throw new Error('Profil Supabase indisponible');
       const safePseudo = (profile.pseudo || pseudoValue() || profile.email || 'Utilisateur').trim() || 'Utilisateur';
+      const authUserId = akroSession?.user?.id || '';
       const actualHome = match.home_score !== '' && match.home_score !== null && match.home_score !== undefined ? Number(match.home_score) : null;
       const actualAway = match.away_score !== '' && match.away_score !== null && match.away_score !== undefined ? Number(match.away_score) : null;
       const finished = match.completed || statusClass(match) === 'done';
       const payload = {
         profile_id: profile.id,
-        user_id: profile.id,
+        user_id: authUserId || profile.id,
         pseudo: safePseudo,
         match_id: match.id,
         home_team: match.home_team || 'À déterminer',
@@ -3773,6 +3774,13 @@ grant select, insert, update on public.profiles to authenticated;`;
         actual_home_score: Number.isNaN(actualHome) ? null : actualHome,
         actual_away_score: Number.isNaN(actualAway) ? null : actualAway
       }) : 0;
+      logSupabase('prediction insert ids', {
+        authUserId,
+        profileId: profile.id,
+        pseudo: safePseudo,
+        predictionUserId: payload.user_id,
+        fkExpected: 'predictions.user_id doit pointer vers public.profiles.id ou auth.users.id selon migration'
+      });
       let payloadToSave = {...payload};
       let result = null;
       for (let attempt = 0; attempt < 3; attempt += 1) {
@@ -3783,6 +3791,15 @@ grant select, insert, update on public.profiles to authenticated;`;
           .single();
         if (!result.error) break;
         const message = result.error.message || '';
+        if (/predictions_user_id_fkey/i.test(message)) {
+          logSupabaseError('FK predictions_user_id_fkey', {
+            authUserId,
+            profileId: profile.id,
+            pseudo: safePseudo,
+            predictionUserId: payloadToSave.user_id || '',
+            hint: 'Exécuter supabase/fix_predictions_user_id_fk.sql pour faire pointer user_id vers public.profiles(id), ou supprimer l’ancienne FK.'
+          });
+        }
         const missingColumn = message.match(/'([^']+)' column|column "([^"]+)"/i);
         const column = missingColumn?.[1] || missingColumn?.[2] || '';
         if (!column || !(column in payloadToSave) || !/schema cache|could not find|does not exist/i.test(message)) break;
