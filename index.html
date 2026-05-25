@@ -478,13 +478,21 @@
     .award-copy strong { color: #9fe9ff; font-size: 11px; letter-spacing: .02em; text-transform: uppercase; }
     .award-copy .winner { font-size: 20px; line-height: 1.06; }
     .historical-match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; width: 100%; }
+    .historical-calendar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; width: 100%; }
     .historical-match-card { display: grid; gap: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.055); }
     .historical-match-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; }
     .historical-match-row .team:last-child { justify-content: end; text-align: right; }
     .historical-score { color: var(--gold); font-weight: 950; white-space: nowrap; }
-    .historical-group-card .euro-team-row { grid-template-columns: 28px minmax(0, 1fr) repeat(6, auto); }
-    .historical-group-stat { min-width: 22px; color: #dce9f7; text-align: right; font-size: 12px; font-weight: 850; }
+    .historical-standings-card { overflow: hidden; }
+    .historical-standings-table { min-width: 720px; table-layout: auto; }
+    .historical-standings-table th:nth-child(2), .historical-standings-table td:nth-child(2) { min-width: 230px; width: 42%; }
+    .historical-standings-table td:first-child, .historical-standings-table th:first-child,
+    .historical-standings-table td:nth-child(n+3), .historical-standings-table th:nth-child(n+3) { text-align: center; white-space: nowrap; }
     .historical-unavailable { padding: 14px; border: 1px dashed rgba(255,255,255,0.18); border-radius: 14px; color: var(--muted); background: rgba(255,255,255,0.045); }
+    .euro-bracket-stage { grid-template-columns: repeat(3, minmax(220px, 1fr)); align-items: stretch; }
+    .euro-bracket-stage .round { justify-content: flex-start; }
+    .euro-bracket-stage .round:not(:last-child)::after { display: block; right: -16px; }
+    .euro-bracket-stage .ko-match::before { display: block; }
     .euro-group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 14px; }
     .euro-group-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .euro-team-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,0.08); }
@@ -1070,8 +1078,11 @@
       .league-calendar-match .team-button { justify-content: center; }
       .calendar-match .date, .calendar-match .match-meta { grid-column: 1 / -1; }
       .standings-wide table { min-width: 620px; }
+      .historical-calendar-grid { grid-template-columns: 1fr; }
+      .historical-standings-table { min-width: 640px; }
       .bracket-stage { padding: 10px; min-width: 1040px; }
       .bracket-stage.ucl-official { min-width: 1040px; }
+      .bracket-stage.euro-bracket-stage { min-width: 760px; grid-template-columns: repeat(3, 240px); }
       .round { gap: 8px; }
       .ko-line { font-size: 12px; }
       .team-modal { padding: calc(var(--live-bar-height) + 10px) 10px 10px; }
@@ -6373,7 +6384,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           }
         },
         champions: {
-          current: '2025-2026',
+          current: '2024-2025',
           seasons: {
             '2023-2024': {
               summary: [
@@ -6449,6 +6460,7 @@ grant select, insert, update on public.profiles to authenticated;`;
               ])],
               calendar: [match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110')), match('Quart', 'Paris Saint-Germain', 'Aston Villa', '5 - 4 cumulé', logo('160'), logo('362')), match('Barrage', 'Paris Saint-Germain', 'Brest', '10 - 0 cumulé', logo('160'), logo('6997'))]
             },
+            '2025-2026': futureSeason('Champions League 2025-2026', 'Meilleur buteur de la compétition'),
             '2026-2027': futureSeason('Champions League 2026-2027', 'Meilleur buteur de la compétition')
           }
         },
@@ -6524,9 +6536,26 @@ grant select, insert, update on public.profiles to authenticated;`;
         return `<article class="card player-card rank-${index + 1}"${style}><div class="avatar-wrap">${avatar}</div><div><div class="team">${escape(item.name)}</div><div class="club-line">${img(item.img)}<span class="club-name">${escape(item.team)}</span></div><div class="player-stat">${escape(item.value)}</div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</div></article>`;
       }).join('') || `<div class="historical-unavailable">${info}</div>`;
       const matchesHtml = matches => (matches || []).map(item => `<article class="historical-match-card"><div class="subtle">${escape(item.phase)}</div><div class="historical-match-row"><span class="team">${img(item.homeImg)}${escape(item.home)}</span><span class="historical-score">${escape(item.score)}</span><span class="team">${escape(item.away)}${img(item.awayImg)}</span></div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</article>`).join('');
+      const scoreParts = value => {
+        const parts = String(value || '').match(/(\d+)\s*-\s*(\d+)/);
+        return parts ? [parts[1], parts[2]] : ['', ''];
+      };
+      const bracketMatchHtml = item => {
+        const [homeScore, awayScore] = scoreParts(item.score);
+        return `<div class="ko-match"><div class="ko-line"><span class="bracket-team">${img(item.homeImg)}<span class="bracket-team-name">${escape(item.home)}</span></span><span class="ko-score">${escape(homeScore)}</span></div><div class="ko-line"><span class="bracket-team">${img(item.awayImg)}<span class="bracket-team-name">${escape(item.away)}</span></span><span class="ko-score">${escape(awayScore)}</span></div><div class="subtle">${escape(item.note || item.phase || '')}</div><span class="status done">Terminé</span></div>`;
+      };
+      const euroBracketHtml = matches => {
+        const phaseMatches = label => (matches || []).filter(item => normalizeTeamName(item.phase).includes(label));
+        const quarters = phaseMatches('quart');
+        const semis = phaseMatches('demi');
+        const final = phaseMatches('finale').filter(item => !normalizeTeamName(item.phase).includes('demi'));
+        if (!quarters.length && !semis.length && !final.length) return `<div class="historical-unavailable">${info}</div>`;
+        return `<div class="bracket-wrap"><div class="bracket-stage euro-bracket-stage"><article class="round"><div class="round-title">Quarts</div>${quarters.map(bracketMatchHtml).join('') || `<div class="historical-unavailable">${info}</div>`}</article><article class="round"><div class="round-title">Demies</div>${semis.map(bracketMatchHtml).join('') || `<div class="historical-unavailable">${info}</div>`}</article><article class="round"><div class="round-title">Finale</div>${final.map(bracketMatchHtml).join('') || `<div class="historical-unavailable">${info}</div>`}</article></div></div>`;
+      };
       const bracketHtml = matches => matches?.length ? `<div class="historical-match-grid">${matchesHtml(matches)}</div>` : `<div class="historical-unavailable">${info}</div>`;
-      const groupsHtml = groups => (groups || []).map(item => `<article class="card euro-group-card historical-group-card"><h3>${escape(item.name)}</h3>${(item.teams || []).map((row, index) => `<div class="euro-team-row"><span>${index + 1}</span><span class="team">${img(row.img)}${escape(row.name)}</span><span class="historical-group-stat">J ${escape(row.played || '-')}</span><span class="historical-group-stat">G ${escape(row.wins || '-')}</span><span class="historical-group-stat">N ${escape(row.draws || '-')}</span><span class="historical-group-stat">P ${escape(row.losses || '-')}</span><span class="historical-group-stat">Diff ${escape(row.goal_diff || '-')}</span><span class="euro-points">${escape(row.pts || '-')} pts</span></div>`).join('')}</article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
-      const calendarHtml = matches => matches?.length ? `<div class="historical-match-grid">${matchesHtml(matches)}</div>` : `<div class="historical-unavailable">${info}</div>`;
+      const stat = value => value === undefined || value === null || value === '' ? '-' : value;
+      const groupsHtml = groups => (groups || []).map(item => `<article class="card historical-standings-card"><h3>${escape(item.name)}</h3><div class="table-scroll"><table class="historical-standings-table"><thead><tr><th>Position</th><th>Équipe</th><th>MJ</th><th>V</th><th>N</th><th>D</th><th>Diff</th><th>Pts</th></tr></thead><tbody>${(item.teams || []).map((row, index) => `<tr><td>${index + 1}</td><td><span class="team">${img(row.img)}${escape(row.name)}</span></td><td>${escape(stat(row.played))}</td><td>${escape(stat(row.wins))}</td><td>${escape(stat(row.draws))}</td><td>${escape(stat(row.losses))}</td><td>${escape(stat(row.goal_diff))}</td><td><strong>${escape(stat(row.pts))}</strong></td></tr>`).join('')}</tbody></table></div></article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
+      const calendarHtml = matches => matches?.length ? `<div class="historical-calendar-grid">${matchesHtml(matches)}</div>` : `<div class="historical-unavailable">${info}</div>`;
 
       window.AKRO_HISTORICAL_COMPETITIONS = HISTORICAL_COMPETITIONS;
       window.AKRO_COACH_HISTORICAL_CONTEXT = HISTORICAL_COMPETITIONS;
@@ -6545,7 +6574,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (nodes.assists) nodes.assists.innerHTML = playersHtml(data.assists);
         if (nodes.awards) nodes.awards.innerHTML = awardsHtml(data.awards);
         if (nodes.big5) nodes.big5.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : '';
-        if (nodes.bracket) nodes.bracket.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : bracketHtml(data.bracket);
+        if (nodes.bracket) nodes.bracket.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : (kind === 'euro' ? euroBracketHtml(data.bracket) : bracketHtml(data.bracket));
         if (nodes.groups) nodes.groups.innerHTML = groupsHtml(data.groups);
         if (nodes.calendar) nodes.calendar.innerHTML = calendarHtml(data.calendar);
         upgradeVisiblePlayerCards();
