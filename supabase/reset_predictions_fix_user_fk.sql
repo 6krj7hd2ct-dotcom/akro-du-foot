@@ -79,12 +79,15 @@ begin
   end if;
 end $$;
 
--- 7) Supprimer les anciennes contraintes/index liés à user_id s'ils existent.
+-- 7) Supprimer les anciennes contraintes/index/colonnes liés à user_id s'ils existent.
 alter table public.predictions
   drop constraint if exists predictions_user_id_fkey;
 
 drop index if exists predictions_user_match_key;
 drop index if exists idx_predictions_user_created;
+
+alter table public.predictions
+  drop column if exists user_id;
 
 -- 8) Recréer proprement la relation canonique profile_id -> profiles.id.
 alter table public.predictions
@@ -93,8 +96,7 @@ alter table public.predictions
 alter table public.predictions
   add constraint predictions_profile_id_fkey
   foreign key (profile_id) references public.profiles(id)
-  on delete cascade
-  not valid;
+  on delete cascade;
 
 -- 9) Index utiles sur le schéma actuel.
 create unique index if not exists predictions_profile_match_key
@@ -103,5 +105,101 @@ create unique index if not exists predictions_profile_match_key
 create index if not exists idx_predictions_profile_created
   on public.predictions (profile_id, created_at desc);
 
--- 10) Recharger le cache PostgREST/Supabase.
+-- 10) Vérifier que l'ancienne FK cassée n'existe plus.
+do $$
+begin
+  if exists (
+    select 1
+    from pg_constraint
+    where conname = 'predictions_user_id_fkey'
+      and conrelid = 'public.predictions'::regclass
+  ) then
+    raise exception 'Correction incomplète : predictions_user_id_fkey existe encore.';
+  end if;
+end $$;
+
+-- 11) Test réel d'insert pronostic avec profile_id uniquement.
+-- Le test utilise le premier profil existant, insère PSG 3-1 Arsenal, puis supprime cette ligne test.
+do $$
+declare
+  test_profile record;
+  test_match_id text := 'test:psg-arsenal:' || floor(extract(epoch from clock_timestamp()) * 1000)::bigint::text;
+  has_pseudo boolean := false;
+begin
+  select id, coalesce(nullif(pseudo, ''), 'Utilisateur') as pseudo
+  into test_profile
+  from public.profiles
+  limit 1;
+
+  if test_profile.id is null then
+    raise notice 'Test insert ignoré : aucun profil existant dans public.profiles.';
+    return;
+  end if;
+
+  has_pseudo := exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'predictions'
+      and column_name = 'pseudo'
+  );
+
+  if has_pseudo then
+    execute '
+      insert into public.predictions (
+        profile_id,
+        match_id,
+        home_team,
+        away_team,
+        predicted_home_score,
+        predicted_away_score,
+        status,
+        points,
+        pseudo
+      )
+      values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    '
+    using
+      test_profile.id,
+      test_match_id,
+      'Paris Saint-Germain',
+      'Arsenal',
+      3,
+      1,
+      'À venir',
+      0,
+      test_profile.pseudo;
+  else
+    execute '
+      insert into public.predictions (
+        profile_id,
+        match_id,
+        home_team,
+        away_team,
+        predicted_home_score,
+        predicted_away_score,
+        status,
+        points
+      )
+      values ($1, $2, $3, $4, $5, $6, $7, $8)
+    '
+    using
+      test_profile.id,
+      test_match_id,
+      'Paris Saint-Germain',
+      'Arsenal',
+      3,
+      1,
+      'À venir',
+      0;
+  end if;
+
+  delete from public.predictions
+  where profile_id = test_profile.id
+    and match_id = test_match_id;
+
+  raise notice 'Test insert prediction OK : PSG 3-1 Arsenal avec profile_id=%', test_profile.id;
+end $$;
+
+-- 12) Recharger le cache PostgREST/Supabase.
 notify pgrst, 'reload schema';
