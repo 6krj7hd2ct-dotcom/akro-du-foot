@@ -1924,10 +1924,15 @@ def _football_supabase_payload() -> dict[str, Any]:
 
     countries = _supabase_service_request("GET", "countries?select=id,api_id,name,code,flag_url&order=name.asc&limit=300") or []
     competitions = _supabase_service_request("GET", "competitions?select=id,api_id,country_id,name,type,logo_url,season,updated_at&is_active=eq.true&order=name.asc&limit=300") or []
-    teams = _supabase_service_request("GET", "teams?select=id,api_id,country_id,name,short_name,code,type,logo_url,venue_name,updated_at&is_active=eq.true&order=updated_at.desc&limit=500") or []
+    teams = _supabase_service_request("GET", "teams?select=id,api_id,country_id,name,short_name,code,type,logo_url,venue_name,updated_at&is_active=eq.true&order=updated_at.desc&limit=2000") or []
     players = _supabase_service_request("GET", "players?select=id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
     coaches = _supabase_service_request("GET", "coaches?select=id,api_id,name,firstname,lastname,birth_date,nationality,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
-    team_players = _supabase_service_request("GET", "team_players?select=team_id,player_id,season,shirt_number,position,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
+    team_players = _supabase_service_request(
+        "GET",
+        "team_players?select=team_id,player_id,season,shirt_number,position,updated_at,players(id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data)&is_active=eq.true&order=updated_at.desc&limit=5000",
+    )
+    if team_players is None:
+        team_players = _supabase_service_request("GET", "team_players?select=team_id,player_id,season,shirt_number,position,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
     team_coaches = _supabase_service_request("GET", "team_coaches?select=team_id,coach_id,season,role,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
     matches = _supabase_service_request("GET", "matches?select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,updated_at&order=match_date.desc&limit=500") or []
 
@@ -1936,13 +1941,33 @@ def _football_supabase_payload() -> dict[str, Any]:
     player_by_id = {str(row.get("id")): row for row in players if row.get("id")}
     coach_by_id = {str(row.get("id")): row for row in coaches if row.get("id")}
     competition_by_id = {str(row.get("id")): row for row in competitions if row.get("id")}
+    missing_link_player_ids = sorted({
+        str(link.get("player_id") or "")
+        for link in team_players
+        if link.get("player_id") and str(link.get("player_id")) not in player_by_id and not isinstance(link.get("players"), dict)
+    })
+    for index in range(0, len(missing_link_player_ids), 80):
+        chunk = missing_link_player_ids[index:index + 80]
+        scoped_players = _supabase_service_request(
+            "GET",
+            f"players?select=id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data,updated_at&id=in.({','.join(quote(item, safe='') for item in chunk)})",
+        ) or []
+        for player in scoped_players:
+            if player.get("id"):
+                player_by_id[str(player["id"])] = player
+                players.append(player)
 
     players_by_team: dict[str, list[dict[str, Any]]] = {}
+    linked_relations = 0
+    resolved_players = 0
     for link in team_players:
         team_id = str(link.get("team_id") or "")
-        player = player_by_id.get(str(link.get("player_id") or ""))
+        embedded_player = link.get("players") if isinstance(link.get("players"), dict) else None
+        player = embedded_player or player_by_id.get(str(link.get("player_id") or ""))
         if not team_id or not player:
             continue
+        linked_relations += 1
+        resolved_players += 1
         raw_player = player.get("raw_data") if isinstance(player.get("raw_data"), dict) else {}
         raw_nested_player = raw_player.get("player") if isinstance(raw_player.get("player"), dict) else {}
         age = raw_player.get("age") or raw_nested_player.get("age")
@@ -2003,10 +2028,19 @@ def _football_supabase_payload() -> dict[str, Any]:
 
     public_teams = []
     player_team_names: dict[str, list[str]] = {}
+    debug_roster_rows = []
     for row in teams:
         country = country_by_id.get(str(row.get("country_id") or ""))
         team_id = str(row.get("id") or "")
         squad = players_by_team.get(team_id, [])
+        if _normalize_football_text(row.get("name") or "") in {"paris saint germain", "psg", "france"}:
+            debug_roster_rows.append({
+                "name": row.get("name") or "",
+                "team_id": team_id,
+                "api_id": row.get("api_id") or "",
+                "squad": len(squad),
+                "positions": sorted({str(player.get("position") or "") for player in squad if player.get("position")}),
+            })
         for player in squad:
             if player.get("name"):
                 player_team_names.setdefault(player["name"], []).append(row.get("name") or "")
@@ -2064,13 +2098,14 @@ def _football_supabase_payload() -> dict[str, Any]:
             "coaches": len(coaches),
             "team_players": len(team_players),
             "team_coaches": len(team_coaches),
+            "team_players_resolved": resolved_players,
             "matches": len(public_matches),
         },
     }
     with FOOTBALL_SUPABASE_CACHE_LOCK:
         FOOTBALL_SUPABASE_CACHE["payload"] = payload
         FOOTBALL_SUPABASE_CACHE["expires_at"] = time.time() + SUPABASE_FOOTBALL_CACHE_TTL
-    print(f"[football-supabase] source=supabase counts={payload['counts']}", flush=True)
+    print(f"[football-supabase] source=supabase counts={payload['counts']} linked_relations={linked_relations} resolved_players={resolved_players} roster_debug={debug_roster_rows}", flush=True)
     return payload
 
 
@@ -2222,6 +2257,9 @@ def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], in
             timeout=60,
         )
         data = response.json() if response.content else {}
+        if response.ok:
+            with FOOTBALL_SUPABASE_CACHE_LOCK:
+                FOOTBALL_SUPABASE_CACHE.clear()
         return {"ok": response.ok, "result": data}, response.status_code if response.status_code < 500 else 502
     except Exception as exc:
         return {"error": f"Impossible d'appeler sync-football-data : {exc}"}, 502
@@ -2386,7 +2424,9 @@ def admin_sync_html() -> str:
       const items = [
         ['équipes parcourues', c.player_teams_visited || c.coach_teams_visited || 0],
         ['joueurs trouvés', c.players_found || 0],
+        ['relations candidates', c.team_player_relation_candidates || 0],
         ['relations team_players upsertées', c.team_players_upserted || 0],
+        ['joueurs non résolus', c.team_player_missing_player_ids || 0],
         ['joueurs total', c.players_total || c.players || 0],
         ['relations total', c.team_players || 0],
         ['erreurs API', c.api_errors || 0],

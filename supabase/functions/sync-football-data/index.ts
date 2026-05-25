@@ -246,6 +246,28 @@ async function readIdMap(table: string) {
   return map;
 }
 
+async function readIdMapForApiIds(table: string, apiIds: string[]) {
+  const uniqueApiIds = Array.from(new Set(apiIds.map(value => String(value || "").trim()).filter(Boolean)));
+  console.log("[sync-football-data] read scoped id map start", {table, requested: uniqueApiIds.length});
+  const map = new Map<string, string>();
+  for (let index = 0; index < uniqueApiIds.length; index += 100) {
+    const chunk = uniqueApiIds.slice(index, index + 100);
+    const {data, error} = await supabase
+      .from(table)
+      .select("id,api_id")
+      .in("api_id", chunk);
+    if (error) {
+      console.error("[sync-football-data] read scoped id map error", {table, message: error.message, details: error.details, hint: error.hint, code: error.code});
+      throw new Error(`${table} scoped map: ${error.message}`);
+    }
+    for (const row of data ?? []) {
+      map.set(String(row.api_id), String(row.id));
+    }
+  }
+  console.log("[sync-football-data] read scoped id map success", {table, requested: uniqueApiIds.length, found: map.size, missing: uniqueApiIds.length - map.size});
+  return map;
+}
+
 async function readCompetitionTargets() {
   const leagueIds = configuredLeagueIds();
   console.log("[sync-football-data] read competition targets start", {leagueIds});
@@ -476,6 +498,8 @@ Deno.serve(async () => {
       let playerTeamsVisited = 0;
       let playersFound = 0;
       let teamPlayersUpserted = 0;
+      let relationCandidates = 0;
+      let missingPlayerLinks = 0;
       console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length});
       for (const teamTarget of playerTeamTargets) {
         playerTeamsVisited += 1;
@@ -501,9 +525,11 @@ Deno.serve(async () => {
         console.log("[sync-football-data] players prepared", {teamApiId: teamTarget.api_id, fetched: players.length, deduped: playerRows.length});
         counts.players = Number(counts.players) + await upsert("players", playerRows);
 
-        const playerMap = await readIdMap("players");
-        const teamPlayerRows = dedupeRows("team_players", players.map(item => {
-          const playerId = playerMap.get(String(pick(item, ["id"], "")));
+        const playerApiIds = players.map(item => String(pick(item, ["id"], ""))).filter(Boolean);
+        const playerMap = await readIdMapForApiIds("players", playerApiIds);
+        const teamPlayerCandidates = players.map(item => {
+          const playerApiId = String(pick(item, ["id"], ""));
+          const playerId = playerMap.get(playerApiId);
           return {
             api_id: `${teamTarget.api_id}:${pick(item, ["id"], "")}:${syncSeason}`,
             team_id: teamTarget.id,
@@ -515,7 +541,23 @@ Deno.serve(async () => {
             raw_data: item,
             updated_at: new Date().toISOString(),
           };
-        }).filter(row => row.team_id && row.player_id), row => apiIdKey(row) || `${row.team_id ?? ""}:${row.player_id ?? ""}:${row.season ?? ""}`);
+        });
+        const missingForTeam = teamPlayerCandidates.filter(row => !row.player_id).length;
+        const validCandidates = teamPlayerCandidates.filter(row => row.team_id && row.player_id);
+        relationCandidates += teamPlayerCandidates.length;
+        missingPlayerLinks += missingForTeam;
+        console.log("[sync-football-data] team_players prepared", {
+          teamName: teamTarget.name,
+          teamId: teamTarget.id,
+          teamApiId: teamTarget.api_id,
+          playersFoundForTeam: players.length,
+          playerRowsUpserted: playerRows.length,
+          playerIdsResolved: playerMap.size,
+          relationCandidates: teamPlayerCandidates.length,
+          validRelations: validCandidates.length,
+          missingPlayerIds: missingForTeam,
+        });
+        const teamPlayerRows = dedupeRows("team_players", validCandidates, row => apiIdKey(row) || `${row.team_id ?? ""}:${row.player_id ?? ""}:${row.season ?? ""}`);
         const upsertedTeamPlayers = await upsert("team_players", teamPlayerRows, "api_id");
         teamPlayersUpserted += upsertedTeamPlayers;
         counts.team_players_upserted = teamPlayersUpserted;
@@ -524,17 +566,23 @@ Deno.serve(async () => {
           team_players_upserted: teamPlayersUpserted,
           teamsVisited: playerTeamsVisited,
           playersFound,
+          relationCandidates,
+          missingPlayerLinks,
           deletedRelations: 0,
         });
       }
       counts.player_teams_visited = playerTeamsVisited;
       counts.players_found = playersFound;
+      counts.team_player_relation_candidates = relationCandidates;
+      counts.team_player_missing_player_ids = missingPlayerLinks;
       counts.players_total = await tableCount("players");
       counts.team_players = await tableCount("team_players");
       console.log("[sync-football-data] players step done", {
         teamsVisited: playerTeamsVisited,
         playersFound,
         teamPlayersUpserted,
+        relationCandidates,
+        missingPlayerLinks,
         playersTotal: counts.players_total,
         teamPlayersTotal: counts.team_players,
         deletedRelations: 0,
@@ -572,7 +620,8 @@ Deno.serve(async () => {
         console.log("[sync-football-data] coaches prepared", {teamApiId: teamTarget.api_id, fetched: coaches.length, deduped: coachRows.length});
         counts.coaches = Number(counts.coaches) + await upsert("coaches", coachRows);
 
-        const coachMap = await readIdMap("coaches");
+        const coachApiIds = coaches.map(item => String(pick(item, ["id"], ""))).filter(Boolean);
+        const coachMap = await readIdMapForApiIds("coaches", coachApiIds);
         const teamCoachRows = dedupeRows("team_coaches", coaches.map(item => ({
           api_id: `${teamTarget.api_id}:${pick(item, ["id"], "")}:${syncSeason}`,
           team_id: teamTarget.id,
