@@ -3654,6 +3654,48 @@ grant select, insert, update on public.profiles to authenticated;`;
           away_score: '',
           status: 'À venir',
           completed: false
+        },
+        {
+          id: 'friendly:france-northern-ireland:2026-06-08',
+          competition: 'Amical',
+          phase: 'International Friendly',
+          date: '2026-06-08T19:00:00+02:00',
+          home_team: 'France',
+          away_team: 'Irlande du Nord',
+          home_flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png',
+          away_flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nir.png',
+          home_score: '',
+          away_score: '',
+          status: 'À venir',
+          completed: false
+        },
+        {
+          id: 'friendly:france-senegal:2026-06-16',
+          competition: 'Amical',
+          phase: 'International Friendly',
+          date: '2026-06-16T19:00:00+02:00',
+          home_team: 'France',
+          away_team: 'Sénégal',
+          home_flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png',
+          away_flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/sen.png',
+          home_score: '',
+          away_score: '',
+          status: 'À venir',
+          completed: false
+        },
+        {
+          id: 'friendly:france-iraq:2026-06-22',
+          competition: 'Amical',
+          phase: 'International Friendly',
+          date: '2026-06-22T19:00:00+02:00',
+          home_team: 'France',
+          away_team: 'Irak',
+          home_flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png',
+          away_flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/irq.png',
+          home_score: '',
+          away_score: '',
+          status: 'À venir',
+          completed: false
         }
       ].filter(match => matchTimestamp(match) >= Date.now());
     }
@@ -3675,7 +3717,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         .filter(match => !match.completed && matchTimestamp(match) >= now)
         .filter(match => isFavoriteMatch(match, teams))
         .sort((a, b) => matchTimestamp(a) - matchTimestamp(b))
-        .slice(0, 3);
+        .slice(0, 8);
       favoriteMatchesList.innerHTML = upcoming.length
         ? upcoming.map(followMatchCard).join('')
         : '<div class="empty">Aucun prochain match favori disponible.</div>';
