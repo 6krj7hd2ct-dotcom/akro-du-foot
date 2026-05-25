@@ -14,7 +14,18 @@ const DEFAULT_COACH_TEAMS_LIMIT = 3;
 const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
 const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
-const DEFAULT_PRIORITY_TEAMS = "Paris Saint-Germain,PSG,Arsenal,Real Madrid,Barcelona,Barcelone,Bayern Munich,Bayern München,Bayern Munchen,Inter,Internazionale,Manchester City,Liverpool,Atletico Madrid,Atlético Madrid,Borussia Dortmund,France,Argentina,Argentine,Brazil,Brésil,Spain,Espagne,England,Angleterre,Portugal,Germany,Allemagne,Italy,Italie,Morocco,Maroc,Netherlands,Pays-Bas,Belgium,Belgique,Croatia,Croatie";
+const DEFAULT_PRIORITY_TEAMS = [
+  "France", "Argentina", "Argentine", "Brazil", "Brésil", "Spain", "Espagne", "England", "Angleterre", "Portugal", "Germany", "Allemagne", "Italy", "Italie",
+  "Netherlands", "Pays-Bas", "Belgium", "Belgique", "Croatia", "Croatie", "Morocco", "Maroc", "Senegal", "Sénégal", "Mexico", "Mexique",
+  "United States", "USA", "Canada", "Japan", "Japon", "South Korea", "Korea Republic", "Corée du Sud", "Uruguay", "Colombia", "Colombie",
+  "Australia", "Australie", "Austria", "Autriche", "Switzerland", "Suisse", "Sweden", "Suède", "Scotland", "Écosse", "Norway", "Norvège",
+  "Algeria", "Algérie", "Egypt", "Égypte", "Tunisia", "Tunisie", "Ghana", "Ivory Coast", "Côte d'Ivoire", "South Africa", "Afrique du Sud",
+  "Cape Verde", "Cap-Vert", "Congo DR", "DR Congo", "Qatar", "Saudi Arabia", "Arabie Saoudite", "Iran", "Iraq", "Irak", "Jordan", "Jordanie",
+  "Uzbekistan", "Ouzbékistan", "New Zealand", "Nouvelle-Zélande", "Panama", "Paraguay", "Ecuador", "Équateur", "Haiti", "Haïti", "Curacao", "Curaçao",
+  "Türkiye", "Turkey", "Turquie", "Czechia", "Czech Republic", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Hungary", "Hongrie",
+  "Paris Saint-Germain", "PSG", "Arsenal", "Real Madrid", "Barcelona", "Barcelone", "Bayern Munich", "Bayern München", "Bayern Munchen",
+  "Inter", "Internazionale", "Manchester City", "Liverpool", "Atletico Madrid", "Atlético Madrid", "Borussia Dortmund",
+].join(",");
 const INCLUDE_PLAYERS = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_PLAYERS") ?? "false").toLowerCase() === "true";
 const INCLUDE_COACHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_COACHES") ?? "false").toLowerCase() === "true";
 const INCLUDE_MATCHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_MATCHES") ?? "false").toLowerCase() === "true";
@@ -572,15 +583,21 @@ Deno.serve(async () => {
       let missingPlayerLinks = 0;
       let apiErrors = 0;
       let priorityTeamsProcessed = 0;
+      let priorityNationsProcessed = 0;
       let clubsProcessed = 0;
       let nationsProcessed = 0;
+      let nationsWithoutSquad = 0;
       const teamLogs: Json[] = [];
       console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length, completeRosterSize, skippedComplete: skippedComplete.length});
       for (const teamTarget of playerTeamTargets) {
         playerTeamsVisited += 1;
         if (teamTarget.priority) priorityTeamsProcessed += 1;
-        if (teamTarget.type === "nation") nationsProcessed += 1;
-        else clubsProcessed += 1;
+        if (teamTarget.type === "nation") {
+          nationsProcessed += 1;
+          if (teamTarget.priority) priorityNationsProcessed += 1;
+        } else {
+          clubsProcessed += 1;
+        }
         console.log("[sync-football-data] fetch squad", {teamApiId: teamTarget.api_id, teamName: teamTarget.name, teamType: teamTarget.type, priority: teamTarget.priority, linkedPlayers: teamTarget.linkedPlayers});
         let squad: Json[] = [];
         let fallbackPlayers: Json[] = [];
@@ -602,6 +619,7 @@ Deno.serve(async () => {
           }
         }
         const normalizedPlayers = dedupeRows("players_normalized", players.map(item => normalizePlayerItem(item, countryLookup)).filter(row => row.api_id && row.name), apiIdKey);
+        if (teamTarget.type === "nation" && !normalizedPlayers.length) nationsWithoutSquad += 1;
         playersFound += players.length;
         const positionsDetected = Array.from(new Set(normalizedPlayers.map(item => String(item.position ?? "")).filter(Boolean))).sort();
         console.log("[sync-football-data] squad fetched", {teamApiId: teamTarget.api_id, squadRows: squad.length, squadPlayers: players.length - fallbackPlayers.length, fallbackPlayers: fallbackPlayers.length, normalizedPlayers: normalizedPlayers.length, positionsDetected});
@@ -689,9 +707,12 @@ Deno.serve(async () => {
       counts.team_player_relation_candidates = relationCandidates;
       counts.team_player_missing_player_ids = missingPlayerLinks;
       counts.roster_priority_teams_processed = priorityTeamsProcessed;
+      counts.roster_priority_nations_processed = priorityNationsProcessed;
       counts.roster_clubs_processed = clubsProcessed;
       counts.roster_nations_processed = nationsProcessed;
       counts.roster_teams_skipped_complete = skippedComplete.length;
+      counts.roster_priority_nations_skipped_complete = skippedComplete.filter(row => row.type === "nation" && row.priority).length;
+      counts.roster_nations_without_squad = nationsWithoutSquad;
       counts.roster_team_logs = teamLogs;
       counts.api_errors = apiErrors;
       counts.players_total = await tableCount("players");
@@ -699,8 +720,10 @@ Deno.serve(async () => {
       console.log("[sync-football-data] players step done", {
         teamsVisited: playerTeamsVisited,
         priorityTeamsProcessed,
+        priorityNationsProcessed,
         clubsProcessed,
         nationsProcessed,
+        nationsWithoutSquad,
         skippedComplete: skippedComplete.length,
         playersFound,
         teamPlayersUpserted,

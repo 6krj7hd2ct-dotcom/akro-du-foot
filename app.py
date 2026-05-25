@@ -2424,9 +2424,12 @@ def admin_sync_html() -> str:
       const items = [
         ['équipes parcourues', c.player_teams_visited || c.coach_teams_visited || 0],
         ['prioritaires traitées', c.roster_priority_teams_processed || 0],
+        ['nations prioritaires', c.roster_priority_nations_processed || 0],
         ['clubs traités', c.roster_clubs_processed || 0],
         ['nations traitées', c.roster_nations_processed || 0],
         ['équipes complètes ignorées', c.roster_teams_skipped_complete || 0],
+        ['nations complètes ignorées', c.roster_priority_nations_skipped_complete || 0],
+        ['nations sans squad', c.roster_nations_without_squad || 0],
         ['joueurs trouvés', c.players_found || 0],
         ['relations candidates', c.team_player_relation_candidates || 0],
         ['relations team_players upsertées', c.team_players_upserted || 0],
