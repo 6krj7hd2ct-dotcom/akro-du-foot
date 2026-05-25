@@ -2337,6 +2337,18 @@
       'ecuador': ['equateur']
     };
 
+    const WORLD_CUP_2026_NATION_ALIASES = new Set([
+      'mexico', 'mexique', 'south africa', 'afrique du sud', 'south korea', 'korea republic', 'coree du sud', 'czechia', 'czech republic', 'republique tcheque',
+      'canada', 'bosnia herzegovina', 'bosnia and herzegovina', 'bosnie herzegovine', 'qatar', 'switzerland', 'suisse',
+      'brazil', 'bresil', 'morocco', 'maroc', 'haiti', 'scotland', 'ecosse', 'united states', 'usa', 'etats unis', 'paraguay', 'australia', 'australie',
+      'turkiye', 'turkey', 'turquie', 'germany', 'allemagne', 'curacao', 'ivory coast', 'cote d ivoire', 'ecuador', 'equateur',
+      'netherlands', 'pays bas', 'japan', 'japon', 'sweden', 'suede', 'tunisia', 'tunisie', 'belgium', 'belgique', 'egypt', 'egypte',
+      'iran', 'new zealand', 'nouvelle zelande', 'spain', 'espagne', 'cape verde', 'cap vert', 'saudi arabia', 'arabie saoudite', 'uruguay',
+      'france', 'senegal', 'iraq', 'irak', 'norway', 'norvege', 'argentina', 'argentine', 'algeria', 'algerie', 'austria', 'autriche',
+      'jordan', 'jordanie', 'portugal', 'congo dr', 'dr congo', 'congo rd', 'uzbekistan', 'ouzbekistan', 'colombia', 'colombie',
+      'england', 'angleterre', 'croatia', 'croatie', 'ghana', 'panama'
+    ]);
+
     function footballAliasSet(value) {
       const base = normalizeFootballName(value);
       const aliases = new Set(base ? [base] : []);
@@ -2347,7 +2359,9 @@
     function supabaseTeamFromName(name) {
       const targets = footballAliasSet(name);
       if (!targets.size) return null;
+      const mustBeNation = Array.from(targets).some(target => WORLD_CUP_2026_NATION_ALIASES.has(target));
       const matches = (AKRO_SUPABASE_FOOTBALL.teams || []).filter(team => {
+        if (mustBeNation && team.type !== 'nation') return false;
         const aliases = new Set();
         const values = [team.name, team.short_name, team.code];
         if (team.type === 'nation') values.push(team.country);

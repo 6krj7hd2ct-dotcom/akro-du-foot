@@ -15,15 +15,15 @@ const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
 const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
 const DEFAULT_PRIORITY_TEAMS = [
-  "South Africa", "Afrique du Sud", "Czechia", "Czech Republic", "République Tchèque", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Bosnie-Herzégovine",
-  "Haiti", "Haïti", "Scotland", "Écosse", "Curacao", "Curaçao", "Cape Verde", "Cap-Vert", "Iraq", "Irak", "Jordan", "Jordanie",
+  "Colombia", "Colombie", "Argentina", "Argentine", "Cape Verde", "Cap-Vert", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Bosnie-Herzégovine", "South Africa", "Afrique du Sud",
+  "Croatia", "Croatie", "England", "Angleterre", "Portugal", "Austria", "Autriche", "Sweden", "Suède", "Türkiye", "Turkey", "Turquie", "Mexico", "Mexique", "Norway", "Norvège",
+  "Czechia", "Czech Republic", "République Tchèque", "Haiti", "Haïti", "Scotland", "Écosse", "Curacao", "Curaçao", "Iraq", "Irak", "Jordan", "Jordanie",
   "Uzbekistan", "Ouzbékistan", "Panama", "New Zealand", "Nouvelle-Zélande", "Congo DR", "DR Congo",
   "Ghana", "Senegal", "Sénégal", "Algeria", "Algérie", "Morocco", "Maroc", "Tunisia", "Tunisie", "Saudi Arabia", "Arabie Saoudite", "Iran",
-  "Mexico", "Mexique", "South Korea", "Korea Republic", "Corée du Sud", "Canada", "Qatar", "Switzerland", "Suisse",
-  "Brazil", "Brésil", "United States", "USA", "États-Unis", "Paraguay", "Australia", "Australie", "Türkiye", "Turkey", "Turquie",
-  "Germany", "Allemagne", "Ivory Coast", "Côte d'Ivoire", "Ecuador", "Équateur", "Netherlands", "Pays-Bas", "Japan", "Japon", "Sweden", "Suède",
+  "South Korea", "Korea Republic", "Corée du Sud", "Canada", "Qatar", "Switzerland", "Suisse",
+  "Brazil", "Brésil", "United States", "USA", "États-Unis", "Paraguay", "Australia", "Australie",
+  "Germany", "Allemagne", "Ivory Coast", "Côte d'Ivoire", "Ecuador", "Équateur", "Netherlands", "Pays-Bas", "Japan", "Japon",
   "Belgium", "Belgique", "Egypt", "Égypte", "Spain", "Espagne", "Uruguay", "France", "Norway", "Norvège",
-  "Argentina", "Argentine", "Austria", "Autriche", "Portugal", "Colombia", "Colombie", "England", "Angleterre", "Croatia", "Croatie",
   "Paris Saint-Germain", "PSG", "Arsenal", "Real Madrid", "Barcelona", "Barcelone", "Bayern Munich", "Bayern München", "Bayern Munchen",
   "Inter", "Internazionale", "Manchester City", "Liverpool", "Atletico Madrid", "Atlético Madrid", "Borussia Dortmund",
 ].join(",");
