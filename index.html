@@ -441,6 +441,7 @@
     .avatar.placeholder::before { content: ""; width: 30px; height: 36px; border-radius: 9px 9px 12px 12px; background: linear-gradient(180deg, #ffffff, #9fb0c2); box-shadow: inset 0 -10px 0 rgba(7,17,31,0.15); }
     .club-line { display: inline-flex; align-items: center; gap: 7px; min-width: 0; max-width: 100%; }
     .club-logo { width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; padding: 2px; background: rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.18); }
+    .club-line .club-logo, .player-card .club-line .flag, .historical-match-card .flag, .historical-standings-table .flag { object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,0.90); }
     .club-logo.placeholder { display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }
     .club-logo.placeholder::before { content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }
     .euro-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }
@@ -651,7 +652,7 @@
     .bracket-wing.right .ko-match::before { right: auto; left: -17px; }
     .ko-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; font-weight: 850; margin: 6px 0; font-size: clamp(10px, 0.92vw, 13px); }
     .bracket-team { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 900; display: grid; justify-items: center; gap: 4px; min-width: 0; width: 100%; padding: 2px; cursor: pointer; text-align: center; }
-    .bracket-team .flag { margin: 0; width: 22px; height: 22px; }
+    .bracket-team .flag { margin: 0; width: 22px; height: 22px; flex: 0 0 22px; object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,0.92); }
     .bracket-team-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.12; }
     .ko-score { font-weight: 950; color: #07111f; min-width: 22px; text-align: center; }
     .ko-match .subtle { color: #526274; }
@@ -1659,6 +1660,7 @@
       
     <nav class="season-tabs" data-season-tabs="champions" aria-label="Saison">
       <span class="season-tabs-label">Saison</span>
+      <button class="tab-button" type="button" data-season-value="2023-2024">2023-2024</button>
       <button class="tab-button" type="button" data-season-value="2024-2025">2024-2025</button>
       <button class="tab-button is-active" type="button" data-season-value="2025-2026">2025-2026</button>
       <button class="tab-button" type="button" data-season-value="2026-2027">2026-2027 bientôt</button>
@@ -1667,7 +1669,7 @@
       <section class="euro-summary-grid" aria-label="Résumé Champions League">
         <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/160.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Paris Saint-Germain</div><p class="subtle">Tenant du titre européen récent.</p></article>
         <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/110.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">Internazionale</div><p class="subtle">Finaliste de la dernière finale complète.</p></article>
-        <article class="euro-summary-card player-summary-card"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Donnée 2025-2026 non disponible.</p></article>
+        <article class="euro-summary-card player-summary-card"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Sera confirmé après la finale.</p></article>
         <article class="euro-summary-card euro-focus-card player-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><img class="player-summary-photo" src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Kylian Mbappé</div><p class="subtle">15 buts en 2025-2026.</p></article>
       </section>
 
@@ -6401,7 +6403,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           }
         },
         champions: {
-          current: '2024-2025',
+          current: '2025-2026',
+          visibleSeasons: ['2023-2024', '2024-2025', '2025-2026', '2026-2027'],
           seasons: {
             '2023-2024': {
               summary: [
@@ -6413,7 +6416,7 @@ grant select, insert, update on public.profiles to authenticated;`;
               honours: [['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')], ['2021', 'Chelsea', logo('363')]],
               scorers: [player('Harry Kane', 'Bayern Munich', '8 buts', logo('132')), player('Kylian Mbappé', 'Paris Saint-Germain', '8 buts', logo('160'), 'à égalité'), player('Erling Haaland', 'Manchester City', '6 buts', logo('382'))],
               assists: [player('Marcel Sabitzer', 'Borussia Dortmund', '5 passes', logo('124')), player('Jude Bellingham', 'Real Madrid', '5 passes', logo('86'), 'à égalité'), player('Bukayo Saka', 'Arsenal', '4 passes', logo('359'))],
-              bracket: [match('Finale', 'Borussia Dortmund', 'Real Madrid', '0 - 2', logo('124'), logo('86'), 'Wembley'), match('Demi-finale', 'Real Madrid', 'Bayern Munich', '4 - 3 cumulé', logo('86'), logo('132')), match('Demi-finale', 'Borussia Dortmund', 'Paris Saint-Germain', '2 - 0 cumulé', logo('124'), logo('160'))],
+              bracket: [match('Quarts', 'Arsenal', 'Bayern Munich', '2 - 3 cumulé', logo('359'), logo('132'), 'Score cumulé'), match('Quarts', 'Manchester City', 'Real Madrid', '4 - 4 tab 3-4', logo('382'), logo('86'), 'Score cumulé'), match('Quarts', 'Atlético Madrid', 'Borussia Dortmund', '4 - 5 cumulé', logo('1068'), logo('124'), 'Score cumulé'), match('Quarts', 'Paris Saint-Germain', 'Barcelona', '6 - 4 cumulé', logo('160'), logo('83'), 'Score cumulé'), match('Demi-finale', 'Real Madrid', 'Bayern Munich', '4 - 3 cumulé', logo('86'), logo('132'), 'Score cumulé'), match('Demi-finale', 'Borussia Dortmund', 'Paris Saint-Germain', '2 - 0 cumulé', logo('124'), logo('160'), 'Score cumulé'), match('Finale', 'Borussia Dortmund', 'Real Madrid', '0 - 2', logo('124'), logo('86'), 'Wembley')],
               groups: [
                 group('Groupe A 2023-2024', [team('Bayern Munich', logo('132'), '16'), team('F.C. København', logo('909'), '8'), team('Galatasaray', logo('432'), '5'), team('Manchester United', logo('360'), '4')]),
                 group('Groupe B 2023-2024', [team('Arsenal', logo('359'), '13'), team('PSV Eindhoven', logo('148'), '9'), team('Lens', logo('175'), '8'), team('Sevilla', logo('243'), '2')]),
@@ -6436,7 +6439,7 @@ grant select, insert, update on public.profiles to authenticated;`;
               honours: [['2025', 'Paris Saint-Germain', logo('160')], ['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')]],
               scorers: [player('Raphinha', 'Barcelona', '13 buts', logo('83')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', logo('124')), player('Harry Kane', 'Bayern Munich', '11 buts', logo('132'))],
               assists: [player('Raphinha', 'Barcelona', '9 passes', logo('83')), player('Ousmane Dembélé', 'Paris Saint-Germain', '6 passes', logo('160')), player('Achraf Hakimi', 'Paris Saint-Germain', '5 passes', logo('160'))],
-              bracket: [match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110'), 'Munich'), match('Demi-finale', 'Paris Saint-Germain', 'Arsenal', '3 - 1 cumulé', logo('160'), logo('359')), match('Demi-finale', 'Internazionale', 'Barcelona', '7 - 6 cumulé', logo('110'), logo('83'))],
+              bracket: [match('Quarts', 'Arsenal', 'Real Madrid', '5 - 1 cumulé', logo('359'), logo('86'), 'Score cumulé'), match('Quarts', 'Paris Saint-Germain', 'Aston Villa', '5 - 4 cumulé', logo('160'), logo('362'), 'Score cumulé'), match('Quarts', 'Barcelona', 'Borussia Dortmund', '5 - 3 cumulé', logo('83'), logo('124'), 'Score cumulé'), match('Quarts', 'Bayern Munich', 'Internazionale', '3 - 4 cumulé', logo('132'), logo('110'), 'Score cumulé'), match('Demi-finale', 'Paris Saint-Germain', 'Arsenal', '3 - 1 cumulé', logo('160'), logo('359'), 'Score cumulé'), match('Demi-finale', 'Internazionale', 'Barcelona', '7 - 6 cumulé', logo('110'), logo('83'), 'Score cumulé'), match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110'), 'Munich')],
               groups: [group('Phase de ligue 2024-2025', [
                 team('Liverpool', logo('364'), '21', {played: 8, wins: 7, draws: 0, losses: 1, goal_diff: '+12'}),
                 team('Barcelona', logo('83'), '19', {played: 8, wins: 6, draws: 1, losses: 1, goal_diff: '+15'}),
@@ -6477,7 +6480,6 @@ grant select, insert, update on public.profiles to authenticated;`;
               ])],
               calendar: [match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110')), match('Quart', 'Paris Saint-Germain', 'Aston Villa', '5 - 4 cumulé', logo('160'), logo('362')), match('Barrage', 'Paris Saint-Germain', 'Brest', '10 - 0 cumulé', logo('160'), logo('6997'))]
             },
-            '2025-2026': futureSeason('Champions League 2025-2026', 'Meilleur buteur de la compétition'),
             '2026-2027': futureSeason('Champions League 2026-2027', 'Meilleur buteur de la compétition')
           }
         },
@@ -6565,7 +6567,24 @@ grant select, insert, update on public.profiles to authenticated;`;
       };
       const bracketMatchHtml = item => {
         const [homeScore, awayScore] = scoreParts(item.score);
-        return `<div class="ko-match"><div class="ko-line"><span class="bracket-team">${img(item.homeImg)}<span class="bracket-team-name">${escape(item.home)}</span></span><span class="ko-score">${escape(homeScore)}</span></div><div class="ko-line"><span class="bracket-team">${img(item.awayImg)}<span class="bracket-team-name">${escape(item.away)}</span></span><span class="ko-score">${escape(awayScore)}</span></div><div class="subtle">${escape(item.note || item.phase || '')}</div><span class="status done">Terminé</span></div>`;
+        const isDone = /\d/.test(String(item.score || '')) && !/venir/i.test(String(item.note || ''));
+        const status = isDone ? 'Terminé' : 'À venir';
+        const statusClass = isDone ? ' done' : '';
+        return `<div class="ko-match"><div class="ko-line"><span class="bracket-team">${img(item.homeImg)}<span class="bracket-team-name">${escape(item.home)}</span></span><span class="ko-score">${escape(homeScore)}</span></div><div class="ko-line"><span class="bracket-team">${img(item.awayImg)}<span class="bracket-team-name">${escape(item.away)}</span></span><span class="ko-score">${escape(awayScore)}</span></div><div class="subtle">${escape(item.note || item.phase || '')}</div><span class="status${statusClass}">${status}</span></div>`;
+      };
+      const championsBracketHtml = matches => {
+        const phaseMatches = label => (matches || []).filter(item => normalizeTeamName(item.phase).includes(label));
+        const quarters = phaseMatches('quart');
+        const semis = phaseMatches('demi');
+        const final = phaseMatches('finale').filter(item => !normalizeTeamName(item.phase).includes('demi'))[0];
+        if (!quarters.length && !semis.length && !final) return `<div class="historical-unavailable">${info}</div>`;
+        const leftQuarters = quarters.slice(0, Math.ceil(quarters.length / 2));
+        const rightQuarters = quarters.slice(Math.ceil(quarters.length / 2));
+        const leftSemi = semis.slice(0, 1);
+        const rightSemi = semis.slice(1, 2);
+        const round = (title, items) => `<article class="round"><div class="round-title">${title}</div>${items.length ? items.map(bracketMatchHtml).join('') : `<div class="historical-unavailable">${info}</div>`}</article>`;
+        const finalHtml = final ? bracketMatchHtml(final).replace('ko-match', 'ko-match final-card') : `<div class="ko-match final-card"><div class="subtle">${info}</div><span class="status">À venir</span></div>`;
+        return `<div class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left">${round('Quarts', leftQuarters)}${round('Demies', leftSemi)}</div><div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy ucl-trophy bracket-trophy" aria-hidden="true"><div class="trophy"></div></div><div class="trophy-title">Champions League</div></div><div class="round-title">Finale</div>${finalHtml}</div><div class="bracket-wing ucl-wing right">${round('Demies', rightSemi)}${round('Quarts', rightQuarters)}</div></div></div>`;
       };
       const euroBracketHtml = matches => {
         const phaseMatches = label => (matches || []).filter(item => normalizeTeamName(item.phase).includes(label));
@@ -6616,7 +6635,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (nodes.assists) nodes.assists.innerHTML = playersHtml(data.assists);
         if (nodes.awards) nodes.awards.innerHTML = awardsHtml(data.awards);
         if (nodes.big5) nodes.big5.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : '';
-        if (nodes.bracket) nodes.bracket.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : (kind === 'euro' ? euroBracketHtml(data.bracket) : bracketHtml(data.bracket));
+        if (nodes.bracket) nodes.bracket.innerHTML = data.future ? `<div class="historical-unavailable">${escape(data.notice)}</div>` : (kind === 'euro' ? euroBracketHtml(data.bracket) : kind === 'champions' ? championsBracketHtml(data.bracket) : bracketHtml(data.bracket));
         if (nodes.groups) nodes.groups.innerHTML = groupsHtml(data.groups);
         if (nodes.calendar) nodes.calendar.innerHTML = calendarHtml(data.calendar);
         upgradeVisiblePlayerCards();
