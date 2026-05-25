@@ -2311,6 +2311,19 @@
       'sweden': ['suede'],
       'norvege': ['norway'],
       'norway': ['norvege'],
+      'ecosse': ['scotland'],
+      'scotland': ['ecosse'],
+      'pays de galles': ['wales'],
+      'wales': ['pays de galles'],
+      'irlande': ['ireland'],
+      'ireland': ['irlande'],
+      'irlande du nord': ['northern ireland'],
+      'northern ireland': ['irlande du nord'],
+      'congo dr': ['dr congo', 'congo rd'],
+      'dr congo': ['congo dr', 'congo rd'],
+      'congo rd': ['congo dr', 'dr congo'],
+      'cap vert': ['cape verde'],
+      'cape verde': ['cap vert'],
       'turquie': ['turkiye', 'turkey'],
       'turkiye': ['turquie', 'turkey'],
       'turkey': ['turquie', 'turkiye'],
@@ -2336,12 +2349,18 @@
       if (!targets.size) return null;
       const matches = (AKRO_SUPABASE_FOOTBALL.teams || []).filter(team => {
         const aliases = new Set();
-        [team.name, team.short_name, team.code, team.country].forEach(value => {
+        const values = [team.name, team.short_name, team.code];
+        if (team.type === 'nation') values.push(team.country);
+        values.forEach(value => {
           footballAliasSet(value).forEach(alias => aliases.add(alias));
         });
         return Array.from(targets).some(target => aliases.has(target));
       });
-      return matches.sort((a, b) => (b.squad?.length || 0) - (a.squad?.length || 0))[0] || null;
+      return matches.sort((a, b) => {
+        const typeScore = (b.type === 'nation' ? 1 : 0) - (a.type === 'nation' ? 1 : 0);
+        if (typeScore) return typeScore;
+        return (b.squad?.length || 0) - (a.squad?.length || 0);
+      })[0] || null;
     }
 
     function supabaseTeamDetails(name) {
