@@ -6645,14 +6645,32 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function whoSmartWrongOptions(correct, pool) {
-      return pool
+      const initialsTrap = pool
         .filter(player => whoPlayerKey(player.name) !== whoPlayerKey(correct.name))
+        .filter(player => whoInitialsForName(player.name) === whoInitialsForName(correct.name))
         .map(player => ({player, score: whoOptionScore(correct, player)}))
         .sort((a, b) => b.score - a.score)
-        .slice(0, 8)
+        .map(item => item.player.name)[0] || whoInventInitialsTrap(correct);
+      const options = [initialsTrap];
+      pool
+        .filter(player => whoPlayerKey(player.name) !== whoPlayerKey(correct.name) && !options.some(name => whoPlayerKey(name) === whoPlayerKey(player.name)))
+        .map(player => ({player, score: whoOptionScore(correct, player)}))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10)
         .sort(() => Math.random() - 0.5)
-        .slice(0, 3)
-        .map(item => item.player.name);
+        .some(item => {
+          options.push(item.player.name);
+          return options.length >= 3;
+        });
+      return options.slice(0, 3);
+    }
+
+    function whoInventInitialsTrap(correct) {
+      const firstInitial = whoPlayerKey(whoNameParts(correct.name).first).slice(0, 1).toUpperCase() || 'A';
+      const lastInitial = whoPlayerKey(whoNameParts(correct.name).last).slice(0, 1).toUpperCase() || 'M';
+      const firstNames = {A: ['Adam', 'Adrián', 'Alex'], B: ['Bruno', 'Bastien', 'Ben'], C: ['Carlos', 'Cristian', 'César'], D: ['Dario', 'Daniel', 'Diego'], E: ['Elias', 'Emil', 'Enzo'], F: ['Felipe', 'Fabio', 'Fernando'], G: ['Gabriel', 'Gonçalo', 'Giovanni'], H: ['Hugo', 'Hector', 'Henri'], I: ['Ibrahim', 'Ivan', 'Ismaël'], J: ['Julian', 'Jules', 'João'], K: ['Karim', 'Kevin', 'Kamil'], L: ['Lucas', 'Loïc', 'Leonardo'], M: ['Marco', 'Matteo', 'Milan'], N: ['Nico', 'Noah', 'Nabil'], O: ['Oscar', 'Omar', 'Oliver'], P: ['Pablo', 'Pedro', 'Paulo'], R: ['Rafael', 'Rayan', 'Ricardo'], S: ['Samuel', 'Sandro', 'Sergio'], T: ['Tiago', 'Tobias', 'Theo'], V: ['Victor', 'Valentin', 'Vitor'], Y: ['Yanis', 'Youssef', 'Yuri']};
+      const lastNames = {A: ['Alvarez', 'Andersen', 'Arias'], B: ['Barrios', 'Bakker', 'Borges'], C: ['Costa', 'Campos', 'Castro'], D: ['Dias', 'Duarte', 'Diallo'], E: ['Estevez', 'Emerson', 'Evrard'], F: ['Fernandes', 'Fofana', 'Ferreira'], G: ['Garcia', 'Gomes', 'Gimenez'], H: ['Hansen', 'Hauge', 'Herrera'], I: ['Iglesias', 'Isaksson', 'Ibarra'], J: ['Jimenez', 'Jensen', 'Junior'], K: ['Kouyaté', 'Keller', 'Kovacs'], L: ['Lopez', 'Larsen', 'Lima'], M: ['Moreno', 'Martin', 'Marquez'], N: ['Nunes', 'Navarro', 'Ndiaye'], O: ['Oliveira', 'Ortega', 'Olsen'], P: ['Pereira', 'Pinto', 'Paquet'], R: ['Rodriguez', 'Ramos', 'Reis'], S: ['Silva', 'Santos', 'Souza'], T: ['Torres', 'Traoré', 'Tavares'], V: ['Varela', 'Vidal', 'Vieira'], Y: ['Yilmaz', 'Yoro', 'Yahia']};
+      return `${(firstNames[firstInitial] || firstNames.A)[0]} ${(lastNames[lastInitial] || lastNames.M)[0]}`;
     }
 
     function whoPositionCode(value) {
@@ -6784,9 +6802,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (whoTimerText) whoTimerText.textContent = `${Math.max(0, whoState.timeLeft)}s`;
       if (whoTimerFill) whoTimerFill.style.width = `${ratio * 100}%`;
       if (whoPhotoCard && whoState.config?.mode === 'silhouette') {
-        const elapsed = Math.max(0, whoState.duration - whoState.timeLeft);
-        const revealWindow = Math.max(1, whoState.duration - 15);
-        const reveal = whoState.timeLeft <= 5 ? 1 : elapsed <= 10 ? 0 : Math.max(0, Math.min(1, (elapsed - 10) / revealWindow));
+        const reveal = whoState.timeLeft > 5 ? 0 : Math.max(0, Math.min(1, (5 - whoState.timeLeft) / 4));
         whoPhotoCard.style.setProperty('--who-brightness', String(0.035 + reveal * 0.965));
         whoPhotoCard.style.setProperty('--who-saturation', String(reveal));
         whoPhotoCard.style.setProperty('--who-contrast', String(1.8 - reveal * 0.8));
