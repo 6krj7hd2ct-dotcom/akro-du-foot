@@ -15,8 +15,9 @@ const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
 const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
 const DEFAULT_PRIORITY_TEAMS = [
-  "Colombia", "Colombie", "Argentina", "Argentine", "Cape Verde", "Cap-Vert", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Bosnie-Herzégovine", "South Africa", "Afrique du Sud",
-  "Croatia", "Croatie", "England", "Angleterre", "Portugal", "Austria", "Autriche", "Sweden", "Suède", "Türkiye", "Turkey", "Turquie", "Mexico", "Mexique", "Norway", "Norvège",
+  "Türkiye", "Turkey", "Turquie", "Mexico", "Mexique", "Cape Verde", "Cabo Verde", "Cap-Vert", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Bosnia & Herzegovina", "Bosnie-Herzégovine", "South Africa", "Afrique du Sud",
+  "Colombia", "Colombie", "Argentina", "Argentine",
+  "Croatia", "Croatie", "England", "Angleterre", "Portugal", "Austria", "Autriche", "Sweden", "Suède", "Norway", "Norvège",
   "Czechia", "Czech Republic", "République Tchèque", "Haiti", "Haïti", "Scotland", "Écosse", "Curacao", "Curaçao", "Iraq", "Irak", "Jordan", "Jordanie",
   "Uzbekistan", "Ouzbékistan", "Panama", "New Zealand", "Nouvelle-Zélande", "Congo DR", "DR Congo",
   "Ghana", "Senegal", "Sénégal", "Algeria", "Algérie", "Morocco", "Maroc", "Tunisia", "Tunisie", "Saudi Arabia", "Arabie Saoudite", "Iran",
@@ -520,9 +521,17 @@ Deno.serve(async () => {
           const wanted = norm(teamName);
           return Boolean(apiName && wanted) && apiName === wanted;
         });
-        const selected = exact.length ? exact : found.slice(0, 2);
+        const national = found.filter(item => Boolean(pick(pick<Json>(item, ["team"], {}), ["national"], false)));
+        const exactNational = exact.filter(item => Boolean(pick(pick<Json>(item, ["team"], {}), ["national"], false)));
+        const selected = exactNational.length ? exactNational : national.slice(0, 1).length ? national.slice(0, 1) : exact.length ? exact : found.slice(0, 2);
         priorityItems.push(...selected);
-        console.log("[sync-football-data] priority team fetched", {teamName, fetched: found.length, selected: selected.length});
+        console.log("[sync-football-data] priority team fetched", {
+          teamName,
+          fetched: found.length,
+          national: national.length,
+          selected: selected.length,
+          selectedNames: selected.map(item => pick(pick<Json>(item, ["team"], {}), ["name"], "")),
+        });
       }
       const priorityRows = dedupeRows("teams", priorityItems.map(item => teamRowFromApi(item, countryLookup)).filter(row => row.api_id && row.name), apiIdKey);
       const limitedPriorityRows = priorityRows.slice(0, teamsTotalLimit);
