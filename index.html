@@ -383,6 +383,9 @@
     .upcoming-match-teams { display: grid; gap: 8px; }
     .upcoming-match-team { justify-content: flex-start; color: #fff; font-size: 17px; font-weight: 950; line-height: 1.1; }
     .upcoming-match-team span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .upcoming-match-team-button { appearance: none; width: 100%; min-width: 0; display: flex; align-items: center; justify-content: flex-start; gap: 10px; border: 0; border-radius: 999px; padding: 3px 7px 3px 3px; margin: -3px 0; color: inherit; background: transparent; font: inherit; font-weight: inherit; line-height: inherit; text-align: left; cursor: pointer; transition: color .18s ease, background .18s ease, transform .18s ease; }
+    .upcoming-match-team-button:hover, .upcoming-match-team-button:focus-visible { color: var(--gold); background: rgba(245,201,107,0.10); transform: translateY(-1px); outline: 1px solid rgba(245,201,107,0.26); }
+    .upcoming-match-team-button span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .upcoming-match-logo { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%; object-fit: contain; object-position: center; padding: 3px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
     .upcoming-match-logo.placeholder { display: grid; place-items: center; color: #9fb0c2; font-size: 11px; font-weight: 950; }
     .upcoming-match-vs { width: fit-content; border-radius: 999px; padding: 3px 8px; background: rgba(255,255,255,0.08); color: #9fb0c2; font-size: 11px; font-weight: 950; text-transform: uppercase; }
@@ -2386,6 +2389,13 @@
       const logo = url => url
         ? `<img class="upcoming-match-logo" src="${escapeHtml(url)}" alt="">`
         : '<span class="upcoming-match-logo placeholder" aria-hidden="true">?</span>';
+      const teamLink = (name, flagUrl) => {
+        const label = name || 'À déterminer';
+        if (!name || label === 'À déterminer') {
+          return `<div class="upcoming-match-team">${logo(flagUrl)}<span>${escapeHtml(label)}</span></div>`;
+        }
+        return `<div class="upcoming-match-team"><button class="upcoming-match-team-button" type="button" data-team="${escapeHtml(name)}" aria-label="Ouvrir la fiche ${escapeHtml(label)}">${logo(flagUrl)}<span>${escapeHtml(label)}</span></button></div>`;
+      };
 
       container.innerHTML = upcoming.map(match => `
         <article class="upcoming-news-card">
@@ -2398,9 +2408,9 @@
             <span>${escapeHtml(timeFormat.format(match.matchDate))}</span>
           </div>
           <div class="upcoming-match-teams">
-            <div class="upcoming-match-team">${logo(match.home_flag_url)}<span>${escapeHtml(match.home_team || 'À déterminer')}</span></div>
+            ${teamLink(match.home_team, match.home_flag_url)}
             <div class="upcoming-match-vs">vs</div>
-            <div class="upcoming-match-team">${logo(match.away_flag_url)}<span>${escapeHtml(match.away_team || 'À déterminer')}</span></div>
+            ${teamLink(match.away_team, match.away_flag_url)}
           </div>
         </article>
       `).join('');
