@@ -101,18 +101,18 @@
       opacity: 0.8;
     }
     .app-top { position: relative; z-index: 101; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
-    .header-icon-actions { position: absolute; top: 0; right: 0; z-index: 120; display: flex; gap: 8px; align-items: center; }
+    .header-icon-actions { position: absolute; top: -12px; right: -14px; z-index: 120; display: flex; gap: 8px; align-items: center; }
     .header-icon-button { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; background: rgba(5,16,31,0.54); color: var(--ink); font: inherit; font-size: 16px; cursor: pointer; text-decoration: none; box-shadow: 0 14px 30px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); transition: transform .18s ease, background .18s ease, border-color .18s ease; }
     .header-icon-button:hover, .header-icon-button:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.50); background: rgba(245,201,107,0.13); outline: none; }
     .app-brand { display: grid; grid-template-columns: clamp(76px, 9vw, 112px) minmax(0, 1fr); gap: 18px; align-items: center; }
     .app-logo { width: clamp(76px, 9vw, 112px); height: clamp(76px, 9vw, 112px); border-radius: 24%; object-fit: cover; box-shadow: 0 18px 44px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.14), 0 0 34px rgba(31,111,235,0.28); background: #000; }
     .app-title { font-size: clamp(42px, 8vw, 92px); line-height: 0.9; }
     .app-copy { color: #c5d3e4; max-width: 650px; margin: 12px 0 0; font-size: 16px; line-height: 1.5; }
-    .global-controls { position: relative; z-index: 102; display: grid; grid-template-columns: minmax(240px, 520px) auto minmax(0, 1fr); gap: 9px; align-items: center; width: 100%; max-width: min(1120px, 100%); }
-    .global-actions { display: flex; flex: 0 0 auto; flex-wrap: nowrap; gap: 10px; justify-content: flex-end; align-items: center; padding-left: clamp(10px, 2vw, 26px); white-space: nowrap; }
+    .global-controls { position: relative; z-index: 102; display: grid; grid-template-columns: minmax(220px, 430px) auto minmax(max-content, 1fr); gap: 9px; align-items: center; width: 100%; max-width: none; }
+    .global-actions { justify-self: end; display: flex; flex: 0 0 auto; flex-wrap: nowrap; gap: 10px; justify-content: flex-end; align-items: center; padding-left: clamp(34px, 5vw, 84px); white-space: nowrap; }
     .global-search { position: relative; z-index: 2500; min-width: 0; max-width: none; }
-    .coach-header-button { color: #08172b; border-color: rgba(245,201,107,0.86); background: linear-gradient(135deg, var(--gold), #fff2b7); box-shadow: 0 14px 30px rgba(245,201,107,0.18), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .coach-header-button:hover, .coach-header-button:focus-visible { background: linear-gradient(135deg, #ffe58c, #fff8d6); outline: 1px solid rgba(245,201,107,0.55); }
+    .action-button.coach-header-button { color: #08172b; border-color: rgba(245,201,107,0.92); background: linear-gradient(180deg, #ffe8a6, #f5c96b 52%, #d5a63a); box-shadow: 0 14px 34px rgba(245,201,107,0.28), 0 0 0 1px rgba(245,201,107,0.18), inset 0 1px 0 rgba(255,255,255,0.42); }
+    .action-button.coach-header-button:hover, .action-button.coach-header-button:focus-visible { transform: translateY(-1px); border-color: rgba(255,226,150,0.98); background: linear-gradient(180deg, #fff0bd, #ffd66f 54%, #e2b044); box-shadow: 0 18px 40px rgba(245,201,107,0.34), 0 0 22px rgba(245,201,107,0.18), inset 0 1px 0 rgba(255,255,255,0.50); outline: 1px solid rgba(245,201,107,0.55); }
     .game-header-button { color: #e8fff8; border-color: rgba(50,211,162,0.42); background: rgba(50,211,162,0.13); box-shadow: 0 14px 30px rgba(50,211,162,0.10), inset 0 1px 0 rgba(255,255,255,0.08); }
     .game-header-button:hover, .game-header-button:focus-visible { background: rgba(50,211,162,0.22); border-color: rgba(50,211,162,0.70); outline: 1px solid rgba(50,211,162,0.45); }
     .mini-game-status { display: none; width: fit-content; max-width: min(620px, 100%); margin-top: -6px; padding: 9px 12px; border: 1px solid rgba(245,201,107,0.28); border-radius: 999px; background: rgba(245,201,107,0.10); color: #ffe1a0; font-size: 12px; font-weight: 900; }
