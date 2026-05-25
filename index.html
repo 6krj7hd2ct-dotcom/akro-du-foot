@@ -2260,8 +2260,14 @@
       if (!team) return null;
       const squad = (team.squad || []).map(player => ({
         name: player.name,
+        firstname: player.firstname,
+        lastname: player.lastname,
         position: player.position,
+        number: player.number || player.shirt_number,
         shirt_number: player.shirt_number,
+        birth_date: player.birth_date,
+        age: player.age,
+        nationality: player.nationality,
         photo_url: player.photo_url
       }));
       return {
@@ -2560,10 +2566,51 @@
       return [number ? `#${number}` : '', name, position ? `· ${position}` : ''].filter(Boolean).join(' ');
     }
 
+    function playerPositionGroup(player) {
+      const position = normalizeFootballName(player?.position || player?.role || '');
+      if (/goal|keeper|gardien|gk/.test(position)) return 'Gardiens';
+      if (/def|back|arriere|stoppeur|dc|df/.test(position)) return 'Défenseurs';
+      if (/mid|milieu|mc|md|mg|dm|cm|am/.test(position)) return 'Milieux';
+      if (/att|forward|wing|ailier|buteur|striker|fw|st/.test(position)) return 'Attaquants';
+      return 'Autres joueurs';
+    }
+
+    function playerCardMarkup(player) {
+      if (typeof player === 'string') {
+        return `<div class="mini-player"><div class="mini-avatar placeholder" aria-hidden="true">${escapeHtml(player.charAt(0) || 'J')}</div><strong>${escapeHtml(player)}</strong></div>`;
+      }
+      const name = player?.name || player?.player || player?.full_name || 'Joueur';
+      const number = player?.number || player?.jersey || player?.shirt_number || '';
+      const position = player?.position || player?.role || '';
+      const nationality = player?.nationality || player?.country || '';
+      const age = player?.age ? `${player.age} ans` : '';
+      const photo = player?.photo_url || player?.photo || '';
+      const avatar = photo
+        ? `<img class="mini-avatar" src="${escapeHtml(photo)}" alt="">`
+        : `<div class="mini-avatar placeholder" aria-hidden="true">${escapeHtml(name.charAt(0) || 'J')}</div>`;
+      const meta = [
+        number ? `<span class="mini-player-number">#${escapeHtml(number)}</span>` : '',
+        position ? `<span>${escapeHtml(position)}</span>` : '',
+        nationality ? `<span>${escapeHtml(nationality)}</span>` : '',
+        age ? `<span>${escapeHtml(age)}</span>` : ''
+      ].filter(Boolean).join('');
+      return `<div class="mini-player">${avatar}<div><strong>${escapeHtml(name)}</strong>${meta ? `<div class="mini-player-meta">${meta}</div>` : ''}</div></div>`;
+    }
+
     function playerGrid(title, players) {
-      const list = (players || []).map(playerLabel).filter(Boolean);
+      const list = (players || []).filter(player => typeof player === 'string' ? player.trim() : playerLabel(player));
       if (!list.length) return '';
-      return `<section class="team-info"><div class="team-info-label">${escapeHtml(title)}</div><div class="player-grid">${list.map(player => `<div class="mini-player"><div class="mini-avatar placeholder" aria-hidden="true">${escapeHtml(player.charAt(0) || 'J')}</div><strong>${escapeHtml(player)}</strong></div>`).join('')}</div></section>`;
+      return `<section class="team-info"><div class="team-info-label">${escapeHtml(title)}</div><div class="player-grid">${list.map(playerCardMarkup).join('')}</div></section>`;
+    }
+
+    function groupedSquadGrid(players) {
+      const groups = ['Gardiens', 'Défenseurs', 'Milieux', 'Attaquants', 'Autres joueurs'];
+      const byGroup = {};
+      (players || []).forEach(player => {
+        const group = playerPositionGroup(player);
+        (byGroup[group] ||= []).push(player);
+      });
+      return groups.map(group => playerGrid(group, byGroup[group] || [])).join('');
     }
 
     function squadCard(details) {
@@ -2581,7 +2628,7 @@
         ${formation ? `<section class="team-info"><div class="team-info-label">Composition du dernier match</div><div class="team-info-value">${escapeHtml(formation)}</div></section>` : ''}
         ${playerGrid('Titulaires / composition du dernier match', starters)}
         ${playerGrid('Remplaçants', substitutes)}
-        ${playerGrid('Effectif', squad)}
+        ${groupedSquadGrid(squad)}
       `;
     }
 

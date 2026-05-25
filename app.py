@@ -1925,10 +1925,10 @@ def _football_supabase_payload() -> dict[str, Any]:
     countries = _supabase_service_request("GET", "countries?select=id,api_id,name,code,flag_url&order=name.asc&limit=300") or []
     competitions = _supabase_service_request("GET", "competitions?select=id,api_id,country_id,name,type,logo_url,season,updated_at&is_active=eq.true&order=name.asc&limit=300") or []
     teams = _supabase_service_request("GET", "teams?select=id,api_id,country_id,name,short_name,code,type,logo_url,venue_name,updated_at&is_active=eq.true&order=updated_at.desc&limit=500") or []
-    players = _supabase_service_request("GET", "players?select=id,api_id,name,position,photo_url,updated_at&is_active=eq.true&order=updated_at.desc&limit=1200") or []
-    coaches = _supabase_service_request("GET", "coaches?select=id,api_id,name,photo_url,nationality,updated_at&is_active=eq.true&order=updated_at.desc&limit=500") or []
-    team_players = _supabase_service_request("GET", "team_players?select=team_id,player_id,season,shirt_number,position,updated_at&is_active=eq.true&order=updated_at.desc&limit=1200") or []
-    team_coaches = _supabase_service_request("GET", "team_coaches?select=team_id,coach_id,season,role,updated_at&is_active=eq.true&order=updated_at.desc&limit=500") or []
+    players = _supabase_service_request("GET", "players?select=id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
+    coaches = _supabase_service_request("GET", "coaches?select=id,api_id,name,firstname,lastname,birth_date,nationality,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
+    team_players = _supabase_service_request("GET", "team_players?select=team_id,player_id,season,shirt_number,position,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
+    team_coaches = _supabase_service_request("GET", "team_coaches?select=team_id,coach_id,season,role,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
     matches = _supabase_service_request("GET", "matches?select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,updated_at&order=match_date.desc&limit=500") or []
 
     country_by_id = {str(row.get("id")): row for row in countries if row.get("id")}
@@ -1943,10 +1943,19 @@ def _football_supabase_payload() -> dict[str, Any]:
         player = player_by_id.get(str(link.get("player_id") or ""))
         if not team_id or not player:
             continue
+        raw_player = player.get("raw_data") if isinstance(player.get("raw_data"), dict) else {}
+        raw_nested_player = raw_player.get("player") if isinstance(raw_player.get("player"), dict) else {}
+        age = raw_player.get("age") or raw_nested_player.get("age")
         players_by_team.setdefault(team_id, []).append({
             "name": player.get("name") or "",
+            "firstname": player.get("firstname") or "",
+            "lastname": player.get("lastname") or "",
             "position": link.get("position") or player.get("position") or "",
             "shirt_number": link.get("shirt_number"),
+            "number": link.get("shirt_number"),
+            "birth_date": player.get("birth_date") or "",
+            "age": age or "",
+            "nationality": player.get("nationality") or "",
             "photo_url": player.get("photo_url") or "",
             "season": link.get("season") or "",
         })
@@ -2022,6 +2031,10 @@ def _football_supabase_payload() -> dict[str, Any]:
         })
     public_players = [{
         "name": row.get("name") or "",
+        "firstname": row.get("firstname") or "",
+        "lastname": row.get("lastname") or "",
+        "birth_date": row.get("birth_date") or "",
+        "nationality": row.get("nationality") or "",
         "position": row.get("position") or "",
         "photo_url": row.get("photo_url") or "",
         "teams": player_team_names.get(row.get("name") or "", [])[:3],
@@ -2049,6 +2062,8 @@ def _football_supabase_payload() -> dict[str, Any]:
             "teams": len(public_teams),
             "players": len(players),
             "coaches": len(coaches),
+            "team_players": len(team_players),
+            "team_coaches": len(team_coaches),
             "matches": len(public_matches),
         },
     }
@@ -2342,8 +2357,20 @@ def admin_sync_html() -> str:
     const button = document.getElementById('run');
     const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}}[c]));
     const fmt = value => value ? new Date(value).toLocaleString('fr-FR') : 'Non disponible';
+    function countsHtml(counts) {{
+      const c = counts || {{}};
+      const items = [
+        ['équipes parcourues', c.player_teams_visited || c.coach_teams_visited || 0],
+        ['joueurs trouvés', c.players_found || 0],
+        ['relations team_players upsertées', c.team_players_upserted || 0],
+        ['joueurs total', c.players_total || c.players || 0],
+        ['relations total', c.team_players || 0],
+        ['erreurs API', c.api_errors || 0],
+      ];
+      return `<div style="display:grid;gap:4px">${{items.map(([label, value]) => `<span><strong>${{escapeHtml(label)}}:</strong> ${{escapeHtml(value)}}</span>`).join('')}}</div><code>${{escapeHtml(JSON.stringify(c))}}</code>`;
+    }}
     function renderLog(log) {{
-      return `<tr><td>${{escapeHtml(fmt(log.started_at))}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(log.status)}}</span></td><td>${{escapeHtml(log.message || log.error_detail || '')}}</td><td><code>${{escapeHtml(JSON.stringify(log.processed_counts || {{}}))}}</code></td></tr>`;
+      return `<tr><td>${{escapeHtml(fmt(log.started_at))}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(log.status)}}</span></td><td>${{escapeHtml(log.message || log.error_detail || '')}}</td><td>${{countsHtml(log.processed_counts)}}</td></tr>`;
     }}
     async function loadLogs() {{
       const res = await fetch('/api/admin/sync/logs', {{cache:'no-store'}});
