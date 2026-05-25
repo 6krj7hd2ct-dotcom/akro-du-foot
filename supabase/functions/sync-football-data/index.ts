@@ -165,6 +165,15 @@ async function upsert(table: string, rows: Json[], onConflict = "api_id") {
   return rows.length;
 }
 
+async function tableCount(table: string) {
+  const {count, error} = await supabase.from(table).select("id", {count: "exact", head: true});
+  if (error) {
+    console.error("[sync-football-data] count error", {table, message: error.message, details: error.details, hint: error.hint, code: error.code});
+    throw new Error(`${table} count: ${error.message}`);
+  }
+  return count ?? 0;
+}
+
 async function startLog() {
   console.log("[sync-football-data] start sync_logs insert");
   const {data, error} = await supabase.from("sync_logs").insert({
@@ -405,10 +414,16 @@ Deno.serve(async () => {
       console.log("[sync-football-data] step players start");
       const playerTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT));
       const playerTeamTargets = await readTeamTargets(playerTeamsLimit);
+      let playerTeamsVisited = 0;
+      let playersFound = 0;
+      let teamPlayersUpserted = 0;
+      console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length});
       for (const teamTarget of playerTeamTargets) {
+        playerTeamsVisited += 1;
         console.log("[sync-football-data] fetch squad", {teamApiId: teamTarget.api_id, teamName: teamTarget.name});
         const squad = await football("players/squads", {team: teamTarget.api_id});
         const players = squad.flatMap(item => asArray((item as Json).players));
+        playersFound += players.length;
         console.log("[sync-football-data] squad fetched", {teamApiId: teamTarget.api_id, squadRows: squad.length, players: players.length});
         const playerRows = dedupeRows("players", players.map(item => ({
           api_id: String(pick(item, ["id"], "")),
@@ -437,11 +452,29 @@ Deno.serve(async () => {
             updated_at: new Date().toISOString(),
           };
         }).filter(row => row.team_id && row.player_id), row => apiIdKey(row) || `${row.team_id ?? ""}:${row.player_id ?? ""}:${row.season ?? ""}`);
-        counts.team_players = Number(counts.team_players) + await upsert("team_players", teamPlayerRows, "api_id");
-        console.log("[sync-football-data] players cumulative", {players: counts.players, team_players: counts.team_players});
+        const upsertedTeamPlayers = await upsert("team_players", teamPlayerRows, "api_id");
+        teamPlayersUpserted += upsertedTeamPlayers;
+        counts.team_players_upserted = teamPlayersUpserted;
+        console.log("[sync-football-data] players cumulative", {
+          players: counts.players,
+          team_players_upserted: teamPlayersUpserted,
+          teamsVisited: playerTeamsVisited,
+          playersFound,
+          deletedRelations: 0,
+        });
       }
+      counts.team_players = await tableCount("team_players");
+      console.log("[sync-football-data] players step done", {
+        teamsVisited: playerTeamsVisited,
+        playersFound,
+        teamPlayersUpserted,
+        teamPlayersTotal: counts.team_players,
+        deletedRelations: 0,
+      });
     } else {
       console.log("[sync-football-data] players skipped", {reason: "FOOTBALL_SYNC_INCLUDE_PLAYERS is not true"});
+      counts.team_players = await tableCount("team_players");
+      console.log("[sync-football-data] team_players retained", {teamPlayersTotal: counts.team_players, deletedRelations: 0});
     }
 
     if (INCLUDE_COACHES) {
