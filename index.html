@@ -767,6 +767,7 @@
     .alltime-rank { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-weight: 950; }
     .alltime-value { color: var(--gold); font-size: 24px; font-weight: 950; text-align: right; }
     .community-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .profile-strip { display: grid; gap: 10px; margin: 18px 0 22px; }
     .community-panel { padding: 16px; }
     .community-predictions { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(240px, 0.52fr); gap: 16px; align-items: start; }
     .community-side { min-width: 0; }
@@ -814,10 +815,12 @@
     .favorite-match-list .empty { grid-column: 1 / -1; }
     .community-form { display: grid; gap: 10px; margin-top: 12px; }
     .profile-gate { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 16px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.08)); }
+    .profile-strip .profile-gate { width: 100%; }
     .profile-gate-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .profile-gate-copy { color: #d6e5f7; font-weight: 850; line-height: 1.35; }
     .profile-auth-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .active-profile-card { position: relative; display: none; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid color-mix(in srgb, var(--profile-accent, #ffe1a0) 48%, transparent); border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--profile-primary, #1f6feb) 78%, #07111f), color-mix(in srgb, var(--profile-secondary, #ef3340) 72%, #07111f)); overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,0.11); }
+    .profile-strip .active-profile-card { min-height: 92px; padding: 16px; }
     .active-profile-card.is-visible { display: grid; }
     .profile-banner-logo { position: absolute; right: 10px; top: 50%; width: 92px; height: 92px; transform: translateY(-50%); object-fit: contain; opacity: .16; filter: drop-shadow(0 16px 26px rgba(0,0,0,.28)); pointer-events: none; }
     .active-profile-card > :not(.profile-banner-logo), .leaderboard-item > :not(.profile-banner-logo) { position: relative; z-index: 1; }
@@ -863,8 +866,8 @@
     .message-top, .prediction-top, .leaderboard-item { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
     .leaderboard-item { position: relative; overflow: hidden; border-color: color-mix(in srgb, var(--profile-accent, #ffe1a0) 32%, rgba(255,255,255,0.09)); background: linear-gradient(90deg, color-mix(in srgb, var(--profile-primary, #1f6feb) 28%, rgba(255,255,255,0.05)), color-mix(in srgb, var(--profile-secondary, #07111f) 22%, rgba(255,255,255,0.055))); }
     .leaderboard-item.top-rank { border-color: color-mix(in srgb, var(--profile-accent, #ffe1a0) 58%, rgba(255,255,255,0.14)); }
-    .leaderboard-rank { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-right: 8px; border-radius: 50%; color: #07111f; background: linear-gradient(180deg, #ffffff, #b9c9dc); font-weight: 950; }
-    .top-rank .leaderboard-rank { background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
+    .leaderboard-rank { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; margin-right: 6px; color: #d6e5f7; font-weight: 950; }
+    .top-rank .leaderboard-rank { color: #ffe1a0; }
     .leaderboard-person { min-width: 0; display: flex; align-items: center; gap: 8px; color: inherit; background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-align: left; }
     .leaderboard-name { display: grid; gap: 2px; min-width: 0; }
     .leaderboard-name strong { overflow-wrap: normal; word-break: normal; line-height: 1.15; }
@@ -1131,6 +1134,19 @@
         </div>
       </div>
     </header>
+
+    <section class="profile-strip" aria-label="Profil utilisateur">
+      <div class="profile-gate" id="profileGate">
+        <div class="profile-gate-top">
+          <div class="profile-gate-copy">Connecte-toi ou crée ton profil pour participer.</div>
+          <div class="profile-auth-actions">
+            <button class="action-button" type="button" id="openProfileCreate">Créer ton profil</button>
+            <button class="action-button" type="button" id="openProfileLogin">Se connecter</button>
+          </div>
+        </div>
+        <div class="active-profile-card" id="activeProfileCard"></div>
+      </div>
+    </section>
     
     <div class="section-head" id="community">
       <div class="section-title"><h2>Communauté</h2><span class="alltime-badge">Global</span><span class="alltime-badge">Jeu privé sans argent</span></div>
@@ -1150,16 +1166,6 @@
           <h3 id="predictions">Pronostics du jour</h3>
           <form class="community-form" id="predictionForm">
             <input id="predictionPseudo" type="hidden" maxlength="32" autocomplete="nickname">
-            <div class="profile-gate" id="profileGate">
-              <div class="profile-gate-top">
-                <div class="profile-gate-copy">Connecte-toi ou crée ton profil pour participer.</div>
-                <div class="profile-auth-actions">
-                  <button class="action-button" type="button" id="openProfileCreate">Créer ton profil</button>
-                  <button class="action-button" type="button" id="openProfileLogin">Se connecter</button>
-                </div>
-              </div>
-              <div class="active-profile-card" id="activeProfileCard"></div>
-            </div>
             <div class="field-row">
               <select id="competitionFilter">
                 <option value="today" selected>Matchs du jour</option>
@@ -2931,7 +2937,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         ${profileBannerLogo(profile)}
         ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
         <div class="active-profile-meta">
-          <div class="active-profile-name"><span>${escapeHtml(profile.pseudo)}</span><span class="reward-badge">${escapeHtml(profile.badge_icon || '★')}</span></div>
+          <div class="active-profile-name"><span>${escapeHtml(profile.pseudo)}</span></div>
           <div class="active-profile-stats">
             <span class="profile-pill">${escapeHtml(profile.favorite_club || 'Club favori')}</span>
             <span class="profile-pill">${escapeHtml(profile.favorite_nation || 'Nation favorite')}</span>
@@ -3856,9 +3862,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         <div class="leaderboard-item ${index < 3 ? 'top-rank' : ''}" style="${profileThemeStyle(row)}">
           ${profileBannerLogo(row)}
           <button class="leaderboard-person" type="button" data-profile-pseudo="${escapeHtml(row.pseudo)}">
-            <span class="leaderboard-rank">${row.rank || index + 1}</span>
+            <span class="leaderboard-rank">#${escapeHtml(row.rank || index + 1)}</span>
             ${avatarImage(row.avatar_url, 'leaderboard-avatar', row)}
-            <span class="reward-badge" title="${escapeHtml(row.badge || 'Badge')}">${escapeHtml(row.badge_icon || '★')}</span>
             <span class="leaderboard-name"><strong>${escapeHtml(row.pseudo)}</strong><span class="leaderboard-meta">${escapeHtml(row.favorite_club || 'Club')} · ${escapeHtml(row.favorite_nation || 'Nation')} · ${escapeHtml(row.predictions_count || 0)} pronos</span></span>
           </button>
           <span class="leaderboard-points">${escapeHtml(row.points || 0)} pts<span class="leaderboard-rate">${escapeHtml(row.success_rate || 0)}% réussite</span></span>
