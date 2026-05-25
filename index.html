@@ -456,6 +456,10 @@
     .news-awards-grid .award-card { min-height: 132px; grid-template-columns: 58px minmax(0, 1fr); align-items: center; align-content: center; isolation: isolate; }
     .news-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.90), rgba(7,17,31,0.42)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 12px center; background-size: cover, 118px 78px; opacity: .58; pointer-events: none; }
     .news-awards-grid .award-card::after { content: ""; }
+    .tournament-awards-grid { gap: 12px; }
+    .tournament-awards-grid .award-card { min-height: 132px; grid-template-columns: 58px minmax(0, 1fr); align-items: center; align-content: center; isolation: isolate; }
+    .tournament-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.91), rgba(7,17,31,0.46)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 12px center; background-size: cover, 124px 82px; opacity: .62; pointer-events: none; }
+    .tournament-awards-grid .award-card::after { content: ""; }
     .award-photo { position: relative; z-index: 1; width: 54px; height: 54px; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(245,201,107,0.10)); border: 1px solid rgba(255,255,255,0.16); display: grid; place-items: center; box-shadow: 0 12px 26px rgba(0,0,0,0.22); }
     .award-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .award-photo-fallback { color: #ffe1a0; font-weight: 950; font-size: 14px; }
@@ -1320,10 +1324,22 @@
       <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Kylian Mbappé</div><p class="subtle">Soulier d’Or 2022 avec 8 buts.</p></article>
     </section>
     <section class="annual-awards-grid tournament-awards-grid" aria-label="Récompenses Coupe du Monde">
-      <article class="award-card" data-mark="BO"><strong>Ballon d'Or Adidas</strong><p>Meilleur joueur du tournoi.</p><div class="winner">Lionel Messi</div><p>Edition 2022</p></article>
-      <article class="award-card" data-mark="SO"><strong>Soulier d'Or Adidas</strong><p>Meilleur buteur du tournoi.</p><div class="winner">Kylian Mbappé</div><p>8 buts</p></article>
-      <article class="award-card" data-mark="GK"><strong>Gant d'Or</strong><p>Meilleur gardien.</p><div class="winner">Emiliano Martínez</div><p>Edition 2022</p></article>
-      <article class="award-card" data-mark="U21"><strong>Meilleur jeune joueur</strong><p>Révélation du tournoi.</p><div class="winner">Enzo Fernández</div><p>Edition 2022</p></article>
+      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)">
+        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/30981.png" alt="Lionel Messi" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>LM</span></div>
+        <div class="award-copy"><strong>Ballon d'Or Adidas</strong><p>Meilleur joueur du tournoi.</p><div class="winner">Lionel Messi</div><p>Edition 2022</p></div>
+      </article>
+      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)">
+        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>KM</span></div>
+        <div class="award-copy"><strong>Soulier d'Or Adidas</strong><p>Meilleur buteur du tournoi.</p><div class="winner">Kylian Mbappé</div><p>8 buts</p></div>
+      </article>
+      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)">
+        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/268375.png" alt="Emiliano Martínez" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>EM</span></div>
+        <div class="award-copy"><strong>Gant d'Or</strong><p>Meilleur gardien.</p><div class="winner">Emiliano Martínez</div><p>Edition 2022</p></div>
+      </article>
+      <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)">
+        <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/1137705.png" alt="Enzo Fernández" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>EF</span></div>
+        <div class="award-copy"><strong>Meilleur jeune joueur</strong><p>Révélation du tournoi.</p><div class="winner">Enzo Fernández</div><p>Edition 2022</p></div>
+      </article>
     </section>
 
     <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Coupe du Monde.</div></div>
@@ -5858,6 +5874,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const group = (name, teams) => ({name, teams});
       const match = (phase, home, away, score, homeImg = '', awayImg = '', note = '') => ({phase, home, away, score, homeImg, awayImg, note});
       const player = (name, teamName, value, img = '', note = '') => ({name, team: teamName, value, img, note});
+      const photo = id => id ? `https://images.fotmob.com/image_resources/playerimages/${id}.png` : '';
       const futureSeason = (competition, favouriteLabel) => ({
         future: true,
         summary: [
@@ -5888,10 +5905,10 @@ grant select, insert, update on public.profiles to authenticated;`;
               ],
               honours: [['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')]],
               awards: [
-                {mark: 'BO', title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Luka Modric', note: 'Edition 2018'},
-                {mark: 'SO', title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'Harry Kane', note: '6 buts'},
-                {mark: 'GK', title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'Thibaut Courtois', note: 'Edition 2018'},
-                {mark: 'U21', title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'Kylian Mbappé', note: 'Edition 2018'}
+                {title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Luka Modric', note: 'Edition 2018', flag: flag('cro'), photo: photo('357633'), initials: 'LM'},
+                {title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'Harry Kane', note: '6 buts', flag: flag('eng'), photo: photo('194165'), initials: 'HK'},
+                {title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'Thibaut Courtois', note: 'Edition 2018', flag: flag('bel'), photo: photo('172649'), initials: 'TC'},
+                {title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'Kylian Mbappé', note: 'Edition 2018', flag: flag('fra'), photo: photo('701154'), initials: 'KM'}
               ],
               scorers: [player('Harry Kane', 'Angleterre', '6 buts', flag('eng')), player('Antoine Griezmann', 'France', '4 buts', flag('fra'), 'à égalité'), player('Romelu Lukaku', 'Belgique', '4 buts', flag('bel'), 'à égalité')],
               assists: [player('Antoine Griezmann', 'France', '2 passes', flag('fra'), 'donnée partagée'), player('Kevin De Bruyne', 'Belgique', '2 passes', flag('bel'), 'donnée partagée'), player('James Rodriguez', 'Colombie', '2 passes', flag('col'), 'donnée partagée')],
@@ -5917,10 +5934,10 @@ grant select, insert, update on public.profiles to authenticated;`;
               ],
               honours: [['2022', 'Argentine', flag('arg')], ['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')]],
               awards: [
-                {mark: 'BO', title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Lionel Messi', note: 'Edition 2022'},
-                {mark: 'SO', title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'Kylian Mbappé', note: '8 buts'},
-                {mark: 'GK', title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'Emiliano Martínez', note: 'Edition 2022'},
-                {mark: 'U21', title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'Enzo Fernández', note: 'Edition 2022'}
+                {title: "Ballon d'Or Adidas", description: 'Meilleur joueur du tournoi.', winner: 'Lionel Messi', note: 'Edition 2022', flag: flag('arg'), photo: photo('30981'), initials: 'LM'},
+                {title: "Soulier d'Or Adidas", description: 'Meilleur buteur du tournoi.', winner: 'Kylian Mbappé', note: '8 buts', flag: flag('fra'), photo: photo('701154'), initials: 'KM'},
+                {title: "Gant d'Or", description: 'Meilleur gardien.', winner: 'Emiliano Martínez', note: 'Edition 2022', flag: flag('arg'), photo: photo('268375'), initials: 'EM'},
+                {title: 'Meilleur jeune joueur', description: 'Révélation du tournoi.', winner: 'Enzo Fernández', note: 'Edition 2022', flag: flag('arg'), photo: photo('1137705'), initials: 'EF'}
               ],
               scorers: [player('Kylian Mbappé', 'France', '8 buts', flag('fra')), player('Lionel Messi', 'Argentine', '7 buts', flag('arg')), player('Olivier Giroud', 'France', '4 buts', flag('fra'))],
               assists: [player('Bruno Fernandes', 'Portugal', '3 passes', flag('por'), 'à égalité'), player('Harry Kane', 'Angleterre', '3 passes', flag('eng'), 'à égalité'), player('Antoine Griezmann', 'France', '3 passes', flag('fra'), 'à égalité')],
@@ -6116,7 +6133,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       };
       const summaryHtml = cards => (cards || []).map(([label, value, detail, image], index) => `<article class="euro-summary-card ${index === 3 ? 'euro-focus-card' : ''}"${image ? ` style="--summary-bg:url(${escape(image)})"` : ''}><div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p></article>`).join('');
       const honoursHtml = honours => (honours || []).map(([year, winner, image]) => `<article class="card recent-honour-card" role="button" tabindex="0" data-team="${escape(winner)}"><h3>${escape(year)}</h3><p class="empty">${img(image)}${escape(winner)}</p></article>`).join('') || `<article class="card recent-honour-card"><h3>A venir</h3><p class="empty">${info}</p></article>`;
-      const awardsHtml = awards => (awards || []).map(item => `<article class="award-card" data-mark="${escape(item.mark || '')}"><strong>${escape(item.title || '')}</strong><p>${escape(item.description || '')}</p><div class="winner">${escape(item.winner || 'Information non disponible')}</div><p>${escape(item.note || '')}</p></article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
+      const initials = value => String(value || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
+      const awardsHtml = awards => (awards || []).map(item => {
+        const flagStyle = item.flag ? ` style="--award-flag:url(${escape(item.flag)})"` : '';
+        const photoHtml = item.photo ? `<img src="${escape(item.photo)}" alt="${escape(item.winner || item.title || '')}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;">` : '';
+        const fallbackHidden = item.photo ? ' hidden' : '';
+        return `<article class="award-card"${flagStyle}><div class="award-photo">${photoHtml}<span class="award-photo-fallback"${fallbackHidden}>${escape(item.initials || initials(item.winner))}</span></div><div class="award-copy"><strong>${escape(item.title || '')}</strong><p>${escape(item.description || '')}</p><div class="winner">${escape(item.winner || 'Information non disponible')}</div><p>${escape(item.note || '')}</p></div></article>`;
+      }).join('') || `<div class="historical-unavailable">${info}</div>`;
       const playersHtml = players => (players || []).map((item, index) => `<article class="card player-card rank-${index + 1}"><div class="avatar-wrap">${item.img ? `<img class="avatar" src="${escape(item.img)}" alt="">` : '<div class="avatar placeholder" aria-hidden="true"></div>'}</div><div><div class="team">${escape(item.name)}</div><div class="club-line">${img(item.img)}<span class="club-name">${escape(item.team)}</span></div><div class="player-stat">${escape(item.value)}</div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</div></article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
       const matchesHtml = matches => (matches || []).map(item => `<article class="historical-match-card"><div class="subtle">${escape(item.phase)}</div><div class="historical-match-row"><span class="team">${img(item.homeImg)}${escape(item.home)}</span><span class="historical-score">${escape(item.score)}</span><span class="team">${escape(item.away)}${img(item.awayImg)}</span></div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</article>`).join('');
       const bracketHtml = matches => matches?.length ? `<div class="historical-match-grid">${matchesHtml(matches)}</div>` : `<div class="historical-unavailable">${info}</div>`;
