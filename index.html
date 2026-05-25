@@ -2102,6 +2102,7 @@
       }
       if (typeof initQuizSelectors === 'function') initQuizSelectors();
       if (typeof renderLeague === 'function' && document.querySelector('[data-tab-panel="leagues"]')?.classList.contains('is-active')) renderLeague();
+      if (typeof renderFollowMatches === 'function') renderFollowMatches(communityMatches);
       console.info('[football-supabase] source utilisée', AKRO_SUPABASE_FOOTBALL.counts);
     }
 
@@ -3474,8 +3475,9 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function statusClass(match) {
-      if (match.completed || match.status === 'Terminé') return 'done';
-      return match.status === 'LIVE' ? 'live' : '';
+      const status = normalizeTeamName(match.status);
+      if (match.completed || status === 'termine' || status === 'ft' || status === 'aet' || status === 'pen') return 'done';
+      return ['live', '1h', '2h', 'ht', 'mi temps', 'in progress', 'match live'].includes(status) ? 'live' : '';
     }
 
     function matchCenter(match) {
@@ -3492,7 +3494,7 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function followMatchCard(match) {
       return `<article class="follow-card">
-        <div class="follow-meta"><span>${escapeHtml(match.competition || 'Compétition')}</span><span>${escapeHtml(shortDate(match.date))}</span></div>
+        <div class="follow-meta"><span>${escapeHtml(matchLabel(match))}</span><span>${escapeHtml(shortDate(match.date))}</span></div>
         <div class="follow-teams">
           ${followTeamButton(match.home_team, match.home_flag_url)}
           <div class="follow-center">${escapeHtml(matchCenter(match))}</div>
@@ -3580,6 +3582,49 @@ grant select, insert, update on public.profiles to authenticated;`;
       });
     }
 
+    function matchLabel(match) {
+      return isInternationalFriendly(match) ? 'Amical' : (match.competition || 'Compétition');
+    }
+
+    function matchIdentity(match) {
+      return normalizeTeamName(`${match.id || ''} ${match.home_team || ''} ${match.away_team || ''} ${match.date || ''}`);
+    }
+
+    function isInternationalFriendly(match) {
+      const text = normalizeTeamName(`${match.competition || ''} ${match.phase || ''} ${match.round || ''}`);
+      return text.includes('friendly') || text.includes('friendlies') || text.includes('amical') || text.includes('amicaux');
+    }
+
+    function normalizeCommunityMatch(match) {
+      const status = String(match.status || '').trim();
+      const normalizedStatus = normalizeTeamName(status);
+      const completed = Boolean(match.completed) || ['termine', 'ft', 'aet', 'pen', 'match finished'].includes(normalizedStatus);
+      return {
+        ...match,
+        competition: isInternationalFriendly(match) ? 'Amical' : (match.competition || 'Compétition'),
+        status: status || (completed ? 'Terminé' : 'À venir'),
+        completed
+      };
+    }
+
+    function communityDisplayMatches(matches) {
+      const output = [];
+      const seen = new Set();
+      const add = match => {
+        if (!match) return;
+        const normalized = normalizeCommunityMatch(match);
+        const key = matchIdentity(normalized);
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        output.push(normalized);
+      };
+      (matches || []).forEach(add);
+      (AKRO_SUPABASE_FOOTBALL.matches || [])
+        .filter(isInternationalFriendly)
+        .forEach(add);
+      return output;
+    }
+
     function renderFavoriteMatches(matches) {
       if (!favoriteMatchesList) return;
       if (!hasActiveProfile()) {
@@ -3591,8 +3636,9 @@ grant select, insert, update on public.profiles to authenticated;`;
         favoriteMatchesList.innerHTML = '<div class="empty">Ajoute des équipes favorites pour voir leurs prochains matchs.</div>';
         return;
       }
+      const source = communityDisplayMatches(matches);
       const now = Date.now();
-      const upcoming = (matches || [])
+      const upcoming = source
         .filter(match => !match.completed && matchTimestamp(match) >= now)
         .filter(match => isFavoriteMatch(match, teams))
         .sort((a, b) => matchTimestamp(a) - matchTimestamp(b))
@@ -3616,7 +3662,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function renderFollowMatches(matches) {
-      const source = matches && matches.length ? matches : DASHBOARD_MATCHES;
+      const source = communityDisplayMatches(matches && matches.length ? matches : DASHBOARD_MATCHES);
       const selected = source
         .filter(isTodayMatch)
         .sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
