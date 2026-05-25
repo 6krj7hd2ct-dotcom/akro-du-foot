@@ -6204,6 +6204,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const HISTORICAL_COMPETITIONS = {
         worldcup: {
           current: '2026',
+          visibleSeasons: ['2018', '2022', '2026', '2030'],
           seasons: {
             '2010': {
               summary: [
@@ -6504,8 +6505,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         const root = panel(kind);
         if (!root) return {};
         const leaders = Array.from(root.querySelectorAll('.leaders'));
+        const heroRows = Array.from(root.querySelectorAll('.hero-badges .hero-row'));
+        const heroStatusPills = Array.from(heroRows[1]?.querySelectorAll('.pill') || []);
         return {
           root,
+          heroKicker: root.querySelector('.hero-content .kicker'),
+          heroStatOne: heroStatusPills[0],
+          heroStatTwo: heroStatusPills[1],
+          heroStatThree: heroStatusPills[2],
           summary: root.querySelector('.euro-summary-grid'),
           scorers: leaders[0],
           assists: leaders[1],
@@ -6572,6 +6579,24 @@ grant select, insert, update on public.profiles to authenticated;`;
       const stat = value => value === undefined || value === null || value === '' ? '-' : value;
       const groupsHtml = groups => (groups || []).map(item => `<article class="card historical-standings-card"><h3>${escape(item.name)}</h3><div class="table-scroll"><table class="historical-standings-table"><thead><tr><th>Position</th><th>Équipe</th><th>MJ</th><th>V</th><th>N</th><th>D</th><th>Diff</th><th>Pts</th></tr></thead><tbody>${(item.teams || []).map((row, index) => `<tr><td>${index + 1}</td><td><span class="team">${img(row.img)}${escape(row.name)}</span></td><td>${escape(stat(row.played))}</td><td>${escape(stat(row.wins))}</td><td>${escape(stat(row.draws))}</td><td>${escape(stat(row.losses))}</td><td>${escape(stat(row.goal_diff))}</td><td><strong>${escape(stat(row.pts))}</strong></td></tr>`).join('')}</tbody></table></div></article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
       const calendarHtml = matches => matches?.length ? `<div class="historical-calendar-grid">${matchesHtml(matches)}</div>` : `<div class="historical-unavailable">${info}</div>`;
+      const summaryValue = (data, label) => (data.summary || []).find(item => String(item[0] || '').toLocaleLowerCase('fr-FR') === label.toLocaleLowerCase('fr-FR'))?.[1] || '';
+      const renderWorldCupHero = (kind, selected, data, nodes) => {
+        if (kind !== 'worldcup') return;
+        if (nodes.heroKicker) nodes.heroKicker.innerHTML = `<span class="ball"></span> Coupe du Monde ${escape(selected)}`;
+        if (data.future) {
+          if (nodes.heroStatOne) nodes.heroStatOne.textContent = `${selected} · données à venir`;
+          if (nodes.heroStatTwo) nodes.heroStatTwo.textContent = 'Calendrier à venir';
+          if (nodes.heroStatThree) nodes.heroStatThree.textContent = 'Avancement : préparation';
+          return;
+        }
+        const champion = summaryValue(data, 'Champion') || info;
+        const finalist = summaryValue(data, 'Finaliste') || info;
+        const groupCount = data.groups?.length || 0;
+        const matchCount = (data.calendar?.length || 0) + (data.bracket?.length || 0);
+        if (nodes.heroStatOne) nodes.heroStatOne.textContent = `Champion : ${champion}`;
+        if (nodes.heroStatTwo) nodes.heroStatTwo.textContent = `Finaliste : ${finalist}`;
+        if (nodes.heroStatThree) nodes.heroStatThree.textContent = groupCount || matchCount ? `${groupCount || '—'} groupes · ${matchCount || '—'} matchs clés` : 'Avancement : données partielles';
+      };
 
       window.AKRO_HISTORICAL_COMPETITIONS = HISTORICAL_COMPETITIONS;
       window.AKRO_COACH_HISTORICAL_CONTEXT = HISTORICAL_COMPETITIONS;
@@ -6585,6 +6610,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           return;
         }
         const nodes = nodesFor(kind);
+        renderWorldCupHero(kind, selected, data, nodes);
         if (nodes.summary) nodes.summary.innerHTML = summaryHtml(data.summary);
         if (nodes.scorers) nodes.scorers.innerHTML = playersHtml(data.scorers);
         if (nodes.assists) nodes.assists.innerHTML = playersHtml(data.assists);
@@ -6614,12 +6640,25 @@ grant select, insert, update on public.profiles to authenticated;`;
     });
 
     const seasonCatalog = window.AKRO_HISTORICAL_COMPETITIONS || {};
+    window.applyHistoricalSeason = (kind, value) => {
+      const nav = document.querySelector(`[data-season-tabs="${kind}"]`);
+      if (!nav) return;
+      const buttons = Array.from(nav.querySelectorAll('[data-season-value]'));
+      const selected = buttons.find((button) => button.dataset.seasonValue === value) || buttons.find((button) => button.classList.contains('is-active')) || buttons[0];
+      if (!selected) return;
+      buttons.forEach((button) => button.classList.toggle('is-active', button === selected));
+      localStorage.setItem(`akrodufoot:season:${kind}`, selected.dataset.seasonValue || '');
+      if (typeof window.renderCompetitionSeason === 'function') {
+        window.renderCompetitionSeason(kind, selected.dataset.seasonValue || '');
+      }
+    };
     document.querySelectorAll('[data-season-tabs]').forEach((nav) => {
       const config = seasonCatalog[nav.dataset.seasonTabs];
       if (config) {
         const label = nav.querySelector('.season-tabs-label');
         const existingLabels = new Map(Array.from(nav.querySelectorAll('[data-season-value]')).map((button) => [button.dataset.seasonValue, button.textContent.trim()]));
-        const values = Array.from(new Set([...Object.keys(config.seasons || {}), config.current].filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr-FR', {numeric: true}));
+        const catalogValues = config.visibleSeasons || Object.keys(config.seasons || {});
+        const values = Array.from(new Set([...catalogValues, config.current].filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr-FR', {numeric: true}));
         nav.replaceChildren();
         if (label) nav.appendChild(label);
         values.forEach((value) => {
@@ -6631,21 +6670,17 @@ grant select, insert, update on public.profiles to authenticated;`;
           nav.appendChild(button);
         });
       }
+      const applySeason = (value) => window.applyHistoricalSeason?.(nav.dataset.seasonTabs, value);
       const key = `akrodufoot:season:${nav.dataset.seasonTabs}`;
-      const buttons = Array.from(nav.querySelectorAll('[data-season-value]'));
-      const applySeason = (value) => {
-        const selected = buttons.find((button) => button.dataset.seasonValue === value) || buttons.find((button) => button.classList.contains('is-active')) || buttons[0];
-        if (!selected) return;
-        buttons.forEach((button) => button.classList.toggle('is-active', button === selected));
-        localStorage.setItem(key, selected.dataset.seasonValue || '');
-        if (typeof window.renderCompetitionSeason === 'function') {
-          window.renderCompetitionSeason(nav.dataset.seasonTabs, selected.dataset.seasonValue || '');
-        }
-      };
       applySeason(localStorage.getItem(key));
-      buttons.forEach((button) => {
-        button.addEventListener('click', () => applySeason(button.dataset.seasonValue));
-      });
+    });
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-season-tabs] [data-season-value]');
+      if (!button) return;
+      const nav = button.closest('[data-season-tabs]');
+      if (!nav) return;
+      event.preventDefault();
+      window.applyHistoricalSeason(nav.dataset.seasonTabs, button.dataset.seasonValue || '');
     });
   </script>
   <script>
