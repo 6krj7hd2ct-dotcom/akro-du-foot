@@ -495,6 +495,7 @@
     .euro-bracket-stage .round:not(:last-child)::after { display: block; right: -16px; }
     .euro-bracket-stage .ko-match::before { display: block; }
     .euro-group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 14px; }
+    #tab-euro .euro-group-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; align-items: stretch; }
     .euro-group-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .euro-team-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,0.08); }
     .euro-team-row:first-of-type { margin-top: 12px; }
@@ -503,6 +504,10 @@
     .euro-match-list { display: grid; gap: 10px; padding: 14px; }
     .euro-match-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); }
     .euro-match-row .score { min-width: 60px; text-align: center; font-size: 18px; }
+    #tab-euro .grid { width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+    #tab-euro .grid > .card { min-width: 0; width: 100%; }
+    #tab-euro .grid > .historical-calendar-grid { grid-column: 1 / -1; }
+    #tab-euro .historical-calendar-grid { grid-template-columns: repeat(3, minmax(260px, 1fr)); width: 100%; }
     .euro-match-team.away { text-align: right; }
     .euro-focus-card { border-color: rgba(99,232,255,0.30); background: linear-gradient(135deg, rgba(99,232,255,0.14), rgba(31,111,235,0.10), rgba(142,75,255,0.10)); }
     .euro-focus-card .club-line { margin-top: 10px; }
@@ -1029,6 +1034,7 @@
       .today-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .news, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #leagueSummaryCards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      #tab-euro .euro-group-grid, #tab-euro .grid, #tab-euro .historical-calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .matches { grid-template-columns: 1fr; }
       .calendar-match { grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }
       .league-calendar-match { grid-template-columns: 80px minmax(0, 1fr) 64px minmax(0, 1fr); padding: 12px; }
@@ -1072,6 +1078,7 @@
       .france-header-card { width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }
       .france-header-image { width: 56px; height: 48px; }
       .today-strip, .leaders, .news, .grid, .matches { grid-template-columns: 1fr; }
+      #tab-euro .euro-group-grid, #tab-euro .grid, #tab-euro .historical-calendar-grid { grid-template-columns: 1fr; }
       #leagueSummaryCards { grid-template-columns: 1fr; }
       .calendar-match { grid-template-columns: 1fr auto 1fr; }
       .league-calendar-match { grid-template-columns: 1fr; text-align: center; }
