@@ -436,6 +436,7 @@
     .club-logo.placeholder { display: inline-grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07)); padding: 0; }
     .club-logo.placeholder::before { content: ""; width: 12px; height: 15px; border-radius: 3px 3px 5px 5px; background: linear-gradient(180deg, #dbe7f7, #708196); }
     .euro-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 18px; }
+    #leagueSummaryCards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .euro-summary-card { position: relative; overflow: hidden; min-height: 132px; padding: 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.12), rgba(142,75,255,0.08)); box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
     .euro-summary-card::before { content: ""; position: absolute; inset: 0; background-image: var(--summary-bg); background-repeat: no-repeat; background-position: calc(100% - 10px) center; background-size: min(136px, 54%) auto; opacity: 0.21; filter: saturate(1.20) contrast(1.08); pointer-events: none; }
     .euro-summary-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }
@@ -998,6 +999,7 @@
       .section-note { text-align: left; }
       .today-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .news, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #leagueSummaryCards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .matches { grid-template-columns: 1fr; }
       .calendar-match { grid-template-columns: 62px minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }
       .league-calendar-match { grid-template-columns: 80px minmax(0, 1fr) 64px minmax(0, 1fr); padding: 12px; }
@@ -1041,6 +1043,7 @@
       .france-header-card { width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }
       .france-header-image { width: 56px; height: 48px; }
       .today-strip, .leaders, .news, .grid, .matches { grid-template-columns: 1fr; }
+      #leagueSummaryCards { grid-template-columns: 1fr; }
       .calendar-match { grid-template-columns: 1fr auto 1fr; }
       .league-calendar-match { grid-template-columns: 1fr; text-align: center; }
       .league-calendar-match .away, .league-calendar-match .away .team-button { justify-content: center; text-align: center; }
@@ -4984,13 +4987,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       const champion = standingTeams[0] || {};
       const runnerUp = standingTeams[1] || {};
       const bestPlayer = (league.top_scorers || [])[0] || {};
+      const scorerDetails = bestPlayer.team
+        ? `${bestPlayer.team} · ${league.name || 'Championnat'} · ${bestPlayer.value || 0} buts · ${bestPlayer.country || bestPlayer.nationality || 'Nationalité non disponible'}`
+        : 'Donnée buteur à compléter.';
       const summaryNode = document.getElementById('leagueSummaryCards');
       if (summaryNode) {
         summaryNode.innerHTML = [
           leagueSummaryCard('Champion', champion.team || 'À déterminer', `Leader actuel de ${league.name || 'ce championnat'}.`, champion.flag_url || leagueClubLogo(champion.team)),
           leagueSummaryCard('Dauphin', runnerUp.team || 'À déterminer', 'Deuxième du classement publié.', runnerUp.flag_url || leagueClubLogo(runnerUp.team)),
-          leagueSummaryCard('Meilleur joueur de la compétition', bestPlayer.name || 'À déterminer', bestPlayer.team ? `${bestPlayer.team} · ${bestPlayer.value || 0} buts` : 'Donnée joueur à compléter.', bestPlayer.photo_url || bestPlayer.country_flag_url || bestPlayer.team_logo_url || leagueClubLogo(bestPlayer.team)),
-          leagueSummaryCard('Meilleur buteur de la compétition', bestPlayer.name || 'À déterminer', bestPlayer.team ? `${bestPlayer.team} · ${league.name || 'Championnat'} · ${bestPlayer.value || 0} buts` : 'Donnée buteur à compléter.', bestPlayer.photo_url || bestPlayer.country_flag_url || bestPlayer.team_logo_url || leagueClubLogo(bestPlayer.team), 'euro-focus-card')
+          leagueSummaryCard('Meilleur buteur de la compétition', bestPlayer.name || 'À déterminer', scorerDetails, bestPlayer.photo_url || bestPlayer.country_flag_url || bestPlayer.team_logo_url || leagueClubLogo(bestPlayer.team), 'euro-focus-card')
         ].join('');
       }
       const honoursNode = document.getElementById('leagueRecentHonours');
