@@ -401,8 +401,12 @@
     .player-card.rank-2 .avatar { border-color: rgba(215,226,238,0.82); box-shadow: 0 0 0 4px rgba(215,226,238,0.12); }
     .player-card.rank-3 .avatar { border-color: rgba(205,127,50,0.82); box-shadow: 0 0 0 4px rgba(205,127,50,0.12); }
     .player-card.big5-card { position: relative; overflow: hidden; }
-    .player-card.big5-card::before { content: ""; position: absolute; inset: 0; opacity: 0.16; pointer-events: none; }
+    .player-card.big5-card { grid-template-columns: minmax(0, 1fr) 74px; border-color: rgba(99,232,255,0.36); background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); }
+    .player-card.big5-card::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(7,17,31,0.55)), var(--player-flag, none); background-repeat: no-repeat; background-position: center, right 8px center; background-size: cover, 110px 74px; opacity: .62; pointer-events: none; }
     .player-card.big5-card > * { position: relative; z-index: 1; }
+    .player-card.big5-card .avatar-wrap { grid-column: 2; grid-row: 1; align-self: end; }
+    .player-card.big5-card > div:last-child { grid-column: 1; grid-row: 1; }
+    .player-card.big5-card .avatar { object-fit: contain; object-position: bottom center; background: transparent; border: 0; opacity: .85; filter: drop-shadow(0 14px 18px rgba(0,0,0,0.40)); }
     .big5-ticker {
       position: relative;
       display: grid;
@@ -416,7 +420,7 @@
       box-shadow: 0 18px 44px rgba(0,0,0,0.22);
     }
     .big5-item { min-width: 0; min-height: 112px; }
-    .big5-item .player-card { height: 100%; padding: 11px 12px; grid-template-columns: 50px minmax(0, 1fr); gap: 10px; }
+    .big5-item .player-card { height: 100%; padding: 11px 8px 11px 12px; gap: 10px; }
     .big5-item .avatar-wrap, .big5-item .avatar { width: 50px; height: 50px; }
     .big5-item .team { font-size: 14px; line-height: 1.15; }
     .big5-item .subtle { font-size: 11px; }
@@ -442,6 +446,12 @@
     .euro-summary-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,17,31,0.15), rgba(7,17,31,0.46)); pointer-events: none; }
     .euro-summary-card > * { position: relative; z-index: 1; }
     .euro-summary-value { margin-top: 8px; color: #fff; font-size: 24px; font-weight: 950; line-height: 1.1; }
+    .euro-summary-card.player-summary-card { min-height: 128px; padding: 14px 104px 14px 15px; border-color: rgba(99,232,255,0.46); background: radial-gradient(circle at 88% 50%, rgba(99,232,255,0.16), transparent 38%), linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.92)); text-align: left; }
+    .euro-summary-card.player-summary-card::before { background-image: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(7,17,31,0.60)), var(--summary-bg); background-position: center, right 14px center; background-size: cover, 118px 80px; opacity: .54; }
+    .euro-summary-card.player-summary-card::after { background: linear-gradient(90deg, rgba(7,17,31,0.05), rgba(7,17,31,0.36)); }
+    .player-summary-photo { position: absolute; z-index: 1; right: 8px; bottom: 0; width: 96px; height: 116px; object-fit: contain; object-position: bottom right; opacity: .85; filter: drop-shadow(0 18px 22px rgba(0,0,0,0.42)); pointer-events: none; }
+    .player-summary-card .subtle:first-child { color: #9fe9ff; font-size: 11px; letter-spacing: .02em; text-transform: uppercase; }
+    .player-summary-card .euro-summary-value { max-width: 82%; font-size: 25px; }
     .recent-honours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 10px; align-items: stretch; }
     .recent-honour-card { min-height: 54px; display: grid; grid-template-columns: 54px minmax(0, 1fr); align-items: center; gap: 9px; padding: 9px 11px; border-radius: 12px; background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(99,232,255,0.07)); cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .recent-honour-card:hover, .recent-honour-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.38); background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(99,232,255,0.08)); outline: none; }
@@ -454,17 +464,21 @@
     .award-card strong { color: #fff4c6; font-size: 15px; }
     .award-card p { margin: 0; color: #d6e5f7; font-size: 12px; line-height: 1.32; }
     .award-card .winner { color: #fff; font-weight: 950; }
-    .news-awards-grid .award-card { min-height: 132px; grid-template-columns: 58px minmax(0, 1fr); align-items: center; align-content: center; isolation: isolate; }
-    .news-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.90), rgba(7,17,31,0.42)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 12px center; background-size: cover, 118px 78px; opacity: .58; pointer-events: none; }
+    .news-awards-grid .award-card { min-height: 132px; grid-template-columns: minmax(0, 1fr) 88px; align-items: center; align-content: center; isolation: isolate; padding-right: 8px; border-color: rgba(99,232,255,0.34); background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); }
+    .news-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(7,17,31,0.55)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 10px center; background-size: cover, 132px 88px; opacity: .66; pointer-events: none; }
     .news-awards-grid .award-card::after { content: ""; }
     .tournament-awards-grid { gap: 12px; }
-    .tournament-awards-grid .award-card { min-height: 132px; grid-template-columns: 58px minmax(0, 1fr); align-items: center; align-content: center; isolation: isolate; }
-    .tournament-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.91), rgba(7,17,31,0.46)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 12px center; background-size: cover, 124px 82px; opacity: .62; pointer-events: none; }
+    .tournament-awards-grid .award-card { min-height: 132px; grid-template-columns: minmax(0, 1fr) 88px; align-items: center; align-content: center; isolation: isolate; padding-right: 8px; border-color: rgba(99,232,255,0.34); background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); }
+    .tournament-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(7,17,31,0.55)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 10px center; background-size: cover, 132px 88px; opacity: .66; pointer-events: none; }
     .tournament-awards-grid .award-card::after { content: ""; }
-    .award-photo { position: relative; z-index: 1; width: 54px; height: 54px; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(245,201,107,0.10)); border: 1px solid rgba(255,255,255,0.16); display: grid; place-items: center; box-shadow: 0 12px 26px rgba(0,0,0,0.22); }
-    .award-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .award-photo { position: relative; z-index: 1; width: 88px; height: 108px; border-radius: 0; overflow: visible; background: transparent; border: 0; display: grid; place-items: end center; box-shadow: none; align-self: end; }
+    .news-awards-grid .award-photo, .tournament-awards-grid .award-photo { grid-column: 2; grid-row: 1; }
+    .award-photo img { width: 100%; height: 100%; object-fit: contain; object-position: bottom center; display: block; opacity: .85; filter: drop-shadow(0 18px 20px rgba(0,0,0,0.42)); }
     .award-photo-fallback { color: #ffe1a0; font-weight: 950; font-size: 14px; }
     .award-copy { position: relative; z-index: 1; min-width: 0; display: grid; gap: 5px; }
+    .news-awards-grid .award-copy, .tournament-awards-grid .award-copy { grid-column: 1; grid-row: 1; }
+    .award-copy strong { color: #9fe9ff; font-size: 11px; letter-spacing: .02em; text-transform: uppercase; }
+    .award-copy .winner { font-size: 20px; line-height: 1.06; }
     .historical-match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; width: 100%; }
     .historical-match-card { display: grid; gap: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.055); }
     .historical-match-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; }
@@ -1073,6 +1087,10 @@
       .quiz-controls, .quiz-theme-selectors { grid-template-columns: 1fr; }
       .quiz-bottom-actions { grid-template-columns: 1fr; }
       .quiz-next-box { justify-items: stretch; }
+      .euro-summary-card.player-summary-card { padding-right: 86px; }
+      .player-summary-photo { width: 78px; height: 96px; }
+      .news-awards-grid .award-card, .tournament-awards-grid .award-card { grid-template-columns: minmax(0, 1fr) 74px; }
+      .award-photo { width: 74px; height: 96px; }
       .team-modal-head { grid-template-columns: auto 1fr auto; padding: 14px; }
       .team-modal-flag { width: 46px; height: 46px; }
       .alltime-row { gap: 9px; padding: 10px; }
@@ -1331,8 +1349,8 @@
     <section class="euro-summary-grid" aria-label="Résumé Coupe du Monde">
       <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Argentine</div><p class="subtle">Tenant du titre 2022.</p></article>
       <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">France</div><p class="subtle">Finaliste de la dernière édition.</p></article>
-      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">Lionel Messi</div><p class="subtle">Ballon d’Or du Mondial 2022.</p></article>
-      <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Kylian Mbappé</div><p class="subtle">Soulier d’Or 2022 avec 8 buts.</p></article>
+      <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Meilleure équipe en attaque</div><div class="euro-summary-value">France</div><p class="subtle">16 buts inscrits en 2022.</p></article>
+      <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/mar.png)"><div class="subtle">Meilleure équipe en défense</div><div class="euro-summary-value">Maroc</div><p class="subtle">Parcours très solide, 5 buts encaissés.</p></article>
     </section>
     <section class="annual-awards-grid tournament-awards-grid" aria-label="Récompenses Coupe du Monde">
       <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/arg.png)">
@@ -1529,8 +1547,8 @@
       <section class="euro-summary-grid" aria-label="Résumé Euro">
         <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Espagne</div><p class="subtle">Victoire 2-1 contre l’Angleterre en finale à Berlin.</p></article>
         <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/eng.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">Angleterre</div><p class="subtle">Deuxième finale européenne consécutive.</p></article>
-        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">Rodri</div><p class="subtle">Élu meilleur joueur de l’Euro 2024.</p></article>
-        <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Dani Olmo</div><p class="subtle">Co-meilleur buteur 2024 avec 3 buts.</p></article>
+        <article class="euro-summary-card player-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><img class="player-summary-photo" src="https://images.fotmob.com/image_resources/playerimages/357711.png" alt="Rodri"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">Rodri</div><p class="subtle">Élu meilleur joueur de l’Euro 2024.</p></article>
+        <article class="euro-summary-card euro-focus-card player-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><img class="player-summary-photo" src="https://images.fotmob.com/image_resources/playerimages/1100438.png" alt="Dani Olmo"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Dani Olmo</div><p class="subtle">Co-meilleur buteur 2024 avec 3 buts.</p></article>
       </section>
 
       <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de l’Euro.</div></div>
@@ -1625,8 +1643,8 @@
       <section class="euro-summary-grid" aria-label="Résumé Champions League">
         <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/160.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Paris Saint-Germain</div><p class="subtle">Tenant du titre européen récent.</p></article>
         <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/110.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">Internazionale</div><p class="subtle">Finaliste de la dernière finale complète.</p></article>
-        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">Ousmane Dembélé</div><p class="subtle">Référence offensive du PSG champion.</p></article>
-        <article class="euro-summary-card euro-focus-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/83.png)"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Raphinha</div><p class="subtle">13 buts en 2024-2025.</p></article>
+        <article class="euro-summary-card player-summary-card"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Donnée 2025-2026 non disponible.</p></article>
+        <article class="euro-summary-card euro-focus-card player-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><img class="player-summary-photo" src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Kylian Mbappé</div><p class="subtle">15 buts en 2025-2026.</p></article>
       </section>
 
       <div class="section-head"><div class="section-title"><h2>Palmarès récent</h2></div><div class="section-note">Derniers vainqueurs de la Champions League.</div></div>
@@ -4802,9 +4820,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       return url ? `<img class="flag" src="${leagueEscape(url)}" alt="">` : '<span class="flag placeholder" aria-hidden="true"></span>';
     }
 
-    function leagueSummaryCard(label, value, detail, imageUrl = '', extraClass = '') {
+    function leagueSummaryCard(label, value, detail, imageUrl = '', extraClass = '', playerPhoto = '') {
       const style = imageUrl ? ` style="--summary-bg:url(${leagueEscape(imageUrl)})"` : '';
+      const photoHtml = playerPhoto ? `<img class="player-summary-photo" src="${leagueEscape(playerPhoto)}" alt="${leagueEscape(value || '')}">` : '';
       return `<article class="euro-summary-card ${extraClass}"${style}>
+        ${photoHtml}
         <div class="subtle">${leagueEscape(label)}</div>
         <div class="euro-summary-value">${leagueEscape(value || 'À déterminer')}</div>
         <p class="subtle">${leagueEscape(detail || '')}</p>
@@ -4856,10 +4876,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       const club = player.team || '';
       const clubLogo = player.team_logo_url || player.club_logo_url || leagueClubLogo(club) || player.flag_url || '';
       const countryFlag = player.country_flag_url || player.flag_url || '';
-      const mainImage = variant === 'big5' ? countryFlag : clubLogo;
+      const mainImage = variant === 'big5' ? (player.photo_url || countryFlag) : clubLogo;
       const avatar = mainImage ? `<img class="avatar" src="${leagueEscape(mainImage)}" alt="">` : '<div class="avatar placeholder" aria-hidden="true"></div>';
       const bgClass = variant === 'big5' && player.league_key ? ` big5-card league-bg-${leagueEscape(player.league_key)}` : '';
-      return `<article class="card player-card${bgClass}">
+      const style = variant === 'big5' && countryFlag ? ` style="--player-flag:url(${leagueEscape(countryFlag)})"` : '';
+      return `<article class="card player-card${bgClass}"${style}>
         <div class="avatar-wrap">${avatar}</div>
         <div><div class="team">${leagueEscape(player.name || 'Joueur')}</div>
         <div class="subtle club-line">${clubLogo ? `<img class="club-logo" src="${leagueEscape(clubLogo)}" alt="">` : '<span class="club-logo placeholder" aria-hidden="true"></span>'}<span class="club-name">${leagueEscape(club)}</span></div>
@@ -5003,7 +5024,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         summaryNode.innerHTML = [
           leagueSummaryCard('Champion', champion.team || 'À déterminer', `Leader actuel de ${league.name || 'ce championnat'}.`, champion.flag_url || leagueClubLogo(champion.team)),
           leagueSummaryCard('Dauphin', runnerUp.team || 'À déterminer', 'Deuxième du classement publié.', runnerUp.flag_url || leagueClubLogo(runnerUp.team)),
-          leagueSummaryCard('Meilleur buteur de la compétition', bestPlayer.name || 'À déterminer', scorerDetails, bestPlayer.photo_url || bestPlayer.country_flag_url || bestPlayer.team_logo_url || leagueClubLogo(bestPlayer.team), 'euro-focus-card')
+          leagueSummaryCard('Meilleur buteur de la compétition', bestPlayer.name || 'À déterminer', scorerDetails, bestPlayer.country_flag_url || bestPlayer.flag_url || '', 'euro-focus-card player-summary-card', bestPlayer.photo_url || '')
         ].join('');
       }
       const honoursNode = document.getElementById('leagueRecentHonours');
@@ -5896,6 +5917,24 @@ grant select, insert, update on public.profiles to authenticated;`;
       const match = (phase, home, away, score, homeImg = '', awayImg = '', note = '') => ({phase, home, away, score, homeImg, awayImg, note});
       const player = (name, teamName, value, img = '', note = '') => ({name, team: teamName, value, img, note});
       const photo = id => id ? `https://images.fotmob.com/image_resources/playerimages/${id}.png` : '';
+      const PLAYER_PHOTOS = {
+        'diego forlan': photo('38229'),
+        'thomas muller': photo('181291'),
+        'lionel messi': photo('30981'),
+        'james rodriguez': photo('281024'),
+        'luka modric': photo('357633'),
+        'harry kane': photo('194165'),
+        'kylian mbappe': photo('701154'),
+        'gianluigi donnarumma': photo('618878'),
+        'cristiano ronaldo': photo('30893'),
+        'rodri': photo('357711'),
+        'dani olmo': photo('1100438'),
+        'vinicius junior': photo('846033'),
+        'ousmane dembele': photo('692984'),
+        'raphinha': photo('802695'),
+        'serhou guirassy': photo('209421')
+      };
+      const playerPhoto = name => PLAYER_PHOTOS[String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()] || '';
       const futureSeason = (competition, favouriteLabel) => ({
         future: true,
         summary: [
@@ -5921,8 +5960,8 @@ grant select, insert, update on public.profiles to authenticated;`;
               summary: [
                 ['Champion', 'Espagne', 'Victoire 1-0 après prolongation contre les Pays-Bas.', flag('esp')],
                 ['Finaliste', 'Pays-Bas', 'Finaliste à Johannesburg.', flag('ned')],
-                ['Meilleur joueur de la compétition', 'Diego Forlan', 'Ballon d’Or du Mondial 2010.', flag('uru')],
-                ['Meilleur buteur de la compétition', 'Thomas Müller', 'Soulier d’Or 2010 avec 5 buts.', flag('ger')]
+                ['Meilleure équipe en attaque', 'Allemagne', '16 buts inscrits.', flag('ger')],
+                ['Meilleure équipe en défense', 'Espagne', '2 buts encaissés.', flag('esp')]
               ],
               honours: [['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')], ['2002', 'Brésil', flag('bra')], ['1998', 'France', flag('fra')]],
               awards: [
@@ -5950,8 +5989,8 @@ grant select, insert, update on public.profiles to authenticated;`;
               summary: [
                 ['Champion', 'Allemagne', 'Victoire 1-0 après prolongation contre l’Argentine.', flag('ger')],
                 ['Finaliste', 'Argentine', 'Finaliste au Maracanã.', flag('arg')],
-                ['Meilleur joueur de la compétition', 'Lionel Messi', 'Ballon d’Or du Mondial 2014.', flag('arg')],
-                ['Meilleur buteur de la compétition', 'James Rodriguez', 'Soulier d’Or 2014 avec 6 buts.', flag('col')]
+                ['Meilleure équipe en attaque', 'Allemagne', '18 buts inscrits.', flag('ger')],
+                ['Meilleure équipe en défense', 'Costa Rica', '2 buts encaissés.', flag('crc')]
               ],
               honours: [['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')], ['2002', 'Brésil', flag('bra')]],
               awards: [
@@ -5979,8 +6018,8 @@ grant select, insert, update on public.profiles to authenticated;`;
               summary: [
                 ['Champion', 'France', 'Victoire 4-2 contre la Croatie en finale.', flag('fra')],
                 ['Finaliste', 'Croatie', 'Premier finaliste mondial de son histoire.', flag('cro')],
-                ['Meilleur joueur de la compétition', 'Luka Modric', 'Ballon d’Or du Mondial 2018.', flag('cro')],
-                ['Meilleur buteur de la compétition', 'Harry Kane', '6 buts avec l’Angleterre.', flag('eng')]
+                ['Meilleure équipe en attaque', 'Belgique', '16 buts inscrits.', flag('bel')],
+                ['Meilleure équipe en défense', 'Uruguay', '3 buts encaissés.', flag('uru')]
               ],
               honours: [['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')], ['2006', 'Italie', flag('ita')]],
               awards: [
@@ -6008,8 +6047,8 @@ grant select, insert, update on public.profiles to authenticated;`;
               summary: [
                 ['Champion', 'Argentine', 'Victoire aux tirs au but contre la France.', flag('arg')],
                 ['Finaliste', 'France', 'Finaliste après un 3-3 spectaculaire.', flag('fra')],
-                ['Meilleur joueur de la compétition', 'Lionel Messi', 'Ballon d’Or du Mondial 2022.', flag('arg')],
-                ['Meilleur buteur de la compétition', 'Kylian Mbappé', '8 buts avec la France.', flag('fra')]
+                ['Meilleure équipe en attaque', 'France', '16 buts inscrits.', flag('fra')],
+                ['Meilleure équipe en défense', 'Maroc', 'Parcours défensif majeur, 5 buts encaissés.', flag('mar')]
               ],
               honours: [['2022', 'Argentine', flag('arg')], ['2018', 'France', flag('fra')], ['2014', 'Allemagne', flag('ger')], ['2010', 'Espagne', flag('esp')]],
               awards: [
@@ -6033,7 +6072,15 @@ grant select, insert, update on public.profiles to authenticated;`;
               ],
               calendar: [match('Finale', 'Argentine', 'France', '3 - 3 tab 4-2', flag('arg'), flag('fra')), match('Quart', 'France', 'Angleterre', '2 - 1', flag('fra'), flag('eng')), match('Quart', 'Maroc', 'Portugal', '1 - 0', flag('mar'), flag('por'))]
             },
-            '2030': futureSeason('Coupe du Monde 2030', 'Meilleur buteur de la compétition')
+            '2030': {
+              ...futureSeason('Coupe du Monde 2030', 'Meilleure équipe en défense'),
+              summary: [
+                ['Champion', 'Coupe du Monde 2030', 'Données à venir.', ''],
+                ['Finaliste', 'Coupe du Monde 2030', 'Données à venir.', ''],
+                ['Meilleure équipe en attaque', 'Coupe du Monde 2030', 'Données à venir.', ''],
+                ['Meilleure équipe en défense', 'Coupe du Monde 2030', 'Données à venir.', '']
+              ]
+            }
           }
         },
         euro: {
@@ -6110,8 +6157,8 @@ grant select, insert, update on public.profiles to authenticated;`;
               summary: [
                 ['Champion', 'Real Madrid', 'Victoire 2-0 contre Dortmund à Wembley.', logo('86')],
                 ['Finaliste', 'Borussia Dortmund', 'Finaliste de la saison 2023-2024.', logo('124')],
-                ['Meilleur joueur de la compétition', 'Vinicius Junior', 'Joueur majeur du parcours madrilène.', logo('86')],
-                ['Meilleur buteur de la compétition', 'Harry Kane', '8 buts avec le Bayern Munich.', logo('132')]
+                ['Meilleur joueur de la compétition', 'Vinicius Junior', 'Joueur majeur du parcours madrilène.', flag('bra')],
+                ['Meilleur buteur de la compétition', 'Harry Kane', '8 buts avec le Bayern Munich.', flag('eng')]
               ],
               honours: [['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')], ['2021', 'Chelsea', logo('363')]],
               scorers: [player('Harry Kane', 'Bayern Munich', '8 buts', logo('132')), player('Kylian Mbappé', 'Paris Saint-Germain', '8 buts', logo('160'), 'à égalité'), player('Erling Haaland', 'Manchester City', '6 buts', logo('382'))],
@@ -6134,7 +6181,7 @@ grant select, insert, update on public.profiles to authenticated;`;
                 ['Champion', 'Paris Saint-Germain', 'Premier sacre européen, 5-0 contre l’Inter.', logo('160')],
                 ['Finaliste', 'Internazionale', 'Finaliste à Munich.', logo('110')],
                 ['Meilleur joueur de la compétition', 'Ousmane Dembélé', 'Joueur de la saison UEFA 2024-2025.', flag('fra')],
-                ['Meilleur buteur de la compétition', 'Raphinha', '13 buts avec Barcelona.', logo('83')]
+                ['Meilleur buteur de la compétition', 'Raphinha', '13 buts avec Barcelona.', flag('bra')]
               ],
               honours: [['2025', 'Paris Saint-Germain', logo('160')], ['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')]],
               scorers: [player('Raphinha', 'Barcelona', '13 buts', logo('83')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', logo('124')), player('Harry Kane', 'Bayern Munich', '11 buts', logo('132'))],
@@ -6233,13 +6280,20 @@ grant select, insert, update on public.profiles to authenticated;`;
         });
         if (kind === 'leagues' && typeof renderLeague === 'function') renderLeague();
       };
-      const summaryHtml = cards => (cards || []).map(([label, value, detail, image], index) => `<article class="euro-summary-card ${index === 3 ? 'euro-focus-card' : ''}"${image ? ` style="--summary-bg:url(${escape(image)})"` : ''}><div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p></article>`).join('');
+      const summaryHtml = cards => (cards || []).map(([label, value, detail, image], index) => {
+        const isPlayerCard = /meilleur joueur|meilleur buteur/i.test(String(label || ''));
+        const klass = `${index === 3 ? 'euro-focus-card' : ''}${isPlayerCard ? ' player-summary-card' : ''}`.trim();
+        const style = image ? ` style="--summary-bg:url(${escape(image)})"` : '';
+        const photoHtml = isPlayerCard && playerPhoto(value) ? `<img class="player-summary-photo" src="${escape(playerPhoto(value))}" alt="${escape(value)}">` : '';
+        return `<article class="euro-summary-card ${klass}"${style}>${photoHtml}<div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p></article>`;
+      }).join('');
       const honoursHtml = honours => (honours || []).map(([year, winner, image]) => `<article class="card recent-honour-card" role="button" tabindex="0" data-team="${escape(winner)}"><h3>${escape(year)}</h3><p class="empty">${img(image)}${escape(winner)}</p></article>`).join('') || `<article class="card recent-honour-card"><h3>A venir</h3><p class="empty">${info}</p></article>`;
       const initials = value => String(value || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
       const awardsHtml = awards => (awards || []).map(item => {
         const flagStyle = item.flag ? ` style="--award-flag:url(${escape(item.flag)})"` : '';
-        const photoHtml = item.photo ? `<img src="${escape(item.photo)}" alt="${escape(item.winner || item.title || '')}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;">` : '';
-        const fallbackHidden = item.photo ? ' hidden' : '';
+        const awardPhoto = item.photo || playerPhoto(item.winner);
+        const photoHtml = awardPhoto ? `<img src="${escape(awardPhoto)}" alt="${escape(item.winner || item.title || '')}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;">` : '';
+        const fallbackHidden = awardPhoto ? ' hidden' : '';
         return `<article class="award-card"${flagStyle}><div class="award-photo">${photoHtml}<span class="award-photo-fallback"${fallbackHidden}>${escape(item.initials || initials(item.winner))}</span></div><div class="award-copy"><strong>${escape(item.title || '')}</strong><p>${escape(item.description || '')}</p><div class="winner">${escape(item.winner || 'Information non disponible')}</div><p>${escape(item.note || '')}</p></div></article>`;
       }).join('') || `<div class="historical-unavailable">${info}</div>`;
       const playersHtml = players => (players || []).map((item, index) => `<article class="card player-card rank-${index + 1}"><div class="avatar-wrap">${item.img ? `<img class="avatar" src="${escape(item.img)}" alt="">` : '<div class="avatar placeholder" aria-hidden="true"></div>'}</div><div><div class="team">${escape(item.name)}</div><div class="club-line">${img(item.img)}<span class="club-name">${escape(item.team)}</span></div><div class="player-stat">${escape(item.value)}</div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</div></article>`).join('') || `<div class="historical-unavailable">${info}</div>`;
