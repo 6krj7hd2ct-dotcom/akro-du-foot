@@ -2601,6 +2601,7 @@ def _save_prediction_supabase(pseudo: str, match_id: str, home_score: int, away_
     existing = _supabase_request("GET", f"predictions?select={SUPABASE_PREDICTION_COLUMNS}&profile_id=eq.{quote(profile_id, safe='')}&match_id=eq.{quote(match_id, safe='')}&limit=1")
     payload = {
         "profile_id": profile_id,
+        "pseudo": pseudo or "Utilisateur",
         "match_id": match_id,
         "home_team": str((match or {}).get("home_team") or ""),
         "away_team": str((match or {}).get("away_team") or ""),
