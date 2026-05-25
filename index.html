@@ -3522,7 +3522,18 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function normalizeTeamName(value) {
-      return String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[-_.]/g, ' ').replace(/\s+/g, ' ').trim();
+      const normalized = String(value || '').toLocaleLowerCase('fr-FR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[-_.]/g, ' ').replace(/\s+/g, ' ').trim();
+      const aliases = {
+        iraq: 'irak',
+        'cote d ivoire': 'cote divoire',
+        'ivory coast': 'cote divoire',
+        'northern ireland': 'irlande du nord',
+        senegal: 'senegal',
+        turkiye: 'turquie',
+        czechia: 'tchequie',
+        netherlands: 'pays bas'
+      };
+      return aliases[normalized] || normalized;
     }
 
     function uniqueTeams(values) {
@@ -3607,6 +3618,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       const day = match.date ? new Date(match.date).toLocaleDateString('fr-CA') : '';
       const teams = [match.home_team, match.away_team].map(normalizeTeamName).sort().join('-');
       return normalizeTeamName(`${teams} ${day}`);
+    }
+
+    function isLiveCommunityMatch(match) {
+      return statusClass(match) === 'live';
     }
 
     function isInternationalFriendly(match) {
@@ -3727,8 +3742,9 @@ grant select, insert, update on public.profiles to authenticated;`;
       const upcoming = source
         .filter(match => !match.completed && matchTimestamp(match) >= now)
         .filter(match => isFavoriteMatch(match, teams))
+        .filter(match => !isTodayMatch(match) && !isLiveCommunityMatch(match))
         .sort((a, b) => matchTimestamp(a) - matchTimestamp(b))
-        .slice(0, 8);
+        .slice(0, 3);
       favoriteMatchesList.innerHTML = upcoming.length
         ? upcoming.map(followMatchCard).join('')
         : '<div class="empty">Aucun prochain match favori disponible.</div>';
