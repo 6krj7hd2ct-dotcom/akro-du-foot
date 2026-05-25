@@ -2763,7 +2763,10 @@
       });
       const hasLocalSquad = formation || coachName || starters.length || substitutes.length || squad.length;
       if (!hasLocalSquad) {
-        return `<div class="team-info"><div class="team-info-label">Effectif</div><div class="team-info-value">Effectif non disponible dans Supabase/cache pour le moment.</div><div class="team-info-actions"><button class="coach-ask-button" type="button" data-team-coach-topic="effectif" data-team-name="${escapeHtml(details.name || details.key || '')}">Demander au Coach</button></div></div>`;
+        const message = details?.sources?.includes('Supabase/API-Football')
+          ? 'Effectif pas encore publié officiellement ou en attente de mise à jour.'
+          : 'Effectif non disponible dans Supabase/cache pour le moment.';
+        return `<div class="team-info"><div class="team-info-label">Effectif</div><div class="team-info-value">${escapeHtml(message)}</div><div class="team-info-actions"><button class="coach-ask-button" type="button" data-team-coach-topic="effectif" data-team-name="${escapeHtml(details.name || details.key || '')}">Demander au Coach</button></div></div>`;
       }
       return `
         ${coachName ? `<section class="team-info"><div class="team-info-label">Coach</div><div class="team-info-value">${escapeHtml(coachName)}</div></section>` : ''}

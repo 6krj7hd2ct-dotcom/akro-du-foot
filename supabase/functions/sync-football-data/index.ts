@@ -13,6 +13,7 @@ const DEFAULT_PLAYER_TEAMS_LIMIT = 3;
 const DEFAULT_COACH_TEAMS_LIMIT = 3;
 const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
 const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
+const DEFAULT_ROSTER_RECHECK_DAYS = 7;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
 const DEFAULT_PRIORITY_TEAMS = [
   "Türkiye", "Turkey", "Turquie", "Mexico", "Mexique", "Cape Verde", "Cabo Verde", "Cap-Vert", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Bosnia & Herzegovina", "Bosnie-Herzégovine", "South Africa", "Afrique du Sud",
@@ -44,6 +45,7 @@ console.log("[sync-football-data] boot", {
   playerTeamsLimit: Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT),
   coachTeamsLimit: Deno.env.get("FOOTBALL_SYNC_COACH_TEAMS_LIMIT") ?? String(DEFAULT_COACH_TEAMS_LIMIT),
   completeRosterSize: Deno.env.get("FOOTBALL_SYNC_COMPLETE_ROSTER_SIZE") ?? String(DEFAULT_COMPLETE_ROSTER_SIZE),
+  rosterRecheckDays: Deno.env.get("FOOTBALL_SYNC_ROSTER_RECHECK_DAYS") ?? String(DEFAULT_ROSTER_RECHECK_DAYS),
   teamLeagues: Deno.env.get("FOOTBALL_SYNC_TEAM_LEAGUES") ?? DEFAULT_TEAM_LEAGUES,
   priorityTeams: Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS,
   matchesTotalLimit: Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT),
@@ -371,8 +373,8 @@ async function readTeamPlayerCounts() {
   return counts;
 }
 
-async function readTeamTargets(limit: number, options: {rosterCounts?: Map<string, number>; completeRosterSize?: number; skipComplete?: boolean} = {}) {
-  console.log("[sync-football-data] read team targets start", {limit, skipComplete: Boolean(options.skipComplete), completeRosterSize: options.completeRosterSize ?? 0});
+async function readTeamTargets(limit: number, options: {rosterCounts?: Map<string, number>; completeRosterSize?: number; skipComplete?: boolean; recheckDays?: number} = {}) {
+  console.log("[sync-football-data] read team targets start", {limit, skipComplete: Boolean(options.skipComplete), completeRosterSize: options.completeRosterSize ?? 0, recheckDays: options.recheckDays ?? 0});
   const {data, error} = await supabase
     .from("teams")
     .select("id,api_id,name,type,updated_at")
@@ -388,14 +390,23 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
     api_id: String(row.api_id ?? ""),
     name: String(row.name ?? ""),
     type: String(row.type ?? ""),
+    updatedAt: String(row.updated_at ?? ""),
     linkedPlayers: options.rosterCounts?.get(String(row.id ?? "")) ?? 0,
     priorityIndex: priorityIndexForTeam(row.name),
     priorityAlias: priorityAliasForTeam(row.name),
   })).filter(row => row.id && row.api_id);
   const enriched = rows.map(row => ({...row, priority: row.priorityIndex >= 0}));
   const completeRosterSize = options.completeRosterSize ?? DEFAULT_COMPLETE_ROSTER_SIZE;
+  const recheckMs = Math.max(0, options.recheckDays ?? 0) * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  const isFreshComplete = (row: typeof enriched[number]) => {
+    if (!options.skipComplete || row.linkedPlayers < completeRosterSize) return false;
+    const updatedTime = row.updatedAt ? new Date(row.updatedAt).getTime() : 0;
+    return Boolean(updatedTime && recheckMs && now - updatedTime < recheckMs);
+  };
   const completeRows = options.skipComplete ? enriched.filter(row => row.linkedPlayers >= completeRosterSize) : [];
-  const availableRows = options.skipComplete ? enriched.filter(row => row.linkedPlayers < completeRosterSize) : enriched;
+  const freshCompleteRows = options.skipComplete ? enriched.filter(isFreshComplete) : [];
+  const availableRows = options.skipComplete ? enriched.filter(row => !isFreshComplete(row)) : enriched;
   const priority = availableRows
     .filter(row => row.priority)
     .sort((a, b) => a.priorityIndex - b.priorityIndex || a.linkedPlayers - b.linkedPlayers || a.name.localeCompare(b.name));
@@ -407,11 +418,12 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
     rows: targets.length,
     priorityRows: priority.length,
     skippedComplete: completeRows.length,
-    skippedCompleteSample: completeRows.slice(0, 8).map(row => ({name: row.name, type: row.type, linkedPlayers: row.linkedPlayers})),
+    skippedFreshComplete: freshCompleteRows.length,
+    skippedCompleteSample: freshCompleteRows.slice(0, 8).map(row => ({name: row.name, type: row.type, linkedPlayers: row.linkedPlayers, updatedAt: row.updatedAt})),
     limit,
     targets,
   });
-  return {targets, skippedComplete: completeRows};
+  return {targets, skippedComplete: freshCompleteRows};
 }
 
 async function readCountryLookup() {
@@ -591,8 +603,9 @@ Deno.serve(async () => {
       console.log("[sync-football-data] step players start");
       const playerTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT));
       const completeRosterSize = Number(Deno.env.get("FOOTBALL_SYNC_COMPLETE_ROSTER_SIZE") ?? String(DEFAULT_COMPLETE_ROSTER_SIZE));
+      const recheckDays = Number(Deno.env.get("FOOTBALL_SYNC_ROSTER_RECHECK_DAYS") ?? String(DEFAULT_ROSTER_RECHECK_DAYS));
       const rosterCounts = await readTeamPlayerCounts();
-      const {targets: playerTeamTargets, skippedComplete} = await readTeamTargets(playerTeamsLimit, {rosterCounts, completeRosterSize, skipComplete: true});
+      const {targets: playerTeamTargets, skippedComplete} = await readTeamTargets(playerTeamsLimit, {rosterCounts, completeRosterSize, skipComplete: true, recheckDays});
       let playerTeamsVisited = 0;
       let playersFound = 0;
       let teamPlayersUpserted = 0;
@@ -605,7 +618,7 @@ Deno.serve(async () => {
       let nationsProcessed = 0;
       let nationsWithoutSquad = 0;
       const teamLogs: Json[] = [];
-      console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length, completeRosterSize, skippedComplete: skippedComplete.length});
+      console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length, completeRosterSize, recheckDays, skippedComplete: skippedComplete.length});
       for (const teamTarget of playerTeamTargets) {
         playerTeamsVisited += 1;
         if (teamTarget.priority) priorityTeamsProcessed += 1;
@@ -711,6 +724,7 @@ Deno.serve(async () => {
           relation_candidates: teamPlayerCandidates.length,
           relations_upserted: upsertedTeamPlayers,
           missing_player_ids: missingForTeam,
+          squad_status: normalizedPlayers.length ? "found" : "not_published",
           positions: positionsDetected,
         });
         console.log("[sync-football-data] players cumulative", {
