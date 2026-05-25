@@ -931,12 +931,14 @@
     .quiz-dialog .subtle { font-size: 12px; line-height: 1.25; }
     .quiz-body { overflow-y: auto; min-height: 0; padding: 9px 14px 18px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .quiz-setup, .quiz-result { display: grid; gap: 8px; }
-    .quiz-stage { min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 8px; padding-bottom: 2px; }
+    .quiz-setup[hidden], .quiz-stage[hidden], .quiz-result[hidden] { display: none !important; }
+    .quiz-stage { min-height: auto; display: grid; grid-template-rows: auto auto auto; gap: 8px; padding-bottom: 2px; }
     .quiz-controls { display: grid; grid-template-columns: minmax(118px, 150px) minmax(150px, 210px) minmax(180px, 1fr); gap: 9px; align-items: end; }
+    .quiz-controls .pseudo-row, .quiz-controls select, .quiz-controls input { min-height: 42px; }
     .quiz-theme-selectors { display: none; grid-template-columns: minmax(0, 1fr); gap: 8px; }
     .quiz-theme-selectors.is-visible { display: grid; }
     .quiz-theme-selectors .pseudo-row { margin: 0; }
-    .quiz-top-actions { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+    .quiz-bottom-actions { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
     .quiz-next-box { display: inline-grid; justify-items: end; gap: 4px; }
     #quizStartButton { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
     #quizNextButton { color: #041611; background: linear-gradient(180deg, #9ff0d5, #32d3a2); }
@@ -950,7 +952,7 @@
     .quiz-score-pill { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; padding: 4px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
     .quiz-progress-bar { height: 4px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
     .quiz-progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--gold), var(--green)); transition: width .25s ease; }
-    .quiz-card { min-height: 0; display: grid; gap: 7px; padding: 10px; border: 1px solid rgba(245,201,107,0.22); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); overflow: visible; }
+    .quiz-card { min-height: auto; display: grid; gap: 7px; padding: 10px; border: 1px solid rgba(245,201,107,0.22); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); overflow: visible; }
     .quiz-card .coach-badge { width: max-content; padding: 4px 8px; font-size: 11px; }
     .quiz-question { font-size: clamp(15px, 1.8vw, 19px); line-height: 1.14; font-weight: 950; }
     .quiz-answers { display: grid; gap: 6px; }
@@ -1069,6 +1071,8 @@
       .quiz-body { overflow-y: auto; padding: 12px; }
       .quiz-question { font-size: 17px; }
       .quiz-controls, .quiz-theme-selectors { grid-template-columns: 1fr; }
+      .quiz-bottom-actions { grid-template-columns: 1fr; }
+      .quiz-next-box { justify-items: stretch; }
       .team-modal-head { grid-template-columns: auto 1fr auto; padding: 14px; }
       .team-modal-flag { width: 46px; height: 46px; }
       .alltime-row { gap: 9px; padding: 10px; }
@@ -1800,13 +1804,6 @@
         <button class="modal-close" type="button" id="quizClose" aria-label="Fermer">×</button>
       </header>
       <div class="team-modal-body quiz-body">
-        <div class="quiz-top-actions">
-          <button class="action-button" type="button" id="quizStartButton">Lancer le quiz</button>
-          <div class="quiz-next-box">
-            <button class="action-button quiz-next-inline" type="button" id="quizNextButton" disabled>Question suivante</button>
-            <span class="quiz-score-pill" id="quizScoreText">0/10</span>
-          </div>
-        </div>
         <div class="quiz-setup" id="quizSetup">
           <div class="profile-auth-note" id="quizProfileNote">Crée ou connecte ton profil pour sauvegarder tes badges.</div>
           <div class="quiz-controls">
@@ -1858,6 +1855,13 @@
         <div class="quiz-result" id="quizResult" hidden>
           <div class="quiz-feedback" id="quizFinalMessage"></div>
           <div class="quiz-badge-list" id="quizBadgeList"></div>
+        </div>
+        <div class="quiz-bottom-actions">
+          <button class="action-button" type="button" id="quizStartButton">Lancer le quiz</button>
+          <div class="quiz-next-box">
+            <button class="action-button quiz-next-inline" type="button" id="quizNextButton" disabled>Question suivante</button>
+            <span class="quiz-score-pill" id="quizScoreText">0/10</span>
+          </div>
         </div>
       </div>
     </article>
