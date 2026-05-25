@@ -37,6 +37,12 @@ set total_predictions = 0,
 alter table public.predictions
   add column if not exists profile_id uuid;
 
+update public.predictions
+set profile_id = user_id
+where profile_id is null
+  and user_id is not null
+  and exists (select 1 from public.profiles p where p.id = public.predictions.user_id);
+
 alter table public.predictions
   drop constraint if exists predictions_user_id_fkey;
 
@@ -55,6 +61,11 @@ begin
     alter table public.predictions alter column user_id drop default;
   end if;
 end $$;
+
+-- 5bis) Si l'ancienne colonne user_id est encore là, elle reste passive :
+-- elle ne doit plus participer aux insertions ni aux relations.
+drop index if exists predictions_user_match_key;
+drop index if exists idx_predictions_user_created;
 
 -- 6) Recréer la FK correcte sur profile_id.
 alter table public.predictions
