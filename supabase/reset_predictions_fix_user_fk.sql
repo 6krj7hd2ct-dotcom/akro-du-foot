@@ -1,11 +1,21 @@
--- Reset ciblé des pronostics + correction de l'ancienne FK user_id.
+-- Reset ciblé des pronostics + correction robuste du schéma predictions.
+-- Compatible si public.predictions.user_id existe encore OU a déjà été supprimé.
 -- Ne supprime pas les profils, badges, quiz_results ni progressions de jeux.
 
--- 1) Diagnostic : vérifier exactement où pointe predictions_user_id_fkey.
+-- 1) Diagnostic colonnes actuelles de public.predictions.
+select
+  column_name,
+  data_type,
+  is_nullable,
+  column_default
+from information_schema.columns
+where table_schema = 'public'
+  and table_name = 'predictions'
+order by ordinal_position;
+
+-- 2) Diagnostic FK actuelles de public.predictions.
 select
   con.conname as constraint_name,
-  src_ns.nspname as source_schema,
-  src.relname as source_table,
   src_col.attname as source_column,
   ref_ns.nspname as referenced_schema,
   ref.relname as referenced_table,
@@ -19,35 +29,34 @@ join unnest(con.conkey) with ordinality as src_key(attnum, ord) on true
 join unnest(con.confkey) with ordinality as ref_key(attnum, ord) on ref_key.ord = src_key.ord
 join pg_attribute src_col on src_col.attrelid = src.oid and src_col.attnum = src_key.attnum
 join pg_attribute ref_col on ref_col.attrelid = ref.oid and ref_col.attnum = ref_key.attnum
-where con.conname = 'predictions_user_id_fkey';
+where src_ns.nspname = 'public'
+  and src.relname = 'predictions'
+  and con.contype = 'f'
+order by con.conname;
 
--- 2) Vider uniquement les pronostics.
+-- 3) Vider uniquement les pronostics.
 delete from public.predictions;
 
--- 3) Remettre les stats pronostics à zéro sans toucher aux profils/badges/quiz.
-update public.profile_stats
-set total_predictions = 0,
-    correct_scores = 0,
-    correct_results = 0,
-    total_points = 0,
-    rank = null,
-    updated_at = now();
+-- 4) Remettre seulement les stats pronostics à zéro.
+do $$
+begin
+  if to_regclass('public.profile_stats') is not null then
+    update public.profile_stats
+    set total_predictions = 0,
+        correct_scores = 0,
+        correct_results = 0,
+        total_points = 0,
+        rank = null,
+        updated_at = now();
+  end if;
+end $$;
 
--- 4) Conserver profile_id comme identifiant canonique des pronostics.
+-- 5) Garantir profile_id comme colonne canonique.
 alter table public.predictions
   add column if not exists profile_id uuid;
 
-update public.predictions
-set profile_id = user_id
-where profile_id is null
-  and user_id is not null
-  and exists (select 1 from public.profiles p where p.id = public.predictions.user_id);
-
-alter table public.predictions
-  drop constraint if exists predictions_user_id_fkey;
-
--- 5) Neutraliser l'ancienne colonne user_id si elle existe encore.
--- Elle ne doit plus bloquer les inserts faits avec profile_id.
+-- 6) Si user_id existe encore, migrer sa valeur vers profile_id puis le rendre passif.
+-- Aucune référence statique à user_id : tout est dynamique après vérification.
 do $$
 begin
   if exists (
@@ -57,17 +66,27 @@ begin
       and table_name = 'predictions'
       and column_name = 'user_id'
   ) then
-    alter table public.predictions alter column user_id drop not null;
-    alter table public.predictions alter column user_id drop default;
+    execute '
+      update public.predictions p
+      set profile_id = p.user_id
+      where p.profile_id is null
+        and p.user_id is not null
+        and exists (select 1 from public.profiles pr where pr.id = p.user_id)
+    ';
+
+    execute 'alter table public.predictions alter column user_id drop not null';
+    execute 'alter table public.predictions alter column user_id drop default';
   end if;
 end $$;
 
--- 5bis) Si l'ancienne colonne user_id est encore là, elle reste passive :
--- elle ne doit plus participer aux insertions ni aux relations.
+-- 7) Supprimer les anciennes contraintes/index liés à user_id s'ils existent.
+alter table public.predictions
+  drop constraint if exists predictions_user_id_fkey;
+
 drop index if exists predictions_user_match_key;
 drop index if exists idx_predictions_user_created;
 
--- 6) Recréer la FK correcte sur profile_id.
+-- 8) Recréer proprement la relation canonique profile_id -> profiles.id.
 alter table public.predictions
   drop constraint if exists predictions_profile_id_fkey;
 
@@ -77,10 +96,12 @@ alter table public.predictions
   on delete cascade
   not valid;
 
+-- 9) Index utiles sur le schéma actuel.
 create unique index if not exists predictions_profile_match_key
   on public.predictions (profile_id, match_id);
 
 create index if not exists idx_predictions_profile_created
   on public.predictions (profile_id, created_at desc);
 
+-- 10) Recharger le cache PostgREST/Supabase.
 notify pgrst, 'reload schema';
