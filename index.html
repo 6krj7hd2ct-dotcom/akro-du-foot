@@ -919,18 +919,22 @@
     .quiz-dialog .subtle { font-size: 12px; line-height: 1.25; }
     .quiz-body { overflow-y: auto; min-height: 0; padding: 9px 14px 18px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .quiz-setup, .quiz-result { display: grid; gap: 8px; }
-    .quiz-stage { min-height: 0; display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 8px; padding-bottom: 2px; }
-    .quiz-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 220px); gap: 9px; align-items: end; }
+    .quiz-stage { min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 8px; padding-bottom: 2px; }
+    .quiz-controls { display: grid; grid-template-columns: minmax(118px, 150px) minmax(150px, 210px) minmax(180px, 1fr); gap: 9px; align-items: end; }
     .quiz-theme-selectors { display: none; grid-template-columns: minmax(0, 1fr); gap: 8px; }
     .quiz-theme-selectors.is-visible { display: grid; }
     .quiz-theme-selectors .pseudo-row { margin: 0; }
+    .quiz-top-actions { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+    .quiz-next-box { display: inline-grid; justify-items: end; gap: 4px; }
+    #quizStartButton { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
+    #quizNextButton { color: #041611; background: linear-gradient(180deg, #9ff0d5, #32d3a2); }
     .quiz-progression { display: grid; gap: 6px; padding: 9px 10px; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; background: rgba(255,255,255,0.055); }
     .quiz-progress-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .quiz-progress-tag { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.07); color: #d6e5f7; font-size: 11px; font-weight: 900; }
     .quiz-progress-tag.is-done { color: #9ff0d5; border-color: rgba(50,211,162,0.38); background: rgba(50,211,162,0.12); }
     .quiz-progress-tag.is-current { color: #ffe1a0; border-color: rgba(245,201,107,0.42); background: rgba(245,201,107,0.12); }
     .quiz-progress-tag.is-locked { color: #8797aa; opacity: .72; }
-    .quiz-progress { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 900; text-transform: uppercase; }
+    .quiz-progress { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 900; text-transform: uppercase; }
     .quiz-score-pill { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; padding: 4px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; }
     .quiz-progress-bar { height: 4px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
     .quiz-progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--gold), var(--green)); transition: width .25s ease; }
@@ -1754,6 +1758,13 @@
         <button class="modal-close" type="button" id="quizClose" aria-label="Fermer">×</button>
       </header>
       <div class="team-modal-body quiz-body">
+        <div class="quiz-top-actions">
+          <button class="action-button" type="button" id="quizStartButton">Lancer le quiz</button>
+          <div class="quiz-next-box">
+            <button class="action-button quiz-next-inline" type="button" id="quizNextButton" disabled>Question suivante</button>
+            <span class="quiz-score-pill" id="quizScoreText">0/10</span>
+          </div>
+        </div>
         <div class="quiz-setup" id="quizSetup">
           <div class="profile-auth-note" id="quizProfileNote">Crée ou connecte ton profil pour sauvegarder tes badges.</div>
           <div class="quiz-controls">
@@ -1780,25 +1791,19 @@
                 <option value="champions">Champions League</option>
               </select>
             </div>
-          </div>
-          <div class="quiz-progression" id="quizProgression" aria-live="polite"></div>
-          <div class="quiz-theme-selectors" id="quizThemeSelectors">
-            <div class="pseudo-row" id="quizDynamicThemeRow">
-              <label for="quizThemeSearch" id="quizThemeSearchLabel">Club</label>
-              <input id="quizThemeSearch" list="quizThemeOptions" type="search" autocomplete="off" placeholder="Rechercher un club">
-              <datalist id="quizThemeOptions"></datalist>
+            <div class="quiz-theme-selectors" id="quizThemeSelectors">
+              <div class="pseudo-row" id="quizDynamicThemeRow">
+                <label for="quizThemeSearch" id="quizThemeSearchLabel">Club</label>
+                <input id="quizThemeSearch" list="quizThemeOptions" type="search" autocomplete="off" placeholder="Rechercher un club">
+                <datalist id="quizThemeOptions"></datalist>
+              </div>
             </div>
           </div>
-          <div class="quiz-actions">
-            <button class="action-button" type="button" id="quizStartButton">Lancer le quiz</button>
-            <button class="search-secondary-button" type="button" id="quizSetupRestartButton">Recommencer</button>
-          </div>
+          <div class="quiz-progression" id="quizProgression" aria-live="polite"></div>
         </div>
         <div class="quiz-stage" id="quizStage" hidden>
           <div class="quiz-progress">
-            <button class="action-button quiz-next-inline" type="button" id="quizNextButton" disabled>Question suivante</button>
             <span id="quizProgressText">Question 1/10</span>
-            <span class="quiz-score-pill" id="quizScoreText">0/10</span>
           </div>
           <div class="quiz-progress-bar" aria-hidden="true"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
           <article class="quiz-card">
@@ -1811,9 +1816,6 @@
         <div class="quiz-result" id="quizResult" hidden>
           <div class="quiz-feedback" id="quizFinalMessage"></div>
           <div class="quiz-badge-list" id="quizBadgeList"></div>
-          <div class="quiz-actions">
-            <button class="search-secondary-button" type="button" id="quizResetButton">Changer de thème</button>
-          </div>
         </div>
       </div>
     </article>
@@ -5006,7 +5008,6 @@ grant select, insert, update on public.profiles to authenticated;`;
     const quizThemeOptions = document.getElementById('quizThemeOptions');
     const quizProgression = document.getElementById('quizProgression');
     const quizStartButton = document.getElementById('quizStartButton');
-    const quizSetupRestartButton = document.getElementById('quizSetupRestartButton');
     const quizProgressText = document.getElementById('quizProgressText');
     const quizScoreText = document.getElementById('quizScoreText');
     const quizProgressFill = document.getElementById('quizProgressFill');
@@ -5015,10 +5016,8 @@ grant select, insert, update on public.profiles to authenticated;`;
     const quizAnswers = document.getElementById('quizAnswers');
     const quizFeedback = document.getElementById('quizFeedback');
     const quizNextButton = document.getElementById('quizNextButton');
-    const quizChangeButton = document.getElementById('quizChangeButton');
     const quizFinalMessage = document.getElementById('quizFinalMessage');
     const quizBadgeList = document.getElementById('quizBadgeList');
-    const quizResetButton = document.getElementById('quizResetButton');
     const QUIZ_DIFFICULTIES = Object.fromEntries(QUIZ_LEVELS.map(([key, label, badge, badgeKey]) => [key, {label, badge, key: badgeKey}]));
     const QUIZ_THEME_LABELS = {
       general: 'Football général',
@@ -5461,6 +5460,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       quizSetup.hidden = false;
       quizStage.hidden = true;
       quizResult.hidden = true;
+      if (quizNextButton) {
+        quizNextButton.disabled = true;
+        quizNextButton.textContent = 'Question suivante';
+      }
+      if (quizScoreText) quizScoreText.textContent = '0/10';
       updateQuizThemeControls();
       updateQuizProfileNote();
     }
@@ -5610,6 +5614,8 @@ grant select, insert, update on public.profiles to authenticated;`;
     async function finishQuiz() {
       quizStage.hidden = true;
       quizResult.hidden = false;
+      quizNextButton.disabled = true;
+      quizNextButton.textContent = 'Question suivante';
       quizBadgeList.innerHTML = '';
       const passed = quizState.score >= 7;
       quizFinalMessage.textContent = passed
@@ -5637,9 +5643,6 @@ grant select, insert, update on public.profiles to authenticated;`;
     quizStartButton?.addEventListener('click', startQuiz);
     quizAnswers?.addEventListener('click', event => answerQuiz(event.target.closest('.quiz-answer')));
     quizNextButton?.addEventListener('click', nextQuizQuestion);
-    quizChangeButton?.addEventListener('click', startQuiz);
-    quizSetupRestartButton?.addEventListener('click', startQuiz);
-    quizResetButton?.addEventListener('click', showQuizSetup);
   </script>
 
   <script>
