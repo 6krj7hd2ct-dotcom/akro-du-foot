@@ -399,7 +399,8 @@
     .player-card.rank-1, .player-card.rank-2, .player-card.rank-3 { border-color: rgba(99,232,255,0.42); background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); box-shadow: 0 18px 42px rgba(0,0,0,0.16); }
     .player-card .avatar-wrap { position: absolute; z-index: 1; right: 8px; bottom: 0; width: 82px; height: 104px; display: grid; place-items: end center; }
     .player-card .avatar { width: 82px; height: 104px; border: 0; border-radius: 0; object-fit: contain; object-position: bottom center; background: transparent; opacity: .85; filter: drop-shadow(0 16px 20px rgba(0,0,0,0.42)); }
-    .player-card .avatar.placeholder { width: 52px; height: 52px; place-self: center; border-radius: 16px; background: linear-gradient(135deg, rgba(99,232,255,0.16), rgba(255,255,255,0.08)); border: 1px solid rgba(99,232,255,0.20); opacity: .92; }
+    .player-card .avatar.placeholder, .player-card .avatar-initials { width: 52px; height: 52px; place-self: center; border-radius: 16px; background: linear-gradient(135deg, rgba(99,232,255,0.10), rgba(255,255,255,0.05)); border: 1px solid rgba(99,232,255,0.16); opacity: .62; }
+    .player-card .avatar-initials { display: grid; place-items: center; color: #9fe9ff; font-size: 15px; font-weight: 950; }
     .player-card .team { color: #fff; font-size: 20px; line-height: 1.05; font-weight: 950; }
     .player-card .club-line { margin-top: 5px; color: #d6e5f7; font-size: 12px; }
     .player-card .player-stat { margin-top: 8px; color: #9fe9ff; font-size: 24px; line-height: 1; font-weight: 950; }
@@ -464,7 +465,7 @@
     .news-awards-grid .award-card { min-height: 132px; grid-template-columns: minmax(0, 1fr) 88px; align-items: center; align-content: center; isolation: isolate; padding-right: 8px; border-color: rgba(99,232,255,0.34); background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); }
     .news-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(7,17,31,0.55)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 10px center; background-size: cover, 132px 88px; opacity: .66; pointer-events: none; }
     .news-awards-grid .award-card::after { content: ""; }
-    .tournament-awards-grid { gap: 12px; }
+    .tournament-awards-grid { gap: 12px; margin-top: 14px; }
     .tournament-awards-grid .award-card { min-height: 132px; grid-template-columns: minmax(0, 1fr) 88px; align-items: center; align-content: center; isolation: isolate; padding-right: 8px; border-color: rgba(99,232,255,0.34); background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); }
     .tournament-awards-grid .award-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.92), rgba(7,17,31,0.55)), var(--award-flag, none); background-repeat: no-repeat; background-position: center, right 10px center; background-size: cover, 132px 88px; opacity: .66; pointer-events: none; }
     .tournament-awards-grid .award-card::after { content: ""; }
@@ -1651,10 +1652,10 @@
       </section>
 
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs</h2><button class="alltime-badge" type="button" data-alltime="champions-scorers">Top 10 all-time</button></div><div class="section-note">Top 3</div></div>
-      <section class="leaders"><article class="card player-card rank-1" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé"></div><div><div class="team">Kylian Mbappé</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/8633.png" alt=""><span class="club-name">Real Madrid</span></div><div class="player-stat">15 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-2" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/eng.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/194165.png" alt="Harry Kane"></div><div><div class="team">Harry Kane</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9823.png" alt=""><span class="club-name">Bayern München</span></div><div class="player-stat">14 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-3" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/geo.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/963964.png" alt="Khvicha Kvaratskhelia"></div><div><div class="team">Khvicha Kvaratskhelia</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">10 <span class="subtle">buts</span></div></div></article></section>
+      <section class="leaders"><article class="card player-card rank-1" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé"></div><div><div class="team">Kylian Mbappé</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/8633.png" alt=""><span class="club-name">Real Madrid</span></div><div class="player-stat">15 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-2" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/eng.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/194165.png" alt="Harry Kane"></div><div><div class="team">Harry Kane</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9823.png" alt=""><span class="club-name">Bayern München</span></div><div class="player-stat">14 <span class="subtle">buts</span></div></div></article><article class="card player-card rank-3" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/geo.png)"><div class="avatar-wrap"><img class="avatar" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Kvaratskhelia_asse_psg_2425_%28cropped_2%29.png" alt="Khvicha Kvaratskhelia"></div><div><div class="team">Khvicha Kvaratskhelia</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">10 <span class="subtle">buts</span></div></div></article></section>
 
       <div class="section-head"><div class="section-title"><h2>Meilleurs passeurs</h2></div><div class="section-note">Top 3</div></div>
-      <section class="leaders"><article class="card player-card rank-1" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="avatar-wrap"><img class="avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_10.jpg/330px-FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_10.jpg" alt="Michael Olise"></div><div><div class="team">Michael Olise</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9823.png" alt=""><span class="club-name">Bayern München</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article><article class="card player-card rank-2" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/geo.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/963964.png" alt="Khvicha Kvaratskhelia"></div><div><div class="team">Khvicha Kvaratskhelia</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article><article class="card player-card rank-3" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/mar.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/556028.png" alt="Achraf Hakimi"></div><div><div class="team">Achraf Hakimi</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article></section>
+      <section class="leaders"><article class="card player-card rank-1" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="avatar-wrap"><img class="avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_10.jpg/330px-FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_10.jpg" alt="Michael Olise"></div><div><div class="team">Michael Olise</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9823.png" alt=""><span class="club-name">Bayern München</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article><article class="card player-card rank-2" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/geo.png)"><div class="avatar-wrap"><img class="avatar" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Kvaratskhelia_asse_psg_2425_%28cropped_2%29.png" alt="Khvicha Kvaratskhelia"></div><div><div class="team">Khvicha Kvaratskhelia</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article><article class="card player-card rank-3" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/mar.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/556028.png" alt="Achraf Hakimi"></div><div><div class="team">Achraf Hakimi</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article></section>
 
 
       <div class="section-head"><div class="section-title"><h2>Phase finale</h2></div><div class="section-note">Bracket Champions League affiché dès disponibilité des matchs à élimination directe.</div></div>
@@ -4860,18 +4861,61 @@ grant select, insert, update on public.profiles to authenticated;`;
       </article>`;
     }
 
+    const PLAYER_NATION_META = {
+      'adrien thomasson': ['France', 'fra'],
+      'anastasios douvikas': ['Grèce', 'gre'],
+      'ante budimir': ['Croatie', 'cro'],
+      'arda guler': ['Turquie', 'tur'],
+      'armand lauriente': ['France', 'fra'],
+      'bruno fernandes': ['Portugal', 'por'],
+      'deniz undav': ['Allemagne', 'deu'],
+      'erling haaland': ['Norvège', 'nor'],
+      'esteban lepaul': ['France', 'fra'],
+      'federico dimarco': ['Italie', 'ita'],
+      'harry kane': ['Angleterre', 'eng'],
+      'igor thiago': ['Brésil', 'bra'],
+      'jarrod bowen': ['Angleterre', 'eng'],
+      'joaquin panichelli': ['Argentine', 'arg'],
+      'julian ryerson': ['Norvège', 'nor'],
+      'kylian mbappe': ['France', 'fra'],
+      'lamine yamal': ['Espagne', 'esp'],
+      'lautaro martinez': ['Argentine', 'arg'],
+      'ludovic ajorque': ['France', 'fra'],
+      'luis diaz': ['Colombie', 'col'],
+      'luis milla': ['Espagne', 'esp'],
+      'marcus thuram': ['France', 'fra'],
+      'mason greenwood': ['Angleterre', 'eng'],
+      'matthieu udol': ['France', 'fra'],
+      'michael olise': ['France', 'fra'],
+      'nicolo barella': ['Italie', 'ita'],
+      'rayan cherki': ['France', 'fra'],
+      'serhou guirassy': ['Guinée', 'gui'],
+      'vedat muriqi': ['Kosovo', 'kos']
+    };
+    const leaguePlayerKey = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const leaguePlayerMeta = player => PLAYER_NATION_META[leaguePlayerKey(player?.name)] || [];
+    const leaguePlayerInitials = value => String(value || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
+    const leaguePlayerFlag = player => {
+      const meta = leaguePlayerMeta(player);
+      return player.country_flag_url || player.nationality_flag_url || player.flag_url || (meta[1] ? `https://a.espncdn.com/i/teamlogos/countries/500/${meta[1]}.png` : '');
+    };
+    const leaguePlayerCountry = player => player.country || player.nationality || leaguePlayerMeta(player)[0] || '';
+
     function leaguePlayerCard(player, label, variant = 'club') {
       const club = player.team || '';
       const clubLogo = player.team_logo_url || player.club_logo_url || leagueClubLogo(club) || player.flag_url || '';
-      const countryFlag = player.country_flag_url || player.flag_url || '';
+      const countryFlag = leaguePlayerFlag(player);
+      const countryLabel = leaguePlayerCountry(player);
       const mainImage = player.photo_url || (variant === 'big5' ? countryFlag : '');
-      const avatar = mainImage ? `<img class="avatar" src="${leagueEscape(mainImage)}" alt="">` : '<div class="avatar placeholder" aria-hidden="true"></div>';
+      const initials = leagueEscape(leaguePlayerInitials(player.name));
+      const avatar = mainImage ? `<img class="avatar" src="${leagueEscape(mainImage)}" alt="${leagueEscape(player.name || 'Joueur')}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="avatar-initials" hidden>${initials}</span>` : `<span class="avatar-initials">${initials}</span>`;
       const bgClass = variant === 'big5' ? ' big5-card' : '';
       const style = countryFlag ? ` style="--player-flag:url(${leagueEscape(countryFlag)})"` : '';
+      const secondary = [club, countryLabel].filter(Boolean).join(' · ');
       return `<article class="card player-card${bgClass}"${style}>
         <div class="avatar-wrap">${avatar}</div>
         <div><div class="team">${leagueEscape(player.name || 'Joueur')}</div>
-        <div class="subtle club-line">${clubLogo ? `<img class="club-logo" src="${leagueEscape(clubLogo)}" alt="">` : '<span class="club-logo placeholder" aria-hidden="true"></span>'}<span class="club-name">${leagueEscape(club)}</span></div>
+        <div class="subtle club-line">${clubLogo ? `<img class="club-logo" src="${leagueEscape(clubLogo)}" alt="">` : '<span class="club-logo placeholder" aria-hidden="true"></span>'}<span class="club-name">${leagueEscape(secondary)}</span></div>
         ${player.league ? `<div class="subtle">${leagueEscape(player.league)}</div>` : ''}
         <div class="player-stat">${leagueEscape(player.value || '0')} <span class="subtle">${leagueEscape(label)}</span></div></div>
       </article>`;
@@ -5923,7 +5967,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         'lamine yamal': photo('1467236'),
         'xavi simons': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Xavi_Simons%2C_Nick_Verhagen_in_duel_met_Xavi_Simons.jpg/330px-Xavi_Simons%2C_Nick_Verhagen_in_duel_met_Xavi_Simons.jpg',
         'arda guler': 'https://upload.wikimedia.org/wikipedia/commons/2/26/Derbide_Fenerbah%C3%A7e_Yedek_Oyuncu_Arda_G%C3%BCler_%282021-22_S%C3%BCper_Lig_-_Cropped%29.jpg',
-        'khvicha kvaratskhelia': photo('963964'),
+        'khvicha kvaratskhelia': 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Kvaratskhelia_asse_psg_2425_%28cropped_2%29.png',
         'michael olise': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_10.jpg/330px-FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_10.jpg',
         'achraf hakimi': photo('556028')
       };
@@ -5936,7 +5980,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           if (existingFlag && !card.style.getPropertyValue('--player-flag')) card.style.setProperty('--player-flag', `url(${existingFlag})`);
           if (!photoUrl) return;
           const wrap = card.querySelector('.avatar-wrap');
-          if (wrap) wrap.innerHTML = `<img class="avatar" src="${photoUrl}" alt="${name.replace(/[&<>"']/g, '')}" onerror="this.replaceWith(Object.assign(document.createElement('div'), {className:'avatar placeholder'}))">`;
+          const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
+          if (wrap) wrap.innerHTML = `<img class="avatar" src="${photoUrl}" alt="${name.replace(/[&<>"']/g, '')}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="avatar-initials" hidden>${initials}</span>`;
         });
       };
       const futureSeason = (competition, favouriteLabel) => ({
@@ -6301,7 +6346,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       const playersHtml = players => (players || []).map((item, index) => {
         const photoUrl = playerPhoto(item.name);
         const style = item.img ? ` style="--player-flag:url(${escape(item.img)})"` : '';
-        const avatar = photoUrl ? `<img class="avatar" src="${escape(photoUrl)}" alt="${escape(item.name)}">` : '<div class="avatar placeholder" aria-hidden="true"></div>';
+        const fallback = escape(initials(item.name));
+        const avatar = photoUrl ? `<img class="avatar" src="${escape(photoUrl)}" alt="${escape(item.name)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="avatar-initials" hidden>${fallback}</span>` : `<span class="avatar-initials">${fallback}</span>`;
         return `<article class="card player-card rank-${index + 1}"${style}><div class="avatar-wrap">${avatar}</div><div><div class="team">${escape(item.name)}</div><div class="club-line">${img(item.img)}<span class="club-name">${escape(item.team)}</span></div><div class="player-stat">${escape(item.value)}</div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</div></article>`;
       }).join('') || `<div class="historical-unavailable">${info}</div>`;
       const matchesHtml = matches => (matches || []).map(item => `<article class="historical-match-card"><div class="subtle">${escape(item.phase)}</div><div class="historical-match-row"><span class="team">${img(item.homeImg)}${escape(item.home)}</span><span class="historical-score">${escape(item.score)}</span><span class="team">${escape(item.away)}${img(item.awayImg)}</span></div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</article>`).join('');
