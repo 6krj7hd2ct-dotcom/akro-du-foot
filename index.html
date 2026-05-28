@@ -936,7 +936,8 @@
     .active-profile-score-row { display: grid; gap: 3px; justify-items: end; }
     .active-profile-scoreboard strong { display: block; color: #ffe1a0; font-size: 15px; line-height: 1.05; font-weight: 950; }
     .profile-game-dialog { width: min(560px, 100%); }
-    .profile-game-dialog.is-bracket-dialog { width: min(1240px, 100%); max-height: min(94vh, 980px); }
+    .profile-game-dialog.is-bracket-dialog { width: min(1280px, 100%); max-height: min(98vh, 1120px); }
+    .profile-game-dialog.is-bracket-dialog .team-modal-body { max-height: calc(98vh - 92px); overflow: auto; }
     .profile-game-ranking-list { display: grid; gap: 9px; max-height: 420px; overflow-y: auto; padding-right: 6px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .profile-game-ranking-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.055); }
     .profile-game-ranking-rank { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-weight: 950; }
@@ -4040,7 +4041,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       const selectedMatches = draft.matches
         .filter(match => draft.selections[String(match.index)])
         .map(match => ({...match, teams: userBracketMatchTeams(match, draft), winner: draft.selections[String(match.index)]}));
-      const final = selectedMatches.find(match => normalizeFootballName(match.round).includes('finale')) || selectedMatches[selectedMatches.length - 1];
+      const exactFinal = selectedMatches.find(match => normalizeFootballName(match.round) === 'finale');
+      const highestRound = selectedMatches
+        .slice()
+        .sort((a, b) => Number(b.index || 0) - Number(a.index || 0))[0];
+      const final = exactFinal || highestRound;
       if (!final) return {champion: '', runnerUp: ''};
       return {champion: final.winner, runnerUp: final.teams.find(team => team !== final.winner) || ''};
     }
@@ -4066,14 +4071,30 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function userBracketPlayerPool() {
       const worldCupTeams = new Set(Object.values(WORLD_CUP_2026_BRACKET_GROUPS).flat().map(focusNormalize));
-      const source = Array.isArray(AKRO_SUPABASE_FOOTBALL?.players) ? AKRO_SUPABASE_FOOTBALL.players : [];
+      const source = [];
+      if (Array.isArray(AKRO_SUPABASE_FOOTBALL?.players)) {
+        source.push(...AKRO_SUPABASE_FOOTBALL.players.map(player => ({
+          name: player.name || player.full_name || [player.firstname, player.lastname].filter(Boolean).join(' '),
+          team: Array.isArray(player.teams) ? player.teams.join(' ') : (player.team_name || player.team || player.national_team || player.club || ''),
+          nation: player.nationality || player.country || player.birth_country || '',
+          position: player.position || player.pos || ''
+        })));
+      }
+      if (Array.isArray(AKRO_SUPABASE_FOOTBALL?.teams)) {
+        AKRO_SUPABASE_FOOTBALL.teams.forEach(team => {
+          if (!worldCupTeams.has(focusNormalize(team.name)) && !worldCupTeams.has(focusNormalize(team.short_name))) return;
+          (team.squad || []).forEach(player => {
+            source.push({
+              name: player.name || [player.firstname, player.lastname].filter(Boolean).join(' '),
+              team: team.name || '',
+              nation: player.nationality || team.country || '',
+              position: player.position || ''
+            });
+          });
+        });
+      }
       const seen = new Set();
-      return source.map(player => {
-        const name = player.name || player.full_name || [player.firstname, player.lastname].filter(Boolean).join(' ');
-        const team = player.team_name || player.team || player.national_team || player.club || '';
-        const nation = player.nationality || player.country || player.birth_country || '';
-        return {name, team, nation, position: player.position || player.pos || ''};
-      }).filter(player => {
+      const linkedPlayers = source.filter(player => {
         if (!player.name) return false;
         const key = focusNormalize(player.name);
         if (seen.has(key)) return false;
@@ -4081,19 +4102,23 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (!linked) return false;
         seen.add(key);
         return true;
-      }).sort((a, b) => a.name.localeCompare(b.name));
+      });
+      return linkedPlayers.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     function userBracketPlayerSearch(field, query) {
       const normalized = focusNormalize(query);
       const pool = userBracketPlayerPool();
+      if (!pool.length) {
+        return '<div class="subtle">Joueurs non encore disponibles, synchronisation nécessaire.</div>';
+      }
       const filtered = normalized
         ? pool.filter(player => [player.name, player.team, player.nation].some(value => focusNormalize(value).includes(normalized)))
         : pool;
       return filtered.slice(0, 10).map(player => `<button class="user-bracket-player-option" type="button" data-user-bracket-player="${escapeHtml(field)}" data-user-bracket-player-name="${escapeHtml(player.name)}">
         <strong>${escapeHtml(player.name)}</strong>
         <span>${escapeHtml([player.nation, player.team, player.position].filter(Boolean).join(' · ') || 'Coupe du Monde')}</span>
-      </button>`).join('') || '<div class="subtle">Joueur à sélectionner plus tard</div>';
+      </button>`).join('') || '<div class="subtle">Aucun joueur trouvé pour cette recherche.</div>';
     }
 
     function renderUserBracketPlayerFields(draft) {
