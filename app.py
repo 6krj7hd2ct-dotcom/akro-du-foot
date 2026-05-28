@@ -2259,18 +2259,29 @@ def admin_sync_logs_response() -> tuple[dict[str, Any], int]:
         "GET",
         "sync_logs?select=id,job_name,status,started_at,finished_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&order=started_at.desc&limit=20",
     )
+    running_rows = _supabase_service_request(
+        "GET",
+        "sync_logs?select=id,status,started_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
+    )
+    success_rows = _supabase_service_request(
+        "GET",
+        "sync_logs?select=id,job_name,status,started_at,finished_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&status=eq.success&order=finished_at.desc&limit=1",
+    )
     if rows is None:
         return {"configured": True, "logs": [], "message": "Impossible de lire sync_logs. Vérifie que supabase/football_core.sql est appliqué."}, 200
     logs = [_sync_log_public(row) for row in rows]
     latest = logs[0] if logs else None
+    latest_success = _sync_log_public(success_rows[0]) if isinstance(success_rows, list) and success_rows else next((log for log in logs if log.get("status") == "success"), None)
+    has_running = isinstance(running_rows, list) and bool(running_rows)
     stale = True
-    if latest and latest.get("finished_at"):
+    freshness_log = latest_success or latest
+    if freshness_log and freshness_log.get("finished_at"):
         try:
-            finished = datetime.fromisoformat(str(latest["finished_at"]).replace("Z", "+00:00"))
+            finished = datetime.fromisoformat(str(freshness_log["finished_at"]).replace("Z", "+00:00"))
             stale = (datetime.now(timezone.utc) - finished).total_seconds() > 36 * 3600
         except ValueError:
             stale = True
-    return {"configured": True, "logs": logs, "latest": latest, "stale": stale}, 200
+    return {"configured": True, "logs": logs, "latest": latest, "latest_success": latest_success, "has_running": has_running, "stale": stale}, 200
 
 
 def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
@@ -2313,40 +2324,39 @@ def admin_sync_cancel_response(payload: dict[str, Any]) -> tuple[dict[str, Any],
 
         url, _ = _supabase_service_config()
         headers = _supabase_service_headers("return=representation")
-        query = "sync_logs?select=id,status,started_at,message,processed_counts&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1"
+        query = "sync_logs?select=id,status,started_at,message,processed_counts&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc"
         running_response = requests.get(f"{url}/rest/v1/{query}", headers=headers, timeout=SUPABASE_TIMEOUT)
         if running_response.status_code >= 400:
             return {"error": f"Impossible de lire la sync en cours : {running_response.text[:220]}"}, 500
         running = running_response.json() if running_response.content else []
         if not isinstance(running, list) or not running:
             return {"ok": False, "message": "Aucune synchronisation en cours."}, 404
-        log_id = str(running[0].get("id") or "")
-        if not log_id:
-            return {"error": "Log de synchronisation introuvable."}, 500
 
         now = datetime.now(timezone.utc).isoformat()
+        running_ids = [str(row.get("id") or "") for row in running if row.get("id")]
+        merged_counts = {
+            "cancelled_by_admin": True,
+            "cancelled_jobs": len(running_ids),
+            "cancelled_at": now,
+        }
         cancel_payload = {
             "status": "cancelled",
-            "cancel_requested": True,
+            "cancel_requested": False,
             "cancelled_at": now,
             "finished_at": now,
-            "message": "Synchronisation annulée",
-            "error_detail": "Annulation demandée depuis /admin/sync. Les données déjà importées sont conservées.",
-            "processed_counts": {
-                **(running[0].get("processed_counts") if isinstance(running[0].get("processed_counts"), dict) else {}),
-                "cancelled_by_admin": True,
-                "cancelled_at": now,
-            },
+            "message": "Synchronisation annulée par admin",
+            "error_detail": "Ancienne synchronisation bloquée annulée. Les données déjà importées sont conservées.",
+            "processed_counts": merged_counts,
         }
         update_response = requests.patch(
-            f"{url}/rest/v1/sync_logs?id=eq.{quote(log_id)}",
+            f"{url}/rest/v1/sync_logs?job_name=eq.sync-football-data&status=eq.running",
             headers=headers,
             json=cancel_payload,
             timeout=SUPABASE_TIMEOUT,
         )
         if update_response.status_code < 400:
             updated = update_response.json() if update_response.content else []
-            return {"ok": True, "message": "Synchronisation annulée", "log": _sync_log_public(updated[0]) if updated else None}, 200
+            return {"ok": True, "message": "Synchronisation annulée", "cancelled": len(updated) or len(running_ids), "logs": [_sync_log_public(row) for row in updated] if updated else []}, 200
 
         fallback_payload = {
             "status": "error",
@@ -2354,21 +2364,21 @@ def admin_sync_cancel_response(payload: dict[str, Any]) -> tuple[dict[str, Any],
             "message": "Synchronisation annulée",
             "error_detail": "Annulation forcée. Applique football_core.sql pour activer le statut cancelled et l'arrêt propre par cancel_requested.",
             "processed_counts": {
-                **(running[0].get("processed_counts") if isinstance(running[0].get("processed_counts"), dict) else {}),
                 "cancelled_by_admin": True,
+                "cancelled_jobs": len(running_ids),
                 "cancel_fallback_status": "error",
                 "cancelled_at": now,
             },
         }
         fallback_response = requests.patch(
-            f"{url}/rest/v1/sync_logs?id=eq.{quote(log_id)}",
+            f"{url}/rest/v1/sync_logs?job_name=eq.sync-football-data&status=eq.running",
             headers=headers,
             json=fallback_payload,
             timeout=SUPABASE_TIMEOUT,
         )
         if fallback_response.status_code < 400:
             updated = fallback_response.json() if fallback_response.content else []
-            return {"ok": True, "message": "Synchronisation annulée. Applique football_core.sql pour afficher le statut cancelled.", "log": _sync_log_public(updated[0]) if updated else None}, 200
+            return {"ok": True, "message": "Synchronisation annulée. Applique football_core.sql pour afficher le statut cancelled.", "cancelled": len(updated) or len(running_ids), "logs": [_sync_log_public(row) for row in updated] if updated else []}, 200
         return {"error": f"Impossible d'annuler la synchronisation : {update_response.text[:180]} / fallback: {fallback_response.text[:180]}"}, 500
     except Exception as exc:
         return {"error": f"Impossible d'annuler la synchronisation : {exc}"}, 502
@@ -2581,9 +2591,9 @@ def admin_sync_html() -> str:
         return;
       }}
       const last = data.latest;
-      const running = last?.status === 'running';
+      const running = Boolean(data.has_running);
       state.textContent = last ? last.status : 'Aucune synchronisation';
-      state.className = `status ${{last?.status || 'running'}}`;
+      state.className = `status ${{running ? 'running' : (last?.status || 'running')}}`;
       button.disabled = running;
       stopButton.classList.toggle('is-visible', running);
       stopButton.disabled = false;

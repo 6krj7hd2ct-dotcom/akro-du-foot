@@ -333,17 +333,18 @@ async function stopIfCancelled(logId: string, counts: Json, checkpoint: string) 
   if (!logId) return;
   const {data, error} = await supabase
     .from("sync_logs")
-    .select("cancel_requested")
+    .select("status,cancel_requested")
     .eq("id", logId)
     .maybeSingle();
   if (error) {
     console.warn("[sync-football-data] cancel check skipped", {checkpoint, message: error.message, code: error.code});
     return;
   }
-  if (Boolean((data as Json | null)?.cancel_requested)) {
+  const logStatus = String((data as Json | null)?.status ?? "");
+  if (Boolean((data as Json | null)?.cancel_requested) || (logStatus && logStatus !== "running")) {
     counts.cancel_checkpoint = checkpoint;
     counts.cancelled_at = new Date().toISOString();
-    console.warn("[sync-football-data] cancellation requested", {checkpoint, counts});
+    console.warn("[sync-football-data] cancellation requested", {checkpoint, logStatus, counts});
     throw new SyncCancelled(checkpoint);
   }
 }
