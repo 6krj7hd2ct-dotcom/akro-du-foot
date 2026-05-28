@@ -236,6 +236,15 @@ function priorityAliasForTeam(name: unknown) {
   return configuredPriorityTeams().find(priorityName => norm(priorityName) === teamName) ?? "";
 }
 
+function looksLikeFalsePriorityMatch(name: unknown) {
+  const teamName = norm(name);
+  if (!teamName) return false;
+  return [...configuredPriorityTeams(), ...DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS]
+    .map(norm)
+    .filter(value => value.length >= 4)
+    .some(priorityName => teamName !== priorityName && new RegExp(`(^| )${priorityName}( |$)`).test(teamName));
+}
+
 function teamRowFromApi(item: Json, countryLookup: Map<string, string>) {
   const team = pick<Json>(item, ["team"], {});
   const venue = pick<Json>(item, ["venue"], {});
@@ -537,7 +546,9 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
     priorityIndex: priorityIndexForTeam(row.name),
     priorityAlias: priorityAliasForTeam(row.name),
   })).filter(row => row.id && row.api_id);
-  const enriched = rows.map(row => ({...row, priority: row.priorityIndex >= 0}));
+  const enriched = rows
+    .filter(row => options.skipComplete || !looksLikeFalsePriorityMatch(row.name))
+    .map(row => ({...row, priority: row.priorityIndex >= 0}));
   const completeRosterSize = options.completeRosterSize ?? DEFAULT_COMPLETE_ROSTER_SIZE;
   const recheckMs = Math.max(0, options.recheckDays ?? 0) * 24 * 60 * 60 * 1000;
   const now = Date.now();
