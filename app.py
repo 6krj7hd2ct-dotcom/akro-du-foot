@@ -2308,24 +2308,70 @@ def admin_sync_cancel_response(payload: dict[str, Any]) -> tuple[dict[str, Any],
         return {"error": "Clé admin invalide."}, 403
     if not _supabase_service_enabled():
         return {"error": "SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY manquant côté serveur."}, 500
-    running = _supabase_service_request(
-        "GET",
-        "sync_logs?select=id,status,started_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
-    )
-    if not isinstance(running, list) or not running:
-        return {"ok": False, "message": "Aucune synchronisation en cours."}, 404
-    log_id = str(running[0].get("id") or "")
-    if not log_id:
-        return {"error": "Log de synchronisation introuvable."}, 500
-    updated = _supabase_service_request(
-        "PATCH",
-        f"sync_logs?id=eq.{quote(log_id)}",
-        json={"cancel_requested": True, "message": "Annulation demandée..."},
-        prefer="return=representation",
-    )
-    if updated is None:
-        return {"error": "Impossible de demander l'annulation. Vérifie que football_core.sql est à jour."}, 500
-    return {"ok": True, "message": "Annulation demandée. La sync va s'arrêter proprement dès que possible.", "log": _sync_log_public(updated[0]) if updated else None}, 200
+    try:
+        import requests
+
+        url, _ = _supabase_service_config()
+        headers = _supabase_service_headers("return=representation")
+        query = "sync_logs?select=id,status,started_at,message,processed_counts&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1"
+        running_response = requests.get(f"{url}/rest/v1/{query}", headers=headers, timeout=SUPABASE_TIMEOUT)
+        if running_response.status_code >= 400:
+            return {"error": f"Impossible de lire la sync en cours : {running_response.text[:220]}"}, 500
+        running = running_response.json() if running_response.content else []
+        if not isinstance(running, list) or not running:
+            return {"ok": False, "message": "Aucune synchronisation en cours."}, 404
+        log_id = str(running[0].get("id") or "")
+        if not log_id:
+            return {"error": "Log de synchronisation introuvable."}, 500
+
+        now = datetime.now(timezone.utc).isoformat()
+        cancel_payload = {
+            "status": "cancelled",
+            "cancel_requested": True,
+            "cancelled_at": now,
+            "finished_at": now,
+            "message": "Synchronisation annulée",
+            "error_detail": "Annulation demandée depuis /admin/sync. Les données déjà importées sont conservées.",
+            "processed_counts": {
+                **(running[0].get("processed_counts") if isinstance(running[0].get("processed_counts"), dict) else {}),
+                "cancelled_by_admin": True,
+                "cancelled_at": now,
+            },
+        }
+        update_response = requests.patch(
+            f"{url}/rest/v1/sync_logs?id=eq.{quote(log_id)}",
+            headers=headers,
+            json=cancel_payload,
+            timeout=SUPABASE_TIMEOUT,
+        )
+        if update_response.status_code < 400:
+            updated = update_response.json() if update_response.content else []
+            return {"ok": True, "message": "Synchronisation annulée", "log": _sync_log_public(updated[0]) if updated else None}, 200
+
+        fallback_payload = {
+            "status": "error",
+            "finished_at": now,
+            "message": "Synchronisation annulée",
+            "error_detail": "Annulation forcée. Applique football_core.sql pour activer le statut cancelled et l'arrêt propre par cancel_requested.",
+            "processed_counts": {
+                **(running[0].get("processed_counts") if isinstance(running[0].get("processed_counts"), dict) else {}),
+                "cancelled_by_admin": True,
+                "cancel_fallback_status": "error",
+                "cancelled_at": now,
+            },
+        }
+        fallback_response = requests.patch(
+            f"{url}/rest/v1/sync_logs?id=eq.{quote(log_id)}",
+            headers=headers,
+            json=fallback_payload,
+            timeout=SUPABASE_TIMEOUT,
+        )
+        if fallback_response.status_code < 400:
+            updated = fallback_response.json() if fallback_response.content else []
+            return {"ok": True, "message": "Synchronisation annulée. Applique football_core.sql pour afficher le statut cancelled.", "log": _sync_log_public(updated[0]) if updated else None}, 200
+        return {"error": f"Impossible d'annuler la synchronisation : {update_response.text[:180]} / fallback: {fallback_response.text[:180]}"}, 500
+    except Exception as exc:
+        return {"error": f"Impossible d'annuler la synchronisation : {exc}"}, 502
 
 
 def _coach_relevant_supabase_context(question: str) -> dict[str, str]:
@@ -2575,7 +2621,7 @@ def admin_sync_html() -> str:
           body: JSON.stringify({{admin_key: document.getElementById('adminKey')?.value || ''}})
         }});
         const data = await res.json();
-        state.textContent = data.ok ? 'Annulation demandée...' : (data.error || data.message || 'Annulation impossible');
+        state.textContent = data.ok ? 'Synchronisation annulée' : (data.error || data.message || 'Annulation impossible');
       }} catch (error) {{
         state.textContent = 'Erreur réseau pendant la demande d’annulation';
       }} finally {{
