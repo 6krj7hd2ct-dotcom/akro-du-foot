@@ -2302,18 +2302,26 @@ def _mark_stalled_syncs() -> list[dict[str, Any]]:
             if age < SYNC_STALL_SECONDS:
                 continue
             counts = row.get("processed_counts") if isinstance(row.get("processed_counts"), dict) else {}
+            last_checkpoint = (
+                counts.get("current_step")
+                or counts.get("last_checkpoint")
+                or counts.get("heartbeat_checkpoint")
+                or "étape inconnue"
+            )
             stalled_counts = {
                 **counts,
                 "sync_timeout": True,
+                "sync_timed_out": True,
                 "timeout_at": now,
                 "stalled_after_seconds": int(age),
                 "last_heartbeat_at": heartbeat.isoformat(),
+                "last_checkpoint": last_checkpoint,
             }
             payload = {
                 "status": "timeout",
                 "finished_at": now,
-                "message": "Synchronisation bloquée",
-                "error_detail": "Aucun heartbeat ni compteur mis à jour récemment. Le job a été libéré automatiquement.",
+                "message": f"Synchronisation bloquée à l'étape : {last_checkpoint}",
+                "error_detail": f"Aucun heartbeat ni compteur mis à jour récemment. Dernière étape connue : {last_checkpoint}. Le job a été libéré automatiquement.",
                 "processed_counts": stalled_counts,
             }
             log_id = quote(str(row.get("id") or ""))
@@ -2327,8 +2335,8 @@ def _mark_stalled_syncs() -> list[dict[str, Any]]:
                 fallback_payload = {
                     "status": "error",
                     "finished_at": now,
-                    "message": "Synchronisation expirée",
-                    "error_detail": "Timeout automatique. Applique football_core.sql pour autoriser le statut timeout.",
+                    "message": f"Synchronisation expirée à l'étape : {last_checkpoint}",
+                    "error_detail": f"Timeout automatique à l'étape {last_checkpoint}. Applique football_core.sql pour autoriser le statut timeout.",
                     "processed_counts": {**stalled_counts, "timeout_fallback_status": "error"},
                 }
                 update_response = requests.patch(

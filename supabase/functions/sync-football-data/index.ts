@@ -40,6 +40,8 @@ const DEFAULT_PRIORITY_TEAMS = [
 const INCLUDE_PLAYERS = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_PLAYERS") ?? "false").toLowerCase() === "true";
 const INCLUDE_COACHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_COACHES") ?? "false").toLowerCase() === "true";
 const INCLUDE_MATCHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_MATCHES") ?? "false").toLowerCase() === "true";
+const API_TIMEOUT_RAW = Number(Deno.env.get("FOOTBALL_SYNC_API_TIMEOUT_MS") ?? "15000");
+const API_TIMEOUT_MS = Number.isFinite(API_TIMEOUT_RAW) && API_TIMEOUT_RAW > 0 ? API_TIMEOUT_RAW : 15000;
 
 console.log("[sync-football-data] boot", {
   hasSupabaseUrl: Boolean(SUPABASE_URL),
@@ -58,6 +60,7 @@ console.log("[sync-football-data] boot", {
   priorityTeams: Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS,
   championsLeaguePriorityTeams: DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS,
   matchesTotalLimit: Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT),
+  apiTimeoutMs: API_TIMEOUT_MS,
   includePlayers: INCLUDE_PLAYERS,
   includeCoaches: INCLUDE_COACHES,
   includeMatches: INCLUDE_MATCHES,
@@ -138,6 +141,10 @@ function dedupeRows(table: string, rows: Json[], keyForRow: (row: Json) => strin
 
 function apiIdKey(row: Json) {
   return String(row.api_id ?? "");
+}
+
+function errorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
 }
 
 function norm(value: unknown) {
@@ -249,7 +256,24 @@ function normalizePlayerItem(item: Json, countryLookup: Map<string, string>) {
 
 async function withRetry(url: string, attempt = 1): Promise<Json[]> {
   console.log("[sync-football-data] football api request", {url, attempt, header: API_KEY_HEADER, hasApiKey: Boolean(API_KEY)});
-  const res = await fetch(url, {headers: {[API_KEY_HEADER]: API_KEY, "Accept": "application/json"}});
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      headers: {[API_KEY_HEADER]: API_KEY, "Accept": "application/json"},
+      signal: controller.signal,
+    });
+  } catch (error) {
+    const aborted = error instanceof DOMException && error.name === "AbortError";
+    const message = aborted
+      ? `API-Football ne répond pas après ${API_TIMEOUT_MS}ms`
+      : errorMessage(error);
+    console.error("[sync-football-data] football api fetch failed", {url, attempt, timeoutMs: API_TIMEOUT_MS, message});
+    throw new Error(`${message} (${url})`);
+  } finally {
+    clearTimeout(timeout);
+  }
   console.log("[sync-football-data] football api response", {url, attempt, status: res.status, ok: res.ok});
   if ((res.status === 429 || res.status >= 500) && attempt < 3) {
     console.warn("[sync-football-data] retry scheduled", {url, attempt, status: res.status});
@@ -333,16 +357,32 @@ async function finishLog(id: string, status: "success" | "error" | "cancelled", 
 
 async function heartbeatLog(id: string, counts: Json, checkpoint: string) {
   if (!id) return;
+  const heartbeatAt = new Date().toISOString();
+  counts.current_step = checkpoint;
+  counts.last_checkpoint = checkpoint;
+  counts.checkpoint_at = heartbeatAt;
   const payload = {
     message: `Synchronisation en cours : ${checkpoint}`,
     processed_counts: {
       ...counts,
       heartbeat_checkpoint: checkpoint,
-      heartbeat_at: new Date().toISOString(),
+      heartbeat_at: heartbeatAt,
     },
   };
   const {error} = await supabase.from("sync_logs").update(payload).eq("id", id).eq("status", "running");
   if (error) console.warn("[sync-football-data] heartbeat update skipped", {checkpoint, message: error.message, code: error.code});
+}
+
+async function checkpointLog(id: string, counts: Json, checkpoint: string, extra: Json = {}) {
+  const checkpointAt = new Date().toISOString();
+  const previous = Array.isArray(counts.checkpoints) ? counts.checkpoints as Json[] : [];
+  counts.current_step = checkpoint;
+  counts.last_checkpoint = checkpoint;
+  counts.checkpoint_at = checkpointAt;
+  counts.checkpoint_extra = extra;
+  counts.checkpoints = [...previous, {checkpoint, at: checkpointAt, ...extra}].slice(-14);
+  console.log("[sync-football-data] checkpoint", {checkpoint, ...extra});
+  await heartbeatLog(id, counts, checkpoint);
 }
 
 async function stopIfCancelled(logId: string, counts: Json, checkpoint: string) {
@@ -540,6 +580,29 @@ Deno.serve(async () => {
   try {
     logId = await startLog();
     console.log("[sync-football-data] sync started", {logId});
+    counts.start_function = true;
+    await checkpointLog(logId, counts, "start_function", {logId});
+    counts.secrets = {
+      hasSupabaseUrl: Boolean(SUPABASE_URL),
+      hasServiceKey: Boolean(SERVICE_KEY),
+      hasFootballApiKey: Boolean(API_KEY),
+      hasFootballApiBaseUrl: Boolean(API_BASE_URL),
+      footballApiBaseUrl: API_BASE_URL || "(missing)",
+      footballApiKeyHeader: API_KEY_HEADER,
+      apiTimeoutMs: API_TIMEOUT_MS,
+    };
+    await checkpointLog(logId, counts, "secrets_loaded", counts.secrets as Json);
+    counts.supabase_client_ready = Boolean(supabase);
+    await checkpointLog(logId, counts, "supabase_client_ready");
+    const initialPriorityTeams = configuredPriorityTeams();
+    const initialLeagueIds = configuredLeagueIds();
+    counts.priority_lists_loaded = true;
+    counts.priority_teams_count = initialPriorityTeams.length;
+    counts.team_leagues_count = initialLeagueIds.length;
+    await checkpointLog(logId, counts, "priority_lists_loaded", {
+      priorityTeams: initialPriorityTeams.length,
+      teamLeagues: initialLeagueIds.length,
+    });
     if (!API_KEY || !API_BASE_URL) {
       const message = "Clé API football absente : mode offline, aucune table vidée.";
       console.warn("[sync-football-data] missing football env", {hasFootballApiKey: Boolean(API_KEY), hasFootballApiBaseUrl: Boolean(API_BASE_URL)});
@@ -549,7 +612,12 @@ Deno.serve(async () => {
 
     await stopIfCancelled(logId, counts, "avant countries");
     console.log("[sync-football-data] step countries start");
+    counts.first_api_path = "countries";
+    await checkpointLog(logId, counts, "first_api_call_started", {path: "countries"});
     const countries = await football("countries");
+    counts.first_api_call_done = true;
+    counts.first_api_rows = countries.length;
+    await checkpointLog(logId, counts, "first_api_call_done", {path: "countries", rows: countries.length});
     console.log("[sync-football-data] step countries fetched", {count: countries.length});
     const countryRows = dedupeRows("countries", countries.map(item => ({
       api_id: String(pick(item, ["code", "name"], "")),
@@ -592,10 +660,26 @@ Deno.serve(async () => {
     const leagueLimit = Number(Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(Math.max(DEFAULT_LEAGUE_LIMIT, configuredTeamLeagueCount)));
     const teamsTotalLimit = Number(Deno.env.get("FOOTBALL_SYNC_TEAMS_TOTAL_LIMIT") ?? String(DEFAULT_TEAMS_TOTAL_LIMIT));
     const priorityTeamNames = configuredPriorityTeams();
+    await checkpointLog(logId, counts, "teams_loaded", {
+      status: "started",
+      priorityTeams: priorityTeamNames.length,
+      teamsTotalLimit,
+      leagueLimit,
+    });
     const competitionTargets = (await readCompetitionTargets()).slice(0, leagueLimit);
+    await checkpointLog(logId, counts, "teams_loaded", {
+      status: "done",
+      competitionsForTeams: competitionTargets.length,
+      priorityTeams: priorityTeamNames.length,
+      teamsTotalLimit,
+      leagueLimit,
+    });
     const competitionMap = new Map(competitionTargets.map(target => [target.api_id, target.id]).filter(([, id]) => Boolean(id)));
     let teamCandidates = 0;
     let teamUpserted = 0;
+    let firstTeamCheckpointDone = false;
+    let firstTeamApiStarted = false;
+    let firstTeamApiDone = false;
     console.log("[sync-football-data] teams limits", {
       teamsTotalLimit,
       leagueLimit,
@@ -612,8 +696,24 @@ Deno.serve(async () => {
       for (const teamName of priorityTeamNames) {
         await stopIfCancelled(logId, counts, `avant équipe prioritaire ${teamName}`);
         if (priorityItems.length >= teamsTotalLimit) break;
+        if (!firstTeamCheckpointDone) {
+          firstTeamCheckpointDone = true;
+          counts.first_team_selected = teamName;
+          await checkpointLog(logId, counts, "first_team_selected", {teamName});
+        }
         console.log("[sync-football-data] fetch priority team", {teamName});
+        if (!firstTeamApiStarted) {
+          firstTeamApiStarted = true;
+          counts.first_team_api_call = teamName;
+          await checkpointLog(logId, counts, "first_team_api_call_started", {teamName});
+        }
         const found = await football("teams", {search: teamName});
+        if (!firstTeamApiDone) {
+          firstTeamApiDone = true;
+          counts.first_team_api_call_done = true;
+          counts.first_team_api_rows = found.length;
+          await checkpointLog(logId, counts, "first_team_api_call_done", {teamName, rows: found.length});
+        }
         const exact = found.filter(item => {
           const apiTeam = pick<Json>(item, ["team"], {});
           const apiName = norm(pick(apiTeam, ["name"], ""));
@@ -1025,15 +1125,20 @@ Deno.serve(async () => {
       return response({ok: false, status: externalStatus || "cancelled", message: externalStatus ? "Synchronisation arrêtée par l’état admin" : "Synchronisation annulée proprement", counts}, 200);
     }
     const message = error instanceof Error ? error.message : String(error);
+    const failedStep = String(counts.current_step ?? counts.last_checkpoint ?? "étape inconnue");
+    counts.failed_step = failedStep;
+    counts.failed_at = new Date().toISOString();
+    counts.error_message = message;
     console.error("[sync-football-data] sync failed", {
       message,
+      failedStep,
       stack: error instanceof Error ? error.stack : "",
       counts,
       logId,
     });
     if (logId) {
-      await finishLog(logId, "error", "Synchronisation football échouée. Les données existantes sont conservées.", counts, message);
+      await finishLog(logId, "error", `Synchronisation football échouée à l'étape : ${failedStep}`, counts, message);
     }
-    return response({ok: false, error: message, counts}, 500);
+    return response({ok: false, error: message, failed_step: failedStep, counts}, 500);
   }
 });
