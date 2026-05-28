@@ -1119,6 +1119,10 @@ Deno.serve(async () => {
         counts.team_players = await tableCount("team_players");
       }
       await checkpointLog(logId, counts, "players_step_done", {teamsVisited: playerTeamsVisited, stableSingleTeamBatch});
+      if (stableSingleTeamBatch) {
+        await finishLog(logId, "success", "Synchronisation football terminée en mode stabilisation.", counts);
+        return response({ok: true, counts, stabilized: true});
+      }
       console.log("[sync-football-data] players step done", {
         teamsVisited: playerTeamsVisited,
         priorityTeamsProcessed,
