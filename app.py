@@ -2934,6 +2934,19 @@ def _read_supabase_community(matches: dict[str, dict[str, Any]]) -> dict[str, An
         return {"available": False}
     profile_by_id = {str(profile.get("id")): profile for profile in profiles if profile.get("id") is not None}
     profile_by_pseudo = {str(profile.get("pseudo")): profile for profile in profiles if profile.get("pseudo")}
+    brackets = _supabase_request("GET", "user_brackets?select=profile_id,likes_count,dislikes_count&is_published=eq.true") or []
+    bracket_votes_by_profile: dict[str, dict[str, int]] = {}
+    for bracket in brackets if isinstance(brackets, list) else []:
+        profile_id = str(bracket.get("profile_id") or "")
+        if not profile_id:
+            continue
+        totals = bracket_votes_by_profile.setdefault(profile_id, {"likes": 0, "dislikes": 0})
+        totals["likes"] += int(bracket.get("likes_count") or 0)
+        totals["dislikes"] += int(bracket.get("dislikes_count") or 0)
+    for profile in profiles:
+        totals = bracket_votes_by_profile.get(str(profile.get("id") or ""), {})
+        profile["bracket_likes_received"] = totals.get("likes", 0)
+        profile["bracket_dislikes_received"] = totals.get("dislikes", 0)
     normalized_predictions = [_prediction_from_supabase(row, profile_by_id) for row in predictions]
     return {
         "available": True,
@@ -3201,8 +3214,8 @@ def _enrich_profiles_with_supabase_users(profiles: dict[str, dict[str, Any]], us
         profile = profiles[pseudo]
         if user.get("id"):
             profile["id"] = user.get("id")
-        for key in ("avatar_url", "favorite_club", "favorite_club_logo", "favorite_nation", "favorite_nation_flag"):
-            if user.get(key):
+        for key in ("avatar_url", "favorite_club", "favorite_club_logo", "favorite_nation", "favorite_nation_flag", "bracket_likes_received", "bracket_dislikes_received"):
+            if user.get(key) is not None:
                 profile[key] = user.get(key)
 
 

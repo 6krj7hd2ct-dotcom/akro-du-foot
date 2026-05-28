@@ -115,6 +115,8 @@
     .action-button.coach-header-button:hover, .action-button.coach-header-button:focus-visible { transform: translateY(-1px); border-color: rgba(255,226,150,0.98); background: linear-gradient(180deg, #fff0bd, #ffd66f 54%, #e2b044); box-shadow: 0 18px 40px rgba(245,201,107,0.34), 0 0 22px rgba(245,201,107,0.18), inset 0 1px 0 rgba(255,255,255,0.50); outline: 1px solid rgba(245,201,107,0.55); }
     .game-header-button { color: #e8fff8; border-color: rgba(50,211,162,0.42); background: rgba(50,211,162,0.13); box-shadow: 0 14px 30px rgba(50,211,162,0.10), inset 0 1px 0 rgba(255,255,255,0.08); }
     .game-header-button:hover, .game-header-button:focus-visible { background: rgba(50,211,162,0.22); border-color: rgba(50,211,162,0.70); outline: 1px solid rgba(50,211,162,0.45); }
+    .game-header-button.has-vote-notification { position: relative; }
+    .game-header-button.has-vote-notification::after { content: ""; position: absolute; top: -4px; right: -4px; width: 10px; height: 10px; border-radius: 50%; background: #ef3340; box-shadow: 0 0 0 3px rgba(239,51,64,0.18), 0 0 18px rgba(239,51,64,0.58); }
     .mini-game-status { display: none; width: fit-content; max-width: min(620px, 100%); margin-top: -6px; padding: 9px 12px; border: 1px solid rgba(245,201,107,0.28); border-radius: 999px; background: rgba(245,201,107,0.10); color: #ffe1a0; font-size: 12px; font-weight: 900; }
     .mini-game-status.is-visible { display: inline-flex; }
     .search-input { width: 100%; padding: 14px 46px 14px 17px; border-radius: 999px; border-color: rgba(245,201,107,0.30); background: rgba(4,14,28,0.74); box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 16px 38px rgba(0,0,0,0.18); font-size: 15px; }
@@ -971,7 +973,11 @@
     .user-bracket-card { display: grid; gap: 5px; }
     .user-bracket-card .subtle { line-height: 1.35; }
     .votes-bracket-list { display: grid; gap: 10px; }
-    .votes-bracket-card { display: grid; gap: 9px; }
+    .votes-bracket-card { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 11px; align-items: center; }
+    .votes-bracket-main { min-width: 0; display: grid; gap: 7px; }
+    .votes-bracket-author { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .votes-bracket-author .profile-avatar-stack { width: 38px; height: 38px; }
+    .votes-bracket-title { display: block; color: #ffe1a0; font-size: 17px; line-height: 1.1; font-weight: 950; }
     .votes-bracket-meta { display: flex; flex-wrap: wrap; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 850; }
     .votes-bracket-actions { display: flex; flex-wrap: wrap; gap: 8px; }
     .votes-bracket-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.065); color: #eaf4ff; font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
@@ -1082,9 +1088,12 @@
     .profile-side-option { appearance: none; min-width: 0; padding: 8px 7px; border-radius: 11px; border: 1px solid rgba(245,201,107,0.18); background: rgba(7,17,31,0.20); color: #ffe1a0; font: inherit; font-size: 11px; line-height: 1.1; font-weight: 950; cursor: pointer; text-align: center; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .profile-side-option:hover, .profile-side-option:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.48); background: rgba(245,201,107,0.12); outline: none; }
     .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
-    .profile-avatar-button { appearance: none; border: 0; padding: 0; margin: 0; background: transparent; border-radius: 999px; cursor: pointer; line-height: 0; transition: transform .16s ease, filter .16s ease; }
+    .profile-avatar-button { position: relative; appearance: none; border: 0; padding: 0; margin: 0; background: transparent; border-radius: 999px; cursor: pointer; line-height: 0; transition: transform .16s ease, filter .16s ease; }
     .profile-avatar-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
     .profile-avatar-button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    .profile-avatar-button .profile-vote-count { position: absolute; top: -7px; min-width: 28px; padding: 4px 6px; border-radius: 999px; border: 1px solid rgba(245,201,107,0.30); background: rgba(7,17,31,0.88); color: #ffe1a0; font-size: 10px; line-height: 1; font-weight: 950; box-shadow: 0 8px 18px rgba(0,0,0,0.28); }
+    .profile-avatar-button .profile-vote-count.like { left: -8px; }
+    .profile-avatar-button .profile-vote-count.dislike { right: -8px; }
     .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 8px; }
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
     .profile-stat strong { display: block; color: var(--gold); font-size: 22px; }
@@ -1258,7 +1267,7 @@
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
-      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-dashboard-grid, .profile-dashboard-block .profile-info-grid, .profile-dashboard-block.pronostics .profile-info-grid, .profile-placeholder-grid, .prediction-insights, .user-bracket-teams, .user-bracket-summary { grid-template-columns: 1fr; }
+      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-dashboard-grid, .profile-dashboard-block .profile-info-grid, .profile-dashboard-block.pronostics .profile-info-grid, .profile-placeholder-grid, .prediction-insights, .user-bracket-teams, .user-bracket-summary, .votes-bracket-card { grid-template-columns: 1fr; }
       .profile-side-options.three { grid-template-columns: 1fr; }
       .active-profile-card, .active-profile-meta { grid-template-columns: 1fr; }
       .active-profile-scoreboard { justify-items: start; grid-template-columns: repeat(2, auto); gap: 10px; padding-left: 0; text-align: left; }
@@ -3886,6 +3895,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       euro: 'Euro',
       champions: 'Champions League'
     };
+    const VOTES_VIEWED_STORAGE_KEY = 'akrodufoot:votes:last-viewed-worldcup-2026';
     const userBracketPlaceholders = {worldcup: null, euro: null, champions: null};
     let activeUserBracketDraft = null;
 
@@ -3896,6 +3906,35 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function profileById(profileId) {
       return Object.values(communityProfiles || {}).find(profile => String(profile?.id || '') === String(profileId || '')) || null;
+    }
+
+    function latestPublishedBracketTime(brackets = []) {
+      return brackets.reduce((latest, row) => {
+        const time = new Date(row.published_at || row.updated_at || row.created_at || 0).getTime();
+        return Number.isFinite(time) && time > latest ? time : latest;
+      }, 0);
+    }
+
+    function setVotesNotification(visible) {
+      document.getElementById('communityHeaderButton')?.classList.toggle('has-vote-notification', Boolean(visible));
+    }
+
+    function markVotesViewed(brackets = []) {
+      const latest = latestPublishedBracketTime(brackets);
+      if (latest) localStorage.setItem(VOTES_VIEWED_STORAGE_KEY, String(latest));
+      setVotesNotification(false);
+    }
+
+    async function refreshVotesNotification() {
+      if (!akroSupabase) return;
+      try {
+        const {brackets} = await fetchPublishedWorldCupBrackets();
+        const latest = latestPublishedBracketTime(brackets);
+        const viewed = Number(localStorage.getItem(VOTES_VIEWED_STORAGE_KEY) || 0);
+        setVotesNotification(Boolean(latest && latest > viewed));
+      } catch (error) {
+        setVotesNotification(false);
+      }
     }
 
     function activeCompetitionSeason(kind) {
@@ -3947,8 +3986,13 @@ grant select, insert, update on public.profiles to authenticated;`;
         return acc;
       }, {});
       const summary = finalUserBracketSelection(draft);
+      const publishedDate = draft.existingBracket?.published_at || draft.existingBracket?.updated_at || '';
+      const publishedLine = draft.existingBracket?.is_published
+        ? `<div class="user-bracket-status">Publié${publishedDate ? ` · ${escapeHtml(profileDate(publishedDate))}` : ''}</div>`
+        : '';
       openProfileInfoModal('Mon bracket', `${label} · ${draft.season || 'Saison en cours'}`, `
         <div class="user-bracket-builder">
+          ${publishedLine}
           <div class="user-bracket-summary">
             <article class="profile-info-card"><span>Champion choisi</span><strong>${escapeHtml(summary.champion || 'À choisir')}</strong></article>
             <article class="profile-info-card"><span>Finaliste choisi</span><strong>${escapeHtml(summary.runnerUp || 'À choisir')}</strong></article>
@@ -3964,7 +4008,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           </section>`).join('')}
           <div class="user-bracket-status" id="userBracketStatus">${draft.status || ''}</div>
           <div class="user-bracket-actions">
-            <button class="action-button" type="button" data-user-bracket-save>Sauvegarder mon bracket</button>
+            <button class="action-button" type="button" data-user-bracket-save>${draft.existingBracket?.is_published ? 'Mettre à jour mon bracket' : 'Sauvegarder mon bracket'}</button>
           </div>
         </div>
       `);
@@ -4050,7 +4094,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         : '<div class="empty">Aucun pronostic enregistré.</div>');
     }
 
-    function openBracketPlaceholder(kind, trigger = null) {
+    async function openBracketPlaceholder(kind, trigger = null) {
       const label = USER_BRACKET_COMPETITIONS[kind] || 'Compétition';
       if (!hasActiveProfile()) {
         openProfileInfoModal(`Mon bracket — ${label}`, 'Profil requis', '<div class="empty">Connecte-toi ou crée ton profil pour sauvegarder ton bracket.</div>');
@@ -4061,7 +4105,25 @@ grant select, insert, update on public.profiles to authenticated;`;
         openProfileInfoModal(`Mon bracket — ${label}`, activeCompetitionSeason(kind), '<div class="empty">Bracket utilisateur disponible quand les équipes de phase finale sont connues.</div>');
         return;
       }
-      activeUserBracketDraft = {kind, competition: label, season: activeCompetitionSeason(kind), matches, selections: {}, status: ''};
+      const season = kind === 'worldcup' ? '2026' : activeCompetitionSeason(kind);
+      let existingBracket = null;
+      try {
+        if (kind === 'worldcup' && akroSupabase && akroProfile?.id) {
+          const rows = await fetchUserBrackets();
+          existingBracket = rows.find(row => row.competition === label && row.season === season) || null;
+        }
+      } catch (error) {
+        existingBracket = null;
+      }
+      activeUserBracketDraft = {
+        kind,
+        competition: label,
+        season,
+        matches,
+        selections: existingBracket?.bracket_data?.selections || {},
+        existingBracket,
+        status: existingBracket?.is_published ? 'Ce bracket est déjà publié dans A vos votes.' : ''
+      };
       renderUserBracketBuilder();
     }
 
@@ -4078,6 +4140,15 @@ grant select, insert, update on public.profiles to authenticated;`;
         return;
       }
       const isWorldCup2026 = activeUserBracketDraft.kind === 'worldcup';
+      const existing = activeUserBracketDraft.existingBracket || null;
+      const sameSelection = existing?.is_published
+        && existing.champion === selection.champion
+        && existing.runner_up === selection.runnerUp
+        && JSON.stringify(existing.bracket_data?.selections || {}) === JSON.stringify(activeUserBracketDraft.selections || {});
+      if (sameSelection) {
+        if (status) status.textContent = `Déjà publié${existing.published_at ? ` le ${profileDate(existing.published_at)}` : ''}.`;
+        return;
+      }
       const payload = {
         profile_id: akroProfile.id,
         competition: activeUserBracketDraft.competition,
@@ -4090,7 +4161,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         champion: selection.champion,
         runner_up: selection.runnerUp,
         is_published: isWorldCup2026,
-        published_at: isWorldCup2026 ? new Date().toISOString() : null,
+        published_at: isWorldCup2026 ? (existing?.published_at || new Date().toISOString()) : null,
         updated_at: new Date().toISOString()
       };
       try {
@@ -4102,6 +4173,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           .single(), 10000);
         if (error) throw error;
         setUserBracketPlaceholder(activeUserBracketDraft.kind, data || payload);
+        activeUserBracketDraft.existingBracket = data || payload;
+        refreshVotesNotification();
         if (status) status.textContent = isWorldCup2026 ? 'Bracket sauvegardé et publié dans A vos votes.' : 'Bracket sauvegardé.';
       } catch (error) {
         logSupabaseError('erreur sauvegarde bracket', error);
@@ -4154,16 +4227,20 @@ grant select, insert, update on public.profiles to authenticated;`;
         const counts = voteCountsForBracket(row, votes);
         const voted = currentVoteForBracket(row, votes);
         return `<article class="profile-placeholder-card user-bracket-card votes-bracket-card">
-          <strong>${escapeHtml(row.champion || 'Champion à choisir')}</strong>
-          <div class="votes-bracket-meta">
-            <span>${escapeHtml(author?.pseudo || 'Profil')}</span>
-            <span>Coupe du Monde ${escapeHtml(row.season || '2026')}</span>
-            <span>Publié le ${escapeHtml(profileDate(row.published_at || row.updated_at || row.created_at))}</span>
-          </div>
-          <div>Finaliste : <strong>${escapeHtml(row.runner_up || 'À choisir')}</strong></div>
-          <div class="votes-bracket-actions">
-            <button class="votes-bracket-button ${voted === 'like' ? 'is-voted' : ''}" type="button" data-bracket-vote="${escapeHtml(row.id)}" data-bracket-vote-type="like">👍 ${escapeHtml(counts.likes)}</button>
-            <button class="votes-bracket-button ${voted === 'dislike' ? 'is-voted' : ''}" type="button" data-bracket-vote="${escapeHtml(row.id)}" data-bracket-vote-type="dislike">👎 ${escapeHtml(counts.dislikes)}</button>
+          ${avatarImage(author?.avatar_url || '', 'profile-avatar', author)}
+          <div class="votes-bracket-main">
+            <div class="votes-bracket-author">
+              <div><span class="votes-bracket-title">${escapeHtml(row.champion || 'Champion à choisir')}</span><div class="subtle">par ${escapeHtml(author?.pseudo || 'Profil')}</div></div>
+            </div>
+            <div class="votes-bracket-meta">
+              <span>Coupe du Monde ${escapeHtml(row.season || '2026')}</span>
+              <span>Publié le ${escapeHtml(profileDate(row.published_at || row.updated_at || row.created_at))}</span>
+            </div>
+            <div>Finaliste : <strong>${escapeHtml(row.runner_up || 'À choisir')}</strong></div>
+            <div class="votes-bracket-actions">
+              <button class="votes-bracket-button ${voted === 'like' ? 'is-voted' : ''}" type="button" data-bracket-vote="${escapeHtml(row.id)}" data-bracket-vote-type="like">👍 ${escapeHtml(counts.likes)}</button>
+              <button class="votes-bracket-button ${voted === 'dislike' ? 'is-voted' : ''}" type="button" data-bracket-vote="${escapeHtml(row.id)}" data-bracket-vote-type="dislike">👎 ${escapeHtml(counts.dislikes)}</button>
+            </div>
           </div>
         </article>`;
       }).join('')}</div>`;
@@ -4173,6 +4250,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       openProfileInfoModal('A vos votes', 'Brackets Coupe du Monde 2026 publiés', '<div class="empty">Chargement des brackets publiés...</div>');
       try {
         const {brackets, votes} = await fetchPublishedWorldCupBrackets();
+        markVotesViewed(brackets);
         openProfileInfoModal('A vos votes', 'Brackets Coupe du Monde 2026 publiés', renderPublishedWorldCupBrackets(brackets, votes));
       } catch (error) {
         logSupabaseError('erreur lecture votes brackets', error);
@@ -4288,10 +4366,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       const generalRank = profileGeneralRank(profile) || profile.rank;
       const rankText = generalRank ? `#${generalRank}` : 'Non classé';
       const totalPoints = profileGeneralPoints(profile);
+      const socialProfile = communityProfiles[profile.pseudo] || {};
+      const likesReceived = Number(profile.bracket_likes_received ?? socialProfile.bracket_likes_received ?? 0);
+      const dislikesReceived = Number(profile.bracket_dislikes_received ?? socialProfile.bracket_dislikes_received ?? 0);
       activeProfileCard.innerHTML = `
         ${profileBannerLogo(profile)}
         <button class="profile-avatar-button" type="button" data-open-active-profile aria-label="Ouvrir ma fiche profil">
           ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
+          <span class="profile-vote-count like">👍 ${escapeHtml(likesReceived)}</span>
+          <span class="profile-vote-count dislike">👎 ${escapeHtml(dislikesReceived)}</span>
         </button>
         <div class="active-profile-meta">
           <div class="profile-favorites-panel">
@@ -5682,6 +5765,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         renderLeaderboard(profileRows.length ? profileRows : data.leaderboard);
         renderCommunityPredictionInsight(selectedMatch());
         if (akroSupabase) await loadSupabaseUserData();
+        refreshVotesNotification();
         renderFavoriteMatches(communityMatches);
         updatePredictionButton();
         setLiveRefreshState(false, liveUpdatedText());
