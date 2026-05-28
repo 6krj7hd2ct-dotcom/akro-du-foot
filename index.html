@@ -1089,8 +1089,14 @@
     .prediction-separator { justify-self: center; align-self: center; color: var(--gold); font-size: 26px; line-height: 1; font-weight: 950; }
     .community-status { margin-top: 10px; color: #ffe1a0; font-size: 13px; min-height: 18px; }
     .match-context { text-align: center; color: var(--muted); font-size: 12px; font-weight: 800; }
-    .coach-prediction { display: grid; gap: 7px; padding: 12px; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); color: #eaf4ff; }
+    .prediction-insights { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 0.8fr); gap: 10px; align-items: stretch; }
+    .coach-prediction, .community-prediction-card { display: grid; gap: 6px; padding: 10px; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); color: #eaf4ff; }
     .coach-prediction-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 950; }
+    .community-prediction-card { border-color: rgba(99,232,255,0.20); background: linear-gradient(135deg, rgba(99,232,255,0.10), rgba(31,111,235,0.10)); }
+    .community-prediction-card strong { color: #ffe1a0; }
+    .community-prediction-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 950; }
+    .community-prediction-meta { color: #d6e5f7; font-size: 12px; line-height: 1.35; font-weight: 850; }
+    .community-prediction-share { display: flex; flex-wrap: wrap; gap: 6px; color: var(--muted); font-size: 11px; line-height: 1.2; font-weight: 850; }
     .coach-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
     .coach-reason { color: #d6e5f7; font-size: 13px; line-height: 1.4; }
     .coach-disclaimer { color: var(--muted); font-size: 11px; font-weight: 800; }
@@ -1215,7 +1221,7 @@
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
-      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-placeholder-grid { grid-template-columns: 1fr; }
+      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-placeholder-grid, .prediction-insights { grid-template-columns: 1fr; }
       .active-profile-card, .active-profile-meta { grid-template-columns: 1fr; }
       .active-profile-scoreboard { justify-items: start; grid-template-columns: repeat(2, auto); gap: 10px; padding-left: 0; text-align: left; }
       .active-profile-score-row { justify-items: start; }
@@ -1391,10 +1397,16 @@
               <span class="prediction-team-name away" id="predictionAwayName">Équipe B</span>
             </div>
             <div class="match-context" id="predictionContext"></div>
-            <div class="coach-prediction" id="coachPrediction" aria-live="polite">
-              <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Analyse fictive pour le jeu entre amis.</span></div>
-              <div class="coach-reason">Coach prépare son analyse dès que le match est sélectionné.</div>
-              <div class="coach-disclaimer">Aucun conseil de pari réel.</div>
+            <div class="prediction-insights">
+              <div class="coach-prediction" id="coachPrediction" aria-live="polite">
+                <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Analyse fictive pour le jeu entre amis.</span></div>
+                <div class="coach-reason">Coach prépare son analyse dès que le match est sélectionné.</div>
+                <div class="coach-disclaimer">Aucun conseil de pari réel.</div>
+              </div>
+              <div class="community-prediction-card" id="communityPredictionInsight" aria-live="polite">
+                <div class="community-prediction-title"><span>La communauté</span><strong>—</strong></div>
+                <div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>
+              </div>
             </div>
             <button class="action-button" type="submit" disabled>Valider le pronostic</button>
           </form>
@@ -3206,6 +3218,7 @@
     const predictionAwayFlag = document.getElementById('predictionAwayFlag');
     const predictionContext = document.getElementById('predictionContext');
     const coachPrediction = document.getElementById('coachPrediction');
+    const communityPredictionInsight = document.getElementById('communityPredictionInsight');
     const predictionStatus = document.getElementById('predictionStatus');
     const predictionPseudo = document.getElementById('predictionPseudo');
     const avatarGrid = document.getElementById('profileAvatarGrid');
@@ -3247,6 +3260,7 @@
 
     let communityMatches = DASHBOARD_MATCHES;
     let communityProfiles = {};
+    let communityPredictions = [];
     let coachPredictionRequest = 0;
     let akroSupabase = null;
     let akroSession = null;
@@ -4934,6 +4948,52 @@ grant select, insert, update on public.profiles to authenticated;`;
       return `<span class="prediction-team-logo">${flagMarkup(url)}</span>`;
     }
 
+    function predictionScoreValue(prediction, key) {
+      const value = prediction?.[key] ?? prediction?.[key.replace('predicted_', '')];
+      const number = Number(value);
+      return Number.isFinite(number) ? number : null;
+    }
+
+    function renderCommunityPredictionInsight(match) {
+      if (!communityPredictionInsight) return;
+      if (!match) {
+        communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>—</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
+        return;
+      }
+      const rows = (communityPredictions || []).filter(item => String(item.match_id || '') === String(match.id || ''));
+      if (!rows.length) {
+        communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>0</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
+        return;
+      }
+      const outcomes = {home: 0, draw: 0, away: 0};
+      const scores = new Map();
+      rows.forEach(item => {
+        const home = predictionScoreValue(item, 'predicted_home_score');
+        const away = predictionScoreValue(item, 'predicted_away_score');
+        if (home === null || away === null) return;
+        if (home > away) outcomes.home += 1;
+        else if (away > home) outcomes.away += 1;
+        else outcomes.draw += 1;
+        const score = `${home} - ${away}`;
+        scores.set(score, (scores.get(score) || 0) + 1);
+      });
+      const validTotal = Math.max(1, outcomes.home + outcomes.draw + outcomes.away);
+      const favoriteKey = Object.entries(outcomes).sort((a, b) => b[1] - a[1])[0]?.[0] || 'draw';
+      const favorite = favoriteKey === 'home' ? match.home_team : favoriteKey === 'away' ? match.away_team : 'Nul';
+      const trend = [...scores.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || '—';
+      const percent = value => Math.round((value / validTotal) * 100);
+      communityPredictionInsight.innerHTML = `
+        <div class="community-prediction-title"><span>La communauté</span><strong>${escapeHtml(rows.length)} pronostic${rows.length > 1 ? 's' : ''}</strong></div>
+        <div class="community-prediction-meta">Favori : <strong>${escapeHtml(favorite)}</strong></div>
+        <div class="community-prediction-meta">Score tendance : <strong>${escapeHtml(trend)}</strong></div>
+        <div class="community-prediction-share">
+          <span>${escapeHtml(match.home_team || 'Équipe A')} ${percent(outcomes.home)}%</span>
+          <span>Nul ${percent(outcomes.draw)}%</span>
+          <span>${escapeHtml(match.away_team || 'Équipe B')} ${percent(outcomes.away)}%</span>
+        </div>
+      `;
+    }
+
     function updatePredictionTeams() {
       const match = selectedMatch();
       if (!match) {
@@ -4945,6 +5005,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           ? 'Aucun match du jour disponible pour les pronostics'
           : 'Aucun match disponible avec ce filtre';
         updateCoachPrediction(null);
+        renderCommunityPredictionInsight(null);
         updatePredictionButton(false, false);
         return;
       }
@@ -4954,6 +5015,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       predictionAwayFlag.innerHTML = predictionLogoMarkup(match.away_flag_url);
       predictionContext.textContent = `${match.competition || 'Compétition'} · ${shortDate(match.date)} · ${match.phase || ''}`;
       updateCoachPrediction(match);
+      renderCommunityPredictionInsight(match);
       updatePredictionButton();
     }
 
@@ -5181,6 +5243,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         predictionStatus.textContent = 'Mode fichier statique : pronostics désactivés.';
         renderMatchOptions(DASHBOARD_MATCHES);
         renderFollowMatches(DASHBOARD_MATCHES);
+        communityPredictions = [];
         setLiveRefreshState(false, 'Mode fichier statique : scores en cache');
         return;
       }
@@ -5191,8 +5254,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         renderMatchOptions(data.matches);
         renderFollowMatches(data.matches);
         communityProfiles = data.profiles || {};
+        communityPredictions = data.predictions || [];
         const profileRows = Object.values(communityProfiles).filter(item => item && item.pseudo);
         renderLeaderboard(profileRows.length ? profileRows : data.leaderboard);
+        renderCommunityPredictionInsight(selectedMatch());
         if (akroSupabase) await loadSupabaseUserData();
         renderFavoriteMatches(communityMatches);
         updatePredictionButton();
