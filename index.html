@@ -967,9 +967,14 @@
     .user-bracket-team { appearance: none; min-width: 0; padding: 9px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(7,17,31,0.18); color: #eaf4ff; font: inherit; font-weight: 950; text-align: left; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .user-bracket-team:hover, .user-bracket-team:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.42); outline: none; }
     .user-bracket-team.is-picked { color: #07111f; border-color: rgba(245,201,107,0.72); background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
+    .user-bracket-slot { display: grid; gap: 7px; }
+    .user-bracket-slot-label { color: var(--muted); font-size: 11px; font-weight: 950; text-transform: uppercase; }
+    .user-bracket-slot-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    .user-bracket-winner { display: grid; gap: 7px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08); }
     .user-bracket-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .user-bracket-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
     .user-bracket-status { color: #ffe1a0; font-size: 12px; font-weight: 850; min-height: 16px; }
+    .user-bracket-title-line { display: block; color: #ffe1a0; font-size: .52em; line-height: 1.05; margin-top: 4px; }
     .user-bracket-card { display: grid; gap: 5px; }
     .user-bracket-card .subtle { line-height: 1.35; }
     .votes-bracket-list { display: grid; gap: 10px; }
@@ -1088,12 +1093,13 @@
     .profile-side-option { appearance: none; min-width: 0; padding: 8px 7px; border-radius: 11px; border: 1px solid rgba(245,201,107,0.18); background: rgba(7,17,31,0.20); color: #ffe1a0; font: inherit; font-size: 11px; line-height: 1.1; font-weight: 950; cursor: pointer; text-align: center; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .profile-side-option:hover, .profile-side-option:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.48); background: rgba(245,201,107,0.12); outline: none; }
     .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
-    .profile-avatar-button { position: relative; appearance: none; border: 0; padding: 0; margin: 0; background: transparent; border-radius: 999px; cursor: pointer; line-height: 0; transition: transform .16s ease, filter .16s ease; }
+    .profile-avatar-button { appearance: none; border: 0; padding: 0; margin: 0; background: transparent; border-radius: 999px; cursor: pointer; line-height: 0; transition: transform .16s ease, filter .16s ease; }
     .profile-avatar-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
     .profile-avatar-button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
-    .profile-avatar-button .profile-vote-count { position: absolute; top: -7px; min-width: 28px; padding: 4px 6px; border-radius: 999px; border: 1px solid rgba(245,201,107,0.30); background: rgba(7,17,31,0.88); color: #ffe1a0; font-size: 10px; line-height: 1; font-weight: 950; box-shadow: 0 8px 18px rgba(0,0,0,0.28); }
-    .profile-avatar-button .profile-vote-count.like { left: -8px; }
-    .profile-avatar-button .profile-vote-count.dislike { right: -8px; }
+    .profile-modal-avatar-wrap { position: relative; display: inline-grid; place-items: center; }
+    .profile-vote-count { position: absolute; top: -7px; min-width: 28px; padding: 4px 6px; border-radius: 999px; border: 1px solid rgba(245,201,107,0.30); background: rgba(7,17,31,0.88); font-size: 10px; line-height: 1; font-weight: 950; box-shadow: 0 8px 18px rgba(0,0,0,0.28); }
+    .profile-vote-count.like { left: -8px; color: #7ff0c8; border-color: rgba(50,211,162,0.42); }
+    .profile-vote-count.dislike { right: -8px; color: #ff9aa5; border-color: rgba(239,51,64,0.42); }
     .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 8px; }
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
     .profile-stat strong { display: block; color: var(--gold); font-size: 22px; }
@@ -3971,10 +3977,95 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (!draft) return {champion: '', runnerUp: ''};
       const selectedMatches = draft.matches
         .filter(match => draft.selections[String(match.index)])
-        .map(match => ({...match, winner: draft.selections[String(match.index)]}));
+        .map(match => ({...match, teams: userBracketMatchTeams(match, draft), winner: draft.selections[String(match.index)]}));
       const final = selectedMatches.find(match => normalizeFootballName(match.round).includes('finale')) || selectedMatches[selectedMatches.length - 1];
       if (!final) return {champion: '', runnerUp: ''};
       return {champion: final.winner, runnerUp: final.teams.find(team => team !== final.winner) || ''};
+    }
+
+    const WORLD_CUP_2026_BRACKET_GROUPS = {
+      A: ['Mexico', 'South Africa', 'South Korea', 'Czechia'],
+      B: ['Canada', 'Bosnia-Herzegovina', 'Qatar', 'Switzerland'],
+      C: ['Brazil', 'Morocco', 'Haiti', 'Scotland'],
+      D: ['United States', 'Paraguay', 'Australia', 'Türkiye'],
+      E: ['Germany', 'Curacao', 'Ivory Coast', 'Ecuador'],
+      F: ['Netherlands', 'Japan', 'Sweden', 'Tunisia'],
+      G: ['Belgium', 'Egypt', 'Iran', 'New Zealand'],
+      H: ['Spain', 'Cape Verde', 'Saudi Arabia', 'Uruguay'],
+      I: ['France', 'Senegal', 'Iraq', 'Norway'],
+      J: ['Argentina', 'Algeria', 'Austria', 'Jordan'],
+      K: ['Portugal', 'Congo DR', 'Uzbekistan', 'Colombia'],
+      L: ['England', 'Croatia', 'Ghana', 'Panama']
+    };
+
+    function worldCupSlot(label) {
+      const group = String(label || '').match(/Groupe\s+([A-L])/i)?.[1]?.toUpperCase();
+      return {label, choices: group ? (WORLD_CUP_2026_BRACKET_GROUPS[group] || []) : []};
+    }
+
+    function buildWorldCupPredictiveBracket() {
+      const firstRoundSlots = [
+        ['1er Groupe A', '2e Groupe C'], ['1er Groupe B', '2e Groupe D'], ['1er Groupe C', '2e Groupe A'], ['1er Groupe D', '2e Groupe B'],
+        ['1er Groupe E', '2e Groupe G'], ['1er Groupe F', '2e Groupe H'], ['1er Groupe G', '2e Groupe E'], ['1er Groupe H', '2e Groupe F'],
+        ['1er Groupe I', '2e Groupe K'], ['1er Groupe J', '2e Groupe L'], ['1er Groupe K', '2e Groupe I'], ['1er Groupe L', '2e Groupe J'],
+        ['2e Groupe A', '2e Groupe B'], ['2e Groupe E', '2e Groupe F'], ['2e Groupe I', '2e Groupe J'], ['2e Groupe K', '2e Groupe L']
+      ];
+      const matches = firstRoundSlots.map((slots, index) => ({
+        index,
+        round: '16es de finale',
+        meta: `Match ${index + 1}`,
+        sides: slots.map(worldCupSlot)
+      }));
+      const addSourceRound = (round, count, offset, sourceOffset) => {
+        for (let i = 0; i < count; i += 1) {
+          matches.push({
+            index: offset + i,
+            round,
+            meta: `Match ${offset + i + 1}`,
+            sourceIndexes: [sourceOffset + (i * 2), sourceOffset + (i * 2) + 1]
+          });
+        }
+      };
+      addSourceRound('8es de finale', 8, 16, 0);
+      addSourceRound('Quarts de finale', 4, 24, 16);
+      addSourceRound('Demi-finales', 2, 28, 24);
+      addSourceRound('Finale', 1, 30, 28);
+      return matches;
+    }
+
+    function userBracketSlotKey(matchIndex, sideIndex) {
+      return `${matchIndex}:side:${sideIndex}`;
+    }
+
+    function userBracketMatchTeams(match, draft = activeUserBracketDraft) {
+      if (Array.isArray(match.teams) && match.teams.length) return match.teams;
+      if (Array.isArray(match.sides)) {
+        return match.sides.map((side, sideIndex) => draft?.selections?.[userBracketSlotKey(match.index, sideIndex)] || '').filter(Boolean);
+      }
+      if (Array.isArray(match.sourceIndexes)) {
+        return match.sourceIndexes.map(index => draft?.selections?.[String(index)] || '').filter(Boolean);
+      }
+      return [];
+    }
+
+    function userBracketSlotMarkup(match, side, sideIndex, draft) {
+      const selected = draft.selections[userBracketSlotKey(match.index, sideIndex)] || '';
+      return `<div class="user-bracket-slot">
+        <div class="user-bracket-slot-label">${escapeHtml(side.label || `Choix ${sideIndex + 1}`)}</div>
+        <div class="user-bracket-slot-options">
+          ${(side.choices || []).map(team => `<button class="user-bracket-team ${selected === team ? 'is-picked' : ''}" type="button" data-user-bracket-slot="${escapeHtml(match.index)}" data-user-bracket-side="${escapeHtml(sideIndex)}" data-user-bracket-team="${escapeHtml(team)}">${escapeHtml(team)}</button>`).join('')}
+        </div>
+      </div>`;
+    }
+
+    function userBracketWinnerMarkup(match, teams, draft) {
+      if (teams.length < 2) return `<div class="subtle">Choisis les équipes précédentes pour débloquer ce tour.</div>`;
+      return `<div class="user-bracket-winner">
+        <div class="user-bracket-slot-label">Vainqueur</div>
+        <div class="user-bracket-teams">
+          ${teams.map(team => `<button class="user-bracket-team ${draft.selections[String(match.index)] === team ? 'is-picked' : ''}" type="button" data-user-bracket-pick="${escapeHtml(match.index)}" data-user-bracket-team="${escapeHtml(team)}">${escapeHtml(team)}</button>`).join('')}
+        </div>
+      </div>`;
     }
 
     function renderUserBracketBuilder() {
@@ -3990,7 +4081,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const publishedLine = draft.existingBracket?.is_published
         ? `<div class="user-bracket-status">Publié${publishedDate ? ` · ${escapeHtml(profileDate(publishedDate))}` : ''}</div>`
         : '';
-      openProfileInfoModal('Mon bracket', `${label} · ${draft.season || 'Saison en cours'}`, `
+      openProfileInfoModal('Mon bracket', draft.season || 'Saison en cours', `
         <div class="user-bracket-builder">
           ${publishedLine}
           <div class="user-bracket-summary">
@@ -3999,12 +4090,14 @@ grant select, insert, update on public.profiles to authenticated;`;
           </div>
           ${Object.entries(byRound).map(([round, matches]) => `<section class="user-bracket-round">
             <h4>${escapeHtml(round)}</h4>
-            ${matches.map(match => `<article class="user-bracket-match">
-              <div class="subtle">${escapeHtml(match.meta || 'Choisis ton vainqueur')}</div>
-              <div class="user-bracket-teams">
-                ${match.teams.map(team => `<button class="user-bracket-team ${draft.selections[String(match.index)] === team ? 'is-picked' : ''}" type="button" data-user-bracket-pick="${escapeHtml(match.index)}" data-user-bracket-team="${escapeHtml(team)}">${escapeHtml(team)}</button>`).join('')}
-              </div>
-            </article>`).join('')}
+            ${matches.map(match => {
+              const teams = userBracketMatchTeams(match, draft);
+              return `<article class="user-bracket-match">
+                <div class="subtle">${escapeHtml(match.meta || 'Choisis ton vainqueur')}</div>
+                ${Array.isArray(match.sides) ? match.sides.map((side, sideIndex) => userBracketSlotMarkup(match, side, sideIndex, draft)).join('') : ''}
+                ${userBracketWinnerMarkup(match, teams, draft)}
+              </article>`;
+            }).join('')}
           </section>`).join('')}
           <div class="user-bracket-status" id="userBracketStatus">${draft.status || ''}</div>
           <div class="user-bracket-actions">
@@ -4012,6 +4105,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           </div>
         </div>
       `);
+      if (profileGameRankingTitle) profileGameRankingTitle.innerHTML = `Mon bracket<span class="user-bracket-title-line">${escapeHtml(label)}</span>`;
     }
 
     function openProfileInfoModal(title, subtitle, html) {
@@ -4100,7 +4194,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         openProfileInfoModal(`Mon bracket — ${label}`, 'Profil requis', '<div class="empty">Connecte-toi ou crée ton profil pour sauvegarder ton bracket.</div>');
         return;
       }
-      const matches = bracketMatchesFromTrigger(trigger);
+      let matches = bracketMatchesFromTrigger(trigger);
+      if (kind === 'worldcup' && !matches.length) matches = buildWorldCupPredictiveBracket();
       if (!matches.length) {
         openProfileInfoModal(`Mon bracket — ${label}`, activeCompetitionSeason(kind), '<div class="empty">Bracket utilisateur disponible quand les équipes de phase finale sont connues.</div>');
         return;
@@ -4366,15 +4461,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       const generalRank = profileGeneralRank(profile) || profile.rank;
       const rankText = generalRank ? `#${generalRank}` : 'Non classé';
       const totalPoints = profileGeneralPoints(profile);
-      const socialProfile = communityProfiles[profile.pseudo] || {};
-      const likesReceived = Number(profile.bracket_likes_received ?? socialProfile.bracket_likes_received ?? 0);
-      const dislikesReceived = Number(profile.bracket_dislikes_received ?? socialProfile.bracket_dislikes_received ?? 0);
       activeProfileCard.innerHTML = `
         ${profileBannerLogo(profile)}
         <button class="profile-avatar-button" type="button" data-open-active-profile aria-label="Ouvrir ma fiche profil">
           ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
-          <span class="profile-vote-count like">👍 ${escapeHtml(likesReceived)}</span>
-          <span class="profile-vote-count dislike">👎 ${escapeHtml(dislikesReceived)}</span>
         </button>
         <div class="active-profile-meta">
           <div class="profile-favorites-panel">
@@ -5637,6 +5727,16 @@ grant select, insert, update on public.profiles to authenticated;`;
       </article>`;
     }
 
+    function profileVoteCountBadges(profile) {
+      const socialProfile = communityProfiles[profile?.pseudo] || {};
+      const likesReceived = Number(profile?.bracket_likes_received ?? socialProfile.bracket_likes_received ?? 0);
+      const dislikesReceived = Number(profile?.bracket_dislikes_received ?? socialProfile.bracket_dislikes_received ?? 0);
+      return `
+        <span class="profile-vote-count like">👍 ${escapeHtml(likesReceived)}</span>
+        <span class="profile-vote-count dislike">👎 ${escapeHtml(dislikesReceived)}</span>
+      `;
+    }
+
     function openUserProfile(pseudo) {
       const modal = document.getElementById('userProfileModal');
       const body = document.getElementById('userProfileBody');
@@ -5670,7 +5770,10 @@ grant select, insert, update on public.profiles to authenticated;`;
             </div>
           </section>
           <div class="profile-heading">
-            ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
+            <div class="profile-modal-avatar-wrap">
+              ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
+              ${profileVoteCountBadges(profile)}
+            </div>
             <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(rankText)}</div></div>
           </div>
           <section class="profile-side-card parent" aria-label="Vos brackets">
@@ -5881,6 +5984,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       const bracketPick = event.target.closest('[data-user-bracket-pick]');
       if (bracketPick && activeUserBracketDraft) {
         activeUserBracketDraft.selections[String(bracketPick.dataset.userBracketPick)] = bracketPick.dataset.userBracketTeam || '';
+        renderUserBracketBuilder();
+        return;
+      }
+      const bracketSlot = event.target.closest('[data-user-bracket-slot]');
+      if (bracketSlot && activeUserBracketDraft) {
+        const matchIndex = bracketSlot.dataset.userBracketSlot || '';
+        const sideIndex = bracketSlot.dataset.userBracketSide || '';
+        activeUserBracketDraft.selections[userBracketSlotKey(matchIndex, sideIndex)] = bracketSlot.dataset.userBracketTeam || '';
+        delete activeUserBracketDraft.selections[String(matchIndex)];
         renderUserBracketBuilder();
         return;
       }
