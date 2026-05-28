@@ -7792,6 +7792,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         'michael olise': photo('1029063'),
         'achraf hakimi': photo('770881'),
         'marcel sabitzer': photo('178121'),
+        'jude bellingham': photo('1077894'),
+        'bukayo saka': photo('934235'),
         'erling haaland': photo('737066')
       };
       const playerPhoto = name => PLAYER_PHOTOS[String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()] || '';
@@ -8057,8 +8059,8 @@ grant select, insert, update on public.profiles to authenticated;`;
                 ['Meilleur buteur de la compétition', 'Harry Kane', '8 buts avec le Bayern Munich.', flag('eng')]
               ],
               honours: [['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')], ['2021', 'Chelsea', logo('363')]],
-              scorers: [player('Harry Kane', 'Bayern Munich', '8 buts', logo('132')), player('Kylian Mbappé', 'Paris Saint-Germain', '8 buts', logo('160'), 'à égalité'), player('Erling Haaland', 'Manchester City', '6 buts', logo('382'))],
-              assists: [player('Marcel Sabitzer', 'Borussia Dortmund', '5 passes', logo('124')), player('Jude Bellingham', 'Real Madrid', '5 passes', logo('86'), 'à égalité'), player('Bukayo Saka', 'Arsenal', '4 passes', logo('359'))],
+              scorers: [player('Harry Kane', 'Bayern Munich', '8 buts', flag('eng')), player('Kylian Mbappé', 'Paris Saint-Germain', '8 buts', flag('fra'), 'à égalité'), player('Erling Haaland', 'Manchester City', '6 buts', flag('nor'))],
+              assists: [player('Marcel Sabitzer', 'Borussia Dortmund', '5 passes', flag('aut')), player('Jude Bellingham', 'Real Madrid', '5 passes', flag('eng'), 'à égalité'), player('Bukayo Saka', 'Arsenal', '4 passes', flag('eng'))],
               bracket: [match('Quarts', 'Arsenal', 'Bayern Munich', '2 - 3 cumulé', logo('359'), logo('132'), 'Score cumulé'), match('Quarts', 'Manchester City', 'Real Madrid', '4 - 4 tab 3-4', logo('382'), logo('86'), 'Score cumulé'), match('Quarts', 'Atlético Madrid', 'Borussia Dortmund', '4 - 5 cumulé', logo('1068'), logo('124'), 'Score cumulé'), match('Quarts', 'Paris Saint-Germain', 'Barcelona', '6 - 4 cumulé', logo('160'), logo('83'), 'Score cumulé'), match('Demi-finale', 'Real Madrid', 'Bayern Munich', '4 - 3 cumulé', logo('86'), logo('132'), 'Score cumulé'), match('Demi-finale', 'Borussia Dortmund', 'Paris Saint-Germain', '2 - 0 cumulé', logo('124'), logo('160'), 'Score cumulé'), match('Finale', 'Borussia Dortmund', 'Real Madrid', '0 - 2', logo('124'), logo('86'), 'Wembley')],
               groups: [
                 group('Groupe A 2023-2024', [team('Bayern Munich', logo('132'), '16'), team('F.C. København', logo('909'), '8'), team('Galatasaray', logo('432'), '5'), team('Manchester United', logo('360'), '4')]),
@@ -8080,8 +8082,8 @@ grant select, insert, update on public.profiles to authenticated;`;
                 ['Meilleur buteur de la compétition', 'Raphinha', '13 buts avec Barcelona.', flag('bra')]
               ],
               honours: [['2025', 'Paris Saint-Germain', logo('160')], ['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')]],
-              scorers: [player('Raphinha', 'Barcelona', '13 buts', logo('83')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', logo('124')), player('Harry Kane', 'Bayern Munich', '11 buts', logo('132'))],
-              assists: [player('Raphinha', 'Barcelona', '9 passes', logo('83')), player('Ousmane Dembélé', 'Paris Saint-Germain', '6 passes', logo('160')), player('Achraf Hakimi', 'Paris Saint-Germain', '5 passes', logo('160'))],
+              scorers: [player('Raphinha', 'Barcelona', '13 buts', flag('bra')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', flag('gui')), player('Harry Kane', 'Bayern Munich', '11 buts', flag('eng'))],
+              assists: [player('Raphinha', 'Barcelona', '9 passes', flag('bra')), player('Ousmane Dembélé', 'Paris Saint-Germain', '6 passes', flag('fra')), player('Achraf Hakimi', 'Paris Saint-Germain', '5 passes', flag('mar'))],
               bracket: [match('Quarts', 'Arsenal', 'Real Madrid', '5 - 1 cumulé', logo('359'), logo('86'), 'Score cumulé'), match('Quarts', 'Paris Saint-Germain', 'Aston Villa', '5 - 4 cumulé', logo('160'), logo('362'), 'Score cumulé'), match('Quarts', 'Barcelona', 'Borussia Dortmund', '5 - 3 cumulé', logo('83'), logo('124'), 'Score cumulé'), match('Quarts', 'Bayern Munich', 'Internazionale', '3 - 4 cumulé', logo('132'), logo('110'), 'Score cumulé'), match('Demi-finale', 'Paris Saint-Germain', 'Arsenal', '3 - 1 cumulé', logo('160'), logo('359'), 'Score cumulé'), match('Demi-finale', 'Internazionale', 'Barcelona', '7 - 6 cumulé', logo('110'), logo('83'), 'Score cumulé'), match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110'), 'Munich')],
               groups: [group('Phase de ligue 2024-2025', [
                 team('Liverpool', logo('364'), '21', {played: 8, wins: 7, draws: 0, losses: 1, goal_diff: '+12'}),
