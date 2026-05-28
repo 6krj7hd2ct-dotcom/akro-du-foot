@@ -925,7 +925,7 @@
     .profile-favorites-label, .active-profile-progress-card span, .active-profile-scoreboard span { color: rgba(223,238,255,0.72); font-size: 10px; line-height: 1; font-weight: 950; letter-spacing: .055em; text-transform: uppercase; }
     .profile-favorite-button { appearance: none; min-width: 0; display: block; width: 100%; padding: 2px 0; border: 0; border-radius: 8px; background: transparent; color: #fff; font: inherit; font-size: 13px; line-height: 1.15; font-weight: 950; text-align: left; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color .16s ease, transform .16s ease; }
     .profile-favorite-button:hover, .profile-favorite-button:focus-visible { color: #ffe1a0; transform: translateX(2px); outline: none; }
-    .active-profile-progress-grid { display: grid; grid-template-columns: repeat(5, minmax(78px, 1fr)); gap: 7px; min-width: 0; }
+    .active-profile-progress-grid { display: grid; grid-template-columns: repeat(4, minmax(78px, 1fr)); gap: 7px; min-width: 0; }
     .active-profile-progress-card { position: relative; appearance: none; min-width: 0; display: grid; gap: 4px; align-content: center; min-height: 52px; padding: 8px 22px 8px 9px; border-radius: 12px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(7,17,31,0.18)); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .active-profile-progress-card strong { color: #ffe1a0; font-size: 13px; line-height: 1.1; font-weight: 950; overflow-wrap: anywhere; }
     .active-profile-card-rank { position: absolute; top: 6px; right: 7px; color: rgba(223,238,255,0.82); font-size: 10px; line-height: 1; font-weight: 950; }
@@ -1068,6 +1068,12 @@
     .profile-side-card:hover, .profile-side-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.42); background: linear-gradient(145deg, rgba(245,201,107,0.12), rgba(31,111,235,0.08)); outline: none; }
     .profile-side-card span { color: var(--muted); font-size: 10px; font-weight: 950; letter-spacing: .035em; text-transform: uppercase; }
     .profile-side-card strong { color: #ffe1a0; font-size: 13px; line-height: 1.15; }
+    .profile-side-card.parent { cursor: default; }
+    .profile-side-card.parent:hover { transform: none; border-color: rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); }
+    .profile-side-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; margin-top: 5px; }
+    .profile-side-options.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .profile-side-option { appearance: none; min-width: 0; padding: 8px 7px; border-radius: 11px; border: 1px solid rgba(245,201,107,0.18); background: rgba(7,17,31,0.20); color: #ffe1a0; font: inherit; font-size: 11px; line-height: 1.1; font-weight: 950; cursor: pointer; text-align: center; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .profile-side-option:hover, .profile-side-option:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.48); background: rgba(245,201,107,0.12); outline: none; }
     .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
     .profile-avatar-button { appearance: none; border: 0; padding: 0; margin: 0; background: transparent; border-radius: 999px; cursor: pointer; line-height: 0; transition: transform .16s ease, filter .16s ease; }
     .profile-avatar-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
@@ -1075,7 +1081,7 @@
     .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 8px; }
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
     .profile-stat strong { display: block; color: var(--gold); font-size: 22px; }
-    .profile-progress-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin-top: 8px; }
+    .profile-progress-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin-top: 8px; }
     .profile-progress-card { appearance: none; min-width: 0; padding: 10px; border-radius: 13px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .profile-progress-card span { display: block; color: var(--muted); font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; }
     .profile-progress-card strong { display: block; margin-top: 4px; color: var(--gold); font-size: 13px; line-height: 1.15; font-weight: 950; overflow-wrap: anywhere; }
@@ -1246,6 +1252,7 @@
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
       .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-dashboard-grid, .profile-dashboard-block .profile-info-grid, .profile-dashboard-block.pronostics .profile-info-grid, .profile-placeholder-grid, .prediction-insights, .user-bracket-teams, .user-bracket-summary { grid-template-columns: 1fr; }
+      .profile-side-options.three { grid-template-columns: 1fr; }
       .active-profile-card, .active-profile-meta { grid-template-columns: 1fr; }
       .active-profile-scoreboard { justify-items: start; grid-template-columns: repeat(2, auto); gap: 10px; padding-left: 0; text-align: left; }
       .active-profile-score-row { justify-items: start; }
@@ -1358,7 +1365,7 @@
             <button class="action-button game-header-button" type="button" id="quizButton">Quiz</button>
             <button class="action-button game-header-button" type="button" id="whoButton">Qui est-ce ?</button>
             <button class="action-button game-header-button" type="button" data-mini-game="Je suis ?">Je suis ?</button>
-            <button class="action-button game-header-button" type="button" data-mini-game="Dream Team">Dream Team</button>
+            <button class="action-button game-header-button" type="button" id="communityHeaderButton">Communauté</button>
           </div>
         </div>
         <div class="mini-game-status" id="miniGameStatus" role="status" aria-live="polite"></div>
@@ -3764,8 +3771,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         ['pronos', 'Pronos', profile?.level || 'Débutant'],
         ['quiz', 'Quiz', highestQuizLevel(profile?.badges || [], profile?.quiz_results || []) || 'Amateur'],
         ['who', 'Qui est-ce ?', highestWhoLevel(profile?.badges || [], profile?.quiz_results || []) || 'Amateur'],
-        ['je-suis', 'Je suis ?', 'Bientôt'],
-        ['dream-team', 'Dream Team', 'Bientôt']
+        ['je-suis', 'Je suis ?', 'Bientôt']
       ];
     }
 
@@ -3824,7 +3830,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function profileGameRankingRows(game) {
-      if (game === 'je-suis' || game === 'dream-team') return [];
+      if (game === 'je-suis') return [];
       return Object.values(communityProfiles)
         .filter(profile => profile && profile.pseudo)
         .map(profile => {
@@ -3952,11 +3958,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         quiz: 'Classement Quiz',
         who: 'Classement Qui est-ce ?',
         pronos: 'Classement Pronos',
-        'je-suis': 'Classement Je suis ?',
-        'dream-team': 'Classement Dream Team'
+        'je-suis': 'Classement Je suis ?'
       };
       profileGameRankingTitle.textContent = labels[game] || 'Classement';
-      profileGameRankingSubtitle.textContent = game === 'je-suis' || game === 'dream-team' ? 'Mini-jeu bientôt disponible' : 'Niveaux et scores cumulés des membres';
+      profileGameRankingSubtitle.textContent = game === 'je-suis' ? 'Mini-jeu bientôt disponible' : 'Niveaux et scores cumulés des membres';
       const rows = profileGameRankingRows(game);
       profileGameRankingBody.innerHTML = rows.length
         ? rows.slice(0, 30).map((row, index) => `<article class="profile-game-ranking-row">
@@ -3983,7 +3988,6 @@ grant select, insert, update on public.profiles to authenticated;`;
           <article class="profile-info-card"><span>Quiz</span><strong>${escapeHtml(quiz)} pts</strong><em>${escapeHtml(gameScoreSummary(profile, 'quiz').label)} bonnes réponses.</em></article>
           <article class="profile-info-card"><span>Qui est-ce ?</span><strong>${escapeHtml(who)} pts</strong><em>${escapeHtml(gameScoreSummary(profile, 'who').label)} bonnes réponses.</em></article>
           <article class="profile-info-card"><span>Je suis ?</span><strong>0 pt</strong><em>Bientôt disponible.</em></article>
-          <article class="profile-info-card"><span>Dream Team</span><strong>0 pt</strong><em>Bientôt disponible.</em></article>
           <article class="profile-info-card"><span>Total</span><strong>${escapeHtml(total)} pts</strong><em>Classement général.</em></article>
         </div>
       `);
@@ -4103,8 +4107,32 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
     }
 
-    function openUserComposModal() {
-      openProfileInfoModal('Vos compos', 'Compositions futures', '<div class="profile-placeholder-grid"><article class="profile-placeholder-card"><strong>Club</strong><div class="subtle">Bientôt disponible.</div></article><article class="profile-placeholder-card"><strong>Nation</strong><div class="subtle">Bientôt disponible.</div></article></div>');
+    function openUserBracketCompetitionModal(competition) {
+      const labels = {
+        worldcup: 'Coupe du Monde',
+        euro: 'Euro',
+        ucl: 'Champions League'
+      };
+      const label = labels[competition] || 'Vos brackets';
+      openProfileInfoModal(label, 'Vos brackets', '<div class="empty">Chargement des brackets...</div>');
+      fetchUserBrackets()
+        .then(rows => {
+          const items = rows.filter(row => row.competition === label);
+          const html = items.length
+            ? items.map(row => `<article class="profile-placeholder-card user-bracket-card"><strong>${escapeHtml(label)}</strong><div class="subtle">${escapeHtml(row.season || 'Saison')}</div><div>Champion : <strong>${escapeHtml(row.champion || 'À choisir')}</strong></div><div class="subtle">Finaliste : ${escapeHtml(row.runner_up || 'À choisir')}</div><div class="subtle">Mis à jour : ${escapeHtml(profileDate(row.updated_at || row.created_at))}</div><div class="subtle">Likes ${Number(row.likes_count || 0)} · Dislikes ${Number(row.dislikes_count || 0)}</div></article>`).join('')
+            : '<div class="empty">Aucun bracket créé pour le moment</div>';
+          openProfileInfoModal(label, 'Vos brackets', `<div class="profile-placeholder-grid">${html}</div>`);
+        })
+        .catch(error => {
+          logSupabaseError('erreur lecture bracket compétition', error);
+          openProfileInfoModal(label, 'Vos brackets', '<div class="empty">Impossible de charger les brackets. Vérifie que le SQL user_brackets.sql est appliqué.</div>');
+        });
+    }
+
+    function openUserComposModal(type = '') {
+      const isNation = type === 'nation';
+      const title = isNation ? 'Compositions nation' : 'Compositions club';
+      openProfileInfoModal(title, 'Vos compositions', `<div class="empty">${escapeHtml(title)} bientôt disponible</div>`);
     }
 
     function closeProfileGameRanking() {
@@ -5081,6 +5109,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       }, 1800);
     }
 
+    function openCommunityFromHeader() {
+      const communitySection = document.getElementById('community');
+      if (communitySection?.scrollIntoView) {
+        communitySection.scrollIntoView({behavior: 'smooth', block: 'start'});
+        return;
+      }
+      openProfileInfoModal('Communauté', 'Espace communautaire', '<div class="empty">Espace communautaire bientôt disponible</div>');
+    }
+
     function showMiniGameSoon(name) {
       const status = document.getElementById('miniGameStatus');
       if (!status) return;
@@ -5416,8 +5453,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         ['pronos', 'Pronos', profile.level || 'Débutant'],
         ['quiz', 'Quiz', quizLevel || 'Non commencé'],
         ['who', 'Qui est-ce ?', whoLevel || 'Non commencé'],
-        ['je-suis', 'Je suis ?', 'Bientôt'],
-        ['dream-team', 'Dream Team', 'Bientôt']
+        ['je-suis', 'Je suis ?', 'Bientôt']
       ];
       const generalRank = profileGeneralRank(profile) || profile.rank;
       const rankText = generalRank ? (Number(generalRank) <= 10 ? `Top 10 · classé #${generalRank}` : `Classé #${generalRank}`) : 'Non classé';
@@ -5427,12 +5463,25 @@ grant select, insert, update on public.profiles to authenticated;`;
       badge.innerHTML = avatarImage(profile.avatar_url, 'profile-avatar', profile);
       body.innerHTML = `
         <div class="profile-heading-shell">
-          <button class="profile-side-card" type="button" data-profile-compos><span>Vos compos</span><strong>Bientôt disponible</strong></button>
+          <section class="profile-side-card parent" aria-label="Vos compositions">
+            <span>Vos compositions</span>
+            <div class="profile-side-options">
+              <button class="profile-side-option" type="button" data-profile-compos="club">Club</button>
+              <button class="profile-side-option" type="button" data-profile-compos="nation">Nation</button>
+            </div>
+          </section>
           <div class="profile-heading">
             ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
             <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(rankText)}</div></div>
           </div>
-          <button class="profile-side-card" type="button" data-profile-brackets><span>Vos brackets</span><strong>Voir les compétitions</strong></button>
+          <section class="profile-side-card parent" aria-label="Vos brackets">
+            <span>Vos brackets</span>
+            <div class="profile-side-options three">
+              <button class="profile-side-option" type="button" data-profile-bracket-kind="worldcup">Coupe du Monde</button>
+              <button class="profile-side-option" type="button" data-profile-bracket-kind="euro">Euro</button>
+              <button class="profile-side-option" type="button" data-profile-bracket-kind="ucl">Champions League</button>
+            </div>
+          </section>
         </div>
         <div class="profile-dashboard-grid">
           <section class="profile-dashboard-block">
@@ -5614,8 +5663,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         openUserBracketsModal();
         return;
       }
-      if (event.target.closest('[data-profile-compos]')) {
-        openUserComposModal();
+      const bracketKindTrigger = event.target.closest('[data-profile-bracket-kind]');
+      if (bracketKindTrigger) {
+        openUserBracketCompetitionModal(bracketKindTrigger.dataset.profileBracketKind || '');
+        return;
+      }
+      const composTrigger = event.target.closest('[data-profile-compos]');
+      if (composTrigger) {
+        openUserComposModal(composTrigger.dataset.profileCompos || '');
         return;
       }
       const bracketTrigger = event.target.closest('[data-user-bracket]');
@@ -5680,6 +5735,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     document.addEventListener('akro:league-focus-change', () => { renderFavoriteMatches(communityMatches); saveFocusTeamsToSupabase(); });
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeUserProfile(); closeProfileCreateModal(); closeProfileLoginModal(); closeProfileGameRanking(); } });
     shareButton?.addEventListener('click', sharePage);
+    document.getElementById('communityHeaderButton')?.addEventListener('click', openCommunityFromHeader);
     document.querySelectorAll('[data-mini-game]').forEach(button => {
       button.addEventListener('click', () => showMiniGameSoon(button.dataset.miniGame || 'Mini-jeu'));
     });
