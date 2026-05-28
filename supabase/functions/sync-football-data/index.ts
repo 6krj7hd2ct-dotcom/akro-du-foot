@@ -878,6 +878,7 @@ Deno.serve(async () => {
       const playerTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT));
       const completeRosterSize = Number(Deno.env.get("FOOTBALL_SYNC_COMPLETE_ROSTER_SIZE") ?? String(DEFAULT_COMPLETE_ROSTER_SIZE));
       const recheckDays = Number(Deno.env.get("FOOTBALL_SYNC_ROSTER_RECHECK_DAYS") ?? String(DEFAULT_ROSTER_RECHECK_DAYS));
+      const stableSingleTeamBatch = !USE_FULL_ROSTER_COUNTS;
       await checkpointLog(logId, counts, "player_targets_started", {
         playerTeamsLimit,
         completeRosterSize,
@@ -1073,6 +1074,8 @@ Deno.serve(async () => {
           firstRosterDiagnosticDone = true;
         }
         await stopIfCancelled(logId, counts, `après effectif ${teamTarget.name}`);
+        await checkpointLog(logId, counts, "team_roster_done", {teamName: teamTarget.name, teamsVisited: playerTeamsVisited, stableSingleTeamBatch});
+        if (stableSingleTeamBatch) break;
       }
       counts.player_teams_visited = playerTeamsVisited;
       counts.players_found = playersFound;
@@ -1097,8 +1100,14 @@ Deno.serve(async () => {
       counts.roster_nations_without_squad = nationsWithoutSquad;
       counts.roster_team_logs = teamLogs;
       counts.api_errors = apiErrors;
-      counts.players_total = await tableCount("players");
-      counts.team_players = await tableCount("team_players");
+      if (stableSingleTeamBatch) {
+        counts.players_total = counts.players;
+        counts.team_players = teamPlayersUpserted;
+      } else {
+        counts.players_total = await tableCount("players");
+        counts.team_players = await tableCount("team_players");
+      }
+      await checkpointLog(logId, counts, "players_step_done", {teamsVisited: playerTeamsVisited, stableSingleTeamBatch});
       console.log("[sync-football-data] players step done", {
         teamsVisited: playerTeamsVisited,
         priorityTeamsProcessed,
