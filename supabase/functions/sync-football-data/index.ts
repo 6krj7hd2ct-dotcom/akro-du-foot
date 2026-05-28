@@ -44,6 +44,8 @@ const API_TIMEOUT_RAW = Number(Deno.env.get("FOOTBALL_SYNC_API_TIMEOUT_MS") ?? "
 const API_TIMEOUT_MS = Number.isFinite(API_TIMEOUT_RAW) && API_TIMEOUT_RAW > 0 ? API_TIMEOUT_RAW : 15000;
 const SUPABASE_TIMEOUT_RAW = Number(Deno.env.get("FOOTBALL_SYNC_SUPABASE_TIMEOUT_MS") ?? "20000");
 const SUPABASE_TIMEOUT_MS = Number.isFinite(SUPABASE_TIMEOUT_RAW) && SUPABASE_TIMEOUT_RAW > 0 ? SUPABASE_TIMEOUT_RAW : 20000;
+const USE_FULL_ROSTER_COUNTS = (Deno.env.get("FOOTBALL_SYNC_USE_FULL_ROSTER_COUNTS") ?? "false").toLowerCase() === "true";
+const INCLUDE_CHAMPIONS_LEAGUE_PRIORITY = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_CHAMPIONS_LEAGUE_PRIORITY") ?? "false").toLowerCase() === "true";
 
 console.log("[sync-football-data] boot", {
   hasSupabaseUrl: Boolean(SUPABASE_URL),
@@ -64,6 +66,8 @@ console.log("[sync-football-data] boot", {
   matchesTotalLimit: Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT),
   apiTimeoutMs: API_TIMEOUT_MS,
   supabaseTimeoutMs: SUPABASE_TIMEOUT_MS,
+  useFullRosterCounts: USE_FULL_ROSTER_COUNTS,
+  includeChampionsLeaguePriority: INCLUDE_CHAMPIONS_LEAGUE_PRIORITY,
   includePlayers: INCLUDE_PLAYERS,
   includeCoaches: INCLUDE_COACHES,
   includeMatches: INCLUDE_MATCHES,
@@ -151,12 +155,18 @@ function errorMessage(error: unknown) {
 }
 
 async function withTimeout<T>(label: string, promise: PromiseLike<T>, timeoutMs = SUPABASE_TIMEOUT_MS): Promise<T> {
+  const controller = new AbortController();
+  const source = promise as PromiseLike<T> & {abortSignal?: (signal: AbortSignal) => PromiseLike<T>};
+  const abortable = typeof source.abortSignal === "function" ? source.abortSignal(controller.signal) : promise;
   let timeoutId: number | undefined;
   const timeout = new Promise<never>((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error(`${label} timeout après ${timeoutMs}ms`)), timeoutMs);
+    timeoutId = setTimeout(() => {
+      controller.abort();
+      reject(new Error(`${label} timeout après ${timeoutMs}ms`));
+    }, timeoutMs);
   });
   try {
-    return await Promise.race([promise, timeout]);
+    return await Promise.race([abortable, timeout]);
   } finally {
     if (timeoutId !== undefined) clearTimeout(timeoutId);
   }
@@ -185,13 +195,16 @@ function configuredLeagueIds() {
 }
 
 function configuredPriorityTeams() {
-  return [
-    ...(Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS).split(","),
-    ...DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS,
-  ]
+  const championsLeagueNames = DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS.map(norm).filter(Boolean);
+  const configured = (Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS)
+    .split(",")
     .map(value => value.trim())
     .filter(Boolean)
-    .filter((value, index, values) => values.findIndex(item => norm(item) === norm(value)) === index);
+    .filter(value => INCLUDE_CHAMPIONS_LEAGUE_PRIORITY || !championsLeagueNames.includes(norm(value)));
+  return [
+    ...configured,
+    ...(INCLUDE_CHAMPIONS_LEAGUE_PRIORITY ? DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS : []),
+  ].filter((value, index, values) => values.findIndex(item => norm(item) === norm(value)) === index);
 }
 
 function isChampionsLeaguePriorityTeam(name: unknown) {
@@ -605,6 +618,9 @@ Deno.serve(async () => {
       footballApiBaseUrl: API_BASE_URL || "(missing)",
       footballApiKeyHeader: API_KEY_HEADER,
       apiTimeoutMs: API_TIMEOUT_MS,
+      supabaseTimeoutMs: SUPABASE_TIMEOUT_MS,
+      useFullRosterCounts: USE_FULL_ROSTER_COUNTS,
+      includeChampionsLeaguePriority: INCLUDE_CHAMPIONS_LEAGUE_PRIORITY,
     };
     await checkpointLog(logId, counts, "secrets_loaded", counts.secrets as Json);
     counts.supabase_client_ready = Boolean(supabase);
@@ -860,8 +876,16 @@ Deno.serve(async () => {
       const playerTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT));
       const completeRosterSize = Number(Deno.env.get("FOOTBALL_SYNC_COMPLETE_ROSTER_SIZE") ?? String(DEFAULT_COMPLETE_ROSTER_SIZE));
       const recheckDays = Number(Deno.env.get("FOOTBALL_SYNC_ROSTER_RECHECK_DAYS") ?? String(DEFAULT_ROSTER_RECHECK_DAYS));
-      const rosterCounts = await readTeamPlayerCounts();
-      const {targets: playerTeamTargets, skippedComplete, rosterStats} = await readTeamTargets(playerTeamsLimit, {rosterCounts, completeRosterSize, skipComplete: true, recheckDays});
+      await checkpointLog(logId, counts, "player_targets_started", {
+        playerTeamsLimit,
+        completeRosterSize,
+        recheckDays,
+        useFullRosterCounts: USE_FULL_ROSTER_COUNTS,
+      });
+      const rosterCounts = USE_FULL_ROSTER_COUNTS ? await readTeamPlayerCounts() : new Map<string, number>();
+      await checkpointLog(logId, counts, "player_roster_counts_done", {teamsWithCounts: rosterCounts.size, useFullRosterCounts: USE_FULL_ROSTER_COUNTS});
+      const {targets: playerTeamTargets, skippedComplete, rosterStats} = await readTeamTargets(playerTeamsLimit, {rosterCounts, completeRosterSize, skipComplete: USE_FULL_ROSTER_COUNTS, recheckDays});
+      await checkpointLog(logId, counts, "player_targets_done", {targets: playerTeamTargets.length, skippedComplete: skippedComplete.length});
       let playerTeamsVisited = 0;
       let playersFound = 0;
       let teamPlayersUpserted = 0;
