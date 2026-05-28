@@ -5525,7 +5525,19 @@ grant select, insert, update on public.profiles to authenticated;`;
       lastLiveRefreshAt = now;
       setLiveRefreshState(true, 'Actualisation des scores...');
       try {
-        await loadCommunity();
+        if (!serverMode) {
+          renderFollowMatches(DASHBOARD_MATCHES);
+          setLiveRefreshState(false, 'Mode fichier statique : scores en cache');
+          return;
+        }
+        const response = await fetch(`/api/community?ts=${Date.now()}`, {cache: 'no-store'});
+        if (!response.ok) throw new Error('community refresh failed');
+        const data = await response.json();
+        renderFollowMatches(data.matches || communityMatches);
+        setLiveRefreshState(false, liveUpdatedText());
+      } catch (error) {
+        console.error('[community] live refresh error', error);
+        setLiveRefreshState(false, 'Actualisation live impossible pour le moment', true);
       } finally {
         liveRefreshInFlight = false;
         liveRefreshButton?.classList.remove('is-loading');
