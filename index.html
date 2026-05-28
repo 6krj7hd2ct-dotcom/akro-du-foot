@@ -967,7 +967,17 @@
     .user-bracket-builder > .user-bracket-player-grid { flex: 0 0 auto; }
     .user-bracket-builder > .user-bracket-tree-area { flex: 1 1 auto; }
     .user-bracket-builder > .user-bracket-choice-panel,
-    .user-bracket-builder > .user-bracket-footer { flex: 0 0 auto; }
+    .user-bracket-builder > .user-bracket-footer {
+  flex: 0 0 auto;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  position: relative;
+  z-index: 5;
+}
     .user-bracket-round { display: grid; gap: 8px; }
     .user-bracket-round h4 { margin: 0; color: #d6e5f7; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
     .user-bracket-match { display: grid; gap: 8px; padding: 10px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.055); }
