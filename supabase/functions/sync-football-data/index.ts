@@ -692,28 +692,62 @@ Deno.serve(async () => {
     });
     if (priorityTeamNames.length && teamsTotalLimit > 0) {
       console.log("[sync-football-data] priority teams start", {count: priorityTeamNames.length});
+      const priorityBatchRaw = Number(Deno.env.get("FOOTBALL_SYNC_PRIORITY_UPSERT_BATCH_SIZE") ?? "8");
+      const priorityBatchSize = Number.isFinite(priorityBatchRaw) && priorityBatchRaw > 0 ? priorityBatchRaw : 8;
       const priorityItems: Json[] = [];
+      const pendingPriorityItems: Json[] = [];
+      const seenPriorityApiIds = new Set<string>();
+      let prioritySearchesDone = 0;
+      let firstTeamParsed = false;
+      let firstTeamUpsertStarted = false;
+      let firstTeamDone = false;
+      const flushPriorityItems = async (reason: string) => {
+        if (!pendingPriorityItems.length) return 0;
+        const remaining = Math.max(0, teamsTotalLimit - Number(counts.teams));
+        if (!remaining) return 0;
+        const priorityRows = dedupeRows("teams", pendingPriorityItems.splice(0, pendingPriorityItems.length).map(item => teamRowFromApi(item, countryLookup)).filter(row => row.api_id && row.name), apiIdKey);
+        const limitedPriorityRows = priorityRows.slice(0, remaining);
+        if (!firstTeamUpsertStarted) {
+          firstTeamUpsertStarted = true;
+          await checkpointLog(logId, counts, "first_team_players_upsert_started", {reason, rows: limitedPriorityRows.length, note: "upsert teams prioritaire"});
+        }
+        await checkpointLog(logId, counts, "priority_team_upsert_started", {reason, rows: limitedPriorityRows.length, remaining});
+        const upsertedPriority = await upsert("teams", limitedPriorityRows);
+        counts.teams = Number(counts.teams) + upsertedPriority;
+        teamUpserted += upsertedPriority;
+        await checkpointLog(logId, counts, "priority_team_upsert_done", {reason, upserted: upsertedPriority, teams: counts.teams});
+        if (firstTeamUpsertStarted && !firstTeamDone) {
+          await checkpointLog(logId, counts, "first_team_players_upsert_done", {upserted: upsertedPriority, note: "upsert teams prioritaire"});
+          firstTeamDone = true;
+          await checkpointLog(logId, counts, "first_team_done", {teams: counts.teams});
+        }
+        return upsertedPriority;
+      };
       for (const teamName of priorityTeamNames) {
         await stopIfCancelled(logId, counts, `avant équipe prioritaire ${teamName}`);
-        if (priorityItems.length >= teamsTotalLimit) break;
+        if (Number(counts.teams) + pendingPriorityItems.length >= teamsTotalLimit) break;
         if (!firstTeamCheckpointDone) {
           firstTeamCheckpointDone = true;
           counts.first_team_selected = teamName;
           await checkpointLog(logId, counts, "first_team_selected", {teamName});
         }
         console.log("[sync-football-data] fetch priority team", {teamName});
+        await checkpointLog(logId, counts, "priority_team_api_call_started", {teamName, prioritySearchesDone, teams: counts.teams});
         if (!firstTeamApiStarted) {
           firstTeamApiStarted = true;
           counts.first_team_api_call = teamName;
           await checkpointLog(logId, counts, "first_team_api_call_started", {teamName});
         }
         const found = await football("teams", {search: teamName});
+        prioritySearchesDone += 1;
+        counts.priority_team_searches_done = prioritySearchesDone;
         if (!firstTeamApiDone) {
           firstTeamApiDone = true;
           counts.first_team_api_call_done = true;
           counts.first_team_api_rows = found.length;
           await checkpointLog(logId, counts, "first_team_api_call_done", {teamName, rows: found.length});
         }
+        await checkpointLog(logId, counts, "priority_team_api_call_done", {teamName, fetched: found.length, prioritySearchesDone});
         const exact = found.filter(item => {
           const apiTeam = pick<Json>(item, ["team"], {});
           const apiName = norm(pick(apiTeam, ["name"], ""));
@@ -723,26 +757,40 @@ Deno.serve(async () => {
         const national = found.filter(item => Boolean(pick(pick<Json>(item, ["team"], {}), ["national"], false)));
         const exactNational = exact.filter(item => Boolean(pick(pick<Json>(item, ["team"], {}), ["national"], false)));
         const selected = exactNational.length ? exactNational : national.slice(0, 1).length ? national.slice(0, 1) : exact.length ? exact : found.slice(0, 2);
-        priorityItems.push(...selected);
+        if (!firstTeamParsed) {
+          firstTeamParsed = true;
+          await checkpointLog(logId, counts, "first_team_response_parsed", {teamName, fetched: found.length, selected: selected.length});
+          await checkpointLog(logId, counts, "first_team_players_counted", {teamName, players: 0, selectedTeams: selected.length, note: "endpoint teams, pas encore effectif"});
+        }
+        const uniqueSelected = selected.filter(item => {
+          const apiId = String(pick(pick<Json>(item, ["team"], {}), ["id"], ""));
+          if (!apiId || seenPriorityApiIds.has(apiId)) return false;
+          seenPriorityApiIds.add(apiId);
+          return true;
+        });
+        priorityItems.push(...uniqueSelected);
+        pendingPriorityItems.push(...uniqueSelected);
+        teamCandidates += selected.length;
+        counts.priority_team_candidates = priorityItems.length;
+        counts.priority_team_pending = pendingPriorityItems.length;
         console.log("[sync-football-data] priority team fetched", {
           teamName,
           fetched: found.length,
           national: national.length,
           selected: selected.length,
-          selectedNames: selected.map(item => pick(pick<Json>(item, ["team"], {}), ["name"], "")),
+          uniqueSelected: uniqueSelected.length,
+          selectedNames: uniqueSelected.map(item => pick(pick<Json>(item, ["team"], {}), ["name"], "")),
         });
+        if (pendingPriorityItems.length >= priorityBatchSize) {
+          await flushPriorityItems(`batch ${prioritySearchesDone}`);
+        }
         await stopIfCancelled(logId, counts, `après équipe prioritaire ${teamName}`);
       }
-      const priorityRows = dedupeRows("teams", priorityItems.map(item => teamRowFromApi(item, countryLookup)).filter(row => row.api_id && row.name), apiIdKey);
-      const limitedPriorityRows = priorityRows.slice(0, teamsTotalLimit);
-      const upsertedPriority = await upsert("teams", limitedPriorityRows);
-      counts.teams = Number(counts.teams) + upsertedPriority;
-      teamCandidates += priorityItems.length;
-      teamUpserted += upsertedPriority;
+      await flushPriorityItems("final priority flush");
       console.log("[sync-football-data] priority teams done", {
         fetched: priorityItems.length,
-        deduped: priorityRows.length,
-        upserted: upsertedPriority,
+        searches: prioritySearchesDone,
+        upserted: teamUpserted,
         teamsTotalLimit,
       });
     }
@@ -786,7 +834,9 @@ Deno.serve(async () => {
       reportedTeams: counts.teams,
     });
 
+    await checkpointLog(logId, counts, "first_team_ids_resolved_started", {table: "teams"});
     const teamMap = await readIdMap("teams");
+    await checkpointLog(logId, counts, "first_team_ids_resolved_done", {table: "teams", rows: teamMap.size});
     const syncSeason = String(Deno.env.get("FOOTBALL_SYNC_SEASON") ?? currentFootballSeason());
 
     await stopIfCancelled(logId, counts, "avant joueurs");
@@ -809,6 +859,7 @@ Deno.serve(async () => {
       let nationsProcessed = 0;
       let nationsWithoutSquad = 0;
       let championsLeagueClubsProcessed = 0;
+      let firstRosterDiagnosticDone = false;
       const teamLogs: Json[] = [];
       console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length, completeRosterSize, recheckDays, skippedComplete: skippedComplete.length});
       for (const teamTarget of playerTeamTargets) {
@@ -863,10 +914,20 @@ Deno.serve(async () => {
           updated_at: new Date().toISOString(),
         }));
         console.log("[sync-football-data] players prepared", {teamApiId: teamTarget.api_id, fetched: players.length, deduped: playerRows.length});
+        if (!firstRosterDiagnosticDone) {
+          await checkpointLog(logId, counts, "first_team_players_upsert_started", {teamName: teamTarget.name, rows: playerRows.length});
+        }
         counts.players = Number(counts.players) + await upsert("players", playerRows);
+        if (!firstRosterDiagnosticDone) {
+          await checkpointLog(logId, counts, "first_team_players_upsert_done", {teamName: teamTarget.name, players: counts.players});
+          await checkpointLog(logId, counts, "first_team_ids_resolved_started", {table: "players", teamName: teamTarget.name, apiIds: normalizedPlayers.length});
+        }
 
         const playerApiIds = normalizedPlayers.map(item => String(item.api_id)).filter(Boolean);
         const playerMap = await readIdMapForApiIds("players", playerApiIds);
+        if (!firstRosterDiagnosticDone) {
+          await checkpointLog(logId, counts, "first_team_ids_resolved_done", {table: "players", teamName: teamTarget.name, rows: playerMap.size});
+        }
         const teamPlayerCandidates = normalizedPlayers.map(item => {
           const playerApiId = String(item.api_id);
           const playerId = playerMap.get(playerApiId);
@@ -903,7 +964,15 @@ Deno.serve(async () => {
           positionsDetected,
         });
         const teamPlayerRows = dedupeRows("team_players", validCandidates, row => apiIdKey(row) || `${row.team_id ?? ""}:${row.player_id ?? ""}:${row.season ?? ""}`);
+        if (!firstRosterDiagnosticDone) {
+          await checkpointLog(logId, counts, "first_team_relations_upsert_started", {teamName: teamTarget.name, rows: teamPlayerRows.length});
+        }
         const upsertedTeamPlayers = await upsert("team_players", teamPlayerRows, "api_id");
+        if (!firstRosterDiagnosticDone) {
+          await checkpointLog(logId, counts, "first_team_relations_upsert_done", {teamName: teamTarget.name, upserted: upsertedTeamPlayers});
+          await checkpointLog(logId, counts, "first_team_done", {teamName: teamTarget.name, players: playerRows.length, relations: upsertedTeamPlayers});
+          firstRosterDiagnosticDone = true;
+        }
         teamPlayersUpserted += upsertedTeamPlayers;
         counts.team_players_upserted = teamPlayersUpserted;
         teamLogs.push({
