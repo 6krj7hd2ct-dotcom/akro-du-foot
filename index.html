@@ -3285,6 +3285,7 @@
     let communityMatches = DASHBOARD_MATCHES;
     let communityProfiles = {};
     let communityPredictions = [];
+    const communityPredictionStatsCache = new Map();
     let coachPredictionRequest = 0;
     let akroSupabase = null;
     let akroSession = null;
@@ -5178,17 +5179,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       return rows;
     }
 
-    function renderCommunityPredictionInsight(match) {
-      if (!communityPredictionInsight) return;
-      if (!match) {
-        communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>—</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
-        return;
-      }
+    function communityPredictionStats(match) {
+      if (!match) return null;
       const rows = allCommunityPredictionRows().filter(item => String(item.match_id || '') === String(match.id || ''));
-      if (!rows.length) {
-        communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>0</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
-        return;
-      }
+      if (!rows.length) return communityPredictionStatsCache.get(String(match.id || '')) || null;
       const outcomes = {home: 0, draw: 0, away: 0};
       const scores = new Map();
       rows.forEach(item => {
@@ -5203,17 +5197,39 @@ grant select, insert, update on public.profiles to authenticated;`;
       });
       const validTotal = Math.max(1, outcomes.home + outcomes.draw + outcomes.away);
       const favoriteKey = Object.entries(outcomes).sort((a, b) => b[1] - a[1])[0]?.[0] || 'draw';
-      const favorite = favoriteKey === 'home' ? match.home_team : favoriteKey === 'away' ? match.away_team : 'Nul';
-      const trend = [...scores.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || '—';
-      const percent = value => Math.round((value / validTotal) * 100);
+      const stats = {
+        count: rows.length,
+        favorite: favoriteKey === 'home' ? match.home_team : favoriteKey === 'away' ? match.away_team : 'Nul',
+        trend: [...scores.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || '—',
+        homePercent: Math.round((outcomes.home / validTotal) * 100),
+        drawPercent: Math.round((outcomes.draw / validTotal) * 100),
+        awayPercent: Math.round((outcomes.away / validTotal) * 100),
+        homeTeam: match.home_team || 'Équipe A',
+        awayTeam: match.away_team || 'Équipe B'
+      };
+      communityPredictionStatsCache.set(String(match.id || ''), stats);
+      return stats;
+    }
+
+    function renderCommunityPredictionInsight(match) {
+      if (!communityPredictionInsight) return;
+      if (!match) {
+        communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>—</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
+        return;
+      }
+      const stats = communityPredictionStats(match);
+      if (!stats) {
+        communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>0</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
+        return;
+      }
       communityPredictionInsight.innerHTML = `
-        <div class="community-prediction-title"><span>La communauté</span><strong>${escapeHtml(rows.length)} pronostic${rows.length > 1 ? 's' : ''}</strong></div>
-        <div class="community-prediction-meta">Favori : <strong>${escapeHtml(favorite)}</strong></div>
-        <div class="community-prediction-meta">Score tendance : <strong>${escapeHtml(trend)}</strong></div>
+        <div class="community-prediction-title"><span>La communauté</span><strong>${escapeHtml(stats.count)} pronostic${stats.count > 1 ? 's' : ''}</strong></div>
+        <div class="community-prediction-meta">Favori : <strong>${escapeHtml(stats.favorite)}</strong></div>
+        <div class="community-prediction-meta">Score tendance : <strong>${escapeHtml(stats.trend)}</strong></div>
         <div class="community-prediction-share">
-          <span>${escapeHtml(match.home_team || 'Équipe A')} ${percent(outcomes.home)}%</span>
-          <span>Nul ${percent(outcomes.draw)}%</span>
-          <span>${escapeHtml(match.away_team || 'Équipe B')} ${percent(outcomes.away)}%</span>
+          <span>${escapeHtml(stats.homeTeam)} ${stats.homePercent}%</span>
+          <span>Nul ${stats.drawPercent}%</span>
+          <span>${escapeHtml(stats.awayTeam)} ${stats.awayPercent}%</span>
         </div>
       `;
     }
@@ -5533,7 +5549,11 @@ grant select, insert, update on public.profiles to authenticated;`;
         const response = await fetch(`/api/community?ts=${Date.now()}`, {cache: 'no-store'});
         if (!response.ok) throw new Error('community refresh failed');
         const data = await response.json();
+        if (Array.isArray(data.predictions) && data.predictions.length) {
+          communityPredictions = data.predictions;
+        }
         renderFollowMatches(data.matches || communityMatches);
+        renderCommunityPredictionInsight(selectedMatch());
         setLiveRefreshState(false, liveUpdatedText());
       } catch (error) {
         console.error('[community] live refresh error', error);
