@@ -2500,6 +2500,8 @@
     function footballAliasSet(value) {
       const base = normalizeFootballName(value);
       const aliases = new Set(base ? [base] : []);
+      const withoutClubSuffix = base.replace(/\b(football club|fc|afc|cf|sc|ac|fk|club)\b/g, ' ').replace(/\s+/g, ' ').trim();
+      if (withoutClubSuffix) aliases.add(withoutClubSuffix);
       (FOOTBALL_TEAM_ALIASES[base] || []).forEach(alias => aliases.add(normalizeFootballName(alias)));
       return aliases;
     }
@@ -2518,11 +2520,23 @@
         });
         return Array.from(targets).some(target => aliases.has(target));
       });
-      return matches.sort((a, b) => {
-        const typeScore = (b.type === 'nation' ? 1 : 0) - (a.type === 'nation' ? 1 : 0);
-        if (typeScore) return typeScore;
-        return (b.squad?.length || 0) - (a.squad?.length || 0);
-      })[0] || null;
+      const scoreTeamMatch = (team) => {
+        const nameAliases = footballAliasSet(team.name);
+        const shortAliases = footballAliasSet(team.short_name);
+        const codeAliases = footballAliasSet(team.code);
+        const exactName = Array.from(targets).some(target => nameAliases.has(target));
+        const exactShort = Array.from(targets).some(target => shortAliases.has(target));
+        const exactCode = Array.from(targets).some(target => codeAliases.has(target));
+        return (
+          (team.type === 'nation' ? 10000 : 0) +
+          (exactName ? 4000 : 0) +
+          (exactShort ? 700 : 0) +
+          (exactCode ? 200 : 0) +
+          ((team.squad?.length || 0) * 5) +
+          (team.logo_url ? 2 : 0)
+        );
+      };
+      return matches.sort((a, b) => scoreTeamMatch(b) - scoreTeamMatch(a))[0] || null;
     }
 
     function supabaseTeamDetails(name) {
@@ -3012,7 +3026,10 @@
       });
     }
 
-    function openTeam(name) {
+    async function openTeam(name) {
+      if (!(AKRO_SUPABASE_FOOTBALL.teams || []).length) {
+        await loadSupabaseFootballData();
+      }
       const details = mergeTeamDetails(name);
       modalTitle.textContent = details.name || name;
       modalFlag.innerHTML = flagHtml(details.flag_url || '');

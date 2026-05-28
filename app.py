@@ -1952,7 +1952,7 @@ def _football_supabase_payload() -> dict[str, Any]:
 
     countries = _supabase_service_request("GET", "countries?select=id,api_id,name,code,flag_url&order=name.asc&limit=300") or []
     competitions = _supabase_service_request("GET", "competitions?select=id,api_id,country_id,name,type,logo_url,season,updated_at&is_active=eq.true&order=name.asc&limit=300") or []
-    teams = _supabase_service_request("GET", "teams?select=id,api_id,country_id,name,short_name,code,type,logo_url,venue_name,updated_at&is_active=eq.true&order=updated_at.desc&limit=2000") or []
+    teams = _supabase_service_request("GET", "teams?select=id,api_id,country_id,name,short_name,code,type,logo_url,venue_name,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=2000") or []
     players = _supabase_service_request("GET", "players?select=id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
     coaches = _supabase_service_request("GET", "coaches?select=id,api_id,name,firstname,lastname,birth_date,nationality,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
     team_players = _supabase_service_paginated(
@@ -2034,6 +2034,22 @@ def _football_supabase_payload() -> dict[str, Any]:
 
     public_matches = []
     competition_for_team: dict[str, str] = {}
+    def _team_logo_url(row: dict[str, Any] | None) -> str:
+        if not row:
+            return ""
+        raw_data = row.get("raw_data") if isinstance(row.get("raw_data"), dict) else {}
+        raw_team = raw_data.get("team") if isinstance(raw_data.get("team"), dict) else {}
+        return (
+            row.get("logo_url")
+            or row.get("logo")
+            or row.get("crest")
+            or raw_team.get("logo")
+            or raw_data.get("logo_url")
+            or raw_data.get("logo")
+            or raw_data.get("crest")
+            or ""
+        )
+
     for match in matches:
         home = team_by_id.get(str(match.get("home_team_id") or ""))
         away = team_by_id.get(str(match.get("away_team_id") or ""))
@@ -2052,8 +2068,8 @@ def _football_supabase_payload() -> dict[str, Any]:
             "venue": match.get("venue_name") or "",
             "home_team": home.get("name") if home else "Équipe à compléter",
             "away_team": away.get("name") if away else "Équipe à compléter",
-            "home_flag_url": home.get("logo_url") if home else "",
-            "away_flag_url": away.get("logo_url") if away else "",
+            "home_flag_url": _team_logo_url(home),
+            "away_flag_url": _team_logo_url(away),
             "home_score": "" if match.get("home_score") is None else str(match.get("home_score")),
             "away_score": "" if match.get("away_score") is None else str(match.get("away_score")),
             "completed": str(match.get("status") or "").lower() in {"ft", "aet", "pen", "terminé", "match finished"},
@@ -2085,7 +2101,7 @@ def _football_supabase_payload() -> dict[str, Any]:
             "short_name": row.get("short_name") or "",
             "code": row.get("code") or "",
             "type": row.get("type") or "club",
-            "logo_url": row.get("logo_url") or "",
+            "logo_url": _team_logo_url(row),
             "venue_name": row.get("venue_name") or "",
             "country": country.get("name") if country else "",
             "country_code": country.get("code") if country else "",
