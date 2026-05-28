@@ -407,6 +407,13 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
   const completeRows = options.skipComplete ? enriched.filter(row => row.linkedPlayers >= completeRosterSize) : [];
   const freshCompleteRows = options.skipComplete ? enriched.filter(isFreshComplete) : [];
   const availableRows = options.skipComplete ? enriched.filter(row => !isFreshComplete(row)) : enriched;
+  const rosterStats = {
+    validatedTeamsTotal: enriched.length,
+    validatedNationsTotal: enriched.filter(row => row.type === "nation").length,
+    completeRostersTotal: completeRows.length,
+    completeNationsTotal: completeRows.filter(row => row.type === "nation").length,
+    alreadyOkTotal: freshCompleteRows.length,
+  };
   const priority = availableRows
     .filter(row => row.priority)
     .sort((a, b) => a.priorityIndex - b.priorityIndex || a.linkedPlayers - b.linkedPlayers || a.name.localeCompare(b.name));
@@ -419,11 +426,12 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
     priorityRows: priority.length,
     skippedComplete: completeRows.length,
     skippedFreshComplete: freshCompleteRows.length,
+    rosterStats,
     skippedCompleteSample: freshCompleteRows.slice(0, 8).map(row => ({name: row.name, type: row.type, linkedPlayers: row.linkedPlayers, updatedAt: row.updatedAt})),
     limit,
     targets,
   });
-  return {targets, skippedComplete: freshCompleteRows};
+  return {targets, skippedComplete: freshCompleteRows, rosterStats};
 }
 
 async function readCountryLookup() {
@@ -605,7 +613,7 @@ Deno.serve(async () => {
       const completeRosterSize = Number(Deno.env.get("FOOTBALL_SYNC_COMPLETE_ROSTER_SIZE") ?? String(DEFAULT_COMPLETE_ROSTER_SIZE));
       const recheckDays = Number(Deno.env.get("FOOTBALL_SYNC_ROSTER_RECHECK_DAYS") ?? String(DEFAULT_ROSTER_RECHECK_DAYS));
       const rosterCounts = await readTeamPlayerCounts();
-      const {targets: playerTeamTargets, skippedComplete} = await readTeamTargets(playerTeamsLimit, {rosterCounts, completeRosterSize, skipComplete: true, recheckDays});
+      const {targets: playerTeamTargets, skippedComplete, rosterStats} = await readTeamTargets(playerTeamsLimit, {rosterCounts, completeRosterSize, skipComplete: true, recheckDays});
       let playerTeamsVisited = 0;
       let playersFound = 0;
       let teamPlayersUpserted = 0;
@@ -747,6 +755,12 @@ Deno.serve(async () => {
       counts.roster_nations_processed = nationsProcessed;
       counts.roster_teams_skipped_complete = skippedComplete.length;
       counts.roster_priority_nations_skipped_complete = skippedComplete.filter(row => row.type === "nation" && row.priority).length;
+      counts.roster_validated_teams_total = rosterStats.validatedTeamsTotal;
+      counts.roster_validated_nations_total = rosterStats.validatedNationsTotal;
+      counts.roster_complete_total = rosterStats.completeRostersTotal;
+      counts.roster_complete_nations_total = rosterStats.completeNationsTotal;
+      counts.roster_updated_teams = playerTeamsVisited;
+      counts.roster_already_ok = rosterStats.alreadyOkTotal;
       counts.roster_nations_without_squad = nationsWithoutSquad;
       counts.roster_team_logs = teamLogs;
       counts.api_errors = apiErrors;

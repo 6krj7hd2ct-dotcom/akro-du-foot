@@ -1894,10 +1894,13 @@ def _supabase_service_request(method: str, path: str, **kwargs: Any) -> Any:
         import requests
 
         url, _ = _supabase_service_config()
+        extra_headers = kwargs.pop("extra_headers", {}) or {}
+        headers = _supabase_service_headers(kwargs.pop("prefer", "return=representation"))
+        headers.update(extra_headers)
         response = requests.request(
             method,
             f"{url}/rest/v1/{path.lstrip('/')}",
-            headers=_supabase_service_headers(kwargs.pop("prefer", "return=representation")),
+            headers=headers,
             timeout=SUPABASE_TIMEOUT,
             **kwargs,
         )
@@ -1914,6 +1917,21 @@ def _supabase_service_request(method: str, path: str, **kwargs: Any) -> Any:
         return None
 
 
+def _supabase_service_paginated(path: str, page_size: int = 1000, max_rows: int = 50000) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for start in range(0, max_rows, page_size):
+        end = start + page_size - 1
+        page = _supabase_service_request("GET", path, extra_headers={"Range": f"{start}-{end}"})
+        if page is None:
+            return rows
+        if not isinstance(page, list) or not page:
+            break
+        rows.extend(page)
+        if len(page) < page_size:
+            break
+    return rows
+
+
 def _football_supabase_payload() -> dict[str, Any]:
     if not _supabase_service_enabled():
         return {"configured": False, "teams": [], "countries": [], "competitions": [], "matches": [], "source": "fallback"}
@@ -1927,12 +1945,17 @@ def _football_supabase_payload() -> dict[str, Any]:
     teams = _supabase_service_request("GET", "teams?select=id,api_id,country_id,name,short_name,code,type,logo_url,venue_name,updated_at&is_active=eq.true&order=updated_at.desc&limit=2000") or []
     players = _supabase_service_request("GET", "players?select=id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
     coaches = _supabase_service_request("GET", "coaches?select=id,api_id,name,firstname,lastname,birth_date,nationality,photo_url,raw_data,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
-    team_players = _supabase_service_request(
-        "GET",
-        "team_players?select=team_id,player_id,season,shirt_number,position,updated_at,players(id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data)&is_active=eq.true&order=updated_at.desc&limit=5000",
+    team_players = _supabase_service_paginated(
+        "team_players?select=team_id,player_id,season,shirt_number,position,updated_at,players(id,api_id,name,firstname,lastname,birth_date,nationality,position,photo_url,raw_data)&is_active=eq.true&order=updated_at.desc",
+        page_size=1000,
+        max_rows=50000,
     )
-    if team_players is None:
-        team_players = _supabase_service_request("GET", "team_players?select=team_id,player_id,season,shirt_number,position,updated_at&is_active=eq.true&order=updated_at.desc&limit=5000") or []
+    if not team_players:
+        team_players = _supabase_service_paginated(
+            "team_players?select=team_id,player_id,season,shirt_number,position,updated_at&is_active=eq.true&order=updated_at.desc",
+            page_size=1000,
+            max_rows=50000,
+        )
     team_coaches = _supabase_service_request("GET", "team_coaches?select=team_id,coach_id,season,role,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
     matches = _supabase_service_request("GET", "matches?select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,updated_at&order=match_date.desc&limit=500") or []
 
@@ -2375,7 +2398,22 @@ def admin_sync_html() -> str:
     .history-date strong, .history-message strong {{ color:#edf6ff; font-size:13px; line-height:1.2; overflow-wrap:anywhere; }}
     .history-date span, .history-message span {{ color:var(--muted); font-size:12px; line-height:1.2; overflow-wrap:anywhere; }}
     .muted {{ color:var(--muted); }}
-    @media (max-width:800px) {{ main {{ width:min(980px, calc(100% - 24px)); margin:0 auto; padding:22px 0; }} .grid {{ grid-template-columns:1fr; }} th, td {{ padding:9px 5px; font-size:12px; }} .counts-list {{ grid-template-columns:1fr; }} }}
+    @media (max-width:800px) {{
+      main {{ width:min(980px, calc(100% - 24px)); margin:0 auto; padding:22px 0; }}
+      .grid {{ grid-template-columns:1fr; }}
+      .history-table-wrap {{ overflow-x:visible; }}
+      table, thead, tbody, tr, th, td {{ display:block; width:100%; }}
+      thead {{ display:none; }}
+      tr {{ margin:0 0 12px; padding:10px 12px; border:1px solid rgba(255,255,255,.1); border-radius:14px; background:rgba(255,255,255,.035); }}
+      td {{ padding:7px 0; border-bottom:0; font-size:12px; }}
+      td::before {{ display:block; margin-bottom:4px; color:var(--gold); font-size:10px; font-weight:950; letter-spacing:.04em; text-transform:uppercase; }}
+      td:nth-child(1)::before {{ content:"Date"; }}
+      td:nth-child(2)::before {{ content:"Statut"; }}
+      td:nth-child(3)::before {{ content:"Message"; }}
+      td:nth-child(4)::before {{ content:"Compteurs"; }}
+      .counts-list {{ grid-template-columns:1fr; gap:5px; }}
+      .counts-json {{ max-height:220px; overflow:auto; }}
+    }}
   </style>
 </head>
 <body>
@@ -2422,17 +2460,17 @@ def admin_sync_html() -> str:
     function countsHtml(counts) {{
       const c = counts || {{}};
       const items = [
-        ['équipes parcourues', c.player_teams_visited || c.coach_teams_visited || 0],
-        ['prioritaires traitées', c.roster_priority_teams_processed || 0],
-        ['nations prioritaires', c.roster_priority_nations_processed || 0],
-        ['clubs traités', c.roster_clubs_processed || 0],
+        ['équipes validées', c.roster_validated_teams_total || 0],
+        ['nations validées', c.roster_validated_nations_total || 0],
+        ['effectifs complets', c.roster_complete_total || 0],
+        ['mises à jour effectifs', c.roster_updated_teams || c.player_teams_visited || c.coach_teams_visited || 0],
+        ['équipes déjà à jour', c.roster_already_ok || c.roster_teams_skipped_complete || 0],
         ['nations traitées', c.roster_nations_processed || 0],
-        ['équipes complètes ignorées', c.roster_teams_skipped_complete || 0],
-        ['nations complètes ignorées', c.roster_priority_nations_skipped_complete || 0],
+        ['clubs traités', c.roster_clubs_processed || 0],
         ['nations sans squad', c.roster_nations_without_squad || 0],
         ['joueurs trouvés', c.players_found || 0],
         ['relations candidates', c.team_player_relation_candidates || 0],
-        ['relations team_players upsertées', c.team_players_upserted || 0],
+        ['relations upsertées', c.team_players_upserted || 0],
         ['joueurs non résolus', c.team_player_missing_player_ids || 0],
         ['joueurs total', c.players_total || c.players || 0],
         ['relations total', c.team_players || 0],

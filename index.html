@@ -2490,7 +2490,7 @@
       if (akroSupabaseFootballPromise) return akroSupabaseFootballPromise;
       akroSupabaseFootballPromise = (async () => {
         try {
-          const response = await fetch('/api/football-supabase', {cache: 'default'});
+          const response = await fetch('/api/football-supabase', {cache: 'no-store'});
           if (!response.ok) return AKRO_SUPABASE_FOOTBALL;
           const data = await response.json();
           applySupabaseFootballData(data);
