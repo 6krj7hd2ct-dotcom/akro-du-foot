@@ -426,7 +426,7 @@
     .player-card.rank-1, .player-card.rank-2, .player-card.rank-3 { position: relative; overflow: hidden; }
     .player-card.rank-1, .player-card.rank-2, .player-card.rank-3 { border-color: rgba(99,232,255,0.42); background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); box-shadow: 0 18px 42px rgba(0,0,0,0.16); }
     .player-card .avatar-wrap { position: absolute; z-index: 1; right: 8px; bottom: 0; width: 82px; height: 104px; display: grid; place-items: end center; }
-    .player-card .avatar { width: 82px; height: 104px; border: 0; border-radius: 0; object-fit: contain; object-position: bottom center; background: transparent; opacity: .85; filter: drop-shadow(0 16px 20px rgba(0,0,0,0.42)); }
+    .player-card .avatar { width: 82px; height: 104px; border: 0; border-radius: 0; object-fit: contain; object-position: bottom center; background: transparent; opacity: .98; filter: drop-shadow(0 16px 20px rgba(0,0,0,0.42)); }
     .player-card .avatar.placeholder, .player-card .avatar-initials { width: 52px; height: 52px; place-self: center; border-radius: 16px; background: linear-gradient(135deg, rgba(99,232,255,0.10), rgba(255,255,255,0.05)); border: 1px solid rgba(99,232,255,0.16); opacity: .62; }
     .player-card .avatar-initials { display: grid; place-items: center; color: #9fe9ff; font-size: 15px; font-weight: 950; }
     .player-card .team { color: #fff; font-size: 20px; line-height: 1.05; font-weight: 950; }
@@ -7758,7 +7758,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const team = (name, img = '', pts = '', stats = {}) => ({name, img, pts, ...stats});
       const group = (name, teams) => ({name, teams});
       const match = (phase, home, away, score, homeImg = '', awayImg = '', note = '') => ({phase, home, away, score, homeImg, awayImg, note});
-      const player = (name, teamName, value, img = '', note = '') => ({name, team: teamName, value, img, note});
+      const player = (name, teamName, value, img = '', note = '', clubImg = '') => ({name, team: teamName, value, img, note, clubImg});
       const photo = id => id ? `https://images.fotmob.com/image_resources/playerimages/${id}.png` : '';
       const PLAYER_PHOTOS = {
         'diego forlan': photo('38229'),
@@ -8059,8 +8059,8 @@ grant select, insert, update on public.profiles to authenticated;`;
                 ['Meilleur buteur de la compétition', 'Harry Kane', '8 buts avec le Bayern Munich.', flag('eng')]
               ],
               honours: [['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')], ['2021', 'Chelsea', logo('363')]],
-              scorers: [player('Harry Kane', 'Bayern Munich', '8 buts', flag('eng')), player('Kylian Mbappé', 'Paris Saint-Germain', '8 buts', flag('fra'), 'à égalité'), player('Erling Haaland', 'Manchester City', '6 buts', flag('nor'))],
-              assists: [player('Marcel Sabitzer', 'Borussia Dortmund', '5 passes', flag('aut')), player('Jude Bellingham', 'Real Madrid', '5 passes', flag('eng'), 'à égalité'), player('Bukayo Saka', 'Arsenal', '4 passes', flag('eng'))],
+              scorers: [player('Harry Kane', 'Bayern Munich', '8 buts', flag('eng'), '', logo('132')), player('Kylian Mbappé', 'Paris Saint-Germain', '8 buts', flag('fra'), 'à égalité', logo('160')), player('Erling Haaland', 'Manchester City', '6 buts', flag('nor'), '', logo('382'))],
+              assists: [player('Marcel Sabitzer', 'Borussia Dortmund', '5 passes', flag('aut'), '', logo('124')), player('Jude Bellingham', 'Real Madrid', '5 passes', flag('eng'), 'à égalité', logo('86')), player('Bukayo Saka', 'Arsenal', '4 passes', flag('eng'), '', logo('359'))],
               bracket: [match('Quarts', 'Arsenal', 'Bayern Munich', '2 - 3 cumulé', logo('359'), logo('132'), 'Score cumulé'), match('Quarts', 'Manchester City', 'Real Madrid', '4 - 4 tab 3-4', logo('382'), logo('86'), 'Score cumulé'), match('Quarts', 'Atlético Madrid', 'Borussia Dortmund', '4 - 5 cumulé', logo('1068'), logo('124'), 'Score cumulé'), match('Quarts', 'Paris Saint-Germain', 'Barcelona', '6 - 4 cumulé', logo('160'), logo('83'), 'Score cumulé'), match('Demi-finale', 'Real Madrid', 'Bayern Munich', '4 - 3 cumulé', logo('86'), logo('132'), 'Score cumulé'), match('Demi-finale', 'Borussia Dortmund', 'Paris Saint-Germain', '2 - 0 cumulé', logo('124'), logo('160'), 'Score cumulé'), match('Finale', 'Borussia Dortmund', 'Real Madrid', '0 - 2', logo('124'), logo('86'), 'Wembley')],
               groups: [
                 group('Groupe A 2023-2024', [team('Bayern Munich', logo('132'), '16'), team('F.C. København', logo('909'), '8'), team('Galatasaray', logo('432'), '5'), team('Manchester United', logo('360'), '4')]),
@@ -8082,8 +8082,8 @@ grant select, insert, update on public.profiles to authenticated;`;
                 ['Meilleur buteur de la compétition', 'Raphinha', '13 buts avec Barcelona.', flag('bra')]
               ],
               honours: [['2025', 'Paris Saint-Germain', logo('160')], ['2024', 'Real Madrid', logo('86')], ['2023', 'Manchester City', logo('382')], ['2022', 'Real Madrid', logo('86')]],
-              scorers: [player('Raphinha', 'Barcelona', '13 buts', flag('bra')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', flag('gui')), player('Harry Kane', 'Bayern Munich', '11 buts', flag('eng'))],
-              assists: [player('Raphinha', 'Barcelona', '9 passes', flag('bra')), player('Ousmane Dembélé', 'Paris Saint-Germain', '6 passes', flag('fra')), player('Achraf Hakimi', 'Paris Saint-Germain', '5 passes', flag('mar'))],
+              scorers: [player('Raphinha', 'Barcelona', '13 buts', flag('bra'), '', logo('83')), player('Serhou Guirassy', 'Borussia Dortmund', '13 buts', flag('gui'), '', logo('124')), player('Harry Kane', 'Bayern Munich', '11 buts', flag('eng'), '', logo('132'))],
+              assists: [player('Raphinha', 'Barcelona', '9 passes', flag('bra'), '', logo('83')), player('Ousmane Dembélé', 'Paris Saint-Germain', '6 passes', flag('fra'), '', logo('160')), player('Achraf Hakimi', 'Paris Saint-Germain', '5 passes', flag('mar'), '', logo('160'))],
               bracket: [match('Quarts', 'Arsenal', 'Real Madrid', '5 - 1 cumulé', logo('359'), logo('86'), 'Score cumulé'), match('Quarts', 'Paris Saint-Germain', 'Aston Villa', '5 - 4 cumulé', logo('160'), logo('362'), 'Score cumulé'), match('Quarts', 'Barcelona', 'Borussia Dortmund', '5 - 3 cumulé', logo('83'), logo('124'), 'Score cumulé'), match('Quarts', 'Bayern Munich', 'Internazionale', '3 - 4 cumulé', logo('132'), logo('110'), 'Score cumulé'), match('Demi-finale', 'Paris Saint-Germain', 'Arsenal', '3 - 1 cumulé', logo('160'), logo('359'), 'Score cumulé'), match('Demi-finale', 'Internazionale', 'Barcelona', '7 - 6 cumulé', logo('110'), logo('83'), 'Score cumulé'), match('Finale', 'Paris Saint-Germain', 'Internazionale', '5 - 0', logo('160'), logo('110'), 'Munich')],
               groups: [group('Phase de ligue 2024-2025', [
                 team('Liverpool', logo('364'), '21', {played: 8, wins: 7, draws: 0, losses: 1, goal_diff: '+12'}),
@@ -8203,7 +8203,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         const style = item.img ? ` style="--player-flag:url(${escape(item.img)})"` : '';
         const fallback = escape(initials(item.name));
         const avatar = photoUrl ? `<img class="avatar" src="${escape(photoUrl)}" alt="${escape(item.name)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="avatar-initials" hidden>${fallback}</span>` : `<span class="avatar-initials">${fallback}</span>`;
-        return `<article class="card player-card rank-${index + 1}"${style}><div class="avatar-wrap">${avatar}</div><div><div class="team">${escape(item.name)}</div><div class="club-line">${img(item.img)}<span class="club-name">${escape(item.team)}</span></div><div class="player-stat">${escape(item.value)}</div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</div></article>`;
+        return `<article class="card player-card rank-${index + 1}"${style}><div class="avatar-wrap">${avatar}</div><div><div class="team">${escape(item.name)}</div><div class="club-line">${img(item.clubImg || item.img)}<span class="club-name">${escape(item.team)}</span></div><div class="player-stat">${escape(item.value)}</div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</div></article>`;
       }).join('') || `<div class="historical-unavailable">${info}</div>`;
       const matchesHtml = matches => (matches || []).map(item => `<article class="historical-match-card"><div class="subtle">${escape(item.phase)}</div><div class="historical-match-row"><span class="team">${img(item.homeImg)}${escape(item.home)}</span><span class="historical-score">${escape(item.score)}</span><span class="team">${escape(item.away)}${img(item.awayImg)}</span></div>${item.note ? `<div class="subtle">${escape(item.note)}</div>` : ''}</article>`).join('');
       const scoreParts = value => {
