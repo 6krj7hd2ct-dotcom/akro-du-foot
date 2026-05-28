@@ -2592,11 +2592,12 @@ def admin_sync_html() -> str:
     .history-table-wrap {{ width:100%; overflow-x:hidden; }}
     table {{ width:100%; table-layout:fixed; border-collapse:collapse; }}
     th, td {{ padding:10px 7px; border-bottom:1px solid rgba(255,255,255,.08); text-align:left; vertical-align:top; }}
-    th:nth-child(1), td:nth-child(1) {{ width:12%; }}
-    th:nth-child(2), td:nth-child(2) {{ width:12%; }}
-    th:nth-child(3), td:nth-child(3) {{ width:18%; }}
-    th:nth-child(4), td:nth-child(4) {{ width:58%; }}
+    th:nth-child(1), td:nth-child(1) {{ width:10%; }}
+    th:nth-child(2), td:nth-child(2) {{ width:11%; }}
+    th:nth-child(3), td:nth-child(3) {{ width:25%; }}
+    th:nth-child(4), td:nth-child(4) {{ width:54%; }}
     th {{ color:var(--gold); font-size:12px; text-transform:uppercase; }}
+    td .status {{ max-width:100%; justify-content:center; white-space:normal; text-align:center; line-height:1.15; padding:6px 8px; }}
     code {{ color:#ffe1a0; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; }}
     .counts-cell {{ display:grid; gap:8px; min-width:0; }}
     .counts-list {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:4px 10px; min-width:0; }}

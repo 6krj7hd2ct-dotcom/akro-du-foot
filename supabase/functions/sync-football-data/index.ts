@@ -42,6 +42,8 @@ const INCLUDE_COACHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_COACHES") ?? "false
 const INCLUDE_MATCHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_MATCHES") ?? "false").toLowerCase() === "true";
 const API_TIMEOUT_RAW = Number(Deno.env.get("FOOTBALL_SYNC_API_TIMEOUT_MS") ?? "15000");
 const API_TIMEOUT_MS = Number.isFinite(API_TIMEOUT_RAW) && API_TIMEOUT_RAW > 0 ? API_TIMEOUT_RAW : 15000;
+const SUPABASE_TIMEOUT_RAW = Number(Deno.env.get("FOOTBALL_SYNC_SUPABASE_TIMEOUT_MS") ?? "20000");
+const SUPABASE_TIMEOUT_MS = Number.isFinite(SUPABASE_TIMEOUT_RAW) && SUPABASE_TIMEOUT_RAW > 0 ? SUPABASE_TIMEOUT_RAW : 20000;
 
 console.log("[sync-football-data] boot", {
   hasSupabaseUrl: Boolean(SUPABASE_URL),
@@ -61,6 +63,7 @@ console.log("[sync-football-data] boot", {
   championsLeaguePriorityTeams: DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS,
   matchesTotalLimit: Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT),
   apiTimeoutMs: API_TIMEOUT_MS,
+  supabaseTimeoutMs: SUPABASE_TIMEOUT_MS,
   includePlayers: INCLUDE_PLAYERS,
   includeCoaches: INCLUDE_COACHES,
   includeMatches: INCLUDE_MATCHES,
@@ -145,6 +148,18 @@ function apiIdKey(row: Json) {
 
 function errorMessage(error: unknown) {
   return error instanceof Error ? error.message : String(error);
+}
+
+async function withTimeout<T>(label: string, promise: PromiseLike<T>, timeoutMs = SUPABASE_TIMEOUT_MS): Promise<T> {
+  let timeoutId: number | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(`${label} timeout après ${timeoutMs}ms`)), timeoutMs);
+  });
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    if (timeoutId !== undefined) clearTimeout(timeoutId);
+  }
 }
 
 function norm(value: unknown) {
@@ -305,7 +320,7 @@ async function upsert(table: string, rows: Json[], onConflict = "api_id") {
     console.log("[sync-football-data] upsert skipped empty", {table});
     return 0;
   }
-  const {error} = await supabase.from(table).upsert(rows, {onConflict, ignoreDuplicates: false});
+  const {error} = await withTimeout(`${table} upsert`, supabase.from(table).upsert(rows, {onConflict, ignoreDuplicates: false}));
   if (error) {
     console.error("[sync-football-data] upsert error", {table, message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`${table}: ${error.message}`);
@@ -315,7 +330,7 @@ async function upsert(table: string, rows: Json[], onConflict = "api_id") {
 }
 
 async function tableCount(table: string) {
-  const {count, error} = await supabase.from(table).select("id", {count: "exact", head: true});
+  const {count, error} = await withTimeout(`${table} count`, supabase.from(table).select("id", {count: "exact", head: true}));
   if (error) {
     console.error("[sync-football-data] count error", {table, message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`${table} count: ${error.message}`);
@@ -325,11 +340,11 @@ async function tableCount(table: string) {
 
 async function startLog() {
   console.log("[sync-football-data] start sync_logs insert");
-  const {data, error} = await supabase.from("sync_logs").insert({
+  const {data, error} = await withTimeout("sync_logs insert", supabase.from("sync_logs").insert({
     job_name: "sync-football-data",
     status: "running",
     message: "Synchronisation football démarrée.",
-  }).select("id").single();
+  }).select("id").single());
   if (error) {
     console.error("[sync-football-data] sync_logs insert error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`sync_logs insert: ${error.message}`);
@@ -351,7 +366,7 @@ async function finishLog(id: string, status: "success" | "error" | "cancelled", 
     payload.cancel_requested = false;
     payload.cancelled_at = new Date().toISOString();
   }
-  const {error} = await supabase.from("sync_logs").update(payload).eq("id", id);
+  const {error} = await withTimeout("sync_logs finish update", supabase.from("sync_logs").update(payload).eq("id", id));
   if (error) console.error("[sync-football-data] sync_logs update error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
 }
 
@@ -369,7 +384,7 @@ async function heartbeatLog(id: string, counts: Json, checkpoint: string) {
       heartbeat_at: heartbeatAt,
     },
   };
-  const {error} = await supabase.from("sync_logs").update(payload).eq("id", id).eq("status", "running");
+  const {error} = await withTimeout("sync_logs heartbeat update", supabase.from("sync_logs").update(payload).eq("id", id).eq("status", "running"), 8000);
   if (error) console.warn("[sync-football-data] heartbeat update skipped", {checkpoint, message: error.message, code: error.code});
 }
 
@@ -387,11 +402,11 @@ async function checkpointLog(id: string, counts: Json, checkpoint: string, extra
 
 async function stopIfCancelled(logId: string, counts: Json, checkpoint: string) {
   if (!logId) return;
-  const {data, error} = await supabase
+  const {data, error} = await withTimeout("sync_logs cancel check", supabase
     .from("sync_logs")
     .select("status,cancel_requested")
     .eq("id", logId)
-    .maybeSingle();
+    .maybeSingle(), 8000);
   if (error) {
     console.warn("[sync-football-data] cancel check skipped", {checkpoint, message: error.message, code: error.code});
     return;
@@ -408,7 +423,7 @@ async function stopIfCancelled(logId: string, counts: Json, checkpoint: string) 
 
 async function readIdMap(table: string) {
   console.log("[sync-football-data] read id map start", {table});
-  const {data, error} = await supabase.from(table).select("id,api_id").not("api_id", "is", null);
+  const {data, error} = await withTimeout(`${table} id map`, supabase.from(table).select("id,api_id").not("api_id", "is", null));
   if (error) {
     console.error("[sync-football-data] read id map error", {table, message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`${table} map: ${error.message}`);
@@ -424,10 +439,10 @@ async function readIdMapForApiIds(table: string, apiIds: string[]) {
   const map = new Map<string, string>();
   for (let index = 0; index < uniqueApiIds.length; index += 100) {
     const chunk = uniqueApiIds.slice(index, index + 100);
-    const {data, error} = await supabase
+    const {data, error} = await withTimeout(`${table} scoped id map`, supabase
       .from(table)
       .select("id,api_id")
-      .in("api_id", chunk);
+      .in("api_id", chunk));
     if (error) {
       console.error("[sync-football-data] read scoped id map error", {table, message: error.message, details: error.details, hint: error.hint, code: error.code});
       throw new Error(`${table} scoped map: ${error.message}`);
@@ -443,10 +458,10 @@ async function readIdMapForApiIds(table: string, apiIds: string[]) {
 async function readCompetitionTargets() {
   const leagueIds = configuredLeagueIds();
   console.log("[sync-football-data] read competition targets start", {leagueIds});
-  const {data, error} = await supabase
+  const {data, error} = await withTimeout("competitions targets", supabase
     .from("competitions")
     .select("id,api_id,name,season")
-    .in("api_id", leagueIds);
+    .in("api_id", leagueIds));
   if (error) {
     console.error("[sync-football-data] read competition targets error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`competitions targets: ${error.message}`);
@@ -469,11 +484,11 @@ async function readCompetitionTargets() {
 async function readTeamPlayerCounts() {
   console.log("[sync-football-data] read team player counts start");
   const counts = new Map<string, number>();
-  const {data, error} = await supabase
+  const {data, error} = await withTimeout("team_players counts", supabase
     .from("team_players")
     .select("team_id")
     .eq("is_active", true)
-    .limit(20000);
+    .limit(20000));
   if (error) {
     console.error("[sync-football-data] read team player counts error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`team_players counts: ${error.message}`);
@@ -488,12 +503,12 @@ async function readTeamPlayerCounts() {
 
 async function readTeamTargets(limit: number, options: {rosterCounts?: Map<string, number>; completeRosterSize?: number; skipComplete?: boolean; recheckDays?: number} = {}) {
   console.log("[sync-football-data] read team targets start", {limit, skipComplete: Boolean(options.skipComplete), completeRosterSize: options.completeRosterSize ?? 0, recheckDays: options.recheckDays ?? 0});
-  const {data, error} = await supabase
+  const {data, error} = await withTimeout("teams targets", supabase
     .from("teams")
     .select("id,api_id,name,type,updated_at")
     .not("api_id", "is", null)
     .order("updated_at", {ascending: true})
-    .limit(5000);
+    .limit(5000));
   if (error) {
     console.error("[sync-football-data] read team targets error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`teams targets: ${error.message}`);
@@ -551,7 +566,7 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
 
 async function readCountryLookup() {
   console.log("[sync-football-data] read country lookup start");
-  const {data, error} = await supabase.from("countries").select("id,api_id,name,code");
+  const {data, error} = await withTimeout("countries lookup", supabase.from("countries").select("id,api_id,name,code"));
   if (error) {
     console.error("[sync-football-data] read country lookup error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`countries lookup: ${error.message}`);
@@ -927,6 +942,7 @@ Deno.serve(async () => {
         const playerMap = await readIdMapForApiIds("players", playerApiIds);
         if (!firstRosterDiagnosticDone) {
           await checkpointLog(logId, counts, "first_team_ids_resolved_done", {table: "players", teamName: teamTarget.name, rows: playerMap.size});
+          await checkpointLog(logId, counts, "first_team_relations_build_started", {teamName: teamTarget.name, normalizedPlayers: normalizedPlayers.length, resolvedPlayers: playerMap.size});
         }
         const teamPlayerCandidates = normalizedPlayers.map(item => {
           const playerApiId = String(item.api_id);
@@ -947,6 +963,14 @@ Deno.serve(async () => {
         const validCandidates = teamPlayerCandidates.filter(row => row.team_id && row.player_id);
         relationCandidates += teamPlayerCandidates.length;
         missingPlayerLinks += missingForTeam;
+        if (!firstRosterDiagnosticDone) {
+          await checkpointLog(logId, counts, "first_team_relations_build_done", {
+            teamName: teamTarget.name,
+            candidates: teamPlayerCandidates.length,
+            validRelations: validCandidates.length,
+            missingPlayerIds: missingForTeam,
+          });
+        }
         console.log("[sync-football-data] team_players prepared", {
           teamName: teamTarget.name,
           teamId: teamTarget.id,
@@ -970,8 +994,6 @@ Deno.serve(async () => {
         const upsertedTeamPlayers = await upsert("team_players", teamPlayerRows, "api_id");
         if (!firstRosterDiagnosticDone) {
           await checkpointLog(logId, counts, "first_team_relations_upsert_done", {teamName: teamTarget.name, upserted: upsertedTeamPlayers});
-          await checkpointLog(logId, counts, "first_team_done", {teamName: teamTarget.name, players: playerRows.length, relations: upsertedTeamPlayers});
-          firstRosterDiagnosticDone = true;
         }
         teamPlayersUpserted += upsertedTeamPlayers;
         counts.team_players_upserted = teamPlayersUpserted;
@@ -1013,6 +1035,17 @@ Deno.serve(async () => {
         counts.roster_nations_processed = nationsProcessed;
         counts.roster_nations_without_squad = nationsWithoutSquad;
         counts.api_errors = apiErrors;
+        if (!firstRosterDiagnosticDone) {
+          await checkpointLog(logId, counts, "first_team_counts_written", {
+            teamName: teamTarget.name,
+            players: counts.players,
+            playersFound,
+            relationCandidates,
+            teamPlayersUpserted,
+          });
+          await checkpointLog(logId, counts, "first_team_done", {teamName: teamTarget.name, players: playerRows.length, relations: upsertedTeamPlayers});
+          firstRosterDiagnosticDone = true;
+        }
         await stopIfCancelled(logId, counts, `après effectif ${teamTarget.name}`);
       }
       counts.player_teams_visited = playerTeamsVisited;
