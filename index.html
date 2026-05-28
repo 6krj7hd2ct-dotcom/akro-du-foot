@@ -970,6 +970,13 @@
     .user-bracket-status { color: #ffe1a0; font-size: 12px; font-weight: 850; min-height: 16px; }
     .user-bracket-card { display: grid; gap: 5px; }
     .user-bracket-card .subtle { line-height: 1.35; }
+    .votes-bracket-list { display: grid; gap: 10px; }
+    .votes-bracket-card { display: grid; gap: 9px; }
+    .votes-bracket-meta { display: flex; flex-wrap: wrap; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 850; }
+    .votes-bracket-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .votes-bracket-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.065); color: #eaf4ff; font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .votes-bracket-button:hover, .votes-bracket-button:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.44); background: rgba(245,201,107,0.12); outline: none; }
+    .votes-bracket-button.is-voted { color: #07111f; border-color: rgba(245,201,107,0.76); background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
     .my-bracket-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(245,201,107,0.34); color: #ffe1a0; background: rgba(245,201,107,0.10); font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .my-bracket-button:hover, .my-bracket-button:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.66); background: rgba(245,201,107,0.16); outline: none; }
     .pseudo-row { display: grid; gap: 6px; }
@@ -1365,7 +1372,7 @@
             <button class="action-button game-header-button" type="button" id="quizButton">Quiz</button>
             <button class="action-button game-header-button" type="button" id="whoButton">Qui est-ce ?</button>
             <button class="action-button game-header-button" type="button" data-mini-game="Je suis ?">Je suis ?</button>
-            <button class="action-button game-header-button" type="button" id="communityHeaderButton">Communauté</button>
+            <button class="action-button game-header-button" type="button" id="communityHeaderButton">A vos votes</button>
           </div>
         </div>
         <div class="mini-game-status" id="miniGameStatus" role="status" aria-live="polite"></div>
@@ -3887,6 +3894,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       userBracketPlaceholders[kind] = bracket ? {...bracket, likes: 0, dislikes: 0, active: true} : null;
     }
 
+    function profileById(profileId) {
+      return Object.values(communityProfiles || {}).find(profile => String(profile?.id || '') === String(profileId || '')) || null;
+    }
+
     function activeCompetitionSeason(kind) {
       const active = document.querySelector(`[data-season-tabs="${kind}"] [data-season-value].is-active`);
       return active?.dataset?.seasonValue || localStorage.getItem(`akrodufoot:season:${kind}`) || '';
@@ -4066,10 +4077,11 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (status) status.textContent = 'Connecte-toi pour sauvegarder ton bracket.';
         return;
       }
+      const isWorldCup2026 = activeUserBracketDraft.kind === 'worldcup';
       const payload = {
         profile_id: akroProfile.id,
         competition: activeUserBracketDraft.competition,
-        season: activeUserBracketDraft.season || 'Saison en cours',
+        season: isWorldCup2026 ? '2026' : (activeUserBracketDraft.season || 'Saison en cours'),
         bracket_data: {
           kind: activeUserBracketDraft.kind,
           matches: activeUserBracketDraft.matches,
@@ -4077,8 +4089,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         },
         champion: selection.champion,
         runner_up: selection.runnerUp,
-        likes_count: 0,
-        dislikes_count: 0,
+        is_published: isWorldCup2026,
+        published_at: isWorldCup2026 ? new Date().toISOString() : null,
         updated_at: new Date().toISOString()
       };
       try {
@@ -4090,10 +4102,102 @@ grant select, insert, update on public.profiles to authenticated;`;
           .single(), 10000);
         if (error) throw error;
         setUserBracketPlaceholder(activeUserBracketDraft.kind, data || payload);
-        if (status) status.textContent = 'Bracket sauvegardé.';
+        if (status) status.textContent = isWorldCup2026 ? 'Bracket sauvegardé et publié dans A vos votes.' : 'Bracket sauvegardé.';
       } catch (error) {
         logSupabaseError('erreur sauvegarde bracket', error);
         if (status) status.textContent = 'Impossible de sauvegarder. Vérifie que le SQL user_brackets.sql est appliqué.';
+      }
+    }
+
+    async function fetchPublishedWorldCupBrackets() {
+      if (!akroSupabase) return {brackets: [], votes: []};
+      const {data, error} = await supabaseStep('select published user_brackets', akroSupabase
+        .from('user_brackets')
+        .select('*')
+        .eq('competition', 'Coupe du Monde')
+        .eq('season', '2026')
+        .eq('is_published', true)
+        .order('published_at', {ascending: false}), 10000);
+      if (error) throw error;
+      const brackets = data || [];
+      const ids = brackets.map(row => row.id).filter(Boolean);
+      if (!ids.length) return {brackets, votes: []};
+      const {data: votesData, error: votesError} = await supabaseStep('select user_bracket_votes', akroSupabase
+        .from('user_bracket_votes')
+        .select('*')
+        .in('bracket_id', ids), 10000);
+      if (votesError) throw votesError;
+      return {brackets, votes: votesData || []};
+    }
+
+    function voteCountsForBracket(bracket, votes) {
+      const bracketVotes = (votes || []).filter(vote => String(vote.bracket_id) === String(bracket.id));
+      if (!bracketVotes.length) {
+        return {likes: Number(bracket.likes_count || 0), dislikes: Number(bracket.dislikes_count || 0)};
+      }
+      return {
+        likes: bracketVotes.filter(vote => vote.vote_type === 'like').length,
+        dislikes: bracketVotes.filter(vote => vote.vote_type === 'dislike').length
+      };
+    }
+
+    function currentVoteForBracket(bracket, votes) {
+      if (!akroProfile?.id) return '';
+      const vote = (votes || []).find(item => String(item.bracket_id) === String(bracket.id) && String(item.profile_id) === String(akroProfile.id));
+      return vote?.vote_type || '';
+    }
+
+    function renderPublishedWorldCupBrackets(brackets, votes) {
+      if (!brackets.length) return '<div class="empty">Aucun bracket Coupe du Monde 2026 publié pour le moment.</div>';
+      return `<div class="votes-bracket-list">${brackets.map(row => {
+        const author = profileById(row.profile_id);
+        const counts = voteCountsForBracket(row, votes);
+        const voted = currentVoteForBracket(row, votes);
+        return `<article class="profile-placeholder-card user-bracket-card votes-bracket-card">
+          <strong>${escapeHtml(row.champion || 'Champion à choisir')}</strong>
+          <div class="votes-bracket-meta">
+            <span>${escapeHtml(author?.pseudo || 'Profil')}</span>
+            <span>Coupe du Monde ${escapeHtml(row.season || '2026')}</span>
+            <span>Publié le ${escapeHtml(profileDate(row.published_at || row.updated_at || row.created_at))}</span>
+          </div>
+          <div>Finaliste : <strong>${escapeHtml(row.runner_up || 'À choisir')}</strong></div>
+          <div class="votes-bracket-actions">
+            <button class="votes-bracket-button ${voted === 'like' ? 'is-voted' : ''}" type="button" data-bracket-vote="${escapeHtml(row.id)}" data-bracket-vote-type="like">👍 ${escapeHtml(counts.likes)}</button>
+            <button class="votes-bracket-button ${voted === 'dislike' ? 'is-voted' : ''}" type="button" data-bracket-vote="${escapeHtml(row.id)}" data-bracket-vote-type="dislike">👎 ${escapeHtml(counts.dislikes)}</button>
+          </div>
+        </article>`;
+      }).join('')}</div>`;
+    }
+
+    async function openVotesFromHeader() {
+      openProfileInfoModal('A vos votes', 'Brackets Coupe du Monde 2026 publiés', '<div class="empty">Chargement des brackets publiés...</div>');
+      try {
+        const {brackets, votes} = await fetchPublishedWorldCupBrackets();
+        openProfileInfoModal('A vos votes', 'Brackets Coupe du Monde 2026 publiés', renderPublishedWorldCupBrackets(brackets, votes));
+      } catch (error) {
+        logSupabaseError('erreur lecture votes brackets', error);
+        openProfileInfoModal('A vos votes', 'Brackets Coupe du Monde 2026 publiés', '<div class="empty">Impossible de charger les brackets publiés. Vérifie que le SQL user_brackets.sql est appliqué.</div>');
+      }
+    }
+
+    async function voteUserBracket(bracketId, voteType) {
+      if (!akroSupabase || !akroProfile?.id) {
+        openProfileInfoModal('A vos votes', 'Connexion requise', '<div class="empty">Connecte-toi ou crée ton profil pour voter.</div>');
+        return;
+      }
+      try {
+        await supabaseStep('upsert user_bracket_votes', akroSupabase
+          .from('user_bracket_votes')
+          .upsert({
+            bracket_id: bracketId,
+            profile_id: akroProfile.id,
+            vote_type: voteType,
+            updated_at: new Date().toISOString()
+          }, {onConflict: 'bracket_id,profile_id'}), 10000);
+        await openVotesFromHeader();
+      } catch (error) {
+        logSupabaseError('erreur vote bracket', error);
+        openProfileInfoModal('A vos votes', 'Vote impossible', '<div class="empty">Impossible d’enregistrer ton vote pour le moment.</div>');
       }
     }
 
@@ -5127,12 +5231,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function openCommunityFromHeader() {
-      const communitySection = document.getElementById('community');
-      if (communitySection?.scrollIntoView) {
-        communitySection.scrollIntoView({behavior: 'smooth', block: 'start'});
-        return;
-      }
-      openProfileInfoModal('Communauté', 'Espace communautaire', '<div class="empty">Espace communautaire bientôt disponible</div>');
+      openVotesFromHeader();
     }
 
     function showMiniGameSoon(name) {
@@ -5703,6 +5802,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
       if (event.target.closest('[data-user-bracket-save]')) {
         saveUserBracketDraft();
+        return;
+      }
+      const bracketVoteTrigger = event.target.closest('[data-bracket-vote]');
+      if (bracketVoteTrigger) {
+        voteUserBracket(bracketVoteTrigger.dataset.bracketVote || '', bracketVoteTrigger.dataset.bracketVoteType || '');
         return;
       }
       const editablePrediction = event.target.closest('[data-edit-prediction]');

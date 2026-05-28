@@ -3199,6 +3199,8 @@ def _enrich_profiles_with_supabase_users(profiles: dict[str, dict[str, Any]], us
         if not pseudo or pseudo not in profiles:
             continue
         profile = profiles[pseudo]
+        if user.get("id"):
+            profile["id"] = user.get("id")
         for key in ("avatar_url", "favorite_club", "favorite_club_logo", "favorite_nation", "favorite_nation_flag"):
             if user.get(key):
                 profile[key] = user.get(key)
