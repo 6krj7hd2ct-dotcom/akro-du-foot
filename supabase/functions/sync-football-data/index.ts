@@ -70,6 +70,16 @@ console.log("[sync-football-data] supabase client created", {hasClient: Boolean(
 
 const jsonHeaders = {"Content-Type": "application/json; charset=utf-8"};
 
+class SyncCancelled extends Error {
+  checkpoint: string;
+
+  constructor(checkpoint: string) {
+    super(`Synchronisation annulée proprement (${checkpoint})`);
+    this.name = "SyncCancelled";
+    this.checkpoint = checkpoint;
+  }
+}
+
 function response(payload: Json, status = 200) {
   return new Response(JSON.stringify(payload), {status, headers: jsonHeaders});
 }
@@ -302,16 +312,40 @@ async function startLog() {
   return data.id as string;
 }
 
-async function finishLog(id: string, status: "success" | "error", message: string, counts: Json, errorDetail = "") {
+async function finishLog(id: string, status: "success" | "error" | "cancelled", message: string, counts: Json, errorDetail = "") {
   console.log("[sync-football-data] finish sync_logs update", {id, status, message, counts, hasErrorDetail: Boolean(errorDetail)});
-  const {error} = await supabase.from("sync_logs").update({
+  const payload: Json = {
     status,
     message,
     processed_counts: counts,
     error_detail: errorDetail || null,
     finished_at: new Date().toISOString(),
-  }).eq("id", id);
+  };
+  if (status === "cancelled") {
+    payload.cancel_requested = false;
+    payload.cancelled_at = new Date().toISOString();
+  }
+  const {error} = await supabase.from("sync_logs").update(payload).eq("id", id);
   if (error) console.error("[sync-football-data] sync_logs update error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
+}
+
+async function stopIfCancelled(logId: string, counts: Json, checkpoint: string) {
+  if (!logId) return;
+  const {data, error} = await supabase
+    .from("sync_logs")
+    .select("cancel_requested")
+    .eq("id", logId)
+    .maybeSingle();
+  if (error) {
+    console.warn("[sync-football-data] cancel check skipped", {checkpoint, message: error.message, code: error.code});
+    return;
+  }
+  if (Boolean((data as Json | null)?.cancel_requested)) {
+    counts.cancel_checkpoint = checkpoint;
+    counts.cancelled_at = new Date().toISOString();
+    console.warn("[sync-football-data] cancellation requested", {checkpoint, counts});
+    throw new SyncCancelled(checkpoint);
+  }
 }
 
 async function readIdMap(table: string) {
@@ -495,6 +529,7 @@ Deno.serve(async () => {
       return response({ok: false, offline: true, message, counts}, 200);
     }
 
+    await stopIfCancelled(logId, counts, "avant countries");
     console.log("[sync-football-data] step countries start");
     const countries = await football("countries");
     console.log("[sync-football-data] step countries fetched", {count: countries.length});
@@ -508,6 +543,7 @@ Deno.serve(async () => {
     counts.countries = await upsert("countries", countryRows);
     console.log("[sync-football-data] step countries done", {inserted: counts.countries});
 
+    await stopIfCancelled(logId, counts, "après countries");
     console.log("[sync-football-data] step competitions start");
     const countryLookup = await readCountryLookup();
     const competitions = await football("leagues", {current: "true"});
@@ -532,6 +568,7 @@ Deno.serve(async () => {
     counts.competitions = await upsert("competitions", competitionRows);
     console.log("[sync-football-data] step competitions done", {inserted: counts.competitions});
 
+    await stopIfCancelled(logId, counts, "après competitions");
     console.log("[sync-football-data] step teams start");
     const configuredTeamLeagueCount = configuredLeagueIds().length;
     const leagueLimit = Number(Deno.env.get("FOOTBALL_SYNC_LEAGUE_LIMIT") ?? String(Math.max(DEFAULT_LEAGUE_LIMIT, configuredTeamLeagueCount)));
@@ -555,6 +592,7 @@ Deno.serve(async () => {
       console.log("[sync-football-data] priority teams start", {count: priorityTeamNames.length});
       const priorityItems: Json[] = [];
       for (const teamName of priorityTeamNames) {
+        await stopIfCancelled(logId, counts, `avant équipe prioritaire ${teamName}`);
         if (priorityItems.length >= teamsTotalLimit) break;
         console.log("[sync-football-data] fetch priority team", {teamName});
         const found = await football("teams", {search: teamName});
@@ -575,6 +613,7 @@ Deno.serve(async () => {
           selected: selected.length,
           selectedNames: selected.map(item => pick(pick<Json>(item, ["team"], {}), ["name"], "")),
         });
+        await stopIfCancelled(logId, counts, `après équipe prioritaire ${teamName}`);
       }
       const priorityRows = dedupeRows("teams", priorityItems.map(item => teamRowFromApi(item, countryLookup)).filter(row => row.api_id && row.name), apiIdKey);
       const limitedPriorityRows = priorityRows.slice(0, teamsTotalLimit);
@@ -591,6 +630,7 @@ Deno.serve(async () => {
     }
     console.log("[sync-football-data] league ids selected", {leagueLimit, teamsTotalLimit, competitionTargets});
     for (const target of competitionTargets) {
+      await stopIfCancelled(logId, counts, `avant ligue teams ${target.name || target.api_id}`);
       const leagueId = target.api_id;
       const season = target.season || String(currentFootballSeason());
       if (Number(counts.teams) >= teamsTotalLimit) {
@@ -618,6 +658,7 @@ Deno.serve(async () => {
       counts.teams = Number(counts.teams) + upserted;
       teamUpserted += upserted;
       console.log("[sync-football-data] teams upserted cumulative", {teams: counts.teams, teamCandidates, teamUpserted, teamsTotalLimit, leaguesScanned: competitionTargets.indexOf(target) + 1});
+      await stopIfCancelled(logId, counts, `après ligue teams ${target.name || target.api_id}`);
     }
     console.log("[sync-football-data] teams step done", {
       teamsTotalLimit,
@@ -630,6 +671,7 @@ Deno.serve(async () => {
     const teamMap = await readIdMap("teams");
     const syncSeason = String(Deno.env.get("FOOTBALL_SYNC_SEASON") ?? currentFootballSeason());
 
+    await stopIfCancelled(logId, counts, "avant joueurs");
     if (INCLUDE_PLAYERS) {
       console.log("[sync-football-data] step players start");
       const playerTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_PLAYER_TEAMS_LIMIT") ?? String(DEFAULT_PLAYER_TEAMS_LIMIT));
@@ -652,6 +694,7 @@ Deno.serve(async () => {
       const teamLogs: Json[] = [];
       console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length, completeRosterSize, recheckDays, skippedComplete: skippedComplete.length});
       for (const teamTarget of playerTeamTargets) {
+        await stopIfCancelled(logId, counts, `avant effectif ${teamTarget.name}`);
         playerTeamsVisited += 1;
         const isChampionsLeaguePriority = teamTarget.type !== "nation" && isChampionsLeaguePriorityTeam(teamTarget.name);
         if (teamTarget.priority) priorityTeamsProcessed += 1;
@@ -772,6 +815,18 @@ Deno.serve(async () => {
           missingPlayerLinks,
           deletedRelations: 0,
         });
+        counts.player_teams_visited = playerTeamsVisited;
+        counts.players_found = playersFound;
+        counts.team_player_relation_candidates = relationCandidates;
+        counts.team_player_missing_player_ids = missingPlayerLinks;
+        counts.roster_priority_teams_processed = priorityTeamsProcessed;
+        counts.roster_priority_nations_processed = priorityNationsProcessed;
+        counts.roster_champions_league_clubs_processed = championsLeagueClubsProcessed;
+        counts.roster_clubs_processed = clubsProcessed;
+        counts.roster_nations_processed = nationsProcessed;
+        counts.roster_nations_without_squad = nationsWithoutSquad;
+        counts.api_errors = apiErrors;
+        await stopIfCancelled(logId, counts, `après effectif ${teamTarget.name}`);
       }
       counts.player_teams_visited = playerTeamsVisited;
       counts.players_found = playersFound;
@@ -824,12 +879,14 @@ Deno.serve(async () => {
       console.log("[sync-football-data] team_players retained", {playersTotal: counts.players_total, teamPlayersTotal: counts.team_players, deletedRelations: 0});
     }
 
+    await stopIfCancelled(logId, counts, "avant coachs");
     if (INCLUDE_COACHES) {
       console.log("[sync-football-data] step coaches start");
       const coachTeamsLimit = Number(Deno.env.get("FOOTBALL_SYNC_COACH_TEAMS_LIMIT") ?? String(DEFAULT_COACH_TEAMS_LIMIT));
       const {targets: coachTeamTargets} = await readTeamTargets(coachTeamsLimit);
       let coachTeamsVisited = 0;
       for (const teamTarget of coachTeamTargets) {
+        await stopIfCancelled(logId, counts, `avant coach ${teamTarget.name}`);
         coachTeamsVisited += 1;
         console.log("[sync-football-data] fetch coaches", {teamApiId: teamTarget.api_id, teamName: teamTarget.name});
         const coaches = await football("coachs", {team: teamTarget.api_id});
@@ -864,6 +921,8 @@ Deno.serve(async () => {
         })).filter(row => row.team_id && row.coach_id), row => apiIdKey(row) || `${row.team_id ?? ""}:${row.coach_id ?? ""}:${row.season ?? ""}:${row.role ?? ""}`);
         counts.team_coaches = Number(counts.team_coaches) + await upsert("team_coaches", teamCoachRows, "api_id");
         console.log("[sync-football-data] coaches cumulative", {coaches: counts.coaches, team_coaches: counts.team_coaches});
+        counts.coach_teams_visited = coachTeamsVisited;
+        await stopIfCancelled(logId, counts, `après coach ${teamTarget.name}`);
       }
       counts.coach_teams_visited = coachTeamsVisited;
       counts.coaches_total = await tableCount("coaches");
@@ -877,14 +936,17 @@ Deno.serve(async () => {
 
     if (!INCLUDE_MATCHES) {
       console.log("[sync-football-data] matches skipped", {reason: "FOOTBALL_SYNC_INCLUDE_MATCHES is not true"});
+      await stopIfCancelled(logId, counts, "avant fin sans matchs");
       await finishLog(logId, "success", "Synchronisation football terminée. Matchs ignorés en mode petit volume.", counts);
       return response({ok: true, counts, skipped: {matches: true}});
     }
 
+    await stopIfCancelled(logId, counts, "avant matchs");
     console.log("[sync-football-data] step matches start");
     const matchesTotalLimit = Number(Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT));
     console.log("[sync-football-data] matches limit", {matchesTotalLimit});
     for (const target of competitionTargets) {
+      await stopIfCancelled(logId, counts, `avant matchs ${target.name || target.api_id}`);
       const leagueId = target.api_id;
       const season = target.season || syncSeason;
       if (Number(counts.matches) >= matchesTotalLimit) {
@@ -928,12 +990,21 @@ Deno.serve(async () => {
       });
       counts.matches = Number(counts.matches) + await upsert("matches", limitedMatchRows);
       console.log("[sync-football-data] fixtures upserted cumulative", {matches: counts.matches, matchesTotalLimit});
+      await stopIfCancelled(logId, counts, `après matchs ${target.name || target.api_id}`);
     }
 
+    await stopIfCancelled(logId, counts, "avant finalisation");
     console.log("[sync-football-data] sync success", {counts});
     await finishLog(logId, "success", "Synchronisation football terminée.", counts);
     return response({ok: true, counts});
   } catch (error) {
+    if (error instanceof SyncCancelled) {
+      console.warn("[sync-football-data] sync cancelled", {checkpoint: error.checkpoint, counts, logId});
+      if (logId) {
+        await finishLog(logId, "cancelled", "Synchronisation annulée proprement.", counts, error.message);
+      }
+      return response({ok: false, status: "cancelled", message: "Synchronisation annulée proprement", counts}, 200);
+    }
     const message = error instanceof Error ? error.message : String(error);
     console.error("[sync-football-data] sync failed", {
       message,

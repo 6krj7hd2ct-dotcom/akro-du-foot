@@ -155,7 +155,7 @@ create table if not exists public.entity_profiles (
 create table if not exists public.sync_logs (
   id uuid primary key default gen_random_uuid(),
   job_name text not null,
-  status text not null default 'running' check (status in ('running', 'success', 'error')),
+  status text not null default 'running' check (status in ('running', 'success', 'error', 'cancelled')),
   started_at timestamptz not null default now(),
   finished_at timestamptz,
   message text,
@@ -164,6 +164,11 @@ create table if not exists public.sync_logs (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.sync_logs add column if not exists cancel_requested boolean not null default false;
+alter table public.sync_logs add column if not exists cancelled_at timestamptz;
+alter table public.sync_logs drop constraint if exists sync_logs_status_check;
+alter table public.sync_logs add constraint sync_logs_status_check check (status in ('running', 'success', 'error', 'cancelled'));
 
 create unique index if not exists countries_api_id_key on public.countries(api_id) where api_id is not null;
 create unique index if not exists teams_api_id_key on public.teams(api_id) where api_id is not null;

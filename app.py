@@ -489,6 +489,12 @@ if app:
         body, status = admin_sync_run_response(payload)
         return jsonify(body), status
 
+    @app.post("/api/admin/sync/cancel")
+    def admin_sync_cancel_route():
+        payload = request.get_json(silent=True) or {}
+        body, status = admin_sync_cancel_response(payload)
+        return jsonify(body), status
+
 
 def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
     question = _clean(payload.get("message", ""), 500)
@@ -1802,6 +1808,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/admin/sync/run":
             body, status = admin_sync_run_response(payload)
             self._send_json(body, status)
+        elif path == "/api/admin/sync/cancel":
+            body, status = admin_sync_cancel_response(payload)
+            self._send_json(body, status)
         elif path == "/api/profile-password/hash":
             body, status = make_profile_password_hash(payload)
             self._send_json(body, status)
@@ -2269,6 +2278,12 @@ def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], in
         return {"error": "Clé admin invalide."}, 403
     if not _supabase_service_enabled():
         return {"error": "SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY manquant côté serveur."}, 500
+    running = _supabase_service_request(
+        "GET",
+        "sync_logs?select=id,status,started_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
+    )
+    if isinstance(running, list) and running:
+        return {"error": "Une synchronisation est déjà en cours. Arrête-la ou attends sa fin avant de relancer.", "running": _sync_log_public(running[0])}, 409
     try:
         import requests
 
@@ -2286,6 +2301,31 @@ def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], in
         return {"ok": response.ok, "result": data}, response.status_code if response.status_code < 500 else 502
     except Exception as exc:
         return {"error": f"Impossible d'appeler sync-football-data : {exc}"}, 502
+
+
+def admin_sync_cancel_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
+    if not _sync_admin_authorized(payload):
+        return {"error": "Clé admin invalide."}, 403
+    if not _supabase_service_enabled():
+        return {"error": "SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY manquant côté serveur."}, 500
+    running = _supabase_service_request(
+        "GET",
+        "sync_logs?select=id,status,started_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
+    )
+    if not isinstance(running, list) or not running:
+        return {"ok": False, "message": "Aucune synchronisation en cours."}, 404
+    log_id = str(running[0].get("id") or "")
+    if not log_id:
+        return {"error": "Log de synchronisation introuvable."}, 500
+    updated = _supabase_service_request(
+        "PATCH",
+        f"sync_logs?id=eq.{quote(log_id)}",
+        json={"cancel_requested": True, "message": "Annulation demandée..."},
+        prefer="return=representation",
+    )
+    if updated is None:
+        return {"error": "Impossible de demander l'annulation. Vérifie que football_core.sql est à jour."}, 500
+    return {"ok": True, "message": "Annulation demandée. La sync va s'arrêter proprement dès que possible.", "log": _sync_log_public(updated[0]) if updated else None}, 200
 
 
 def _coach_relevant_supabase_context(question: str) -> dict[str, str]:
@@ -2377,9 +2417,11 @@ def admin_sync_html() -> str:
     .grid {{ display:grid; grid-template-columns:minmax(260px,.8fr) minmax(320px,1.2fr); gap:12px; align-items:start; }}
     .card {{ padding:14px; }}
     .status {{ display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px; font-weight:900; background:rgba(255,255,255,.08); }}
-    .success {{ color:var(--ok); }} .error {{ color:var(--err); }} .running {{ color:var(--gold); }}
+    .success {{ color:var(--ok); }} .error {{ color:var(--err); }} .running {{ color:var(--gold); }} .cancelled {{ color:var(--muted); }}
     button {{ border:0; border-radius:999px; padding:11px 16px; font-weight:950; color:#07111f; background:linear-gradient(180deg,#ffe1a0,#d5a63a); cursor:pointer; }}
     button:disabled {{ opacity:.58; cursor:wait; }}
+    .stop-button {{ display:none; color:#fff; background:linear-gradient(180deg,#ff8b8b,#b92f43); box-shadow:0 10px 26px rgba(255,75,95,.22); }}
+    .stop-button.is-visible {{ display:inline-flex; }}
     input {{ min-width:220px; border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:11px 12px; background:rgba(255,255,255,.08); color:#fff; }}
     .actions {{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }}
     .history-table-wrap {{ width:100%; overflow-x:hidden; }}
@@ -2424,6 +2466,7 @@ def admin_sync_html() -> str:
       <div class="actions">
         {admin_input}
         <button id="run">Mettre à jour maintenant</button>
+        <button id="stop" class="stop-button">Arrêter la synchronisation</button>
         <span id="state" class="status running">Chargement des logs...</span>
       </div>
     </section>
@@ -2442,6 +2485,7 @@ def admin_sync_html() -> str:
     const freshness = document.getElementById('freshness');
     const logsBody = document.getElementById('logs');
     const button = document.getElementById('run');
+    const stopButton = document.getElementById('stop');
     const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}}[c]));
     const fmt = value => value ? new Date(value).toLocaleString('fr-FR') : 'Non disponible';
     function dateCell(value) {{
@@ -2491,8 +2535,12 @@ def admin_sync_html() -> str:
         return;
       }}
       const last = data.latest;
+      const running = last?.status === 'running';
       state.textContent = last ? last.status : 'Aucune synchronisation';
       state.className = `status ${{last?.status || 'running'}}`;
+      button.disabled = running;
+      stopButton.classList.toggle('is-visible', running);
+      stopButton.disabled = false;
       latest.innerHTML = last ? `<strong>${{escapeHtml(last.status)}}</strong><br>${{escapeHtml(fmt(last.finished_at || last.started_at))}}<br><span class="muted">${{escapeHtml(last.message || '')}}</span>` : 'Aucun log.';
       freshness.textContent = data.stale ? 'Données absentes ou anciennes : relance recommandée.' : 'Données synchronisées récemment.';
       logsBody.innerHTML = (data.logs || []).map(renderLog).join('') || '<tr><td colspan="4" class="muted">Aucune synchronisation enregistrée.</td></tr>';
@@ -2516,7 +2564,26 @@ def admin_sync_html() -> str:
         await loadLogs();
       }}
     }});
+    stopButton.addEventListener('click', async () => {{
+      stopButton.disabled = true;
+      state.textContent = 'Annulation demandée...';
+      state.className = 'status running';
+      try {{
+        const res = await fetch('/api/admin/sync/cancel', {{
+          method:'POST',
+          headers:{{'Content-Type':'application/json'}},
+          body: JSON.stringify({{admin_key: document.getElementById('adminKey')?.value || ''}})
+        }});
+        const data = await res.json();
+        state.textContent = data.ok ? 'Annulation demandée...' : (data.error || data.message || 'Annulation impossible');
+      }} catch (error) {{
+        state.textContent = 'Erreur réseau pendant la demande d’annulation';
+      }} finally {{
+        await loadLogs();
+      }}
+    }});
     loadLogs();
+    setInterval(loadLogs, 10000);
   </script>
 </body>
 </html>"""
