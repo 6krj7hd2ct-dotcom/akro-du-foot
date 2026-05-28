@@ -1018,7 +1018,26 @@
     .user-bracket-tree-side-slot { color: #526274; font-size: 9px; line-height: 1; font-weight: 950; text-transform: uppercase; }
     .user-bracket-tree-slot-edit { position: absolute; top: 50%; right: 4px; width: 18px; height: 18px; transform: translateY(-50%); display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(7,17,31,0.12); background: rgba(255,255,255,0.72); color: #07111f; font: inherit; font-size: 11px; line-height: 1; font-weight: 950; cursor: pointer; z-index: 2; }
     .user-bracket-tree-slot-edit:hover, .user-bracket-tree-slot-edit:focus-visible { border-color: rgba(245,201,107,0.66); background: #ffe1a0; outline: none; }
-    .user-bracket-choice-panel { display: grid; gap: 9px; padding: 11px; border-radius: 15px; border: 1px solid rgba(245,201,107,0.22); background: rgba(7,17,31,0.34); }
+    .user-bracket-choice-panel {
+  position: absolute;
+  z-index: 50;
+
+  display: grid;
+  gap: 9px;
+
+  padding: 11px;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 260px;
+  max-height: 320px;
+  overflow-y: auto;
+
+  border-radius: 15px;
+}
     .user-bracket-choice-panel[hidden] { display: none; }
     .user-bracket-choice-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #d6e5f7; font-size: 12px; font-weight: 950; }
     .user-bracket-choice-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 7px; }
