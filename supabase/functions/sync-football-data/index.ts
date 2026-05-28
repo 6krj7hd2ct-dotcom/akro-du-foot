@@ -516,12 +516,13 @@ async function readTeamPlayerCounts() {
 
 async function readTeamTargets(limit: number, options: {rosterCounts?: Map<string, number>; completeRosterSize?: number; skipComplete?: boolean; recheckDays?: number} = {}) {
   console.log("[sync-football-data] read team targets start", {limit, skipComplete: Boolean(options.skipComplete), completeRosterSize: options.completeRosterSize ?? 0, recheckDays: options.recheckDays ?? 0});
+  const readLimit = options.skipComplete ? 5000 : Math.max(50, limit * 5);
   const {data, error} = await withTimeout("teams targets", supabase
     .from("teams")
     .select("id,api_id,name,type,updated_at")
     .not("api_id", "is", null)
     .order("updated_at", {ascending: true})
-    .limit(5000));
+    .limit(readLimit));
   if (error) {
     console.error("[sync-football-data] read team targets error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
     throw new Error(`teams targets: ${error.message}`);
@@ -571,6 +572,7 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
     skippedFreshComplete: freshCompleteRows.length,
     rosterStats,
     skippedCompleteSample: freshCompleteRows.slice(0, 8).map(row => ({name: row.name, type: row.type, linkedPlayers: row.linkedPlayers, updatedAt: row.updatedAt})),
+    readLimit,
     limit,
     targets,
   });
