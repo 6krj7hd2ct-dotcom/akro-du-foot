@@ -917,7 +917,7 @@
     .active-profile-card.is-visible { display: grid; }
     .profile-banner-logo { position: absolute; right: 10px; top: 50%; width: 92px; height: 92px; transform: translateY(-50%); object-fit: contain; opacity: .16; filter: drop-shadow(0 16px 26px rgba(0,0,0,.28)); pointer-events: none; }
     .active-profile-card > :not(.profile-banner-logo), .leaderboard-item > :not(.profile-banner-logo) { position: relative; z-index: 1; }
-    .active-profile-meta { display: grid; grid-template-columns: minmax(130px, 0.55fr) minmax(0, 1fr); gap: 10px; align-items: stretch; min-width: 0; }
+    .active-profile-meta { display: grid; grid-template-columns: minmax(130px, 0.48fr) minmax(0, 1fr); gap: 10px; align-items: stretch; min-width: 0; }
     .active-profile-name { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 950; }
     .active-profile-stats { display: flex; flex-wrap: wrap; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 850; }
     .profile-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 999px; background: rgba(255,255,255,0.075); border: 1px solid rgba(255,255,255,0.09); }
@@ -926,8 +926,9 @@
     .profile-favorite-button { appearance: none; min-width: 0; display: block; width: 100%; padding: 2px 0; border: 0; border-radius: 8px; background: transparent; color: #fff; font: inherit; font-size: 13px; line-height: 1.15; font-weight: 950; text-align: left; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color .16s ease, transform .16s ease; }
     .profile-favorite-button:hover, .profile-favorite-button:focus-visible { color: #ffe1a0; transform: translateX(2px); outline: none; }
     .active-profile-progress-grid { display: grid; grid-template-columns: repeat(5, minmax(78px, 1fr)); gap: 7px; min-width: 0; }
-    .active-profile-progress-card { appearance: none; min-width: 0; display: grid; gap: 4px; align-content: center; min-height: 52px; padding: 8px 9px; border-radius: 12px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(7,17,31,0.18)); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .active-profile-progress-card { position: relative; appearance: none; min-width: 0; display: grid; gap: 4px; align-content: center; min-height: 52px; padding: 8px 22px 8px 9px; border-radius: 12px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(7,17,31,0.18)); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .active-profile-progress-card strong { color: #ffe1a0; font-size: 13px; line-height: 1.1; font-weight: 950; overflow-wrap: anywhere; }
+    .active-profile-card-rank { position: absolute; top: 6px; right: 7px; color: rgba(223,238,255,0.82); font-size: 10px; line-height: 1; font-weight: 950; }
     .active-profile-progress-card:hover, .active-profile-progress-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.46); background: linear-gradient(145deg, rgba(245,201,107,0.14), rgba(7,17,31,0.20)); outline: none; }
     .active-profile-scoreboard { min-width: 118px; display: grid; gap: 7px; justify-items: end; align-content: center; padding-left: 8px; text-align: right; }
     .active-profile-score-row { display: grid; gap: 3px; justify-items: end; }
@@ -940,6 +941,17 @@
     .profile-game-ranking-main strong { overflow-wrap: anywhere; line-height: 1.15; }
     .profile-game-ranking-meta { color: var(--muted); font-size: 12px; font-weight: 850; }
     .profile-game-ranking-score { color: #ffe1a0; font-weight: 950; text-align: right; white-space: nowrap; }
+    .profile-info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .profile-info-card { appearance: none; min-width: 0; display: grid; gap: 5px; padding: 12px; border-radius: 14px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .profile-info-card:hover, .profile-info-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.44); background: linear-gradient(145deg, rgba(245,201,107,0.12), rgba(31,111,235,0.08)); outline: none; }
+    .profile-info-card span { color: var(--muted); font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; }
+    .profile-info-card strong { color: var(--gold); font-size: 16px; line-height: 1.15; font-weight: 950; }
+    .profile-info-card em { color: #d6e5f7; font-size: 12px; line-height: 1.25; font-style: normal; font-weight: 850; }
+    .profile-placeholder-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .profile-placeholder-card { min-width: 0; padding: 13px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.11); background: rgba(255,255,255,0.055); }
+    .profile-placeholder-card strong { display: block; color: #ffe1a0; margin-bottom: 4px; }
+    .my-bracket-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(245,201,107,0.34); color: #ffe1a0; background: rgba(245,201,107,0.10); font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .my-bracket-button:hover, .my-bracket-button:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.66); background: rgba(245,201,107,0.16); outline: none; }
     .pseudo-row { display: grid; gap: 6px; }
     .pseudo-row label { color: var(--muted); font-size: 12px; font-weight: 900; text-transform: uppercase; }
     .avatar-picker { display: grid; gap: 8px; }
@@ -1028,9 +1040,14 @@
     #userProfileBadge { width: 42px; height: 42px; padding: 0; overflow: visible; background: transparent; border: 0; }
     #userProfileBadge .profile-avatar-stack { width: 42px; height: 42px; }
     #userProfileBadge img { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .profile-heading { display: grid; justify-items: center; gap: 10px; margin-bottom: 14px; text-align: center; }
+    .profile-heading-shell { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px; align-items: center; margin-bottom: 14px; }
+    .profile-heading { display: grid; justify-items: center; gap: 10px; text-align: center; }
     .profile-heading .profile-avatar-stack { width: 86px; height: 86px; }
     .profile-heading strong { display: block; font-size: 20px; line-height: 1.1; }
+    .profile-side-card { appearance: none; min-width: 0; display: grid; gap: 4px; padding: 12px; border-radius: 14px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); color: inherit; font: inherit; text-align: left; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .profile-side-card:hover, .profile-side-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.42); background: linear-gradient(145deg, rgba(245,201,107,0.12), rgba(31,111,235,0.08)); outline: none; }
+    .profile-side-card span { color: var(--muted); font-size: 10px; font-weight: 950; letter-spacing: .035em; text-transform: uppercase; }
+    .profile-side-card strong { color: #ffe1a0; font-size: 13px; line-height: 1.15; }
     .profile-avatar { width: 62px; height: 62px; flex: 0 0 auto; box-shadow: 0 0 0 1px rgba(245,201,107,0.28), 0 12px 28px rgba(0,0,0,0.22); }
     .profile-avatar-button { appearance: none; border: 0; padding: 0; margin: 0; background: transparent; border-radius: 999px; cursor: pointer; line-height: 0; transition: transform .16s ease, filter .16s ease; }
     .profile-avatar-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
@@ -1039,9 +1056,10 @@
     .profile-stat { padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
     .profile-stat strong { display: block; color: var(--gold); font-size: 22px; }
     .profile-progress-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin-top: 8px; }
-    .profile-progress-card { min-width: 0; padding: 10px; border-radius: 13px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
+    .profile-progress-card { appearance: none; min-width: 0; padding: 10px; border-radius: 13px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .profile-progress-card span { display: block; color: var(--muted); font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; }
     .profile-progress-card strong { display: block; margin-top: 4px; color: var(--gold); font-size: 13px; line-height: 1.15; font-weight: 950; overflow-wrap: anywhere; }
+    .profile-progress-card:hover, .profile-progress-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.44); background: linear-gradient(145deg, rgba(245,201,107,0.12), rgba(31,111,235,0.08)); outline: none; }
     .profile-history { display: grid; gap: 9px; max-height: 330px; overflow-y: auto; padding-right: 6px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .profile-history-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 11px; border-radius: 13px; background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09); }
     .profile-history-row.is-editable { cursor: pointer; transition: border-color .16s ease, background .16s ease, transform .16s ease; }
@@ -1197,7 +1215,7 @@
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
-      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary { grid-template-columns: 1fr; }
+      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-placeholder-grid { grid-template-columns: 1fr; }
       .active-profile-card, .active-profile-meta { grid-template-columns: 1fr; }
       .active-profile-scoreboard { justify-items: start; grid-template-columns: repeat(2, auto); gap: 10px; padding-left: 0; text-align: left; }
       .active-profile-score-row { justify-items: start; }
@@ -1587,7 +1605,7 @@
     <section class="leaders"><div class="empty">Aucune donnée publiée pour le moment.</div></section>
 
 
-    <div class="section-head"><div class="section-title"><h2>Arbre à élimination directe</h2></div><div class="section-note">Bracket officiel horizontal : les deux ailes convergent vers la finale au centre.</div></div>
+    <div class="section-head"><div class="section-title"><h2>Phase finale</h2><button class="my-bracket-button" type="button" data-user-bracket="worldcup">Mon bracket</button></div><div class="section-note">Bracket officiel horizontal : les deux ailes convergent vers la finale au centre.</div></div>
     <section class="bracket-wrap"><div class="bracket-stage"><div class="bracket-wing left"><article class="round"><div class="round-title">16es</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">28/06/2026 21:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">29/06/2026 19:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">29/06/2026 22:30</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">30/06/2026 03:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">30/06/2026 19:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">30/06/2026 23:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">01/07/2026 03:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">01/07/2026 18:00</div><span class="status">À venir</span></div></article><article class="round"><div class="round-title">8es</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">04/07/2026 19:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">04/07/2026 23:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">05/07/2026 22:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">06/07/2026 02:00</div><span class="status">À venir</span></div></article><article class="round"><div class="round-title">Quarts</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">09/07/2026 22:00</div><span class="status">À venir</span></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">10/07/2026 21:00</div><span class="status">À venir</span></div></article><article class="round"><div class="round-title">Demies</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="ko-line"><span class="bracket-team"><span class="flag placeholder" aria-hidden="true"></span><span class="bracket-team-name">À déterminer</span></span><span class="ko-score"></span></div><div class="subtle">14/07/2026 21:00</div><span class="status">À venir</span></div></article></div><div class="bracket-center"><div class="trophy-card">
         <div class="bracket-logo premium-trophy worldcup-trophy bracket-trophy" aria-hidden="true">
           <svg viewBox="0 0 220 300" role="img" focusable="false">
@@ -1762,7 +1780,7 @@
       <div class="section-head"><div class="section-title"><h2>Meilleurs passeurs</h2></div><div class="section-note">Top 3 de la compétition 2024.</div></div>
       <section class="leaders"><article class="card player-card rank-1" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/1467236.png" alt="Lamine Yamal"></div><div><div class="team">Lamine Yamal</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="club-name">Espagne</span></div><div class="player-stat">4 passes</div></div></article><article class="card player-card rank-2" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/ned.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/1173787.png" alt="Xavi Simons"></div><div><div class="team">Xavi Simons</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ned.png" alt=""><span class="club-name">Pays-Bas</span></div><div class="player-stat">3 passes</div></div></article><article class="card player-card rank-3" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/tur.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/1253890.png" alt="Arda Güler"></div><div><div class="team">Arda Güler</div><div class="club-line"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/tur.png" alt=""><span class="club-name">Turquie</span></div><div class="player-stat">2 passes</div></div></article></section>
 
-      <div class="section-head"><div class="section-title"><h2>Phase finale</h2></div><div class="section-note">Le dernier carré et les quarts majeurs de l’Euro 2024.</div></div>
+      <div class="section-head"><div class="section-title"><h2>Phase finale</h2><button class="my-bracket-button" type="button" data-user-bracket="euro">Mon bracket</button></div><div class="section-note">Le dernier carré et les quarts majeurs de l’Euro 2024.</div></div>
       <section class="bracket-wrap">
         <div class="bracket-stage">
           <div class="bracket-wing left"><article class="round"><div class="round-title">Quarts</div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/esp.png" alt=""><span class="bracket-team-name">Espagne</span></span><span class="ko-score">2</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/ger.png" alt=""><span class="bracket-team-name">Allemagne</span></span><span class="ko-score">1</span></div></div><div class="ko-match"><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/por.png" alt=""><span class="bracket-team-name">Portugal</span></span><span class="ko-score">0</span></div><div class="ko-line"><span class="bracket-team"><img class="flag" src="https://a.espncdn.com/i/teamlogos/countries/500/fra.png" alt=""><span class="bracket-team-name">France</span></span><span class="ko-score">0 tab</span></div></div></article></div>
@@ -1857,7 +1875,7 @@
       <section class="leaders"><article class="card player-card rank-1" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/1029063.png" alt="Michael Olise"></div><div><div class="team">Michael Olise</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9823.png" alt=""><span class="club-name">Bayern München</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article><article class="card player-card rank-2" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/geo.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/900433.png" alt="Khvicha Kvaratskhelia"></div><div><div class="team">Khvicha Kvaratskhelia</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article><article class="card player-card rank-3" style="--player-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/mar.png)"><div class="avatar-wrap"><img class="avatar" src="https://images.fotmob.com/image_resources/playerimages/770881.png" alt="Achraf Hakimi"></div><div><div class="team">Achraf Hakimi</div><div class="subtle club-line"><img class="club-logo" src="https://images.fotmob.com/image_resources/logo/teamlogo/9847.png" alt=""><span class="club-name">Paris Saint-Germain</span></div><div class="player-stat">6 <span class="subtle">passes</span></div></div></article></section>
 
 
-      <div class="section-head"><div class="section-title"><h2>Phase finale</h2></div><div class="section-note">Bracket Champions League affiché dès disponibilité des matchs à élimination directe.</div></div>
+      <div class="section-head"><div class="section-title"><h2>Phase finale</h2><button class="my-bracket-button" type="button" data-user-bracket="champions">Mon bracket</button></div><div class="section-note">Bracket Champions League affiché dès disponibilité des matchs à élimination directe.</div></div>
       <section class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left"><article class="round"><div class="round-title">Barrages</div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Club Brugge"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/570.png" alt=""><span class="bracket-team-name">Club Brugge</span></button><span class="ko-score">4</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Atlético Madrid"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/1068.png" alt=""><span class="bracket-team-name">Atlético Madrid</span></button><span class="ko-score">7</span></div><div class="subtle">18/02/2026 - 24/02/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="FK Qarabag"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/10414.png" alt=""><span class="bracket-team-name">FK Qarabag</span></button><span class="ko-score">3</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Newcastle United"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/361.png" alt=""><span class="bracket-team-name">Newcastle United</span></button><span class="ko-score">9</span></div><div class="subtle">18/02/2026 - 24/02/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Bodo/Glimt"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/2980.png" alt=""><span class="bracket-team-name">Bodo/Glimt</span></button><span class="ko-score">5</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Internazionale"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/110.png" alt=""><span class="bracket-team-name">Internazionale</span></button><span class="ko-score">2</span></div><div class="subtle">18/02/2026 - 24/02/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Olympiacos"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/435.png" alt=""><span class="bracket-team-name">Olympiacos</span></button><span class="ko-score">0</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Bayer Leverkusen"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/131.png" alt=""><span class="bracket-team-name">Bayer Leverkusen</span></button><span class="ko-score">2</span></div><div class="subtle">18/02/2026 - 24/02/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div></article><article class="round"><div class="round-title">8es</div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Bodo/Glimt"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/2980.png" alt=""><span class="bracket-team-name">Bodo/Glimt</span></button><span class="ko-score">3</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Sporting CP"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/2250.png" alt=""><span class="bracket-team-name">Sporting CP</span></button><span class="ko-score">5</span></div><div class="subtle">11/03/2026 - 17/03/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Bayer Leverkusen"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/131.png" alt=""><span class="bracket-team-name">Bayer Leverkusen</span></button><span class="ko-score">1</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Arsenal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt=""><span class="bracket-team-name">Arsenal</span></button><span class="ko-score">3</span></div><div class="subtle">11/03/2026 - 17/03/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Newcastle United"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/361.png" alt=""><span class="bracket-team-name">Newcastle United</span></button><span class="ko-score">3</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Barcelona"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/83.png" alt=""><span class="bracket-team-name">Barcelona</span></button><span class="ko-score">8</span></div><div class="subtle">10/03/2026 - 18/03/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Atlético Madrid"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/1068.png" alt=""><span class="bracket-team-name">Atlético Madrid</span></button><span class="ko-score">7</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Tottenham Hotspur"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/367.png" alt=""><span class="bracket-team-name">Tottenham Hotspur</span></button><span class="ko-score">5</span></div><div class="subtle">10/03/2026 - 18/03/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div></article><article class="round"><div class="round-title">Quarts</div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Barcelona"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/83.png" alt=""><span class="bracket-team-name">Barcelona</span></button><span class="ko-score">2</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Atlético Madrid"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/1068.png" alt=""><span class="bracket-team-name">Atlético Madrid</span></button><span class="ko-score">3</span></div><div class="subtle">08/04/2026 - 14/04/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Sporting CP"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/2250.png" alt=""><span class="bracket-team-name">Sporting CP</span></button><span class="ko-score">0</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Arsenal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt=""><span class="bracket-team-name">Arsenal</span></button><span class="ko-score">1</span></div><div class="subtle">07/04/2026 - 15/04/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div></article><article class="round"><div class="round-title">Demies</div><div class="ko-match"><div class="ko-line"><button class="bracket-team" type="button" data-team="Atlético Madrid"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/1068.png" alt=""><span class="bracket-team-name">Atlético Madrid</span></button><span class="ko-score">1</span></div><div class="ko-line"><button class="bracket-team" type="button" data-team="Arsenal"><img class="flag" src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt=""><span class="bracket-team-name">Arsenal</span></button><span class="ko-score">2</span></div><div class="subtle">29/04/2026 - 05/05/2026</div><div class="subtle">Score cumulé</div><span class="status done">Terminé</span></div></article></div><div class="bracket-center"><div class="trophy-card">
         <div class="bracket-logo premium-trophy ucl-trophy bracket-trophy" aria-hidden="true">
           <svg viewBox="0 0 220 300" role="img" focusable="false">
@@ -3704,16 +3722,18 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function activeProfileGameLevels(profile) {
       return [
+        ['pronos', 'Pronos', profile?.level || 'Débutant'],
         ['quiz', 'Quiz', highestQuizLevel(profile?.badges || [], profile?.quiz_results || []) || 'Amateur'],
         ['who', 'Qui est-ce ?', highestWhoLevel(profile?.badges || [], profile?.quiz_results || []) || 'Amateur'],
-        ['pronos', 'Pronos', profile?.level || 'Débutant'],
         ['je-suis', 'Je suis ?', 'Bientôt'],
         ['dream-team', 'Dream Team', 'Bientôt']
       ];
     }
 
-    function activeProfileGameCard([key, label, value]) {
-      return `<button class="active-profile-progress-card" type="button" data-profile-game-ranking="${escapeHtml(key)}" aria-label="Ouvrir le classement ${escapeHtml(label)}"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`;
+    function activeProfileGameCard([key, label, value], profile) {
+      const rank = profileGameRank(profile, key);
+      const rankLabel = rank ? `#${rank}` : '—';
+      return `<button class="active-profile-progress-card" type="button" data-profile-game-ranking="${escapeHtml(key)}" aria-label="Ouvrir le classement ${escapeHtml(label)}"><span class="active-profile-card-rank">${escapeHtml(rankLabel)}</span><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`;
     }
 
     function gameLevelIndex(label = '') {
@@ -3722,14 +3742,46 @@ grant select, insert, update on public.profiles to authenticated;`;
       return index >= 0 ? index : -1;
     }
 
-    function bestGameScore(profile, game = 'quiz') {
+    function gameResults(profile, game = 'quiz') {
       const results = profile?.quiz_results || [];
-      const filtered = results.filter(item => {
+      return results.filter(item => {
         const type = String(item.theme_type || '');
         return game === 'who' ? type.startsWith('who:') : !type.startsWith('who:');
       });
-      const best = filtered.reduce((max, item) => Math.max(max, Number(item.score || 0)), 0);
-      return best ? `${best}/10` : '—';
+    }
+
+    function gameScoreSummary(profile, game = 'quiz') {
+      const rows = gameResults(profile, game);
+      const score = rows.reduce((sum, item) => sum + Number(item.score || 0), 0);
+      const total = rows.reduce((sum, item) => sum + Number(item.total_questions || 10), 0);
+      return {score, total, sessions: rows.length, label: total ? `${score}/${total}` : '—'};
+    }
+
+    function gameBonusPoints(profile, game = 'quiz') {
+      return gameResults(profile, game).reduce((sum, item) => {
+        const score = Number(item.score || 0);
+        if (score > 7) return sum + 3;
+        if (score >= 7) return sum + 2;
+        if (score >= 4) return sum + 1;
+        return sum;
+      }, 0);
+    }
+
+    function profileGamePoints(profile) {
+      return gameBonusPoints(profile, 'quiz') + gameBonusPoints(profile, 'who');
+    }
+
+    function profileGeneralPoints(profile) {
+      return Number(profile?.points || 0) + profileGamePoints(profile);
+    }
+
+    function profileGeneralRank(profile) {
+      if (!profile?.pseudo) return null;
+      const rows = Object.values(communityProfiles)
+        .filter(item => item && item.pseudo)
+        .sort((a, b) => profileGeneralPoints(b) - profileGeneralPoints(a) || String(a.pseudo || '').localeCompare(String(b.pseudo || '')));
+      const index = rows.findIndex(item => item.pseudo === profile.pseudo);
+      return index >= 0 ? index + 1 : null;
     }
 
     function profileGameRankingRows(game) {
@@ -3739,15 +3791,47 @@ grant select, insert, update on public.profiles to authenticated;`;
         .map(profile => {
           if (game === 'quiz') {
             const level = highestQuizLevel(profile.badges || [], profile.quiz_results || []) || profile.quiz_level || 'Amateur';
-            return {profile, level, value: bestGameScore(profile, 'quiz'), sort: gameLevelIndex(level) * 100 + Number(bestGameScore(profile, 'quiz').split('/')[0] || 0)};
+            const summary = gameScoreSummary(profile, 'quiz');
+            return {profile, level, value: summary.label, sort: summary.score * 1000 + summary.total + gameLevelIndex(level)};
           }
           if (game === 'who') {
             const level = highestWhoLevel(profile.badges || [], profile.quiz_results || []) || profile.who_level || 'Amateur';
-            return {profile, level, value: bestGameScore(profile, 'who'), sort: gameLevelIndex(level) * 100 + Number(bestGameScore(profile, 'who').split('/')[0] || 0)};
+            const summary = gameScoreSummary(profile, 'who');
+            return {profile, level, value: summary.label, sort: summary.score * 1000 + summary.total + gameLevelIndex(level)};
           }
           return {profile, level: profile.level || 'Débutant', value: `${Number(profile.points || 0)} pts`, sort: Number(profile.points || 0)};
         })
         .sort((a, b) => b.sort - a.sort || String(a.profile.pseudo || '').localeCompare(String(b.profile.pseudo || '')));
+    }
+
+    function profileGameRank(profile, game) {
+      if (!profile?.pseudo) return null;
+      if (game === 'general') return profileGeneralRank(profile);
+      const rows = profileGameRankingRows(game);
+      const index = rows.findIndex(row => row.profile.pseudo === profile.pseudo);
+      return index >= 0 ? index + 1 : null;
+    }
+
+    const USER_BRACKET_COMPETITIONS = {
+      worldcup: 'Coupe du Monde',
+      euro: 'Euro',
+      champions: 'Champions League'
+    };
+    const userBracketPlaceholders = {worldcup: null, euro: null, champions: null};
+
+    function setUserBracketPlaceholder(kind, bracket) {
+      if (!Object.prototype.hasOwnProperty.call(userBracketPlaceholders, kind)) return;
+      userBracketPlaceholders[kind] = bracket ? {...bracket, likes: 0, dislikes: 0, active: true} : null;
+    }
+
+    function openProfileInfoModal(title, subtitle, html) {
+      if (!profileGameRankingModal || !profileGameRankingBody || !profileGameRankingTitle || !profileGameRankingSubtitle) return;
+      profileGameRankingTitle.textContent = title;
+      profileGameRankingSubtitle.textContent = subtitle;
+      profileGameRankingBody.innerHTML = html;
+      profileGameRankingModal.classList.add('is-open');
+      profileGameRankingModal.setAttribute('aria-hidden', 'false');
+      profileGameRankingClose?.focus();
     }
 
     function openProfileGameRanking(game) {
@@ -3760,7 +3844,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         'dream-team': 'Classement Dream Team'
       };
       profileGameRankingTitle.textContent = labels[game] || 'Classement';
-      profileGameRankingSubtitle.textContent = game === 'je-suis' || game === 'dream-team' ? 'Mini-jeu bientôt disponible' : 'Niveaux et scores des membres';
+      profileGameRankingSubtitle.textContent = game === 'je-suis' || game === 'dream-team' ? 'Mini-jeu bientôt disponible' : 'Niveaux et scores cumulés des membres';
       const rows = profileGameRankingRows(game);
       profileGameRankingBody.innerHTML = rows.length
         ? rows.slice(0, 30).map((row, index) => `<article class="profile-game-ranking-row">
@@ -3772,6 +3856,42 @@ grant select, insert, update on public.profiles to authenticated;`;
       profileGameRankingModal.classList.add('is-open');
       profileGameRankingModal.setAttribute('aria-hidden', 'false');
       profileGameRankingClose?.focus();
+    }
+
+    function openProfilePointsHistory(pseudo) {
+      const profile = communityProfiles[pseudo] || profileFromSupabaseState();
+      if (!profile) return;
+      const pronos = Number(profile.points || 0);
+      const quiz = gameBonusPoints(profile, 'quiz');
+      const who = gameBonusPoints(profile, 'who');
+      const total = pronos + quiz + who;
+      openProfileInfoModal('Historique des points', profile.pseudo || 'Profil', `
+        <div class="profile-info-grid">
+          <article class="profile-info-card"><span>Pronostics</span><strong>${escapeHtml(pronos)} pts</strong><em>Points issus des pronostics.</em></article>
+          <article class="profile-info-card"><span>Quiz</span><strong>${escapeHtml(quiz)} pts</strong><em>${escapeHtml(gameScoreSummary(profile, 'quiz').label)} bonnes réponses.</em></article>
+          <article class="profile-info-card"><span>Qui est-ce ?</span><strong>${escapeHtml(who)} pts</strong><em>${escapeHtml(gameScoreSummary(profile, 'who').label)} bonnes réponses.</em></article>
+          <article class="profile-info-card"><span>Je suis ?</span><strong>0 pt</strong><em>Bientôt disponible.</em></article>
+          <article class="profile-info-card"><span>Dream Team</span><strong>0 pt</strong><em>Bientôt disponible.</em></article>
+          <article class="profile-info-card"><span>Total</span><strong>${escapeHtml(total)} pts</strong><em>Classement général.</em></article>
+        </div>
+      `);
+    }
+
+    function openBracketPlaceholder(kind) {
+      const label = USER_BRACKET_COMPETITIONS[kind] || 'Compétition';
+      openProfileInfoModal(`Mon bracket — ${label}`, 'Préparation des brackets utilisateur', '<div class="empty">Création de bracket bientôt disponible.</div>');
+    }
+
+    function openUserBracketsModal() {
+      const cards = Object.entries(USER_BRACKET_COMPETITIONS).map(([key, label]) => {
+        const bracket = userBracketPlaceholders[key];
+        return `<article class="profile-placeholder-card"><strong>${escapeHtml(label)}</strong><div class="subtle">${bracket ? 'Bracket actif' : 'Aucun bracket créé pour le moment'}</div><div class="subtle">Likes · Dislikes · Date de création</div></article>`;
+      }).join('');
+      openProfileInfoModal('Vos brackets', 'Coupe du Monde, Euro et Champions League', `<div class="profile-placeholder-grid">${cards}</div>`);
+    }
+
+    function openUserComposModal() {
+      openProfileInfoModal('Vos compos', 'Compositions futures', '<div class="profile-placeholder-grid"><article class="profile-placeholder-card"><strong>Club</strong><div class="subtle">Bientôt disponible.</div></article><article class="profile-placeholder-card"><strong>Nation</strong><div class="subtle">Bientôt disponible.</div></article></div>');
     }
 
     function closeProfileGameRanking() {
@@ -3803,7 +3923,9 @@ grant select, insert, update on public.profiles to authenticated;`;
       activeProfileCard.setAttribute('style', profileThemeStyle(profile));
       const favoriteClub = profile.favorite_club || 'Club favori';
       const favoriteNation = profile.favorite_nation || 'Nation favorite';
-      const rankText = profile.rank ? `#${profile.rank}` : 'Non classé';
+      const generalRank = profileGeneralRank(profile) || profile.rank;
+      const rankText = generalRank ? `#${generalRank}` : 'Non classé';
+      const totalPoints = profileGeneralPoints(profile);
       activeProfileCard.innerHTML = `
         ${profileBannerLogo(profile)}
         <button class="profile-avatar-button" type="button" data-open-active-profile aria-label="Ouvrir ma fiche profil">
@@ -3816,12 +3938,12 @@ grant select, insert, update on public.profiles to authenticated;`;
             <button class="profile-favorite-button" type="button" data-team="${escapeHtml(favoriteNation)}">${escapeHtml(favoriteNation)}</button>
           </div>
           <div class="active-profile-progress-grid">
-            ${activeProfileGameLevels(profile).map(activeProfileGameCard).join('')}
+            ${activeProfileGameLevels(profile).map(item => activeProfileGameCard(item, profile)).join('')}
           </div>
         </div>
         <div class="active-profile-scoreboard" aria-label="Classement et points">
           <div class="active-profile-score-row"><span>Classement</span><strong>${escapeHtml(rankText)}</strong></div>
-          <div class="active-profile-score-row"><span>Points</span><strong>${escapeHtml(profile.points || 0)} pts</strong></div>
+          <div class="active-profile-score-row"><span>Points</span><strong>${escapeHtml(totalPoints)} pts</strong></div>
         </div>
       `;
     }
@@ -4078,7 +4200,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       communityProfiles[profile.pseudo] = profile;
       const currentRows = Object.values(communityProfiles)
         .filter(item => item && item.pseudo)
-        .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+        .sort((a, b) => profileGeneralPoints(b) - profileGeneralPoints(a) || String(a.pseudo || '').localeCompare(String(b.pseudo || '')));
       currentRows.forEach((row, index) => { row.rank = index + 1; });
       const activeRow = currentRows.find(row => row.pseudo === profile.pseudo);
       if (activeRow) akroStats = {...(akroStats || {}), rank: activeRow.rank};
@@ -4886,7 +5008,12 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function renderLeaderboard(rows) {
       const list = document.getElementById('leaderboardList');
-      list.innerHTML = rows && rows.length ? rows.map((row, index) => `
+      const rankedRows = (rows || [])
+        .filter(row => row && row.pseudo)
+        .slice()
+        .sort((a, b) => profileGeneralPoints(b) - profileGeneralPoints(a) || String(a.pseudo || '').localeCompare(String(b.pseudo || '')));
+      rankedRows.forEach((row, index) => { row.rank = index + 1; });
+      list.innerHTML = rankedRows.length ? rankedRows.map((row, index) => `
         <div class="leaderboard-item ${index < 3 ? 'top-rank' : ''}" style="${profileThemeStyle(row)}">
           ${profileBannerLogo(row)}
           <button class="leaderboard-person" type="button" data-profile-pseudo="${escapeHtml(row.pseudo)}">
@@ -4894,7 +5021,7 @@ grant select, insert, update on public.profiles to authenticated;`;
             ${avatarImage(row.avatar_url, 'leaderboard-avatar', row)}
             <span class="leaderboard-name"><strong>${escapeHtml(row.pseudo)}</strong><span class="leaderboard-meta">${escapeHtml(row.favorite_club || 'Club')} · ${escapeHtml(row.favorite_nation || 'Nation')} · ${escapeHtml(row.predictions_count || 0)} pronos</span></span>
           </button>
-          <span class="leaderboard-points">${escapeHtml(row.points || 0)} pts<span class="leaderboard-rate">${escapeHtml(row.success_rate || 0)}% réussite</span></span>
+          <span class="leaderboard-points">${escapeHtml(profileGeneralPoints(row))} pts<span class="leaderboard-rate">${escapeHtml(row.success_rate || 0)}% réussite</span></span>
         </div>
       `).join('') : '<div class="empty">Aucun point pour le moment.</div>';
     }
@@ -4967,21 +5094,27 @@ grant select, insert, update on public.profiles to authenticated;`;
       const quizLevel = highestQuizLevel(profile.badges || [], profile.quiz_results || []);
       const whoLevel = highestWhoLevel(profile.badges || [], profile.quiz_results || []);
       const progressCards = [
-        ['Pronos', profile.level || 'Débutant'],
-        ['Quiz', quizLevel || 'Non commencé'],
-        ['Qui est-ce ?', whoLevel || 'Non commencé'],
-        ['Je suis ?', 'Bientôt'],
-        ['Dream Team', 'Bientôt']
+        ['pronos', 'Pronos', profile.level || 'Débutant'],
+        ['quiz', 'Quiz', quizLevel || 'Non commencé'],
+        ['who', 'Qui est-ce ?', whoLevel || 'Non commencé'],
+        ['je-suis', 'Je suis ?', 'Bientôt'],
+        ['dream-team', 'Dream Team', 'Bientôt']
       ];
-      const rankText = profile.rank ? (Number(profile.rank) <= 10 ? `Top 10 · classé #${profile.rank}` : `Classé #${profile.rank}`) : 'Non classé';
+      const generalRank = profileGeneralRank(profile) || profile.rank;
+      const rankText = generalRank ? (Number(generalRank) <= 10 ? `Top 10 · classé #${generalRank}` : `Classé #${generalRank}`) : 'Non classé';
+      const totalPoints = profileGeneralPoints(profile);
       title.textContent = profile.pseudo || pseudo;
       subtitle.textContent = `${rankText} · ${profile.level || 'Débutant'}`;
       badge.innerHTML = avatarImage(profile.avatar_url, 'profile-avatar', profile);
       const history = profile.recent_predictions || profile.history || [];
       body.innerHTML = `
-        <div class="profile-heading">
-          ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
-          <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(rankText)}</div></div>
+        <div class="profile-heading-shell">
+          <button class="profile-side-card" type="button" data-profile-compos><span>Vos compos</span><strong>Bientôt disponible</strong></button>
+          <div class="profile-heading">
+            ${avatarImage(profile.avatar_url, 'profile-avatar', profile)}
+            <div><strong>${escapeHtml(profile.pseudo || pseudo)}</strong><div class="subtle">${escapeHtml(rankText)}</div></div>
+          </div>
+          <button class="profile-side-card" type="button" data-profile-brackets><span>Vos brackets</span><strong>Voir les compétitions</strong></button>
         </div>
         <div class="profile-summary">
           <div class="profile-stat"><strong>${escapeHtml(profile.points || 0)}</strong><span>points</span></div>
@@ -4992,7 +5125,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         <div class="team-info">
           <div class="team-info-label">Progression</div>
           <div class="profile-progress-grid">
-            ${progressCards.map(([label, value]) => `<article class="profile-progress-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></article>`).join('')}
+            ${progressCards.map(([key, label, value]) => `<button class="profile-progress-card" type="button" data-profile-game-ranking="${escapeHtml(key)}"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`).join('')}
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-info-label">Classement</div>
+          <div class="profile-info-grid">
+            <button class="profile-info-card" type="button" data-profile-points-history="${escapeHtml(profile.pseudo || pseudo)}"><span>Classement</span><strong>${escapeHtml(generalRank ? `#${generalRank}` : 'Non classé')}</strong><em>${escapeHtml(totalPoints)} pts au total</em></button>
+            <button class="profile-info-card" type="button" data-profile-game-ranking="pronos"><span>Pronostics</span><strong>${escapeHtml(profile.predictions_count || 0)} pronos</strong><em>${escapeHtml(profile.exact_scores || 0)} exacts · ${escapeHtml(profile.success_rate || 0)}% réussite</em></button>
           </div>
         </div>
         <h3>Historique Pronostique</h3>
@@ -5051,7 +5191,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         renderMatchOptions(data.matches);
         renderFollowMatches(data.matches);
         communityProfiles = data.profiles || {};
-        renderLeaderboard(data.leaderboard);
+        const profileRows = Object.values(communityProfiles).filter(item => item && item.pseudo);
+        renderLeaderboard(profileRows.length ? profileRows : data.leaderboard);
         if (akroSupabase) await loadSupabaseUserData();
         renderFavoriteMatches(communityMatches);
         updatePredictionButton();
@@ -5116,6 +5257,24 @@ grant select, insert, update on public.profiles to authenticated;`;
         openProfileGameRanking(gameRankingTrigger.dataset.profileGameRanking || '');
         return;
       }
+      const pointsHistoryTrigger = event.target.closest('[data-profile-points-history]');
+      if (pointsHistoryTrigger) {
+        openProfilePointsHistory(pointsHistoryTrigger.dataset.profilePointsHistory || '');
+        return;
+      }
+      if (event.target.closest('[data-profile-brackets]')) {
+        openUserBracketsModal();
+        return;
+      }
+      if (event.target.closest('[data-profile-compos]')) {
+        openUserComposModal();
+        return;
+      }
+      const bracketTrigger = event.target.closest('[data-user-bracket]');
+      if (bracketTrigger) {
+        openBracketPlaceholder(bracketTrigger.dataset.userBracket || '');
+        return;
+      }
       const editablePrediction = event.target.closest('[data-edit-prediction]');
       if (editablePrediction && !event.target.closest('.profile-edit-form')) {
         editablePrediction.classList.toggle('is-editing');
@@ -5143,7 +5302,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     profileBannerStyle?.addEventListener('change', () => {
       saveProfileBannerMode(profileBannerStyle.value, akroProfile);
       renderActiveProfile();
-      renderLeaderboard(Object.values(communityProfiles).filter(item => item && item.pseudo).sort((a, b) => Number(b.points || 0) - Number(a.points || 0)));
+      renderLeaderboard(Object.values(communityProfiles).filter(item => item && item.pseudo));
     });
     profileEmailInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
     profilePseudoInput?.addEventListener('keydown', event => { if (event.key === 'Enter') createProfileFromModal(); });
