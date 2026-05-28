@@ -794,6 +794,14 @@
     .honor-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 11px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.055); }
     .honor-row strong { display: block; line-height: 1.16; }
     .honor-value { color: var(--gold); font-weight: 950; white-space: nowrap; }
+    .nation-honors { display: grid; gap: 12px; }
+    .nation-honor-card { padding: 13px; border-radius: 16px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(135deg, rgba(245,201,107,0.10), rgba(31,111,235,0.10)); }
+    .nation-honor-title { color: #ffe1a0; font-weight: 950; margin-bottom: 10px; }
+    .nation-honor-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+    .nation-honor-stat { padding: 10px; border-radius: 13px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
+    .nation-honor-stat strong { display: block; color: var(--gold); font-size: 21px; line-height: 1; }
+    .nation-honor-stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; font-weight: 850; text-transform: uppercase; }
+    .nation-honor-note { margin-top: 9px; color: var(--muted); font-size: 12px; font-weight: 800; }
     .formation-board { min-height: 140px; display: grid; place-items: center; border: 1px dashed rgba(245,201,107,0.30); border-radius: 16px; background: radial-gradient(ellipse at center, rgba(50,211,162,0.14), transparent 68%), linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035)); color: #d6e5f7; font-weight: 850; }
     .roster-section h3 { padding: 0; margin-bottom: 10px; color: #ffe1a0; }
     .player-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
@@ -2410,6 +2418,7 @@
         key: team.name,
         name: team.name,
         original_name: team.name,
+        type: team.type || '',
         api_id: team.api_id,
         flag_url: team.logo_url || team.country_flag_url || '',
         country_code: team.country_code || team.code || '',
@@ -2687,7 +2696,84 @@
       </section>`;
     }
 
+    const NATION_HONORS = {
+      mexico: {worldCup:[0,0,17], continental:['Copa América',0,2,11]},
+      'south africa': {worldCup:[0,0,4], continental:['CAN',1,1,11], last:'1996'},
+      'south korea': {worldCup:[0,0,12], continental:['Asian Cup',2,4,16], last:'1960'},
+      czechia: {worldCup:[0,2,10], continental:['EURO',1,1,11], last:'1976'},
+      canada: {worldCup:[0,0,3], continental:['Copa América',0,0,1]},
+      'bosnia herzegovina': {worldCup:[0,0,2], continental:['EURO',0,0,0]},
+      qatar: {worldCup:[0,0,2], continental:['Asian Cup',2,0,11], last:'2023'},
+      switzerland: {worldCup:[0,0,13], continental:['EURO',0,0,6]},
+      brazil: {worldCup:[5,2,23], continental:['Copa América',9,12,38], last:'2019'},
+      morocco: {worldCup:[0,0,7], continental:['CAN',1,1,19], last:'1976'},
+      haiti: {worldCup:[0,0,2], continental:['Copa América',0,0,0]},
+      scotland: {worldCup:[0,0,9], continental:['EURO',0,0,4]},
+      'united states': {worldCup:[0,0,12], continental:['Copa América',0,0,5]},
+      paraguay: {worldCup:[0,0,9], continental:['Copa América',2,6,39], last:'1979'},
+      australia: {worldCup:[0,0,7], continental:['Asian Cup',1,1,6], last:'2015'},
+      turkiye: {worldCup:[0,0,3], continental:['EURO',0,0,6]},
+      germany: {worldCup:[4,4,21], continental:['EURO',3,3,14], last:'2014'},
+      curacao: {worldCup:[0,0,1], continental:['Copa América',0,0,0]},
+      'ivory coast': {worldCup:[0,0,5], continental:['CAN',3,2,26], last:'2023'},
+      ecuador: {worldCup:[0,0,5], continental:['Copa América',0,0,30]},
+      netherlands: {worldCup:[0,3,12], continental:['EURO',1,0,11], last:'1988'},
+      japan: {worldCup:[0,0,8], continental:['Asian Cup',4,1,11], last:'2011'},
+      sweden: {worldCup:[0,1,13], continental:['EURO',0,0,8]},
+      tunisia: {worldCup:[0,0,7], continental:['CAN',1,2,22], last:'2004'},
+      belgium: {worldCup:[0,0,15], continental:['EURO',0,1,7]},
+      egypt: {worldCup:[0,0,4], continental:['CAN',7,3,26], last:'2010'},
+      iran: {worldCup:[0,0,7], continental:['Asian Cup',3,0,16], last:'1976'},
+      'new zealand': {worldCup:[0,0,4], continental:['OFC Nations Cup',5,1,11], last:'2016'},
+      spain: {worldCup:[1,0,17], continental:['EURO',4,1,12], last:'2024'},
+      'cape verde': {worldCup:[0,0,1], continental:['CAN',0,0,4]},
+      'saudi arabia': {worldCup:[0,0,7], continental:['Asian Cup',3,3,12], last:'1996'},
+      uruguay: {worldCup:[2,0,15], continental:['Copa América',15,6,46], last:'2011'},
+      france: {worldCup:[2,2,17], continental:['EURO',2,1,11], last:'2018'},
+      senegal: {worldCup:[0,0,4], continental:['CAN',1,2,18], last:'2021'},
+      iraq: {worldCup:[0,0,2], continental:['Asian Cup',1,0,10], last:'2007'},
+      norway: {worldCup:[0,0,4], continental:['EURO',0,0,1]},
+      argentina: {worldCup:[3,3,19], continental:['Copa América',16,14,44], last:'2022'},
+      algeria: {worldCup:[0,0,5], continental:['CAN',2,1,20], last:'2019'},
+      austria: {worldCup:[0,0,8], continental:['EURO',0,0,4]},
+      jordan: {worldCup:[0,0,1], continental:['Asian Cup',0,1,5]},
+      portugal: {worldCup:[0,0,9], continental:['EURO',1,1,9], last:'2016'},
+      'congo dr': {worldCup:[0,0,2], continental:['CAN',2,0,20], last:'1974'},
+      uzbekistan: {worldCup:[0,0,1], continental:['Asian Cup',0,0,8]},
+      colombia: {worldCup:[0,0,7], continental:['Copa América',1,2,24], last:'2001'},
+      england: {worldCup:[1,0,17], continental:['EURO',0,2,11], last:'1966'},
+      croatia: {worldCup:[0,1,7], continental:['EURO',0,0,8]},
+      ghana: {worldCup:[0,0,5], continental:['CAN',4,5,24], last:'1982'},
+      panama: {worldCup:[0,0,2], continental:['Copa América',0,0,1]}
+    };
+
+    function nationHonorsData(details) {
+      const aliases = footballAliasSet(details.name || details.key || details.country || '');
+      for (const alias of aliases) {
+        if (NATION_HONORS[alias]) return NATION_HONORS[alias];
+      }
+      return null;
+    }
+
+    function statCard(label, value) {
+      return `<div class="nation-honor-stat"><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`;
+    }
+
+    function nationHonorsCard(details) {
+      const data = nationHonorsData(details);
+      if (!data) return '';
+      const [wcTitles, wcFinals, wcParticipations] = data.worldCup;
+      const [continentalName, continentalTitles, continentalFinals, continentalParticipations] = data.continental;
+      const lastTitle = data.last ? `<div class="nation-honor-note">Dernier titre : ${escapeHtml(data.last)}</div>` : '';
+      return `<section class="nation-honors">
+        <article class="nation-honor-card"><div class="nation-honor-title">Coupe du Monde</div><div class="nation-honor-stats">${statCard('Titres', wcTitles)}${statCard('Finales perdues', wcFinals)}${statCard('Participations', wcParticipations)}</div></article>
+        <article class="nation-honor-card"><div class="nation-honor-title">${escapeHtml(continentalName)}</div><div class="nation-honor-stats">${statCard('Titres', continentalTitles)}${statCard('Finales perdues', continentalFinals)}${statCard('Participations', continentalParticipations)}</div>${lastTitle}</article>
+      </section>`;
+    }
+
     function honorsCard(details) {
+      const nationHonors = details.type === 'nation' ? nationHonorsCard(details) : '';
+      if (nationHonors) return nationHonors;
       const honors = details.honors || details.palmares || [];
       if (!honors.length) return `<div class="team-info"><div class="team-info-label">Palmarès</div><div class="team-info-value">Palmarès non disponible dans Supabase/cache pour le moment.</div><div class="team-info-actions"><button class="coach-ask-button" type="button" data-team-coach-topic="palmarès" data-team-name="${escapeHtml(details.name || details.key || '')}">Demander au Coach</button></div></div>`;
       return `<section class="team-info"><div class="team-info-label">Palmarès Foot Mercato</div><div class="honors-list">${honors.map(item => `<article class="honor-row"><div><strong>${escapeHtml(item.competition || '')}</strong><div class="subtle">${escapeHtml(item.years || 'Années non disponibles')}</div></div><div class="honor-value">${escapeHtml(item.titles || '')} titre${Number(item.titles) > 1 ? 's' : ''}</div></article>`).join('')}</div></section>`;
