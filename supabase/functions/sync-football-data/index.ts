@@ -15,6 +15,15 @@ const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
 const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
 const DEFAULT_ROSTER_RECHECK_DAYS = 7;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
+const DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS = [
+  "Paris Saint-Germain", "PSG", "Arsenal", "Real Madrid", "Barcelona", "Barcelone", "Bayern Munich", "Bayern München", "Bayern Munchen",
+  "Inter", "Internazionale", "Manchester City", "Liverpool", "Atletico Madrid", "Atlético Madrid", "Borussia Dortmund",
+  "Chelsea", "Juventus", "Benfica", "Sporting CP", "Sporting Lisbon", "Monaco", "AS Monaco", "Atalanta", "Bayer Leverkusen",
+  "Club Brugge", "Newcastle United", "Tottenham Hotspur", "Olympiacos", "Olympiakos", "Qarabag", "FK Qarabag",
+  "Union Saint-Gilloise", "Union SG", "Ajax", "Ajax Amsterdam", "Napoli", "Marseille", "OM", "Villarreal", "Athletic Club",
+  "PSV", "PSV Eindhoven", "Eintracht Frankfurt", "Slavia Prague", "Slavia Praha", "Copenhagen", "FC Copenhagen", "F.C. København",
+  "Pafos", "Pafos FC", "Kairat Almaty", "Kairat",
+];
 const DEFAULT_PRIORITY_TEAMS = [
   "Türkiye", "Turkey", "Turquie", "Mexico", "Mexique", "Cape Verde", "Cabo Verde", "Cap-Vert", "Bosnia-Herzegovina", "Bosnia and Herzegovina", "Bosnia & Herzegovina", "Bosnie-Herzégovine", "South Africa", "Afrique du Sud",
   "Colombia", "Colombie", "Argentina", "Argentine",
@@ -26,8 +35,7 @@ const DEFAULT_PRIORITY_TEAMS = [
   "Brazil", "Brésil", "United States", "USA", "États-Unis", "Paraguay", "Australia", "Australie",
   "Germany", "Allemagne", "Ivory Coast", "Côte d'Ivoire", "Ecuador", "Équateur", "Netherlands", "Pays-Bas", "Japan", "Japon",
   "Belgium", "Belgique", "Egypt", "Égypte", "Spain", "Espagne", "Uruguay", "France", "Norway", "Norvège",
-  "Paris Saint-Germain", "PSG", "Arsenal", "Real Madrid", "Barcelona", "Barcelone", "Bayern Munich", "Bayern München", "Bayern Munchen",
-  "Inter", "Internazionale", "Manchester City", "Liverpool", "Atletico Madrid", "Atlético Madrid", "Borussia Dortmund",
+  ...DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS,
 ].join(",");
 const INCLUDE_PLAYERS = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_PLAYERS") ?? "false").toLowerCase() === "true";
 const INCLUDE_COACHES = (Deno.env.get("FOOTBALL_SYNC_INCLUDE_COACHES") ?? "false").toLowerCase() === "true";
@@ -48,6 +56,7 @@ console.log("[sync-football-data] boot", {
   rosterRecheckDays: Deno.env.get("FOOTBALL_SYNC_ROSTER_RECHECK_DAYS") ?? String(DEFAULT_ROSTER_RECHECK_DAYS),
   teamLeagues: Deno.env.get("FOOTBALL_SYNC_TEAM_LEAGUES") ?? DEFAULT_TEAM_LEAGUES,
   priorityTeams: Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS,
+  championsLeaguePriorityTeams: DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS,
   matchesTotalLimit: Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT),
   includePlayers: INCLUDE_PLAYERS,
   includeCoaches: INCLUDE_COACHES,
@@ -142,10 +151,22 @@ function configuredLeagueIds() {
 }
 
 function configuredPriorityTeams() {
-  return (Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS)
-    .split(",")
+  return [
+    ...(Deno.env.get("FOOTBALL_SYNC_PRIORITY_TEAMS") ?? DEFAULT_PRIORITY_TEAMS).split(","),
+    ...DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS,
+  ]
     .map(value => value.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter((value, index, values) => values.findIndex(item => norm(item) === norm(value)) === index);
+}
+
+function isChampionsLeaguePriorityTeam(name: unknown) {
+  const teamName = norm(name);
+  if (!teamName) return false;
+  return DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS
+    .map(norm)
+    .filter(Boolean)
+    .includes(teamName);
 }
 
 function countryIdForName(countryLookup: Map<string, string>, name: unknown) {
@@ -410,8 +431,10 @@ async function readTeamTargets(limit: number, options: {rosterCounts?: Map<strin
   const rosterStats = {
     validatedTeamsTotal: enriched.length,
     validatedNationsTotal: enriched.filter(row => row.type === "nation").length,
+    validatedChampionsLeagueClubsTotal: enriched.filter(row => row.type !== "nation" && isChampionsLeaguePriorityTeam(row.name)).length,
     completeRostersTotal: completeRows.length,
     completeNationsTotal: completeRows.filter(row => row.type === "nation").length,
+    completeChampionsLeagueClubsTotal: completeRows.filter(row => row.type !== "nation" && isChampionsLeaguePriorityTeam(row.name)).length,
     alreadyOkTotal: freshCompleteRows.length,
   };
   const priority = availableRows
@@ -625,16 +648,19 @@ Deno.serve(async () => {
       let clubsProcessed = 0;
       let nationsProcessed = 0;
       let nationsWithoutSquad = 0;
+      let championsLeagueClubsProcessed = 0;
       const teamLogs: Json[] = [];
       console.log("[sync-football-data] players limits", {playerTeamsLimit, teamsToVisit: playerTeamTargets.length, completeRosterSize, recheckDays, skippedComplete: skippedComplete.length});
       for (const teamTarget of playerTeamTargets) {
         playerTeamsVisited += 1;
+        const isChampionsLeaguePriority = teamTarget.type !== "nation" && isChampionsLeaguePriorityTeam(teamTarget.name);
         if (teamTarget.priority) priorityTeamsProcessed += 1;
         if (teamTarget.type === "nation") {
           nationsProcessed += 1;
           if (teamTarget.priority) priorityNationsProcessed += 1;
         } else {
           clubsProcessed += 1;
+          if (isChampionsLeaguePriority) championsLeagueClubsProcessed += 1;
         }
         console.log("[sync-football-data] fetch squad", {teamApiId: teamTarget.api_id, teamName: teamTarget.name, teamType: teamTarget.type, priority: teamTarget.priority, linkedPlayers: teamTarget.linkedPlayers});
         let squad: Json[] = [];
@@ -705,6 +731,7 @@ Deno.serve(async () => {
           teamApiId: teamTarget.api_id,
           teamType: teamTarget.type,
           priority: teamTarget.priority,
+          championsLeaguePriority: isChampionsLeaguePriority,
           playersFoundForTeam: players.length,
           normalizedPlayers: normalizedPlayers.length,
           playerRowsUpserted: playerRows.length,
@@ -726,6 +753,7 @@ Deno.serve(async () => {
           supabase_team_id: teamTarget.id,
           type: teamTarget.type,
           priority: teamTarget.priority,
+          champions_league_priority: isChampionsLeaguePriority,
           linked_before: teamTarget.linkedPlayers,
           players_found: players.length,
           normalized_players: normalizedPlayers.length,
@@ -751,14 +779,18 @@ Deno.serve(async () => {
       counts.team_player_missing_player_ids = missingPlayerLinks;
       counts.roster_priority_teams_processed = priorityTeamsProcessed;
       counts.roster_priority_nations_processed = priorityNationsProcessed;
+      counts.roster_champions_league_clubs_processed = championsLeagueClubsProcessed;
+      counts.roster_champions_league_clubs_skipped_complete = skippedComplete.filter(row => row.type !== "nation" && isChampionsLeaguePriorityTeam(row.name)).length;
       counts.roster_clubs_processed = clubsProcessed;
       counts.roster_nations_processed = nationsProcessed;
       counts.roster_teams_skipped_complete = skippedComplete.length;
       counts.roster_priority_nations_skipped_complete = skippedComplete.filter(row => row.type === "nation" && row.priority).length;
       counts.roster_validated_teams_total = rosterStats.validatedTeamsTotal;
       counts.roster_validated_nations_total = rosterStats.validatedNationsTotal;
+      counts.roster_validated_champions_league_clubs_total = rosterStats.validatedChampionsLeagueClubsTotal;
       counts.roster_complete_total = rosterStats.completeRostersTotal;
       counts.roster_complete_nations_total = rosterStats.completeNationsTotal;
+      counts.roster_complete_champions_league_clubs_total = rosterStats.completeChampionsLeagueClubsTotal;
       counts.roster_updated_teams = playerTeamsVisited;
       counts.roster_already_ok = rosterStats.alreadyOkTotal;
       counts.roster_nations_without_squad = nationsWithoutSquad;
@@ -770,6 +802,7 @@ Deno.serve(async () => {
         teamsVisited: playerTeamsVisited,
         priorityTeamsProcessed,
         priorityNationsProcessed,
+        championsLeagueClubsProcessed,
         clubsProcessed,
         nationsProcessed,
         nationsWithoutSquad,
