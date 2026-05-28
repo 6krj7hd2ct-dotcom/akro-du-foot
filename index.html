@@ -487,6 +487,9 @@
     .player-summary-card .euro-summary-value { max-width: 82%; font-size: 25px; }
     .annual-awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 18px; }
     .award-card { position: relative; overflow: hidden; min-height: 118px; display: grid; align-content: space-between; gap: 9px; padding: 14px; border-radius: 16px; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(245,201,107,0.08)); border: 1px solid rgba(255,255,255,0.10); }
+    .award-card[data-award-history] { cursor: pointer; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; text-align: left; }
+    .award-card[data-award-history]:hover { transform: translateY(-2px); border-color: rgba(245,201,107,0.42); box-shadow: 0 18px 38px rgba(0,0,0,0.28), 0 0 0 1px rgba(99,232,255,0.12); }
+    .award-card[data-award-history]:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     .award-card::after { content: attr(data-mark); position: absolute; right: 12px; bottom: -8px; font-size: 54px; line-height: 1; opacity: .14; pointer-events: none; }
     .award-card strong { color: #fff4c6; font-size: 15px; }
     .award-card p { margin: 0; color: #d6e5f7; font-size: 12px; line-height: 1.32; }
@@ -506,6 +509,17 @@
     .news-awards-grid .award-copy, .tournament-awards-grid .award-copy { grid-column: 1; grid-row: 1; }
     .award-copy strong { color: #9fe9ff; font-size: 11px; letter-spacing: .02em; text-transform: uppercase; }
     .award-copy .winner { font-size: 20px; line-height: 1.06; }
+    .award-history-dialog { width: min(820px, 100%); max-height: min(86vh, 820px); overflow: hidden; display: flex; flex-direction: column; }
+    .award-history-dialog .team-modal-body { overflow-y: auto; padding-bottom: 24px; }
+    .award-history-list { display: grid; gap: 10px; }
+    .award-history-card { position: relative; overflow: hidden; display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(99,232,255,0.24); border-radius: 15px; background: linear-gradient(145deg, rgba(7,17,31,0.94), rgba(12,39,62,0.86)); }
+    .award-history-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 92% 50%, rgba(245,201,107,0.14), transparent 28%); pointer-events: none; }
+    .award-history-photo { position: relative; z-index: 1; width: 58px; height: 58px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: #ffe1a0; font-weight: 950; }
+    .award-history-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .award-history-main { position: relative; z-index: 1; min-width: 0; }
+    .award-history-main strong { display: block; color: #fff; font-size: 17px; line-height: 1.1; }
+    .award-history-years { margin-top: 4px; color: #cfe0f4; font-size: 12px; line-height: 1.35; }
+    .award-history-count { position: relative; z-index: 1; min-width: 88px; padding: 8px 10px; border-radius: 999px; background: rgba(245,201,107,0.14); border: 1px solid rgba(245,201,107,0.28); color: #ffe1a0; text-align: center; font-weight: 950; }
     .historical-match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; width: 100%; }
     .historical-calendar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; width: 100%; }
     .historical-match-card { display: grid; gap: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.055); }
@@ -1222,6 +1236,9 @@
       .euro-summary-card.player-summary-card { padding-right: 86px; }
       .player-summary-photo { width: 78px; height: 96px; }
       .news-awards-grid .award-card, .tournament-awards-grid .award-card { grid-template-columns: minmax(0, 1fr) 74px; }
+      .award-history-card { grid-template-columns: 48px minmax(0, 1fr); }
+      .award-history-photo { width: 48px; height: 48px; }
+      .award-history-count { grid-column: 2; justify-self: start; min-width: 0; }
       .award-photo { width: 74px; height: 96px; }
       .team-modal-head { grid-template-columns: auto 1fr auto; padding: 14px; }
       .team-modal-flag { width: 46px; height: 46px; }
@@ -1437,19 +1454,19 @@
       </section>
       <div class="section-head"><div class="section-title"><h2>Récompenses annuelles</h2></div><div class="section-note">Lauréats majeurs, mise à jour annuelle.</div></div>
       <section class="annual-awards-grid news-awards-grid" aria-label="Récompenses annuelles">
-        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)">
+        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)" data-award-history="ballon-or" role="button" tabindex="0" aria-label="Voir l'historique du Ballon d'Or">
           <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/692984.png" alt="Ousmane Dembélé" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>OD</span></div>
           <div class="award-copy"><strong>Ballon d'Or</strong><p>Meilleur joueur de l'année.</p><div class="winner">Ousmane Dembélé</div><p>Mise à jour annuelle</p></div>
         </article>
-        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/ita.png)">
+        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/ita.png)" data-award-history="yachine" role="button" tabindex="0" aria-label="Voir l'historique du Trophée Yachine">
           <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/618878.png" alt="Gianluigi Donnarumma" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>GD</span></div>
           <div class="award-copy"><strong>Trophée Yachine</strong><p>Meilleur gardien.</p><div class="winner">Gianluigi Donnarumma</div><p>Mise à jour annuelle</p></div>
         </article>
-        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)">
+        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/esp.png)" data-award-history="kopa" role="button" tabindex="0" aria-label="Voir l'historique du Trophée Kopa">
           <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/1467236.png" alt="Lamine Yamal" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>LY</span></div>
           <div class="award-copy"><strong>Trophée Kopa</strong><p>Meilleur jeune joueur.</p><div class="winner">Lamine Yamal</div><p>Mise à jour annuelle</p></div>
         </article>
-        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/swe.png)">
+        <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/swe.png)" data-award-history="gerd-muller" role="button" tabindex="0" aria-label="Voir l'historique du Trophée Gerd Müller">
           <div class="award-photo"><img src="https://images.fotmob.com/image_resources/playerimages/664500.png" alt="Viktor Gyökeres" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="award-photo-fallback" hidden>VG</span></div>
           <div class="award-copy"><strong>Trophée Gerd Müller</strong><p>Meilleur buteur de l'année.</p><div class="winner">Viktor Gyökeres</div><p>Mise à jour annuelle</p></div>
         </article>
@@ -1937,6 +1954,22 @@
       </header>
       <div class="team-modal-body">
         <div id="allTimeBody"></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="team-modal" id="awardHistoryModal" aria-hidden="true">
+    <article class="team-dialog award-history-dialog" role="dialog" aria-modal="true" aria-labelledby="awardHistoryTitle">
+      <header class="team-modal-head">
+        <div class="reward-badge" id="awardHistoryBadge">H</div>
+        <div>
+          <div class="team-modal-title" id="awardHistoryTitle">Historique</div>
+          <div class="subtle" id="awardHistoryDescription">Anciens gagnants classés par nombre de titres.</div>
+        </div>
+        <button class="modal-close" type="button" id="awardHistoryClose" aria-label="Fermer">×</button>
+      </header>
+      <div class="team-modal-body">
+        <div class="award-history-list" id="awardHistoryBody"></div>
       </div>
     </article>
   </div>
@@ -2924,6 +2957,92 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && modal.classList.contains('is-open')) hideTeam();
     });
+  </script>
+  <script>
+    const AWARD_HISTORY_DATA = {
+      'ballon-or': {badge:'BO', title:"Ballon d'Or", description:"Palmarès historique groupé par joueur, trié par nombre de victoires.", label:"Ballon d'Or", labelPlural:"Ballons d'Or", winners:[
+        {name:'Lionel Messi', years:[2009,2010,2011,2012,2015,2019,2021,2023], photo:'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {name:'Cristiano Ronaldo', years:[2008,2013,2014,2016,2017], photo:'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {name:'Michel Platini', years:[1983,1984,1985]}, {name:'Johan Cruyff', years:[1971,1973,1974]}, {name:'Marco van Basten', years:[1988,1989,1992]},
+        {name:'Alfredo Di Stéfano', years:[1957,1959]}, {name:'Franz Beckenbauer', years:[1972,1976]}, {name:'Kevin Keegan', years:[1978,1979]},
+        {name:'Karl-Heinz Rummenigge', years:[1980,1981]}, {name:'Ronaldo', years:[1997,2002]}, {name:'Stanley Matthews', years:[1956]}, {name:'Raymond Kopa', years:[1958]},
+        {name:'Luis Suárez', years:[1960]}, {name:'Omar Sívori', years:[1961]}, {name:'Josef Masopust', years:[1962]}, {name:'Lev Yashin', years:[1963]},
+        {name:'Denis Law', years:[1964]}, {name:'Eusébio', years:[1965]}, {name:'Bobby Charlton', years:[1966]}, {name:'Flórián Albert', years:[1967]},
+        {name:'George Best', years:[1968]}, {name:'Gianni Rivera', years:[1969]}, {name:'Gerd Müller', years:[1970]}, {name:'Oleg Blokhin', years:[1975]},
+        {name:'Allan Simonsen', years:[1977]}, {name:'Paolo Rossi', years:[1982]}, {name:'Igor Belanov', years:[1986]}, {name:'Ruud Gullit', years:[1987]},
+        {name:'Lothar Matthäus', years:[1990]}, {name:'Jean-Pierre Papin', years:[1991]}, {name:'Roberto Baggio', years:[1993]}, {name:'Hristo Stoichkov', years:[1994]},
+        {name:'George Weah', years:[1995]}, {name:'Matthias Sammer', years:[1996]}, {name:'Zinedine Zidane', years:[1998]}, {name:'Rivaldo', years:[1999]},
+        {name:'Luís Figo', years:[2000]}, {name:'Michael Owen', years:[2001]}, {name:'Pavel Nedvěd', years:[2003]}, {name:'Andriy Shevchenko', years:[2004]},
+        {name:'Ronaldinho', years:[2005]}, {name:'Fabio Cannavaro', years:[2006]}, {name:'Kaká', years:[2007], photo:'https://images.fotmob.com/image_resources/playerimages/10884.png'},
+        {name:'Luka Modrić', years:[2018], photo:'https://images.fotmob.com/image_resources/playerimages/31097.png'}, {name:'Karim Benzema', years:[2022]},
+        {name:'Rodri', years:[2024], photo:'https://images.fotmob.com/image_resources/playerimages/675088.png'}, {name:'Ousmane Dembélé', years:[2025], photo:'https://images.fotmob.com/image_resources/playerimages/692984.png'}
+      ]},
+      'yachine': {badge:'Y', title:'Trophée Yachine', description:'Meilleur gardien, palmarès depuis la création du trophée.', label:'Trophée Yachine', labelPlural:'Trophées Yachine', winners:[
+        {name:'Gianluigi Donnarumma', years:[2021,2025], photo:'https://images.fotmob.com/image_resources/playerimages/618878.png'}, {name:'Emiliano Martínez', years:[2023,2024]},
+        {name:'Alisson Becker', years:[2019]}, {name:'Thibaut Courtois', years:[2022]}
+      ]},
+      'kopa': {badge:'K', title:'Trophée Kopa', description:'Meilleur jeune joueur, palmarès depuis la création du trophée.', label:'Trophée Kopa', labelPlural:'Trophées Kopa', winners:[
+        {name:'Lamine Yamal', years:[2024,2025], photo:'https://images.fotmob.com/image_resources/playerimages/1467236.png'}, {name:'Kylian Mbappé', years:[2018], photo:'https://images.fotmob.com/image_resources/playerimages/701154.png'},
+        {name:'Matthijs de Ligt', years:[2019]}, {name:'Pedri', years:[2021]}, {name:'Gavi', years:[2022]}, {name:'Jude Bellingham', years:[2023]}
+      ]},
+      'gerd-muller': {badge:'GM', title:'Trophée Gerd Müller', description:"Meilleur buteur de l'année, classement historique des lauréats.", label:'Trophée Gerd Müller', labelPlural:'Trophées Gerd Müller', winners:[
+        {name:'Robert Lewandowski', years:[2021,2022]}, {name:'Harry Kane', years:[2024], photo:'https://images.fotmob.com/image_resources/playerimages/194165.png'},
+        {name:'Kylian Mbappé', years:[2024], photo:'https://images.fotmob.com/image_resources/playerimages/701154.png'}, {name:'Erling Haaland', years:[2023], photo:'https://images.fotmob.com/image_resources/playerimages/737066.png'},
+        {name:'Viktor Gyökeres', years:[2025], photo:'https://images.fotmob.com/image_resources/playerimages/664500.png'}
+      ]}
+    };
+    function awardHistoryInitials(name) {
+      return String(name || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
+    }
+    function awardHistoryCard(item, award) {
+      const safeName = escapeHtml(item.name);
+      const years = [...(item.years || [])].sort((a, b) => a - b);
+      const count = years.length;
+      const photo = item.photo ? `<img src="${escapeHtml(item.photo)}" alt="${safeName}" onerror="this.hidden=true;this.nextElementSibling.hidden=false;">` : '';
+      const fallbackHidden = item.photo ? ' hidden' : '';
+      const label = count > 1 ? (award.labelPlural || `${award.label}s`) : award.label;
+      return `<article class="award-history-card"><div class="award-history-photo">${photo}<span${fallbackHidden}>${escapeHtml(awardHistoryInitials(item.name))}</span></div><div class="award-history-main"><strong>${safeName}</strong><div class="award-history-years">${escapeHtml(years.join(', '))}</div></div><div class="award-history-count">${count} ${escapeHtml(label)}</div></article>`;
+    }
+    function openAwardHistory(key) {
+      const data = AWARD_HISTORY_DATA[key];
+      const modal = document.getElementById('awardHistoryModal');
+      const title = document.getElementById('awardHistoryTitle');
+      const description = document.getElementById('awardHistoryDescription');
+      const badge = document.getElementById('awardHistoryBadge');
+      const body = document.getElementById('awardHistoryBody');
+      if (!data || !modal || !title || !description || !badge || !body) return;
+      title.textContent = data.title;
+      description.textContent = data.description;
+      badge.textContent = data.badge;
+      const latestYear = item => Math.max(...(item.years || [0]));
+      const winners = [...(data.winners || [])].sort((a, b) => (b.years?.length || 0) - (a.years?.length || 0) || latestYear(b) - latestYear(a) || String(a.name).localeCompare(String(b.name), 'fr'));
+      body.innerHTML = winners.map(item => awardHistoryCard(item, data)).join('') || '<div class="historical-unavailable">Historique indisponible.</div>';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.getElementById('awardHistoryClose')?.focus();
+    }
+    function closeAwardHistory() {
+      const modal = document.getElementById('awardHistoryModal');
+      modal?.classList.remove('is-open');
+      modal?.setAttribute('aria-hidden', 'true');
+    }
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('[data-award-history]');
+      if (trigger) {
+        openAwardHistory(trigger.dataset.awardHistory);
+        return;
+      }
+      if (event.target === document.getElementById('awardHistoryModal')) closeAwardHistory();
+    });
+    document.addEventListener('keydown', (event) => {
+      const trigger = event.target.closest?.('[data-award-history]');
+      if (trigger && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault();
+        openAwardHistory(trigger.dataset.awardHistory);
+      }
+      if (event.key === 'Escape' && document.getElementById('awardHistoryModal')?.classList.contains('is-open')) closeAwardHistory();
+    });
+    document.getElementById('awardHistoryClose')?.addEventListener('click', closeAwardHistory);
   </script>
   <script>
     const HONOURS_LISTS = {"worldcup-history": {"players": [{"name": "Brésil", "country": "Brésil", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png", "value": "5", "years": "1958, 1962, 1970, 1994, 2002", "rank": 1}, {"name": "Allemagne", "country": "Allemagne", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png", "value": "4", "years": "1954, 1974, 1990, 2014", "rank": 2}, {"name": "Italie", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ita.png", "value": "4", "years": "1934, 1938, 1982, 2006", "rank": 2}, {"name": "Argentine", "country": "Argentine", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png", "value": "3", "years": "1978, 1986, 2022", "rank": 4}, {"name": "France", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png", "value": "2", "years": "1998, 2018", "rank": 5}, {"name": "Uruguay", "country": "Uruguay", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png", "value": "2", "years": "1930, 1950", "rank": 5}, {"name": "Angleterre", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png", "value": "1", "years": "1966", "rank": 7}, {"name": "Espagne", "country": "Espagne", "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png", "value": "1", "years": "2010", "rank": 7}], "title": "Palmarès Coupe du Monde", "empty": "Palmarès Coupe du Monde indisponible", "label": "titres"}, "champions-history": {"players": [{"name": "Real Madrid", "country": "Espagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png", "value": "15", "years": "1956, 1957, 1958, 1959, 1960, 1966, 1998, 2000, 2002, 2014, 2016, 2017, 2018, 2022, 2024", "rank": 1}, {"name": "AC Milan", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/103.png", "value": "7", "years": "1963, 1969, 1989, 1990, 1994, 2003, 2007", "rank": 2}, {"name": "Bayern Munich", "country": "Allemagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png", "value": "6", "years": "1974, 1975, 1976, 2001, 2013, 2020", "rank": 3}, {"name": "Liverpool", "country": "Angleterre", "flag_url": "", "value": "6", "years": "1977, 1978, 1981, 1984, 2005, 2019", "rank": 3}, {"name": "Barcelona", "country": "Espagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png", "value": "5", "years": "1992, 2006, 2009, 2011, 2015", "rank": 5}, {"name": "Ajax", "country": "Pays-Bas", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/139.png", "value": "4", "years": "1971, 1972, 1973, 1995", "rank": 6}, {"name": "Internazionale", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png", "value": "3", "years": "1964, 1965, 2010", "rank": 7}, {"name": "Manchester United", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/360.png", "value": "3", "years": "1968, 1999, 2008", "rank": 7}, {"name": "Benfica", "country": "Portugal", "flag_url": "", "value": "2", "years": "1961, 1962", "rank": 9}, {"name": "Chelsea", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png", "value": "2", "years": "2012, 2021", "rank": 9}, {"name": "Juventus", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/111.png", "value": "2", "years": "1985, 1996", "rank": 9}, {"name": "Nottingham Forest", "country": "Angleterre", "flag_url": "", "value": "2", "years": "1979, 1980", "rank": 9}, {"name": "Porto", "country": "Portugal", "flag_url": "", "value": "2", "years": "1987, 2004", "rank": 9}, {"name": "Celtic", "country": "Écosse", "flag_url": "", "value": "1", "years": "1967", "rank": 14}, {"name": "Feyenoord", "country": "Pays-Bas", "flag_url": "", "value": "1", "years": "1970", "rank": 14}, {"name": "Aston Villa", "country": "Angleterre", "flag_url": "", "value": "1", "years": "1982", "rank": 14}, {"name": "Hamburg", "country": "Allemagne", "flag_url": "", "value": "1", "years": "1983", "rank": 14}, {"name": "Steaua București", "country": "Roumanie", "flag_url": "", "value": "1", "years": "1986", "rank": 14}, {"name": "PSV", "country": "Pays-Bas", "flag_url": "", "value": "1", "years": "1988", "rank": 14}, {"name": "Red Star Belgrade", "country": "Serbie", "flag_url": "", "value": "1", "years": "1991", "rank": 14}, {"name": "Marseille", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png", "value": "1", "years": "1993", "rank": 14}, {"name": "Borussia Dortmund", "country": "Allemagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png", "value": "1", "years": "1997", "rank": 14}, {"name": "Manchester City", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png", "value": "1", "years": "2023", "rank": 14}, {"name": "Paris Saint-Germain", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png", "value": "1", "years": "2025", "rank": 14}], "title": "Palmarès Champions League", "empty": "Palmarès Champions League indisponible", "label": "titres"}, "league-history-ligue1": {"players": [{"name": "Paris Saint-Germain", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png", "value": "13", "years": "1986, 1994, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2022, 2023, 2024, 2025", "rank": 1}, {"name": "Saint-Étienne", "country": "France", "flag_url": "", "value": "10", "years": "1957, 1964, 1967, 1968, 1969, 1970, 1974, 1975, 1976, 1981", "rank": 2}, {"name": "Marseille", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png", "value": "9", "years": "1937, 1948, 1971, 1972, 1989, 1990, 1991, 1992, 2010", "rank": 3}, {"name": "AS Monaco", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png", "value": "8", "years": "1961, 1963, 1978, 1982, 1988, 1997, 2000, 2017", "rank": 4}, {"name": "Nantes", "country": "France", "flag_url": "", "value": "8", "years": "1965, 1966, 1973, 1977, 1980, 1983, 1995, 2001", "rank": 4}, {"name": "Lyon", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/167.png", "value": "7", "years": "2002, 2003, 2004, 2005, 2006, 2007, 2008", "rank": 6}, {"name": "Bordeaux", "country": "France", "flag_url": "", "value": "6", "years": "1950, 1984, 1985, 1987, 1999, 2009", "rank": 7}, {"name": "Reims", "country": "France", "flag_url": "", "value": "6", "years": "1949, 1953, 1955, 1958, 1960, 1962", "rank": 7}, {"name": "Lille", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/166.png", "value": "5", "years": "1933, 1946, 1954, 2011, 2021", "rank": 9}, {"name": "Nice", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2502.png", "value": "4", "years": "1951, 1952, 1956, 1959", "rank": 10}, {"name": "Sète", "country": "France", "flag_url": "", "value": "2", "years": "1934, 1939", "rank": 11}, {"name": "Sochaux", "country": "France", "flag_url": "", "value": "2", "years": "1935, 1938", "rank": 11}, {"name": "Auxerre", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/172.png", "value": "1", "years": "1996", "rank": 13}, {"name": "Lens", "country": "France", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/175.png", "value": "1", "years": "1998", "rank": 13}, {"name": "Montpellier", "country": "France", "flag_url": "", "value": "1", "years": "2012", "rank": 13}, {"name": "Racing Club de France", "country": "France", "flag_url": "", "value": "1", "years": "1936", "rank": 13}, {"name": "Roubaix-Tourcoing", "country": "France", "flag_url": "", "value": "1", "years": "1947", "rank": 13}, {"name": "Strasbourg", "country": "France", "flag_url": "", "value": "1", "years": "1979", "rank": 13}], "title": "Palmarès Ligue 1", "empty": "Palmarès Ligue 1 indisponible", "label": "titres"}, "league-history-laliga": {"players": [{"name": "Real Madrid", "country": "Espagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png", "value": "36", "years": "1932, 1933, 1954, 1955, 1957, 1958, 1961, 1962, 1963, 1964, 1965, 1967, 1968, 1969, 1972, 1975, 1976, 1978, 1979, 1980, 1986, 1987, 1988, 1989, 1990, 1995, 1997, 2001, 2003, 2007, 2008, 2012, 2017, 2020, 2022, 2024", "rank": 1}, {"name": "Barcelona", "country": "Espagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png", "value": "28", "years": "1929, 1945, 1948, 1949, 1952, 1953, 1959, 1960, 1974, 1985, 1991, 1992, 1993, 1994, 1998, 1999, 2005, 2006, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2023, 2025", "rank": 2}, {"name": "Atlético Madrid", "country": "Espagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png", "value": "11", "years": "1940, 1941, 1950, 1951, 1966, 1970, 1973, 1977, 1996, 2014, 2021", "rank": 3}, {"name": "Athletic Club", "country": "Espagne", "flag_url": "", "value": "8", "years": "1930, 1931, 1934, 1936, 1943, 1956, 1983, 1984", "rank": 4}, {"name": "Valencia", "country": "Espagne", "flag_url": "", "value": "6", "years": "1942, 1944, 1947, 1971, 2002, 2004", "rank": 5}, {"name": "Real Sociedad", "country": "Espagne", "flag_url": "", "value": "2", "years": "1981, 1982", "rank": 6}, {"name": "Deportivo La Coruña", "country": "Espagne", "flag_url": "", "value": "1", "years": "2000", "rank": 7}, {"name": "Real Betis", "country": "Espagne", "flag_url": "", "value": "1", "years": "1935", "rank": 7}, {"name": "Sevilla", "country": "Espagne", "flag_url": "", "value": "1", "years": "1946", "rank": 7}], "title": "Palmarès Liga", "empty": "Palmarès Liga indisponible", "label": "titres"}, "league-history-bundesliga": {"players": [{"name": "Bayern Munich", "country": "Allemagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png", "value": "33", "years": "1969, 1972, 1973, 1974, 1980, 1981, 1985, 1986, 1987, 1989, 1990, 1994, 1997, 1999, 2000, 2001, 2003, 2005, 2006, 2008, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2025", "rank": 1}, {"name": "Borussia Dortmund", "country": "Allemagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png", "value": "5", "years": "1995, 1996, 2002, 2011, 2012", "rank": 2}, {"name": "Borussia Mönchengladbach", "country": "Allemagne", "flag_url": "", "value": "5", "years": "1970, 1971, 1975, 1976, 1977", "rank": 2}, {"name": "Werder Bremen", "country": "Allemagne", "flag_url": "", "value": "4", "years": "1965, 1988, 1993, 2004", "rank": 4}, {"name": "Hamburg", "country": "Allemagne", "flag_url": "", "value": "3", "years": "1979, 1982, 1983", "rank": 5}, {"name": "Stuttgart", "country": "Allemagne", "flag_url": "", "value": "3", "years": "1984, 1992, 2007", "rank": 5}, {"name": "Kaiserslautern", "country": "Allemagne", "flag_url": "", "value": "2", "years": "1991, 1998", "rank": 7}, {"name": "Köln", "country": "Allemagne", "flag_url": "", "value": "2", "years": "1964, 1978", "rank": 7}, {"name": "1860 Munich", "country": "Allemagne", "flag_url": "", "value": "1", "years": "1966", "rank": 9}, {"name": "Bayer Leverkusen", "country": "Allemagne", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/131.png", "value": "1", "years": "2024", "rank": 9}, {"name": "Eintracht Braunschweig", "country": "Allemagne", "flag_url": "", "value": "1", "years": "1967", "rank": 9}, {"name": "Nürnberg", "country": "Allemagne", "flag_url": "", "value": "1", "years": "1968", "rank": 9}, {"name": "Wolfsburg", "country": "Allemagne", "flag_url": "", "value": "1", "years": "2009", "rank": 9}], "title": "Palmarès Bundesliga", "empty": "Palmarès Bundesliga indisponible", "label": "titres"}, "league-history-premierleague": {"players": [{"name": "Liverpool", "country": "Angleterre", "flag_url": "", "value": "20", "years": "", "rank": 1}, {"name": "Manchester United", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/360.png", "value": "20", "years": "", "rank": 1}, {"name": "Arsenal", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png", "value": "13", "years": "", "rank": 3}, {"name": "Manchester City", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png", "value": "10", "years": "", "rank": 4}, {"name": "Everton", "country": "Angleterre", "flag_url": "", "value": "9", "years": "", "rank": 5}, {"name": "Aston Villa", "country": "Angleterre", "flag_url": "", "value": "7", "years": "", "rank": 6}, {"name": "Chelsea", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png", "value": "6", "years": "", "rank": 7}, {"name": "Sunderland", "country": "Angleterre", "flag_url": "", "value": "6", "years": "", "rank": 7}, {"name": "Newcastle United", "country": "Angleterre", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png", "value": "4", "years": "", "rank": 9}, {"name": "Sheffield Wednesday", "country": "Angleterre", "flag_url": "", "value": "4", "years": "", "rank": 9}, {"name": "Blackburn Rovers", "country": "Angleterre", "flag_url": "", "value": "3", "years": "", "rank": 11}, {"name": "Huddersfield Town", "country": "Angleterre", "flag_url": "", "value": "3", "years": "", "rank": 11}, {"name": "Leeds United", "country": "Angleterre", "flag_url": "", "value": "3", "years": "", "rank": 11}, {"name": "Wolverhampton Wanderers", "country": "Angleterre", "flag_url": "", "value": "3", "years": "", "rank": 11}, {"name": "Burnley", "country": "Angleterre", "flag_url": "", "value": "2", "years": "", "rank": 15}, {"name": "Derby County", "country": "Angleterre", "flag_url": "", "value": "2", "years": "", "rank": 15}, {"name": "Portsmouth", "country": "Angleterre", "flag_url": "", "value": "2", "years": "", "rank": 15}, {"name": "Preston North End", "country": "Angleterre", "flag_url": "", "value": "2", "years": "", "rank": 15}, {"name": "Tottenham Hotspur", "country": "Angleterre", "flag_url": "", "value": "2", "years": "", "rank": 15}, {"name": "Ipswich Town", "country": "Angleterre", "flag_url": "", "value": "1", "years": "", "rank": 20}, {"name": "Leicester City", "country": "Angleterre", "flag_url": "", "value": "1", "years": "", "rank": 20}, {"name": "Nottingham Forest", "country": "Angleterre", "flag_url": "", "value": "1", "years": "", "rank": 20}, {"name": "Sheffield United", "country": "Angleterre", "flag_url": "", "value": "1", "years": "", "rank": 20}, {"name": "West Bromwich Albion", "country": "Angleterre", "flag_url": "", "value": "1", "years": "", "rank": 20}], "title": "Palmarès championnat anglais", "empty": "Palmarès championnat anglais indisponible", "label": "titres"}, "league-history-seriea": {"players": [{"name": "Juventus", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/111.png", "value": "36", "years": "", "rank": 1}, {"name": "Internazionale", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png", "value": "20", "years": "", "rank": 2}, {"name": "AC Milan", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/103.png", "value": "19", "years": "", "rank": 3}, {"name": "Genoa", "country": "Italie", "flag_url": "", "value": "9", "years": "", "rank": 4}, {"name": "Bologna", "country": "Italie", "flag_url": "", "value": "7", "years": "", "rank": 5}, {"name": "Pro Vercelli", "country": "Italie", "flag_url": "", "value": "7", "years": "", "rank": 5}, {"name": "Torino", "country": "Italie", "flag_url": "", "value": "7", "years": "", "rank": 5}, {"name": "Napoli", "country": "Italie", "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/114.png", "value": "4", "years": "1987, 1990, 2023, 2025", "rank": 8}, {"name": "Roma", "country": "Italie", "flag_url": "", "value": "3", "years": "", "rank": 9}, {"name": "Fiorentina", "country": "Italie", "flag_url": "", "value": "2", "years": "", "rank": 10}, {"name": "Lazio", "country": "Italie", "flag_url": "", "value": "2", "years": "", "rank": 10}, {"name": "Cagliari", "country": "Italie", "flag_url": "", "value": "1", "years": "", "rank": 12}, {"name": "Casale", "country": "Italie", "flag_url": "", "value": "1", "years": "", "rank": 12}, {"name": "Hellas Verona", "country": "Italie", "flag_url": "", "value": "1", "years": "", "rank": 12}, {"name": "Novese", "country": "Italie", "flag_url": "", "value": "1", "years": "", "rank": 12}, {"name": "Sampdoria", "country": "Italie", "flag_url": "", "value": "1", "years": "", "rank": 12}], "title": "Palmarès Serie A", "empty": "Palmarès Serie A indisponible", "label": "titres"}};
