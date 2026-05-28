@@ -975,10 +975,17 @@
     .user-bracket-team { appearance: none; min-width: 0; padding: 9px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(7,17,31,0.18); color: #eaf4ff; font: inherit; font-weight: 950; text-align: left; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .user-bracket-team:hover, .user-bracket-team:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.42); outline: none; }
     .user-bracket-team.is-picked { color: #07111f; border-color: rgba(245,201,107,0.72); background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
-    .user-bracket-tree-area { min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .user-bracket-tree-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
     .user-bracket-tree-scroll { flex: 1 1 auto; min-height: 0; width: 100%; overflow: auto; padding: 4px 0 10px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .user-bracket-tree { min-width: 1060px; height: 100%; min-height: 560px; display: grid; grid-template-columns: 1.06fr .98fr .9fr .82fr minmax(150px,.9fr) .82fr .9fr .98fr 1.06fr; gap: 9px; align-items: stretch; padding: 12px; border-radius: 18px; border: 1px solid rgba(245,201,107,0.16); background: radial-gradient(circle at 50% 36%, rgba(245,201,107,0.13), transparent 26%), linear-gradient(135deg, rgba(7,17,31,0.92), rgba(16,48,83,0.72)); }
-    .user-bracket-tree-col { height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 9px; }
+    .user-bracket-tree-col { min-height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 9px; }
     .user-bracket-tree-col.round-16 { gap: 7px; }
     .user-bracket-tree-col.round-8 { gap: 17px; }
     .user-bracket-tree-col.round-q { gap: 43px; }
