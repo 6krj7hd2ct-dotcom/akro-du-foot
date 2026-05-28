@@ -944,9 +944,16 @@
     .profile-info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .profile-info-card { appearance: none; min-width: 0; display: grid; gap: 5px; padding: 12px; border-radius: 14px; border: 1px solid rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .profile-info-card:hover, .profile-info-card:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.44); background: linear-gradient(145deg, rgba(245,201,107,0.12), rgba(31,111,235,0.08)); outline: none; }
+    article.profile-info-card { cursor: default; }
+    article.profile-info-card:hover { transform: none; border-color: rgba(245,201,107,0.18); background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(31,111,235,0.08)); }
     .profile-info-card span { color: var(--muted); font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; }
     .profile-info-card strong { color: var(--gold); font-size: 16px; line-height: 1.15; font-weight: 950; }
     .profile-info-card em { color: #d6e5f7; font-size: 12px; line-height: 1.25; font-style: normal; font-weight: 850; }
+    .profile-dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px; }
+    .profile-dashboard-block { min-width: 0; padding: 12px; border-radius: 16px; border: 1px solid rgba(245,201,107,0.16); background: rgba(255,255,255,0.045); box-shadow: inset 0 1px 0 rgba(255,255,255,0.055); }
+    .profile-dashboard-title { color: #d6e5f7; font-size: 12px; font-weight: 950; text-transform: uppercase; letter-spacing: .045em; margin-bottom: 9px; }
+    .profile-dashboard-block .profile-info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .profile-dashboard-block.pronostics .profile-info-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .profile-placeholder-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .profile-placeholder-card { min-width: 0; padding: 13px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.11); background: rgba(255,255,255,0.055); }
     .profile-placeholder-card strong { display: block; color: #ffe1a0; margin-bottom: 4px; }
@@ -1221,7 +1228,7 @@
       .team-dialog { max-height: 90vh; }
       .alltime-row { grid-template-columns: 38px 46px minmax(0, 1fr); }
       .alltime-value { grid-column: 3; font-size: 20px; text-align: left; }
-      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-placeholder-grid, .prediction-insights { grid-template-columns: 1fr; }
+      .community-grid, .community-predictions, .field-row, .field-row.three, .follow-list, .favorite-match-list, .profile-summary, .profile-heading-shell, .profile-info-grid, .profile-dashboard-grid, .profile-dashboard-block .profile-info-grid, .profile-dashboard-block.pronostics .profile-info-grid, .profile-placeholder-grid, .prediction-insights { grid-template-columns: 1fr; }
       .active-profile-card, .active-profile-meta { grid-template-columns: 1fr; }
       .active-profile-scoreboard { justify-items: start; grid-template-columns: repeat(2, auto); gap: 10px; padding-left: 0; text-align: left; }
       .active-profile-score-row { justify-items: start; }
@@ -3891,6 +3898,28 @@ grant select, insert, update on public.profiles to authenticated;`;
       `);
     }
 
+    function openGeneralRankingModal() {
+      const rows = Object.values(communityProfiles)
+        .filter(profile => profile && profile.pseudo)
+        .sort((a, b) => profileGeneralPoints(b) - profileGeneralPoints(a) || String(a.pseudo || '').localeCompare(String(b.pseudo || '')));
+      openProfileInfoModal('Classement général', 'Points pronostics + bonus jeux', rows.length
+        ? rows.slice(0, 50).map((profile, index) => `<article class="profile-game-ranking-row">
+            <div class="profile-game-ranking-rank">${index + 1}</div>
+            <div class="profile-game-ranking-main"><strong>${escapeHtml(profile.pseudo || 'Utilisateur')}</strong><div class="profile-game-ranking-meta">${escapeHtml(profile.favorite_club || 'Club')} · ${escapeHtml(profile.favorite_nation || 'Nation')}</div></div>
+            <div class="profile-game-ranking-score">${escapeHtml(profileGeneralPoints(profile))} pts</div>
+          </article>`).join('')
+        : '<div class="empty">Aucun classement disponible.</div>');
+    }
+
+    function openProfilePredictionHistory(pseudo) {
+      const profile = communityProfiles[pseudo] || profileFromSupabaseState();
+      if (!profile) return;
+      const history = (profile.history || profile.recent_predictions || []).slice().sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
+      openProfileInfoModal('Historique Pronostique', profile.pseudo || 'Profil', history.length
+        ? `<div class="profile-history">${history.map(item => profileHistoryRow(item, profile.pseudo || pseudo)).join('')}</div>`
+        : '<div class="empty">Aucun pronostic enregistré.</div>');
+    }
+
     function openBracketPlaceholder(kind) {
       const label = USER_BRACKET_COMPETITIONS[kind] || 'Compétition';
       openProfileInfoModal(`Mon bracket — ${label}`, 'Préparation des brackets utilisateur', '<div class="empty">Création de bracket bientôt disponible.</div>');
@@ -5168,7 +5197,6 @@ grant select, insert, update on public.profiles to authenticated;`;
       title.textContent = profile.pseudo || pseudo;
       subtitle.textContent = `${rankText} · ${profile.level || 'Débutant'}`;
       badge.innerHTML = avatarImage(profile.avatar_url, 'profile-avatar', profile);
-      const history = profile.recent_predictions || profile.history || [];
       body.innerHTML = `
         <div class="profile-heading-shell">
           <button class="profile-side-card" type="button" data-profile-compos><span>Vos compos</span><strong>Bientôt disponible</strong></button>
@@ -5178,11 +5206,22 @@ grant select, insert, update on public.profiles to authenticated;`;
           </div>
           <button class="profile-side-card" type="button" data-profile-brackets><span>Vos brackets</span><strong>Voir les compétitions</strong></button>
         </div>
-        <div class="profile-summary">
-          <div class="profile-stat"><strong>${escapeHtml(profile.points || 0)}</strong><span>points</span></div>
-          <div class="profile-stat"><strong>${escapeHtml(profile.predictions_count || 0)}</strong><span>pronostics</span></div>
-          <div class="profile-stat"><strong>${escapeHtml(profile.exact_scores || 0)}</strong><span>scores exacts</span></div>
-          <div class="profile-stat"><strong>${escapeHtml(profile.success_rate || 0)}%</strong><span>réussite</span></div>
+        <div class="profile-dashboard-grid">
+          <section class="profile-dashboard-block">
+            <div class="profile-dashboard-title">Classement</div>
+            <div class="profile-info-grid">
+              <button class="profile-info-card" type="button" data-profile-general-ranking><span>Classement général</span><strong>${escapeHtml(generalRank ? `#${generalRank}` : 'Non classé')}</strong></button>
+              <button class="profile-info-card" type="button" data-profile-points-history="${escapeHtml(profile.pseudo || pseudo)}"><span>Total des points</span><strong>${escapeHtml(totalPoints)} pts</strong><em>au total</em></button>
+            </div>
+          </section>
+          <section class="profile-dashboard-block pronostics">
+            <div class="profile-dashboard-title">Pronostics</div>
+            <div class="profile-info-grid">
+              <button class="profile-info-card" type="button" data-profile-pronostics-history="${escapeHtml(profile.pseudo || pseudo)}"><span>Pronos</span><strong>${escapeHtml(profile.predictions_count || 0)}</strong></button>
+              <article class="profile-info-card"><span>Scores exacts</span><strong>${escapeHtml(profile.exact_scores || 0)}</strong></article>
+              <article class="profile-info-card"><span>Réussite</span><strong>${escapeHtml(profile.success_rate || 0)}%</strong></article>
+            </div>
+          </section>
         </div>
         <div class="team-info">
           <div class="team-info-label">Progression</div>
@@ -5190,15 +5229,6 @@ grant select, insert, update on public.profiles to authenticated;`;
             ${progressCards.map(([key, label, value]) => `<button class="profile-progress-card" type="button" data-profile-game-ranking="${escapeHtml(key)}"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`).join('')}
           </div>
         </div>
-        <div class="team-info">
-          <div class="team-info-label">Classement</div>
-          <div class="profile-info-grid">
-            <button class="profile-info-card" type="button" data-profile-points-history="${escapeHtml(profile.pseudo || pseudo)}"><span>Classement</span><strong>${escapeHtml(generalRank ? `#${generalRank}` : 'Non classé')}</strong><em>${escapeHtml(totalPoints)} pts au total</em></button>
-            <button class="profile-info-card" type="button" data-profile-game-ranking="pronos"><span>Pronostics</span><strong>${escapeHtml(profile.predictions_count || 0)} pronos</strong><em>${escapeHtml(profile.exact_scores || 0)} exacts · ${escapeHtml(profile.success_rate || 0)}% réussite</em></button>
-          </div>
-        </div>
-        <h3>Historique Pronostique</h3>
-        <div class="profile-history">${history.length ? history.map(item => profileHistoryRow(item, profile.pseudo || pseudo)).join('') : '<div class="empty">Aucun pronostic enregistré.</div>'}</div>
       `;
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
@@ -5327,6 +5357,15 @@ grant select, insert, update on public.profiles to authenticated;`;
         openProfilePointsHistory(pointsHistoryTrigger.dataset.profilePointsHistory || '');
         return;
       }
+      if (event.target.closest('[data-profile-general-ranking]')) {
+        openGeneralRankingModal();
+        return;
+      }
+      const pronosticsHistoryTrigger = event.target.closest('[data-profile-pronostics-history]');
+      if (pronosticsHistoryTrigger) {
+        openProfilePredictionHistory(pronosticsHistoryTrigger.dataset.profilePronosticsHistory || '');
+        return;
+      }
       if (event.target.closest('[data-profile-brackets]')) {
         openUserBracketsModal();
         return;
@@ -5353,6 +5392,12 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (event.target && event.target.id === 'profileLogoutButton') logoutProfile();
     });
     document.getElementById('userProfileBody')?.addEventListener('submit', (event) => {
+      const form = event.target.closest('[data-profile-prediction-form]');
+      if (!form) return;
+      event.preventDefault();
+      submitProfilePredictionEdit(form);
+    });
+    profileGameRankingBody?.addEventListener('submit', (event) => {
       const form = event.target.closest('[data-profile-prediction-form]');
       if (!form) return;
       event.preventDefault();
