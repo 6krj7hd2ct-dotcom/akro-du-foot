@@ -967,8 +967,7 @@
     .user-bracket-builder > .user-bracket-player-grid { flex: 0 0 auto; }
     .user-bracket-builder > .user-bracket-tree-scroll { flex: 1 1 0; }
     .user-bracket-builder > .user-bracket-choice-panel,
-    .user-bracket-builder > .user-bracket-status,
-    .user-bracket-builder > .user-bracket-actions { flex: 0 0 auto; }
+    .user-bracket-builder > .user-bracket-footer { flex: 0 0 auto; }
     .user-bracket-round { display: grid; gap: 8px; }
     .user-bracket-round h4 { margin: 0; color: #d6e5f7; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
     .user-bracket-match { display: grid; gap: 8px; padding: 10px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.055); }
@@ -977,8 +976,8 @@
     .user-bracket-team:hover, .user-bracket-team:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.42); outline: none; }
     .user-bracket-team.is-picked { color: #07111f; border-color: rgba(245,201,107,0.72); background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
     .user-bracket-tree-scroll { min-height: 0; width: 100%; overflow: auto; padding: 4px 0 10px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
-    .user-bracket-tree { min-width: 1060px; min-height: 100%; display: grid; grid-template-columns: 1.06fr .98fr .9fr .82fr minmax(150px,.9fr) .82fr .9fr .98fr 1.06fr; gap: 9px; align-items: center; padding: 12px; border-radius: 18px; border: 1px solid rgba(245,201,107,0.16); background: radial-gradient(circle at 50% 36%, rgba(245,201,107,0.13), transparent 26%), linear-gradient(135deg, rgba(7,17,31,0.92), rgba(16,48,83,0.72)); }
-    .user-bracket-tree-col { display: grid; gap: 9px; align-content: center; }
+    .user-bracket-tree { min-width: 1060px; height: 100%; min-height: 100%; display: grid; grid-template-columns: 1.06fr .98fr .9fr .82fr minmax(150px,.9fr) .82fr .9fr .98fr 1.06fr; gap: 9px; align-items: stretch; padding: 12px; border-radius: 18px; border: 1px solid rgba(245,201,107,0.16); background: radial-gradient(circle at 50% 36%, rgba(245,201,107,0.13), transparent 26%), linear-gradient(135deg, rgba(7,17,31,0.92), rgba(16,48,83,0.72)); }
+    .user-bracket-tree-col { height: 100%; display: grid; gap: 9px; align-content: space-evenly; }
     .user-bracket-tree-col.round-16 { gap: 7px; }
     .user-bracket-tree-col.round-8 { gap: 17px; }
     .user-bracket-tree-col.round-q { gap: 43px; }
@@ -1028,6 +1027,8 @@
     .user-bracket-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .user-bracket-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
     .user-bracket-status { color: #ffe1a0; font-size: 12px; font-weight: 850; min-height: 16px; }
+    .user-bracket-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .user-bracket-footer .user-bracket-actions { margin-left: auto; }
     .user-bracket-title-line { display: block; color: #ffe1a0; font-size: .52em; line-height: 1.05; margin-top: 4px; }
     .user-bracket-card { display: grid; gap: 5px; }
     .user-bracket-card .subtle { line-height: 1.35; }
@@ -4385,9 +4386,11 @@ grant select, insert, update on public.profiles to authenticated;`;
           ${renderUserBracketPlayerFields(draft)}
           ${renderUserBracketTree(draft, Boolean(draft.readOnly))}
           ${draft.readOnly ? '' : renderUserBracketSlotPicker(draft)}
-          <div class="user-bracket-status" id="userBracketStatus">${draft.status || ''}</div>
-          <div class="user-bracket-actions" ${draft.readOnly ? 'hidden' : ''}>
-            <button class="action-button" type="button" data-user-bracket-save>${draft.existingBracket?.is_published ? 'Mettre à jour mon bracket' : 'Sauvegarder mon bracket'}</button>
+          <div class="user-bracket-footer">
+            <div class="user-bracket-status" id="userBracketStatus">${draft.status || ''}</div>
+            <div class="user-bracket-actions" ${draft.readOnly ? 'hidden' : ''}>
+              <button class="action-button" type="button" data-user-bracket-save>${draft.existingBracket?.is_published ? 'Mettre à jour mon bracket' : 'Sauvegarder mon bracket'}</button>
+            </div>
           </div>
         </div>
       `);
