@@ -1816,8 +1816,8 @@
     </nav>
 
       <section class="euro-summary-grid" aria-label="Résumé Champions League">
-        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/160.png)"><div class="subtle">Champion</div><div class="euro-summary-value">Paris Saint-Germain</div><p class="subtle">Tenant du titre européen récent.</p></article>
-        <article class="euro-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/soccer/500/110.png)"><div class="subtle">Finaliste</div><div class="euro-summary-value">Internazionale</div><p class="subtle">Finaliste de la dernière finale complète.</p></article>
+        <article class="euro-summary-card"><div class="subtle">Champion</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Sera confirmé après la finale 2025-2026.</p></article>
+        <article class="euro-summary-card"><div class="subtle">Finaliste</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Sera confirmé après la finale 2025-2026.</p></article>
         <article class="euro-summary-card player-summary-card"><div class="subtle">Meilleur joueur de la compétition</div><div class="euro-summary-value">À déterminer</div><p class="subtle">Sera confirmé après la finale.</p></article>
         <article class="euro-summary-card euro-focus-card player-summary-card" style="--summary-bg:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)"><img class="player-summary-photo" src="https://images.fotmob.com/image_resources/playerimages/701154.png" alt="Kylian Mbappé"><div class="subtle">Meilleur buteur de la compétition</div><div class="euro-summary-value">Kylian Mbappé</div><p class="subtle">15 buts en 2025-2026.</p></article>
       </section>
@@ -8190,6 +8190,38 @@ grant select, insert, update on public.profiles to authenticated;`;
         const photoHtml = isPlayerCard && playerPhoto(value) ? `<img class="player-summary-photo" src="${escape(playerPhoto(value))}" alt="${escape(value)}">` : '';
         return `<article class="euro-summary-card ${klass}"${style}>${photoHtml}<div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p></article>`;
       }).join('');
+      const updateChampionsCurrentFinalSummary = selected => {
+        if (selected !== '2025-2026') return;
+        const nodes = nodesFor('champions');
+        const cards = Array.from(nodes.summary?.querySelectorAll('.euro-summary-card') || []);
+        if (cards.length < 2) return;
+        const setCard = (index, label, value, detail, image = '') => {
+          if (image) cards[index].style.setProperty('--summary-bg', `url(${image})`);
+          else cards[index].style.removeProperty('--summary-bg');
+          cards[index].innerHTML = `<div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p>`;
+        };
+        const finalCard = nodes.bracket?.querySelector('.final-card');
+        const rows = Array.from(finalCard?.querySelectorAll('.ko-line') || []);
+        const scores = rows.map(row => row.querySelector('.ko-score')?.textContent?.trim() || '');
+        const teams = rows.map(row => ({
+          name: row.querySelector('.bracket-team-name')?.textContent?.trim() || '',
+          logo: row.querySelector('img')?.getAttribute('src') || ''
+        }));
+        const finalDone = finalCard?.querySelector('.status.done') || (scores.length >= 2 && scores.every(score => /^\d+$/.test(score)));
+        if (!finalDone || teams.length < 2) {
+          setCard(0, 'Champion', 'À déterminer', 'Sera confirmé après la finale 2025-2026.');
+          setCard(1, 'Finaliste', 'À déterminer', 'Sera confirmé après la finale 2025-2026.');
+          return;
+        }
+        const homeScore = Number(scores[0]);
+        const awayScore = Number(scores[1]);
+        if (Number.isNaN(homeScore) || Number.isNaN(awayScore) || homeScore === awayScore) return;
+        const winner = homeScore > awayScore ? teams[0] : teams[1];
+        const loser = homeScore > awayScore ? teams[1] : teams[0];
+        const scoreText = `${scores[0]}-${scores[1]}`;
+        setCard(0, 'Champion', winner.name || 'À déterminer', `Vainqueur de la finale 2025-2026 (${scoreText}).`, winner.logo);
+        setCard(1, 'Finaliste', loser.name || 'À déterminer', `Finaliste de la Champions League 2025-2026 (${scoreText}).`, loser.logo);
+      };
       const initials = value => String(value || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
       const awardsHtml = awards => (awards || []).map(item => {
         const flagStyle = item.flag ? ` style="--award-flag:url(${escape(item.flag)})"` : '';
@@ -8346,6 +8378,7 @@ grant select, insert, update on public.profiles to authenticated;`;
             const derivedGroups = championsLeagueGroupsFromMatches(selected);
             const nodes = nodesFor(kind);
             if (nodes.groups && derivedGroups.length) nodes.groups.innerHTML = groupsHtml(derivedGroups);
+            updateChampionsCurrentFinalSummary(selected);
           }
           return;
         }
@@ -8373,8 +8406,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (nodes.groups) nodes.groups.innerHTML = data.groups?.length ? groupsHtml(data.groups) : (derivedChampionsGroups.length ? groupsHtml(derivedChampionsGroups) : fallbackCurrentHtml('groups'));
         if (nodes.calendar) nodes.calendar.innerHTML = data.calendar?.length ? calendarHtml(data.calendar) : fallbackCurrentHtml('calendar');
         upgradeVisiblePlayerCards();
+        if (kind === 'champions') updateChampionsCurrentFinalSummary(selected);
       };
       ['worldcup', 'euro', 'champions', 'leagues'].forEach(capture);
+      updateChampionsCurrentFinalSummary('2025-2026');
       upgradeVisiblePlayerCards();
     })();
   </script>
