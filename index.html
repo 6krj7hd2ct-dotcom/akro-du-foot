@@ -1441,7 +1441,43 @@
       .recent-result { justify-self: start; }
       .coach-stats { grid-template-columns: 1fr; }
     }
-  </style>
+  .profile-game-dialog.is-bracket-dialog .team-modal-body {
+  height: calc(95vh - 120px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.profile-game-dialog.is-bracket-dialog .user-bracket-builder {
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.profile-game-dialog.is-bracket-dialog .user-bracket-player-grid {
+  flex: 0 0 auto !important;
+}
+
+.profile-game-dialog.is-bracket-dialog .user-bracket-tree-area {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.profile-game-dialog.is-bracket-dialog .user-bracket-tree-scroll {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+}
+
+.profile-game-dialog.is-bracket-dialog .user-bracket-footer {
+  flex: 0 0 auto !important;
+  margin-top: 10px !important;
+}</style>
 </head>
 <body>
   <main>
