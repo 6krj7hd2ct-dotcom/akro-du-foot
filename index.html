@@ -1099,6 +1099,10 @@
     .prediction-insights { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 0.8fr); gap: 10px; align-items: stretch; }
     .coach-prediction, .community-prediction-card { display: grid; gap: 6px; padding: 10px; border: 1px solid rgba(245,201,107,0.24); border-radius: 14px; background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); color: #eaf4ff; }
     .coach-prediction-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 950; }
+    .coach-prediction-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .coach-prediction-stat { min-width: 0; padding: 8px; border-radius: 11px; background: rgba(7,17,31,0.20); border: 1px solid rgba(255,255,255,0.09); }
+    .coach-prediction-stat span { display: block; color: var(--muted); font-size: 10px; line-height: 1; font-weight: 950; text-transform: uppercase; letter-spacing: .045em; }
+    .coach-prediction-stat strong { display: block; margin-top: 5px; color: #ffe1a0; font-size: 13px; line-height: 1.18; font-weight: 950; overflow-wrap: anywhere; }
     .community-prediction-card { border-color: rgba(99,232,255,0.20); background: linear-gradient(135deg, rgba(99,232,255,0.10), rgba(31,111,235,0.10)); }
     .community-prediction-card strong { color: #ffe1a0; }
     .community-prediction-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 950; }
@@ -3914,9 +3918,16 @@ grant select, insert, update on public.profiles to authenticated;`;
     function openProfilePredictionHistory(pseudo) {
       const profile = communityProfiles[pseudo] || profileFromSupabaseState();
       if (!profile) return;
-      const history = (profile.history || profile.recent_predictions || []).slice().sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
-      openProfileInfoModal('Historique Pronostique', profile.pseudo || 'Profil', history.length
-        ? `<div class="profile-history">${history.map(item => profileHistoryRow(item, profile.pseudo || pseudo)).join('')}</div>`
+      const history = [...(profile.history || []), ...(profile.recent_predictions || [])];
+      const seen = new Set();
+      const rows = history.filter(item => {
+        const key = [item.match_id || '', item.prediction || '', item.created_at || ''].join('|');
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }).sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
+      openProfileInfoModal('Historique Pronostique', profile.pseudo || 'Profil', rows.length
+        ? `<div class="profile-history">${rows.map(item => profileHistoryRow(item, profile.pseudo || pseudo)).join('')}</div>`
         : '<div class="empty">Aucun pronostic enregistré.</div>');
     }
 
@@ -4978,9 +4989,35 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function predictionScoreValue(prediction, key) {
-      const value = prediction?.[key] ?? prediction?.[key.replace('predicted_', '')];
+      const direct = prediction?.[key] ?? prediction?.[key.replace('predicted_', '')];
+      const value = direct ?? (() => {
+        const text = String(prediction?.prediction || '');
+        const match = text.match(/(\d+)\s*-\s*(\d+)/);
+        if (!match) return null;
+        return key.includes('home') ? match[1] : match[2];
+      })();
       const number = Number(value);
       return Number.isFinite(number) ? number : null;
+    }
+
+    function allCommunityPredictionRows() {
+      const rows = [];
+      const seen = new Set();
+      const add = item => {
+        if (!item || !item.match_id) return;
+        const home = predictionScoreValue(item, 'predicted_home_score');
+        const away = predictionScoreValue(item, 'predicted_away_score');
+        const key = [item.id || '', item.pseudo || '', item.match_id || '', home, away, item.created_at || ''].join('|');
+        if (seen.has(key)) return;
+        seen.add(key);
+        rows.push(item);
+      };
+      (communityPredictions || []).forEach(add);
+      Object.values(communityProfiles || {}).forEach(profile => {
+        (profile?.history || []).forEach(add);
+        (profile?.recent_predictions || []).forEach(add);
+      });
+      return rows;
     }
 
     function renderCommunityPredictionInsight(match) {
@@ -4989,7 +5026,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>—</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
         return;
       }
-      const rows = (communityPredictions || []).filter(item => String(item.match_id || '') === String(match.id || ''));
+      const rows = allCommunityPredictionRows().filter(item => String(item.match_id || '') === String(match.id || ''));
       if (!rows.length) {
         communityPredictionInsight.innerHTML = '<div class="community-prediction-title"><span>La communauté</span><strong>0</strong></div><div class="community-prediction-meta">Aucun pronostic communautaire pour ce match.</div>';
         return;
@@ -5048,7 +5085,20 @@ grant select, insert, update on public.profiles to authenticated;`;
       updatePredictionButton();
     }
 
-    function renderCoachPrediction(data) {
+    function coachFavoriteLabel(value) {
+      const text = String(value || '').trim();
+      return text.replace(/\s+favori$/i, '') || 'Analyse en attente';
+    }
+
+    function coachContextReason(reason, match) {
+      const base = String(reason || '').trim();
+      if (base && base !== 'Coach prépare son analyse dès que le match est sélectionné.') return base;
+      if (!match) return 'Coach prépare son analyse dès que le match est sélectionné.';
+      const phase = match.phase || match.round || match.competition || 'match';
+      return `${match.home_team} et ${match.away_team} arrivent sur un ${phase} qui peut basculer sur les détails. Match serré attendu, avec un duel clé dans les transitions.`;
+    }
+
+    function renderCoachPrediction(data, match = null) {
       if (!coachPrediction) return;
       const fallback = {
         predicted_winner: 'Analyse en attente',
@@ -5058,12 +5108,16 @@ grant select, insert, update on public.profiles to authenticated;`;
         disclaimer: 'Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel.'
       };
       const info = data || fallback;
-      const confidence = info.confidence ? ` — confiance ${escapeHtml(info.confidence)}%` : '';
-      const score = info.predicted_score ? ` · score probable ${escapeHtml(info.predicted_score)}` : '';
-      const reason = info.reason || fallback.reason;
+      const confidence = info.confidence ? ` · confiance ${escapeHtml(info.confidence)}%` : '';
+      const score = info.predicted_score ? `${escapeHtml(info.predicted_score)}${confidence}` : (info.confidence ? `Confiance ${escapeHtml(info.confidence)}%` : 'À affiner');
+      const reason = coachContextReason(info.reason || fallback.reason, match);
       const disclaimer = info.disclaimer || fallback.disclaimer;
       coachPrediction.innerHTML = `
-        <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Coach : ${escapeHtml(info.predicted_winner || fallback.predicted_winner)}${score}${confidence}.</span></div>
+        <div class="coach-prediction-top"><span class="coach-badge">Coach</span><span>Lecture du match</span></div>
+        <div class="coach-prediction-grid">
+          <div class="coach-prediction-stat"><span>Favori</span><strong>${escapeHtml(coachFavoriteLabel(info.predicted_winner || fallback.predicted_winner))}</strong></div>
+          <div class="coach-prediction-stat"><span>Score probable</span><strong>${score}</strong></div>
+        </div>
         <div class="coach-reason">Analyse : ${escapeHtml(reason)}</div>
         <div class="coach-disclaimer">${escapeHtml(disclaimer)}</div>
       `;
@@ -5072,11 +5126,11 @@ grant select, insert, update on public.profiles to authenticated;`;
     async function updateCoachPrediction(match) {
       const requestId = ++coachPredictionRequest;
       if (!match) {
-        renderCoachPrediction(null);
+        renderCoachPrediction(null, null);
         return;
       }
       if (!serverMode) {
-        renderCoachPrediction(null);
+        renderCoachPrediction(null, match);
         return;
       }
       coachPrediction.innerHTML = `
@@ -5091,9 +5145,9 @@ grant select, insert, update on public.profiles to authenticated;`;
           body: JSON.stringify({match_id: match.id})
         });
         const data = await response.json().catch(() => ({}));
-        if (requestId === coachPredictionRequest) renderCoachPrediction(data);
+        if (requestId === coachPredictionRequest) renderCoachPrediction(data, match);
       } catch (error) {
-        if (requestId === coachPredictionRequest) renderCoachPrediction(null);
+        if (requestId === coachPredictionRequest) renderCoachPrediction(null, match);
       }
     }
 
