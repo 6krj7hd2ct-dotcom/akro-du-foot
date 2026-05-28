@@ -960,9 +960,15 @@
     .profile-dashboard-block .profile-info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .profile-dashboard-block.pronostics .profile-info-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .profile-placeholder-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .profile-placeholder-grid.is-bracket-list { grid-template-columns: 1fr; }
     .profile-placeholder-card { min-width: 0; padding: 13px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.11); background: rgba(255,255,255,0.055); }
     .profile-placeholder-card strong { display: block; color: #ffe1a0; margin-bottom: 4px; }
-    .user-bracket-builder { min-height: 0; height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto auto; gap: 12px; overflow: hidden; }
+    .user-bracket-builder { min-height: 0; height: 100%; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+    .user-bracket-builder > .user-bracket-player-grid { flex: 0 0 auto; }
+    .user-bracket-builder > .user-bracket-tree-scroll { flex: 1 1 auto; }
+    .user-bracket-builder > .user-bracket-choice-panel,
+    .user-bracket-builder > .user-bracket-status,
+    .user-bracket-builder > .user-bracket-actions { flex: 0 0 auto; }
     .user-bracket-round { display: grid; gap: 8px; }
     .user-bracket-round h4 { margin: 0; color: #d6e5f7; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
     .user-bracket-match { display: grid; gap: 8px; padding: 10px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.055); }
@@ -1026,9 +1032,9 @@
     .user-bracket-card { display: grid; gap: 5px; }
     .user-bracket-card .subtle { line-height: 1.35; }
     button.user-bracket-card { width: 100%; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-    .user-bracket-card-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-    .user-bracket-card-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; }
-    .user-bracket-card-main { min-width: 0; display: grid; gap: 8px; }
+    .user-bracket-card-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 0; }
+    .user-bracket-card-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: stretch; }
+    .user-bracket-card-main { width: 100%; min-width: 0; display: grid; gap: 8px; }
     .user-bracket-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
     .user-bracket-stat { min-width: 0; display: grid; gap: 2px; padding: 8px 9px; border-radius: 11px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.055); }
     .user-bracket-stat span { color: var(--muted); font-size: 9px; line-height: 1.05; font-weight: 950; text-transform: uppercase; letter-spacing: .035em; }
@@ -4748,7 +4754,7 @@ grant select, insert, update on public.profiles to authenticated;`;
             </article>`;
           }).join('');
         }).join('');
-        openProfileInfoModal('Vos brackets', 'Coupe du Monde, Euro et Champions League', `<div class="profile-placeholder-grid">${cards}</div>`);
+        openProfileInfoModal('Vos brackets', 'Coupe du Monde, Euro et Champions League', `<div class="profile-placeholder-grid is-bracket-list">${cards}</div>`);
       } catch (error) {
         logSupabaseError('erreur lecture brackets', error);
         openProfileInfoModal('Vos brackets', 'Coupe du Monde, Euro et Champions League', '<div class="empty">Impossible de charger les brackets. Vérifie que le SQL user_brackets.sql est appliqué.</div>');
@@ -4784,7 +4790,7 @@ grant select, insert, update on public.profiles to authenticated;`;
                 </article>`;
               }).join('')
             : '<div class="empty">Aucun bracket créé pour le moment</div>';
-          openProfileInfoModal(label, 'Vos brackets', `<div class="profile-placeholder-grid">${html}</div>`);
+          openProfileInfoModal(label, 'Vos brackets', `<div class="profile-placeholder-grid is-bracket-list">${html}</div>`);
         })
         .catch(error => {
           logSupabaseError('erreur lecture bracket compétition', error);
