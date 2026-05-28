@@ -72,11 +72,13 @@ const jsonHeaders = {"Content-Type": "application/json; charset=utf-8"};
 
 class SyncCancelled extends Error {
   checkpoint: string;
+  externalStatus: string;
 
-  constructor(checkpoint: string) {
+  constructor(checkpoint: string, externalStatus = "") {
     super(`Synchronisation annulée proprement (${checkpoint})`);
     this.name = "SyncCancelled";
     this.checkpoint = checkpoint;
+    this.externalStatus = externalStatus;
   }
 }
 
@@ -329,6 +331,20 @@ async function finishLog(id: string, status: "success" | "error" | "cancelled", 
   if (error) console.error("[sync-football-data] sync_logs update error", {message: error.message, details: error.details, hint: error.hint, code: error.code});
 }
 
+async function heartbeatLog(id: string, counts: Json, checkpoint: string) {
+  if (!id) return;
+  const payload = {
+    message: `Synchronisation en cours : ${checkpoint}`,
+    processed_counts: {
+      ...counts,
+      heartbeat_checkpoint: checkpoint,
+      heartbeat_at: new Date().toISOString(),
+    },
+  };
+  const {error} = await supabase.from("sync_logs").update(payload).eq("id", id).eq("status", "running");
+  if (error) console.warn("[sync-football-data] heartbeat update skipped", {checkpoint, message: error.message, code: error.code});
+}
+
 async function stopIfCancelled(logId: string, counts: Json, checkpoint: string) {
   if (!logId) return;
   const {data, error} = await supabase
@@ -345,8 +361,9 @@ async function stopIfCancelled(logId: string, counts: Json, checkpoint: string) 
     counts.cancel_checkpoint = checkpoint;
     counts.cancelled_at = new Date().toISOString();
     console.warn("[sync-football-data] cancellation requested", {checkpoint, logStatus, counts});
-    throw new SyncCancelled(checkpoint);
+    throw new SyncCancelled(checkpoint, logStatus && logStatus !== "running" ? logStatus : "");
   }
+  await heartbeatLog(logId, counts, checkpoint);
 }
 
 async function readIdMap(table: string) {
@@ -1000,11 +1017,12 @@ Deno.serve(async () => {
     return response({ok: true, counts});
   } catch (error) {
     if (error instanceof SyncCancelled) {
-      console.warn("[sync-football-data] sync cancelled", {checkpoint: error.checkpoint, counts, logId});
-      if (logId) {
+      const externalStatus = error.externalStatus;
+      console.warn("[sync-football-data] sync cancelled", {checkpoint: error.checkpoint, externalStatus, counts, logId});
+      if (logId && !["timeout", "stalled"].includes(externalStatus)) {
         await finishLog(logId, "cancelled", "Synchronisation annulée proprement.", counts, error.message);
       }
-      return response({ok: false, status: "cancelled", message: "Synchronisation annulée proprement", counts}, 200);
+      return response({ok: false, status: externalStatus || "cancelled", message: externalStatus ? "Synchronisation arrêtée par l’état admin" : "Synchronisation annulée proprement", counts}, 200);
     }
     const message = error instanceof Error ? error.message : String(error);
     console.error("[sync-football-data] sync failed", {

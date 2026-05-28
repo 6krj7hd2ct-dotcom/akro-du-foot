@@ -62,6 +62,7 @@ COMMUNITY_LEVELS = [
 ]
 
 SUPABASE_TIMEOUT = 8
+SYNC_STALL_SECONDS = max(60, int(os.environ.get("AKRO_SYNC_STALL_MINUTES", "5")) * 60)
 SUPABASE_FOOTBALL_CACHE_TTL = max(30, int(os.environ.get("AKRO_SUPABASE_FOOTBALL_CACHE_TTL", "300")))
 SUPABASE_FAILURE_TTL = max(30, int(os.environ.get("AKRO_SUPABASE_FAILURE_TTL", "120")))
 SUPABASE_PROFILE_COLUMNS = "id,pseudo,avatar_url,favorite_club,favorite_club_logo,favorite_nation,favorite_nation_flag,created_at,updated_at"
@@ -2246,26 +2247,125 @@ def _sync_log_public(row: dict[str, Any]) -> dict[str, Any]:
         "status": row.get("status"),
         "started_at": row.get("started_at"),
         "finished_at": row.get("finished_at"),
+        "updated_at": row.get("updated_at"),
         "message": row.get("message") or "",
         "processed_counts": row.get("processed_counts") or {},
         "error_detail": row.get("error_detail") or "",
     }
 
 
+def _parse_supabase_datetime(value: Any) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _sync_last_heartbeat(row: dict[str, Any]) -> datetime | None:
+    counts = row.get("processed_counts") if isinstance(row.get("processed_counts"), dict) else {}
+    return (
+        _parse_supabase_datetime(counts.get("heartbeat_at") if isinstance(counts, dict) else None)
+        or _parse_supabase_datetime(row.get("updated_at"))
+        or _parse_supabase_datetime(row.get("started_at"))
+    )
+
+
+def _mark_stalled_syncs() -> list[dict[str, Any]]:
+    if not _supabase_service_enabled():
+        return []
+    try:
+        import requests
+
+        url, _ = _supabase_service_config()
+        headers = _supabase_service_headers("return=representation")
+        query = "sync_logs?select=id,job_name,status,started_at,updated_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc"
+        running_response = requests.get(f"{url}/rest/v1/{query}", headers=headers, timeout=SUPABASE_TIMEOUT)
+        if running_response.status_code >= 400:
+            print(f"[admin-sync] lecture running impossible: {running_response.text[:220]}", flush=True)
+            return []
+        running = running_response.json() if running_response.content else []
+        if not isinstance(running, list) or not running:
+            return []
+
+        now_dt = datetime.now(timezone.utc)
+        now = now_dt.isoformat()
+        stalled: list[dict[str, Any]] = []
+        for row in running:
+            if not isinstance(row, dict):
+                continue
+            heartbeat = _sync_last_heartbeat(row)
+            if not heartbeat:
+                continue
+            age = (now_dt - heartbeat).total_seconds()
+            if age < SYNC_STALL_SECONDS:
+                continue
+            counts = row.get("processed_counts") if isinstance(row.get("processed_counts"), dict) else {}
+            stalled_counts = {
+                **counts,
+                "sync_timeout": True,
+                "timeout_at": now,
+                "stalled_after_seconds": int(age),
+                "last_heartbeat_at": heartbeat.isoformat(),
+            }
+            payload = {
+                "status": "timeout",
+                "finished_at": now,
+                "message": "Synchronisation bloquée",
+                "error_detail": "Aucun heartbeat ni compteur mis à jour récemment. Le job a été libéré automatiquement.",
+                "processed_counts": stalled_counts,
+            }
+            log_id = quote(str(row.get("id") or ""))
+            update_response = requests.patch(
+                f"{url}/rest/v1/sync_logs?id=eq.{log_id}",
+                headers=headers,
+                json=payload,
+                timeout=SUPABASE_TIMEOUT,
+            )
+            if update_response.status_code >= 400:
+                fallback_payload = {
+                    "status": "error",
+                    "finished_at": now,
+                    "message": "Synchronisation expirée",
+                    "error_detail": "Timeout automatique. Applique football_core.sql pour autoriser le statut timeout.",
+                    "processed_counts": {**stalled_counts, "timeout_fallback_status": "error"},
+                }
+                update_response = requests.patch(
+                    f"{url}/rest/v1/sync_logs?id=eq.{log_id}",
+                    headers=headers,
+                    json=fallback_payload,
+                    timeout=SUPABASE_TIMEOUT,
+                )
+            if update_response.status_code < 400:
+                updated = update_response.json() if update_response.content else []
+                if isinstance(updated, list) and updated:
+                    stalled.extend(updated)
+                else:
+                    stalled.append({**row, **payload})
+            else:
+                print(f"[admin-sync] timeout update impossible: {update_response.text[:220]}", flush=True)
+        return stalled
+    except Exception as exc:
+        print(f"[admin-sync] détection stalled impossible: {exc}", flush=True)
+        return []
+
+
 def admin_sync_logs_response() -> tuple[dict[str, Any], int]:
     if not _supabase_service_enabled():
         return {"configured": False, "logs": [], "message": "SUPABASE_SERVICE_ROLE_KEY manquante côté serveur."}, 200
+    stalled_rows = _mark_stalled_syncs()
     rows = _supabase_service_request(
         "GET",
-        "sync_logs?select=id,job_name,status,started_at,finished_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&order=started_at.desc&limit=20",
+        "sync_logs?select=id,job_name,status,started_at,updated_at,finished_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&order=started_at.desc&limit=20",
     )
     running_rows = _supabase_service_request(
         "GET",
-        "sync_logs?select=id,status,started_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
+        "sync_logs?select=id,status,started_at,updated_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
     )
     success_rows = _supabase_service_request(
         "GET",
-        "sync_logs?select=id,job_name,status,started_at,finished_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&status=eq.success&order=finished_at.desc&limit=1",
+        "sync_logs?select=id,job_name,status,started_at,updated_at,finished_at,message,processed_counts,error_detail&job_name=eq.sync-football-data&status=eq.success&order=finished_at.desc&limit=1",
     )
     if rows is None:
         return {"configured": True, "logs": [], "message": "Impossible de lire sync_logs. Vérifie que supabase/football_core.sql est appliqué."}, 200
@@ -2281,7 +2381,7 @@ def admin_sync_logs_response() -> tuple[dict[str, Any], int]:
             stale = (datetime.now(timezone.utc) - finished).total_seconds() > 36 * 3600
         except ValueError:
             stale = True
-    return {"configured": True, "logs": logs, "latest": latest, "latest_success": latest_success, "has_running": has_running, "stale": stale}, 200
+    return {"configured": True, "logs": logs, "latest": latest, "latest_success": latest_success, "has_running": has_running, "stale": stale, "stalled_marked": len(stalled_rows)}, 200
 
 
 def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
@@ -2289,9 +2389,10 @@ def admin_sync_run_response(payload: dict[str, Any]) -> tuple[dict[str, Any], in
         return {"error": "Clé admin invalide."}, 403
     if not _supabase_service_enabled():
         return {"error": "SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY manquant côté serveur."}, 500
+    _mark_stalled_syncs()
     running = _supabase_service_request(
         "GET",
-        "sync_logs?select=id,status,started_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
+        "sync_logs?select=id,status,started_at,updated_at,message&job_name=eq.sync-football-data&status=eq.running&order=started_at.desc&limit=1",
     )
     if isinstance(running, list) and running:
         return {"error": "Une synchronisation est déjà en cours. Arrête-la ou attends sa fin avant de relancer.", "running": _sync_log_public(running[0])}, 409
@@ -2473,7 +2574,7 @@ def admin_sync_html() -> str:
     .grid {{ display:grid; grid-template-columns:minmax(260px,.8fr) minmax(320px,1.2fr); gap:12px; align-items:start; }}
     .card {{ padding:14px; }}
     .status {{ display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px; font-weight:900; background:rgba(255,255,255,.08); }}
-    .success {{ color:var(--ok); }} .error {{ color:var(--err); }} .running {{ color:var(--gold); }} .cancelled {{ color:var(--muted); }}
+    .success {{ color:var(--ok); }} .error, .timeout, .stalled {{ color:var(--err); }} .running {{ color:var(--gold); }} .cancelled {{ color:var(--muted); }}
     button {{ border:0; border-radius:999px; padding:11px 16px; font-weight:950; color:#07111f; background:linear-gradient(180deg,#ffe1a0,#d5a63a); cursor:pointer; }}
     button:disabled {{ opacity:.58; cursor:wait; }}
     .stop-button {{ display:none; color:#fff; background:linear-gradient(180deg,#ff8b8b,#b92f43); box-shadow:0 10px 26px rgba(255,75,95,.22); }}
@@ -2544,6 +2645,14 @@ def admin_sync_html() -> str:
     const stopButton = document.getElementById('stop');
     const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}}[c]));
     const fmt = value => value ? new Date(value).toLocaleString('fr-FR') : 'Non disponible';
+    const statusLabel = status => ({{
+      running: 'Synchronisation en cours',
+      success: 'Synchronisation terminée',
+      error: 'Erreur',
+      cancelled: 'Synchronisation annulée',
+      timeout: 'Synchronisation bloquée',
+      stalled: 'Synchronisation expirée'
+    }}[String(status || '')] || String(status || 'Aucune synchronisation'));
     function dateCell(value) {{
       if (!value) return '<div class="history-date"><strong>Non disponible</strong><span></span></div>';
       const date = new Date(value);
@@ -2579,7 +2688,7 @@ def admin_sync_html() -> str:
       return `<div class="counts-cell"><div class="counts-list">${{items.map(([label, value]) => `<span><strong>${{escapeHtml(label)}}:</strong> ${{escapeHtml(value)}}</span>`).join('')}}</div><code class="counts-json">${{escapeHtml(JSON.stringify(c, null, 2))}}</code></div>`;
     }}
     function renderLog(log) {{
-      return `<tr><td>${{dateCell(log.started_at)}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(log.status)}}</span></td><td>${{messageCell(log.message || log.error_detail || '')}}</td><td>${{countsHtml(log.processed_counts)}}</td></tr>`;
+      return `<tr><td>${{dateCell(log.started_at)}}</td><td><span class="status ${{escapeHtml(log.status)}}">${{escapeHtml(statusLabel(log.status))}}</span></td><td>${{messageCell(log.message || log.error_detail || '')}}</td><td>${{countsHtml(log.processed_counts)}}</td></tr>`;
     }}
     async function loadLogs() {{
       const res = await fetch('/api/admin/sync/logs', {{cache:'no-store'}});
@@ -2592,12 +2701,12 @@ def admin_sync_html() -> str:
       }}
       const last = data.latest;
       const running = Boolean(data.has_running);
-      state.textContent = last ? last.status : 'Aucune synchronisation';
+      state.textContent = last ? statusLabel(last.status) : 'Aucune synchronisation';
       state.className = `status ${{running ? 'running' : (last?.status || 'running')}}`;
       button.disabled = running;
       stopButton.classList.toggle('is-visible', running);
       stopButton.disabled = false;
-      latest.innerHTML = last ? `<strong>${{escapeHtml(last.status)}}</strong><br>${{escapeHtml(fmt(last.finished_at || last.started_at))}}<br><span class="muted">${{escapeHtml(last.message || '')}}</span>` : 'Aucun log.';
+      latest.innerHTML = last ? `<strong>${{escapeHtml(statusLabel(last.status))}}</strong><br>${{escapeHtml(fmt(last.finished_at || last.started_at))}}<br><span class="muted">${{escapeHtml(last.message || '')}}</span>` : 'Aucun log.';
       freshness.textContent = data.stale ? 'Données absentes ou anciennes : relance recommandée.' : 'Données synchronisées récemment.';
       logsBody.innerHTML = (data.logs || []).map(renderLog).join('') || '<tr><td colspan="4" class="muted">Aucune synchronisation enregistrée.</td></tr>';
     }}
