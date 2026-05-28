@@ -991,7 +991,7 @@
     .user-bracket-tree-side img, .user-bracket-tree-side .flag { width: 21px; height: 21px; border-radius: 50%; object-fit: contain; background: rgba(255,255,255,0.82); box-shadow: 0 0 0 1px rgba(7,17,31,0.10); }
     .user-bracket-tree-side-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
     .user-bracket-tree-side-slot { color: #526274; font-size: 9px; line-height: 1; font-weight: 950; text-transform: uppercase; }
-    .user-bracket-tree-slot-edit { position: absolute; top: 50%; right: 4px; width: 18px; height: 18px; transform: translateY(-50%); display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(7,17,31,0.12); background: rgba(255,255,255,0.72); color: #07111f; font: inherit; font-size: 11px; line-height: 1; font-weight: 950; cursor: pointer; }
+    .user-bracket-tree-slot-edit { position: absolute; top: 50%; right: 4px; width: 18px; height: 18px; transform: translateY(-50%); display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(7,17,31,0.12); background: rgba(255,255,255,0.72); color: #07111f; font: inherit; font-size: 11px; line-height: 1; font-weight: 950; cursor: pointer; z-index: 2; }
     .user-bracket-tree-slot-edit:hover, .user-bracket-tree-slot-edit:focus-visible { border-color: rgba(245,201,107,0.66); background: #ffe1a0; outline: none; }
     .user-bracket-tree-menu { position: absolute; z-index: 8; left: 6px; right: 6px; top: calc(100% + 4px); display: grid; gap: 4px; padding: 6px; border-radius: 11px; border: 1px solid rgba(245,201,107,0.28); background: rgba(7,17,31,0.97); box-shadow: 0 18px 38px rgba(0,0,0,0.34); }
     .user-bracket-tree-choice { appearance: none; min-width: 0; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 7px; padding: 6px 7px; border: 0; border-radius: 8px; background: transparent; color: #eaf4ff; font: inherit; font-size: 11px; font-weight: 900; text-align: left; cursor: pointer; }
@@ -3948,6 +3948,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       return Object.values(communityProfiles || {}).find(profile => String(profile?.id || '') === String(profileId || '')) || null;
     }
 
+    function mergeProfilesById(rows = []) {
+      rows.forEach(profile => {
+        if (!profile?.id) return;
+        const currentKey = profile.pseudo || profile.id;
+        const existing = profileById(profile.id) || communityProfiles[currentKey] || {};
+        communityProfiles[currentKey] = {...existing, ...profile};
+      });
+    }
+
     function latestPublishedBracketTime(brackets = []) {
       return brackets.reduce((latest, row) => {
         const time = new Date(row.published_at || row.updated_at || row.created_at || 0).getTime();
@@ -4015,6 +4024,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       const final = selectedMatches.find(match => normalizeFootballName(match.round).includes('finale')) || selectedMatches[selectedMatches.length - 1];
       if (!final) return {champion: '', runnerUp: ''};
       return {champion: final.winner, runnerUp: final.teams.find(team => team !== final.winner) || ''};
+    }
+
+    function finalUserBracketSelectionFromRow(row) {
+      const draft = {
+        kind: 'worldcup',
+        matches: row?.bracket_data?.matches?.length ? row.bracket_data.matches : buildWorldCupPredictiveBracket(),
+        selections: row?.bracket_data?.selections || {}
+      };
+      return finalUserBracketSelection(draft);
     }
 
     function userBracketTeamIcon(team) {
@@ -4135,10 +4153,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       const choices = isFirstRound ? (slot?.choices || []) : teams;
       const label = team || slot?.label || 'À choisir';
       const picked = team && winner === team;
-      const buttonAttrs = isFirstRound && !team
-        ? `data-user-bracket-tree-slot="${escapeHtml(match.index)}" data-user-bracket-side="${escapeHtml(sideIndex)}"`
+      const buttonAttrs = isFirstRound
+        ? ''
         : `data-user-bracket-pick="${escapeHtml(match.index)}" data-user-bracket-team="${escapeHtml(team)}"`;
-      const tag = readOnly || (!isFirstRound && !team) ? 'div' : 'button';
+      const tag = readOnly || isFirstRound || (!isFirstRound && !team) ? 'div' : 'button';
       const type = tag === 'button' ? ' type="button"' : '';
       const attrs = tag === 'button' ? ` ${buttonAttrs}` : '';
       const menu = !readOnly && isFirstRound
@@ -4152,7 +4170,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           <span class="user-bracket-tree-side-name">${escapeHtml(team || slot?.label || 'À choisir')}</span>
           <span class="user-bracket-tree-side-slot">${escapeHtml(isFirstRound ? (slot?.label || '') : (picked ? '✓' : ''))}</span>
         </${tag}>
-        ${!readOnly && isFirstRound && team ? `<button class="user-bracket-tree-slot-edit" type="button" data-user-bracket-tree-slot="${escapeHtml(match.index)}" data-user-bracket-side="${escapeHtml(sideIndex)}" aria-label="Changer ${escapeHtml(slot?.label || 'ce choix')}">⋯</button>` : ''}
+        ${!readOnly && isFirstRound ? `<button class="user-bracket-tree-slot-edit" type="button" data-user-bracket-tree-slot="${escapeHtml(match.index)}" data-user-bracket-side="${escapeHtml(sideIndex)}" aria-label="${team ? `Changer ${escapeHtml(team)}` : `Choisir ${escapeHtml(slot?.label || 'ce choix')}`}">⋯</button>` : ''}
         ${menu}
       </div>`;
     }
@@ -4423,6 +4441,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         .order('published_at', {ascending: false}), 10000);
       if (error) throw error;
       const brackets = data || [];
+      const profileIds = [...new Set(brackets.map(row => row.profile_id).filter(Boolean))];
+      if (profileIds.length) {
+        const {data: profileRows, error: profilesError} = await supabaseStep('select bracket author profiles', akroSupabase
+          .from('profiles')
+          .select(PROFILE_SELECT_COLUMNS)
+          .in('id', profileIds), 10000);
+        if (!profilesError) mergeProfilesById(profileRows || []);
+      }
       const ids = brackets.map(row => row.id).filter(Boolean);
       if (!ids.length) return {brackets, votes: []};
       const {data: votesData, error: votesError} = await supabaseStep('select user_bracket_votes', akroSupabase
@@ -4454,6 +4480,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (!brackets.length) return '<div class="empty">Aucun bracket Coupe du Monde 2026 publié pour le moment.</div>';
       return `<div class="votes-bracket-list">${brackets.map(row => {
         const author = profileById(row.profile_id);
+        const summary = finalUserBracketSelectionFromRow(row);
+        const champion = summary.champion || row.champion || '';
         const counts = voteCountsForBracket(row, votes);
         const voted = currentVoteForBracket(row, votes);
         return `<article class="profile-placeholder-card user-bracket-card votes-bracket-card">
@@ -4462,7 +4490,7 @@ grant select, insert, update on public.profiles to authenticated;`;
             <div class="votes-bracket-author">
               <div><span class="votes-bracket-title">${escapeHtml(author?.pseudo || 'Profil')}</span><div class="subtle">Coupe du Monde ${escapeHtml(row.season || '2026')} • publié le ${escapeHtml(profileDate(row.published_at || row.updated_at || row.created_at))}</div></div>
             </div>
-            <div>Gagnant : <strong>${escapeHtml(row.champion || 'À choisir')}</strong></div>
+            <div>Gagnant : <strong>${escapeHtml(champion || 'à déterminer')}</strong></div>
             <div class="votes-bracket-footer">
               <div class="votes-bracket-actions">
                 <button class="votes-bracket-button ${voted === 'like' ? 'is-voted' : ''}" type="button" data-bracket-vote="${escapeHtml(row.id)}" data-bracket-vote-type="like">👍 ${escapeHtml(counts.likes)}</button>
