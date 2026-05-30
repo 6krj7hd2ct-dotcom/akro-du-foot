@@ -1,7 +1,625 @@
 {
-  "generated_at": "2026-05-30T07:33:49+00:00",
+  "generated_at": "2026-05-30T12:13:06+00:00",
   "competition": "Ligue des Champions",
-  "standings": [],
+  "standings": [
+    {
+      "name": "League Phase",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Arsenal",
+          "espn_id": "359",
+          "abbr": "ARS",
+          "country_code": "ARS",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
+          "played": "8",
+          "wins": "0",
+          "draws": "+19",
+          "losses": "24",
+          "goals_for": "4",
+          "goals_against": "23",
+          "goal_diff": "0",
+          "points": "8",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 2,
+          "team": "Bayern Munich",
+          "espn_id": "132",
+          "abbr": "MUN",
+          "country_code": "MUN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
+          "played": "8",
+          "wins": "1",
+          "draws": "+14",
+          "losses": "21",
+          "goals_for": "8",
+          "goals_against": "22",
+          "goal_diff": "0",
+          "points": "7",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 3,
+          "team": "Liverpool",
+          "espn_id": "364",
+          "abbr": "LIV",
+          "country_code": "LIV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+12",
+          "losses": "18",
+          "goals_for": "8",
+          "goals_against": "20",
+          "goal_diff": "0",
+          "points": "6",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 4,
+          "team": "Tottenham Hotspur",
+          "espn_id": "367",
+          "abbr": "TOT",
+          "country_code": "TOT",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/367.png",
+          "played": "8",
+          "wins": "1",
+          "draws": "+10",
+          "losses": "17",
+          "goals_for": "7",
+          "goals_against": "17",
+          "goal_diff": "2",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 5,
+          "team": "Barcelona",
+          "espn_id": "83",
+          "abbr": "BAR",
+          "country_code": "BAR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+8",
+          "losses": "16",
+          "goals_for": "14",
+          "goals_against": "22",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 6,
+          "team": "Chelsea",
+          "espn_id": "363",
+          "abbr": "CHE",
+          "country_code": "CHE",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+7",
+          "losses": "16",
+          "goals_for": "10",
+          "goals_against": "17",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 7,
+          "team": "Sporting CP",
+          "espn_id": "2250",
+          "abbr": "SCP",
+          "country_code": "SCP",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2250.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+6",
+          "losses": "16",
+          "goals_for": "11",
+          "goals_against": "17",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 8,
+          "team": "Manchester City",
+          "espn_id": "382",
+          "abbr": "MNC",
+          "country_code": "MNC",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+6",
+          "losses": "16",
+          "goals_for": "9",
+          "goals_against": "15",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 9,
+          "team": "Real Madrid",
+          "espn_id": "86",
+          "abbr": "RMA",
+          "country_code": "RMA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+9",
+          "losses": "15",
+          "goals_for": "12",
+          "goals_against": "21",
+          "goal_diff": "0",
+          "points": "5",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 10,
+          "team": "Internazionale",
+          "espn_id": "110",
+          "abbr": "INT",
+          "country_code": "INT",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+8",
+          "losses": "15",
+          "goals_for": "7",
+          "goals_against": "15",
+          "goal_diff": "0",
+          "points": "5",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 11,
+          "team": "Paris Saint-Germain",
+          "espn_id": "160",
+          "abbr": "PSG",
+          "country_code": "PSG",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+10",
+          "losses": "14",
+          "goals_for": "11",
+          "goals_against": "21",
+          "goal_diff": "2",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 12,
+          "team": "Newcastle United",
+          "espn_id": "361",
+          "abbr": "NEW",
+          "country_code": "NEW",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+10",
+          "losses": "14",
+          "goals_for": "7",
+          "goals_against": "17",
+          "goal_diff": "2",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 13,
+          "team": "Juventus",
+          "espn_id": "111",
+          "abbr": "JUV",
+          "country_code": "JUV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/111.png",
+          "played": "8",
+          "wins": "1",
+          "draws": "+4",
+          "losses": "13",
+          "goals_for": "10",
+          "goals_against": "14",
+          "goal_diff": "4",
+          "points": "3",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 14,
+          "team": "Atlético Madrid",
+          "espn_id": "1068",
+          "abbr": "ATM",
+          "country_code": "ATM",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+2",
+          "losses": "13",
+          "goals_for": "15",
+          "goals_against": "17",
+          "goal_diff": "1",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 15,
+          "team": "Atalanta",
+          "espn_id": "105",
+          "abbr": "ATA",
+          "country_code": "ATA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/105.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "0",
+          "losses": "13",
+          "goals_for": "10",
+          "goals_against": "10",
+          "goal_diff": "1",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 16,
+          "team": "Bayer Leverkusen",
+          "espn_id": "131",
+          "abbr": "B04",
+          "country_code": "B04",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/131.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "-1",
+          "losses": "12",
+          "goals_for": "14",
+          "goals_against": "13",
+          "goal_diff": "3",
+          "points": "3",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 17,
+          "team": "Borussia Dortmund",
+          "espn_id": "124",
+          "abbr": "DOR",
+          "country_code": "DOR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+2",
+          "losses": "11",
+          "goals_for": "17",
+          "goals_against": "19",
+          "goal_diff": "2",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 18,
+          "team": "Olympiacos",
+          "espn_id": "435",
+          "abbr": "OLY",
+          "country_code": "OLY",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/435.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "-4",
+          "losses": "11",
+          "goals_for": "14",
+          "goals_against": "10",
+          "goal_diff": "2",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 19,
+          "team": "Club Brugge",
+          "espn_id": "570",
+          "abbr": "BRU",
+          "country_code": "BRU",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/570.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-2",
+          "losses": "10",
+          "goals_for": "17",
+          "goals_against": "15",
+          "goal_diff": "1",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 20,
+          "team": "Galatasaray",
+          "espn_id": "432",
+          "abbr": "GAL",
+          "country_code": "GAL",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/432.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-2",
+          "losses": "10",
+          "goals_for": "11",
+          "goals_against": "9",
+          "goal_diff": "1",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 21,
+          "team": "AS Monaco",
+          "espn_id": "174",
+          "abbr": "MON",
+          "country_code": "MON",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "-6",
+          "losses": "10",
+          "goals_for": "14",
+          "goals_against": "8",
+          "goal_diff": "4",
+          "points": "2",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 22,
+          "team": "FK Qarabag",
+          "espn_id": "10414",
+          "abbr": "QAR",
+          "country_code": "QAR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/10414.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-8",
+          "losses": "10",
+          "goals_for": "21",
+          "goals_against": "13",
+          "goal_diff": "1",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 23,
+          "team": "Bodo/Glimt",
+          "espn_id": "2980",
+          "abbr": "BODO",
+          "country_code": "BODO",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2980.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "-1",
+          "losses": "9",
+          "goals_for": "15",
+          "goals_against": "14",
+          "goal_diff": "3",
+          "points": "2",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 24,
+          "team": "Benfica",
+          "espn_id": "1929",
+          "abbr": "SLB",
+          "country_code": "SLB",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/1929.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-2",
+          "losses": "9",
+          "goals_for": "12",
+          "goals_against": "10",
+          "goal_diff": "0",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 25,
+          "team": "Marseille",
+          "espn_id": "176",
+          "abbr": "OLM",
+          "country_code": "OLM",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-3",
+          "losses": "9",
+          "goals_for": "14",
+          "goals_against": "11",
+          "goal_diff": "0",
+          "points": "3",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 26,
+          "team": "Pafos",
+          "espn_id": "22281",
+          "abbr": "PAF",
+          "country_code": "PAF",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/22281.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "-3",
+          "losses": "9",
+          "goals_for": "11",
+          "goals_against": "8",
+          "goal_diff": "3",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 27,
+          "team": "Union St.-Gilloise",
+          "espn_id": "5807",
+          "abbr": "USG",
+          "country_code": "USG",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/5807.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-9",
+          "losses": "9",
+          "goals_for": "17",
+          "goals_against": "8",
+          "goal_diff": "0",
+          "points": "3",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 28,
+          "team": "PSV Eindhoven",
+          "espn_id": "148",
+          "abbr": "PSV",
+          "country_code": "PSV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/148.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "0",
+          "losses": "8",
+          "goals_for": "16",
+          "goals_against": "16",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 29,
+          "team": "Athletic Club",
+          "espn_id": "93",
+          "abbr": "ATH",
+          "country_code": "ATH",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/93.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-5",
+          "losses": "8",
+          "goals_for": "14",
+          "goals_against": "9",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 30,
+          "team": "Napoli",
+          "espn_id": "114",
+          "abbr": "NAP",
+          "country_code": "NAP",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/114.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-6",
+          "losses": "8",
+          "goals_for": "15",
+          "goals_against": "9",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 31,
+          "team": "F.C. København",
+          "espn_id": "909",
+          "abbr": "KBH",
+          "country_code": "KBH",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/909.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-9",
+          "losses": "8",
+          "goals_for": "21",
+          "goals_against": "12",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 32,
+          "team": "Ajax Amsterdam",
+          "espn_id": "139",
+          "abbr": "AJA",
+          "country_code": "AJA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/139.png",
+          "played": "8",
+          "wins": "6",
+          "draws": "-13",
+          "losses": "6",
+          "goals_for": "21",
+          "goals_against": "8",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 33,
+          "team": "Eintracht Frankfurt",
+          "espn_id": "125",
+          "abbr": "SGE",
+          "country_code": "SGE",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/125.png",
+          "played": "8",
+          "wins": "6",
+          "draws": "-11",
+          "losses": "4",
+          "goals_for": "21",
+          "goals_against": "10",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 34,
+          "team": "Slavia Prague",
+          "espn_id": "494",
+          "abbr": "SLP",
+          "country_code": "SLP",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/494.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-14",
+          "losses": "3",
+          "goals_for": "19",
+          "goals_against": "5",
+          "goal_diff": "3",
+          "points": "0",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 35,
+          "team": "Villarreal",
+          "espn_id": "102",
+          "abbr": "VIL",
+          "country_code": "VIL",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/102.png",
+          "played": "8",
+          "wins": "7",
+          "draws": "-13",
+          "losses": "1",
+          "goals_for": "18",
+          "goals_against": "5",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 36,
+          "team": "Kairat Almaty",
+          "espn_id": "2528",
+          "abbr": "KAI",
+          "country_code": "KAI",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2528.png",
+          "played": "8",
+          "wins": "7",
+          "draws": "-15",
+          "losses": "1",
+          "goals_for": "22",
+          "goals_against": "7",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    }
+  ],
   "group_matches": [
     {
       "name": "Phase de ligue",
@@ -5659,49 +6277,79 @@
   },
   "top_scorers": [
     {
+      "rank": 1,
       "name": "Kylian Mbappé",
       "team": "Real Madrid",
-      "team_id": 8633,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 15,
-      "rank": 1,
+      "played": "11",
+      "value": "15",
+      "team_id": 8633,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
       "country": "France"
     },
     {
+      "rank": 2,
       "name": "Harry Kane",
-      "team": "Bayern München",
-      "team_id": 9823,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
+      "team": "Bayern Munich",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 14,
-      "rank": 2,
+      "played": "13",
+      "value": "14",
+      "team_id": 9823,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
       "country": "England"
     },
     {
+      "rank": 3,
+      "name": "Julián Álvarez",
+      "team": "Atlético Madrid",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/277206.png",
+      "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+      "all_time_rank": "",
+      "played": "15",
+      "value": "10",
+      "team_id": "",
+      "team_logo_url": "",
+      "country": "Argentina"
+    },
+    {
+      "rank": 4,
       "name": "Khvicha Kvaratskhelia",
       "team": "Paris Saint-Germain",
-      "team_id": 9847,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9847.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/900433.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/geo.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 10,
-      "rank": 3,
+      "played": "15",
+      "value": "10",
+      "team_id": 9847,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9847.png",
       "country": "Georgia"
+    },
+    {
+      "rank": 5,
+      "name": "Anthony Gordon",
+      "team": "Newcastle United",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/268782.png",
+      "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
+      "all_time_rank": "",
+      "played": "12",
+      "value": "10",
+      "team_id": "",
+      "team_logo_url": "",
+      "country": "England"
     }
   ],
   "top_assists": [
@@ -5866,6 +6514,76 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
+      "source": "RMC Sport",
+      "date": "2026-05-30T12:11:31+00:00",
+      "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
+    },
+    {
+      "title": "\"Rien à cirer du PSG\": ces Français assument de supporter Arsenal, un club très francophile",
+      "source": "RMC Sport",
+      "date": "2026-05-30T10:30:03+00:00",
+      "summary": "Ils sont Français mais ne veulent pas de la victoire du PSG ce soir. Ils ne sont pas fans de l'OM ou d'un autre club français mais tout simplement d'Arsenal, ce club londonien très francophile, de par ses…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/rien-a-cirer-du-psg-ces-francais-assument-de-supporter-arsenal-un-club-tres-francophile_AV-202605300191.html"
+    },
+    {
+      "title": "PSG-Arsenal: qui est le favori des bookmakers pour cette finale de Ligue des champions?",
+      "source": "RMC Sport",
+      "date": "2026-05-30T10:09:39+00:00",
+      "summary": "Alors que la planète football trépigne d'impatience à quelques heures de la grande finale de la Ligue des champions entre le PSG et Arsenal ce samedi (18h), les bookmakers ont déjà choisi leur club favori…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-qui-est-le-favori-des-bookmakers-pour-cette-finale-de-ligue-des-champions_AV-202605300186.html"
+    },
+    {
+      "title": "Indice UEFA: le PSG permet de maintenir la position de la France, menacée par la dynamique portugaise",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:53:13+00:00",
+      "summary": "Présent une nouvelle fois en finale de Ligue des champions ce samedi (18h contre Arsenal), le PSG porte le football français à l'indice UEFA. Si la France restera cinquième du classement à l'issue de cette…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/indice-uefa-le-psg-permet-de-maintenir-la-position-de-la-france-menacee-par-la-dynamique-portugaise_AV-202605300177.html"
+    },
+    {
+      "title": "Supporters, anciens joueurs et entraîneur du PSG... Ils seront tous derrière leur club ce soir",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:38:20+00:00",
+      "summary": "Supporters, anciens joueurs (Didier Domi et Pierre Ducrocq) et ancien entraîneur (Luis Fernandez) ont tous répondu à l'appel de RMC ce samedi, afin de montrer leur engouement pour leur club, quelques heures…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/supporters-anciens-joueurs-et-entraineurs-du-psg-ils-seront-tous-derriere-leur-club-ce-soir_AV-202605300175.html"
+    },
+    {
+      "title": "PSG-Arsenal: on connaît le montant des primes versées aux Parisiens en cas de victoire en finale de Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:18:28+00:00",
+      "summary": "Selon nos confrères de L'Équipe, une prime d'un million d'euros attend chaque joueur du PSG en cas de sacre ce samedi en finale de Ligue des champions contre Arsenal. Un montant négocié en début de saison par…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-on-connait-le-montant-des-primes-versees-aux-parisiens-en-cas-de-victoire-en-finale-de-ligue-des-champions_AV-202605300161.html"
+    },
+    {
+      "title": "PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:00:25+00:00",
+      "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
+    },
+    {
+      "title": "\"On a décalé le début de la cérémonie\": ce fan du PSG se marie le même jour que la finale de la Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:27:33+00:00",
+      "summary": "Jean-Baptiste, fan du PSG, se marie ce samedi, jour de finale de la Ligue des champions. De quoi faire reporter le mariage? Non, assure-t-il sur RMC! Pour la bonne raison qu'il était à Munich l'année dernière…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/on-a-decale-le-debut-de-la-ceremonie-ce-fan-du-psg-se-marie-le-meme-jour-que-la-finale-de-la-ligue-des-champions_AV-202605300143.html"
+    },
+    {
+      "title": "\"Une bonne personne\" plutôt qu'un \"monstre du football\", la der de la légende André-Pierre Gignac, icône au Mexique",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:27:16+00:00",
+      "summary": "A 40 ans, l'ancien avant-centre de l'équipe de France dispute son dernier match avec les Tigres de Monterrey, la finale de la Ligue des champions de la Concacaf. point d'orgue d'une carrière exceptionnelle.",
+      "url": "https://rmcsport.bfmtv.com/football/une-bonne-personne-plutot-qu-un-monstre-du-football-la-der-de-la-legende-andre-pierre-gignac-icone-au-mexique_AD-202605300142.html"
+    },
+    {
+      "title": "Trois penaltys et cartons rouges non-sifflés: Arsenal favorisé par le VAR et les arbitres en Premier League",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:16:28+00:00",
+      "summary": "D'après le rapport annuel du comité KMI, Arsenal et Chelsea sont les deux équipes qui ont le plus bénéficié d'erreurs d'arbitrage cette saison en Premier League. Les Gunners auraient dû concéder trois…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/trois-penaltys-et-cartons-rouges-non-siffles-arsenal-favorise-par-le-var-et-les-arbitres-en-premier-league_AV-202605300140.html"
+    },
+    {
       "title": "PSG-Arsenal: 18h au lieu de 21h, pourquoi la finale de Ligue des champions va se jouer à un horaire inhabituel",
       "source": "RMC Sport",
       "date": "2026-05-30T07:30:05+00:00",
@@ -5885,13 +6603,6 @@
       "date": "2026-05-30T07:07:00+00:00",
       "summary": "La finale de la Ligue Champions entre le Paris Saint-Germain et Arsenal se joue ce samedi 30 mai à 18h en direct de la Puskás Aréna de Budapest, Hongrie. Notre consultant et ancien joueur d’Arsenal, Emmanuel…",
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-raya-le-roc-rice-imperial-trossard-le-poux-manu-petit-decrit-le-xi-d-arsenal_VN-202605300119.html"
-    },
-    {
-      "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
-      "source": "RMC Sport",
-      "date": "2026-05-30T06:34:35+00:00",
-      "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
     },
     {
       "title": "\"Je crois à un doublé: Pierre Gasly, fan du PSG, se confie sur RMC avant la finale contre Arsenal",
@@ -5920,46 +6631,81 @@
       "date": "2026-05-29T23:03:49+00:00",
       "summary": "Luis Enrique Martínez García, dit Luis Enrique, est un ancien footballeur international espagnol reconverti en entraîneur, né le 8 mai 1970 à Gijón. Ex-sélectionneur de l'équipe d'Espagne, il entraîne…",
       "url": "https://rmcsport.bfmtv.com/football/clubs/paris-saint-germain/luis-enrique_DN-202308300457.html"
-    },
-    {
-      "title": "Achraf Hakimi",
-      "source": "RMC Sport",
-      "date": "2026-05-29T23:03:49+00:00",
-      "summary": "Achraf Hakimi est un joueur de football marocain né le 4 novembre 1998 à Madrid en Espagne. Ses parents sont d'origine marocaine et il a choisi de représenter le Maroc, avec qui il a atteint les demi-finales…",
-      "url": "https://rmcsport.bfmtv.com/football/achraf-hakimi_DN-202508100323.html"
-    },
-    {
-      "title": "Marquinhos",
-      "source": "RMC Sport",
-      "date": "2026-05-29T23:03:49+00:00",
-      "summary": "Marcos Aoás Corrêa, dit Marquinhos, est un international brésilien né le 14 mai 1994 à São Paulo. Il joue actuellement au Paris Saint-Germain, dont il est le capitaine. Défenseur central de formation, il lui…",
-      "url": "https://rmcsport.bfmtv.com/football/marquinhos_DN-202308300507.html"
-    },
-    {
-      "title": "PSG-Arsenal : \"Deux équipes en totale confiance\" Riolo indécis",
-      "source": "RMC Sport",
-      "date": "2026-05-29T22:14:54+00:00",
-      "summary": "Le PSG affronte Arsenal, samedi à 18h à Budapest, en finale de la Ligue des champions. Les deux finalistes n'ont plus l'image de losers, remarque Riolo, qui ne désigne pas de favori.",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-deux-equipes-en-totale-confiance-riolo-indecis_VN-202605290948.html"
-    },
-    {
-      "title": "PSG-Arsenal: les mêmes joueurs que lors de la finale de l'an dernier? Un doute subsiste dans la compo probable",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:03:30+00:00",
-      "summary": "La composition d'équipe alignée par Luis Enrique pour la finale de Ligue des champions entre le PSG et Arsenal, samedi à Budapest, aura des airs de déjà-vu. Le onze de départ devrait fortement ressembler à…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-les-memes-joueurs-que-lors-de-la-finale-de-l-an-dernier-un-doute-subsiste-dans-la-compo-probable_AP-202605290907.html"
-    },
-    {
-      "title": "DIRECT. PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
-      "source": "RMC Sport",
-      "date": "2026-05-29T20:56:22+00:00",
-      "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
     }
   ],
   "france_news": [],
   "general_news": [
     {
+      "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
+      "source": "RMC Sport",
+      "date": "2026-05-30T12:11:31+00:00",
+      "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
+    },
+    {
+      "title": "\"Rien à cirer du PSG\": ces Français assument de supporter Arsenal, un club très francophile",
+      "source": "RMC Sport",
+      "date": "2026-05-30T10:30:03+00:00",
+      "summary": "Ils sont Français mais ne veulent pas de la victoire du PSG ce soir. Ils ne sont pas fans de l'OM ou d'un autre club français mais tout simplement d'Arsenal, ce club londonien très francophile, de par ses…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/rien-a-cirer-du-psg-ces-francais-assument-de-supporter-arsenal-un-club-tres-francophile_AV-202605300191.html"
+    },
+    {
+      "title": "PSG-Arsenal: qui est le favori des bookmakers pour cette finale de Ligue des champions?",
+      "source": "RMC Sport",
+      "date": "2026-05-30T10:09:39+00:00",
+      "summary": "Alors que la planète football trépigne d'impatience à quelques heures de la grande finale de la Ligue des champions entre le PSG et Arsenal ce samedi (18h), les bookmakers ont déjà choisi leur club favori…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-qui-est-le-favori-des-bookmakers-pour-cette-finale-de-ligue-des-champions_AV-202605300186.html"
+    },
+    {
+      "title": "Indice UEFA: le PSG permet de maintenir la position de la France, menacée par la dynamique portugaise",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:53:13+00:00",
+      "summary": "Présent une nouvelle fois en finale de Ligue des champions ce samedi (18h contre Arsenal), le PSG porte le football français à l'indice UEFA. Si la France restera cinquième du classement à l'issue de cette…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/indice-uefa-le-psg-permet-de-maintenir-la-position-de-la-france-menacee-par-la-dynamique-portugaise_AV-202605300177.html"
+    },
+    {
+      "title": "Supporters, anciens joueurs et entraîneur du PSG... Ils seront tous derrière leur club ce soir",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:38:20+00:00",
+      "summary": "Supporters, anciens joueurs (Didier Domi et Pierre Ducrocq) et ancien entraîneur (Luis Fernandez) ont tous répondu à l'appel de RMC ce samedi, afin de montrer leur engouement pour leur club, quelques heures…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/supporters-anciens-joueurs-et-entraineurs-du-psg-ils-seront-tous-derriere-leur-club-ce-soir_AV-202605300175.html"
+    },
+    {
+      "title": "PSG-Arsenal: on connaît le montant des primes versées aux Parisiens en cas de victoire en finale de Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:18:28+00:00",
+      "summary": "Selon nos confrères de L'Équipe, une prime d'un million d'euros attend chaque joueur du PSG en cas de sacre ce samedi en finale de Ligue des champions contre Arsenal. Un montant négocié en début de saison par…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-on-connait-le-montant-des-primes-versees-aux-parisiens-en-cas-de-victoire-en-finale-de-ligue-des-champions_AV-202605300161.html"
+    },
+    {
+      "title": "PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:00:25+00:00",
+      "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
+    },
+    {
+      "title": "\"On a décalé le début de la cérémonie\": ce fan du PSG se marie le même jour que la finale de la Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:27:33+00:00",
+      "summary": "Jean-Baptiste, fan du PSG, se marie ce samedi, jour de finale de la Ligue des champions. De quoi faire reporter le mariage? Non, assure-t-il sur RMC! Pour la bonne raison qu'il était à Munich l'année dernière…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/on-a-decale-le-debut-de-la-ceremonie-ce-fan-du-psg-se-marie-le-meme-jour-que-la-finale-de-la-ligue-des-champions_AV-202605300143.html"
+    },
+    {
+      "title": "\"Une bonne personne\" plutôt qu'un \"monstre du football\", la der de la légende André-Pierre Gignac, icône au Mexique",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:27:16+00:00",
+      "summary": "A 40 ans, l'ancien avant-centre de l'équipe de France dispute son dernier match avec les Tigres de Monterrey, la finale de la Ligue des champions de la Concacaf. point d'orgue d'une carrière exceptionnelle.",
+      "url": "https://rmcsport.bfmtv.com/football/une-bonne-personne-plutot-qu-un-monstre-du-football-la-der-de-la-legende-andre-pierre-gignac-icone-au-mexique_AD-202605300142.html"
+    },
+    {
+      "title": "Trois penaltys et cartons rouges non-sifflés: Arsenal favorisé par le VAR et les arbitres en Premier League",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:16:28+00:00",
+      "summary": "D'après le rapport annuel du comité KMI, Arsenal et Chelsea sont les deux équipes qui ont le plus bénéficié d'erreurs d'arbitrage cette saison en Premier League. Les Gunners auraient dû concéder trois…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/trois-penaltys-et-cartons-rouges-non-siffles-arsenal-favorise-par-le-var-et-les-arbitres-en-premier-league_AV-202605300140.html"
+    },
+    {
       "title": "PSG-Arsenal: 18h au lieu de 21h, pourquoi la finale de Ligue des champions va se jouer à un horaire inhabituel",
       "source": "RMC Sport",
       "date": "2026-05-30T07:30:05+00:00",
@@ -5979,13 +6725,6 @@
       "date": "2026-05-30T07:07:00+00:00",
       "summary": "La finale de la Ligue Champions entre le Paris Saint-Germain et Arsenal se joue ce samedi 30 mai à 18h en direct de la Puskás Aréna de Budapest, Hongrie. Notre consultant et ancien joueur d’Arsenal, Emmanuel…",
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-raya-le-roc-rice-imperial-trossard-le-poux-manu-petit-decrit-le-xi-d-arsenal_VN-202605300119.html"
-    },
-    {
-      "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
-      "source": "RMC Sport",
-      "date": "2026-05-30T06:34:35+00:00",
-      "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
     },
     {
       "title": "\"Je crois à un doublé: Pierre Gasly, fan du PSG, se confie sur RMC avant la finale contre Arsenal",
@@ -6014,44 +6753,212 @@
       "date": "2026-05-29T23:03:49+00:00",
       "summary": "Luis Enrique Martínez García, dit Luis Enrique, est un ancien footballeur international espagnol reconverti en entraîneur, né le 8 mai 1970 à Gijón. Ex-sélectionneur de l'équipe d'Espagne, il entraîne…",
       "url": "https://rmcsport.bfmtv.com/football/clubs/paris-saint-germain/luis-enrique_DN-202308300457.html"
-    },
-    {
-      "title": "Achraf Hakimi",
-      "source": "RMC Sport",
-      "date": "2026-05-29T23:03:49+00:00",
-      "summary": "Achraf Hakimi est un joueur de football marocain né le 4 novembre 1998 à Madrid en Espagne. Ses parents sont d'origine marocaine et il a choisi de représenter le Maroc, avec qui il a atteint les demi-finales…",
-      "url": "https://rmcsport.bfmtv.com/football/achraf-hakimi_DN-202508100323.html"
-    },
-    {
-      "title": "Marquinhos",
-      "source": "RMC Sport",
-      "date": "2026-05-29T23:03:49+00:00",
-      "summary": "Marcos Aoás Corrêa, dit Marquinhos, est un international brésilien né le 14 mai 1994 à São Paulo. Il joue actuellement au Paris Saint-Germain, dont il est le capitaine. Défenseur central de formation, il lui…",
-      "url": "https://rmcsport.bfmtv.com/football/marquinhos_DN-202308300507.html"
-    },
-    {
-      "title": "PSG-Arsenal : \"Deux équipes en totale confiance\" Riolo indécis",
-      "source": "RMC Sport",
-      "date": "2026-05-29T22:14:54+00:00",
-      "summary": "Le PSG affronte Arsenal, samedi à 18h à Budapest, en finale de la Ligue des champions. Les deux finalistes n'ont plus l'image de losers, remarque Riolo, qui ne désigne pas de favori.",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-deux-equipes-en-totale-confiance-riolo-indecis_VN-202605290948.html"
-    },
-    {
-      "title": "PSG-Arsenal: les mêmes joueurs que lors de la finale de l'an dernier? Un doute subsiste dans la compo probable",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:03:30+00:00",
-      "summary": "La composition d'équipe alignée par Luis Enrique pour la finale de Ligue des champions entre le PSG et Arsenal, samedi à Budapest, aura des airs de déjà-vu. Le onze de départ devrait fortement ressembler à…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-les-memes-joueurs-que-lors-de-la-finale-de-l-an-dernier-un-doute-subsiste-dans-la-compo-probable_AP-202605290907.html"
-    },
-    {
-      "title": "DIRECT. PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
-      "source": "RMC Sport",
-      "date": "2026-05-29T20:56:22+00:00",
-      "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
     }
   ],
   "all_news": [
+    {
+      "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
+      "source": "RMC Sport",
+      "date": "2026-05-30T12:11:31+00:00",
+      "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
+    },
+    {
+      "title": "Coup de tonnerre en Premier League : Arne Slot quitte Liverpool avec effet immédiat",
+      "source": "RMC Sport",
+      "date": "2026-05-30T12:00:21+00:00",
+      "summary": "Dans un communiqué, le club de Liverpool a annoncé se séparer de son entraîneur, Arne Slot, après deux saisons au club.",
+      "url": "https://rmcsport.bfmtv.com/football/premier-league/coup-de-tonnerre-en-premier-league-arne-slot-quitte-liverpool-avec-effet-immediat_AV-202605300220.html"
+    },
+    {
+      "title": "Premier League : Arne Slot démis de ses fonctions à Liverpool",
+      "source": "SO FOOT",
+      "date": "2026-05-30T11:39:39+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/premier-league-arne-slot-demis-de-ses-fonctions-a-liverpool"
+    },
+    {
+      "title": "DIRECT. Mercato: Liverpool annonce le départ d'Arne Slot",
+      "source": "RMC Sport",
+      "date": "2026-05-30T11:31:22+00:00",
+      "summary": "Alors que les les championnats européens ont rendu leur verdict et que la Coupe du monde approche (11 juin-19 juillet), le mercato va ouvrir ses portes le 15 juin en France avec de nombreux mouvements…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-jeudi-28-mai-2026_LN-202605280249.html"
+    },
+    {
+      "title": "Le champion du monde argentin Nicolás Otamendi s’engage avec River Plate",
+      "source": "SO FOOT",
+      "date": "2026-05-30T11:19:11+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/le-champion-du-monde-argentin-nicolas-otamendi-sengage-avec-river-plate"
+    },
+    {
+      "title": "\"C'est bien qu'il ait propres idées\", le soutien inattendu de Michel Sardou à Kylian Mbappé après sa sortie sur le RN",
+      "source": "RMC Sport",
+      "date": "2026-05-30T11:14:40+00:00",
+      "summary": "Michel Sardou a été interrogé par nos confrères de L'Équipe sur les inquiétudes de Kylian Mbappé sur une potentielle victoire du Rassemblement national à la prochaine présidentielle. Le chanteur de 79 ans…",
+      "url": "https://rmcsport.bfmtv.com/football/kylian-mbappe/c-est-bien-qu-il-ait-ses-idees-propres-idees-le-soutien-inattendu-de-michel-sardou-a-kylian-mbappe-apres-sa-sortie-sur-le-rn_AV-202605300209.html"
+    },
+    {
+      "title": "Michel Sardou a apprécié la sortie de Kylian Mbappé sur le Rassemblement national",
+      "source": "SO FOOT",
+      "date": "2026-05-30T10:39:30+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/michel-sardou-a-apprecie-la-sortie-de-kylian-mbappe-sur-le-rassemblement-national"
+    },
+    {
+      "title": "\"Rien à cirer du PSG\": ces Français assument de supporter Arsenal, un club très francophile",
+      "source": "RMC Sport",
+      "date": "2026-05-30T10:30:03+00:00",
+      "summary": "Ils sont Français mais ne veulent pas de la victoire du PSG ce soir. Ils ne sont pas fans de l'OM ou d'un autre club français mais tout simplement d'Arsenal, ce club londonien très francophile, de par ses…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/rien-a-cirer-du-psg-ces-francais-assument-de-supporter-arsenal-un-club-tres-francophile_AV-202605300191.html"
+    },
+    {
+      "title": "Arsenal",
+      "source": "RMC Sport",
+      "date": "2026-05-30T10:09:40+00:00",
+      "summary": "Arsenal est un club de football anglais évoluant en Premier League et fondé en 1886. Les joueurs sont surnommés les Gunners et évoluent à l'Emirates Stadium, stade de Londres qui a remplacé Highbury. La…",
+      "url": "https://rmcsport.bfmtv.com/football/premier-league/arsenal_DN-202304160356.html"
+    },
+    {
+      "title": "PSG-Arsenal: qui est le favori des bookmakers pour cette finale de Ligue des champions?",
+      "source": "RMC Sport",
+      "date": "2026-05-30T10:09:39+00:00",
+      "summary": "Alors que la planète football trépigne d'impatience à quelques heures de la grande finale de la Ligue des champions entre le PSG et Arsenal ce samedi (18h), les bookmakers ont déjà choisi leur club favori…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-qui-est-le-favori-des-bookmakers-pour-cette-finale-de-ligue-des-champions_AV-202605300186.html"
+    },
+    {
+      "title": "Arsène Wenger parie sur Arsenal pour la finale de Ligue des champions face au Paris Saint-Germain",
+      "source": "SO FOOT",
+      "date": "2026-05-30T10:07:53+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/arsene-wenger-veut-quarsenal-gagne-la-ligue-des-champions"
+    },
+    {
+      "title": "La plus grande brocante sports d’Europe revient pour 2 jours à Lille le samedi 30 et dimanche 31 mai !",
+      "source": "SO FOOT",
+      "date": "2026-05-30T09:56:25+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/la-plus-grande-brocante-sports-deurope-revient-pour-2-jours-a-lille-le-samedi-30-et-dimanche-31-mai"
+    },
+    {
+      "title": "Indice UEFA: le PSG permet de maintenir la position de la France, menacée par la dynamique portugaise",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:53:13+00:00",
+      "summary": "Présent une nouvelle fois en finale de Ligue des champions ce samedi (18h contre Arsenal), le PSG porte le football français à l'indice UEFA. Si la France restera cinquième du classement à l'issue de cette…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/indice-uefa-le-psg-permet-de-maintenir-la-position-de-la-france-menacee-par-la-dynamique-portugaise_AV-202605300177.html"
+    },
+    {
+      "title": "Supporters, anciens joueurs et entraîneur du PSG... Ils seront tous derrière leur club ce soir",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:38:20+00:00",
+      "summary": "Supporters, anciens joueurs (Didier Domi et Pierre Ducrocq) et ancien entraîneur (Luis Fernandez) ont tous répondu à l'appel de RMC ce samedi, afin de montrer leur engouement pour leur club, quelques heures…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/supporters-anciens-joueurs-et-entraineurs-du-psg-ils-seront-tous-derriere-leur-club-ce-soir_AV-202605300175.html"
+    },
+    {
+      "title": "PSG-Arsenal : le programme des hommes de Luis Enrique avant la finale de Ligue des champions",
+      "source": "SO FOOT",
+      "date": "2026-05-30T09:37:08+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/psg-arsenal-le-programme-des-hommes-de-luis-enrique-avant-la-finale-de-ligue-des-champions"
+    },
+    {
+      "title": "71% de mises en plus, la Coupe du monde 2026, une aubaine pour les paris sportifs",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:34:07+00:00",
+      "summary": "Avec 104 matchs, 60 milliards de dollars pourraient être pariés pendant Mondial organisé aux Etats-Unis, au Canada et au Mexique selon une estimation d'un cabinet spécialisé dans les paris et jeux.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/71-de-mises-en-plus-la-coupe-du-monde-2026-une-aubaine-pour-les-paris-sportifs_AD-202605300168.html"
+    },
+    {
+      "title": "Le Havre réagit au décès de Bryan Bergougnoux",
+      "source": "SO FOOT",
+      "date": "2026-05-30T09:19:33+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/le-havre-reagit-au-deces-de-bryan-bergougnoux"
+    },
+    {
+      "title": "PSG-Arsenal: on connaît le montant des primes versées aux Parisiens en cas de victoire en finale de Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:18:28+00:00",
+      "summary": "Selon nos confrères de L'Équipe, une prime d'un million d'euros attend chaque joueur du PSG en cas de sacre ce samedi en finale de Ligue des champions contre Arsenal. Un montant négocié en début de saison par…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-on-connait-le-montant-des-primes-versees-aux-parisiens-en-cas-de-victoire-en-finale-de-ligue-des-champions_AV-202605300161.html"
+    },
+    {
+      "title": "PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
+      "source": "RMC Sport",
+      "date": "2026-05-30T09:00:25+00:00",
+      "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
+    },
+    {
+      "title": "Pays hôte de la Coupe du monde 2026, le Canada dévoile sa liste",
+      "source": "SO FOOT",
+      "date": "2026-05-30T08:51:26+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/pays-hote-de-la-coupe-du-monde-2026-le-canada-devoile-sa-liste"
+    },
+    {
+      "title": "L’analyse du maire de New York Zohran Mamdani avant la finale de Ligue des champions PSG-Arsenal",
+      "source": "SO FOOT",
+      "date": "2026-05-30T08:28:50+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/lanalyse-du-maire-de-new-york-zohran-mamdani-avant-la-finale-de-ligue-des-champions-psg-arsenal"
+    },
+    {
+      "title": "\"On a décalé le début de la cérémonie\": ce fan du PSG se marie le même jour que la finale de la Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:27:33+00:00",
+      "summary": "Jean-Baptiste, fan du PSG, se marie ce samedi, jour de finale de la Ligue des champions. De quoi faire reporter le mariage? Non, assure-t-il sur RMC! Pour la bonne raison qu'il était à Munich l'année dernière…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/on-a-decale-le-debut-de-la-ceremonie-ce-fan-du-psg-se-marie-le-meme-jour-que-la-finale-de-la-ligue-des-champions_AV-202605300143.html"
+    },
+    {
+      "title": "\"Une bonne personne\" plutôt qu'un \"monstre du football\", la der de la légende André-Pierre Gignac, icône au Mexique",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:27:16+00:00",
+      "summary": "A 40 ans, l'ancien avant-centre de l'équipe de France dispute son dernier match avec les Tigres de Monterrey, la finale de la Ligue des champions de la Concacaf. point d'orgue d'une carrière exceptionnelle.",
+      "url": "https://rmcsport.bfmtv.com/football/une-bonne-personne-plutot-qu-un-monstre-du-football-la-der-de-la-legende-andre-pierre-gignac-icone-au-mexique_AD-202605300142.html"
+    },
+    {
+      "title": "Profitez des meilleures cotes d’Unibet pour parier sur PSG–Arsenal",
+      "source": "SO FOOT",
+      "date": "2026-05-30T08:25:10+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/profitez-des-meilleures-cotes-dunibet-pour-parier-sur-psg-arsenal"
+    },
+    {
+      "title": "Trois penaltys et cartons rouges non-sifflés: Arsenal favorisé par le VAR et les arbitres en Premier League",
+      "source": "RMC Sport",
+      "date": "2026-05-30T08:16:28+00:00",
+      "summary": "D'après le rapport annuel du comité KMI, Arsenal et Chelsea sont les deux équipes qui ont le plus bénéficié d'erreurs d'arbitrage cette saison en Premier League. Les Gunners auraient dû concéder trois…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/trois-penaltys-et-cartons-rouges-non-siffles-arsenal-favorise-par-le-var-et-les-arbitres-en-premier-league_AV-202605300140.html"
+    },
+    {
+      "title": "En direct : une journée de finale à Budapest, avant PSG-Arsenal",
+      "source": "SO FOOT",
+      "date": "2026-05-30T08:00:59+00:00",
+      "summary": "Toutes les indiscrétions d'une journée de finale à Budapest.",
+      "url": "https://www.sofoot.com/articles/en-direct-une-journee-de-finale-a-budapest-avant-psg-arsenal"
+    },
+    {
+      "title": "Anthony Gordon impressionnant en espagnol lors de sa présentation au FC Barcelone",
+      "source": "SO FOOT",
+      "date": "2026-05-30T07:58:11+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/anthony-gordon-impressionnant-en-espagnol-lors-de-sa-presentation-au-fc-barcelone"
+    },
+    {
+      "title": "\"Une personne incroyable et un vrai amoureux du football\", les hommages pleuvent après la mort de Bryan Bergougnoux",
+      "source": "RMC Sport",
+      "date": "2026-05-30T07:48:11+00:00",
+      "summary": "Bryan Bergougnoux est mort ce vendredi à Toulouse, à l'âge de 43 ans. Le TFC, mais aussi le reste du monde du football français, ont rendu hommage à \"un homme attachant et sincère\", trois fois champion de…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/une-personne-incroyable-et-un-vrai-amoureux-du-football-les-hommages-pleuvent-apres-la-mort-de-bryan-bergougnoux_AN-202605300132.html"
+    },
+    {
+      "title": "Ligue 1 : Jean-Pierre Rivère demande des comptes à l’OM sur l’affaire Grégory Lorenzi",
+      "source": "SO FOOT",
+      "date": "2026-05-30T07:42:22+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/ligue-1-jean-pierre-rivere-demande-des-comptes-a-lom-sur-laffaire-gregory-lorenzi"
+    },
     {
       "title": "Raheem Sterling arrêté \"pour conduite sous l'emprise de stupéfiants\" après avoir envoyé sa Lamborghini dans le décor",
       "source": "RMC Sport",
@@ -6065,13 +6972,6 @@
       "date": "2026-05-30T07:30:05+00:00",
       "summary": "Habitués à regarder les finales de Ligue des champions en début de soirée, les fans de football européens vont devoir allumer leur télévision dès la fin d'après-midi ce samedi pour voir PSG-Arsenal. Un choix…",
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-18h-au-lieu-de-21h-pourquoi-la-finale-de-ligue-des-champions-va-se-jouer-a-un-horaire-inhabituel_AV-202605300126.html"
-    },
-    {
-      "title": "Arsenal",
-      "source": "RMC Sport",
-      "date": "2026-05-30T07:30:05+00:00",
-      "summary": "Arsenal est un club de football anglais évoluant en Premier League et fondé en 1886. Les joueurs sont surnommés les Gunners et évoluent à l'Emirates Stadium, stade de Londres qui a remplacé Highbury. La…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/arsenal_DN-202304160356.html"
     },
     {
       "title": "A quelle heure et sur quelle chaîne suivre la finale de la Ligue des champions entre le PSG et Arsenal?",
@@ -6093,13 +6993,6 @@
       "date": "2026-05-30T07:07:00+00:00",
       "summary": "La finale de la Ligue Champions entre le Paris Saint-Germain et Arsenal se joue ce samedi 30 mai à 18h en direct de la Puskás Aréna de Budapest, Hongrie. Notre consultant et ancien joueur d’Arsenal, Emmanuel…",
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-raya-le-roc-rice-imperial-trossard-le-poux-manu-petit-decrit-le-xi-d-arsenal_VN-202605300119.html"
-    },
-    {
-      "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
-      "source": "RMC Sport",
-      "date": "2026-05-30T06:34:35+00:00",
-      "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
     },
     {
       "title": "\"Je crois à un doublé: Pierre Gasly, fan du PSG, se confie sur RMC avant la finale contre Arsenal",
@@ -6158,10 +7051,10 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/c-est-important-que-neymar-soit-la-estime-dante-en-vue-de-la-coupe-du-monde-2026_AV-202605300078.html"
     },
     {
-      "title": "Comment les supporters Parisiens ont tenté de se faire une place à Budapest au milieu des fans d’Arsenal avant la finale de Ligue des champions",
+      "title": "Comment les supporters parisiens ont tenté de se faire une place à Budapest au milieu des fans d’Arsenal avant la finale de Ligue des champions",
       "source": "SO FOOT",
       "date": "2026-05-30T04:00:53+00:00",
-      "summary": "Comment les supporters Parisiens ont tenté de se faire une place au milieu des fans d'Arsenal.",
+      "summary": "Comment les supporters parisiens ont tenté de se faire une place au milieu des fans d’Arsenal.",
       "url": "https://www.sofoot.com/articles/comment-les-supporters-parisiens-ont-tente-de-se-faire-une-place-a-budapest-au-milieu-des-fans-darsenal-avant-la-finale-de-ligue-des-champions"
     },
     {
@@ -6186,32 +7079,11 @@
       "url": "https://rmcsport.bfmtv.com/football/transferts/un-ancien-de-l-ac-milan-et-monaco-comme-directeur-sportif-sans-puel-sur-le-banc-la-reorganisation-se-confirme-a-nice_AP-202605290968.html"
     },
     {
-      "title": "DIRECT. Mercato: entraîneur, directeur sportif... grand chamboulement à Nice",
-      "source": "RMC Sport",
-      "date": "2026-05-29T23:15:43+00:00",
-      "summary": "Alors que les les championnats européens ont rendu leur verdict et que la Coupe du monde approche (11 juin-19 juillet), le mercato va ouvrir ses portes le 15 juin en France avec de nombreux mouvements…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-jeudi-28-mai-2026_LN-202605280249.html"
-    },
-    {
       "title": "Luis Enrique entraîneur du PSG",
       "source": "RMC Sport",
       "date": "2026-05-29T23:03:49+00:00",
       "summary": "Luis Enrique Martínez García, dit Luis Enrique, est un ancien footballeur international espagnol reconverti en entraîneur, né le 8 mai 1970 à Gijón. Ex-sélectionneur de l'équipe d'Espagne, il entraîne…",
       "url": "https://rmcsport.bfmtv.com/football/clubs/paris-saint-germain/luis-enrique_DN-202308300457.html"
-    },
-    {
-      "title": "Achraf Hakimi",
-      "source": "RMC Sport",
-      "date": "2026-05-29T23:03:49+00:00",
-      "summary": "Achraf Hakimi est un joueur de football marocain né le 4 novembre 1998 à Madrid en Espagne. Ses parents sont d'origine marocaine et il a choisi de représenter le Maroc, avec qui il a atteint les demi-finales…",
-      "url": "https://rmcsport.bfmtv.com/football/achraf-hakimi_DN-202508100323.html"
-    },
-    {
-      "title": "Marquinhos",
-      "source": "RMC Sport",
-      "date": "2026-05-29T23:03:49+00:00",
-      "summary": "Marcos Aoás Corrêa, dit Marquinhos, est un international brésilien né le 14 mai 1994 à São Paulo. Il joue actuellement au Paris Saint-Germain, dont il est le capitaine. Défenseur central de formation, il lui…",
-      "url": "https://rmcsport.bfmtv.com/football/marquinhos_DN-202308300507.html"
     },
     {
       "title": "Ousmane Dembélé",
@@ -6221,25 +7093,11 @@
       "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
     },
     {
-      "title": "Warren Zaïre-Emery",
+      "title": "Achraf Hakimi",
       "source": "RMC Sport",
       "date": "2026-05-29T23:03:49+00:00",
-      "summary": "Warren Zaïre-Emery est un footballeur français né le 8 mars 2006 à Montreuil. Formé par le Paris Saint-Germain, il joue au poste de milieu de terrain. Le 6 août 2022, il devient le plus jeune joueur de…",
-      "url": "https://rmcsport.bfmtv.com/football/warren-zaire-emery_DN-202308300471.html"
-    },
-    {
-      "title": "PSG-Arsenal : \"Deux équipes en totale confiance\" Riolo indécis",
-      "source": "RMC Sport",
-      "date": "2026-05-29T22:14:54+00:00",
-      "summary": "Le PSG affronte Arsenal, samedi à 18h à Budapest, en finale de la Ligue des champions. Les deux finalistes n'ont plus l'image de losers, remarque Riolo, qui ne désigne pas de favori.",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-deux-equipes-en-totale-confiance-riolo-indecis_VN-202605290948.html"
-    },
-    {
-      "title": "Nice 4-1 ASSE : \"Ce n'est pas le moment de faire des bilans\" recadre Montanier après la défaite",
-      "source": "RMC Sport",
-      "date": "2026-05-29T22:12:26+00:00",
-      "summary": "Alors que l'AS Saint-Étienne s'est incliné 4-1 sur la pelouse de l'OGC Nice lors du barrage retour de Ligue 1, Philippe Montanier, coach des Verts s'est exprimé sur la défaite de son équipe en conférence de…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-nice-4-1-asse-ce-n-est-pas-le-moment-de-faire-des-bilans-recadre-montanier-apres-la-defaite_VN-202605290943.html"
+      "summary": "Achraf Hakimi est un joueur de football marocain né le 4 novembre 1998 à Madrid en Espagne. Ses parents sont d'origine marocaine et il a choisi de représenter le Maroc, avec qui il a atteint les demi-finales…",
+      "url": "https://rmcsport.bfmtv.com/football/achraf-hakimi_DN-202508100323.html"
     },
     {
       "title": "Nice : La belle image de Dante avec son fils après son dernier match",
@@ -6249,20 +7107,6 @@
       "url": "https://www.sofoot.com/breves/nice-la-belle-image-de-dante-avec-son-fils-apres-son-dernier-match"
     },
     {
-      "title": "\"Ce ne sont pas des pratiques qui se font\": après le maintien de Nice, Rivère règle ses comptes avec Grégory Lorenzi et l'OM",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:42:50+00:00",
-      "summary": "En marge du maintien en Ligue 1 assuré par Nice lors de son barrage contre Saint-Etienne ce vendredi, Jean-Pierre Rivère avait un message à faire passer. Le dirigeant des Aiglons raconte l'imbroglio autour de…",
-      "url": "https://rmcsport.bfmtv.com/football/clubs/ogc-nice/ce-ne-sont-pas-des-pratiques-qui-se-font-apres-le-maintien-de-nice-rivere-regle-ses-comptes-avec-gregory-lorenzi-et-l-om_AP-202605290927.html"
-    },
-    {
-      "title": "Nice reste en L1 : \"Pas neutre financièrement\" Rivère raconte le revirement de Lorenzi à l'OM",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:38:11+00:00",
-      "summary": "Après la victoire de l'OGC Nice sur St-Étienne 4-1, ce vendredi soir en Barrages de L1, et le maintien des Aiglons, le patron du club Jean-Pierre Rivère a dit ses vérités sur la volte-face du Directeur…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-nice-reste-en-l1-pas-neutre-financierement-rivere-raconte-le-revirement-de-lorenzi-a-l-om_VN-202605290924.html"
-    },
-    {
       "title": "L’émotion de Lindsey Heaps après sa dernière avec OL Lyonnes",
       "source": "SO FOOT",
       "date": "2026-05-29T21:27:11+00:00",
@@ -6270,53 +7114,11 @@
       "url": "https://www.sofoot.com/breves/lemotion-de-lindsey-heaps-apres-sa-derniere-avec-ol-lyonnes"
     },
     {
-      "title": "Nice - Saint-Étienne: Nice se maintient, Saint-Etienne reste en Ligue 2",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:24:40+00:00",
-      "summary": "Nice a nettement battu Saint-Etienne (4-1), dans le cadre du barrage retour L1/L2. Les Niçois se maintiennent et l'ASSE reste en Ligue 2.",
-      "url": "https://rmcsport.bfmtv.com/football/barrages-l1-l2/direct-nice-saint-etienne-suivez-le-match-de-barrage-retour-l1-l2-en-live_LS-202605290624.html"
-    },
-    {
-      "title": "Barrages Ligue 1-Ligue 2: Nice et Wahi décrochent leur maintien en renversant Saint-Etienne",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:12:28+00:00",
-      "summary": "Après sa défaite en finale de la Coupe de France face à Lens (3-1), l'OGC Nice a sauvé sa saison, vendredi, en arrachant son maintien en Ligue 1 lors du barrage retour face à Saint-Etienne (4-1). Elye Wahi a…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-1/barrages-ligue-1-ligue-2-nice-et-wahi-decrochent-leur-maintien-en-renversant-saint-etienne_AN-202605290914.html"
-    },
-    {
       "title": "Amical : Pas de vainqueur entre la Bosnie et la Macédoine",
       "source": "SO FOOT",
       "date": "2026-05-29T21:10:45+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/amical-pas-de-vainqueur-entre-la-bosnie-et-la-macedoine"
-    },
-    {
-      "title": "Nice 4-1 ASSE : Les Aiglons renversent les Verts et se maintiennent en Ligue 1 ! (comms RMC)",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:07:02+00:00",
-      "summary": "L'OGC Nice est maintenu en Ligue 1. À l'issue d'une rencontre renversante, les Niçois se sont imposé 4-1 face à l'AS Saint-Étienne lors du barrage retour de Ligue 1. Une victoire et un maintien que les…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-nice-4-1-asse-les-aiglons-renversent-les-verts-et-se-maintiennent-en-ligue-1-comms-rmc_VN-202605290911.html"
-    },
-    {
-      "title": "PSG-Arsenal: les mêmes joueurs que lors de la finale de l'an dernier? Un doute subsiste dans la compo probable",
-      "source": "RMC Sport",
-      "date": "2026-05-29T21:03:30+00:00",
-      "summary": "La composition d'équipe alignée par Luis Enrique pour la finale de Ligue des champions entre le PSG et Arsenal, samedi à Budapest, aura des airs de déjà-vu. Le onze de départ devrait fortement ressembler à…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-les-memes-joueurs-que-lors-de-la-finale-de-l-an-dernier-un-doute-subsiste-dans-la-compo-probable_AP-202605290907.html"
-    },
-    {
-      "title": "OL Lyonnes-Paris FC: sacrées pour la 19e fois, l'OL écrase le Paris FC en finale du championnat de France",
-      "source": "RMC Sport",
-      "date": "2026-05-29T20:57:11+00:00",
-      "summary": "C'est officiellement la fin de la saison d'Arkéma Première Ligue: le club d'OL Lyonnes étrille le Paris FC cinq buts à zéro ce vendredi 29 mai, en finale du championnat de France féminin. Dummornay inscrit un…",
-      "url": "https://rmcsport.bfmtv.com/football/feminin/d1/direct-ol-lyonnes-paris-fc-suivez-le-match-de-la-finale-du-championnat-de-france-feminin-d-arkema-premiere-ligue-en-live_LS-202605290824.html"
-    },
-    {
-      "title": "DIRECT. PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
-      "source": "RMC Sport",
-      "date": "2026-05-29T20:56:22+00:00",
-      "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
     },
     {
       "title": "Première Ligue : OL Lyonnes sans pitié avec le Paris FC pour conserver son titre",
@@ -6373,194 +7175,103 @@
       "date": "2026-05-29T18:10:24+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/psg-arsenal-arteta-a-nous-de-prendre-le-trophee-au-psg"
-    },
-    {
-      "title": "Euro U17 : L’équipe de France se relance face au Danemark",
-      "source": "SO FOOT",
-      "date": "2026-05-29T17:51:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/euro-u17-lequipe-de-france-se-relance-face-au-danemark"
-    },
-    {
-      "title": "Mercato : L’Atlético de Madrid trolle le Barça après les rumeurs autour de Julian Álvarez",
-      "source": "SO FOOT",
-      "date": "2026-05-29T17:13:49+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-latletico-de-madrid-trolle-le-barca-apres-les-rumeurs-autour-de-julian-alvarez"
-    },
-    {
-      "title": "Ancien de l’OL, Tours, Le Havre, Toulouse, Bryan Bergougnoux est décédé à 43 ans",
-      "source": "SO FOOT",
-      "date": "2026-05-29T16:00:46+00:00",
-      "summary": "L’ancien de l’OL était l’adjoint de Didier Digard au Havre.",
-      "url": "https://www.sofoot.com/breves/ancien-de-lol-tours-le-havre-toulouse-bryan-bergougnoux-est-decede-a-43-ans"
-    },
-    {
-      "title": "Oliver Frapolli n’est plus l’entraîneur du Stade lavallois",
-      "source": "SO FOOT",
-      "date": "2026-05-29T15:41:45+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/oliver-frapolli-nest-plus-lentraineur-du-stade-lavallois"
-    },
-    {
-      "title": "Marquinhos parle des forces du PSG avant la finale de Ligue des champions contre Arsenal",
-      "source": "SO FOOT",
-      "date": "2026-05-29T15:14:50+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/marquinhos-parle-des-forces-du-psg-avant-la-finale-de-ligue-des-champions-contre-arsenal"
-    },
-    {
-      "title": "Mercato : Mason Greenwood vers l’Italie et la Roma pour renflouer les caisses de l’OM ?",
-      "source": "SO FOOT",
-      "date": "2026-05-29T15:01:49+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-mason-greenwood-vers-litalie-et-la-roma-pour-renflouer-les-caisses-de-lom"
-    },
-    {
-      "title": "Le lieu du Trophée des champions entre le PSG et Lens décidé à pile ou face ?",
-      "source": "SO FOOT",
-      "date": "2026-05-29T14:46:52+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/le-lieu-du-trophee-des-champions-entre-le-psg-et-lens-decide-a-pile-ou-face"
-    },
-    {
-      "title": "Mercato : le FC Porto renvoie Seko Fofana à Rennes",
-      "source": "SO FOOT",
-      "date": "2026-05-29T14:23:47+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-le-fc-porto-renvoie-seko-fofana-a-rennes"
-    },
-    {
-      "title": "Mercato : Kieran Trippier pourrait se diriger vers Wolverhampton et la D2 anglaise",
-      "source": "SO FOOT",
-      "date": "2026-05-29T14:06:31+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-kieran-trippier-pourrait-se-diriger-vers-wolverhampton-et-la-d2-anglaise"
-    },
-    {
-      "title": "PSG-Arsenal : les cinq clés pour déverrouiller la finale de la Ligue des champions",
-      "source": "SO FOOT",
-      "date": "2026-05-29T14:00:08+00:00",
-      "summary": "Bon courage au défenseur qui va devoir se coltiner Kvara un soir de C1.",
-      "url": "https://www.sofoot.com/articles/psg-arsenal-les-cinq-cles-pour-deverrouiller-la-finale-de-la-ligue-des-champions"
-    },
-    {
-      "title": "Le boss de Versailles Alexandre Mulliez affiche son soutien à Kylian Mbappé sur LinkedIN après ses déclarations sur l’extrême droite",
-      "source": "SO FOOT",
-      "date": "2026-05-29T13:55:56+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/le-boss-de-versailles-alexandre-mulliez-affiche-son-soutien-a-kylian-mbappe-sur-linkedin-apres-ses-declarations-sur-lextreme-droite"
-    },
-    {
-      "title": "Beckham, Ronaldinho, Pancrate, pluie de stars à Budapest : les anciennes gloires du PSG seront au soutien de leurs héritiers",
-      "source": "SO FOOT",
-      "date": "2026-05-29T13:42:40+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/beckham-ronaldinho-pancrate-pluie-de-stars-a-budapest-les-anciennes-gloires-du-psg-seront-au-soutien-de-leurs-heritiers"
-    },
-    {
-      "title": "Mercato : Prêté au Bayern par Chelsea, Nicolas Jackson quitte la Bavière et revient chez les Blues",
-      "source": "SO FOOT",
-      "date": "2026-05-29T13:13:14+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-prete-au-bayern-par-chelsea-nicolas-jackson-quitte-la-baviere-et-revient-chez-les-blues"
-    },
-    {
-      "title": "Mauvaise nouvelle pour les fans de Roland-Garros et du PSG : Moïse Kouamé devrait jouer en même temps que la finale de Ligue des champions",
-      "source": "SO FOOT",
-      "date": "2026-05-29T13:00:06+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mauvaise-nouvelle-pour-les-fans-de-roland-garros-et-du-psg-moise-kouame-devrait-jouer-en-meme-temps-que-la-finale-de-ligue-des-champions"
     }
   ],
   "focused_club_news": {
     "Arsenal": [
       {
-        "title": "PSG-Arsenal: 18h au lieu de 21h, pourquoi la finale de Ligue des champions va se jouer à un horaire inhabituel",
-        "source": "RMC Sport",
-        "date": "2026-05-30T07:30:05+00:00",
-        "summary": "Habitués à regarder les finales de Ligue des champions en début de soirée, les fans de football européens vont devoir allumer leur télévision dès la fin d'après-midi ce samedi pour voir PSG-Arsenal. Un choix…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-18h-au-lieu-de-21h-pourquoi-la-finale-de-ligue-des-champions-va-se-jouer-a-un-horaire-inhabituel_AV-202605300126.html"
-      },
-      {
-        "title": "Arsenal",
-        "source": "RMC Sport",
-        "date": "2026-05-30T07:30:05+00:00",
-        "summary": "Arsenal est un club de football anglais évoluant en Premier League et fondé en 1886. Les joueurs sont surnommés les Gunners et évoluent à l'Emirates Stadium, stade de Londres qui a remplacé Highbury. La…",
-        "url": "https://rmcsport.bfmtv.com/football/premier-league/arsenal_DN-202304160356.html"
-      },
-      {
-        "title": "A quelle heure et sur quelle chaîne suivre la finale de la Ligue des champions entre le PSG et Arsenal?",
-        "source": "RMC Sport",
-        "date": "2026-05-30T07:24:38+00:00",
-        "summary": "Tout savoir sur la diffusion de la finale de la Ligue des champions PSG-Arsenal sur M6 et Canal+ à partir de 18h. Un choc à suivre aussi sur la radio RMC.",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/a-quelle-heure-et-sur-quelle-chaine-suivre-la-finale-de-la-ligue-des-champions-entre-le-psg-et-arsenal_AV-202605300122.html"
-      },
-      {
-        "title": "PSG-Arsenal : Raya le ROC, Rice IMPÉRIAL, Trossard le POUX… Manu Petit décrit le XI d'Arsenal",
-        "source": "RMC Sport",
-        "date": "2026-05-30T07:07:00+00:00",
-        "summary": "La finale de la Ligue Champions entre le Paris Saint-Germain et Arsenal se joue ce samedi 30 mai à 18h en direct de la Puskás Aréna de Budapest, Hongrie. Notre consultant et ancien joueur d’Arsenal, Emmanuel…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-raya-le-roc-rice-imperial-trossard-le-poux-manu-petit-decrit-le-xi-d-arsenal_VN-202605300119.html"
-      },
-      {
         "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
         "source": "RMC Sport",
-        "date": "2026-05-30T06:34:35+00:00",
+        "date": "2026-05-30T12:11:31+00:00",
         "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
         "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
       },
       {
-        "title": "\"Je crois à un doublé: Pierre Gasly, fan du PSG, se confie sur RMC avant la finale contre Arsenal",
+        "title": "\"Rien à cirer du PSG\": ces Français assument de supporter Arsenal, un club très francophile",
         "source": "RMC Sport",
-        "date": "2026-05-30T06:30:36+00:00",
-        "summary": "Le pilote français de F1 Pierre Gasly, \"énorme fan du PSG\", se confie auprès de RMC quelques heures avant la finale de la Ligue des champions, qui voit son club de coeur affronter à Budapest, ce samedi soir,…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/je-crois-a-un-double-pierre-gasly-fan-du-psg-se-confie-sur-rmc-avant-la-finale-contre-arsenal_AV-202605300066.html"
+        "date": "2026-05-30T10:30:03+00:00",
+        "summary": "Ils sont Français mais ne veulent pas de la victoire du PSG ce soir. Ils ne sont pas fans de l'OM ou d'un autre club français mais tout simplement d'Arsenal, ce club londonien très francophile, de par ses…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/rien-a-cirer-du-psg-ces-francais-assument-de-supporter-arsenal-un-club-tres-francophile_AV-202605300191.html"
       },
       {
-        "title": "PSG-Arsenal: à Paris, le dispositif de sécurité est \"exceptionnel, le niveau d'alerte est très élevé\"",
+        "title": "Arsenal",
         "source": "RMC Sport",
-        "date": "2026-05-30T06:14:54+00:00",
-        "summary": "Jérôme Jimenez, délégué du syndicat Alliance Police, explique ce samedi sur RMC que le \"niveau d'alerte est très très elevé\" à propos des risques de débordements dans les rues de la capitale, à l'issue de la…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-le-dispositif-de-securite-est-exceptionnel-le-niveau-d-alerte-est-tres-tres-eleve_AV-202605300098.html"
+        "date": "2026-05-30T10:09:40+00:00",
+        "summary": "Arsenal est un club de football anglais évoluant en Premier League et fondé en 1886. Les joueurs sont surnommés les Gunners et évoluent à l'Emirates Stadium, stade de Londres qui a remplacé Highbury. La…",
+        "url": "https://rmcsport.bfmtv.com/football/premier-league/arsenal_DN-202304160356.html"
       },
       {
-        "title": "En direct : PSG-Arsenal",
+        "title": "PSG-Arsenal: qui est le favori des bookmakers pour cette finale de Ligue des champions?",
+        "source": "RMC Sport",
+        "date": "2026-05-30T10:09:39+00:00",
+        "summary": "Alors que la planète football trépigne d'impatience à quelques heures de la grande finale de la Ligue des champions entre le PSG et Arsenal ce samedi (18h), les bookmakers ont déjà choisi leur club favori…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-qui-est-le-favori-des-bookmakers-pour-cette-finale-de-ligue-des-champions_AV-202605300186.html"
+      },
+      {
+        "title": "Arsène Wenger parie sur Arsenal pour la finale de Ligue des champions face au Paris Saint-Germain",
         "source": "SO FOOT",
-        "date": "2026-05-30T06:00:03+00:00",
+        "date": "2026-05-30T10:07:53+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/articles/en-direct-psg-arsenal-2026"
+        "url": "https://www.sofoot.com/breves/arsene-wenger-veut-quarsenal-gagne-la-ligue-des-champions"
       },
       {
-        "title": "PSG-Arsenal: \"Il est là pour l’efficacité, pas le spectaculaire\", Matvey Safonov face à son plus grand défi",
+        "title": "Indice UEFA: le PSG permet de maintenir la position de la France, menacée par la dynamique portugaise",
         "source": "RMC Sport",
-        "date": "2026-05-30T05:55:00+00:00",
-        "summary": "Matvey Safonov disputera ce samedi sa première finale de Ligue des champions à l'occasion du match PSG-Arsenal à Budapest. Quatre mois après s’être imposé comme titulaire à Paris, le Russe de 27 ans fait face…",
-        "url": "https://rmcsport.bfmtv.com/football/clubs/paris-saint-germain/psg-arsenal-il-est-la-pour-l-efficacite-pas-le-spectaculaire-matvey-safonov-face-a-son-plus-grand-defi_AV-202605300039.html"
+        "date": "2026-05-30T09:53:13+00:00",
+        "summary": "Présent une nouvelle fois en finale de Ligue des champions ce samedi (18h contre Arsenal), le PSG porte le football français à l'indice UEFA. Si la France restera cinquième du classement à l'issue de cette…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/indice-uefa-le-psg-permet-de-maintenir-la-position-de-la-france-menacee-par-la-dynamique-portugaise_AV-202605300177.html"
       },
       {
-        "title": "Comment les supporters Parisiens ont tenté de se faire une place à Budapest au milieu des fans d’Arsenal avant la finale de Ligue des champions",
+        "title": "PSG-Arsenal : le programme des hommes de Luis Enrique avant la finale de Ligue des champions",
         "source": "SO FOOT",
-        "date": "2026-05-30T04:00:53+00:00",
-        "summary": "Comment les supporters Parisiens ont tenté de se faire une place au milieu des fans d'Arsenal.",
-        "url": "https://www.sofoot.com/articles/comment-les-supporters-parisiens-ont-tente-de-se-faire-une-place-a-budapest-au-milieu-des-fans-darsenal-avant-la-finale-de-ligue-des-champions"
+        "date": "2026-05-30T09:37:08+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/psg-arsenal-le-programme-des-hommes-de-luis-enrique-avant-la-finale-de-ligue-des-champions"
       },
       {
-        "title": "Comment battre cette équipe d’Arsenal pour le PSG en finale de Ligue des champions ?",
-        "source": "SO FOOT",
-        "date": "2026-05-30T04:00:03+00:00",
-        "summary": "Ceux qui ont affronté Arsenal cette saison livrent quelques conseils.",
-        "url": "https://www.sofoot.com/articles/comment-battre-cette-equipe-darsenal-pour-le-psg-en-finale-de-ligue-des-champions"
+        "title": "PSG-Arsenal: on connaît le montant des primes versées aux Parisiens en cas de victoire en finale de Ligue des champions",
+        "source": "RMC Sport",
+        "date": "2026-05-30T09:18:28+00:00",
+        "summary": "Selon nos confrères de L'Équipe, une prime d'un million d'euros attend chaque joueur du PSG en cas de sacre ce samedi en finale de Ligue des champions contre Arsenal. Un montant négocié en début de saison par…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-on-connait-le-montant-des-primes-versees-aux-parisiens-en-cas-de-victoire-en-finale-de-ligue-des-champions_AV-202605300161.html"
       },
       {
-        "title": "PSG-Arsenal en finale de Ligue des champions Paris en quête de sa deuxième victoire dans la compétition",
+        "title": "PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
+        "source": "RMC Sport",
+        "date": "2026-05-30T09:00:25+00:00",
+        "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
+      },
+      {
+        "title": "L’analyse du maire de New York Zohran Mamdani avant la finale de Ligue des champions PSG-Arsenal",
         "source": "SO FOOT",
-        "date": "2026-05-30T00:00:38+00:00",
-        "summary": "Le PSG peut-il le refaire ?",
-        "url": "https://www.sofoot.com/articles/psg-arsenal-en-finale-de-ligue-des-champions-paris-en-quete-de-sa-deuxieme-victoire-dans-la-competition"
+        "date": "2026-05-30T08:28:50+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/lanalyse-du-maire-de-new-york-zohran-mamdani-avant-la-finale-de-ligue-des-champions-psg-arsenal"
+      },
+      {
+        "title": "Profitez des meilleures cotes d’Unibet pour parier sur PSG–Arsenal",
+        "source": "SO FOOT",
+        "date": "2026-05-30T08:25:10+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/profitez-des-meilleures-cotes-dunibet-pour-parier-sur-psg-arsenal"
+      },
+      {
+        "title": "Trois penaltys et cartons rouges non-sifflés: Arsenal favorisé par le VAR et les arbitres en Premier League",
+        "source": "RMC Sport",
+        "date": "2026-05-30T08:16:28+00:00",
+        "summary": "D'après le rapport annuel du comité KMI, Arsenal et Chelsea sont les deux équipes qui ont le plus bénéficié d'erreurs d'arbitrage cette saison en Premier League. Les Gunners auraient dû concéder trois…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/trois-penaltys-et-cartons-rouges-non-siffles-arsenal-favorise-par-le-var-et-les-arbitres-en-premier-league_AV-202605300140.html"
       }
     ],
     "Barcelona": [
+      {
+        "title": "Anthony Gordon impressionnant en espagnol lors de sa présentation au FC Barcelone",
+        "source": "SO FOOT",
+        "date": "2026-05-30T07:58:11+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/anthony-gordon-impressionnant-en-espagnol-lors-de-sa-presentation-au-fc-barcelone"
+      },
       {
         "title": "Neymar",
         "source": "RMC Sport",
@@ -6601,6 +7312,13 @@
     ],
     "Chelsea": [
       {
+        "title": "Trois penaltys et cartons rouges non-sifflés: Arsenal favorisé par le VAR et les arbitres en Premier League",
+        "source": "RMC Sport",
+        "date": "2026-05-30T08:16:28+00:00",
+        "summary": "D'après le rapport annuel du comité KMI, Arsenal et Chelsea sont les deux équipes qui ont le plus bénéficié d'erreurs d'arbitrage cette saison en Premier League. Les Gunners auraient dû concéder trois…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/trois-penaltys-et-cartons-rouges-non-siffles-arsenal-favorise-par-le-var-et-les-arbitres-en-premier-league_AV-202605300140.html"
+      },
+      {
         "title": "Mercato : Prêté au Bayern par Chelsea, Nicolas Jackson quitte la Bavière et revient chez les Blues",
         "source": "SO FOOT",
         "date": "2026-05-29T13:13:14+00:00",
@@ -6610,104 +7328,118 @@
     ],
     "Liverpool": [
       {
+        "title": "Coup de tonnerre en Premier League : Arne Slot quitte Liverpool avec effet immédiat",
+        "source": "RMC Sport",
+        "date": "2026-05-30T12:00:21+00:00",
+        "summary": "Dans un communiqué, le club de Liverpool a annoncé se séparer de son entraîneur, Arne Slot, après deux saisons au club.",
+        "url": "https://rmcsport.bfmtv.com/football/premier-league/coup-de-tonnerre-en-premier-league-arne-slot-quitte-liverpool-avec-effet-immediat_AV-202605300220.html"
+      },
+      {
+        "title": "Premier League : Arne Slot démis de ses fonctions à Liverpool",
+        "source": "SO FOOT",
+        "date": "2026-05-30T11:39:39+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/premier-league-arne-slot-demis-de-ses-fonctions-a-liverpool"
+      },
+      {
+        "title": "DIRECT. Mercato: Liverpool annonce le départ d'Arne Slot",
+        "source": "RMC Sport",
+        "date": "2026-05-30T11:31:22+00:00",
+        "summary": "Alors que les les championnats européens ont rendu leur verdict et que la Coupe du monde approche (11 juin-19 juillet), le mercato va ouvrir ses portes le 15 juin en France avec de nombreux mouvements…",
+        "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-jeudi-28-mai-2026_LN-202605280249.html"
+      },
+      {
         "title": "Liverpool dévoile un nouveau mémorial en hommage aux victimes du Heysel",
         "source": "SO FOOT",
         "date": "2026-05-29T19:49:59+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/liverpool-devoile-un-nouveau-memorial-en-hommage-aux-victimes-du-heysel"
-      },
-      {
-        "title": "Liverpool : Ibrahima Konaté proche d’un départ ?",
-        "source": "SO FOOT",
-        "date": "2026-05-29T09:19:32+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/liverpool-ibrahima-konate-proche-dun-depart"
       }
     ],
     "Paris Saint-Germain": [
       {
-        "title": "PSG-Arsenal: 18h au lieu de 21h, pourquoi la finale de Ligue des champions va se jouer à un horaire inhabituel",
-        "source": "RMC Sport",
-        "date": "2026-05-30T07:30:05+00:00",
-        "summary": "Habitués à regarder les finales de Ligue des champions en début de soirée, les fans de football européens vont devoir allumer leur télévision dès la fin d'après-midi ce samedi pour voir PSG-Arsenal. Un choix…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-18h-au-lieu-de-21h-pourquoi-la-finale-de-ligue-des-champions-va-se-jouer-a-un-horaire-inhabituel_AV-202605300126.html"
-      },
-      {
-        "title": "A quelle heure et sur quelle chaîne suivre la finale de la Ligue des champions entre le PSG et Arsenal?",
-        "source": "RMC Sport",
-        "date": "2026-05-30T07:24:38+00:00",
-        "summary": "Tout savoir sur la diffusion de la finale de la Ligue des champions PSG-Arsenal sur M6 et Canal+ à partir de 18h. Un choc à suivre aussi sur la radio RMC.",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/a-quelle-heure-et-sur-quelle-chaine-suivre-la-finale-de-la-ligue-des-champions-entre-le-psg-et-arsenal_AV-202605300122.html"
-      },
-      {
-        "title": "PSG-Arsenal : Raya le ROC, Rice IMPÉRIAL, Trossard le POUX… Manu Petit décrit le XI d'Arsenal",
-        "source": "RMC Sport",
-        "date": "2026-05-30T07:07:00+00:00",
-        "summary": "La finale de la Ligue Champions entre le Paris Saint-Germain et Arsenal se joue ce samedi 30 mai à 18h en direct de la Puskás Aréna de Budapest, Hongrie. Notre consultant et ancien joueur d’Arsenal, Emmanuel…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/video-psg-arsenal-raya-le-roc-rice-imperial-trossard-le-poux-manu-petit-decrit-le-xi-d-arsenal_VN-202605300119.html"
-      },
-      {
         "title": "DIRECT. PSG-Arsenal: suivez le match de la finale de Ligue des champions en live",
         "source": "RMC Sport",
-        "date": "2026-05-30T06:34:35+00:00",
+        "date": "2026-05-30T12:11:31+00:00",
         "summary": "Tenant du titre, le PSG rêve de conserver sa couronne européenne et affronte pour cela Arsenal en finale de Ligue des champions ce samedi à Budapest. Face à des Gunners tout juste sacrés champions…",
         "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-suivez-le-match-de-la-finale-de-ligue-des-champions-en-live_LS-202605300041.html"
       },
       {
-        "title": "\"Je crois à un doublé: Pierre Gasly, fan du PSG, se confie sur RMC avant la finale contre Arsenal",
+        "title": "\"Rien à cirer du PSG\": ces Français assument de supporter Arsenal, un club très francophile",
         "source": "RMC Sport",
-        "date": "2026-05-30T06:30:36+00:00",
-        "summary": "Le pilote français de F1 Pierre Gasly, \"énorme fan du PSG\", se confie auprès de RMC quelques heures avant la finale de la Ligue des champions, qui voit son club de coeur affronter à Budapest, ce samedi soir,…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/je-crois-a-un-double-pierre-gasly-fan-du-psg-se-confie-sur-rmc-avant-la-finale-contre-arsenal_AV-202605300066.html"
+        "date": "2026-05-30T10:30:03+00:00",
+        "summary": "Ils sont Français mais ne veulent pas de la victoire du PSG ce soir. Ils ne sont pas fans de l'OM ou d'un autre club français mais tout simplement d'Arsenal, ce club londonien très francophile, de par ses…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/rien-a-cirer-du-psg-ces-francais-assument-de-supporter-arsenal-un-club-tres-francophile_AV-202605300191.html"
       },
       {
-        "title": "PSG-Arsenal: à Paris, le dispositif de sécurité est \"exceptionnel, le niveau d'alerte est très élevé\"",
+        "title": "PSG-Arsenal: qui est le favori des bookmakers pour cette finale de Ligue des champions?",
         "source": "RMC Sport",
-        "date": "2026-05-30T06:14:54+00:00",
-        "summary": "Jérôme Jimenez, délégué du syndicat Alliance Police, explique ce samedi sur RMC que le \"niveau d'alerte est très très elevé\" à propos des risques de débordements dans les rues de la capitale, à l'issue de la…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-le-dispositif-de-securite-est-exceptionnel-le-niveau-d-alerte-est-tres-tres-eleve_AV-202605300098.html"
+        "date": "2026-05-30T10:09:39+00:00",
+        "summary": "Alors que la planète football trépigne d'impatience à quelques heures de la grande finale de la Ligue des champions entre le PSG et Arsenal ce samedi (18h), les bookmakers ont déjà choisi leur club favori…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-qui-est-le-favori-des-bookmakers-pour-cette-finale-de-ligue-des-champions_AV-202605300186.html"
       },
       {
-        "title": "En direct : PSG-Arsenal",
+        "title": "Arsène Wenger parie sur Arsenal pour la finale de Ligue des champions face au Paris Saint-Germain",
         "source": "SO FOOT",
-        "date": "2026-05-30T06:00:03+00:00",
+        "date": "2026-05-30T10:07:53+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/articles/en-direct-psg-arsenal-2026"
+        "url": "https://www.sofoot.com/breves/arsene-wenger-veut-quarsenal-gagne-la-ligue-des-champions"
       },
       {
-        "title": "PSG-Arsenal: \"Il est là pour l’efficacité, pas le spectaculaire\", Matvey Safonov face à son plus grand défi",
+        "title": "Indice UEFA: le PSG permet de maintenir la position de la France, menacée par la dynamique portugaise",
         "source": "RMC Sport",
-        "date": "2026-05-30T05:55:00+00:00",
-        "summary": "Matvey Safonov disputera ce samedi sa première finale de Ligue des champions à l'occasion du match PSG-Arsenal à Budapest. Quatre mois après s’être imposé comme titulaire à Paris, le Russe de 27 ans fait face…",
-        "url": "https://rmcsport.bfmtv.com/football/clubs/paris-saint-germain/psg-arsenal-il-est-la-pour-l-efficacite-pas-le-spectaculaire-matvey-safonov-face-a-son-plus-grand-defi_AV-202605300039.html"
+        "date": "2026-05-30T09:53:13+00:00",
+        "summary": "Présent une nouvelle fois en finale de Ligue des champions ce samedi (18h contre Arsenal), le PSG porte le football français à l'indice UEFA. Si la France restera cinquième du classement à l'issue de cette…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/indice-uefa-le-psg-permet-de-maintenir-la-position-de-la-france-menacee-par-la-dynamique-portugaise_AV-202605300177.html"
       },
       {
-        "title": "Neymar",
+        "title": "Supporters, anciens joueurs et entraîneur du PSG... Ils seront tous derrière leur club ce soir",
         "source": "RMC Sport",
-        "date": "2026-05-30T05:20:18+00:00",
-        "summary": "Avec son look et son talent indéniable balle au pied, Neymar Junior fait partie des icônes incontournables du foot mondial. Après un long passage au Barça, il rejoint le PSG à l'été 2017 pour un montant…",
-        "url": "https://rmcsport.bfmtv.com/football/neymar_DN-201501260352.html"
+        "date": "2026-05-30T09:38:20+00:00",
+        "summary": "Supporters, anciens joueurs (Didier Domi et Pierre Ducrocq) et ancien entraîneur (Luis Fernandez) ont tous répondu à l'appel de RMC ce samedi, afin de montrer leur engouement pour leur club, quelques heures…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/supporters-anciens-joueurs-et-entraineurs-du-psg-ils-seront-tous-derriere-leur-club-ce-soir_AV-202605300175.html"
       },
       {
-        "title": "Comment battre cette équipe d’Arsenal pour le PSG en finale de Ligue des champions ?",
+        "title": "PSG-Arsenal : le programme des hommes de Luis Enrique avant la finale de Ligue des champions",
         "source": "SO FOOT",
-        "date": "2026-05-30T04:00:03+00:00",
-        "summary": "Ceux qui ont affronté Arsenal cette saison livrent quelques conseils.",
-        "url": "https://www.sofoot.com/articles/comment-battre-cette-equipe-darsenal-pour-le-psg-en-finale-de-ligue-des-champions"
+        "date": "2026-05-30T09:37:08+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/psg-arsenal-le-programme-des-hommes-de-luis-enrique-avant-la-finale-de-ligue-des-champions"
       },
       {
-        "title": "PSG-Arsenal en finale de Ligue des champions Paris en quête de sa deuxième victoire dans la compétition",
-        "source": "SO FOOT",
-        "date": "2026-05-30T00:00:38+00:00",
-        "summary": "Le PSG peut-il le refaire ?",
-        "url": "https://www.sofoot.com/articles/psg-arsenal-en-finale-de-ligue-des-champions-paris-en-quete-de-sa-deuxieme-victoire-dans-la-competition"
-      },
-      {
-        "title": "Luis Enrique entraîneur du PSG",
+        "title": "PSG-Arsenal: on connaît le montant des primes versées aux Parisiens en cas de victoire en finale de Ligue des champions",
         "source": "RMC Sport",
-        "date": "2026-05-29T23:03:49+00:00",
-        "summary": "Luis Enrique Martínez García, dit Luis Enrique, est un ancien footballeur international espagnol reconverti en entraîneur, né le 8 mai 1970 à Gijón. Ex-sélectionneur de l'équipe d'Espagne, il entraîne…",
-        "url": "https://rmcsport.bfmtv.com/football/clubs/paris-saint-germain/luis-enrique_DN-202308300457.html"
+        "date": "2026-05-30T09:18:28+00:00",
+        "summary": "Selon nos confrères de L'Équipe, une prime d'un million d'euros attend chaque joueur du PSG en cas de sacre ce samedi en finale de Ligue des champions contre Arsenal. Un montant négocié en début de saison par…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-on-connait-le-montant-des-primes-versees-aux-parisiens-en-cas-de-victoire-en-finale-de-ligue-des-champions_AV-202605300161.html"
+      },
+      {
+        "title": "PSG-Arsenal: un doute subsiste dans la compo probable des Parisiens",
+        "source": "RMC Sport",
+        "date": "2026-05-30T09:00:25+00:00",
+        "summary": "Le PSG a rendez-vous avec son destin ce samedi en finale de la Ligue des champions face à Arsenal. A la veille de ce sommet européen, Luis Enrique, Ousmane Dembélé et Marquinhos se présenteront devant la…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-arsenal-toutes-les-infos-a-la-veille-de-la-finale-de-la-ligue-des-champions_LN-202605290498.html"
+      },
+      {
+        "title": "L’analyse du maire de New York Zohran Mamdani avant la finale de Ligue des champions PSG-Arsenal",
+        "source": "SO FOOT",
+        "date": "2026-05-30T08:28:50+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/lanalyse-du-maire-de-new-york-zohran-mamdani-avant-la-finale-de-ligue-des-champions-psg-arsenal"
+      },
+      {
+        "title": "\"On a décalé le début de la cérémonie\": ce fan du PSG se marie le même jour que la finale de la Ligue des champions",
+        "source": "RMC Sport",
+        "date": "2026-05-30T08:27:33+00:00",
+        "summary": "Jean-Baptiste, fan du PSG, se marie ce samedi, jour de finale de la Ligue des champions. De quoi faire reporter le mariage? Non, assure-t-il sur RMC! Pour la bonne raison qu'il était à Munich l'année dernière…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/on-a-decale-le-debut-de-la-ceremonie-ce-fan-du-psg-se-marie-le-meme-jour-que-la-finale-de-la-ligue-des-champions_AV-202605300143.html"
+      },
+      {
+        "title": "Profitez des meilleures cotes d’Unibet pour parier sur PSG–Arsenal",
+        "source": "SO FOOT",
+        "date": "2026-05-30T08:25:10+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/profitez-des-meilleures-cotes-dunibet-pour-parier-sur-psg-arsenal"
       }
     ]
   },
@@ -6806,11 +7538,7 @@
       "url": "https://www.lephoceen.fr/rss"
     }
   ],
-  "errors": [
-    "classement Ligue des Champions ESPN: ValueError",
-    "buteurs Ligue des Champions ESPN: ValueError",
-    "passeurs Ligue des Champions ESPN: ValueError"
-  ],
+  "errors": [],
   "players_index": [
     {
       "name": "1. FC Köln",
@@ -6820,7 +7548,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8722.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6831,7 +7559,7 @@
       "number": "2",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/770881.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -6842,7 +7570,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1573563.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6853,7 +7581,7 @@
       "number": "45",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1473580.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6864,7 +7592,7 @@
       "number": "19",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/751202.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6875,7 +7603,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1190025.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6886,7 +7614,7 @@
       "number": "13",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/800882.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6897,19 +7625,19 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8121.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
       "name": "Anthony Gordon",
-      "club_current": "Bayern Munich",
-      "country": "Bayern Munich",
+      "club_current": "Newcastle United",
+      "country": "England",
       "position": "LW",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/906937.png",
-      "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
-      "source": "ESPN, FotMob"
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/268782.png",
+      "associated_team": "Newcastle United",
+      "updated_at": "2026-05-30T12:13:06+00:00",
+      "source": "FotMob/ESPN stats"
     },
     {
       "name": "Antonio Rüdiger",
@@ -6919,7 +7647,7 @@
       "number": "22",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/276738.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6930,7 +7658,7 @@
       "number": "15",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1253890.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6941,7 +7669,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1327150.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6952,7 +7680,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/942375.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6963,7 +7691,7 @@
       "number": "70",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830676.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6974,7 +7702,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8315.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6985,7 +7713,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9906.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6996,7 +7724,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8406.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7007,7 +7735,7 @@
       "number": "14",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/914458.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7018,7 +7746,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8583.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7029,7 +7757,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1695701.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7040,7 +7768,7 @@
       "number": "39",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1798782.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7051,7 +7779,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8634.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7062,7 +7790,7 @@
       "number": "33",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1970833.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7073,7 +7801,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8178.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7084,7 +7812,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9823.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7095,7 +7823,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/488139.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7106,7 +7834,7 @@
       "number": "80",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830677.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7117,7 +7845,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9789.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7128,7 +7856,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9788.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7139,7 +7867,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1297165.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7150,7 +7878,7 @@
       "number": "21",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750027.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7161,7 +7889,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8521.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7172,7 +7900,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1202525.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7183,7 +7911,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/708890.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7194,7 +7922,7 @@
       "number": "30",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1771196.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7205,7 +7933,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9910.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7216,7 +7944,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1095432.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7227,7 +7955,7 @@
       "number": "19",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/531629.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7238,7 +7966,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/282674.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7249,7 +7977,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/949321.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7260,7 +7988,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/121633.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7271,7 +7999,7 @@
       "number": "42",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830689.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7282,7 +8010,7 @@
       "number": "35",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413780.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7293,7 +8021,7 @@
       "number": "47",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1771197.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7304,7 +8032,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/658554.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7315,7 +8043,7 @@
       "number": "24",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1367619.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7326,7 +8054,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9866.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7337,7 +8065,7 @@
       "number": "54",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830648.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7348,7 +8076,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1682313.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7359,7 +8087,7 @@
       "number": "27",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1682313.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7370,7 +8098,7 @@
       "number": "14",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1339208.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7381,7 +8109,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1015185.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7392,7 +8120,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9810.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7403,7 +8131,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/10268.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7414,7 +8142,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1406729.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7425,7 +8153,7 @@
       "number": "38",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1904968.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7436,7 +8164,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8558.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7447,7 +8175,7 @@
       "number": "8",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/605654.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7458,7 +8186,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/94937.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7469,7 +8197,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/743533.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7480,7 +8208,7 @@
       "number": "23",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/623537.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7491,7 +8219,7 @@
       "number": "20",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750028.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7502,7 +8230,7 @@
       "number": "26",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1484851.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7513,7 +8241,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1607566.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7524,7 +8252,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8358.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7535,7 +8263,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1021586.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7546,7 +8274,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1503655.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7557,7 +8285,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1276453.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7568,7 +8296,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8305.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7579,7 +8307,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/618878.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7590,7 +8318,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1612643.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7601,7 +8329,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/7732.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7612,7 +8340,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413847.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7623,7 +8351,7 @@
       "number": "9",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/940087.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7634,18 +8362,18 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9790.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
       "name": "Harry Kane",
-      "club_current": "Bayern München",
+      "club_current": "Bayern Munich",
       "country": "England",
       "position": "ST",
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
-      "associated_team": "Bayern München",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "associated_team": "Bayern Munich",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -7656,7 +8384,7 @@
       "number": "21",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/851626.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7667,7 +8395,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8226.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7678,7 +8406,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1328820.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7689,7 +8417,7 @@
       "number": "49",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1593857.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7700,7 +8428,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1140003.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7711,7 +8439,7 @@
       "number": "6",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1140003.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7722,7 +8450,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413963.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7733,7 +8461,7 @@
       "number": "10",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1156141.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7744,7 +8472,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/574631.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7755,7 +8483,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1174672.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7766,7 +8494,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/524434.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7777,7 +8505,7 @@
       "number": "40",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1285872.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7788,7 +8516,7 @@
       "number": "4",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/469700.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7799,7 +8527,7 @@
       "number": "28",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1807277.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7810,7 +8538,7 @@
       "number": "6",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/460632.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7821,7 +8549,7 @@
       "number": "44",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/950824.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7832,7 +8560,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1070712.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7843,7 +8571,7 @@
       "number": "87",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1342757.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7854,8 +8582,19 @@
       "number": "5",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1077894.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Julián Álvarez",
+      "club_current": "Atlético Madrid",
+      "country": "Argentina",
+      "position": "",
+      "number": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/277206.png",
+      "associated_team": "Atlético Madrid",
+      "updated_at": "2026-05-30T12:13:06+00:00",
+      "source": "FotMob/ESPN stats"
     },
     {
       "name": "Kang-In Lee",
@@ -7865,7 +8604,7 @@
       "number": "19",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/940976.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7876,7 +8615,7 @@
       "number": "7",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/900433.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -7887,7 +8626,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/429265.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7898,7 +8637,7 @@
       "number": "27",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/526827.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7909,7 +8648,7 @@
       "number": "10",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -7920,7 +8659,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9746.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7931,7 +8670,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1737700.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7942,7 +8681,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8588.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7953,7 +8692,7 @@
       "number": "8",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/343748.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7964,7 +8703,7 @@
       "number": "48",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1664982.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7975,7 +8714,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/530859.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7986,7 +8725,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8581.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7997,7 +8736,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8639.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8008,7 +8747,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1323669.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8019,7 +8758,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8689.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8030,7 +8769,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1259680.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8041,7 +8780,7 @@
       "number": "4",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1255209.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8052,7 +8791,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1177131.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8063,7 +8802,7 @@
       "number": "21",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/504606.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8074,7 +8813,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1382350.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8085,7 +8824,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/359193.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8096,7 +8835,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/860914.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8107,7 +8846,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/31097.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8118,7 +8857,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9748.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8129,7 +8868,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9905.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8140,7 +8879,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8661.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8151,7 +8890,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/27299.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8162,7 +8901,7 @@
       "number": "51",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1997332.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8173,7 +8912,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/498033.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8184,7 +8923,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1321605.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8195,7 +8934,7 @@
       "number": "5",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/267365.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8206,7 +8945,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8592.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8217,7 +8956,7 @@
       "number": "60",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830671.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8228,7 +8967,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1356312.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8239,7 +8978,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1288111.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8250,7 +8989,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1628516.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8261,7 +9000,7 @@
       "number": "39",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/800880.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8272,7 +9011,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1412933.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8283,7 +9022,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413926.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8294,7 +9033,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8550.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8305,7 +9044,7 @@
       "number": "17",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "Bayern München",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -8316,7 +9055,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/309328.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8327,7 +9066,7 @@
       "number": "3",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/828159.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8338,7 +9077,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9829.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8349,7 +9088,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/883080.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8360,7 +9099,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9830.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8371,7 +9110,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1327214.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8382,7 +9121,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9831.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8393,7 +9132,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1197347.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8404,7 +9143,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1744188.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8415,7 +9154,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/602304.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8426,7 +9165,7 @@
       "number": "25",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1158945.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8437,7 +9176,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8371.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8448,7 +9187,7 @@
       "number": "10",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/692984.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8459,7 +9198,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/6379.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8470,7 +9209,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9847.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8481,7 +9220,7 @@
       "number": "47",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1699549.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8492,7 +9231,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/823825.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8503,7 +9242,7 @@
       "number": "22",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/352994.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8514,7 +9253,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8370.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8525,7 +9264,7 @@
       "number": "17",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1580528.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8536,7 +9275,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/178475.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8547,7 +9286,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8603.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8558,7 +9297,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8633.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8569,7 +9308,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8670.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8580,7 +9319,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8560.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8591,7 +9330,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1075046.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8602,7 +9341,7 @@
       "number": "89",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1602252.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8613,7 +9352,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/589344.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8624,7 +9363,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9851.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8635,7 +9374,7 @@
       "number": "11",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/895362.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8646,7 +9385,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/614006.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8657,7 +9396,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1034808.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8668,7 +9407,7 @@
       "number": "55",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830647.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8679,7 +9418,7 @@
       "number": "24",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1574189.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8690,7 +9429,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/385437.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8701,7 +9440,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8302.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8712,7 +9451,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8152.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8723,7 +9462,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9848.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8734,7 +9473,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/94841.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8745,7 +9484,7 @@
       "number": "45",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1796908.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8756,7 +9495,7 @@
       "number": "1",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/170323.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8767,7 +9506,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/116772.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8778,7 +9517,7 @@
       "number": "20",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1286183.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8789,7 +9528,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1518139.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8800,7 +9539,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9941.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8811,7 +9550,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/760712.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8822,7 +9561,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8149.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8833,7 +9572,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/10267.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8844,7 +9583,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/10269.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8855,7 +9594,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/10205.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8866,7 +9605,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/846033.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8877,7 +9616,7 @@
       "number": "17",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1061249.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8888,7 +9627,7 @@
       "number": "33",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1367615.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8899,7 +9638,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8697.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8910,7 +9649,7 @@
       "number": "51",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1137670.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8921,7 +9660,7 @@
       "number": "36",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1692886.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8932,7 +9671,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/8721.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8943,7 +9682,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1417079.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8954,7 +9693,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1426808.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8965,7 +9704,7 @@
       "number": "50",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1842376.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8976,7 +9715,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1327406.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8987,7 +9726,7 @@
       "number": "3",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/844415.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-05-30T07:33:49+00:00",
+      "updated_at": "2026-05-30T12:13:06+00:00",
       "source": "ESPN, FotMob"
     }
   ]
