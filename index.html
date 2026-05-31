@@ -4364,10 +4364,11 @@ grant select, insert, update on public.profiles to authenticated;`;
       const choices = isFirstRound ? (slot?.choices || []) : teams;
       const label = team || slot?.label || 'À choisir';
       const picked = team && winner === team;
-      const buttonAttrs = isFirstRound
-        ? ''
-        : `data-user-bracket-pick="${escapeHtml(match.index)}" data-user-bracket-team="${escapeHtml(team)}"`;
-      const tag = readOnly || isFirstRound || (!isFirstRound && !team) ? 'div' : 'button';
+      const canPickSide = !readOnly && Boolean(team);
+      const buttonAttrs = canPickSide
+        ? `data-user-bracket-pick="${escapeHtml(match.index)}" data-user-bracket-team="${escapeHtml(team)}"`
+        : '';
+      const tag = canPickSide ? 'button' : 'div';
       const type = tag === 'button' ? ' type="button"' : '';
       const attrs = tag === 'button' ? ` ${buttonAttrs}` : '';
       return `<div class="user-bracket-tree-side-wrap">
