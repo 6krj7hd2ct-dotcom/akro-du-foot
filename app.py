@@ -77,6 +77,11 @@ LIVE_SCORE_REFRESH_LOCK = threading.Lock()
 LIVE_SCORE_LAST_REFRESH_AT = 0.0
 LIVE_SCORE_REFRESHING = False
 LIVE_SCORE_LAST_ERROR = ""
+MATCH_ARTICLE_GENERATION_INTERVAL = 300
+MATCH_ARTICLE_GENERATION_DELAY_SECONDS = 15 * 60
+MATCH_ARTICLE_GENERATION_LOCK = threading.Lock()
+MATCH_ARTICLE_GENERATION_LAST_RUN = 0.0
+MATCH_ARTICLE_GENERATION_RUNNING = False
 FOOTBALL_SUPABASE_CACHE_LOCK = threading.Lock()
 FOOTBALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
 SUPABASE_FAILED_PATHS: dict[str, float] = {}
@@ -312,6 +317,7 @@ def _is_allowed_cached_news(article: dict[str, Any]) -> bool:
 
 
 def community_payload() -> dict[str, Any]:
+    _schedule_match_article_generation()
     worldcup_dashboard = _read_json(CACHE_FILE, {})
     champions_dashboard = _read_json(CHAMPIONS_LEAGUE_CACHE_FILE, {})
     leagues_dashboard = _read_json(LEAGUES_CACHE_FILE, {})
@@ -354,6 +360,33 @@ def _schedule_live_score_refresh(force: bool = False) -> None:
         LIVE_SCORE_REFRESHING = True
         LIVE_SCORE_LAST_REFRESH_AT = now
     threading.Thread(target=_refresh_live_score_caches, daemon=True).start()
+
+
+def _schedule_match_article_generation(force: bool = False) -> None:
+    global MATCH_ARTICLE_GENERATION_LAST_RUN, MATCH_ARTICLE_GENERATION_RUNNING
+    if not _supabase_service_enabled():
+        return
+    now = time.time()
+    with MATCH_ARTICLE_GENERATION_LOCK:
+        if MATCH_ARTICLE_GENERATION_RUNNING:
+            return
+        if not force and now - MATCH_ARTICLE_GENERATION_LAST_RUN < MATCH_ARTICLE_GENERATION_INTERVAL:
+            return
+        MATCH_ARTICLE_GENERATION_LAST_RUN = now
+        MATCH_ARTICLE_GENERATION_RUNNING = True
+    threading.Thread(target=_generate_match_articles, daemon=True).start()
+
+
+def _generate_match_articles() -> None:
+    global MATCH_ARTICLE_GENERATION_RUNNING
+    try:
+        created = _generate_match_articles_once()
+        if created:
+            print(f"[match-articles] articles générés: {created}", flush=True)
+    except Exception as error:
+        print(f"[match-articles] génération ignorée: {error}", flush=True)
+    finally:
+        MATCH_ARTICLE_GENERATION_RUNNING = False
 
 
 def _refresh_live_score_caches() -> None:
@@ -1940,6 +1973,166 @@ def _supabase_service_paginated(path: str, page_size: int = 1000, max_rows: int 
         if len(page) < page_size:
             break
     return rows
+
+
+def _generate_match_articles_once() -> int:
+    cutoff = datetime.fromtimestamp(time.time() - MATCH_ARTICLE_GENERATION_DELAY_SECONDS, timezone.utc).isoformat()
+    matches = _supabase_service_request(
+        "GET",
+        "matches?"
+        "select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,raw_data,updated_at"
+        f"&status=in.(FT,AET,PEN)&updated_at=lte.{quote(cutoff, safe='')}&order=updated_at.asc&limit=20",
+    )
+    if not isinstance(matches, list) or not matches:
+        return 0
+
+    match_ids = [str(match.get("id") or "") for match in matches if match.get("id")]
+    if not match_ids:
+        return 0
+
+    existing = _supabase_service_request(
+        "GET",
+        f"match_articles?select=match_id&match_id=in.({','.join(quote(item, safe='') for item in match_ids)})",
+    )
+    if existing is None:
+        return 0
+    existing_ids = {str(row.get("match_id") or "") for row in existing if isinstance(row, dict)}
+    candidates = [match for match in matches if str(match.get("id") or "") not in existing_ids]
+    if not candidates:
+        return 0
+
+    team_ids = sorted({
+        str(match.get(field) or "")
+        for match in candidates
+        for field in ("home_team_id", "away_team_id")
+        if match.get(field)
+    })
+    competition_ids = sorted({str(match.get("competition_id") or "") for match in candidates if match.get("competition_id")})
+    teams = _supabase_service_request(
+        "GET",
+        f"teams?select=id,name&limit=2000&id=in.({','.join(quote(item, safe='') for item in team_ids)})",
+    ) if team_ids else []
+    competitions = _supabase_service_request(
+        "GET",
+        f"competitions?select=id,name&limit=300&id=in.({','.join(quote(item, safe='') for item in competition_ids)})",
+    ) if competition_ids else []
+    team_by_id = {str(row.get("id")): str(row.get("name") or "") for row in (teams or []) if isinstance(row, dict)}
+    competition_by_id = {str(row.get("id")): str(row.get("name") or "") for row in (competitions or []) if isinstance(row, dict)}
+
+    created = 0
+    for match in candidates:
+        article = _match_article_payload(match, team_by_id, competition_by_id)
+        if not article:
+            continue
+        saved = _supabase_service_request(
+            "POST",
+            "match_articles",
+            json=article,
+            prefer="return=minimal",
+        )
+        if saved is not None:
+            created += 1
+    return created
+
+
+def _match_article_payload(match: dict[str, Any], team_by_id: dict[str, str], competition_by_id: dict[str, str]) -> dict[str, Any] | None:
+    match_id = str(match.get("id") or "")
+    home = team_by_id.get(str(match.get("home_team_id") or "")) or "Équipe domicile"
+    away = team_by_id.get(str(match.get("away_team_id") or "")) or "Équipe extérieure"
+    home_score = _to_score(match.get("home_score"))
+    away_score = _to_score(match.get("away_score"))
+    if not match_id or home_score is None or away_score is None:
+        return None
+    competition = competition_by_id.get(str(match.get("competition_id") or "")) or "Compétition"
+    score = f"{home_score}-{away_score}"
+    penalties = _match_article_penalty_score(match)
+    score_title = f"{score} ({penalties} TAB)" if penalties else score
+    title = f"{home} {score_title} {away} : résumé automatique du match"
+    if penalties:
+        summary = f"{home} et {away} se sont quittés sur un score de {score} avant une séance de tirs au but conclue à {penalties}."
+    elif home_score == away_score:
+        summary = f"{home} et {away} se sont neutralisés sur le score de {score}."
+    else:
+        winner = home if home_score > away_score else away
+        summary = f"{winner} s'est imposé face à {away if winner == home else home} sur le score de {score}."
+    moments = _match_article_moments(match)
+    content = _match_article_content(match, title, summary, competition, home, away, score_title, moments)
+    return {
+        "match_id": match_id,
+        "match_api_id": str(match.get("api_id") or ""),
+        "slug": _match_article_slug(match, home, away),
+        "title": title,
+        "summary": summary,
+        "content": content,
+        "competition": competition,
+        "status": "published",
+        "published_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def _match_article_slug(match: dict[str, Any], home: str, away: str) -> str:
+    date_value = str(match.get("match_date") or "")[:10]
+    base = _normalize_football_text(f"{date_value} {home} {away} {match.get('api_id') or match.get('id')}")
+    slug = "-".join(base.split())
+    return slug[:140] or f"match-{str(match.get('id') or '')[:8]}"
+
+
+def _match_article_penalty_score(match: dict[str, Any]) -> str:
+    raw_data = match.get("raw_data") if isinstance(match.get("raw_data"), dict) else {}
+    score = raw_data.get("score") if isinstance(raw_data.get("score"), dict) else {}
+    penalty = score.get("penalty") if isinstance(score.get("penalty"), dict) else {}
+    home = _to_score(penalty.get("home"))
+    away = _to_score(penalty.get("away"))
+    return f"{home}-{away}" if home is not None and away is not None else ""
+
+
+def _match_article_moments(match: dict[str, Any]) -> list[str]:
+    raw_data = match.get("raw_data") if isinstance(match.get("raw_data"), dict) else {}
+    events = raw_data.get("events") if isinstance(raw_data.get("events"), list) else []
+    moments = []
+    for event in events[:8]:
+        if not isinstance(event, dict):
+            continue
+        event_type = str(event.get("type") or event.get("detail") or "").strip()
+        player = event.get("player") if isinstance(event.get("player"), dict) else {}
+        team = event.get("team") if isinstance(event.get("team"), dict) else {}
+        minute = event.get("time") if isinstance(event.get("time"), dict) else {}
+        label = " ".join(str(part or "").strip() for part in [minute.get("elapsed"), event_type, player.get("name"), team.get("name")] if part)
+        if label:
+            moments.append(label)
+    return moments
+
+
+def _match_article_content(match: dict[str, Any], title: str, summary: str, competition: str, home: str, away: str, score: str, moments: list[str]) -> str:
+    date_label = _format_article_date(match.get("match_date"))
+    lines = [
+        title,
+        "",
+        summary,
+        "",
+        "Moments clés",
+    ]
+    lines.extend([f"- {moment}" for moment in moments] or ["- Les événements détaillés seront ajoutés dès disponibilité dans les données match."])
+    lines.extend([
+        "",
+        "Fiche match",
+        f"- Compétition : {competition}",
+        f"- Date : {date_label or 'Date non disponible'}",
+        f"- Affiche : {home} vs {away}",
+        f"- Score : {score}",
+        f"- Statut : {match.get('status') or 'Terminé'}",
+    ])
+    if match.get("venue_name"):
+        lines.append(f"- Stade : {match.get('venue_name')}")
+    return "\n".join(lines)
+
+
+def _format_article_date(value: Any) -> str:
+    try:
+        date = datetime.fromisoformat(str(value or "").replace("Z", "+00:00"))
+    except ValueError:
+        return ""
+    return date.strftime("%d/%m/%Y %Hh%M")
 
 
 def _football_supabase_payload() -> dict[str, Any]:
