@@ -10124,8 +10124,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         const homeScore = matchNumber(final.home_score);
         const awayScore = matchNumber(final.away_score);
         if (homeScore === null || awayScore === null) return null;
-        const homePen = matchNumber(final.home_penalty_score);
-        const awayPen = matchNumber(final.away_penalty_score);
+        const rawScore = final.raw_data && typeof final.raw_data === 'object' && final.raw_data.score && typeof final.raw_data.score === 'object' ? final.raw_data.score : {};
+        const rawPenalty = rawScore.penalty && typeof rawScore.penalty === 'object' ? rawScore.penalty : {};
+        const homePen = matchNumber(final.home_penalty_score ?? rawPenalty.home);
+        const awayPen = matchNumber(final.away_penalty_score ?? rawPenalty.away);
         let homeWins = homeScore > awayScore;
         let awayWins = awayScore > homeScore;
         if (!homeWins && !awayWins && homePen !== null && awayPen !== null) {
@@ -10273,10 +10275,12 @@ grant select, insert, update on public.profiles to authenticated;`;
         const selected = value || config.current;
         const data = config.seasons[selected];
         if (!data) {
+          const championsSupabaseBracket = kind === 'champions' && selected === '2025-2026' ? championsSupabaseBracketMatches(selected) : [];
           restore(kind);
           if (kind === 'champions') {
             const derivedGroups = championsLeagueGroupsFromMatches(selected);
             const nodes = nodesFor(kind);
+            if (nodes.bracket && championsSupabaseBracket.length) nodes.bracket.innerHTML = championsBracketHtml(championsSupabaseBracket);
             if (nodes.groups && derivedGroups.length) nodes.groups.innerHTML = groupsHtml(derivedGroups);
             updateChampionsCurrentFinalSummary(selected);
           }
