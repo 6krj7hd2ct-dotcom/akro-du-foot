@@ -2795,11 +2795,13 @@
         TEAMS_DETAILS[team.name] = mergeTeamDetails(team.name);
       });
       if (typeof TEAM_MATCHES !== 'undefined' && Array.isArray(TEAM_MATCHES)) {
-        const seen = new Set(TEAM_MATCHES.map(match => String(match.id || `${match.home_team}-${match.away_team}-${match.date}`)));
+        const seen = new Map(TEAM_MATCHES.map((match, index) => [String(match.id || `${match.home_team}-${match.away_team}-${match.date}`), index]));
         (AKRO_SUPABASE_FOOTBALL.matches || []).forEach(match => {
           const key = String(match.id || `${match.home_team}-${match.away_team}-${match.date}`);
-          if (!seen.has(key)) {
-            seen.add(key);
+          if (seen.has(key)) {
+            TEAM_MATCHES[seen.get(key)] = {...TEAM_MATCHES[seen.get(key)], ...match};
+          } else {
+            seen.set(key, TEAM_MATCHES.length);
             TEAM_MATCHES.push(match);
           }
         });
@@ -2810,6 +2812,10 @@
       }
       if (typeof initQuizSelectors === 'function') initQuizSelectors();
       if (typeof renderLeague === 'function' && document.querySelector('[data-tab-panel="leagues"]')?.classList.contains('is-active')) renderLeague();
+      if (typeof window.renderCompetitionSeason === 'function') {
+        const championsSeason = document.querySelector('[data-season-tabs="champions"] [data-season-value].is-active')?.dataset.seasonValue || '2025-2026';
+        if (championsSeason === '2025-2026') window.renderCompetitionSeason('champions', championsSeason);
+      }
       if (typeof renderFollowMatches === 'function') renderFollowMatches(communityMatches);
       if (typeof renderNewsUpcomingMatches === 'function') renderNewsUpcomingMatches();
       console.info('[football-supabase] source utilisée', AKRO_SUPABASE_FOOTBALL.counts);
@@ -9961,6 +9967,12 @@ grant select, insert, update on public.profiles to authenticated;`;
           else cards[index].style.removeProperty('--summary-bg');
           cards[index].innerHTML = `<div class="subtle">${escape(label)}</div><div class="euro-summary-value">${escape(value)}</div><p class="subtle">${escape(detail)}</p>`;
         };
+        const supabaseFinal = championsSupabaseFinalResult(selected);
+        if (supabaseFinal) {
+          setCard(0, 'Champion', supabaseFinal.winner || 'À déterminer', `Vainqueur de la finale 2025-2026 (${supabaseFinal.scoreText}).`, supabaseFinal.winnerLogo);
+          setCard(1, 'Finaliste', supabaseFinal.loser || 'À déterminer', `Finaliste de la Champions League 2025-2026 (${supabaseFinal.scoreText}).`, supabaseFinal.loserLogo);
+          return;
+        }
         const finalCard = nodes.bracket?.querySelector('.final-card');
         const rows = Array.from(finalCard?.querySelectorAll('.ko-line') || []);
         const scores = rows.map(row => row.querySelector('.ko-score')?.textContent?.trim() || '');
@@ -10002,6 +10014,133 @@ grant select, insert, update on public.profiles to authenticated;`;
       const scoreParts = value => {
         const parts = String(value || '').match(/(\d+)\s*-\s*(\d+)/);
         return parts ? [parts[1], parts[2]] : ['', ''];
+      };
+      const isChampionsSupabaseMatch = match => {
+        const competition = normalizeTeamName(match?.competition || '');
+        if (!competition.includes('champions league') && !competition.includes('uefa champions league') && !competition.includes('ligue des champions')) return false;
+        const season = String(match?.season || '').trim();
+        const date = String(match?.date || '');
+        return season === '2025'
+          || season === '2025-2026'
+          || date.startsWith('2025-')
+          || date.startsWith('2026-');
+      };
+      const championsSupabaseRoundType = match => {
+        const phase = normalizeTeamName(match?.phase || '');
+        if (phase.includes('final') && !phase.includes('semi') && !phase.includes('demi')) return 'final';
+        if (phase.includes('semi') || phase.includes('demi')) return 'semi';
+        if (phase.includes('quarter') || phase.includes('quart')) return 'quarter';
+        if (phase.includes('round of 16') || phase.includes('8e') || phase.includes('huitieme')) return 'round16';
+        if (phase.includes('play off') || phase.includes('playoff') || phase.includes('barrage')) return 'playoff';
+        return '';
+      };
+      const isFinishedSupabaseMatch = match => {
+        const status = normalizeTeamName(match?.status || '');
+        return Boolean(match?.completed) || ['ft', 'aet', 'pen'].includes(status) || status.includes('match finished') || status.includes('termine');
+      };
+      const matchNumber = value => {
+        const number = Number(value);
+        return Number.isFinite(number) ? number : null;
+      };
+      const championsSupabaseTieKey = match => [match.home_team, match.away_team].map(teamName => normalizeTeamName(teamName)).sort().join('|');
+      const championsSupabaseTieMatch = (roundType, matches) => {
+        const ordered = [...matches].sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+        const first = ordered[0] || {};
+        let homeTotal = 0;
+        let awayTotal = 0;
+        let hasScore = false;
+        ordered.forEach(match => {
+          const homeScore = matchNumber(match.home_score);
+          const awayScore = matchNumber(match.away_score);
+          if (homeScore === null || awayScore === null) return;
+          hasScore = true;
+          if (normalizeTeamName(match.home_team) === normalizeTeamName(first.home_team)) {
+            homeTotal += homeScore;
+            awayTotal += awayScore;
+          } else {
+            homeTotal += awayScore;
+            awayTotal += homeScore;
+          }
+        });
+        const statusDone = ordered.some(isFinishedSupabaseMatch);
+        return match(
+          roundType === 'quarter' ? 'Quarts' : roundType === 'semi' ? 'Demi-finale' : roundType === 'round16' ? '8es' : 'Barrages',
+          first.home_team || 'À déterminer',
+          first.away_team || 'À déterminer',
+          hasScore ? `${homeTotal} - ${awayTotal} cumulé` : '',
+          first.home_flag_url || '',
+          first.away_flag_url || '',
+          statusDone ? 'Score cumulé' : 'À venir'
+        );
+      };
+      const championsSupabaseFinalMatch = source => {
+        const final = source
+          .filter(match => championsSupabaseRoundType(match) === 'final')
+          .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))[0];
+        if (!final) return null;
+        const homeScore = matchNumber(final.home_score);
+        const awayScore = matchNumber(final.away_score);
+        const penaltyHome = matchNumber(final.home_penalty_score);
+        const penaltyAway = matchNumber(final.away_penalty_score);
+        const score = homeScore !== null && awayScore !== null
+          ? `${homeScore} - ${awayScore}${penaltyHome !== null && penaltyAway !== null ? ` tab ${penaltyHome}-${penaltyAway}` : ''}`
+          : '';
+        return match(
+          'Finale',
+          final.home_team || 'À déterminer',
+          final.away_team || 'À déterminer',
+          score,
+          final.home_flag_url || '',
+          final.away_flag_url || '',
+          final.venue || final.date || ''
+        );
+      };
+      const championsSupabaseBracketMatches = selected => {
+        if (selected !== '2025-2026' || !Array.isArray(TEAM_MATCHES)) return [];
+        const source = TEAM_MATCHES.filter(isChampionsSupabaseMatch);
+        const final = championsSupabaseFinalMatch(source);
+        const grouped = {quarter: new Map(), semi: new Map(), round16: new Map(), playoff: new Map()};
+        source.forEach(match => {
+          const type = championsSupabaseRoundType(match);
+          if (!grouped[type]) return;
+          const key = championsSupabaseTieKey(match);
+          if (!key) return;
+          if (!grouped[type].has(key)) grouped[type].set(key, []);
+          grouped[type].get(key).push(match);
+        });
+        const roundMatches = type => Array.from(grouped[type].values()).map(items => championsSupabaseTieMatch(type, items));
+        const quarters = roundMatches('quarter');
+        const semis = roundMatches('semi');
+        if (!final || quarters.length < 4 || semis.length < 2) return [];
+        return [...roundMatches('playoff'), ...roundMatches('round16'), ...quarters, ...semis, final];
+      };
+      const championsSupabaseFinalResult = selected => {
+        if (selected !== '2025-2026' || !Array.isArray(TEAM_MATCHES)) return null;
+        const source = TEAM_MATCHES.filter(isChampionsSupabaseMatch);
+        const final = source
+          .filter(match => championsSupabaseRoundType(match) === 'final')
+          .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))[0];
+        if (!final || !isFinishedSupabaseMatch(final)) return null;
+        const homeScore = matchNumber(final.home_score);
+        const awayScore = matchNumber(final.away_score);
+        if (homeScore === null || awayScore === null) return null;
+        const homePen = matchNumber(final.home_penalty_score);
+        const awayPen = matchNumber(final.away_penalty_score);
+        let homeWins = homeScore > awayScore;
+        let awayWins = awayScore > homeScore;
+        if (!homeWins && !awayWins && homePen !== null && awayPen !== null) {
+          homeWins = homePen > awayPen;
+          awayWins = awayPen > homePen;
+        }
+        if (!homeWins && !awayWins) return null;
+        const scoreText = `${homeScore}-${awayScore}${homePen !== null && awayPen !== null ? ` tab ${homePen}-${awayPen}` : ''}`;
+        return {
+          winner: homeWins ? final.home_team : final.away_team,
+          loser: homeWins ? final.away_team : final.home_team,
+          winnerLogo: homeWins ? final.home_flag_url : final.away_flag_url,
+          loserLogo: homeWins ? final.away_flag_url : final.home_flag_url,
+          scoreText
+        };
       };
       const bracketMatchHtml = item => {
         const [homeScore, awayScore] = scoreParts(item.score);
@@ -10156,7 +10295,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (nodes.bracket) {
           const premiumEuroBracket = kind === 'euro' && ['2020', '2024'].includes(selected);
           const premiumWorldCupBracket = kind === 'worldcup' && ['2018', '2022'].includes(selected);
-          nodes.bracket.innerHTML = data.bracket?.length
+          const championsSupabaseBracket = kind === 'champions' ? championsSupabaseBracketMatches(selected) : [];
+          nodes.bracket.innerHTML = championsSupabaseBracket.length
+            ? championsBracketHtml(championsSupabaseBracket)
+            : data.bracket?.length
             ? (premiumEuroBracket ? premiumBracketHtml(data.bracket, `Euro ${selected}`, `<div class="bracket-logo premium-trophy euro-trophy bracket-trophy" aria-hidden="true">${euroTrophySvg}</div>`)
               : premiumWorldCupBracket ? premiumBracketHtml(data.bracket, `Coupe du Monde ${selected}`)
               : kind === 'euro' ? euroBracketHtml(data.bracket)

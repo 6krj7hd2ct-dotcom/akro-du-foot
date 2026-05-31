@@ -2473,7 +2473,7 @@ def _football_supabase_payload() -> dict[str, Any]:
             max_rows=50000,
         )
     team_coaches = _supabase_service_request("GET", "team_coaches?select=team_id,coach_id,season,role,updated_at&is_active=eq.true&order=updated_at.desc&limit=1000") or []
-    matches = _supabase_service_request("GET", "matches?select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,updated_at&order=match_date.desc&limit=500") or []
+    matches = _supabase_service_request("GET", "matches?select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,raw_data,updated_at&order=match_date.desc&limit=500") or []
 
     country_by_id = {str(row.get("id")): row for row in countries if row.get("id")}
     team_by_id = {str(row.get("id")): row for row in teams if row.get("id")}
@@ -2561,6 +2561,9 @@ def _football_supabase_payload() -> dict[str, Any]:
         away = team_by_id.get(str(match.get("away_team_id") or ""))
         competition = competition_by_id.get(str(match.get("competition_id") or ""))
         competition_name = competition.get("name") if competition else ""
+        raw_match = match.get("raw_data") if isinstance(match.get("raw_data"), dict) else {}
+        raw_score = raw_match.get("score") if isinstance(raw_match.get("score"), dict) else {}
+        raw_penalty = raw_score.get("penalty") if isinstance(raw_score.get("penalty"), dict) else {}
         if home and competition_name:
             competition_for_team.setdefault(str(home.get("id")), str(competition_name))
         if away and competition_name:
@@ -2568,6 +2571,7 @@ def _football_supabase_payload() -> dict[str, Any]:
         public_matches.append({
             "id": match.get("api_id") or match.get("id") or "",
             "competition": competition_name or "Compétition",
+            "season": match.get("season") or "",
             "phase": match.get("round") or "",
             "date": match.get("match_date") or "",
             "status": match.get("status") or "",
@@ -2578,6 +2582,8 @@ def _football_supabase_payload() -> dict[str, Any]:
             "away_flag_url": _team_logo_url(away),
             "home_score": "" if match.get("home_score") is None else str(match.get("home_score")),
             "away_score": "" if match.get("away_score") is None else str(match.get("away_score")),
+            "home_penalty_score": "" if raw_penalty.get("home") is None else str(raw_penalty.get("home")),
+            "away_penalty_score": "" if raw_penalty.get("away") is None else str(raw_penalty.get("away")),
             "completed": str(match.get("status") or "").lower() in {"ft", "aet", "pen", "terminé", "match finished"},
         })
 
