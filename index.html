@@ -997,10 +997,13 @@
     .user-bracket-tree-scroll { flex: 1 1 auto; min-height: 0; width: 100%; overflow: auto; padding: 4px 0 10px; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .user-bracket-tree { min-width: 1060px; height: 100%; min-height: 560px; display: grid; grid-template-columns: 1.06fr .98fr .9fr .82fr minmax(150px,.9fr) .82fr .9fr .98fr 1.06fr; gap: 9px; align-items: stretch; padding: 12px; border-radius: 18px; border: 1px solid rgba(245,201,107,0.16); background: radial-gradient(circle at 50% 36%, rgba(245,201,107,0.13), transparent 26%), linear-gradient(135deg, rgba(7,17,31,0.92), rgba(16,48,83,0.72)); }
     .user-bracket-tree-col { min-height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 9px; }
+    .user-bracket-tree-matches { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 9px; }
+    .user-bracket-tree-col.round-q .user-bracket-tree-matches { justify-content: space-around; gap: 18px; }
+    .user-bracket-tree-col.round-s .user-bracket-tree-matches { justify-content: center; gap: 18px; }
     .user-bracket-tree-col.round-16 { gap: 7px; }
     .user-bracket-tree-col.round-8 { gap: 17px; }
     .user-bracket-tree-col.round-q { gap: 43px; }
-    .user-bracket-tree-col.round-s { justify-content: center; gap: 18px; }
+    .user-bracket-tree-col.round-s { gap: 18px; }
     .user-bracket-tree-col.center { justify-content: center; gap: 11px; }
     .user-bracket-tree-label { min-height: 26px; display: grid; place-items: center; padding: 5px 9px; border-radius: 999px; border: 1px solid rgba(245,201,107,0.28); background: rgba(245,201,107,0.10); color: #ffe1a0; font-size: 11px; font-weight: 950; text-transform: uppercase; letter-spacing: .04em; text-align: center; }
     .user-bracket-tree-match { position: relative; display: grid; gap: 5px; min-height: 72px; padding: 7px; border-radius: 13px; border: 1px solid rgba(255,255,255,0.13); background: linear-gradient(180deg, rgba(238,245,252,0.94), rgba(205,222,238,0.88)); box-shadow: 0 12px 24px rgba(0,0,0,0.18); }
@@ -4386,7 +4389,9 @@ grant select, insert, update on public.profiles to authenticated;`;
     function userBracketRoundColumn(title, matches, draft, className = '', side = 'left', readOnly = false) {
       return `<section class="user-bracket-tree-col ${className} ${side}">
         <div class="user-bracket-tree-label">${escapeHtml(title)}</div>
-        ${matches.map(match => userBracketTreeMatch(match, draft, readOnly)).join('')}
+        <div class="user-bracket-tree-matches">
+          ${matches.map(match => userBracketTreeMatch(match, draft, readOnly)).join('')}
+        </div>
       </section>`;
     }
 
