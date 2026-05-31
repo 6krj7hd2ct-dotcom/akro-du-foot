@@ -1170,6 +1170,7 @@
     .live-event.red::before { background: var(--red); box-shadow: 0 0 12px rgba(239,51,64,0.78); }
     .live-event.end::before { background: #b9c9dc; box-shadow: none; }
     .live-event.start::before { background: #32d3a2; box-shadow: 0 0 12px rgba(50,211,162,0.75); }
+    .live-event-competition { color: var(--gold); font-weight: 950; letter-spacing: .02em; }
     .live-event-team { appearance: none; border: 0; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-weight: 950; cursor: pointer; padding: 2px 5px; transition: color .18s ease, background .18s ease; }
     .live-event-team:hover { color: var(--gold); background: rgba(245,201,107,0.12); }
     @keyframes liveTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -5799,16 +5800,42 @@ grant select, insert, update on public.profiles to authenticated;`;
       renderFavoriteMatches(source);
     }
 
+    function liveCompetitionAbbr(match) {
+      const label = normalizeTeamName(matchLabel(match));
+      if (label.includes('coupe du monde') || label.includes('world cup')) return 'CDM';
+      if (label.includes('champions league') || label.includes('ligue des champions')) return 'CL';
+      if (label.includes('euro')) return 'EURO';
+      if (label.includes('ligue 1')) return 'L1';
+      if (label.includes('premier league')) return 'PL';
+      if (label.includes('liga')) return 'LIGA';
+      if (label.includes('bundesliga')) return 'BL';
+      if (label.includes('serie a')) return 'SA';
+      return (matchLabel(match) || 'LIVE').slice(0, 4).toUpperCase();
+    }
+
+    function liveMatchDate(match) {
+      if (!match.date) return '';
+      const date = new Date(match.date);
+      return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit', year: 'numeric'});
+    }
+
+    function liveMatchTime(match) {
+      if (!match.date) return '';
+      const date = new Date(match.date);
+      return Number.isNaN(date.getTime()) ? '' : date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'}).replace(':', 'h');
+    }
+
     function liveEventLabel(match) {
       const score = matchCenter(match).replace(' - ', '-');
       const normalizedStatus = normalizeTeamName(match.status);
       const status = statusClass(match);
+      const competition = liveCompetitionAbbr(match);
       if (status === 'live') {
-        const prefix = ['ht', 'mi temps'].includes(normalizedStatus) ? 'MT' : 'LIVE';
-        return {type: 'goal', prefix, home: match.home_team, center: score, away: match.away_team};
+        const statusLabel = ['ht', 'mi temps'].includes(normalizedStatus) ? 'MT' : 'EN DIRECT';
+        return {type: 'goal', competition, statusLabel, home: match.home_team, center: score, away: match.away_team};
       }
-      if (status === 'done') return {type: 'end', prefix: 'FIN', home: match.home_team, center: score, away: match.away_team};
-      return {type: 'start', prefix: 'À venir', home: match.home_team, center: `vs · ${shortDate(match.date)}`, away: match.away_team};
+      if (status === 'done') return {type: 'end', competition, statusLabel: 'FIN', home: match.home_team, center: score, away: match.away_team};
+      return {type: 'start', competition, dateLabel: liveMatchDate(match), timeLabel: liveMatchTime(match), home: match.home_team, center: 'vs', away: match.away_team};
     }
 
     function liveEventMarkup(event) {
@@ -5818,11 +5845,12 @@ grant select, insert, update on public.profiles to authenticated;`;
       const away = normalizeTeamName(event.away) === 'a determiner'
         ? `<span>${escapeHtml(event.away)}</span>`
         : `<button class="live-event-team" type="button" data-team="${escapeHtml(event.away)}">${escapeHtml(event.away)}</button>`;
+      const parts = event.type === 'start'
+        ? [event.dateLabel, event.timeLabel, `${home} ${escapeHtml(event.center)} ${away}`]
+        : [`${home} ${escapeHtml(event.center)} ${away}`, event.statusLabel];
       return `<span class="live-event ${event.type}">
-        <span>${escapeHtml(event.prefix)}</span>
-        ${home}
-        <span>${escapeHtml(event.center)}</span>
-        ${away}
+        <span class="live-event-competition">${escapeHtml(event.competition)}</span>
+        ${parts.filter(Boolean).map(part => `<span>•</span><span>${part}</span>`).join('')}
       </span>`;
     }
 
