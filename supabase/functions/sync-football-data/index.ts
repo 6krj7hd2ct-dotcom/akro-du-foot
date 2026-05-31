@@ -15,6 +15,7 @@ const DEFAULT_MATCHES_TOTAL_LIMIT = 50;
 const DEFAULT_COMPLETE_ROSTER_SIZE = 25;
 const DEFAULT_ROSTER_RECHECK_DAYS = 7;
 const DEFAULT_TEAM_LEAGUES = "61,39,140,135,78,2,3,88,94,144,203,179,71,128,262,253,307,98,113,106,119,103,197,383";
+const DEFAULT_MATCH_PRIORITY_LEAGUES = "2,1,4";
 const DEFAULT_CHAMPIONS_LEAGUE_PRIORITY_TEAMS = [
   "Paris Saint-Germain", "PSG", "Arsenal", "Real Madrid", "Barcelona", "Barcelone", "Bayern Munich", "Bayern München", "Bayern Munchen",
   "Inter", "Internazionale", "Manchester City", "Liverpool", "Atletico Madrid", "Atlético Madrid", "Borussia Dortmund",
@@ -189,6 +190,13 @@ function currentFootballSeason() {
 
 function configuredLeagueIds() {
   return (Deno.env.get("FOOTBALL_SYNC_TEAM_LEAGUES") ?? DEFAULT_TEAM_LEAGUES)
+    .split(",")
+    .map(value => value.trim())
+    .filter(Boolean);
+}
+
+function configuredMatchPriorityLeagueIds() {
+  return (Deno.env.get("FOOTBALL_SYNC_MATCH_PRIORITY_LEAGUES") ?? DEFAULT_MATCH_PRIORITY_LEAGUES)
     .split(",")
     .map(value => value.trim())
     .filter(Boolean);
@@ -1214,8 +1222,13 @@ Deno.serve(async () => {
     await stopIfCancelled(logId, counts, "avant matchs");
     console.log("[sync-football-data] step matches start");
     const matchesTotalLimit = Number(Deno.env.get("FOOTBALL_SYNC_MATCHES_TOTAL_LIMIT") ?? String(DEFAULT_MATCHES_TOTAL_LIMIT));
-    console.log("[sync-football-data] matches limit", {matchesTotalLimit});
-    for (const target of competitionTargets) {
+    const matchPriorityLeagueIds = configuredMatchPriorityLeagueIds();
+    const matchTargets = [
+      ...competitionTargets.filter(target => matchPriorityLeagueIds.includes(target.api_id)),
+      ...competitionTargets.filter(target => !matchPriorityLeagueIds.includes(target.api_id)),
+    ];
+    console.log("[sync-football-data] matches limit", {matchesTotalLimit, matchPriorityLeagueIds, matchTargets});
+    for (const target of matchTargets) {
       await stopIfCancelled(logId, counts, `avant matchs ${target.name || target.api_id}`);
       const leagueId = target.api_id;
       const season = target.season || syncSeason;
