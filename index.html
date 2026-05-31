@@ -5801,9 +5801,14 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function liveEventLabel(match) {
       const score = matchCenter(match).replace(' - ', '-');
-      if (match.status === 'LIVE') return {type: 'goal', prefix: 'LIVE', home: match.home_team, center: score, away: match.away_team};
-      if (match.completed || match.status === 'Terminé') return {type: 'end', prefix: 'FIN', home: match.home_team, center: score, away: match.away_team};
-      return {type: 'start', prefix: 'DÉBUT', home: match.home_team, center: `vs · ${shortDate(match.date)}`, away: match.away_team};
+      const normalizedStatus = normalizeTeamName(match.status);
+      const status = statusClass(match);
+      if (status === 'live') {
+        const prefix = ['ht', 'mi temps'].includes(normalizedStatus) ? 'MT' : 'LIVE';
+        return {type: 'goal', prefix, home: match.home_team, center: score, away: match.away_team};
+      }
+      if (status === 'done') return {type: 'end', prefix: 'FIN', home: match.home_team, center: score, away: match.away_team};
+      return {type: 'start', prefix: 'À venir', home: match.home_team, center: `vs · ${shortDate(match.date)}`, away: match.away_team};
     }
 
     function liveEventMarkup(event) {
