@@ -5787,6 +5787,18 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
     }
 
+    function shouldShowInLiveTicker(match) {
+      const label = normalizeTeamName(matchLabel(match));
+      const isMajorCompetition = label.includes('coupe du monde') ||
+        label.includes('world cup') ||
+        label.includes('euro') ||
+        label.includes('champions league') ||
+        label.includes('ligue des champions');
+      if (isMajorCompetition) return true;
+      const teams = profileFocusTeams();
+      return teams.length ? isFavoriteMatch(match, teams) : false;
+    }
+
     function renderFollowMatches(matches) {
       const source = communityDisplayMatches(matches && matches.length ? matches : DASHBOARD_MATCHES);
       const selected = source
@@ -5796,7 +5808,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       communityFollowMatches.innerHTML = selected.length
         ? selected.map(followMatchCard).join('')
         : '<div class="empty">Aucun match aujourd’hui</div>';
-      renderLiveEventsTicker(selected);
+      renderLiveEventsTicker(selected.filter(shouldShowInLiveTicker));
       renderFavoriteMatches(source);
     }
 
