@@ -5521,9 +5521,17 @@ grant select, insert, update on public.profiles to authenticated;`;
       return ['live', '1h', '2h', 'ht', 'mi temps', 'in progress', 'match live'].includes(status) ? 'live' : '';
     }
 
+    function hasMatchScore(match) {
+      return match.home_score !== '' &&
+        match.away_score !== '' &&
+        match.home_score !== null &&
+        match.away_score !== null &&
+        match.home_score !== undefined &&
+        match.away_score !== undefined;
+    }
+
     function matchCenter(match) {
-      const hasScore = match.home_score !== '' && match.away_score !== '';
-      return hasScore ? `${match.home_score} - ${match.away_score}` : shortDate(match.date).split(' ').pop() || 'VS';
+      return hasMatchScore(match) ? `${match.home_score} - ${match.away_score}` : shortDate(match.date).split(' ').pop() || 'VS';
     }
 
     function followTeamButton(name, flagUrl, away = false) {
@@ -5541,8 +5549,16 @@ grant select, insert, update on public.profiles to authenticated;`;
           <div class="follow-center">${escapeHtml(matchCenter(match))}</div>
           ${followTeamButton(match.away_team, match.away_flag_url, true)}
         </div>
-        <span class="follow-status ${statusClass(match)}">${escapeHtml(match.status || 'À venir')}</span>
+        <span class="follow-status ${statusClass(match)}">${escapeHtml(followStatusLabel(match))}</span>
       </article>`;
+    }
+
+    function followStatusLabel(match) {
+      const normalizedStatus = normalizeTeamName(match.status);
+      const status = statusClass(match);
+      if (status === 'done') return 'FIN';
+      if (status === 'live') return ['ht', 'mi temps'].includes(normalizedStatus) ? 'MT' : 'EN DIRECT';
+      return 'À venir';
     }
 
     function normalizeTeamName(value) {
