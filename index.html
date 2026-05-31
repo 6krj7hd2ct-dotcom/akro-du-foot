@@ -401,6 +401,10 @@
     .match-summary-competition { color: #ffe1a0; font-size: 11px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }
     .match-summary-date { color: #b9c9dc; font-size: 12px; font-weight: 850; }
     .match-summary-teams { color: #fff; font-size: 17px; font-weight: 950; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .match-summary-team-line { min-width: 0; display: inline-flex; align-items: center; gap: 7px; overflow: hidden; vertical-align: middle; }
+    .match-summary-team-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .match-summary-logo { width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
+    .match-summary-vs { color: #9fb0c2; font-size: 12px; font-weight: 950; text-transform: uppercase; }
     .match-summary-score { border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }
     .match-summary-text { margin: 0; color: #c9d7e7; font-size: 13px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .match-summary-link { align-self: end; color: var(--gold); font-size: 13px; font-weight: 950; }
@@ -2915,6 +2919,36 @@
       return 4;
     }
 
+    function isOfficialMatchArticleCompetition(article) {
+      const competition = normalizeFootballName(article?.competition || '');
+      return competition.includes('coupe du monde')
+        || competition.includes('world cup')
+        || competition === 'euro'
+        || `${competition} `.includes('euro ')
+        || competition.includes('european championship')
+        || competition.includes('champions league')
+        || competition.includes('ligue des champions');
+    }
+
+    function isRecentEnoughMatchArticle(article) {
+      const value = article?.date || article?.published_at || article?.created_at || '';
+      const date = value ? new Date(value) : null;
+      return !!date && !Number.isNaN(date.getTime()) && date >= new Date('2026-04-28T00:00:00');
+    }
+
+    function isAllowedMatchArticle(article) {
+      if (!isRecentEnoughMatchArticle(article)) return false;
+      if (isOfficialMatchArticleCompetition(article)) return true;
+      const teams = typeof profileFocusTeams === 'function' ? profileFocusTeams() : [];
+      return !!(teams.length && typeof isFavoriteMatch === 'function' && isFavoriteMatch(article, teams));
+    }
+
+    function matchArticleTeamLine(name, logo) {
+      const safeName = escapeHtml(name || '');
+      const image = logo ? `<img class="match-summary-logo" src="${escapeHtml(logo)}" alt="" loading="lazy">` : '';
+      return `<span class="match-summary-team-line">${image}<span class="match-summary-team-name">${safeName}</span></span>`;
+    }
+
     function matchArticleDate(value) {
       if (!value) return 'Date non disponible';
       const date = new Date(value);
@@ -2930,7 +2964,7 @@
           const key = String(article.match_id || article.slug || '');
           if (!key || seen.has(key)) return false;
           seen.add(key);
-          return true;
+          return isAllowedMatchArticle(article);
         })
         .sort((a, b) => matchArticlePriority(a) - matchArticlePriority(b) || String(b.published_at || '').localeCompare(String(a.published_at || '')))
         .slice(0, 6);
@@ -2942,14 +2976,16 @@
 
       container.innerHTML = articles.map(article => {
         const href = `/actus/resume/${encodeURIComponent(article.slug || '')}`;
-        const teams = article.teams || [article.home_team, article.away_team].filter(Boolean).join(' vs ') || 'Match';
+        const teams = article.home_team || article.away_team
+          ? `${matchArticleTeamLine(article.home_team, article.home_logo_url)} <span class="match-summary-vs">vs</span> ${matchArticleTeamLine(article.away_team, article.away_logo_url)}`
+          : escapeHtml(article.teams || 'Match');
         return `<a class="match-summary-card" href="${escapeHtml(href)}">
           <div class="match-summary-top">
             <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
             <span class="match-summary-date">${escapeHtml(matchArticleDate(article.date || article.published_at))}</span>
           </div>
           <div class="match-summary-line">
-            <span class="match-summary-teams">${escapeHtml(teams)}</span>
+            <span class="match-summary-teams">${teams}</span>
             <span class="match-summary-score">${escapeHtml(article.score || '')}</span>
           </div>
           <p class="match-summary-text">${escapeHtml(article.summary || article.title || '')}</p>
@@ -2962,7 +2998,9 @@
       const container = document.getElementById('matchArticlesBoard');
       if (!container) return;
       try {
-        const response = await fetch('/api/match-articles', {cache: 'no-store'});
+        const focus = typeof profileFocusTeams === 'function' ? profileFocusTeams().join('|') : '';
+        const query = focus ? `?focus=${encodeURIComponent(focus)}` : '';
+        const response = await fetch(`/api/match-articles${query}`, {cache: 'no-store'});
         if (!response.ok) throw new Error('articles unavailable');
         const data = await response.json();
         renderMatchArticles(data.articles || []);

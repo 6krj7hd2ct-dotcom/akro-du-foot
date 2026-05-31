@@ -11,7 +11,7 @@ import subprocess
 import sys
 import threading
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -209,8 +209,17 @@ def refresh_global_news_payload(filter_key: str = "all") -> dict[str, Any]:
     return news_payload(filter_key)
 
 
-def match_articles_payload(limit: int = 12) -> dict[str, Any]:
-    articles = _match_articles_rows(limit)
+MATCH_ARTICLES_MIN_DATE = date(2026, 4, 28)
+
+
+def match_articles_payload(limit: int = 12, focus: str = "") -> dict[str, Any]:
+    safe_limit = max(1, min(int(limit or 12), 12))
+    focus_teams = _match_article_focus_teams(focus)
+    articles = [
+        article
+        for article in _match_articles_rows(200, max_limit=200)
+        if _is_official_match_article_competition(article.get("competition")) or _match_article_matches_focus(article, focus_teams)
+    ][:safe_limit]
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "articles": articles,
@@ -220,7 +229,7 @@ def match_articles_payload(limit: int = 12) -> dict[str, Any]:
 
 def match_article_detail_html(slug: str) -> tuple[str, int]:
     slug = _clean(slug, 160)
-    articles = _match_articles_rows(12, slug=slug)
+    articles = _match_articles_rows(12, slug=slug, apply_filters=False)
     article = articles[0] if articles else None
     if not article:
         return _match_article_page_html({
@@ -236,7 +245,7 @@ def match_article_detail_html(slug: str) -> tuple[str, int]:
     return _match_article_page_html(article), 200
 
 
-def _match_articles_rows(limit: int = 12, slug: str = "", max_limit: int = 12) -> list[dict[str, Any]]:
+def _match_articles_rows(limit: int = 12, slug: str = "", max_limit: int = 12, official_only: bool = False, apply_filters: bool = True) -> list[dict[str, Any]]:
     if not _supabase_service_enabled():
         return []
     safe_limit = max(1, min(int(limit or 12), max(1, int(max_limit or 12))))
@@ -266,9 +275,19 @@ def _match_articles_rows(limit: int = 12, slug: str = "", max_limit: int = 12) -
     match_ids = [str(article.get("match_id") or "") for article in deduped if article.get("match_id")]
     matches = _supabase_service_request(
         "GET",
-        f"matches?select=id,api_id,competition_id,match_date,home_team_id,away_team_id,home_score,away_score,status&limit=50&id=in.({','.join(quote(item, safe='') for item in match_ids)})",
+        f"matches?select=id,api_id,competition_id,match_date,home_team_id,away_team_id,home_score,away_score,status&limit={max(1, len(match_ids))}&id=in.({','.join(quote(item, safe='') for item in match_ids)})",
     ) if match_ids else []
     match_by_id = {str(row.get("id")): row for row in (matches or []) if isinstance(row, dict)}
+    competition_ids = sorted({
+        str(match.get("competition_id") or "")
+        for match in match_by_id.values()
+        if match.get("competition_id")
+    })
+    competitions = _supabase_service_request(
+        "GET",
+        f"competitions?select=id,name&limit={max(1, len(competition_ids))}&id=in.({','.join(quote(item, safe='') for item in competition_ids)})",
+    ) if competition_ids else []
+    competition_by_id = {str(row.get("id")): str(row.get("name") or "") for row in (competitions or []) if isinstance(row, dict)}
     team_ids = sorted({
         str(match.get(field) or "")
         for match in match_by_id.values()
@@ -277,27 +296,86 @@ def _match_articles_rows(limit: int = 12, slug: str = "", max_limit: int = 12) -
     })
     teams = _supabase_service_request(
         "GET",
-        f"teams?select=id,name&limit=100&id=in.({','.join(quote(item, safe='') for item in team_ids)})",
+        f"teams?select=id,name,logo_url,raw_data&limit={max(1, len(team_ids))}&id=in.({','.join(quote(item, safe='') for item in team_ids)})",
     ) if team_ids else []
-    team_by_id = {str(row.get("id")): str(row.get("name") or "") for row in (teams or []) if isinstance(row, dict)}
+    team_by_id = {str(row.get("id")): row for row in (teams or []) if isinstance(row, dict)}
 
     output = []
     for article in deduped:
         match = match_by_id.get(str(article.get("match_id") or ""), {})
-        home = team_by_id.get(str(match.get("home_team_id") or ""), "")
-        away = team_by_id.get(str(match.get("away_team_id") or ""), "")
+        competition = competition_by_id.get(str(match.get("competition_id") or ""), "") or str(article.get("competition") or "")
+        article_date = match.get("match_date") or article.get("published_at") or article.get("created_at") or ""
+        if apply_filters and not _match_article_is_recent_enough(article_date):
+            continue
+        if official_only and not _is_official_match_article_competition(competition):
+            continue
+        home_row = team_by_id.get(str(match.get("home_team_id") or ""), {})
+        away_row = team_by_id.get(str(match.get("away_team_id") or ""), {})
+        home = str(home_row.get("name") or "") if isinstance(home_row, dict) else ""
+        away = str(away_row.get("name") or "") if isinstance(away_row, dict) else ""
         home_score = match.get("home_score")
         away_score = match.get("away_score")
         score = f"{home_score} - {away_score}" if home_score is not None and away_score is not None else ""
         output.append({
             **article,
-            "date": match.get("match_date") or article.get("published_at") or article.get("created_at") or "",
+            "competition": competition or article.get("competition") or "",
+            "date": article_date,
             "home_team": home,
             "away_team": away,
+            "home_logo_url": _match_article_team_logo_url(home_row),
+            "away_logo_url": _match_article_team_logo_url(away_row),
             "teams": " vs ".join(team for team in (home, away) if team),
             "score": score,
         })
     return output
+
+
+def _match_article_team_logo_url(row: dict[str, Any] | None) -> str:
+    if not isinstance(row, dict):
+        return ""
+    raw_data = row.get("raw_data") if isinstance(row.get("raw_data"), dict) else {}
+    raw_team = raw_data.get("team") if isinstance(raw_data.get("team"), dict) else {}
+    return str(row.get("logo_url") or raw_team.get("logo") or raw_data.get("logo_url") or raw_data.get("logo") or "")
+
+
+def _match_article_is_recent_enough(value: Any) -> bool:
+    if not value:
+        return False
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00")).date()
+    except ValueError:
+        return False
+    return parsed >= MATCH_ARTICLES_MIN_DATE
+
+
+def _is_official_match_article_competition(value: Any) -> bool:
+    normalized = _normalize_football_text(str(value or ""))
+    return (
+        "coupe du monde" in normalized
+        or "world cup" in normalized
+        or normalized == "euro"
+        or "euro " in f"{normalized} "
+        or "european championship" in normalized
+        or "champions league" in normalized
+        or "ligue des champions" in normalized
+    )
+
+
+def _match_article_focus_teams(value: str) -> list[str]:
+    teams = []
+    for item in str(value or "").split("|"):
+        normalized = _normalize_football_text(item)
+        if normalized and normalized not in teams:
+            teams.append(normalized)
+    return teams
+
+
+def _match_article_matches_focus(article: dict[str, Any], focus_teams: list[str]) -> bool:
+    if not focus_teams:
+        return False
+    home = _normalize_football_text(article.get("home_team") or "")
+    away = _normalize_football_text(article.get("away_team") or "")
+    return any(team and team in {home, away} for team in focus_teams)
 
 
 def _match_article_page_html(article: dict[str, Any]) -> str:
@@ -341,7 +419,7 @@ def _match_article_page_html(article: dict[str, Any]) -> str:
 
 
 def match_articles_archive_html() -> str:
-    articles = _match_articles_rows(60, max_limit=60)
+    articles = _match_articles_rows(120, max_limit=120, official_only=True)[:60]
     cards = "".join(_match_article_archive_card(article) for article in articles)
     if not cards:
         cards = '<div class="empty">Aucun résumé disponible pour le moment.</div>'
@@ -366,6 +444,10 @@ def match_articles_archive_html() -> str:
     .competition {{ color: #ffe1a0; font-size: 11px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }}
     .date {{ color: #b9c9dc; font-size: 12px; font-weight: 850; }}
     .teams {{ color: #fff; font-size: 17px; font-weight: 950; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .team-line {{ min-width: 0; display: inline-flex; align-items: center; gap: 7px; overflow: hidden; vertical-align: middle; }}
+    .team-line span {{ min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .team-logo {{ width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.16); }}
+    .vs {{ color: #9fb0c2; font-size: 12px; font-weight: 950; text-transform: uppercase; }}
     .score {{ border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }}
     .title {{ color: #f4f8ff; font-size: 15px; line-height: 1.35; font-weight: 900; }}
     .read {{ align-self: end; color: #f5c96b; font-size: 13px; font-weight: 950; }}
@@ -387,7 +469,7 @@ def _match_article_archive_card(article: dict[str, Any]) -> str:
     href = f"/actus/resume/{quote(str(article.get('slug') or ''), safe='')}"
     competition = _html_escape(article.get("competition") or "Compétition")
     date = _html_escape(_format_article_date(article.get("date")) or "")
-    teams = _html_escape(article.get("teams") or "Match")
+    teams = _match_article_teams_html(article)
     score = _html_escape(article.get("score") or "")
     title = _html_escape(article.get("title") or article.get("summary") or "Résumé de match")
     return f"""<a class="card" href="{href}">
@@ -396,6 +478,23 @@ def _match_article_archive_card(article: dict[str, Any]) -> str:
       <div class="title">{title}</div>
       <span class="read">Lire le résumé</span>
     </a>"""
+
+
+def _match_article_teams_html(article: dict[str, Any]) -> str:
+    home = article.get("home_team") or ""
+    away = article.get("away_team") or ""
+    if not home and not away:
+        return _html_escape(article.get("teams") or "Match")
+    return (
+        f"{_match_article_team_line_html(home, article.get('home_logo_url') or '')} "
+        f"<span class=\"vs\">vs</span> "
+        f"{_match_article_team_line_html(away, article.get('away_logo_url') or '')}"
+    )
+
+
+def _match_article_team_line_html(name: Any, logo_url: Any) -> str:
+    logo = f'<img class="team-logo" src="{_html_escape(logo_url)}" alt="" loading="lazy">' if logo_url else ""
+    return f'<span class="team-line">{logo}<span>{_html_escape(name)}</span></span>'
 
 
 def _html_escape(value: Any) -> str:
@@ -655,7 +754,7 @@ if app:
 
     @app.get("/api/match-articles")
     def match_articles():
-        return jsonify(match_articles_payload())
+        return jsonify(match_articles_payload(focus=request.args.get("focus", "")))
 
     @app.get("/actus/resume/<slug>")
     def match_article_detail(slug: str):
@@ -1992,7 +2091,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
         elif path == "/api/match-articles":
-            self._send_json(match_articles_payload())
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            self._send_json(match_articles_payload(focus=_url_decode(query.get("focus", ""))))
         elif path == "/actus/resumes":
             self._send_html(match_articles_archive_html(), no_store=True)
         elif path.startswith("/actus/resume/"):
