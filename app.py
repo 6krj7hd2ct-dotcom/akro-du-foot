@@ -236,10 +236,10 @@ def match_article_detail_html(slug: str) -> tuple[str, int]:
     return _match_article_page_html(article), 200
 
 
-def _match_articles_rows(limit: int = 12, slug: str = "") -> list[dict[str, Any]]:
+def _match_articles_rows(limit: int = 12, slug: str = "", max_limit: int = 12) -> list[dict[str, Any]]:
     if not _supabase_service_enabled():
         return []
-    safe_limit = max(1, min(int(limit or 12), 12))
+    safe_limit = max(1, min(int(limit or 12), max(1, int(max_limit or 12))))
     slug_filter = f"&slug=eq.{quote(slug, safe='')}" if slug else ""
     articles = _supabase_service_request(
         "GET",
@@ -338,6 +338,64 @@ def _match_article_page_html(article: dict[str, Any]) -> str:
   </main>
 </body>
 </html>"""
+
+
+def match_articles_archive_html() -> str:
+    articles = _match_articles_rows(60, max_limit=60)
+    cards = "".join(_match_article_archive_card(article) for article in articles)
+    if not cards:
+        cards = '<div class="empty">Aucun résumé disponible pour le moment.</div>'
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archives des résumés · Akro du Foot</title>
+  <style>
+    body {{ margin: 0; min-height: 100vh; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #f4f8ff; background: radial-gradient(circle at top left, rgba(31,111,235,.25), transparent 34rem), linear-gradient(135deg, #07111f, #10243b); }}
+    main {{ width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 42px 0; }}
+    a {{ color: inherit; text-decoration: none; }}
+    .back {{ color: #f5c96b; font-weight: 900; }}
+    h1 {{ margin: 16px 0 8px; font-size: clamp(34px, 6vw, 64px); line-height: .95; }}
+    .intro {{ color: #b9c9dc; font-weight: 750; }}
+    .grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 24px; }}
+    .card {{ position: relative; display: grid; gap: 10px; min-height: 176px; padding: 15px; border-radius: 16px; border: 1px solid rgba(245,201,107,.24); background: linear-gradient(145deg, rgba(7,17,31,.95), rgba(25,43,62,.88)); box-shadow: 0 18px 44px rgba(0,0,0,.20); overflow: hidden; }}
+    .card::before {{ content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(245,201,107,.15), transparent 36%), radial-gradient(circle at left bottom, rgba(99,232,255,.10), transparent 34%); pointer-events: none; }}
+    .card > * {{ position: relative; z-index: 1; }}
+    .top, .line {{ display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }}
+    .competition {{ color: #ffe1a0; font-size: 11px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }}
+    .date {{ color: #b9c9dc; font-size: 12px; font-weight: 850; }}
+    .teams {{ color: #fff; font-size: 17px; font-weight: 950; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .score {{ border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }}
+    .title {{ color: #f4f8ff; font-size: 15px; line-height: 1.35; font-weight: 900; }}
+    .read {{ align-self: end; color: #f5c96b; font-size: 13px; font-weight: 950; }}
+    .empty {{ grid-column: 1 / -1; padding: 18px; border-radius: 16px; color: #b9c9dc; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }}
+  </style>
+</head>
+<body>
+  <main>
+    <a class="back" href="/">← Retour à Akro du Foot</a>
+    <h1>Archives des résumés</h1>
+    <p class="intro">Tous les résumés de matchs publiés automatiquement, du plus récent au plus ancien.</p>
+    <section class="grid">{cards}</section>
+  </main>
+</body>
+</html>"""
+
+
+def _match_article_archive_card(article: dict[str, Any]) -> str:
+    href = f"/actus/resume/{quote(str(article.get('slug') or ''), safe='')}"
+    competition = _html_escape(article.get("competition") or "Compétition")
+    date = _html_escape(_format_article_date(article.get("date")) or "")
+    teams = _html_escape(article.get("teams") or "Match")
+    score = _html_escape(article.get("score") or "")
+    title = _html_escape(article.get("title") or article.get("summary") or "Résumé de match")
+    return f"""<a class="card" href="{href}">
+      <div class="top"><span class="competition">{competition}</span><span class="date">{date}</span></div>
+      <div class="line"><span class="teams">{teams}</span><span class="score">{score}</span></div>
+      <div class="title">{title}</div>
+      <span class="read">Lire le résumé</span>
+    </a>"""
 
 
 def _html_escape(value: Any) -> str:
@@ -603,6 +661,10 @@ if app:
     def match_article_detail(slug: str):
         html, status = match_article_detail_html(slug)
         return Response(html, status=status, content_type="text/html; charset=utf-8")
+
+    @app.get("/actus/resumes")
+    def match_articles_archive():
+        return Response(match_articles_archive_html(), content_type="text/html; charset=utf-8")
 
     @app.get("/api/mercato-live")
     def mercato_live():
@@ -1931,6 +1993,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
             self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
         elif path == "/api/match-articles":
             self._send_json(match_articles_payload())
+        elif path == "/actus/resumes":
+            self._send_html(match_articles_archive_html(), no_store=True)
         elif path.startswith("/actus/resume/"):
             html, status = match_article_detail_html(_url_decode(path.rsplit("/", 1)[-1]))
             self._send_html(html, status=status, no_store=True)
