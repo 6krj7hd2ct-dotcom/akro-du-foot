@@ -209,6 +209,141 @@ def refresh_global_news_payload(filter_key: str = "all") -> dict[str, Any]:
     return news_payload(filter_key)
 
 
+def match_articles_payload(limit: int = 12) -> dict[str, Any]:
+    articles = _match_articles_rows(limit)
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "articles": articles,
+        "count": len(articles),
+    }
+
+
+def match_article_detail_html(slug: str) -> tuple[str, int]:
+    slug = _clean(slug, 160)
+    articles = _match_articles_rows(12, slug=slug)
+    article = articles[0] if articles else None
+    if not article:
+        return _match_article_page_html({
+            "title": "Résumé introuvable",
+            "summary": "Ce résumé de match n'est pas disponible.",
+            "content": "Le résumé demandé n'existe pas ou n'est pas encore publié.",
+            "competition": "Akro du Foot",
+            "date": "",
+            "score": "",
+            "home_team": "",
+            "away_team": "",
+        }), 404
+    return _match_article_page_html(article), 200
+
+
+def _match_articles_rows(limit: int = 12, slug: str = "") -> list[dict[str, Any]]:
+    if not _supabase_service_enabled():
+        return []
+    safe_limit = max(1, min(int(limit or 12), 12))
+    slug_filter = f"&slug=eq.{quote(slug, safe='')}" if slug else ""
+    articles = _supabase_service_request(
+        "GET",
+        "match_articles?"
+        "select=id,match_id,match_api_id,slug,title,summary,content,competition,status,published_at,created_at"
+        f"&status=eq.published{slug_filter}&order=published_at.desc&limit={safe_limit}",
+    )
+    if not isinstance(articles, list) or not articles:
+        return []
+
+    deduped = []
+    seen = set()
+    for article in articles:
+        if not isinstance(article, dict):
+            continue
+        key = str(article.get("match_id") or article.get("slug") or "")
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        deduped.append(article)
+    if not deduped:
+        return []
+
+    match_ids = [str(article.get("match_id") or "") for article in deduped if article.get("match_id")]
+    matches = _supabase_service_request(
+        "GET",
+        f"matches?select=id,api_id,competition_id,match_date,home_team_id,away_team_id,home_score,away_score,status&limit=50&id=in.({','.join(quote(item, safe='') for item in match_ids)})",
+    ) if match_ids else []
+    match_by_id = {str(row.get("id")): row for row in (matches or []) if isinstance(row, dict)}
+    team_ids = sorted({
+        str(match.get(field) or "")
+        for match in match_by_id.values()
+        for field in ("home_team_id", "away_team_id")
+        if match.get(field)
+    })
+    teams = _supabase_service_request(
+        "GET",
+        f"teams?select=id,name&limit=100&id=in.({','.join(quote(item, safe='') for item in team_ids)})",
+    ) if team_ids else []
+    team_by_id = {str(row.get("id")): str(row.get("name") or "") for row in (teams or []) if isinstance(row, dict)}
+
+    output = []
+    for article in deduped:
+        match = match_by_id.get(str(article.get("match_id") or ""), {})
+        home = team_by_id.get(str(match.get("home_team_id") or ""), "")
+        away = team_by_id.get(str(match.get("away_team_id") or ""), "")
+        home_score = match.get("home_score")
+        away_score = match.get("away_score")
+        score = f"{home_score} - {away_score}" if home_score is not None and away_score is not None else ""
+        output.append({
+            **article,
+            "date": match.get("match_date") or article.get("published_at") or article.get("created_at") or "",
+            "home_team": home,
+            "away_team": away,
+            "teams": " vs ".join(team for team in (home, away) if team),
+            "score": score,
+        })
+    return output
+
+
+def _match_article_page_html(article: dict[str, Any]) -> str:
+    title = _html_escape(article.get("title") or "Résumé de match")
+    summary = _html_escape(article.get("summary") or "")
+    content = _html_escape(article.get("content") or "").replace("\n", "<br>")
+    competition = _html_escape(article.get("competition") or "Compétition")
+    date = _html_escape(_format_article_date(article.get("date")) or "")
+    teams = _html_escape(article.get("teams") or "")
+    score = _html_escape(article.get("score") or "")
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title} · Akro du Foot</title>
+  <style>
+    body {{ margin: 0; min-height: 100vh; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #f4f8ff; background: radial-gradient(circle at top left, rgba(31,111,235,.25), transparent 34rem), linear-gradient(135deg, #07111f, #10243b); }}
+    main {{ width: min(920px, calc(100% - 28px)); margin: 0 auto; padding: 42px 0; }}
+    a {{ color: #f5c96b; font-weight: 900; text-decoration: none; }}
+    article {{ border: 1px solid rgba(255,255,255,.14); border-radius: 22px; padding: clamp(20px, 4vw, 38px); background: rgba(255,255,255,.06); box-shadow: 0 24px 70px rgba(0,0,0,.28); }}
+    .meta {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; color: #b9c9dc; font-weight: 850; }}
+    .pill {{ border: 1px solid rgba(245,201,107,.28); border-radius: 999px; padding: 6px 10px; color: #ffe1a0; background: rgba(245,201,107,.10); }}
+    h1 {{ margin: 0 0 14px; font-size: clamp(30px, 6vw, 56px); line-height: .96; }}
+    .summary {{ color: #d8e5f4; font-size: 18px; line-height: 1.55; font-weight: 750; }}
+    .content {{ margin-top: 24px; color: #c9d7e7; line-height: 1.65; font-size: 16px; }}
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="/">← Retour à Akro du Foot</a></p>
+    <article>
+      <div class="meta"><span class="pill">{competition}</span><span>{date}</span><span>{teams}</span><span>{score}</span></div>
+      <h1>{title}</h1>
+      <p class="summary">{summary}</p>
+      <div class="content">{content}</div>
+    </article>
+  </main>
+</body>
+</html>"""
+
+
+def _html_escape(value: Any) -> str:
+    return str(value or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;").replace("'", "&#39;")
+
+
 def refresh_news_payload(competition: str, focus: str, league: str = "") -> dict[str, Any]:
     key = str(competition or "").casefold()
     live: list[dict[str, Any]] = []
@@ -459,6 +594,15 @@ if app:
     @app.get("/api/news/refresh")
     def refresh_global_news():
         return jsonify(refresh_global_news_payload(request.args.get("filter", "all")))
+
+    @app.get("/api/match-articles")
+    def match_articles():
+        return jsonify(match_articles_payload())
+
+    @app.get("/actus/resume/<slug>")
+    def match_article_detail(slug: str):
+        html, status = match_article_detail_html(slug)
+        return Response(html, status=status, content_type="text/html; charset=utf-8")
 
     @app.get("/api/mercato-live")
     def mercato_live():
@@ -1785,6 +1929,11 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/news/refresh":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
+        elif path == "/api/match-articles":
+            self._send_json(match_articles_payload())
+        elif path.startswith("/actus/resume/"):
+            html, status = match_article_detail_html(_url_decode(path.rsplit("/", 1)[-1]))
+            self._send_html(html, status=status, no_store=True)
         elif path == "/api/mercato-live":
             self._send_json(_read_json(MERCATO_LIVE_CACHE_FILE, {"items": [], "source": "Mercato Live", "url": "https://www.mercatolive.fr/"}))
         elif path == "/api/leagues-dashboard":

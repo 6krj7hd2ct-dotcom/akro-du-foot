@@ -392,6 +392,18 @@
     .upcoming-match-logo { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%; object-fit: contain; object-position: center; padding: 3px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
     .upcoming-match-logo.placeholder { display: grid; place-items: center; color: #9fb0c2; font-size: 11px; font-weight: 950; }
     .upcoming-match-vs { width: fit-content; border-radius: 999px; padding: 3px 8px; background: rgba(255,255,255,0.08); color: #9fb0c2; font-size: 11px; font-weight: 950; text-transform: uppercase; }
+    .match-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .match-summary-grid .empty { grid-column: 1 / -1; }
+    .match-summary-card { position: relative; display: grid; gap: 10px; min-height: 180px; padding: 15px; border-radius: 16px; border: 1px solid rgba(245,201,107,0.24); background: linear-gradient(145deg, rgba(7,17,31,0.95), rgba(25,43,62,0.88)); box-shadow: 0 18px 44px rgba(0,0,0,0.20); color: inherit; text-decoration: none; overflow: hidden; }
+    .match-summary-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(245,201,107,0.15), transparent 36%), radial-gradient(circle at left bottom, rgba(99,232,255,0.10), transparent 34%); pointer-events: none; }
+    .match-summary-card > * { position: relative; z-index: 1; }
+    .match-summary-top, .match-summary-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
+    .match-summary-competition { color: #ffe1a0; font-size: 11px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }
+    .match-summary-date { color: #b9c9dc; font-size: 12px; font-weight: 850; }
+    .match-summary-teams { color: #fff; font-size: 17px; font-weight: 950; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .match-summary-score { border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }
+    .match-summary-text { margin: 0; color: #c9d7e7; font-size: 13px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .match-summary-link { align-self: end; color: var(--gold); font-size: 13px; font-weight: 950; }
     .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .article-tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 8px; background: rgba(245,201,107,0.12); border: 1px solid rgba(245,201,107,0.22); color: #ffe1a0; font-size: 11px; font-weight: 900; }
     .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -1353,7 +1365,7 @@
       .section-head { align-items: start; flex-direction: column; }
       .section-note { text-align: left; }
       .today-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .news, .grid, .upcoming-news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .news, .grid, .upcoming-news-grid, .match-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #leagueSummaryCards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       #tab-euro .euro-group-grid, #tab-euro .grid, #tab-euro .historical-calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .matches { grid-template-columns: 1fr; }
@@ -1407,7 +1419,7 @@
       .france-header-items { gap: 10px; padding: 8px 10px; }
       .france-header-card { width: min(270px, 82vw); grid-template-columns: 56px minmax(0, 1fr); }
       .france-header-image { width: 56px; height: 48px; }
-      .today-strip, .leaders, .news, .grid, .matches, .upcoming-news-grid { grid-template-columns: 1fr; }
+      .today-strip, .leaders, .news, .grid, .matches, .upcoming-news-grid, .match-summary-grid { grid-template-columns: 1fr; }
       #tab-euro .euro-group-grid, #tab-euro .grid, #tab-euro .historical-calendar-grid { grid-template-columns: 1fr; }
       #leagueSummaryCards { grid-template-columns: 1fr; }
       .calendar-match { grid-template-columns: 1fr auto 1fr; }
@@ -1700,6 +1712,10 @@
       <div class="section-head"><div class="section-title"><h2>Prochains Matchs</h2></div><div class="section-note">Les 6 prochaines affiches programmées, toutes compétitions confondues.</div></div>
       <section class="upcoming-news-grid" id="newsUpcomingMatches" aria-label="Prochains Matchs">
         <div class="empty">Chargement des prochains matchs...</div>
+      </section>
+      <div class="section-head"><div class="section-title"><h2>Résumés des matchs</h2></div><div class="section-note">Les derniers résumés publiés automatiquement après les matchs terminés.</div></div>
+      <section class="match-summary-grid" id="matchArticlesBoard" aria-label="Résumés des matchs">
+        <div class="empty">Chargement des résumés...</div>
       </section>
       <div class="section-head"><div class="section-title"><h2>Récompenses annuelles</h2></div><div class="section-note">Lauréats majeurs, mise à jour annuelle.</div></div>
       <section class="annual-awards-grid news-awards-grid" aria-label="Récompenses annuelles">
@@ -2888,6 +2904,73 @@
       `).join('');
     }
     window.addEventListener('DOMContentLoaded', renderNewsUpcomingMatches);
+
+    function matchArticlePriority(article) {
+      const teams = typeof profileFocusTeams === 'function' ? profileFocusTeams() : [];
+      if (teams.length && typeof isFavoriteMatch === 'function' && isFavoriteMatch(article, teams)) return 0;
+      const competition = normalizeFootballName(article.competition || '');
+      if (competition.includes('coupe du monde') || competition.includes('world cup')) return 1;
+      if (competition === 'euro' || competition.includes('coupe d europe') || competition.includes('european championship')) return 2;
+      if (competition.includes('champions league') || competition.includes('ligue des champions')) return 3;
+      return 4;
+    }
+
+    function matchArticleDate(value) {
+      if (!value) return 'Date non disponible';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit', year: 'numeric'});
+    }
+
+    function renderMatchArticles(items) {
+      const container = document.getElementById('matchArticlesBoard');
+      if (!container) return;
+      const seen = new Set();
+      const articles = (items || [])
+        .filter(article => {
+          const key = String(article.match_id || article.slug || '');
+          if (!key || seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+        .sort((a, b) => matchArticlePriority(a) - matchArticlePriority(b) || String(b.published_at || '').localeCompare(String(a.published_at || '')))
+        .slice(0, 6);
+
+      if (!articles.length) {
+        container.innerHTML = '<div class="empty">Aucun résumé disponible pour le moment.</div>';
+        return;
+      }
+
+      container.innerHTML = articles.map(article => {
+        const href = `/actus/resume/${encodeURIComponent(article.slug || '')}`;
+        const teams = article.teams || [article.home_team, article.away_team].filter(Boolean).join(' vs ') || 'Match';
+        return `<a class="match-summary-card" href="${escapeHtml(href)}">
+          <div class="match-summary-top">
+            <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
+            <span class="match-summary-date">${escapeHtml(matchArticleDate(article.date || article.published_at))}</span>
+          </div>
+          <div class="match-summary-line">
+            <span class="match-summary-teams">${escapeHtml(teams)}</span>
+            <span class="match-summary-score">${escapeHtml(article.score || '')}</span>
+          </div>
+          <p class="match-summary-text">${escapeHtml(article.summary || article.title || '')}</p>
+          <span class="match-summary-link">Lire le résumé</span>
+        </a>`;
+      }).join('');
+    }
+
+    async function loadMatchArticles() {
+      const container = document.getElementById('matchArticlesBoard');
+      if (!container) return;
+      try {
+        const response = await fetch('/api/match-articles', {cache: 'no-store'});
+        if (!response.ok) throw new Error('articles unavailable');
+        const data = await response.json();
+        renderMatchArticles(data.articles || []);
+      } catch (error) {
+        container.innerHTML = '<div class="empty">Aucun résumé disponible pour le moment.</div>';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', loadMatchArticles);
 
     function flagHtml(url) {
       return url ? `<img class="team-modal-flag" src="${escapeHtml(url)}" alt="">` : '<div class="team-modal-flag flag placeholder" aria-hidden="true"></div>';
