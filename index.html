@@ -949,12 +949,20 @@
     .chatbot-message ul { margin: 8px 0 0; padding-left: 18px; }
     .chatbot-message.user { justify-self: end; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }
     .chatbot-message.bot { justify-self: start; }
+    .chatbot-message.is-thinking { color: #ffe1a0; border-color: rgba(245,201,107,0.28); background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); }
+    .chatbot-message.is-thinking::after { content: ""; display: inline-block; width: 28px; height: 8px; margin-left: 7px; border-radius: 999px; background: radial-gradient(circle, #ffe1a0 35%, transparent 38%) 0 50% / 9px 9px repeat-x; animation: coachThinking 1s linear infinite; }
+    @keyframes coachThinking { to { background-position: 9px 50%; } }
     .coach-verification { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 0 7px; color: #c9dcf2; font-size: 11px; font-weight: 850; }
     .coach-verify-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 7px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.08); }
     .coach-verify-pill.verified { color: #9af6d3; border-color: rgba(50,211,162,0.34); background: rgba(50,211,162,0.12); }
     .coach-verify-pill.limited { color: #ffe1a0; border-color: rgba(245,201,107,0.34); background: rgba(245,201,107,0.12); }
     .coach-verify-pill.local { color: #bdd7ff; border-color: rgba(31,111,235,0.34); background: rgba(31,111,235,0.12); }
-    .chatbot-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
+    .chatbot-tools { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 14px 0; border-top: 1px solid rgba(255,255,255,0.10); }
+    .chatbot-tool-button { appearance: none; border: 1px solid rgba(245,201,107,0.18); border-radius: 999px; padding: 7px 10px; color: #dfeeff; background: rgba(255,255,255,0.06); font: inherit; font-size: 12px; font-weight: 900; cursor: pointer; transition: border-color .16s ease, color .16s ease, background .16s ease; }
+    .chatbot-tool-button:hover, .chatbot-tool-button:focus-visible { color: #ffe1a0; border-color: rgba(245,201,107,0.42); background: rgba(245,201,107,0.10); outline: none; }
+    .chatbot-tool-button.is-active { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); border-color: transparent; }
+    .chatbot-voice-status { flex-basis: 100%; color: #b9c9dc; font-size: 12px; font-weight: 850; min-height: 16px; }
+    .chatbot-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 14px; border-top: 0; }
     .alltime-row { display: grid; grid-template-columns: 44px 52px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; background: rgba(255,255,255,0.06); }
     .alltime-rank { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-weight: 950; }
     .alltime-value { color: var(--gold); font-size: 24px; font-weight: 950; text-align: right; }
@@ -2425,6 +2433,14 @@
       </header>
       <div class="chatbot-messages" id="footballChatbotMessages">
         <div class="chatbot-message bot">Salut, je suis Coach. Pose-moi une question foot.</div>
+      </div>
+      <div class="chatbot-tools" aria-label="Outils vocaux du Coach">
+        <button class="chatbot-tool-button" type="button" id="coachMicButton">🎙️ Parler au Coach</button>
+        <button class="chatbot-tool-button" type="button" id="coachSpeakButton">🔊 Écouter la réponse</button>
+        <button class="chatbot-tool-button" type="button" id="coachPauseButton" hidden>Pause</button>
+        <button class="chatbot-tool-button" type="button" id="coachResumeButton" hidden>Reprise</button>
+        <button class="chatbot-tool-button" type="button" id="coachStopVoiceButton" hidden>Stop</button>
+        <div class="chatbot-voice-status" id="coachVoiceStatus" aria-live="polite"></div>
       </div>
       <form class="chatbot-form" id="footballChatbotForm">
         <input id="footballChatbotInput" type="text" maxlength="500" placeholder="Pose ta question foot…" autocomplete="off">
@@ -10173,6 +10189,12 @@ grant select, insert, update on public.profiles to authenticated;`;
     const footballChatbotForm = document.getElementById('footballChatbotForm');
     const footballChatbotInput = document.getElementById('footballChatbotInput');
     const footballChatbotMessages = document.getElementById('footballChatbotMessages');
+    const coachMicButton = document.getElementById('coachMicButton');
+    const coachSpeakButton = document.getElementById('coachSpeakButton');
+    const coachPauseButton = document.getElementById('coachPauseButton');
+    const coachResumeButton = document.getElementById('coachResumeButton');
+    const coachStopVoiceButton = document.getElementById('coachStopVoiceButton');
+    const coachVoiceStatus = document.getElementById('coachVoiceStatus');
     const footballChatbotHistory = [];
     const COACH_SESSION_KEY = 'akro:coach:session_id';
     const coachSessionId = localStorage.getItem(COACH_SESSION_KEY) || `coach-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -10186,6 +10208,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       lastComparisonEntity: ''
     };
     let coachHistoryLoaded = false;
+    let coachLastAnswer = '';
+    let coachTypingTimer = 0;
 
     function chatbotEscape(value) {
       return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -10230,6 +10254,84 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
       footballChatbotMessages.scrollTop = footballChatbotMessages.scrollHeight;
       return node;
+    }
+
+    function setCoachThinking(node, active = true) {
+      if (!node) return;
+      node.classList.toggle('is-thinking', active);
+    }
+
+    function typeCoachMessage(node, text, verification = null) {
+      window.clearInterval(coachTypingTimer);
+      setCoachThinking(node, false);
+      const cleanText = String(text || '');
+      const step = Math.max(3, Math.ceil(cleanText.length / 90));
+      let index = 0;
+      const render = () => {
+        index = Math.min(cleanText.length, index + step);
+        setChatbotMessage(node, cleanText.slice(0, index), verification);
+        footballChatbotMessages.scrollTop = footballChatbotMessages.scrollHeight;
+        if (index >= cleanText.length) window.clearInterval(coachTypingTimer);
+      };
+      render();
+      coachTypingTimer = window.setInterval(render, 18);
+    }
+
+    function coachSetVoiceStatus(text) {
+      if (coachVoiceStatus) coachVoiceStatus.textContent = text || '';
+    }
+
+    function coachUpdateVoiceControls(speaking = false, paused = false) {
+      if (coachSpeakButton) coachSpeakButton.classList.toggle('is-active', speaking && !paused);
+      if (coachPauseButton) coachPauseButton.hidden = !speaking || paused;
+      if (coachResumeButton) coachResumeButton.hidden = !speaking || !paused;
+      if (coachStopVoiceButton) coachStopVoiceButton.hidden = !speaking;
+    }
+
+    function speakCoachAnswer() {
+      if (!('speechSynthesis' in window)) {
+        coachSetVoiceStatus('Lecture audio non disponible sur ce navigateur.');
+        return;
+      }
+      const text = coachLastAnswer.trim();
+      if (!text) {
+        coachSetVoiceStatus('Aucune réponse à lire pour le moment.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'fr-FR';
+      utterance.rate = 0.98;
+      utterance.onstart = () => { coachSetVoiceStatus('🔊 Coach en train de parler...'); coachUpdateVoiceControls(true, false); };
+      utterance.onpause = () => { coachSetVoiceStatus('Lecture en pause.'); coachUpdateVoiceControls(true, true); };
+      utterance.onresume = () => { coachSetVoiceStatus('🔊 Coach en train de parler...'); coachUpdateVoiceControls(true, false); };
+      utterance.onend = () => { coachSetVoiceStatus(''); coachUpdateVoiceControls(false, false); };
+      utterance.onerror = () => { coachSetVoiceStatus('Lecture audio interrompue.'); coachUpdateVoiceControls(false, false); };
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function startCoachDictation() {
+      const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!Recognition) {
+        coachSetVoiceStatus('Micro non disponible sur ce navigateur.');
+        return;
+      }
+      const recognition = new Recognition();
+      recognition.lang = 'fr-FR';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      if (coachMicButton) coachMicButton.classList.add('is-active');
+      coachSetVoiceStatus('Coach écoute...');
+      recognition.onresult = event => {
+        const transcript = event.results?.[0]?.[0]?.transcript || '';
+        if (transcript) footballChatbotInput.value = transcript;
+        coachSetVoiceStatus(transcript ? 'Question dictée. Tu peux envoyer.' : '');
+      };
+      recognition.onerror = () => coachSetVoiceStatus('Impossible de comprendre la dictée.');
+      recognition.onend = () => {
+        if (coachMicButton) coachMicButton.classList.remove('is-active');
+      };
+      recognition.start();
     }
 
     function coachNormalize(value) {
@@ -10306,12 +10408,28 @@ grant select, insert, update on public.profiles to authenticated;`;
     function closeFootballChatbot() {
       footballChatbotModal.classList.remove('is-open');
       footballChatbotModal.setAttribute('aria-hidden', 'true');
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      coachSetVoiceStatus('');
+      coachUpdateVoiceControls(false, false);
     }
 
     footballChatbotButton.addEventListener('click', openFootballChatbot);
     footballChatbotClose.addEventListener('click', closeFootballChatbot);
     footballChatbotModal.addEventListener('click', event => {
       if (event.target === footballChatbotModal) closeFootballChatbot();
+    });
+    coachMicButton?.addEventListener('click', startCoachDictation);
+    coachSpeakButton?.addEventListener('click', speakCoachAnswer);
+    coachPauseButton?.addEventListener('click', () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.pause();
+    });
+    coachResumeButton?.addEventListener('click', () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.resume();
+    });
+    coachStopVoiceButton?.addEventListener('click', () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      coachSetVoiceStatus('');
+      coachUpdateVoiceControls(false, false);
     });
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && footballChatbotModal.classList.contains('is-open')) closeFootballChatbot();
@@ -10325,6 +10443,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       addChatbotMessage('user', question);
       updateCoachMemoryFromText(question);
       const pending = addChatbotMessage('bot', 'Je réfléchis...', false);
+      setCoachThinking(pending, true);
       try {
         const response = await fetch('/api/football-chatbot', {
           method: 'POST',
@@ -10338,14 +10457,16 @@ grant select, insert, update on public.profiles to authenticated;`;
         });
         const data = await response.json().catch(() => ({}));
         const answer = data.answer || data.error || 'Coach indisponible : clé OpenAI absente ou invalide.';
-        setChatbotMessage(pending, answer, data.verification || null);
+        coachLastAnswer = answer;
+        typeCoachMessage(pending, answer, data.verification || null);
         updateCoachMemoryFromDetectedContext(data.detected_context || {});
         updateCoachMemoryFromText(answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
         if (footballChatbotHistory.length > 20) footballChatbotHistory.shift();
       } catch (error) {
         const answer = 'Coach indisponible : clé OpenAI absente ou invalide.';
-        setChatbotMessage(pending, answer);
+        coachLastAnswer = answer;
+        typeCoachMessage(pending, answer);
         footballChatbotHistory.push({role: 'assistant', content: answer});
         if (footballChatbotHistory.length > 20) footballChatbotHistory.shift();
       }

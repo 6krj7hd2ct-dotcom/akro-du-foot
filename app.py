@@ -38,6 +38,9 @@ COACH_UNAVAILABLE = "Coach indisponible : clé OpenAI absente ou invalide."
 COACH_DISCLAIMER = "Analyse fictive pour le jeu entre amis. Aucun conseil de pari réel."
 COACH_FACTS_LAST_VERIFIED = "2026-05-24"
 COACH_VERIFICATION_SOURCES = ("Wikipedia", "FotMob", "Transfermarkt", "SofaScore", "ESPN", "API Football")
+API_FOOTBALL_BASE_URL = os.environ.get("API_FOOTBALL_BASE_URL", "https://v3.football.api-sports.io").rstrip("/")
+COACH_API_FOOTBALL_CACHE_TTL = max(3600, int(os.environ.get("AKRO_COACH_API_FOOTBALL_CACHE_TTL", "604800")))
+COACH_API_FOOTBALL_TIMEOUT = max(4, int(os.environ.get("AKRO_COACH_API_FOOTBALL_TIMEOUT", "12")))
 
 COMMUNITY_LEVELS = [
     ("Débutant", "Bronze", "🥉"),
@@ -1791,6 +1794,17 @@ def _is_correction_message(normalized_text: str) -> bool:
 def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
     normalized = _normalize_football_text(question)
     recent = _recent_history_text(history)
+    if any(term in normalized for term in {"compare", "comparaison", "versus", "vs", "plus fort", "meilleur"}) and len(_coach_detect_player_names(question)) >= 2:
+        stats_context = _coach_player_stats_context(question)
+        if stats_context:
+            age = _coach_detect_age(question)
+            age_text = f" à âge équivalent ({age} ans)" if age else ""
+            return (
+                f"Résumé : je peux comparer ces joueurs{age_text} avec les données disponibles dans Akro/Supabase.\n\n"
+                f"Données utilisées :\n{stats_context}\n\n"
+                "Analyse : les chiffres ci-dessus donnent la base objective. Pour départager proprement, il faut ensuite pondérer le contexte : rôle exact, championnat, niveau de l’équipe, compétition européenne, sélection et titres disponibles dans la période.\n\n"
+                "Conclusion : si une ligne indique que la statistique détaillée est absente, je ne l’invente pas. Elle pourra être enrichie via API-Football puis conservée en base pour les prochaines questions."
+            )
     supabase_answer = _supabase_local_answer(normalized)
     if supabase_answer:
         return supabase_answer
@@ -2436,6 +2450,69 @@ def _supabase_service_paginated(path: str, page_size: int = 1000, max_rows: int 
     return rows
 
 
+def _api_football_enabled() -> bool:
+    return bool(os.environ.get("API_FOOTBALL_KEY", "").strip())
+
+
+def _api_football_cache_key(endpoint: str, params: dict[str, Any]) -> str:
+    normalized = json.dumps({"endpoint": endpoint.strip("/"), "params": params}, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int | None = None) -> list[dict[str, Any]]:
+    if not _api_football_enabled():
+        return []
+    endpoint = endpoint.strip("/")
+    clean_params = {key: str(value) for key, value in params.items() if value not in (None, "")}
+    cache_key = _api_football_cache_key(endpoint, clean_params)
+    cached = _supabase_service_request(
+        "GET",
+        f"coach_api_cache?select=response,updated_at&cache_key=eq.{quote(cache_key, safe='')}&limit=1",
+    )
+    if isinstance(cached, list) and cached:
+        updated_at = str(cached[0].get("updated_at") or cached[0].get("created_at") or "")
+        try:
+            parsed = datetime.fromisoformat(updated_at.replace("Z", "+00:00"))
+            max_age = cache_ttl or COACH_API_FOOTBALL_CACHE_TTL
+            if (datetime.now(timezone.utc) - parsed.astimezone(timezone.utc)).total_seconds() <= max_age:
+                response = cached[0].get("response")
+                if isinstance(response, dict):
+                    rows = response.get("response")
+                    return rows if isinstance(rows, list) else []
+        except ValueError:
+            pass
+    try:
+        import requests
+
+        response = requests.get(
+            f"{API_FOOTBALL_BASE_URL}/{endpoint}",
+            params=clean_params,
+            headers={"x-apisports-key": os.environ.get("API_FOOTBALL_KEY", "").strip()},
+            timeout=COACH_API_FOOTBALL_TIMEOUT,
+        )
+        if response.status_code >= 400:
+            print(f"[coach-api-football] status={response.status_code} endpoint={endpoint}", flush=True)
+            return []
+        payload = response.json()
+        _supabase_service_request(
+            "POST",
+            "coach_api_cache?on_conflict=cache_key",
+            json={
+                "cache_key": cache_key,
+                "endpoint": endpoint,
+                "params": clean_params,
+                "response": payload,
+                "source": "api-football",
+            },
+            prefer="resolution=merge-duplicates,return=minimal",
+        )
+        rows = payload.get("response") if isinstance(payload, dict) else []
+        return rows if isinstance(rows, list) else []
+    except Exception as exc:
+        print(f"[coach-api-football] erreur endpoint={endpoint}: {exc}", flush=True)
+        return []
+
+
 def _generate_match_articles_once() -> int:
     cutoff = datetime.fromtimestamp(time.time() - MATCH_ARTICLE_GENERATION_DELAY_SECONDS, timezone.utc).isoformat()
     matches = _supabase_service_request(
@@ -2887,6 +2964,212 @@ def _coach_query_terms(normalized_question: str) -> list[str]:
         "pronostic", "favori", "palmares", "palmarès", "bracket", "phase", "finale",
     }
     return [word for word in normalized_question.split() if len(word) > 2 and word not in stopwords]
+
+
+COACH_PLAYER_ALIASES = {
+    "messi": "Lionel Messi",
+    "lionel messi": "Lionel Messi",
+    "ronaldo": "Cristiano Ronaldo",
+    "cristiano ronaldo": "Cristiano Ronaldo",
+    "cr7": "Cristiano Ronaldo",
+    "mbappe": "Kylian Mbappé",
+    "mbappee": "Kylian Mbappé",
+    "kylian mbappe": "Kylian Mbappé",
+    "haaland": "Erling Haaland",
+    "erling haaland": "Erling Haaland",
+    "neymar": "Neymar",
+    "zidane": "Zinedine Zidane",
+    "platini": "Michel Platini",
+}
+
+COACH_PLAYER_BIRTH_DATES = {
+    "Lionel Messi": "1987-06-24",
+    "Cristiano Ronaldo": "1985-02-05",
+    "Kylian Mbappé": "1998-12-20",
+    "Erling Haaland": "2000-07-21",
+    "Neymar": "1992-02-05",
+    "Zinedine Zidane": "1972-06-23",
+    "Michel Platini": "1955-06-21",
+}
+
+
+def _coach_detect_player_names(question: str) -> list[str]:
+    normalized = _normalize_football_text(question)
+    names: list[str] = []
+    for alias, name in COACH_PLAYER_ALIASES.items():
+        if alias in normalized and name not in names:
+            names.append(name)
+    if len(names) >= 2:
+        return names[:4]
+    payload = _football_supabase_payload()
+    terms = _coach_query_terms(normalized)
+    for player in _coach_pick_relevant_rows(payload.get("players", []), terms, ["name", "firstname", "lastname"], 4):
+        name = str(player.get("name") or "").strip()
+        if name and name not in names:
+            names.append(name)
+    return names[:4]
+
+
+def _coach_detect_age(question: str) -> int | None:
+    normalized = _normalize_football_text(question)
+    match = re.search(r"\b(?:a|à|age|ans)\s*(\d{2})\b", normalized)
+    if not match:
+        match = re.search(r"\b(\d{2})\s*ans\b", normalized)
+    if not match:
+        return None
+    age = int(match.group(1))
+    return age if 15 <= age <= 45 else None
+
+
+def _coach_player_birth_year(player_name: str, payload: dict[str, Any]) -> int | None:
+    for player in payload.get("players", []):
+        if _normalize_football_text(player.get("name", "")) == _normalize_football_text(player_name):
+            birth = str(player.get("birth_date") or "")[:10]
+            if re.match(r"^\d{4}-", birth):
+                return int(birth[:4])
+    birth = COACH_PLAYER_BIRTH_DATES.get(player_name)
+    return int(birth[:4]) if birth else None
+
+
+def _coach_seasons_for_age(player_name: str, age: int, payload: dict[str, Any]) -> list[str]:
+    birth_year = _coach_player_birth_year(player_name, payload)
+    if not birth_year:
+        return []
+    pivot = birth_year + age
+    return [str(pivot - 1), str(pivot), str(pivot + 1)]
+
+
+def _coach_find_player_row(player_name: str, payload: dict[str, Any]) -> dict[str, Any] | None:
+    wanted = _normalize_football_text(player_name)
+    for player in payload.get("players", []):
+        if _normalize_football_text(player.get("name", "")) == wanted:
+            return player
+    candidates = _coach_pick_relevant_rows(payload.get("players", []), _coach_query_terms(wanted), ["name", "firstname", "lastname"], 1)
+    return candidates[0] if candidates else None
+
+
+def _coach_player_stats_rows(player_name: str, seasons: list[str]) -> list[dict[str, Any]]:
+    if not _supabase_service_enabled() or not seasons:
+        return []
+    season_filter = ",".join(quote(season, safe="") for season in seasons)
+    rows = _supabase_service_request(
+        "GET",
+        "coach_player_season_stats?"
+        "select=player_name,player_api_id,team_name,league_name,season,appearances,lineups,minutes,goals,assists,yellow_cards,red_cards,rating,updated_at"
+        f"&player_name=ilike.{quote(f'*{player_name}*', safe='')}&season=in.({season_filter})&order=season.asc",
+    )
+    return rows if isinstance(rows, list) else []
+
+
+def _coach_stat_int(value: Any) -> int:
+    try:
+        return int(value or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[str, Any]]:
+    if not _api_football_enabled() or not seasons:
+        return []
+    collected: list[dict[str, Any]] = []
+    for season in seasons[:4]:
+        rows = _api_football_get("players", {"search": player_name, "season": season})
+        for item in rows[:3]:
+            player = item.get("player") if isinstance(item, dict) else {}
+            if not isinstance(player, dict):
+                continue
+            api_name = str(player.get("name") or "").strip()
+            if not api_name or _coach_match_score(_normalize_football_text(api_name), _coach_query_terms(_normalize_football_text(player_name))) <= 0:
+                continue
+            for stat in item.get("statistics") or []:
+                if not isinstance(stat, dict):
+                    continue
+                games = stat.get("games") if isinstance(stat.get("games"), dict) else {}
+                goals = stat.get("goals") if isinstance(stat.get("goals"), dict) else {}
+                cards = stat.get("cards") if isinstance(stat.get("cards"), dict) else {}
+                team = stat.get("team") if isinstance(stat.get("team"), dict) else {}
+                league = stat.get("league") if isinstance(stat.get("league"), dict) else {}
+                row = {
+                    "api_id": f"{player.get('id')}:{team.get('id') or ''}:{league.get('id') or ''}:{season}",
+                    "player_api_id": str(player.get("id") or ""),
+                    "player_name": api_name,
+                    "team_api_id": str(team.get("id") or ""),
+                    "team_name": str(team.get("name") or ""),
+                    "league_api_id": str(league.get("id") or ""),
+                    "league_name": str(league.get("name") or ""),
+                    "season": str(season),
+                    "appearances": _coach_stat_int(games.get("appearences") or games.get("appearances")),
+                    "lineups": _coach_stat_int(games.get("lineups")),
+                    "minutes": _coach_stat_int(games.get("minutes")),
+                    "goals": _coach_stat_int(goals.get("total")),
+                    "assists": _coach_stat_int(goals.get("assists")),
+                    "yellow_cards": _coach_stat_int(cards.get("yellow")),
+                    "red_cards": _coach_stat_int(cards.get("red")),
+                    "rating": None,
+                    "raw_data": {"player": player, "statistics": stat},
+                    "source": "api-football",
+                }
+                try:
+                    row["rating"] = float(games.get("rating")) if games.get("rating") not in (None, "") else None
+                except (TypeError, ValueError):
+                    row["rating"] = None
+                collected.append(row)
+    if collected and _supabase_service_enabled():
+        _supabase_service_request(
+            "POST",
+            "coach_player_season_stats?on_conflict=api_id",
+            json=collected[:80],
+            prefer="resolution=merge-duplicates,return=minimal",
+        )
+    return collected
+
+
+def _coach_player_stats_context(question: str) -> str:
+    player_names = _coach_detect_player_names(question)
+    if not player_names:
+        return ""
+    payload = _football_supabase_payload()
+    age = _coach_detect_age(question)
+    lines = []
+    for name in player_names:
+        seasons = _coach_seasons_for_age(name, age, payload) if age else []
+        if not seasons:
+            seasons = [str(datetime.now(timezone.utc).year - 1), str(datetime.now(timezone.utc).year)]
+        rows = _coach_player_stats_rows(name, seasons)
+        if not rows:
+            rows = _coach_api_player_stats(name, seasons)
+        if not rows:
+            row = _coach_find_player_row(name, payload) or {}
+            base = [f"- {name}: statistiques détaillées absentes dans Supabase"]
+            if row.get("birth_date"):
+                base.append(f"naissance {row['birth_date']}")
+            if row.get("nationality"):
+                base.append(f"nationalité {row['nationality']}")
+            if row.get("teams"):
+                base.append("équipes liées " + ", ".join(row.get("teams")[:3]))
+            lines.append(" · ".join(base))
+            continue
+        totals = {
+            "matches": sum(_coach_stat_int(row.get("appearances")) for row in rows),
+            "minutes": sum(_coach_stat_int(row.get("minutes")) for row in rows),
+            "goals": sum(_coach_stat_int(row.get("goals")) for row in rows),
+            "assists": sum(_coach_stat_int(row.get("assists")) for row in rows),
+        }
+        competitions = sorted({str(row.get("league_name") or "") for row in rows if row.get("league_name")})[:5]
+        teams = sorted({str(row.get("team_name") or "") for row in rows if row.get("team_name")})[:5]
+        age_label = f" autour de ses {age} ans" if age else ""
+        lines.append(
+            f"- {name}{age_label}: {totals['matches']} matchs, {totals['minutes']} minutes, "
+            f"{totals['goals']} buts, {totals['assists']} passes décisives. "
+            f"Saisons: {', '.join(sorted({str(row.get('season')) for row in rows if row.get('season')}))}. "
+            f"Clubs: {', '.join(teams) or 'non précisés'}. Compétitions: {', '.join(competitions) or 'non précisées'}."
+        )
+    if not lines:
+        return ""
+    intro = "Statistiques joueur récupérées depuis Supabase"
+    if _api_football_enabled():
+        intro += " puis enrichies à la demande via API-Football si nécessaire"
+    return intro + ":\n" + "\n".join(lines)
 
 
 def _coach_match_score(haystack: str, terms: list[str]) -> int:
@@ -3402,6 +3685,9 @@ def admin_sync_cancel_response(payload: dict[str, Any]) -> tuple[dict[str, Any],
 
 
 def _coach_relevant_supabase_context(question: str) -> dict[str, str]:
+    player_stats_context = _coach_player_stats_context(question)
+    if player_stats_context:
+        return {"source": "Supabase/API-Football player statistics", "context": player_stats_context}
     profile_context = _coach_entity_profile_context(question)
     if profile_context:
         return {"source": "Supabase entity_profiles", "context": profile_context}
