@@ -3009,8 +3009,13 @@ COACH_PLAYER_ALIASES = {
     "haaland": "Erling Haaland",
     "erling haaland": "Erling Haaland",
     "neymar": "Neymar",
+    "karim benzema": "Karim Benzema",
+    "benzema": "Karim Benzema",
+    "ronaldinho": "Ronaldinho",
     "zidane": "Zinedine Zidane",
     "platini": "Michel Platini",
+    "thierry henry": "Thierry Henry",
+    "henry": "Thierry Henry",
 }
 
 COACH_PLAYER_BIRTH_DATES = {
@@ -3019,8 +3024,11 @@ COACH_PLAYER_BIRTH_DATES = {
     "Kylian Mbappé": "1998-12-20",
     "Erling Haaland": "2000-07-21",
     "Neymar": "1992-02-05",
+    "Karim Benzema": "1987-12-19",
+    "Ronaldinho": "1980-03-21",
     "Zinedine Zidane": "1972-06-23",
     "Michel Platini": "1955-06-21",
+    "Thierry Henry": "1977-08-17",
 }
 
 COACH_PLAYER_MATCH_HINTS = {
@@ -3038,6 +3046,36 @@ COACH_PLAYER_MATCH_HINTS = {
         "nationalities": ["France", "French"],
         "birth_date": "1998-12-20",
         "clubs": ["Monaco", "Paris Saint Germain", "Paris Saint-Germain", "PSG", "Real Madrid", "France"],
+    },
+    "Neymar": {
+        "nationalities": ["Brazil", "Brasil", "Brésil", "Brazilian"],
+        "birth_date": "1992-02-05",
+        "clubs": ["Santos", "Barcelona", "FC Barcelona", "Paris Saint Germain", "Paris Saint-Germain", "PSG", "Al Hilal", "Brazil"],
+    },
+    "Erling Haaland": {
+        "nationalities": ["Norway", "Norwegian", "Norvège"],
+        "birth_date": "2000-07-21",
+        "clubs": ["Bryne", "Molde", "Red Bull Salzburg", "RB Salzburg", "Borussia Dortmund", "Manchester City", "Norway"],
+    },
+    "Karim Benzema": {
+        "nationalities": ["France", "French"],
+        "birth_date": "1987-12-19",
+        "clubs": ["Lyon", "Olympique Lyonnais", "Real Madrid", "Al Ittihad", "Al-Ittihad", "France"],
+    },
+    "Ronaldinho": {
+        "nationalities": ["Brazil", "Brasil", "Brésil", "Brazilian"],
+        "birth_date": "1980-03-21",
+        "clubs": ["Gremio", "Grêmio", "Paris Saint Germain", "Paris Saint-Germain", "PSG", "Barcelona", "FC Barcelona", "AC Milan", "Flamengo", "Atletico Mineiro", "Brazil"],
+    },
+    "Zinedine Zidane": {
+        "nationalities": ["France", "French"],
+        "birth_date": "1972-06-23",
+        "clubs": ["Cannes", "Bordeaux", "Juventus", "Real Madrid", "France"],
+    },
+    "Thierry Henry": {
+        "nationalities": ["France", "French"],
+        "birth_date": "1977-08-17",
+        "clubs": ["Monaco", "Juventus", "Arsenal", "Barcelona", "FC Barcelona", "New York Red Bulls", "France"],
     },
 }
 
@@ -3120,7 +3158,7 @@ def _coach_player_stats_rows(player_name: str, seasons: list[str]) -> list[dict[
     rows = _supabase_service_request(
         "GET",
         "coach_player_season_stats?"
-        "select=player_name,player_api_id,team_name,league_name,season,appearances,lineups,minutes,goals,assists,yellow_cards,red_cards,rating,raw_data,updated_at"
+        "select=api_id,player_name,player_api_id,team_name,league_name,season,appearances,lineups,minutes,goals,assists,yellow_cards,red_cards,rating,raw_data,updated_at"
         f"&player_name=ilike.{quote(f'*{player_name}*', safe='')}&season=in.({season_filter})&order=season.asc",
     )
     if not isinstance(rows, list):
@@ -3140,6 +3178,26 @@ def _coach_stat_int(value: Any) -> int:
         return 0
 
 
+def _coach_optional_stat_int(value: Any) -> int | None:
+    if value in (None, ""):
+        return None
+    return _coach_stat_int(value)
+
+
+def _coach_unique_stat_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    unique: list[dict[str, Any]] = []
+    for row in rows:
+        key = str(row.get("api_id") or "").strip()
+        if not key:
+            key = "|".join(str(row.get(field) or "") for field in ("player_api_id", "team_name", "league_name", "season"))
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(row)
+    return unique
+
+
 def _coach_player_api_search_terms(player_name: str) -> list[str]:
     normalized = _normalize_football_text(player_name)
     aliases = {
@@ -3148,6 +3206,10 @@ def _coach_player_api_search_terms(player_name: str) -> list[str]:
         "kylian mbappe": ["kylian mbappe", "mbappe"],
         "erling haaland": ["erling haaland", "haaland"],
         "neymar": ["neymar"],
+        "karim benzema": ["karim benzema", "benzema"],
+        "ronaldinho": ["ronaldinho"],
+        "zinedine zidane": ["zinedine zidane", "zidane"],
+        "thierry henry": ["thierry henry", "henry"],
     }
     terms = aliases.get(normalized, [])
     if not terms:
@@ -3185,7 +3247,7 @@ def _coach_player_reference(player_name: str, payload: dict[str, Any] | None = N
 
 
 def _coach_known_player_requires_strict_identity(player_name: str) -> bool:
-    return player_name in {"Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé"}
+    return player_name in COACH_PLAYER_MATCH_HINTS
 
 
 def _coach_api_player_birth(player: dict[str, Any]) -> str:
@@ -3429,7 +3491,7 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                     "lineups": _coach_stat_int(games.get("lineups")),
                     "minutes": _coach_stat_int(games.get("minutes")),
                     "goals": _coach_stat_int(goals.get("total")),
-                    "assists": _coach_stat_int(goals.get("assists")),
+                    "assists": _coach_optional_stat_int(goals.get("assists")),
                     "yellow_cards": _coach_stat_int(cards.get("yellow")),
                     "red_cards": _coach_stat_int(cards.get("red")),
                     "rating": None,
@@ -3498,18 +3560,25 @@ def _coach_player_stats_context(question: str) -> str:
                 base.append("équipes liées " + ", ".join(row.get("teams")[:3]))
             lines.append(" · ".join(base))
             continue
+        unique_rows = _coach_unique_stat_rows(rows)
+        if len(unique_rows) != len(rows):
+            print(f"[coach-enrich] aggregate_dedup player={name} before={len(rows)} after={len(unique_rows)}", flush=True)
+        rows = unique_rows
+        assists_known_rows = [row for row in rows if row.get("assists") not in (None, "")]
         totals = {
             "matches": sum(_coach_stat_int(row.get("appearances")) for row in rows),
             "minutes": sum(_coach_stat_int(row.get("minutes")) for row in rows),
             "goals": sum(_coach_stat_int(row.get("goals")) for row in rows),
-            "assists": sum(_coach_stat_int(row.get("assists")) for row in rows),
+            "assists": sum(_coach_stat_int(row.get("assists")) for row in assists_known_rows),
         }
         competitions = sorted({str(row.get("league_name") or "") for row in rows if row.get("league_name")})[:5]
         teams = sorted({str(row.get("team_name") or "") for row in rows if row.get("team_name")})[:5]
         age_label = f" autour de ses {age} ans" if age else ""
         lines.append(
             f"- {name}{age_label}: {totals['matches']} matchs, {totals['minutes']} minutes, "
-            f"{totals['goals']} buts, {totals['assists']} passes décisives. "
+            f"{totals['goals']} buts, "
+            f"{totals['assists']} passes décisives"
+            f"{'' if len(assists_known_rows) == len(rows) else ' (passes parfois non fournies par API-Football)'}. "
             f"Saisons: {', '.join(sorted({str(row.get('season')) for row in rows if row.get('season')}))}. "
             f"Clubs: {', '.join(teams) or 'non précisés'}. Compétitions: {', '.join(competitions) or 'non précisées'}."
         )
