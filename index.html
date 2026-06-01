@@ -402,20 +402,22 @@
     .upcoming-match-vs { width: fit-content; border-radius: 999px; padding: 3px 8px; background: rgba(255,255,255,0.08); color: #9fb0c2; font-size: 11px; font-weight: 950; text-transform: uppercase; }
     .match-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
     .match-summary-grid .empty { grid-column: 1 / -1; }
-    .match-summary-card { position: relative; display: grid; gap: 10px; min-height: 180px; padding: 15px; border-radius: 16px; border: 1px solid rgba(245,201,107,0.24); background: linear-gradient(145deg, rgba(7,17,31,0.95), rgba(25,43,62,0.88)); box-shadow: 0 18px 44px rgba(0,0,0,0.20); color: inherit; text-decoration: none; overflow: hidden; }
+    .match-summary-card { position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; min-height: 204px; padding: 16px; border-radius: 16px; border: 1px solid rgba(245,201,107,0.24); background: linear-gradient(145deg, rgba(7,17,31,0.95), rgba(25,43,62,0.88)); box-shadow: 0 18px 44px rgba(0,0,0,0.20); color: inherit; text-decoration: none; overflow: hidden; }
     .match-summary-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(245,201,107,0.15), transparent 36%), radial-gradient(circle at left bottom, rgba(99,232,255,0.10), transparent 34%); pointer-events: none; }
     .match-summary-card > * { position: relative; z-index: 1; }
-    .match-summary-top, .match-summary-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
-    .match-summary-competition { color: #ffe1a0; font-size: 11px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }
-    .match-summary-date { color: #b9c9dc; font-size: 12px; font-weight: 850; }
+    .match-summary-head, .match-summary-line, .match-summary-bottom { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; min-width: 0; }
+    .match-summary-line { align-items: center; }
+    .match-summary-bottom { align-items: flex-end; margin-top: 2px; }
+    .match-summary-competition { flex: 0 0 auto; border-radius: 999px; padding: 5px 9px; background: rgba(245,201,107,0.14); border: 1px solid rgba(245,201,107,0.30); color: #ffe1a0; font-size: 10px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+    .match-summary-date { flex: 0 0 auto; color: #94a7bc; font-size: 11px; font-weight: 850; text-align: right; white-space: nowrap; }
     .match-summary-teams { color: #fff; font-size: 16px; font-weight: 700; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .match-summary-team-line { min-width: 0; display: inline-flex; align-items: center; gap: 7px; overflow: hidden; vertical-align: middle; }
     .match-summary-team-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
     .match-summary-logo { width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
     .match-summary-vs { color: #9fb0c2; font-size: 12px; font-weight: 950; text-transform: uppercase; }
     .match-summary-score { border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }
-    .match-summary-title { margin: 0; color: #fff; font-size: 16px; line-height: 1.18; font-weight: 950; }
-    .match-summary-text { margin: 0; color: #c9d7e7; font-size: 13px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .match-summary-title { min-width: 0; margin: 0; color: #fff; font-size: clamp(20px, 2vw, 27px); line-height: 1.04; font-weight: 950; letter-spacing: 0; }
+    .match-summary-text { min-width: 0; margin: 0; color: #c9d7e7; font-size: 13px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .match-summary-link { align-self: end; color: var(--gold); font-size: 13px; font-weight: 950; }
     .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .article-tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 8px; background: rgba(245,201,107,0.12); border: 1px solid rgba(245,201,107,0.22); color: #ffe1a0; font-size: 11px; font-weight: 900; }
@@ -3197,16 +3199,18 @@
           ? `${matchArticleTeamLine(article.home_team, article.home_logo_url)} <span class="match-summary-vs">vs</span> ${matchArticleTeamLine(article.away_team, article.away_logo_url)}`
           : escapeHtml(article.teams || 'Match');
         return `<a class="match-summary-card" href="${escapeHtml(href)}">
-          <h3 class="match-summary-title">${escapeHtml(title)}</h3>
+          <div class="match-summary-head">
+            <h3 class="match-summary-title">${escapeHtml(title)}</h3>
+            <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
+          </div>
           <div class="match-summary-line">
             <span class="match-summary-teams">${teams}</span>
             <span class="match-summary-score">${escapeHtml(article.score || '')}</span>
           </div>
-          <div class="match-summary-top">
-            <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
+          <div class="match-summary-bottom">
+            <p class="match-summary-text">${escapeHtml(article.summary || '')}${article.winner ? ` Vainqueur : ${escapeHtml(article.winner)}.` : ''}</p>
             <span class="match-summary-date">${escapeHtml(matchArticleDate(article.date || article.published_at))}</span>
           </div>
-          <p class="match-summary-text">${escapeHtml(article.summary || '')}${article.winner ? ` Vainqueur : ${escapeHtml(article.winner)}.` : ''}</p>
           <span class="match-summary-link">Lire le résumé</span>
         </a>`;
       }).join('');
@@ -3793,7 +3797,7 @@
     };
     ALL_TIME_LISTS['goat-copa-goals'] = {
       players: [
-        {rank: 1, name: 'Norberto Méndez', country: 'Argentine', value: 17, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 1, name: 'Norberto Méndez', country: 'Argentine', value: 17, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: '/avatars/hall-of-fame/norberto-mendez.png'},
         {rank: 1, name: 'Zizinho', country: 'Brésil', value: 17, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
         {rank: 3, name: 'Lolo Fernández', country: 'Pérou', value: 15, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/per.png'},
         {rank: 3, name: 'Severino Varela', country: 'Uruguay', value: 15, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
@@ -3875,7 +3879,7 @@
     };
     ALL_TIME_LISTS['goat-most-appearances'] = {
       players: [
-        {rank: 1, name: 'Fábio', country: 'Brésil', value: 1427, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png', photo_url: 'https://upload.wikimedia.org/wikipedia/commons/0/04/F%C3%A1bio_Deivson_Lopes_Maciel_of_Cruzeiro_EC_%28cropped%29.jpg'},
+        {rank: 1, name: 'Fábio', country: 'Brésil', value: 1427, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png', photo_url: '/avatars/hall-of-fame/fabio.png'},
         {rank: 2, name: 'Peter Shilton', country: 'Angleterre', value: 1390, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
         {rank: 3, name: 'Cristiano Ronaldo', country: 'Portugal', value: 1270, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
         {rank: 4, name: 'Rogério Ceni', country: 'Brésil', value: 1237, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
@@ -3954,19 +3958,29 @@
     };
     ALL_TIME_LISTS['club-total-trophies'] = {
       players: [
-        {rank: 1, name: 'Rangers', country: 'Écosse', value: 118, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/257.png'},
-        {rank: 2, name: 'Celtic', country: 'Écosse', value: 117, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/256.png'},
-        {rank: 3, name: 'Barcelona', country: 'Espagne', value: 100, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'},
-        {rank: 4, name: 'Real Madrid', country: 'Espagne', value: 99, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
-        {rank: 5, name: 'Benfica', country: 'Portugal', value: 86, years: 'Dernier titre : 2025', flag_url: ''},
-        {rank: 6, name: 'Porto', country: 'Portugal', value: 84, years: 'Dernier titre : 2024', flag_url: ''},
-        {rank: 7, name: 'Bayern Munich', country: 'Allemagne', value: 84, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'},
-        {rank: 8, name: 'Ajax', country: 'Pays-Bas', value: 76, years: 'Dernier titre : 2022', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/139.png'},
-        {rank: 9, name: 'Juventus', country: 'Italie', value: 70, years: 'Dernier titre : 2021', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png'},
-        {rank: 10, name: 'Manchester United', country: 'Angleterre', value: 68, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/360.png'}
+        {rank: 1, name: 'Barcelona', country: 'Espagne', value: 100, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'},
+        {rank: 2, name: 'Real Madrid', country: 'Espagne', value: 99, years: 'Dernier titre : 2026', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
+        {rank: 3, name: 'Bayern Munich', country: 'Allemagne', value: 84, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'},
+        {rank: 4, name: 'Juventus', country: 'Italie', value: 70, years: 'Dernier titre : 2021', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png'},
+        {rank: 5, name: 'Manchester United', country: 'Angleterre', value: 68, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/360.png'},
+        {rank: 6, name: 'Liverpool', country: 'Angleterre', value: 68, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png'},
+        {rank: 7, name: 'Paris Saint-Germain', country: 'France', value: 54, years: 'Dernier titre : 2026', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png'},
+        {rank: 8, name: 'AC Milan', country: 'Italie', value: 49, years: 'Dernier titre : 2022', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png'},
+        {rank: 9, name: 'Arsenal', country: 'Angleterre', value: 48, years: 'Dernier titre : 2023', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png'},
+        {rank: 10, name: 'Inter', country: 'Italie', value: 46, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png'},
+        {rank: 11, name: 'Chelsea', country: 'Angleterre', value: 35, years: 'Dernier titre : 2022', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/363.png'},
+        {rank: 12, name: 'Atlético Madrid', country: 'Espagne', value: 34, years: 'Dernier titre : 2021', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png'},
+        {rank: 13, name: 'Manchester City', country: 'Angleterre', value: 33, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png'},
+        {rank: 14, name: 'Marseille', country: 'France', value: 27, years: 'Dernier titre : 2012', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/176.png'},
+        {rank: 15, name: 'Borussia Dortmund', country: 'Allemagne', value: 22, years: 'Dernier titre : 2021', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/124.png'},
+        {rank: 16, name: 'Tottenham Hotspur', country: 'Angleterre', value: 17, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/367.png'},
+        {rank: 17, name: 'Napoli', country: 'Italie', value: 14, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/114.png'},
+        {rank: 17, name: 'Valencia', country: 'Espagne', value: 14, years: 'Dernier titre : 2019', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/94.png'},
+        {rank: 17, name: 'Roma', country: 'Italie', value: 14, years: 'Dernier titre : 2022', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/104.png'},
+        {rank: 20, name: 'Monaco', country: 'France', value: 8, years: 'Dernier titre : 2017', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/174.png'}
       ],
-      title: 'Clubs européens avec le plus de titres toutes compétitions',
-      empty: 'Classement clubs européens indisponible',
+      title: 'Clubs Big 5 avec le plus de titres toutes compétitions',
+      empty: 'Classement clubs Big 5 indisponible',
       label: 'titres'
     };
     ALL_TIME_LISTS['club-international-trophies'] = {
@@ -3986,16 +4000,26 @@
     };
     ALL_TIME_LISTS['club-domestic-leagues'] = {
       players: [
-        {rank: 1, name: 'Linfield', country: 'Irlande du Nord', value: 56, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/2555.png'},
-        {rank: 2, name: 'Celtic', country: 'Écosse', value: 55, years: 'Dernier titre : 2025', flag_url: ''},
-        {rank: 2, name: 'Rangers', country: 'Écosse', value: 55, years: 'Dernier titre : 2021', flag_url: ''},
-        {rank: 4, name: 'Olympiacos', country: 'Grèce', value: 47, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/435.png'},
-        {rank: 5, name: 'Benfica', country: 'Portugal', value: 38, years: 'Dernier titre : 2023', flag_url: ''},
-        {rank: 6, name: 'Real Madrid', country: 'Espagne', value: 36, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
-        {rank: 7, name: 'Ajax', country: 'Pays-Bas', value: 36, years: 'Dernier titre : 2022', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/139.png'},
-        {rank: 8, name: 'Juventus', country: 'Italie', value: 36, years: 'Dernier titre : 2020', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png'},
-        {rank: 9, name: 'Bayern Munich', country: 'Allemagne', value: 33, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'},
-        {rank: 10, name: 'Paris Saint-Germain', country: 'France', value: 13, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png'}
+        {rank: 1, name: 'Real Madrid', country: 'Espagne', value: 36, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
+        {rank: 1, name: 'Juventus', country: 'Italie', value: 36, years: 'Dernier titre : 2020', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png'},
+        {rank: 3, name: 'Bayern Munich', country: 'Allemagne', value: 33, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'},
+        {rank: 4, name: 'Barcelona', country: 'Espagne', value: 28, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'},
+        {rank: 5, name: 'Manchester United', country: 'Angleterre', value: 20, years: 'Dernier titre : 2013', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/360.png'},
+        {rank: 5, name: 'Liverpool', country: 'Angleterre', value: 20, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png'},
+        {rank: 5, name: 'Inter', country: 'Italie', value: 20, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png'},
+        {rank: 8, name: 'AC Milan', country: 'Italie', value: 19, years: 'Dernier titre : 2022', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png'},
+        {rank: 9, name: 'Paris Saint-Germain', country: 'France', value: 13, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png'},
+        {rank: 9, name: 'Arsenal', country: 'Angleterre', value: 13, years: 'Dernier titre : 2004', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png'},
+        {rank: 11, name: 'Atlético Madrid', country: 'Espagne', value: 11, years: 'Dernier titre : 2021', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png'},
+        {rank: 12, name: 'Manchester City', country: 'Angleterre', value: 10, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png'},
+        {rank: 12, name: 'Saint-Étienne', country: 'France', value: 10, years: 'Dernier titre : 1981', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/178.png'},
+        {rank: 14, name: 'Everton', country: 'Angleterre', value: 9, years: 'Dernier titre : 1987', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/368.png'},
+        {rank: 14, name: 'Marseille', country: 'France', value: 9, years: 'Dernier titre : 2010', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/176.png'},
+        {rank: 16, name: 'Borussia Dortmund', country: 'Allemagne', value: 8, years: 'Dernier titre : 2012', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/124.png'},
+        {rank: 16, name: 'Monaco', country: 'France', value: 8, years: 'Dernier titre : 2017', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/174.png'},
+        {rank: 16, name: 'Nantes', country: 'France', value: 8, years: 'Dernier titre : 2001', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/165.png'},
+        {rank: 19, name: 'Aston Villa', country: 'Angleterre', value: 7, years: 'Dernier titre : 1981', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/362.png'},
+        {rank: 19, name: 'Lyon', country: 'France', value: 7, years: 'Dernier titre : 2008', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/167.png'}
       ],
       title: 'Clubs avec le plus de championnats nationaux',
       empty: 'Classement championnats nationaux indisponible',
@@ -8508,15 +8532,15 @@ grant select, insert, update on public.profiles to authenticated;`;
         {title: 'Clubs avec le plus de Champions League', note: 'Rois de la C1', target: 'champions-history', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
         {title: 'Clubs avec le plus de titres toutes compétitions confondues', note: 'Palmarès clubs européens', target: 'club-total-trophies', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'},
         {title: 'Clubs avec le plus de trophées internationaux', note: 'Palmarès continental et mondial', target: 'club-international-trophies', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
-        {title: 'Clubs avec le plus de championnats nationaux', note: 'Domination domestique', target: 'club-domestic-leagues', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/2555.png'}
+        {title: 'Clubs avec le plus de championnats nationaux', note: 'Domination domestique', target: 'club-domestic-leagues', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'}
       ]
     };
     const HALL_GOAT_PHOTOS = {
       'cristiano ronaldo': 'https://images.fotmob.com/image_resources/playerimages/30893.png',
       'lionel messi': 'https://images.fotmob.com/image_resources/playerimages/30981.png',
-      'fabio': 'https://upload.wikimedia.org/wikipedia/commons/0/04/F%C3%A1bio_Deivson_Lopes_Maciel_of_Cruzeiro_EC_%28cropped%29.jpg',
+      'fabio': '/avatars/hall-of-fame/fabio.png',
       'miroslav klose': 'https://images.fotmob.com/image_resources/playerimages/30638.png',
-      'norberto mendez': 'https://upload.wikimedia.org/wikipedia/commons/0/07/Tucho_mendez.jpg',
+      'norberto mendez': '/avatars/hall-of-fame/norberto-mendez.png',
       'samuel etoo': 'https://images.fotmob.com/image_resources/playerimages/33639.png',
       'peter shilton': 'https://upload.wikimedia.org/wikipedia/commons/4/43/Peter_Shilton.png'
     };
