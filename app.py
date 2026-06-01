@@ -2465,6 +2465,13 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
         return []
     endpoint = endpoint.strip("/")
     clean_params = {key: str(value) for key, value in params.items() if value not in (None, "")}
+    safe_url = f"{API_FOOTBALL_BASE_URL}/{endpoint}"
+    api_key = os.environ.get("API_FOOTBALL_KEY", "").strip()
+    print(
+        f"[coach-api-football] request_prepare url={safe_url} params={clean_params} "
+        f"key_configured={bool(api_key)} key_len={len(api_key)}",
+        flush=True,
+    )
     cache_key = _api_football_cache_key(endpoint, clean_params)
     cached = _supabase_service_request(
         "GET",
@@ -2479,20 +2486,27 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
                 response = cached[0].get("response")
                 if isinstance(response, dict):
                     rows = response.get("response")
+                    print(
+                        f"[coach-api-football] cache_hit endpoint={endpoint} params={clean_params} "
+                        f"rows={len(rows) if isinstance(rows, list) else 0}",
+                        flush=True,
+                    )
                     return rows if isinstance(rows, list) else []
         except ValueError:
             pass
     try:
         import requests
 
+        print(f"[coach-api-football] http_start url={safe_url} params={clean_params}", flush=True)
         response = requests.get(
-            f"{API_FOOTBALL_BASE_URL}/{endpoint}",
+            safe_url,
             params=clean_params,
             headers={"x-apisports-key": os.environ.get("API_FOOTBALL_KEY", "").strip()},
             timeout=COACH_API_FOOTBALL_TIMEOUT,
         )
+        print(f"[coach-api-football] http_done status={response.status_code} url={safe_url} params={clean_params}", flush=True)
         if response.status_code >= 400:
-            print(f"[coach-api-football] status={response.status_code} endpoint={endpoint}", flush=True)
+            print(f"[coach-api-football] http_error status={response.status_code} endpoint={endpoint} body={response.text[:220]}", flush=True)
             return []
         payload = response.json()
         if isinstance(payload, dict) and payload.get("errors"):
@@ -3104,14 +3118,29 @@ def _coach_api_player_matches(api_name: str, requested_name: str) -> bool:
 
 
 def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[str, Any]]:
+    print(
+        f"[coach-enrich] player_start player={player_name} seasons={seasons} "
+        f"api_enabled={_api_football_enabled()} supabase_service={_supabase_service_enabled()}",
+        flush=True,
+    )
     if not _api_football_enabled() or not seasons:
+        print(f"[coach-enrich] player_skip player={player_name} reason=api_disabled_or_no_seasons", flush=True)
         return []
     collected: list[dict[str, Any]] = []
+    search_terms = _coach_player_api_search_terms(player_name)
+    print(f"[coach-enrich] search_terms player={player_name} terms={search_terms}", flush=True)
     for season in seasons[:4]:
         rows: list[dict[str, Any]] = []
         seen_api_players: set[str] = set()
-        for search_term in _coach_player_api_search_terms(player_name):
-            for item in _api_football_get("players", {"search": search_term, "season": season}):
+        print(f"[coach-enrich] season_start player={player_name} season={season}", flush=True)
+        for search_term in search_terms:
+            api_rows = _api_football_get("players", {"search": search_term, "season": season})
+            print(
+                f"[coach-enrich] api_rows player={player_name} season={season} "
+                f"search={search_term} count={len(api_rows)}",
+                flush=True,
+            )
+            for item in api_rows:
                 player = item.get("player") if isinstance(item, dict) else {}
                 api_id = str(player.get("id") or "") if isinstance(player, dict) else ""
                 dedupe_key = api_id or json.dumps(player, sort_keys=True, ensure_ascii=False)
@@ -3119,12 +3148,20 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                     continue
                 seen_api_players.add(dedupe_key)
                 rows.append(item)
+        print(f"[coach-enrich] candidates player={player_name} season={season} count={len(rows)}", flush=True)
+        season_mapped = 0
         for item in rows[:8]:
             player = item.get("player") if isinstance(item, dict) else {}
             if not isinstance(player, dict):
                 continue
             api_name = str(player.get("name") or "").strip()
-            if not api_name or not _coach_api_player_matches(api_name, player_name):
+            matches_player = bool(api_name and _coach_api_player_matches(api_name, player_name))
+            print(
+                f"[coach-enrich] candidate_match player={player_name} season={season} "
+                f"api_name={api_name or '-'} api_id={player.get('id') or '-'} matched={matches_player}",
+                flush=True,
+            )
+            if not matches_player:
                 continue
             for stat in item.get("statistics") or []:
                 if not isinstance(stat, dict):
@@ -3159,7 +3196,10 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                 except (TypeError, ValueError):
                     row["rating"] = None
                 collected.append(row)
+                season_mapped += 1
+        print(f"[coach-enrich] season_mapped player={player_name} season={season} rows={season_mapped}", flush=True)
     if collected and _supabase_service_enabled():
+        print(f"[coach-enrich] upsert_start player={player_name} rows={len(collected[:80])}", flush=True)
         saved = _supabase_service_request(
             "POST",
             "coach_player_season_stats?on_conflict=api_id",
@@ -3170,6 +3210,10 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
             print(f"[coach-api-football] upsert coach_player_season_stats failed player={player_name} rows={len(collected[:80])}", flush=True)
         else:
             print(f"[coach-api-football] upsert coach_player_season_stats ok player={player_name} rows={len(collected[:80])}", flush=True)
+    elif collected:
+        print(f"[coach-enrich] upsert_skip player={player_name} reason=supabase_service_disabled rows={len(collected)}", flush=True)
+    else:
+        print(f"[coach-enrich] no_rows_mapped player={player_name}", flush=True)
     return collected
 
 
@@ -3179,14 +3223,19 @@ def _coach_player_stats_context(question: str) -> str:
         return ""
     payload = _football_supabase_payload()
     age = _coach_detect_age(question)
+    print(f"[coach-enrich] context_start question={question[:160]!r} players={player_names} age={age}", flush=True)
     lines = []
     for name in player_names:
         seasons = _coach_seasons_for_age(name, age, payload) if age else []
+        print(f"[coach-enrich] player_context player={name} seasons={seasons}", flush=True)
         if not seasons:
             seasons = [str(datetime.now(timezone.utc).year - 1), str(datetime.now(timezone.utc).year)]
+            print(f"[coach-enrich] player_context fallback_seasons player={name} seasons={seasons}", flush=True)
         rows = _coach_player_stats_rows(name, seasons)
+        print(f"[coach-enrich] supabase_rows player={name} seasons={seasons} count={len(rows)}", flush=True)
         if not rows:
             rows = _coach_api_player_stats(name, seasons)
+            print(f"[coach-enrich] enriched_rows player={name} seasons={seasons} count={len(rows)}", flush=True)
         if not rows:
             row = _coach_find_player_row(name, payload) or {}
             base = [f"- {name}: statistiques détaillées absentes dans Supabase"]
