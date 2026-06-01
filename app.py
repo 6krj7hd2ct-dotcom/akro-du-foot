@@ -3023,6 +3023,24 @@ COACH_PLAYER_BIRTH_DATES = {
     "Michel Platini": "1955-06-21",
 }
 
+COACH_PLAYER_MATCH_HINTS = {
+    "Lionel Messi": {
+        "nationalities": ["Argentina", "Argentine"],
+        "birth_date": "1987-06-24",
+        "clubs": ["Barcelona", "FC Barcelona", "Paris Saint Germain", "Paris Saint-Germain", "PSG", "Inter Miami", "Argentina"],
+    },
+    "Cristiano Ronaldo": {
+        "nationalities": ["Portugal", "Portuguese"],
+        "birth_date": "1985-02-05",
+        "clubs": ["Sporting CP", "Manchester United", "Real Madrid", "Juventus", "Al Nassr", "Al-Nassr", "Portugal"],
+    },
+    "Kylian Mbappé": {
+        "nationalities": ["France", "French"],
+        "birth_date": "1998-12-20",
+        "clubs": ["Monaco", "Paris Saint Germain", "Paris Saint-Germain", "PSG", "Real Madrid", "France"],
+    },
+}
+
 
 def _coach_detect_player_names(question: str) -> list[str]:
     normalized = _normalize_football_text(question)
@@ -3079,6 +3097,22 @@ def _coach_find_player_row(player_name: str, payload: dict[str, Any]) -> dict[st
     return candidates[0] if candidates else None
 
 
+def _coach_stat_row_matches_player(row: dict[str, Any], player_name: str, payload: dict[str, Any] | None = None) -> bool:
+    reference = _coach_player_reference(player_name, payload)
+    raw_data = row.get("raw_data") if isinstance(row.get("raw_data"), dict) else {}
+    confidence = _coach_stat_int(raw_data.get("matching_confidence"))
+    threshold = _coach_player_confidence_threshold(player_name)
+    if confidence >= threshold:
+        return True
+
+    expected_clubs = _coach_normalized_values(list(reference.get("clubs") or []))
+    team_name = _normalize_football_text(str(row.get("team_name") or ""))
+    if expected_clubs and team_name:
+        return any(club and (club in team_name or team_name in club) for club in expected_clubs)
+
+    return player_name not in COACH_PLAYER_MATCH_HINTS
+
+
 def _coach_player_stats_rows(player_name: str, seasons: list[str]) -> list[dict[str, Any]]:
     if not _supabase_service_enabled() or not seasons:
         return []
@@ -3086,10 +3120,17 @@ def _coach_player_stats_rows(player_name: str, seasons: list[str]) -> list[dict[
     rows = _supabase_service_request(
         "GET",
         "coach_player_season_stats?"
-        "select=player_name,player_api_id,team_name,league_name,season,appearances,lineups,minutes,goals,assists,yellow_cards,red_cards,rating,updated_at"
+        "select=player_name,player_api_id,team_name,league_name,season,appearances,lineups,minutes,goals,assists,yellow_cards,red_cards,rating,raw_data,updated_at"
         f"&player_name=ilike.{quote(f'*{player_name}*', safe='')}&season=in.({season_filter})&order=season.asc",
     )
-    return rows if isinstance(rows, list) else []
+    if not isinstance(rows, list):
+        return []
+    payload = _football_supabase_payload()
+    filtered = [row for row in rows if _coach_stat_row_matches_player(row, player_name, payload)]
+    rejected = len(rows) - len(filtered)
+    if rejected:
+        print(f"[coach-enrich] supabase_rows_rejected player={player_name} rejected={rejected} kept={len(filtered)}", flush=True)
+    return filtered
 
 
 def _coach_stat_int(value: Any) -> int:
@@ -3122,6 +3163,88 @@ def _coach_player_api_search_terms(player_name: str) -> list[str]:
     return out
 
 
+def _coach_normalized_values(values: list[str]) -> set[str]:
+    return {_normalize_football_text(value) for value in values if value}
+
+
+def _coach_player_reference(player_name: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
+    reference = dict(COACH_PLAYER_MATCH_HINTS.get(player_name, {}))
+    if payload:
+        row = _coach_find_player_row(player_name, payload) or {}
+        if row.get("birth_date") and not reference.get("birth_date"):
+            reference["birth_date"] = str(row.get("birth_date") or "")[:10]
+        if row.get("nationality"):
+            nationalities = list(reference.get("nationalities") or [])
+            nationalities.append(str(row.get("nationality") or ""))
+            reference["nationalities"] = nationalities
+        if row.get("teams"):
+            clubs = list(reference.get("clubs") or [])
+            clubs.extend(str(team) for team in row.get("teams") or [])
+            reference["clubs"] = clubs
+    return reference
+
+
+def _coach_api_profile_name(player: dict[str, Any]) -> str:
+    direct = str(player.get("name") or "").strip()
+    full = " ".join(str(player.get(key) or "").strip() for key in ("firstname", "lastname")).strip()
+    if direct and full:
+        return f"{direct} {full}"
+    return direct or full
+
+
+def _coach_player_confidence(player: dict[str, Any], requested_name: str, payload: dict[str, Any] | None = None) -> tuple[int, list[str]]:
+    score = 0
+    reasons: list[str] = []
+    reference = _coach_player_reference(requested_name, payload)
+    api_name = _coach_api_profile_name(player)
+    api_norm = _normalize_football_text(api_name)
+    requested_norm = _normalize_football_text(requested_name)
+    alias_terms = _coach_player_api_search_terms(requested_name)
+
+    if api_norm == requested_norm or requested_norm in api_norm:
+        score += 45
+        reasons.append("nom exact")
+    elif _coach_api_player_matches(api_name, requested_name):
+        score += 25
+        reasons.append("nom compatible")
+    if any(term and term in api_norm for term in alias_terms):
+        score += 10
+        reasons.append("alias reconnu")
+
+    expected_birth = str(reference.get("birth_date") or COACH_PLAYER_BIRTH_DATES.get(requested_name) or "")[:10]
+    api_birth = str((player.get("birth") or {}).get("date") or player.get("birth_date") or "")[:10]
+    if expected_birth and api_birth:
+        if api_birth == expected_birth:
+            score += 45
+            reasons.append(f"naissance exacte {api_birth}")
+        elif api_birth[:4] == expected_birth[:4]:
+            score += 20
+            reasons.append(f"année naissance compatible {api_birth[:4]}")
+        else:
+            score -= 45
+            reasons.append(f"naissance incompatible {api_birth}")
+
+    expected_nationalities = _coach_normalized_values(list(reference.get("nationalities") or []))
+    api_nationality = _normalize_football_text(str(player.get("nationality") or ""))
+    if expected_nationalities and api_nationality:
+        if api_nationality in expected_nationalities:
+            score += 25
+            reasons.append(f"nationalité {player.get('nationality')}")
+        else:
+            score -= 30
+            reasons.append(f"nationalité incompatible {player.get('nationality')}")
+
+    if player.get("photo"):
+        score += 5
+        reasons.append("photo")
+
+    return score, reasons
+
+
+def _coach_player_confidence_threshold(player_name: str) -> int:
+    return 70 if player_name in COACH_PLAYER_MATCH_HINTS else 45
+
+
 def _coach_api_player_matches(api_name: str, requested_name: str) -> bool:
     requested_terms = _coach_query_terms(_normalize_football_text(requested_name))
     if _coach_match_score(_normalize_football_text(api_name), requested_terms) > 0:
@@ -3133,6 +3256,8 @@ def _coach_api_player_matches(api_name: str, requested_name: str) -> bool:
 def _coach_api_player_profiles(player_name: str) -> list[dict[str, Any]]:
     profiles: list[dict[str, Any]] = []
     seen_api_players: set[str] = set()
+    payload = _football_supabase_payload()
+    threshold = _coach_player_confidence_threshold(player_name)
     for search_term in _coach_player_api_search_terms(player_name):
         api_rows = _api_football_get("players/profiles", {"search": search_term})
         print(
@@ -3150,16 +3275,29 @@ def _coach_api_player_profiles(player_name: str) -> list[dict[str, Any]]:
             if not api_id:
                 continue
             matched = bool(api_name and _coach_api_player_matches(api_name, player_name))
+            confidence, reasons = _coach_player_confidence(player, player_name, payload)
             print(
                 f"[coach-enrich] profile_candidate player={player_name} api_name={api_name or '-'} "
-                f"api_id={api_id} matched={matched}",
+                f"api_id={api_id} matched={matched} confidence={confidence} threshold={threshold} "
+                f"reasons={'; '.join(reasons) or '-'}",
                 flush=True,
             )
-            if not matched or api_id in seen_api_players:
+            if not matched or confidence < threshold or api_id in seen_api_players:
                 continue
             seen_api_players.add(api_id)
+            player["_coach_match_confidence"] = confidence
+            player["_coach_match_reasons"] = reasons
             profiles.append(player)
-    print(f"[coach-enrich] profiles_matched player={player_name} count={len(profiles)}", flush=True)
+    profiles.sort(key=lambda player: int(player.get("_coach_match_confidence") or 0), reverse=True)
+    if profiles:
+        best = profiles[0]
+        print(
+            f"[coach-enrich] profile_selected player={player_name} api_name={_coach_api_profile_name(best)} "
+            f"api_id={best.get('id')} confidence={best.get('_coach_match_confidence')} "
+            f"reasons={'; '.join(best.get('_coach_match_reasons') or [])}",
+            flush=True,
+        )
+    print(f"[coach-enrich] profiles_matched player={player_name} count={len(profiles)} threshold={threshold}", flush=True)
     return profiles
 
 
@@ -3196,6 +3334,9 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
             for item in api_rows:
                 player = item.get("player") if isinstance(item, dict) else {}
                 api_id = str(player.get("id") or "") if isinstance(player, dict) else ""
+                if isinstance(player, dict):
+                    player["_coach_match_confidence"] = profile.get("_coach_match_confidence")
+                    player["_coach_match_reasons"] = profile.get("_coach_match_reasons") or []
                 dedupe_key = api_id or json.dumps(player, sort_keys=True, ensure_ascii=False)
                 if dedupe_key in seen_api_players:
                     continue
@@ -3241,7 +3382,13 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                     "yellow_cards": _coach_stat_int(cards.get("yellow")),
                     "red_cards": _coach_stat_int(cards.get("red")),
                     "rating": None,
-                    "raw_data": {"player": player, "statistics": stat, "api_player_name": api_name},
+                    "raw_data": {
+                        "player": player,
+                        "statistics": stat,
+                        "api_player_name": api_name,
+                        "matching_confidence": player.get("_coach_match_confidence"),
+                        "matching_reasons": player.get("_coach_match_reasons") or [],
+                    },
                     "source": "api-football",
                 }
                 try:
