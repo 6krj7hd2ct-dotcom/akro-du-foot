@@ -519,8 +519,18 @@
     .hall-scorer-name { color: #fff; font-size: 16px; line-height: 1.1; font-weight: 950; margin-top: 7px; }
     .hall-scorer-country { color: #a9bed3; font-size: 12px; font-weight: 850; margin-top: 4px; }
     .hall-scorer-goals { color: #ffe1a0; font-size: 23px; line-height: 1; font-weight: 950; margin-top: 8px; }
+    .hall-feature-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+    .hall-feature-card { appearance: none; position: relative; overflow: hidden; min-height: 156px; display: grid; align-content: end; gap: 9px; width: 100%; padding: 15px; text-align: left; border: 1px solid rgba(245,201,107,0.22); border-radius: 17px; background: linear-gradient(145deg, rgba(7,17,31,0.95), rgba(23,47,75,0.74)); color: #fff; cursor: pointer; box-shadow: 0 18px 44px rgba(0,0,0,0.20); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+    .hall-feature-card::before { content: ""; position: absolute; right: 12px; top: 12px; width: 82px; height: 82px; border-radius: 18px; background: var(--feature-image, none) center / contain no-repeat, rgba(255,255,255,0.08); opacity: 1; filter: drop-shadow(0 16px 28px rgba(0,0,0,0.30)); }
+    .hall-feature-card::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(245,201,107,0.16), transparent 36%), radial-gradient(circle at left bottom, rgba(99,232,255,0.11), transparent 36%); pointer-events: none; }
+    .hall-feature-card:hover, .hall-feature-card:focus-visible { transform: translateY(-2px); border-color: rgba(245,201,107,0.50); background: linear-gradient(145deg, rgba(9,24,45,0.98), rgba(31,63,98,0.82)); outline: none; }
+    .hall-feature-card > * { position: relative; z-index: 1; }
+    .hall-feature-kicker { width: fit-content; padding: 5px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 11px; font-weight: 950; text-transform: uppercase; }
+    .hall-feature-title { max-width: calc(100% - 54px); color: #fff; font-size: 18px; line-height: 1.08; font-weight: 950; }
+    .hall-feature-note { color: #bcd0e5; font-size: 12px; line-height: 1.35; font-weight: 850; }
     @media (max-width: 980px) { .hall-scorer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 760px) { .hall-top3-grid, .hall-scorer-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } .hall-league-actions { justify-content: flex-start; } .hall-team-card { padding-right: 102px; } }
+    @media (max-width: 980px) { .hall-feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 760px) { .hall-top3-grid, .hall-scorer-grid, .hall-feature-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } .hall-league-actions { justify-content: flex-start; } .hall-team-card { padding-right: 102px; } }
     @media (max-width: 860px) {
       .player-card { min-height: 108px; padding: 12px 78px 12px 12px; }
       .player-card .avatar-wrap, .player-card .avatar { width: 70px; height: 92px; }
@@ -1686,6 +1696,7 @@
       <button class="tab-button" type="button" data-tab-target="worldcup">Coupe du Monde</button>
       <button class="tab-button" type="button" data-tab-target="euro">Euro</button>
       <button class="tab-button" type="button" data-tab-target="champions">Champions League</button>
+      <button class="tab-button" type="button" data-tab-target="championships">Les Championnats</button>
       <button class="tab-button" type="button" data-tab-target="hall">Hall of fame</button>
     </nav>
 
@@ -1790,6 +1801,27 @@
       <section class="news news-board" id="globalNewsBoard"><div class="empty">Aucune actualité disponible pour le moment.</div></section>
     </section>
 
+    <section class="tab-panel" id="tab-championships" data-tab-panel="championships">
+      <section class="hero hall-hero">
+        <div class="hero-content">
+          <div class="kicker"><span class="ball"></span> Les Championnats</div>
+          <h1>Les Championnats</h1>
+          <p class="hero-copy">Les meilleurs buteurs et les classements des cinq grands championnats européens, dans un espace plus lisible.</p>
+          <div class="hero-badges">
+            <div class="hero-row">
+              <span class="pill">Top buteurs</span>
+              <span class="pill">Classements</span>
+              <span class="pill">Big 5</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs des 5 grands championnats</h2></div><div class="section-note">Le meilleur buteur publié pour chaque championnat.</div></div>
+      <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
+      <div class="section-head"><div class="section-title"><h2>Classement Championnats</h2></div><div class="section-note">Les 3 premiers actuels de chaque grand championnat.</div></div>
+      <section class="hall-standings-board" id="hallLeagueStandings" aria-label="Classement Championnats"></section>
+    </section>
+
     <section class="tab-panel" id="tab-hall" data-tab-panel="hall">
       <section class="hero hall-hero">
         <div class="hero-content">
@@ -1799,8 +1831,9 @@
           <div class="hero-badges">
             <div class="hero-row">
               <span class="pill">Récompenses</span>
-              <span class="pill">Buteurs historiques</span>
-              <span class="pill">Classements championnats</span>
+              <span class="pill">Hall of GOAT</span>
+              <span class="pill">Best Nation</span>
+              <span class="pill">Best Club</span>
             </div>
           </div>
         </div>
@@ -1824,14 +1857,12 @@
           <div class="award-copy"><strong>Trophée Gerd Müller</strong><p>Meilleur buteur de l'année.</p><div class="winner">Viktor Gyökeres</div><p>Mise à jour annuelle</p></div>
         </article>
       </section>
-      <div class="section-head"><div class="section-title"><h2>Meilleur buteur all-time</h2><button class="alltime-badge" type="button" data-alltime="global-goals">Classement global</button></div><div class="section-note">Toutes compétitions confondues · Top 5</div></div>
-      <section class="hall-scorer-grid" id="hallGlobalScorers" aria-label="Meilleur buteur all-time"></section>
-      <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs Champions League</h2><button class="alltime-badge" type="button" data-alltime="champions-goals">Classement global</button></div><div class="section-note">Buteurs historiques de la compétition · Top 5</div></div>
-      <section class="hall-scorer-grid" id="hallChampionsScorers" aria-label="Meilleurs buteurs Champions League"></section>
-      <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs des 5 grands championnats</h2></div><div class="section-note">Le meilleur buteur publié pour chaque championnat.</div></div>
-      <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
-      <div class="section-head"><div class="section-title"><h2>Classement Championnats</h2></div><div class="section-note">Les 3 premiers actuels de chaque grand championnat.</div></div>
-      <section class="hall-standings-board" id="hallLeagueStandings" aria-label="Classement Championnats"></section>
+      <div class="section-head"><div class="section-title"><h2>Hall of GOAT</h2></div><div class="section-note">Records individuels majeurs · Top 20 au clic.</div></div>
+      <section class="hall-feature-grid" id="hallGoatGrid" aria-label="Hall of GOAT"></section>
+      <div class="section-head"><div class="section-title"><h2>Best Nation</h2></div><div class="section-note">Nations les plus titrées par grande compétition.</div></div>
+      <section class="hall-feature-grid" id="hallNationGrid" aria-label="Best Nation"></section>
+      <div class="section-head"><div class="section-title"><h2>Best Club</h2></div><div class="section-note">Clubs les plus titrés, en Europe et dans le monde.</div></div>
+      <section class="hall-feature-grid" id="hallClubGrid" aria-label="Best Club"></section>
     </section>
 
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
@@ -3641,7 +3672,12 @@
         {rank: 12, name: 'Luis Suárez', country: 'Uruguay', value: 562, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
         {rank: 13, name: 'Glenn Ferguson', country: 'Irlande du Nord', value: 562, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nir.png'},
         {rank: 14, name: 'Fernando Peyroteo', country: 'Portugal', value: 544, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'},
-        {rank: 15, name: 'Uwe Seeler', country: 'Allemagne', value: 528, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'}
+        {rank: 15, name: 'Uwe Seeler', country: 'Allemagne', value: 528, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 16, name: 'Roberto Dinamite', country: 'Brésil', value: 511, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 17, name: 'Hugo Sánchez', country: 'Mexique', value: 507, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/mex.png'},
+        {rank: 18, name: 'Alfredo Di Stéfano', country: 'Argentine / Espagne', value: 500, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 19, name: 'Ferenc Deák', country: 'Hongrie', value: 500, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/hun.png'},
+        {rank: 20, name: 'Zico', country: 'Brésil', value: 476, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'}
       ],
       title: 'Meilleur buteur all-time',
       empty: 'Classement global des buteurs indisponible',
@@ -3663,11 +3699,178 @@
         {rank: 12, name: 'Alfredo Di Stéfano', country: 'Espagne', value: 49, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
         {rank: 13, name: 'Zlatan Ibrahimović', country: 'Suède', value: 48, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/swe.png'},
         {rank: 13, name: 'Mohamed Salah', country: 'Égypte', value: 48, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'},
-        {rank: 15, name: 'Filippo Inzaghi', country: 'Italie', value: 46, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'}
+        {rank: 15, name: 'Filippo Inzaghi', country: 'Italie', value: 46, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'},
+        {rank: 16, name: 'Didier Drogba', country: 'Côte d’Ivoire', value: 44, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/civ.png'},
+        {rank: 16, name: 'Neymar', country: 'Brésil', value: 44, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 18, name: 'Sergio Agüero', country: 'Argentine', value: 41, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 19, name: 'Alessandro Del Piero', country: 'Italie', value: 40, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'},
+        {rank: 20, name: 'Edinson Cavani', country: 'Uruguay', value: 35, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'}
       ],
       title: 'Meilleurs buteurs Champions League',
       empty: 'Classement global Champions League indisponible',
       label: 'buts'
+    };
+    ALL_TIME_LISTS['goat-worldcup-goals'] = {
+      players: [
+        {rank: 1, name: 'Miroslav Klose', country: 'Allemagne', value: 16, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 2, name: 'Ronaldo', country: 'Brésil', value: 15, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 3, name: 'Gerd Müller', country: 'Allemagne', value: 14, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 4, name: 'Lionel Messi', country: 'Argentine', value: 13, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {rank: 4, name: 'Just Fontaine', country: 'France', value: 13, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 6, name: 'Kylian Mbappé', country: 'France', value: 12, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/701154.png'},
+        {rank: 6, name: 'Pelé', country: 'Brésil', value: 12, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 8, name: 'Sándor Kocsis', country: 'Hongrie', value: 11, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/hun.png'},
+        {rank: 8, name: 'Jürgen Klinsmann', country: 'Allemagne', value: 11, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 10, name: 'Thomas Müller', country: 'Allemagne', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 10, name: 'Gabriel Batistuta', country: 'Argentine', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 10, name: 'Gary Lineker', country: 'Angleterre', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
+        {rank: 10, name: 'Grzegorz Lato', country: 'Pologne', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/pol.png'},
+        {rank: 10, name: 'Teófilo Cubillas', country: 'Pérou', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/per.png'},
+        {rank: 15, name: 'Eusébio', country: 'Portugal', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'},
+        {rank: 15, name: 'Christian Vieri', country: 'Italie', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'},
+        {rank: 15, name: 'David Villa', country: 'Espagne', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 15, name: 'Paolo Rossi', country: 'Italie', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'},
+        {rank: 15, name: 'Rivaldo', country: 'Brésil', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 20, name: 'Diego Maradona', country: 'Argentine', value: 8, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'}
+      ],
+      title: 'Meilleur buteur Coupe du Monde',
+      empty: 'Classement Coupe du Monde indisponible',
+      label: 'buts'
+    };
+    ALL_TIME_LISTS['goat-euro-goals'] = {
+      players: [
+        {rank: 1, name: 'Cristiano Ronaldo', country: 'Portugal', value: 14, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {rank: 2, name: 'Michel Platini', country: 'France', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 3, name: 'Antoine Griezmann', country: 'France', value: 7, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 4, name: 'Alan Shearer', country: 'Angleterre', value: 7, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
+        {rank: 5, name: 'Álvaro Morata', country: 'Espagne', value: 7, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 6, name: 'Romelu Lukaku', country: 'Belgique', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bel.png'},
+        {rank: 6, name: 'Wayne Rooney', country: 'Angleterre', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
+        {rank: 6, name: 'Ruud van Nistelrooy', country: 'Pays-Bas', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ned.png'},
+        {rank: 6, name: 'Thierry Henry', country: 'France', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 10, name: 'Nuno Gomes', country: 'Portugal', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'},
+        {rank: 11, name: 'Zinedine Zidane', country: 'France', value: 5, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 11, name: 'Jürgen Klinsmann', country: 'Allemagne', value: 5, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 11, name: 'Fernando Torres', country: 'Espagne', value: 5, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 11, name: 'Mario Gómez', country: 'Allemagne', value: 5, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 11, name: 'Patrick Kluivert', country: 'Pays-Bas', value: 5, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ned.png'},
+        {rank: 16, name: 'Harry Kane', country: 'Angleterre', value: 5, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/194165.png'},
+        {rank: 17, name: 'Dieter Müller', country: 'Allemagne', value: 4, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 17, name: 'Dennis Bergkamp', country: 'Pays-Bas', value: 4, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ned.png'},
+        {rank: 17, name: 'David Villa', country: 'Espagne', value: 4, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 17, name: 'Kylian Mbappé', country: 'France', value: 4, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/701154.png'}
+      ],
+      title: 'Meilleur buteur Euro',
+      empty: 'Classement Euro indisponible',
+      label: 'buts'
+    };
+    ALL_TIME_LISTS['goat-copa-goals'] = {
+      players: [
+        {rank: 1, name: 'Norberto Méndez', country: 'Argentine', value: 17, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 1, name: 'Zizinho', country: 'Brésil', value: 17, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 3, name: 'Lolo Fernández', country: 'Pérou', value: 15, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/per.png'},
+        {rank: 3, name: 'Severino Varela', country: 'Uruguay', value: 15, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
+        {rank: 5, name: 'Paolo Guerrero', country: 'Pérou', value: 14, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/per.png'},
+        {rank: 5, name: 'Eduardo Vargas', country: 'Chili', value: 14, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/chi.png'},
+        {rank: 7, name: 'Gabriel Batistuta', country: 'Argentine', value: 13, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 7, name: 'Ademir', country: 'Brésil', value: 13, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 9, name: 'Lionel Messi', country: 'Argentine', value: 13, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {rank: 10, name: 'Jair', country: 'Brésil', value: 13, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 11, name: 'Héctor Scarone', country: 'Uruguay', value: 12, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
+        {rank: 11, name: 'Roberto Porta', country: 'Uruguay', value: 12, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
+        {rank: 13, name: 'Ángel Romano', country: 'Uruguay', value: 11, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
+        {rank: 13, name: 'Teodoro Fernández', country: 'Pérou', value: 11, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/per.png'},
+        {rank: 15, name: 'Alex Aguinaga', country: 'Équateur', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ecu.png'},
+        {rank: 15, name: 'Luis Suárez', country: 'Uruguay', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
+        {rank: 17, name: 'Neymar', country: 'Brésil', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 17, name: 'Ronaldo', country: 'Brésil', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 19, name: 'Carlos Valderrama', country: 'Colombie', value: 8, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/col.png'},
+        {rank: 19, name: 'James Rodríguez', country: 'Colombie', value: 8, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/col.png'}
+      ],
+      title: 'Meilleur buteur Copa America',
+      empty: 'Classement Copa America indisponible',
+      label: 'buts'
+    };
+    ALL_TIME_LISTS['goat-afcon-goals'] = {
+      players: [
+        {rank: 1, name: 'Samuel Eto’o', country: 'Cameroun', value: 18, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cmr.png'},
+        {rank: 2, name: 'Laurent Pokou', country: 'Côte d’Ivoire', value: 14, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/civ.png'},
+        {rank: 3, name: 'Rashidi Yekini', country: 'Nigeria', value: 13, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nga.png'},
+        {rank: 4, name: 'Hassan El-Shazly', country: 'Égypte', value: 12, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'},
+        {rank: 5, name: 'Didier Drogba', country: 'Côte d’Ivoire', value: 11, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/civ.png'},
+        {rank: 5, name: 'Hossam Hassan', country: 'Égypte', value: 11, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'},
+        {rank: 7, name: 'Patrick M’Boma', country: 'Cameroun', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cmr.png'},
+        {rank: 7, name: 'Manucho', country: 'Angola', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ang.png'},
+        {rank: 9, name: 'Kalusha Bwalya', country: 'Zambie', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/zam.png'},
+        {rank: 10, name: 'André Ayew', country: 'Ghana', value: 10, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/gha.png'},
+        {rank: 11, name: 'Vincent Aboubakar', country: 'Cameroun', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cmr.png'},
+        {rank: 11, name: 'Asamoah Gyan', country: 'Ghana', value: 9, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/gha.png'},
+        {rank: 13, name: 'Jay-Jay Okocha', country: 'Nigeria', value: 7, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nga.png'},
+        {rank: 13, name: 'Yaya Touré', country: 'Côte d’Ivoire', value: 7, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/civ.png'},
+        {rank: 15, name: 'Sadio Mané', country: 'Sénégal', value: 7, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/sen.png'},
+        {rank: 16, name: 'Mohamed Salah', country: 'Égypte', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'},
+        {rank: 16, name: 'Pierre-Emerick Aubameyang', country: 'Gabon', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/gab.png'},
+        {rank: 18, name: 'Emmanuel Adebayor', country: 'Togo', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/tog.png'},
+        {rank: 19, name: 'Benni McCarthy', country: 'Afrique du Sud', value: 6, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/rsa.png'},
+        {rank: 20, name: 'Frédéric Kanouté', country: 'Mali', value: 5, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/mli.png'}
+      ],
+      title: 'Meilleur buteur CAN',
+      empty: 'Classement CAN indisponible',
+      label: 'buts'
+    };
+    ALL_TIME_LISTS['goat-most-trophies'] = {
+      players: [
+        {rank: 1, name: 'Lionel Messi', country: 'Argentine', value: 46, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {rank: 2, name: 'Dani Alves', country: 'Brésil', value: 43, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 3, name: 'Hossam Ashour', country: 'Égypte', value: 39, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'},
+        {rank: 4, name: 'Andrés Iniesta', country: 'Espagne', value: 39, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 5, name: 'Maxwell', country: 'Brésil', value: 37, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 6, name: 'Ryan Giggs', country: 'Pays de Galles', value: 36, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/wal.png'},
+        {rank: 7, name: 'Gerard Piqué', country: 'Espagne', value: 36, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 8, name: 'Cristiano Ronaldo', country: 'Portugal', value: 35, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {rank: 9, name: 'Xavi', country: 'Espagne', value: 34, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 10, name: 'Sergio Busquets', country: 'Espagne', value: 34, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 11, name: 'Zlatan Ibrahimović', country: 'Suède', value: 33, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/swe.png'},
+        {rank: 12, name: 'Kenny Dalglish', country: 'Écosse', value: 31, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/sco.png'},
+        {rank: 13, name: 'Vítor Baía', country: 'Portugal', value: 31, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'},
+        {rank: 14, name: 'Toni Kroos', country: 'Allemagne', value: 31, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 15, name: 'Manuel Neuer', country: 'Allemagne', value: 31, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 16, name: 'Thomas Müller', country: 'Allemagne', value: 31, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 17, name: 'Karim Benzema', country: 'France', value: 30, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 18, name: 'Luka Modrić', country: 'Croatie', value: 30, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cro.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/31097.png'},
+        {rank: 19, name: 'Marcelo', country: 'Brésil', value: 29, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 20, name: 'Sergio Ramos', country: 'Espagne', value: 29, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'}
+      ],
+      title: 'Joueurs les plus titrés de l’histoire',
+      empty: 'Classement des joueurs titrés indisponible',
+      label: 'titres'
+    };
+    ALL_TIME_LISTS['goat-most-appearances'] = {
+      players: [
+        {rank: 1, name: 'Peter Shilton', country: 'Angleterre', value: 1390, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
+        {rank: 2, name: 'Fábio', country: 'Brésil', value: 1320, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 3, name: 'Cristiano Ronaldo', country: 'Portugal', value: 1270, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {rank: 4, name: 'Rogério Ceni', country: 'Brésil', value: 1237, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 5, name: 'Roberto Carlos', country: 'Brésil', value: 1130, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 6, name: 'Xavi', country: 'Espagne', value: 1100, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 7, name: 'Gianluigi Buffon', country: 'Italie', value: 1100, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'},
+        {rank: 8, name: 'Lionel Messi', country: 'Argentine', value: 1090, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {rank: 9, name: 'Iker Casillas', country: 'Espagne', value: 1048, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 10, name: 'Ryan Giggs', country: 'Pays de Galles', value: 1031, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/wal.png'},
+        {rank: 11, name: 'Paolo Maldini', country: 'Italie', value: 1028, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'},
+        {rank: 12, name: 'Javier Zanetti', country: 'Argentine', value: 1020, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 13, name: 'Dani Alves', country: 'Brésil', value: 1000, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 14, name: 'Raúl González', country: 'Espagne', value: 1000, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 15, name: 'Andrés Iniesta', country: 'Espagne', value: 970, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 16, name: 'Sergio Ramos', country: 'Espagne', value: 960, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 17, name: 'Frank Lampard', country: 'Angleterre', value: 950, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
+        {rank: 18, name: 'Luka Modrić', country: 'Croatie', value: 930, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cro.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/31097.png'},
+        {rank: 19, name: 'Zlatan Ibrahimović', country: 'Suède', value: 920, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/swe.png'},
+        {rank: 20, name: 'Thierry Henry', country: 'France', value: 900, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'}
+      ],
+      title: 'Joueurs avec le plus de matchs joués',
+      empty: 'Classement des matchs joués indisponible',
+      label: 'matchs'
     };
     ALL_TIME_LISTS['euro-history'] = {
       players: [
@@ -3682,6 +3885,92 @@
       ],
       title: 'Palmarès Euro',
       empty: 'Palmarès Euro indisponible',
+      label: 'titres'
+    };
+    ALL_TIME_LISTS['nation-copa-history'] = {
+      players: [
+        {rank: 1, name: 'Argentine', country: 'Argentine', value: 16, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {rank: 2, name: 'Uruguay', country: 'Uruguay', value: 15, years: 'Dernier titre : 2011', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
+        {rank: 3, name: 'Brésil', country: 'Brésil', value: 9, years: 'Dernier titre : 2019', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 4, name: 'Paraguay', country: 'Paraguay', value: 2, years: 'Dernier titre : 1979', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/par.png'},
+        {rank: 4, name: 'Chili', country: 'Chili', value: 2, years: 'Dernier titre : 2016', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/chi.png'},
+        {rank: 4, name: 'Pérou', country: 'Pérou', value: 2, years: 'Dernier titre : 1975', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/per.png'},
+        {rank: 7, name: 'Colombie', country: 'Colombie', value: 1, years: 'Dernier titre : 2001', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/col.png'},
+        {rank: 7, name: 'Bolivie', country: 'Bolivie', value: 1, years: 'Dernier titre : 1963', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bol.png'}
+      ],
+      title: 'Nations avec le plus de Copa America',
+      empty: 'Palmarès Copa America indisponible',
+      label: 'titres'
+    };
+    ALL_TIME_LISTS['nation-afcon-history'] = {
+      players: [
+        {rank: 1, name: 'Égypte', country: 'Égypte', value: 7, years: 'Dernier titre : 2010', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'},
+        {rank: 2, name: 'Cameroun', country: 'Cameroun', value: 5, years: 'Dernier titre : 2017', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cmr.png'},
+        {rank: 3, name: 'Ghana', country: 'Ghana', value: 4, years: 'Dernier titre : 1982', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/gha.png'},
+        {rank: 4, name: 'Nigeria', country: 'Nigeria', value: 3, years: 'Dernier titre : 2013', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nga.png'},
+        {rank: 4, name: 'Côte d’Ivoire', country: 'Côte d’Ivoire', value: 3, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/civ.png'},
+        {rank: 6, name: 'Algérie', country: 'Algérie', value: 2, years: 'Dernier titre : 2019', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/alg.png'},
+        {rank: 6, name: 'RD Congo', country: 'RD Congo', value: 2, years: 'Dernier titre : 1974', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cod.png'},
+        {rank: 8, name: 'Sénégal', country: 'Sénégal', value: 1, years: 'Dernier titre : 2021', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/sen.png'},
+        {rank: 8, name: 'Maroc', country: 'Maroc', value: 1, years: 'Dernier titre : 1976', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/mar.png'},
+        {rank: 8, name: 'Tunisie', country: 'Tunisie', value: 1, years: 'Dernier titre : 2004', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/tun.png'},
+        {rank: 8, name: 'Afrique du Sud', country: 'Afrique du Sud', value: 1, years: 'Dernier titre : 1996', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/rsa.png'},
+        {rank: 8, name: 'Zambie', country: 'Zambie', value: 1, years: 'Dernier titre : 2012', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/zam.png'},
+        {rank: 8, name: 'Éthiopie', country: 'Éthiopie', value: 1, years: 'Dernier titre : 1962', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eth.png'},
+        {rank: 8, name: 'Soudan', country: 'Soudan', value: 1, years: 'Dernier titre : 1970', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/sdn.png'},
+        {rank: 8, name: 'Congo', country: 'Congo', value: 1, years: 'Dernier titre : 1972', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/cgo.png'}
+      ],
+      title: 'Nations avec le plus de CAN',
+      empty: 'Palmarès CAN indisponible',
+      label: 'titres'
+    };
+    ALL_TIME_LISTS['club-total-trophies'] = {
+      players: [
+        {rank: 1, name: 'Al Ahly', country: 'Égypte', value: 149, years: 'Dernier titre : 2025', flag_url: 'https://upload.wikimedia.org/wikipedia/en/7/70/Al_Ahly_SC_logo.png'},
+        {rank: 2, name: 'Rangers', country: 'Écosse', value: 118, years: 'Dernier titre : 2024', flag_url: ''},
+        {rank: 3, name: 'Celtic', country: 'Écosse', value: 117, years: 'Dernier titre : 2025', flag_url: ''},
+        {rank: 4, name: 'Nacional', country: 'Uruguay', value: 116, years: 'Dernier titre : 2024', flag_url: ''},
+        {rank: 5, name: 'Peñarol', country: 'Uruguay', value: 111, years: 'Dernier titre : 2024', flag_url: ''},
+        {rank: 6, name: 'Barcelona', country: 'Espagne', value: 100, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'},
+        {rank: 7, name: 'Real Madrid', country: 'Espagne', value: 99, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
+        {rank: 8, name: 'Benfica', country: 'Portugal', value: 86, years: 'Dernier titre : 2025', flag_url: ''},
+        {rank: 9, name: 'Porto', country: 'Portugal', value: 84, years: 'Dernier titre : 2024', flag_url: ''},
+        {rank: 10, name: 'Bayern Munich', country: 'Allemagne', value: 84, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'}
+      ],
+      title: 'Clubs avec le plus de titres toutes compétitions',
+      empty: 'Classement clubs indisponible',
+      label: 'titres'
+    };
+    ALL_TIME_LISTS['club-international-trophies'] = {
+      players: [
+        {rank: 1, name: 'Real Madrid', country: 'Espagne', value: 34, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
+        {rank: 2, name: 'Al Ahly', country: 'Égypte', value: 26, years: 'Dernier titre : 2024', flag_url: 'https://upload.wikimedia.org/wikipedia/en/7/70/Al_Ahly_SC_logo.png'},
+        {rank: 3, name: 'Barcelona', country: 'Espagne', value: 22, years: 'Dernier titre : 2015', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png'},
+        {rank: 4, name: 'Boca Juniors', country: 'Argentine', value: 22, years: 'Dernier titre : 2008', flag_url: ''},
+        {rank: 5, name: 'AC Milan', country: 'Italie', value: 21, years: 'Dernier titre : 2007', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png'},
+        {rank: 6, name: 'Independiente', country: 'Argentine', value: 18, years: 'Dernier titre : 2017', flag_url: ''},
+        {rank: 7, name: 'Liverpool', country: 'Angleterre', value: 14, years: 'Dernier titre : 2019', flag_url: ''},
+        {rank: 8, name: 'Bayern Munich', country: 'Allemagne', value: 14, years: 'Dernier titre : 2020', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'}
+      ],
+      title: 'Clubs avec le plus de trophées internationaux',
+      empty: 'Classement international indisponible',
+      label: 'titres'
+    };
+    ALL_TIME_LISTS['club-domestic-leagues'] = {
+      players: [
+        {rank: 1, name: 'Linfield', country: 'Irlande du Nord', value: 56, years: 'Dernier titre : 2025', flag_url: ''},
+        {rank: 2, name: 'Celtic', country: 'Écosse', value: 55, years: 'Dernier titre : 2025', flag_url: ''},
+        {rank: 2, name: 'Rangers', country: 'Écosse', value: 55, years: 'Dernier titre : 2021', flag_url: ''},
+        {rank: 4, name: 'Olympiacos', country: 'Grèce', value: 47, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/435.png'},
+        {rank: 5, name: 'Benfica', country: 'Portugal', value: 38, years: 'Dernier titre : 2023', flag_url: ''},
+        {rank: 6, name: 'Real Madrid', country: 'Espagne', value: 36, years: 'Dernier titre : 2024', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
+        {rank: 7, name: 'Ajax', country: 'Pays-Bas', value: 36, years: 'Dernier titre : 2022', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/139.png'},
+        {rank: 8, name: 'Juventus', country: 'Italie', value: 36, years: 'Dernier titre : 2020', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png'},
+        {rank: 9, name: 'Bayern Munich', country: 'Allemagne', value: 33, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'},
+        {rank: 10, name: 'Paris Saint-Germain', country: 'France', value: 13, years: 'Dernier titre : 2025', flag_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png'}
+      ],
+      title: 'Clubs avec le plus de championnats nationaux',
+      empty: 'Classement championnats nationaux indisponible',
       label: 'titres'
     };
     const allTimeModal = document.getElementById('allTimeModal');
@@ -8128,6 +8417,30 @@ grant select, insert, update on public.profiles to authenticated;`;
       seriea: 'https://a.espncdn.com/i/leaguelogos/soccer/500/ita.1.png',
       bundesliga: 'https://a.espncdn.com/i/leaguelogos/soccer/500/ger.1.png'
     };
+    const HALL_FEATURE_GROUPS = {
+      goat: [
+        {title: 'Meilleur buteur all-time', note: 'Toutes compétitions confondues', target: 'global-goals', image: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {title: 'Meilleur buteur Champions League', note: 'Buts en C1', target: 'champions-goals', image: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {title: 'Meilleur buteur Coupe du Monde', note: 'Records Mondial', target: 'goat-worldcup-goals', image: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {title: 'Meilleur buteur Euro', note: 'Records EURO', target: 'goat-euro-goals', image: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'},
+        {title: 'Meilleur buteur Copa America', note: 'Records CONMEBOL', target: 'goat-copa-goals', image: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {title: 'Meilleur buteur CAN', note: 'Records Afrique', target: 'goat-afcon-goals', image: 'https://a.espncdn.com/i/teamlogos/countries/500/cmr.png'},
+        {title: 'Joueurs les plus titrés de l’histoire', note: 'Titres collectifs', target: 'goat-most-trophies', image: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {title: 'Joueurs avec le plus de matchs joués', note: 'Longévité historique', target: 'goat-most-appearances', image: 'https://images.fotmob.com/image_resources/playerimages/30893.png'}
+      ],
+      nation: [
+        {title: 'Nations avec le plus de Coupes du Monde', note: 'Nations championnes du monde', target: 'worldcup-history', image: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {title: 'Nations avec le plus d’Euros', note: 'Nations championnes d’Europe', target: 'euro-history', image: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {title: 'Nations avec le plus de Copa America', note: 'Palmarès sud-américain', target: 'nation-copa-history', image: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png'},
+        {title: 'Nations avec le plus de CAN', note: 'Palmarès africain', target: 'nation-afcon-history', image: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'}
+      ],
+      club: [
+        {title: 'Clubs avec le plus de Champions League', note: 'Rois de la C1', target: 'champions-history', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
+        {title: 'Clubs avec le plus de titres toutes compétitions confondues', note: 'Palmarès global clubs', target: 'club-total-trophies', image: 'https://upload.wikimedia.org/wikipedia/en/7/70/Al_Ahly_SC_logo.png'},
+        {title: 'Clubs avec le plus de trophées internationaux', note: 'Palmarès continental et mondial', target: 'club-international-trophies', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png'},
+        {title: 'Clubs avec le plus de championnats nationaux', note: 'Domination domestique', target: 'club-domestic-leagues', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'}
+      ]
+    };
 
     function hallScorerCard(player) {
       const initials = String(player.name || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
@@ -8143,6 +8456,24 @@ grant select, insert, update on public.profiles to authenticated;`;
           <div class="hall-scorer-goals">${leagueEscape(player.value || '—')} buts</div>
         </div>
       </article>`;
+    }
+
+    function hallFeatureCard(item, label) {
+      const style = item.image ? ` style="--feature-image:url(${leagueEscape(item.image)})"` : '';
+      return `<button class="hall-feature-card" type="button" data-alltime="${leagueEscape(item.target)}"${style}>
+        <span class="hall-feature-kicker">${leagueEscape(label)}</span>
+        <span class="hall-feature-title">${leagueEscape(item.title)}</span>
+        <span class="hall-feature-note">${leagueEscape(item.note || 'Classement complet')}</span>
+      </button>`;
+    }
+
+    function renderHallFeatureGroups() {
+      const goat = document.getElementById('hallGoatGrid');
+      const nation = document.getElementById('hallNationGrid');
+      const club = document.getElementById('hallClubGrid');
+      if (goat) goat.innerHTML = HALL_FEATURE_GROUPS.goat.map(item => hallFeatureCard(item, 'GOAT')).join('');
+      if (nation) nation.innerHTML = HALL_FEATURE_GROUPS.nation.map(item => hallFeatureCard(item, 'Nation')).join('');
+      if (club) club.innerHTML = HALL_FEATURE_GROUPS.club.map(item => hallFeatureCard(item, 'Club')).join('');
     }
 
     function hallLeagueTeamCard(team, index) {
@@ -8195,6 +8526,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     async function renderHallOfFame() {
+      renderHallFeatureGroups();
       await ensureLeagueData();
       if (!LEAGUES_DATA) return;
       const big5Node = document.getElementById('big5TopScorers');
@@ -10651,6 +10983,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           panel.classList.toggle('is-active', panel.dataset.tabPanel === target);
         });
         if (target === 'leagues' && typeof renderLeague === 'function') renderLeague();
+        if (target === 'championships' && typeof renderHallOfFame === 'function') renderHallOfFame();
         if (target === 'hall' && typeof renderHallOfFame === 'function') renderHallOfFame();
       });
     });
