@@ -10039,6 +10039,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         return Boolean(match?.completed) || ['ft', 'aet', 'pen'].includes(status) || status.includes('match finished') || status.includes('termine');
       };
       const matchNumber = value => {
+        if (value === undefined || value === null || String(value).trim() === '') return null;
         const number = Number(value);
         return Number.isFinite(number) ? number : null;
       };
@@ -10076,7 +10077,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const championsSupabaseFinalMatch = source => {
         const final = source
           .filter(match => championsSupabaseRoundType(match) === 'final')
-          .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))[0];
+          .sort((a, b) => Number(isFinishedSupabaseMatch(b)) - Number(isFinishedSupabaseMatch(a)) || String(b.date || '').localeCompare(String(a.date || '')))[0];
         if (!final) return null;
         const homeScore = matchNumber(final.home_score);
         const awayScore = matchNumber(final.away_score);
@@ -10119,7 +10120,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         const source = TEAM_MATCHES.filter(isChampionsSupabaseMatch);
         const final = source
           .filter(match => championsSupabaseRoundType(match) === 'final')
-          .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))[0];
+          .sort((a, b) => Number(isFinishedSupabaseMatch(b)) - Number(isFinishedSupabaseMatch(a)) || String(b.date || '').localeCompare(String(a.date || '')))[0];
         if (!final || !isFinishedSupabaseMatch(final)) return null;
         const homeScore = matchNumber(final.home_score);
         const awayScore = matchNumber(final.away_score);
@@ -10153,18 +10154,24 @@ grant select, insert, update on public.profiles to authenticated;`;
       };
       const championsBracketHtml = matches => {
         const phaseMatches = label => (matches || []).filter(item => normalizeTeamName(item.phase).includes(label));
+        const playoffs = phaseMatches('barrage');
+        const round16 = phaseMatches('8es');
         const quarters = phaseMatches('quart');
         const semis = phaseMatches('demi');
         const final = phaseMatches('finale').filter(item => !normalizeTeamName(item.phase).includes('demi'))[0];
         if (!quarters.length && !semis.length && !final) return `<div class="historical-unavailable">${info}</div>`;
+        const splitRound = items => [items.slice(0, Math.ceil(items.length / 2)), items.slice(Math.ceil(items.length / 2))];
+        const [leftPlayoffs, rightPlayoffs] = splitRound(playoffs);
+        const [leftRound16, rightRound16] = splitRound(round16);
         const leftQuarters = quarters.slice(0, Math.ceil(quarters.length / 2));
         const rightQuarters = quarters.slice(Math.ceil(quarters.length / 2));
         const leftSemi = semis.slice(0, 1);
         const rightSemi = semis.slice(1, 2);
         const round = (title, items) => `<article class="round"><div class="round-title">${title}</div>${items.length ? items.map(bracketMatchHtml).join('') : `<div class="historical-unavailable">${info}</div>`}</article>`;
+        const optionalRound = (title, items) => items.length ? round(title, items) : '';
         const finalHtml = final ? bracketMatchHtml(final).replace('ko-match', 'ko-match final-card') : `<div class="ko-match final-card"><div class="subtle">${info}</div><span class="status">À venir</span></div>`;
         const trophySvg = `<svg viewBox="0 0 220 300" role="img" focusable="false"><defs><linearGradient id="uclChromeHist" x1="20%" x2="82%" y1="8%" y2="92%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#cfd8e8"/><stop offset="0.48" stop-color="#7f91ad"/><stop offset="0.72" stop-color="#eef5ff"/><stop offset="1" stop-color="#92a5c4"/></linearGradient><linearGradient id="uclStemHist" x1="0" x2="1"><stop offset="0" stop-color="#75879f"/><stop offset="0.48" stop-color="#f7fbff"/><stop offset="1" stop-color="#6c7d97"/></linearGradient><radialGradient id="uclGlowHist" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#ddebff" stop-opacity="0.90"/><stop offset="0.52" stop-color="#7ba9ff" stop-opacity="0.22"/><stop offset="1" stop-color="#0b1735" stop-opacity="0"/></radialGradient></defs><ellipse cx="110" cy="151" rx="92" ry="122" fill="url(#uclGlowHist)"/><path d="M52 71c-29 13-43 41-38 73 5 31 27 51 57 58" fill="none" stroke="url(#uclChromeHist)" stroke-width="13" stroke-linecap="round"/><path d="M168 71c29 13 43 41 38 73-5 31-27 51-57 58" fill="none" stroke="url(#uclChromeHist)" stroke-width="13" stroke-linecap="round"/><path d="M58 48h104l-12 124c-3 35-22 57-40 57s-37-22-40-57L58 48Z" fill="url(#uclChromeHist)" stroke="rgba(255,255,255,.72)" stroke-width="3"/><path d="M82 71h56l-7 92c-2 24-11 39-21 39s-19-15-21-39L82 71Z" fill="rgba(255,255,255,.20)"/><path d="M110 226v33" stroke="url(#uclStemHist)" stroke-width="18" stroke-linecap="round"/><path d="M68 269h84l15 18H53l15-18Z" fill="url(#uclStemHist)"/><path d="M82 288h56" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="118" r="31" fill="none" stroke="#f8fbff" stroke-opacity=".64" stroke-width="5"/><path d="M110 86l10 23h25l-20 15 8 24-23-14-22 14 8-24-20-15h25l9-23Z" fill="#f8fbff" fill-opacity=".74"/></svg>`;
-        return `<div class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left">${round('Quarts', leftQuarters)}${round('Demies', leftSemi)}</div><div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy ucl-trophy bracket-trophy" aria-hidden="true">${trophySvg}</div><div class="trophy-title">Champions League</div></div><div class="round-title">Finale</div>${finalHtml}</div><div class="bracket-wing ucl-wing right">${round('Demies', rightSemi)}${round('Quarts', rightQuarters)}</div></div></div>`;
+        return `<div class="bracket-wrap"><div class="bracket-stage ucl-official"><div class="bracket-wing ucl-wing left">${optionalRound('Barrages', leftPlayoffs)}${optionalRound('8es', leftRound16)}${round('Quarts', leftQuarters)}${round('Demies', leftSemi)}</div><div class="bracket-center"><div class="trophy-card"><div class="bracket-logo premium-trophy ucl-trophy bracket-trophy" aria-hidden="true">${trophySvg}</div><div class="trophy-title">Champions League</div></div><div class="round-title">Finale</div>${finalHtml}</div><div class="bracket-wing ucl-wing right">${round('Demies', rightSemi)}${round('Quarts', rightQuarters)}${optionalRound('8es', rightRound16)}${optionalRound('Barrages', rightPlayoffs)}</div></div></div>`;
       };
       const euroTrophySvg = `<svg viewBox="0 0 220 300" role="img" focusable="false"><defs><linearGradient id="euroBracketChrome" x1="18%" x2="86%" y1="4%" y2="96%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#d9f4ff"/><stop offset="0.50" stop-color="#7f98b8"/><stop offset="0.72" stop-color="#f8fdff"/><stop offset="1" stop-color="#7790ad"/></linearGradient><linearGradient id="euroBracketBlue" x1="0" x2="1"><stop offset="0" stop-color="#49d6ff"/><stop offset="0.55" stop-color="#3867ff"/><stop offset="1" stop-color="#8a56ff"/></linearGradient><radialGradient id="euroBracketGlow" cx="50%" cy="34%" r="72%"><stop offset="0" stop-color="#bff6ff" stop-opacity=".92"/><stop offset=".55" stop-color="#5de0ff" stop-opacity=".24"/><stop offset="1" stop-color="#07111f" stop-opacity="0"/></radialGradient></defs><ellipse cx="110" cy="150" rx="92" ry="122" fill="url(#euroBracketGlow)"/><path d="M58 54h104l-10 104c-4 42-23 68-42 68s-38-26-42-68L58 54Z" fill="url(#euroBracketChrome)" stroke="rgba(255,255,255,.72)" stroke-width="3"/><path d="M50 73c-28 12-42 38-38 68 4 33 27 54 60 62" fill="none" stroke="url(#euroBracketChrome)" stroke-width="14" stroke-linecap="round"/><path d="M170 73c28 12 42 38 38 68-4 33-27 54-60 62" fill="none" stroke="url(#euroBracketChrome)" stroke-width="14" stroke-linecap="round"/><path d="M83 82h54l-7 73c-3 28-12 45-20 45s-17-17-20-45L83 82Z" fill="rgba(255,255,255,.22)"/><path d="M73 122c21-18 53-23 79-6-5 18-14 33-27 45-16-11-34-13-55-6 0-12 1-23 3-33Z" fill="url(#euroBracketBlue)" opacity=".74"/><circle cx="110" cy="118" r="29" fill="none" stroke="#f8fdff" stroke-opacity=".62" stroke-width="5"/><path d="M110 91l8 18h20l-16 12 6 20-18-11-18 11 6-20-16-12h20l8-18Z" fill="#f8fdff" fill-opacity=".78"/><path d="M110 225v34" stroke="url(#euroBracketChrome)" stroke-width="18" stroke-linecap="round"/><path d="M66 269h88l16 19H50l16-19Z" fill="url(#euroBracketChrome)"/><path d="M80 289h60" stroke="#ffffff" stroke-opacity=".62" stroke-width="4" stroke-linecap="round"/></svg>`;
       const premiumBracketHtml = (matches, title, centerLogo = '<div class="bracket-logo bracket-trophy" aria-hidden="true"><div class="trophy"></div></div>') => {
@@ -10280,6 +10287,7 @@ grant select, insert, update on public.profiles to authenticated;`;
             const championsMatches = Array.isArray(TEAM_MATCHES)
               ? TEAM_MATCHES.filter(match => normalizeTeamName(match?.competition || '').includes('champions'))
               : [];
+            const championsKnockoutMatches = championsMatches.filter(match => championsSupabaseRoundType(match));
             console.info('[champions-2025-bracket]', {
               kind,
               selected,
@@ -10288,6 +10296,16 @@ grant select, insert, update on public.profiles to authenticated;`;
               usingSupabase: championsSupabaseBracket.length > 0,
               fallbackRestored: championsSupabaseBracket.length === 0,
               championsMatchesCount: championsMatches.length,
+              championsKnockoutMatches: championsKnockoutMatches.map(match => ({
+                phase: match.phase || '',
+                round: match.round || match.phase || '',
+                home_team: match.home_team || '',
+                away_team: match.away_team || '',
+                home_score: match.home_score ?? '',
+                away_score: match.away_score ?? '',
+                date: match.date || '',
+                status: match.status || ''
+              })),
               championsFinalMatches: championsMatches
                 .filter(match => normalizeTeamName(match?.phase || '').includes('final'))
                 .map(match => ({
