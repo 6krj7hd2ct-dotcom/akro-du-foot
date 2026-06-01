@@ -215,11 +215,11 @@ MATCH_ARTICLES_MIN_DATE = date(2026, 4, 28)
 def match_articles_payload(limit: int = 12, focus: str = "") -> dict[str, Any]:
     safe_limit = max(1, min(int(limit or 12), 12))
     focus_teams = _match_article_focus_teams(focus)
-    articles = [
+    articles = _dedupe_match_articles([
         article
-        for article in _match_articles_rows(200, max_limit=200)
+        for article in [*_match_articles_rows(200, max_limit=200), *_static_match_articles_rows()]
         if _is_official_match_article_competition(article.get("competition")) or _match_article_matches_focus(article, focus_teams)
-    ][:safe_limit]
+    ])[:safe_limit]
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "articles": articles,
@@ -232,6 +232,8 @@ def match_article_detail_html(slug: str) -> tuple[str, int]:
     articles = _match_articles_rows(12, slug=slug, apply_filters=False)
     article = articles[0] if articles else None
     if not article:
+        article = next((item for item in _static_match_articles_rows() if item.get("slug") == slug), None)
+    if not article:
         return _match_article_page_html({
             "title": "Résumé introuvable",
             "summary": "Ce résumé de match n'est pas disponible.",
@@ -243,6 +245,42 @@ def match_article_detail_html(slug: str) -> tuple[str, int]:
             "away_team": "",
         }), 404
     return _match_article_page_html(article), 200
+
+
+def _static_match_articles_rows() -> list[dict[str, Any]]:
+    return [{
+        "id": "static-paris-back-2-back",
+        "match_id": "champions-final-2025-2026-psg-arsenal",
+        "match_api_id": "champions-final-2025-2026-psg-arsenal",
+        "slug": "paris-back-2-back",
+        "title": "Paris Back 2 Back",
+        "summary": "Paris Saint-Germain remporte la Champions League 2025-2026 face à Arsenal, finaliste, après un 1-1 intense et une séance de tirs au but gagnée 4-3.",
+        "content": "Paris Saint-Germain conserve sa couronne européenne au terme d'une finale tendue face à Arsenal. Après un score de 1-1, Paris s'impose 4-3 aux tirs au but et remporte la Champions League 2025-2026.\n\nArsenal termine finaliste après une campagne solide, mais Paris a mieux tenu le moment décisif. Cette victoire confirme la place du PSG au sommet de l'Europe.",
+        "competition": "Champions League",
+        "status": "published",
+        "date": "2026-05-30T16:00:00Z",
+        "published_at": "2026-05-30T19:30:00Z",
+        "created_at": "2026-05-30T19:30:00Z",
+        "home_team": "Paris Saint-Germain",
+        "away_team": "Arsenal",
+        "home_logo_url": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
+        "away_logo_url": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
+        "teams": "Paris Saint-Germain vs Arsenal",
+        "score": "1 - 1 · TAB 4-3",
+        "winner": "Paris Saint-Germain",
+    }]
+
+
+def _dedupe_match_articles(articles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    output = []
+    seen = set()
+    for article in sorted(articles or [], key=lambda item: str(item.get("published_at") or item.get("date") or item.get("created_at") or ""), reverse=True):
+        key = str(article.get("match_id") or article.get("slug") or "")
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        output.append(article)
+    return output
 
 
 def _match_articles_rows(limit: int = 12, slug: str = "", max_limit: int = 12, official_only: bool = False, apply_filters: bool = True) -> list[dict[str, Any]]:
@@ -419,7 +457,10 @@ def _match_article_page_html(article: dict[str, Any]) -> str:
 
 
 def match_articles_archive_html() -> str:
-    articles = _match_articles_rows(120, max_limit=120, official_only=True)[:60]
+    articles = _dedupe_match_articles([
+        *_match_articles_rows(120, max_limit=120, official_only=True),
+        *_static_match_articles_rows(),
+    ])[:60]
     cards = "".join(_match_article_archive_card(article) for article in articles)
     if not cards:
         cards = '<div class="empty">Aucun résumé disponible pour le moment.</div>'

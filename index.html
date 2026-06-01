@@ -403,9 +403,9 @@
     .match-summary-top, .match-summary-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
     .match-summary-competition { color: #ffe1a0; font-size: 11px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }
     .match-summary-date { color: #b9c9dc; font-size: 12px; font-weight: 850; }
-    .match-summary-teams { color: #fff; font-size: 17px; font-weight: 950; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .match-summary-teams { color: #fff; font-size: 16px; font-weight: 700; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .match-summary-team-line { min-width: 0; display: inline-flex; align-items: center; gap: 7px; overflow: hidden; vertical-align: middle; }
-    .match-summary-team-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .match-summary-team-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
     .match-summary-logo { width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
     .match-summary-vs { color: #9fb0c2; font-size: 12px; font-weight: 950; text-transform: uppercase; }
     .match-summary-score { border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }
@@ -509,7 +509,18 @@
     .hall-standings-table td:last-child { border-right: 1px solid rgba(255,255,255,0.09); border-radius: 0 12px 12px 0; }
     .hall-standing-team { display: flex; align-items: center; gap: 9px; color: #fff; font-weight: 950; }
     .hall-standing-team .flag { width: 24px; height: 24px; flex-basis: 24px; object-fit: contain; }
-    @media (max-width: 760px) { .hall-top3-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } .hall-league-actions { justify-content: flex-start; } .hall-team-card { padding-right: 102px; } }
+    .hall-scorer-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }
+    .hall-scorer-card { position: relative; overflow: hidden; min-height: 138px; display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 11px; align-items: center; padding: 13px; border: 1px solid rgba(245,201,107,0.20); border-radius: 16px; background: linear-gradient(145deg, rgba(7,17,31,0.94), rgba(23,47,75,0.72)); box-shadow: 0 16px 38px rgba(0,0,0,0.18); }
+    .hall-scorer-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(245,201,107,0.14), transparent 40%), radial-gradient(circle at left bottom, rgba(99,232,255,0.10), transparent 34%); pointer-events: none; }
+    .hall-scorer-card > * { position: relative; z-index: 1; }
+    .hall-scorer-avatar { width: 54px; height: 70px; border-radius: 16px; display: grid; place-items: center; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(168,185,204,0.84)); color: #07111f; font-size: 17px; font-weight: 950; box-shadow: 0 14px 28px rgba(0,0,0,0.24); }
+    .hall-scorer-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hall-scorer-rank { width: fit-content; min-width: 30px; padding: 5px 8px; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
+    .hall-scorer-name { color: #fff; font-size: 16px; line-height: 1.1; font-weight: 950; margin-top: 7px; }
+    .hall-scorer-country { color: #a9bed3; font-size: 12px; font-weight: 850; margin-top: 4px; }
+    .hall-scorer-goals { color: #ffe1a0; font-size: 23px; line-height: 1; font-weight: 950; margin-top: 8px; }
+    @media (max-width: 980px) { .hall-scorer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 760px) { .hall-top3-grid, .hall-scorer-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } .hall-league-actions { justify-content: flex-start; } .hall-team-card { padding-right: 102px; } }
     @media (max-width: 860px) {
       .player-card { min-height: 108px; padding: 12px 78px 12px 12px; }
       .player-card .avatar-wrap, .player-card .avatar { width: 70px; height: 92px; }
@@ -1813,6 +1824,10 @@
           <div class="award-copy"><strong>Trophée Gerd Müller</strong><p>Meilleur buteur de l'année.</p><div class="winner">Viktor Gyökeres</div><p>Mise à jour annuelle</p></div>
         </article>
       </section>
+      <div class="section-head"><div class="section-title"><h2>Meilleur buteur all-time</h2><button class="alltime-badge" type="button" data-alltime="global-goals">Classement global</button></div><div class="section-note">Toutes compétitions confondues · Top 5</div></div>
+      <section class="hall-scorer-grid" id="hallGlobalScorers" aria-label="Meilleur buteur all-time"></section>
+      <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs Champions League</h2><button class="alltime-badge" type="button" data-alltime="champions-goals">Classement global</button></div><div class="section-note">Buteurs historiques de la compétition · Top 5</div></div>
+      <section class="hall-scorer-grid" id="hallChampionsScorers" aria-label="Meilleurs buteurs Champions League"></section>
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs des 5 grands championnats</h2></div><div class="section-note">Le meilleur buteur publié pour chaque championnat.</div></div>
       <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
       <div class="section-head"><div class="section-title"><h2>Classement Championnats</h2></div><div class="section-note">Les 3 premiers actuels de chaque grand championnat.</div></div>
@@ -3073,10 +3088,17 @@
       return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit', year: 'numeric'});
     }
 
+    function matchArticleEmoji(article) {
+      const competition = normalizeFootballName(article?.competition || '');
+      if (competition.includes('champions league') || competition.includes('ligue des champions')) return '🏆';
+      if (competition.includes('coupe du monde') || competition.includes('world cup')) return '🌍';
+      return '';
+    }
+
     const STATIC_MATCH_ARTICLES = [{
       match_id: 'champions-final-2025-2026-psg-arsenal',
       slug: 'paris-back-2-back',
-      url: '#matchArticlesBoard',
+      url: '/actus/resume/paris-back-2-back',
       title: 'Paris Back 2 Back',
       summary: 'Paris Saint-Germain remporte la Champions League 2025-2026 face à Arsenal, finaliste, après un 1-1 intense et une séance de tirs au but gagnée 4-3.',
       competition: 'Champions League',
@@ -3111,19 +3133,21 @@
 
       container.innerHTML = articles.map(article => {
         const href = article.url || `/actus/resume/${encodeURIComponent(article.slug || '')}`;
+        const emoji = matchArticleEmoji(article);
+        const title = `${emoji ? `${emoji} ` : ''}${article.title || 'Résumé disponible'}`;
         const teams = article.home_team || article.away_team
           ? `${matchArticleTeamLine(article.home_team, article.home_logo_url)} <span class="match-summary-vs">vs</span> ${matchArticleTeamLine(article.away_team, article.away_logo_url)}`
           : escapeHtml(article.teams || 'Match');
         return `<a class="match-summary-card" href="${escapeHtml(href)}">
-          <div class="match-summary-top">
-            <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
-            <span class="match-summary-date">${escapeHtml(matchArticleDate(article.date || article.published_at))}</span>
-          </div>
+          <h3 class="match-summary-title">${escapeHtml(title)}</h3>
           <div class="match-summary-line">
             <span class="match-summary-teams">${teams}</span>
             <span class="match-summary-score">${escapeHtml(article.score || '')}</span>
           </div>
-          <h3 class="match-summary-title">${escapeHtml(article.title || 'Résumé disponible')}</h3>
+          <div class="match-summary-top">
+            <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
+            <span class="match-summary-date">${escapeHtml(matchArticleDate(article.date || article.published_at))}</span>
+          </div>
           <p class="match-summary-text">${escapeHtml(article.summary || '')}${article.winner ? ` Vainqueur : ${escapeHtml(article.winner)}.` : ''}</p>
           <span class="match-summary-link">Lire le résumé</span>
         </a>`;
@@ -3601,6 +3625,50 @@
         label: 'buts'
       }
     }, HONOURS_LISTS);
+    ALL_TIME_LISTS['global-goals'] = {
+      players: [
+        {rank: 1, name: 'Cristiano Ronaldo', country: 'Portugal', value: 938, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {rank: 2, name: 'Lionel Messi', country: 'Argentine', value: 879, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {rank: 3, name: 'Pelé', country: 'Brésil', value: 762, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 4, name: 'Romário', country: 'Brésil', value: 755, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 5, name: 'Josef Bican', country: 'Autriche / Tchécoslovaquie', value: 722, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/aut.png'},
+        {rank: 6, name: 'Ferenc Puskás', country: 'Hongrie', value: 714, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/hun.png'},
+        {rank: 7, name: 'Robert Lewandowski', country: 'Pologne', value: 694, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/pol.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30889.png'},
+        {rank: 8, name: 'Jimmy Jones', country: 'Irlande du Nord', value: 647, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nir.png'},
+        {rank: 9, name: 'Gerd Müller', country: 'Allemagne', value: 634, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 10, name: 'Eusébio', country: 'Portugal', value: 623, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'},
+        {rank: 11, name: 'Zlatan Ibrahimović', country: 'Suède', value: 573, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/swe.png'},
+        {rank: 12, name: 'Luis Suárez', country: 'Uruguay', value: 562, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/uru.png'},
+        {rank: 13, name: 'Glenn Ferguson', country: 'Irlande du Nord', value: 562, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nir.png'},
+        {rank: 14, name: 'Fernando Peyroteo', country: 'Portugal', value: 544, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png'},
+        {rank: 15, name: 'Uwe Seeler', country: 'Allemagne', value: 528, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'}
+      ],
+      title: 'Meilleur buteur all-time',
+      empty: 'Classement global des buteurs indisponible',
+      label: 'buts'
+    };
+    ALL_TIME_LISTS['champions-goals'] = {
+      players: [
+        {rank: 1, name: 'Cristiano Ronaldo', country: 'Portugal', value: 141, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {rank: 2, name: 'Lionel Messi', country: 'Argentine', value: 129, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {rank: 3, name: 'Robert Lewandowski', country: 'Pologne', value: 109, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/pol.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30889.png'},
+        {rank: 4, name: 'Karim Benzema', country: 'France', value: 90, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 5, name: 'Raúl González', country: 'Espagne', value: 71, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 6, name: 'Kylian Mbappé', country: 'France', value: 70, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/701154.png'},
+        {rank: 7, name: 'Ruud van Nistelrooy', country: 'Pays-Bas', value: 60, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ned.png'},
+        {rank: 8, name: 'Andriy Shevchenko', country: 'Ukraine', value: 59, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ukr.png'},
+        {rank: 9, name: 'Erling Haaland', country: 'Norvège', value: 57, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/nor.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/737066.png'},
+        {rank: 9, name: 'Thomas Müller', country: 'Allemagne', value: 57, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ger.png'},
+        {rank: 11, name: 'Thierry Henry', country: 'France', value: 50, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/fra.png'},
+        {rank: 12, name: 'Alfredo Di Stéfano', country: 'Espagne', value: 49, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png'},
+        {rank: 13, name: 'Zlatan Ibrahimović', country: 'Suède', value: 48, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/swe.png'},
+        {rank: 13, name: 'Mohamed Salah', country: 'Égypte', value: 48, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/egy.png'},
+        {rank: 15, name: 'Filippo Inzaghi', country: 'Italie', value: 46, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/ita.png'}
+      ],
+      title: 'Meilleurs buteurs Champions League',
+      empty: 'Classement global Champions League indisponible',
+      label: 'buts'
+    };
     ALL_TIME_LISTS['euro-history'] = {
       players: [
         {rank: 1, name: 'Espagne', country: 'Espagne', flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/esp.png', value: '4', years: '1964, 2008, 2012, 2024'},
@@ -3622,7 +3690,9 @@
     const allTimeClose = document.getElementById('allTimeClose');
 
     function allTimeAvatar(player) {
-      return player.flag_url
+      return player.photo_url
+        ? `<img class="mini-avatar" src="${escapeHtml(player.photo_url)}" alt="">`
+        : player.flag_url
         ? `<img class="mini-avatar" src="${escapeHtml(player.flag_url)}" alt="">`
         : '<div class="mini-avatar placeholder" aria-hidden="true"></div>';
     }
@@ -8059,6 +8129,22 @@ grant select, insert, update on public.profiles to authenticated;`;
       bundesliga: 'https://a.espncdn.com/i/leaguelogos/soccer/500/ger.1.png'
     };
 
+    function hallScorerCard(player) {
+      const initials = String(player.name || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
+      const avatar = player.photo_url
+        ? `<img src="${leagueEscape(player.photo_url)}" alt="${leagueEscape(player.name || '')}" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span hidden>${leagueEscape(initials)}</span>`
+        : `<span>${leagueEscape(initials)}</span>`;
+      return `<article class="hall-scorer-card">
+        <div class="hall-scorer-avatar">${avatar}</div>
+        <div>
+          <span class="hall-scorer-rank">#${leagueEscape(player.rank || '')}</span>
+          <div class="hall-scorer-name">${leagueEscape(player.name || 'Joueur')}</div>
+          <div class="hall-scorer-country">${leagueEscape(player.country || player.team || 'Nationalité indisponible')}</div>
+          <div class="hall-scorer-goals">${leagueEscape(player.value || '—')} buts</div>
+        </div>
+      </article>`;
+    }
+
     function hallLeagueTeamCard(team, index) {
       const name = team.team || team.name || 'À déterminer';
       const logo = team.flag_url || team.logo_url || leagueClubLogo(name);
@@ -8115,6 +8201,16 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (big5Node) {
         const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
         big5Node.innerHTML = big5Items || '<div class="empty">Buteurs indisponibles.</div>';
+      }
+      const globalScorersNode = document.getElementById('hallGlobalScorers');
+      if (globalScorersNode) {
+        const players = (ALL_TIME_LISTS['global-goals']?.players || []).slice(0, 5);
+        globalScorersNode.innerHTML = players.length ? players.map(hallScorerCard).join('') : '<div class="empty">Classement indisponible.</div>';
+      }
+      const championsScorersNode = document.getElementById('hallChampionsScorers');
+      if (championsScorersNode) {
+        const players = (ALL_TIME_LISTS['champions-goals']?.players || []).slice(0, 5);
+        championsScorersNode.innerHTML = players.length ? players.map(hallScorerCard).join('') : '<div class="empty">Classement indisponible.</div>';
       }
       const standingsNode = document.getElementById('hallLeagueStandings');
       if (!standingsNode) return;
