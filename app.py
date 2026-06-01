@@ -1117,7 +1117,8 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
         return {"answer": COACH_REFUSAL, "source": "refusal", "cached": False}, 200
 
     live_sensitive = _coach_needs_recent_verification(normalized_query)
-    cached = None if live_sensitive else _search_ai_answer_get(normalized_query)
+    bypass_cache = _coach_should_bypass_answer_cache(query)
+    cached = None if live_sensitive or bypass_cache else _search_ai_answer_get(normalized_query)
     if cached:
         _search_ai_answer_increment_usage(cached.get("id"))
         return {
@@ -1131,7 +1132,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
     verified_fact = _verified_coach_fact_answer(query, [])
     if verified_fact:
         answer = _format_coach_answer(verified_fact["answer"])
-        if not live_sensitive:
+        if not live_sensitive and not bypass_cache:
             _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
         return {
             "answer": answer,
@@ -1146,7 +1147,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
     local_answer = _local_coach_answer(query, [])
     if local_answer:
         answer = _format_coach_answer(local_answer)
-        if not live_sensitive:
+        if not live_sensitive and not bypass_cache:
             _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
         return {
             "answer": answer,
@@ -1197,7 +1198,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
             return {"error": COACH_UNAVAILABLE}, 503
         data = response.json()
         answer = _format_coach_answer(_openai_response_text(data)) or COACH_UNAVAILABLE
-        if not live_sensitive:
+        if not live_sensitive and not bypass_cache:
             _search_ai_answer_upsert(query, normalized_query, answer, entity_type)
         return {
             "answer": answer,
@@ -1794,6 +1795,9 @@ def _is_correction_message(normalized_text: str) -> bool:
 def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
     normalized = _normalize_football_text(question)
     recent = _recent_history_text(history)
+    historical_answer = _coach_historical_team_comparison_answer(question)
+    if historical_answer:
+        return historical_answer
     if any(term in normalized for term in {"compare", "comparaison", "versus", "vs", "plus fort", "meilleur"}) and len(_coach_detect_player_names(question)) >= 2:
         comparison_answer = _coach_player_comparison_answer(question)
         if comparison_answer:
@@ -3005,10 +3009,16 @@ COACH_PLAYER_ALIASES = {
     "karim benzema": "Karim Benzema",
     "benzema": "Karim Benzema",
     "ronaldinho": "Ronaldinho",
+    "zinedine zidane": "Zinedine Zidane",
     "zidane": "Zinedine Zidane",
+    "michel platini": "Michel Platini",
     "platini": "Michel Platini",
     "thierry henry": "Thierry Henry",
     "henry": "Thierry Henry",
+    "maradona": "Diego Maradona",
+    "diego maradona": "Diego Maradona",
+    "pele": "Pelé",
+    "pelé": "Pelé",
 }
 
 COACH_PLAYER_BIRTH_DATES = {
@@ -3022,6 +3032,8 @@ COACH_PLAYER_BIRTH_DATES = {
     "Zinedine Zidane": "1972-06-23",
     "Michel Platini": "1955-06-21",
     "Thierry Henry": "1977-08-17",
+    "Diego Maradona": "1960-10-30",
+    "Pelé": "1940-10-23",
 }
 
 COACH_PLAYER_MATCH_HINTS = {
@@ -3070,6 +3082,97 @@ COACH_PLAYER_MATCH_HINTS = {
         "birth_date": "1977-08-17",
         "clubs": ["Monaco", "Juventus", "Arsenal", "Barcelona", "FC Barcelona", "New York Red Bulls", "France"],
     },
+    "Michel Platini": {
+        "nationalities": ["France", "French"],
+        "birth_date": "1955-06-21",
+        "clubs": ["Nancy", "Saint Etienne", "Saint-Étienne", "Juventus", "France"],
+    },
+    "Diego Maradona": {
+        "nationalities": ["Argentina", "Argentine"],
+        "birth_date": "1960-10-30",
+        "clubs": ["Argentinos Juniors", "Boca Juniors", "Barcelona", "Napoli", "Sevilla", "Argentina"],
+    },
+    "Pelé": {
+        "nationalities": ["Brazil", "Brasil", "Brésil", "Brazilian"],
+        "birth_date": "1940-10-23",
+        "clubs": ["Santos", "New York Cosmos", "Brazil"],
+    },
+}
+
+COACH_HISTORICAL_TEAMS = {
+    ("france", "1998"): {
+        "label": "France 1998",
+        "team": "France",
+        "year": "1998",
+        "competition": "Coupe du Monde 1998",
+        "result": "Championne du monde",
+        "coach": "Aimé Jacquet",
+        "captain": "Didier Deschamps",
+        "key_players": ["Zinedine Zidane", "Didier Deschamps", "Lilian Thuram", "Marcel Desailly", "Laurent Blanc", "Fabien Barthez"],
+        "style": "Bloc très solide, défense dominante, maîtrise émotionnelle et coups d'éclat de Zidane dans les grands moments.",
+        "strengths": ["Défense exceptionnelle", "cadre collectif très fort", "milieu Deschamps-Petit-Karembeu très discipliné", "impact mental énorme à domicile"],
+        "limits": ["Animation offensive parfois moins fluide", "dépendance aux coups de pied arrêtés et aux grands moments individuels"],
+        "final": "France 3-0 Brésil",
+    },
+    ("france", "2018"): {
+        "label": "France 2018",
+        "team": "France",
+        "year": "2018",
+        "competition": "Coupe du Monde 2018",
+        "result": "Championne du monde",
+        "coach": "Didier Deschamps",
+        "captain": "Hugo Lloris",
+        "key_players": ["Kylian Mbappé", "Antoine Griezmann", "N'Golo Kanté", "Paul Pogba", "Raphaël Varane", "Hugo Lloris"],
+        "style": "Équipe plus verticale, très forte en transitions, capable de défendre bas puis d'accélérer brutalement avec Mbappé et Griezmann.",
+        "strengths": ["Transitions offensives dévastatrices", "talent individuel supérieur devant", "grosse solidité dans les matchs couperets", "variété Pogba-Griezmann-Mbappé"],
+        "limits": ["Moins dominante dans la possession", "choix parfois prudents avec le ballon"],
+        "final": "France 4-2 Croatie",
+    },
+}
+
+COACH_LEGEND_PROFILES = {
+    "Ronaldinho": {
+        "role": "créateur offensif / meneur excentré",
+        "clubs": ["Grêmio", "PSG", "FC Barcelone", "AC Milan", "Atlético Mineiro"],
+        "nation": "Brésil",
+        "strength": "génie créatif, dribble, imagination, passes décisives et influence émotionnelle énorme",
+        "era": "années 2000",
+    },
+    "Zinedine Zidane": {
+        "role": "meneur de jeu",
+        "clubs": ["Cannes", "Bordeaux", "Juventus", "Real Madrid"],
+        "nation": "France",
+        "strength": "contrôle du tempo, qualité technique, grands matchs et leadership dans les moments décisifs",
+        "era": "années 1990-2000",
+    },
+    "Thierry Henry": {
+        "role": "attaquant complet",
+        "clubs": ["Monaco", "Juventus", "Arsenal", "FC Barcelone", "New York Red Bulls"],
+        "nation": "France",
+        "strength": "vitesse, appels côté gauche, finition en mouvement et domination en Premier League",
+        "era": "années 2000",
+    },
+    "Michel Platini": {
+        "role": "meneur-buteur",
+        "clubs": ["Nancy", "Saint-Étienne", "Juventus"],
+        "nation": "France",
+        "strength": "vision, coups francs, volume de buts rare pour un meneur et Euro 1984 légendaire",
+        "era": "années 1980",
+    },
+    "Diego Maradona": {
+        "role": "meneur total",
+        "clubs": ["Argentinos Juniors", "Boca Juniors", "FC Barcelone", "Napoli"],
+        "nation": "Argentine",
+        "strength": "dribble, leadership, capacité à porter une équipe et Coupe du Monde 1986 mythique",
+        "era": "années 1980",
+    },
+    "Pelé": {
+        "role": "attaquant créatif",
+        "clubs": ["Santos", "New York Cosmos"],
+        "nation": "Brésil",
+        "strength": "buteur, passeur, jeu aérien, précocité et trois Coupes du Monde",
+        "era": "années 1950-1970",
+    },
 }
 
 
@@ -3101,14 +3204,52 @@ def _coach_detect_age(question: str) -> int | None:
     return age if 15 <= age <= 45 else None
 
 
+def _coach_detect_historical_team_refs(question: str) -> list[dict[str, Any]]:
+    normalized = _normalize_football_text(question)
+    full_years = re.findall(r"\b(?:19|20)\d{2}\b", normalized)
+    if not full_years:
+        return []
+    refs: list[dict[str, Any]] = []
+    nation = ""
+    if "france" in normalized or "bleus" in normalized:
+        nation = "france"
+    if not nation:
+        return []
+    for year in full_years:
+        item = COACH_HISTORICAL_TEAMS.get((nation, year))
+        if item and item not in refs:
+            refs.append(item)
+    return refs
+
+
+def _coach_is_comparison_question(question: str) -> bool:
+    normalized = _normalize_football_text(question)
+    return (
+        any(term in normalized for term in {"compare", "comparaison", "versus", "vs", "plus fort", "meilleur"})
+        and (len(_coach_detect_player_names(question)) >= 2 or len(_coach_detect_historical_team_refs(question)) >= 2)
+    )
+
+
+def _coach_should_bypass_answer_cache(question: str) -> bool:
+    normalized = _normalize_football_text(question)
+    return bool(
+        _coach_is_comparison_question(question)
+        or _coach_detect_age(question)
+        or re.search(r"\b(19|20)\d{2}\b", normalized)
+        or any(term in normalized for term in {"ronaldinho", "zidane", "henry", "platini", "maradona", "pele", "pelé"})
+    )
+
+
 def _coach_player_birth_year(player_name: str, payload: dict[str, Any]) -> int | None:
+    birth = COACH_PLAYER_BIRTH_DATES.get(player_name)
+    if birth:
+        return int(birth[:4])
     for player in payload.get("players", []):
         if _normalize_football_text(player.get("name", "")) == _normalize_football_text(player_name):
             birth = str(player.get("birth_date") or "")[:10]
             if re.match(r"^\d{4}-", birth):
                 return int(birth[:4])
-    birth = COACH_PLAYER_BIRTH_DATES.get(player_name)
-    return int(birth[:4]) if birth else None
+    return None
 
 
 def _coach_seasons_for_age(player_name: str, age: int, payload: dict[str, Any]) -> list[str]:
@@ -3607,6 +3748,7 @@ def _coach_player_summary_for_comparison(player_name: str, age: int | None, payl
         "competitions": sorted({str(row.get("league_name") or "") for row in rows if row.get("league_name")})[:5],
         "totals": totals,
         "rows": rows,
+        "legend": COACH_LEGEND_PROFILES.get(player_name),
         "source": source,
         "assists_complete": bool(rows) and len(assists_known_rows) == len(rows),
     }
@@ -3635,6 +3777,18 @@ def _coach_player_comparison_answer(question: str) -> str:
     for summary in summaries:
         totals = summary.get("totals") or {}
         if not summary.get("rows"):
+            legend = summary.get("legend") or {}
+            if legend:
+                lines.append(
+                    f"{summary['name']}\n"
+                    f"• Profil : {legend.get('role')}\n"
+                    f"• Nation : {legend.get('nation')}\n"
+                    f"• Clubs : {', '.join(legend.get('clubs') or [])}\n"
+                    f"• Période : {legend.get('era')}\n"
+                    f"• Point fort : {legend.get('strength')}\n"
+                    f"• Stats détaillées : non complètes dans API-Football pour cette fenêtre historique"
+                )
+                continue
             lines.append(
                 f"{summary['name']}\n"
                 "• Statistiques détaillées : indisponibles pour cette fenêtre\n"
@@ -3678,6 +3832,13 @@ def _coach_player_comparison_answer(question: str) -> str:
     analysis_bits.append(
         f"{winner['name']} combine le mieux rendement offensif et présence dans les matchs disponibles."
     )
+    legend_names = [summary["name"] for summary in summaries if summary.get("legend") and not summary.get("rows")]
+    if legend_names:
+        analysis_bits.append(
+            "Pour les légendes plus anciennes comme "
+            + ", ".join(legend_names)
+            + ", l'analyse repose surtout sur le profil historique, car les statistiques saison par saison sont moins complètes."
+        )
 
     lines.append("Analyse\n" + "\n".join(f"• {bit}" for bit in analysis_bits))
     lines.append(
@@ -3689,6 +3850,42 @@ def _coach_player_comparison_answer(question: str) -> str:
     )
     source_names = sorted({str(summary.get("source") or "") for summary in summaries if summary.get("source")})
     lines.append(f"Sources\nDonnées locales et API utilisées : {', '.join(source_names) or 'Akro du Foot'}.")
+    return "\n\n".join(lines)
+
+
+def _coach_historical_team_comparison_answer(question: str) -> str:
+    refs = _coach_detect_historical_team_refs(question)
+    if len(refs) < 2:
+        return ""
+    left, right = refs[0], refs[1]
+    lines = [
+        "Résumé",
+        f"{left['label']} et {right['label']} sont deux équipes championnes du monde, mais avec deux identités assez différentes.",
+        f"{left['label']}\n"
+        f"• Compétition : {left['competition']}\n"
+        f"• Résultat : {left['result']}\n"
+        f"• Sélectionneur : {left['coach']}\n"
+        f"• Cadres : {', '.join(left['key_players'])}\n"
+        f"• Style : {left['style']}\n"
+        f"• Finale : {left['final']}",
+        f"{right['label']}\n"
+        f"• Compétition : {right['competition']}\n"
+        f"• Résultat : {right['result']}\n"
+        f"• Sélectionneur : {right['coach']}\n"
+        f"• Cadres : {', '.join(right['key_players'])}\n"
+        f"• Style : {right['style']}\n"
+        f"• Finale : {right['final']}",
+        "Analyse\n"
+        f"• {left['label']} avait probablement la base défensive la plus impressionnante : {', '.join(left['strengths'][:2])}.\n"
+        f"• {right['label']} avait plus de vitesse, de puissance de transition et de variété offensive : {', '.join(right['strengths'][:2])}.\n"
+        f"• Sur un match fermé, {left['label']} peut avoir l'avantage grâce à sa solidité et son contrôle mental.\n"
+        f"• Dans un match avec espaces, {right['label']} devient très dangereuse grâce à Mbappé, Griezmann et Pogba.",
+        "Conclusion\n"
+        f"Je donne un léger avantage à {right['label']} pour le potentiel offensif et la capacité à punir en transition. "
+        f"Mais si la question porte sur la maîtrise défensive pure, {left['label']} reste la référence. "
+        "En clair : 1998 est plus solide, 2018 est plus explosive.",
+        "Sources\nBase historique locale Akro du Foot, à enrichir avec les feuilles de match et statistiques détaillées quand elles seront disponibles.",
+    ]
     return "\n\n".join(lines)
 
 
