@@ -10276,6 +10276,30 @@ grant select, insert, update on public.profiles to authenticated;`;
         const data = config.seasons[selected];
         if (!data) {
           const championsSupabaseBracket = kind === 'champions' && selected === '2025-2026' ? championsSupabaseBracketMatches(selected) : [];
+          if (kind === 'champions' && selected === '2025-2026') {
+            const championsMatches = Array.isArray(TEAM_MATCHES)
+              ? TEAM_MATCHES.filter(match => normalizeTeamName(match?.competition || '').includes('champions'))
+              : [];
+            console.info('[champions-2025-bracket]', {
+              kind,
+              selected,
+              hasHistoricalData: Boolean(data),
+              supabaseBracketCount: championsSupabaseBracket.length,
+              usingSupabase: championsSupabaseBracket.length > 0,
+              fallbackRestored: championsSupabaseBracket.length === 0,
+              championsMatchesCount: championsMatches.length,
+              championsFinalMatches: championsMatches
+                .filter(match => normalizeTeamName(match?.phase || '').includes('final'))
+                .map(match => ({
+                  phase: match.phase || '',
+                  status: match.status || '',
+                  home_team: match.home_team || '',
+                  away_team: match.away_team || '',
+                  score: `${match.home_score ?? ''}-${match.away_score ?? ''}`,
+                  penalties: `${match.home_penalty_score ?? ''}-${match.away_penalty_score ?? ''}`
+                }))
+            });
+          }
           restore(kind);
           if (kind === 'champions') {
             const derivedGroups = championsLeagueGroupsFromMatches(selected);
