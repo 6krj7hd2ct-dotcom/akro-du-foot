@@ -2593,6 +2593,7 @@ def _football_supabase_payload() -> dict[str, Any]:
             str(home.get("name") if home else ""),
             str(away.get("name") if away else ""),
         ]).lower()
+        print("[champions-final-debug] reached", flush=True)
         if "champions" in match_search and "final" in match_search and "paris" in match_search and "arsenal" in match_search:
             print("[champions-final-debug] raw_supabase_match=" + json.dumps(match, ensure_ascii=False, default=str), flush=True)
             print("[champions-final-debug] raw_data=" + json.dumps(raw_match, ensure_ascii=False, default=str), flush=True)
