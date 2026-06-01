@@ -471,6 +471,21 @@
     .big5-item .subtle { font-size: 11px; }
     .big5-item .club-logo { width: 18px; height: 18px; flex-basis: 18px; }
     .big5-item .player-stat { font-size: 22px; margin-top: 5px; }
+    .news-kicker-icon { width: 26px; height: 26px; display: inline-grid; place-items: center; margin-right: 2px; border-radius: 999px; border: 1px solid rgba(245,201,107,0.34); background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.34), rgba(245,201,107,0.18) 38%, rgba(7,17,31,0.64)); color: #ffe1a0; box-shadow: 0 10px 24px rgba(0,0,0,0.22), 0 0 18px rgba(245,201,107,0.14); font-size: 14px; line-height: 1; }
+    .hall-hero::after { display: none; }
+    .hall-standings-board { display: grid; gap: 14px; }
+    .hall-league-row { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.11); border-radius: 18px; background: linear-gradient(135deg, rgba(7,17,31,0.92), rgba(18,43,70,0.70)); box-shadow: 0 16px 38px rgba(0,0,0,0.18); }
+    .hall-league-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .hall-league-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 17px; font-weight: 950; }
+    .hall-league-title::before { content: ""; width: 9px; height: 28px; border-radius: 999px; background: linear-gradient(180deg, var(--gold), rgba(99,232,255,0.70)); box-shadow: 0 0 18px rgba(245,201,107,0.18); }
+    .hall-top3-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .hall-team-card { position: relative; overflow: hidden; min-height: 118px; display: grid; align-content: center; gap: 8px; padding: 14px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.10), rgba(245,201,107,0.08)); }
+    .hall-team-card::before { content: ""; position: absolute; right: 10px; top: 50%; width: 88px; height: 88px; transform: translateY(-50%); background: var(--club-logo, none) center / contain no-repeat; opacity: .20; pointer-events: none; filter: saturate(1.12); }
+    .hall-team-card > * { position: relative; z-index: 1; }
+    .hall-rank { width: 28px; height: 28px; display: inline-grid; place-items: center; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
+    .hall-team-name { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 18px; line-height: 1.08; font-weight: 950; }
+    .hall-team-meta { color: #bcd0e5; font-size: 12px; font-weight: 850; }
+    @media (max-width: 760px) { .hall-top3-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } }
     @media (max-width: 860px) {
       .player-card { min-height: 108px; padding: 12px 78px 12px 12px; }
       .player-card .avatar-wrap, .player-card .avatar { width: 70px; height: 92px; }
@@ -1633,6 +1648,7 @@
       <button class="tab-button" type="button" data-tab-target="euro">Euro</button>
       <button class="tab-button" type="button" data-tab-target="champions">Champions League</button>
       <button class="tab-button" type="button" data-tab-target="leagues">Championnats</button>
+      <button class="tab-button" type="button" data-tab-target="hall">Hall of fame</button>
     </nav>
 
     <section class="mercato-ticker mercato-under-tabs" aria-label="Mercato live">
@@ -1684,7 +1700,7 @@
     <section class="tab-panel is-active" id="tab-news" data-tab-panel="news">
       <section class="hero news-hero">
         <div class="hero-content">
-          <div class="kicker"><span class="ball"></span> Actualités football</div>
+          <div class="kicker"><span class="ball"></span><span class="news-kicker-icon" aria-hidden="true">📰</span> Actualités football</div>
           <h1>Actus</h1>
           <p class="hero-copy">Toutes les dernières news football en français, centralisées dans un seul espace : France, PSG, compétitions, championnats et mercato important.</p>
           <div class="hero-badges">
@@ -1721,6 +1737,25 @@
       <section class="match-summary-grid" id="matchArticlesBoard" aria-label="Résumés des matchs">
         <div class="empty">Chargement des résumés...</div>
       </section>
+      <div class="section-head"><div class="section-title"><h2>Fil d’actualités</h2></div><div class="section-note">Articles français uniquement, triés du plus récent au plus ancien.</div></div>
+      <section class="news news-board" id="globalNewsBoard"><div class="empty">Aucune actualité disponible pour le moment.</div></section>
+    </section>
+
+    <section class="tab-panel" id="tab-hall" data-tab-panel="hall">
+      <section class="hero hall-hero">
+        <div class="hero-content">
+          <div class="kicker"><span class="ball"></span> Hall of fame</div>
+          <h1>Hall of fame</h1>
+          <p class="hero-copy">Palmarès, récompenses majeures et références historiques des grands championnats européens.</p>
+          <div class="hero-badges">
+            <div class="hero-row">
+              <span class="pill">Récompenses</span>
+              <span class="pill">Buteurs historiques</span>
+              <span class="pill">Classements championnats</span>
+            </div>
+          </div>
+        </div>
+      </section>
       <div class="section-head"><div class="section-title"><h2>Récompenses annuelles</h2></div><div class="section-note">Lauréats majeurs, mise à jour annuelle.</div></div>
       <section class="annual-awards-grid news-awards-grid" aria-label="Récompenses annuelles">
         <article class="award-card" style="--award-flag:url(https://a.espncdn.com/i/teamlogos/countries/500/fra.png)" data-award-history="ballon-or" role="button" tabindex="0" aria-label="Voir l'historique du Ballon d'Or">
@@ -1742,8 +1777,8 @@
       </section>
       <div class="section-head"><div class="section-title"><h2>Meilleurs buteurs des 5 grands championnats</h2></div><div class="section-note">Le meilleur buteur publié pour chaque championnat.</div></div>
       <section class="big5-ticker" id="big5TopScorers" aria-label="Meilleurs buteurs des 5 grands championnats"></section>
-      <div class="section-head"><div class="section-title"><h2>Fil d’actualités</h2></div><div class="section-note">Articles français uniquement, triés du plus récent au plus ancien.</div></div>
-      <section class="news news-board" id="globalNewsBoard"><div class="empty">Aucune actualité disponible pour le moment.</div></section>
+      <div class="section-head"><div class="section-title"><h2>Classement Championnats</h2></div><div class="section-note">Les 3 premiers actuels de chaque grand championnat.</div></div>
+      <section class="hall-standings-board" id="hallLeagueStandings" aria-label="Classement Championnats"></section>
     </section>
 
     <section class="tab-panel" id="tab-worldcup" data-tab-panel="worldcup">
@@ -7917,6 +7952,51 @@ grant select, insert, update on public.profiles to authenticated;`;
       leagueFocusNews('leagues', focus);
     }
 
+    const HALL_LEAGUE_ORDER = [
+      ['ligue1', 'Ligue 1'],
+      ['laliga', 'Liga'],
+      ['premierleague', 'Premier League'],
+      ['seriea', 'Serie A'],
+      ['bundesliga', 'Bundesliga']
+    ];
+
+    function hallLeagueTeamCard(team, index) {
+      const name = team.team || team.name || 'À déterminer';
+      const logo = team.flag_url || team.logo_url || leagueClubLogo(name);
+      const points = team.points || team.pts || '—';
+      const played = team.played || team.matches_played || team.mj || '—';
+      const style = logo ? ` style="--club-logo:url(${leagueEscape(logo)})"` : '';
+      return `<article class="hall-team-card"${style}>
+        <span class="hall-rank">#${leagueEscape(team.rank || index + 1)}</span>
+        <div class="hall-team-name">${leagueFlag(logo)}<span>${leagueEscape(name)}</span></div>
+        <div class="hall-team-meta">${leagueEscape(points)} pts · ${leagueEscape(played)} MJ</div>
+      </article>`;
+    }
+
+    async function renderHallOfFame() {
+      await ensureLeagueData();
+      if (!LEAGUES_DATA) return;
+      const big5Node = document.getElementById('big5TopScorers');
+      if (big5Node) {
+        const big5Items = (LEAGUES_DATA.big5_top_scorers || []).map(player => `<div class="big5-item">${leaguePlayerCard(player, 'buts', 'big5')}</div>`).join('');
+        big5Node.innerHTML = big5Items || '<div class="empty">Buteurs indisponibles.</div>';
+      }
+      const standingsNode = document.getElementById('hallLeagueStandings');
+      if (!standingsNode) return;
+      standingsNode.innerHTML = HALL_LEAGUE_ORDER.map(([key, label]) => {
+        const league = (LEAGUES_DATA.leagues || {})[key] || {};
+        const teams = leagueStandingsTeams(league).slice(0, 3);
+        const cards = teams.length ? teams.map(hallLeagueTeamCard).join('') : '<div class="empty">Classement indisponible.</div>';
+        return `<article class="hall-league-row">
+          <div class="hall-league-head">
+            <div class="hall-league-title">${leagueEscape(league.name || label)}</div>
+            <button class="alltime-badge history-badge" type="button" data-alltime="league-history-${leagueEscape(key)}">Palmarès</button>
+          </div>
+          <div class="hall-top3-grid">${cards}</div>
+        </article>`;
+      }).join('');
+    }
+
     function leagueTabIsActive() {
       return document.querySelector('[data-tab-panel="leagues"]')?.classList.contains('is-active');
     }
@@ -10329,6 +10409,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           panel.classList.toggle('is-active', panel.dataset.tabPanel === target);
         });
         if (target === 'leagues' && typeof renderLeague === 'function') renderLeague();
+        if (target === 'hall' && typeof renderHallOfFame === 'function') renderHallOfFame();
       });
     });
 
