@@ -166,6 +166,9 @@
     .ucl-trophy { filter: drop-shadow(0 0 24px rgba(180,210,255,0.30)) drop-shadow(0 18px 34px rgba(0,0,0,0.32)); }
     .euro-trophy { filter: drop-shadow(0 0 26px rgba(99,232,255,0.34)) drop-shadow(0 18px 36px rgba(0,0,0,0.32)); }
     .hero.champions .hero-logo-mark { opacity: 0.96; }
+    .hero.champions .hero-logo-mark.is-club-logo { width: clamp(130px, 18vw, 220px); aspect-ratio: 1; opacity: 1; filter: drop-shadow(0 0 26px rgba(99,232,255,0.24)) drop-shadow(0 20px 42px rgba(0,0,0,0.34)); }
+    .hero-focus-logo { width: 78%; height: 78%; display: grid; place-items: center; border-radius: 999px; background: radial-gradient(circle at 42% 32%, rgba(255,255,255,0.28), rgba(99,232,255,0.12) 42%, rgba(7,17,31,0.32)); border: 1px solid rgba(255,255,255,0.16); box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 0 28px rgba(245,201,107,0.08); }
+    .hero-focus-logo img { width: 82%; height: 82%; object-fit: contain; display: block; filter: none; opacity: 1; }
     .league-focus-backdrop {
       position: absolute;
       right: clamp(22px, 7vw, 96px);
@@ -406,6 +409,7 @@
     .match-summary-logo { width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
     .match-summary-vs { color: #9fb0c2; font-size: 12px; font-weight: 950; text-transform: uppercase; }
     .match-summary-score { border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }
+    .match-summary-title { margin: 0; color: #fff; font-size: 16px; line-height: 1.18; font-weight: 950; }
     .match-summary-text { margin: 0; color: #c9d7e7; font-size: 13px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .match-summary-link { align-self: end; color: var(--gold); font-size: 13px; font-weight: 950; }
     .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -1647,7 +1651,6 @@
       <button class="tab-button" type="button" data-tab-target="worldcup">Coupe du Monde</button>
       <button class="tab-button" type="button" data-tab-target="euro">Euro</button>
       <button class="tab-button" type="button" data-tab-target="champions">Champions League</button>
-      <button class="tab-button" type="button" data-tab-target="leagues">Championnats</button>
       <button class="tab-button" type="button" data-tab-target="hall">Hall of fame</button>
     </nav>
 
@@ -2070,7 +2073,7 @@
     <section class="tab-panel" id="tab-champions" data-tab-panel="champions">
       <section class="hero champions">
         
-        <div class="hero-logo-mark premium-trophy ucl-trophy hero-trophy" aria-hidden="true">
+        <div class="hero-logo-mark premium-trophy ucl-trophy hero-trophy" id="championsHeroLogoMark" aria-hidden="true">
           <svg viewBox="0 0 220 300" role="img" focusable="false">
             <defs>
               <linearGradient id="uclChrome" x1="20%" x2="82%" y1="8%" y2="92%">
@@ -2091,6 +2094,27 @@
             <path d="M110 86l10 23h25l-20 15 8 24-23-14-22 14 8-24-20-15h25l9-23Z" fill="#f8fbff" fill-opacity=".74"/>
           </svg>
         </div>
+        <template id="championsHeroTrophyTemplate">
+          <svg viewBox="0 0 220 300" role="img" focusable="false">
+            <defs>
+              <linearGradient id="uclChromeFallback" x1="20%" x2="82%" y1="8%" y2="92%">
+                <stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#cfd8e8"/><stop offset="0.48" stop-color="#7f91ad"/><stop offset="0.72" stop-color="#eef5ff"/><stop offset="1" stop-color="#92a5c4"/>
+              </linearGradient>
+              <linearGradient id="uclStemFallback" x1="0" x2="1"><stop offset="0" stop-color="#75879f"/><stop offset="0.48" stop-color="#f7fbff"/><stop offset="1" stop-color="#6c7d97"/></linearGradient>
+              <radialGradient id="uclGlowFallback" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#ddebff" stop-opacity="0.90"/><stop offset="0.52" stop-color="#7ba9ff" stop-opacity="0.22"/><stop offset="1" stop-color="#0b1735" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="110" cy="151" rx="92" ry="122" fill="url(#uclGlowFallback)"/>
+            <path d="M52 71c-29 13-43 41-38 73 5 31 27 51 57 58" fill="none" stroke="url(#uclChromeFallback)" stroke-width="13" stroke-linecap="round"/>
+            <path d="M168 71c29 13 43 41 38 73-5 31-27 51-57 58" fill="none" stroke="url(#uclChromeFallback)" stroke-width="13" stroke-linecap="round"/>
+            <path d="M58 48h104l-12 124c-3 35-22 57-40 57s-37-22-40-57L58 48Z" fill="url(#uclChromeFallback)" stroke="rgba(255,255,255,.72)" stroke-width="3"/>
+            <path d="M82 71h56l-7 92c-2 24-11 39-21 39s-19-15-21-39L82 71Z" fill="rgba(255,255,255,.20)"/>
+            <path d="M110 226v33" stroke="url(#uclStemFallback)" stroke-width="18" stroke-linecap="round"/>
+            <path d="M68 269h84l15 18H53l15-18Z" fill="url(#uclStemFallback)"/>
+            <path d="M82 288h56" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="110" cy="118" r="31" fill="none" stroke="#f8fbff" stroke-opacity=".64" stroke-width="5"/>
+            <path d="M110 86l10 23h25l-20 15 8 24-23-14-22 14 8-24-20-15h25l9-23Z" fill="#f8fbff" fill-opacity=".74"/>
+          </svg>
+        </template>
         <div class="hero-content">
           <div class="kicker"><span class="ball"></span> UEFA Champions League</div>
           <h1>Champions League</h1>
@@ -3014,11 +3038,28 @@
       return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit', year: 'numeric'});
     }
 
+    const STATIC_MATCH_ARTICLES = [{
+      match_id: 'champions-final-2025-2026-psg-arsenal',
+      slug: 'paris-back-2-back',
+      url: '#matchArticlesBoard',
+      title: 'Paris Back 2 Back',
+      summary: 'Paris Saint-Germain remporte la Champions League 2025-2026 face à Arsenal, finaliste, après un 1-1 intense et une séance de tirs au but gagnée 4-3.',
+      competition: 'Champions League',
+      date: '2026-05-30T16:00:00Z',
+      published_at: '2026-05-30T19:30:00Z',
+      home_team: 'Paris Saint-Germain',
+      away_team: 'Arsenal',
+      home_logo_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png',
+      away_logo_url: 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png',
+      score: '1 - 1 · TAB 4-3',
+      winner: 'Paris Saint-Germain'
+    }];
+
     function renderMatchArticles(items) {
       const container = document.getElementById('matchArticlesBoard');
       if (!container) return;
       const seen = new Set();
-      const articles = (items || [])
+      const articles = [...(items || []), ...STATIC_MATCH_ARTICLES]
         .filter(article => {
           const key = String(article.match_id || article.slug || '');
           if (!key || seen.has(key)) return false;
@@ -3034,7 +3075,7 @@
       }
 
       container.innerHTML = articles.map(article => {
-        const href = `/actus/resume/${encodeURIComponent(article.slug || '')}`;
+        const href = article.url || `/actus/resume/${encodeURIComponent(article.slug || '')}`;
         const teams = article.home_team || article.away_team
           ? `${matchArticleTeamLine(article.home_team, article.home_logo_url)} <span class="match-summary-vs">vs</span> ${matchArticleTeamLine(article.away_team, article.away_logo_url)}`
           : escapeHtml(article.teams || 'Match');
@@ -3047,7 +3088,8 @@
             <span class="match-summary-teams">${teams}</span>
             <span class="match-summary-score">${escapeHtml(article.score || '')}</span>
           </div>
-          <p class="match-summary-text">${escapeHtml(article.summary || article.title || '')}</p>
+          <h3 class="match-summary-title">${escapeHtml(article.title || 'Résumé disponible')}</h3>
+          <p class="match-summary-text">${escapeHtml(article.summary || '')}${article.winner ? ` Vainqueur : ${escapeHtml(article.winner)}.` : ''}</p>
           <span class="match-summary-link">Lire le résumé</span>
         </a>`;
       }).join('');
@@ -3064,7 +3106,7 @@
         const data = await response.json();
         renderMatchArticles(data.articles || []);
       } catch (error) {
-        container.innerHTML = '<div class="empty">Aucun résumé disponible pour le moment.</div>';
+        renderMatchArticles([]);
       }
     }
     window.addEventListener('DOMContentLoaded', loadMatchArticles);
@@ -7598,6 +7640,21 @@ grant select, insert, update on public.profiles to authenticated;`;
       const icon = document.getElementById(`${kind}FocusIcon`);
       if (!icon) return;
       icon.innerHTML = focusFlag(focusTeamIcon(team));
+      if (kind === 'champions') updateChampionsHeroLogo(team);
+    }
+
+    function updateChampionsHeroLogo(team) {
+      const target = document.getElementById('championsHeroLogoMark');
+      if (!target) return;
+      const logo = focusTeamIcon(team);
+      if (team && logo) {
+        target.classList.add('is-club-logo');
+        target.innerHTML = `<div class="hero-focus-logo"><img src="${focusEscape(logo)}" alt=""></div>`;
+        return;
+      }
+      const fallback = document.getElementById('championsHeroTrophyTemplate');
+      target.classList.remove('is-club-logo');
+      if (fallback) target.innerHTML = fallback.innerHTML;
     }
 
     function renderFocus(kind) {
