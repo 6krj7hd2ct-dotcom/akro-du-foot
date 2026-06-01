@@ -11,7 +11,7 @@ import subprocess
 import sys
 import threading
 import time
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -26,7 +26,7 @@ except ImportError:
     request = None
     send_file = None
 
-from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, NEWS_CACHE_FILE, OUTPUT_HTML
+from src.config import BASE_DIR, CACHE_FILE, CHAMPIONS_LEAGUE_CACHE_FILE, HALL_OF_FAME_CACHE_FILE, LEAGUES_CACHE_FILE, MERCATO_LIVE_CACHE_FILE, NEWS_CACHE_FILE, OUTPUT_HTML
 from src.fetchers import fetch_all_news, fetch_champions_league_news, fetch_france_header_news, fetch_league_news, fetch_world_cup_news, filter_news_articles, rank_articles, dedupe_articles
 
 COMMUNITY_FILE = BASE_DIR / "data" / "community.json"
@@ -82,6 +82,9 @@ MATCH_ARTICLE_GENERATION_DELAY_SECONDS = 15 * 60
 MATCH_ARTICLE_GENERATION_LOCK = threading.Lock()
 MATCH_ARTICLE_GENERATION_LAST_RUN = 0.0
 MATCH_ARTICLE_GENERATION_RUNNING = False
+HALL_OF_FAME_REFRESH_LOCK = threading.Lock()
+HALL_OF_FAME_REFRESH_LAST_RUN = 0.0
+HALL_OF_FAME_REFRESH_RUNNING = False
 FOOTBALL_SUPABASE_CACHE_LOCK = threading.Lock()
 FOOTBALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
 SUPABASE_FAILED_PATHS: dict[str, float] = {}
@@ -207,6 +210,89 @@ def refresh_global_news_payload(filter_key: str = "all") -> dict[str, Any]:
     data = fetch_all_news(filter_key=filter_key or "all", previous=previous.get("all_articles") or previous.get("articles") or [])
     NEWS_CACHE_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     return news_payload(filter_key)
+
+
+def hall_of_fame_payload() -> dict[str, Any]:
+    _schedule_hall_of_fame_refresh()
+    cache = _read_json(HALL_OF_FAME_CACHE_FILE, {})
+    lists = cache.get("lists") if isinstance(cache, dict) else {}
+    return {
+        "generated_at": cache.get("generated_at", "") if isinstance(cache, dict) else "",
+        "checked_at": cache.get("checked_at", "") if isinstance(cache, dict) else "",
+        "status": cache.get("status", "fallback") if isinstance(cache, dict) else "fallback",
+        "lists": lists if isinstance(lists, dict) else {},
+    }
+
+
+def _hall_of_fame_refresh_enabled() -> bool:
+    return os.environ.get("AKRO_DISABLE_HALL_OF_FAME_REFRESH", "").strip().lower() not in {"1", "true", "yes", "on"}
+
+
+def _seconds_until_next_hall_of_fame_refresh(now: datetime | None = None) -> float:
+    now = now or datetime.now().astimezone()
+    target = now.replace(hour=8, minute=0, second=0, microsecond=0)
+    if now >= target:
+        target = target + timedelta(days=1)
+    return max(0.0, (target - now).total_seconds())
+
+
+def _schedule_hall_of_fame_refresh(force: bool = False) -> None:
+    global HALL_OF_FAME_REFRESH_LAST_RUN, HALL_OF_FAME_REFRESH_RUNNING
+    if not _hall_of_fame_refresh_enabled():
+        return
+    now = time.time()
+    with HALL_OF_FAME_REFRESH_LOCK:
+        if HALL_OF_FAME_REFRESH_RUNNING:
+            return
+        next_delay = _seconds_until_next_hall_of_fame_refresh()
+        should_run = force or (next_delay > 23 * 3600 and now - HALL_OF_FAME_REFRESH_LAST_RUN > 12 * 3600)
+        if not should_run:
+            return
+        HALL_OF_FAME_REFRESH_RUNNING = True
+        HALL_OF_FAME_REFRESH_LAST_RUN = now
+    threading.Thread(target=_refresh_hall_of_fame_cache, daemon=True).start()
+
+
+def _valid_hall_of_fame_list(value: Any) -> bool:
+    if not isinstance(value, dict):
+        return False
+    players = value.get("players")
+    if not isinstance(players, list) or not players:
+        return False
+    return all(isinstance(item, dict) and item.get("name") and item.get("value") not in {None, ""} for item in players[:3])
+
+
+def _refresh_hall_of_fame_cache() -> None:
+    global HALL_OF_FAME_REFRESH_RUNNING
+    try:
+        previous = _read_json(HALL_OF_FAME_CACHE_FILE, {})
+        curated = _read_json(BASE_DIR / "data" / "hall_of_fame_updates.json", {})
+        reliable_lists = {}
+        source_lists = curated.get("lists") if isinstance(curated, dict) else {}
+        if isinstance(source_lists, dict):
+            reliable_lists = {key: value for key, value in source_lists.items() if _valid_hall_of_fame_list(value)}
+        payload = {
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "checked_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "status": "updated" if reliable_lists else "fallback",
+            "lists": reliable_lists or (previous.get("lists") if isinstance(previous, dict) and isinstance(previous.get("lists"), dict) else {}),
+        }
+        HALL_OF_FAME_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        HALL_OF_FAME_CACHE_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception as error:
+        print(f"[hall-of-fame] vérification ignorée: {error}", flush=True)
+    finally:
+        HALL_OF_FAME_REFRESH_RUNNING = False
+
+
+def _run_hall_of_fame_daily_loop() -> None:
+    while True:
+        time.sleep(max(60.0, _seconds_until_next_hall_of_fame_refresh()))
+        _schedule_hall_of_fame_refresh(force=True)
+
+
+if app and _hall_of_fame_refresh_enabled():
+    threading.Thread(target=_run_hall_of_fame_daily_loop, daemon=True).start()
 
 
 MATCH_ARTICLES_MIN_DATE = date(2026, 4, 28)
@@ -796,6 +882,10 @@ if app:
     @app.get("/api/news/refresh")
     def refresh_global_news():
         return jsonify(refresh_global_news_payload(request.args.get("filter", "all")))
+
+    @app.get("/api/hall-of-fame")
+    def hall_of_fame():
+        return jsonify(hall_of_fame_payload())
 
     @app.get("/api/match-articles")
     def match_articles():
@@ -2138,6 +2228,8 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/news/refresh":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(refresh_global_news_payload(_url_decode(query.get("filter", "all"))))
+        elif path == "/api/hall-of-fame":
+            self._send_json(hall_of_fame_payload())
         elif path == "/api/match-articles":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(match_articles_payload(focus=_url_decode(query.get("focus", ""))))

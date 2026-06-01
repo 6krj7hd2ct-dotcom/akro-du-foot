@@ -8,6 +8,7 @@ CHAMPIONS_LEAGUE_CACHE_FILE = DATA_DIR / "champions_league_dashboard.json"
 LEAGUES_CACHE_FILE = DATA_DIR / "leagues_dashboard.json"
 MERCATO_LIVE_CACHE_FILE = DATA_DIR / "mercato_live.json"
 NEWS_CACHE_FILE = DATA_DIR / "news_dashboard.json"
+HALL_OF_FAME_CACHE_FILE = DATA_DIR / "hall_of_fame_cache.json"
 
 ESPN_STANDINGS_URL = "https://www.espn.com/soccer/standings/_/league/fifa.world/fifa-world"
 ESPN_SCOREBOARD_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=200"

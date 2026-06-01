@@ -527,6 +527,8 @@
     .hall-feature-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
     .hall-feature-card { appearance: none; position: relative; overflow: hidden; min-height: 176px; display: grid; grid-template-columns: minmax(0, 1fr) 92px; gap: 10px; align-items: end; width: 100%; padding: 15px; text-align: left; border: 1px solid rgba(99,232,255,0.30); border-radius: 17px; background: linear-gradient(145deg, rgba(7,17,31,0.96), rgba(9,34,56,0.90)); color: #fff; cursor: pointer; box-shadow: 0 18px 44px rgba(0,0,0,0.20); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
     .hall-feature-card::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(90deg, rgba(7,17,31,0.94), rgba(7,17,31,0.62)), var(--feature-flag, var(--feature-image, none)); background-repeat: no-repeat; background-position: center, right 8px center; background-size: cover, 136px 92px; opacity: .72; pointer-events: none; }
+    .hall-feature-card.is-nation::before,
+    .hall-feature-card.is-club::before { background-image: linear-gradient(90deg, rgba(7,17,31,0.96), rgba(7,17,31,0.72)); opacity: 1; }
     .hall-feature-card::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(245,201,107,0.13), transparent 36%), radial-gradient(circle at left bottom, rgba(99,232,255,0.12), transparent 36%); pointer-events: none; }
     .hall-feature-card:hover, .hall-feature-card:focus-visible { transform: translateY(-2px); border-color: rgba(245,201,107,0.50); background: linear-gradient(145deg, rgba(9,24,45,0.98), rgba(31,63,98,0.82)); outline: none; }
     .hall-feature-card > * { position: relative; z-index: 1; }
@@ -540,7 +542,7 @@
     .hall-feature-visual img { width: 100%; max-width: 104px; height: 126px; object-fit: contain; object-position: bottom center; opacity: 1; filter: drop-shadow(0 18px 22px rgba(0,0,0,0.42)); }
     .hall-feature-card.is-nation .hall-feature-visual img,
     .hall-feature-card.is-club .hall-feature-visual img { max-width: 112px; height: 112px; object-position: center; }
-    .hall-feature-fallback { width: 72px; height: 72px; border-radius: 18px; display: grid; place-items: center; color: #9fe9ff; background: rgba(99,232,255,0.10); border: 1px solid rgba(99,232,255,0.22); font-size: 20px; font-weight: 950; }
+    .hall-feature-silhouette { width: 82px; height: 118px; align-self: end; border-radius: 42px 42px 22px 22px; background: radial-gradient(circle at 50% 21%, rgba(225,238,252,0.96) 0 20%, transparent 21%), linear-gradient(180deg, rgba(180,204,228,0.92), rgba(92,124,156,0.76)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 18px 28px rgba(0,0,0,0.34); opacity: .94; }
     .hall-hero-visual { position: absolute; z-index: 0; right: clamp(28px, 7vw, 110px); top: 50%; width: clamp(230px, 28vw, 370px); aspect-ratio: 1.08; transform: translateY(-50%); pointer-events: none; filter: drop-shadow(0 26px 48px rgba(0,0,0,0.34)); }
     .hall-visual-podium { position: absolute; inset: 9% 5% 3%; border-radius: 30px; border: 1px solid rgba(245,201,107,0.24); background: radial-gradient(circle at 50% 18%, rgba(245,201,107,0.28), transparent 30%), linear-gradient(145deg, rgba(7,17,31,0.95), rgba(32,39,64,0.86)); overflow: hidden; }
     .hall-visual-podium::before { content: ""; position: absolute; left: 20%; right: 20%; bottom: 17%; height: 32%; border-radius: 18px 18px 8px 8px; background: linear-gradient(180deg, #ffe1a0, #c4932d); box-shadow: -72px 32px 0 -9px rgba(170,190,215,0.92), 72px 42px 0 -13px rgba(148,168,195,0.82); }
@@ -8506,6 +8508,14 @@ grant select, insert, update on public.profiles to authenticated;`;
         {title: 'Clubs avec le plus de championnats nationaux', note: 'Domination domestique', target: 'club-domestic-leagues', image: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'}
       ]
     };
+    const HALL_GOAT_PHOTOS = {
+      'cristiano ronaldo': 'https://images.fotmob.com/image_resources/playerimages/30893.png',
+      'lionel messi': 'https://images.fotmob.com/image_resources/playerimages/30981.png',
+      'miroslav klose': 'https://upload.wikimedia.org/wikipedia/commons/8/8c/2016209185719_2016-07-27_Champions_for_Charity_-_Sven_-_1D_X_-_0149_-_DV3P4742_mod.jpg',
+      'norberto mendez': 'https://upload.wikimedia.org/wikipedia/commons/0/07/Tucho_mendez.jpg',
+      'samuel etoo': 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Samuel_2011.jpg',
+      'peter shilton': 'https://upload.wikimedia.org/wikipedia/commons/4/43/Peter_Shilton.png'
+    };
 
     function hallScorerCard(player) {
       const initials = String(player.name || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
@@ -8523,8 +8533,18 @@ grant select, insert, update on public.profiles to authenticated;`;
       </article>`;
     }
 
-    function hallFeatureInitials(name) {
-      return String(name || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
+    function hallFeatureNameKey(name) {
+      return String(name || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[’']/g, '')
+        .replace(/[^a-z0-9]+/gi, ' ')
+        .trim()
+        .toLowerCase();
+    }
+
+    function hallFeaturePhotoFor(name) {
+      return HALL_GOAT_PHOTOS[hallFeatureNameKey(name)] || '';
     }
 
     function hallFeatureCard(item, label) {
@@ -8532,22 +8552,24 @@ grant select, insert, update on public.profiles to authenticated;`;
       const leader = (list.players || [])[0] || {};
       const group = String(label || '').toLocaleLowerCase('fr-FR');
       const isGoat = group === 'goat';
-      const visual = (isGoat ? leader.photo_url : '') || leader.flag_url || item.image || '';
+      const visual = isGoat
+        ? (leader.photo_url || hallFeaturePhotoFor(leader.name) || item.image || '')
+        : (leader.flag_url || item.image || '');
       const flag = leader.flag_url || item.image || '';
       const styleParts = [];
       if (visual) styleParts.push(`--feature-image:url(${leagueEscape(visual)})`);
-      if (flag) styleParts.push(`--feature-flag:url(${leagueEscape(flag)})`);
+      if (isGoat && flag) styleParts.push(`--feature-flag:url(${leagueEscape(flag)})`);
       const style = styleParts.length ? ` style="${styleParts.join(';')}"` : '';
       const total = leader.value ? `${leagueEscape(leader.value)} ${leagueEscape(list.label || item.note || 'titres')}` : leagueEscape(item.note || 'Classement complet');
       const country = leader.country || leader.team || item.note || 'Classement complet';
       const visualMarkup = visual
-        ? `<img src="${leagueEscape(visual)}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="hall-feature-fallback" hidden>${leagueEscape(hallFeatureInitials(leader.name || item.title))}</span>`
-        : `<span class="hall-feature-fallback">${leagueEscape(hallFeatureInitials(leader.name || item.title))}</span>`;
+        ? `<img src="${leagueEscape(visual)}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span class="hall-feature-silhouette" hidden aria-hidden="true"></span>`
+        : `<span class="hall-feature-silhouette" aria-hidden="true"></span>`;
       return `<button class="hall-feature-card is-${leagueEscape(group)}" type="button" data-alltime="${leagueEscape(item.target)}"${style}>
         <span class="hall-feature-copy">
           <span class="hall-feature-title">${leagueEscape(item.title)}</span>
           <span class="hall-feature-leader">${leagueEscape(leader.name || item.note || 'Classement complet')}</span>
-          <span class="hall-feature-country">${flag ? `<img src="${leagueEscape(flag)}" alt="">` : ''}<span>${leagueEscape(country)}</span></span>
+          <span class="hall-feature-country">${isGoat && flag ? `<img src="${leagueEscape(flag)}" alt="">` : ''}<span>${leagueEscape(country)}</span></span>
           <span class="hall-feature-total">${total}</span>
         </span>
         <span class="hall-feature-visual">${visualMarkup}</span>
@@ -8612,7 +8634,26 @@ grant select, insert, update on public.profiles to authenticated;`;
       document.getElementById('allTimeClose')?.focus();
     }
 
+    let hallOfFameUpdatesPromise = null;
+
+    async function loadHallOfFameUpdates() {
+      if (hallOfFameUpdatesPromise) return hallOfFameUpdatesPromise;
+      hallOfFameUpdatesPromise = fetch('/api/hall-of-fame', { cache: 'no-store' })
+        .then(response => response.ok ? response.json() : null)
+        .then(data => {
+          const lists = data && typeof data === 'object' ? data.lists || {} : {};
+          Object.entries(lists).forEach(([key, value]) => {
+            if (!value || !Array.isArray(value.players) || !value.players.length) return;
+            ALL_TIME_LISTS[key] = { ...(ALL_TIME_LISTS[key] || {}), ...value };
+          });
+          return data;
+        })
+        .catch(() => null);
+      return hallOfFameUpdatesPromise;
+    }
+
     async function renderHallOfFame() {
+      await loadHallOfFameUpdates();
       renderHallFeatureGroups();
       await ensureLeagueData();
       if (!LEAGUES_DATA) return;
