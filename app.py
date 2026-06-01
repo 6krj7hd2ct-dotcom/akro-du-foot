@@ -1802,6 +1802,9 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
         comparison_answer = _coach_player_comparison_answer(question)
         if comparison_answer:
             return comparison_answer
+    legend_answer = _coach_legend_profile_answer(question)
+    if legend_answer:
+        return legend_answer
     supabase_answer = _supabase_local_answer(normalized)
     if supabase_answer:
         return supabase_answer
@@ -3175,6 +3178,89 @@ COACH_LEGEND_PROFILES = {
     },
 }
 
+COACH_HALL_OF_FAME_MEMORY = {
+    "Lionel Messi": {
+        "nicknames": ["La Pulga"],
+        "honours": ["8 Ballons d'Or", "Champion du Monde 2022", "Vainqueur Copa América 2021", "4 Ligues des Champions"],
+        "distinctions": ["The Best FIFA", "Ballon d'Or Coupe du Monde 2014 et 2022"],
+        "records": ["Recordman de Ballons d'Or", "référence historique du FC Barcelone"],
+        "legacy": "souvent cité comme le joueur le plus complet de l'ère moderne par son mélange buts, création, dribble et continuité.",
+        "weight": 100,
+    },
+    "Cristiano Ronaldo": {
+        "nicknames": ["CR7"],
+        "honours": ["5 Ballons d'Or", "Champion d'Europe 2016", "5 Ligues des Champions"],
+        "distinctions": ["multiple FIFA World Player / The Best", "Soulier d'or européen multiple"],
+        "records": ["meilleur buteur historique de la Ligue des Champions", "référence absolue du buteur moderne"],
+        "legacy": "incarne le rendement, la longévité, l'exigence physique et l'impact décisif dans les grands rendez-vous européens.",
+        "weight": 98,
+    },
+    "Kylian Mbappé": {
+        "nicknames": ["Kyks"],
+        "honours": ["Champion du Monde 2018", "Finaliste Coupe du Monde 2022", "Ligue des Champions 2025"],
+        "distinctions": ["Soulier d'or Coupe du Monde 2022"],
+        "records": ["un des joueurs les plus précoces de l'histoire en Coupe du Monde"],
+        "legacy": "référence de vitesse, d'attaque de profondeur et de précocité au très haut niveau.",
+        "weight": 84,
+    },
+    "Neymar": {
+        "nicknames": ["Ney"],
+        "honours": ["Ligue des Champions 2015", "Copa Libertadores 2011", "Médaille d'or olympique 2016"],
+        "distinctions": ["icône technique du Brésil moderne", "membre majeur du trio MSN au Barça"],
+        "records": ["parmi les plus grands buteurs de l'histoire de la sélection brésilienne"],
+        "legacy": "créateur spectaculaire, dribbleur d'élite et joueur qui a marqué toute une génération par son style.",
+        "weight": 82,
+    },
+    "Ronaldinho": {
+        "nicknames": ["Ronnie", "O Bruxo"],
+        "honours": ["Ballon d'Or 2005", "Champion du Monde 2002", "Ligue des Champions 2006", "Copa América 1999"],
+        "distinctions": ["FIFA World Player 2004 et 2005"],
+        "records": ["icône du FC Barcelone", "symbole du football-spectacle des années 2000"],
+        "legacy": "considéré comme l'un des meilleurs dribbleurs de l'histoire, avec une influence énorme sur une génération de joueurs.",
+        "weight": 90,
+    },
+    "Zinedine Zidane": {
+        "nicknames": ["Zizou"],
+        "honours": ["Ballon d'Or 1998", "Champion du Monde 1998", "Champion d'Europe 2000", "Ligue des Champions 2002"],
+        "distinctions": ["FIFA World Player 1998, 2000 et 2003"],
+        "records": ["légende Juventus et Real Madrid", "buteur de la finale de Ligue des Champions 2002"],
+        "legacy": "considéré comme l'un des plus grands milieux de terrain de l'histoire par son contrôle du tempo et ses grands matchs.",
+        "weight": 94,
+    },
+    "Thierry Henry": {
+        "nicknames": ["Titi"],
+        "honours": ["Champion du Monde 1998", "Champion d'Europe 2000", "Ligue des Champions 2009"],
+        "distinctions": ["Soulier d'or européen", "icône de Premier League"],
+        "records": ["meilleur buteur historique d'Arsenal", "meilleur buteur des Bleus pendant de longues années"],
+        "legacy": "attaquant complet, référence d'Arsenal et de la Premier League par sa vitesse, sa finition et son élégance.",
+        "weight": 86,
+    },
+    "Michel Platini": {
+        "nicknames": ["Le Roi Michel"],
+        "honours": ["3 Ballons d'Or consécutifs", "Champion d'Europe 1984", "Coupe des clubs champions 1985"],
+        "distinctions": ["meilleur joueur et meilleur buteur de l'Euro 1984"],
+        "records": ["9 buts à l'Euro 1984", "légende du football français et de la Juventus"],
+        "legacy": "meneur-buteur rarissime, symbole d'une France techniquement dominante dans les années 1980.",
+        "weight": 91,
+    },
+    "Diego Maradona": {
+        "nicknames": ["El Pibe de Oro"],
+        "honours": ["Champion du Monde 1986", "Finaliste Coupe du Monde 1990", "2 titres de Serie A avec Napoli"],
+        "distinctions": ["Ballon d'Or d'honneur France Football"],
+        "records": ["auteur du But du siècle", "icône absolue du football argentin"],
+        "legacy": "l'un des plus grands joueurs de l'histoire, capable de porter une sélection ou un club au-delà de son niveau collectif.",
+        "weight": 97,
+    },
+    "Pelé": {
+        "nicknames": ["O Rei"],
+        "honours": ["3 Coupes du Monde", "2 Copa Libertadores", "multiples titres avec Santos"],
+        "distinctions": ["Athlète du siècle pour plusieurs institutions sportives"],
+        "records": ["seul joueur triple champion du monde", "symbole mondial du football brésilien"],
+        "legacy": "figure fondatrice du football moderne, référence historique du buteur créatif et de la domination internationale.",
+        "weight": 99,
+    },
+}
+
 
 def _coach_detect_player_names(question: str) -> list[str]:
     normalized = _normalize_football_text(question)
@@ -3238,6 +3324,36 @@ def _coach_should_bypass_answer_cache(question: str) -> bool:
         or re.search(r"\b(19|20)\d{2}\b", normalized)
         or any(term in normalized for term in {"ronaldinho", "zidane", "henry", "platini", "maradona", "pele", "pelé"})
     )
+
+
+def _coach_hall_profile(player_name: str) -> dict[str, Any]:
+    return COACH_HALL_OF_FAME_MEMORY.get(player_name, {})
+
+
+def _coach_hall_lines(player_name: str) -> list[str]:
+    hall = _coach_hall_profile(player_name)
+    if not hall:
+        return []
+    lines: list[str] = []
+    nicknames = hall.get("nicknames") or []
+    if nicknames:
+        lines.append("Surnom : " + ", ".join(str(item) for item in nicknames))
+    honours = hall.get("honours") or []
+    if honours:
+        lines.append("Palmarès : " + ", ".join(str(item) for item in honours))
+    distinctions = hall.get("distinctions") or []
+    if distinctions:
+        lines.append("Distinctions : " + ", ".join(str(item) for item in distinctions))
+    records = hall.get("records") or []
+    if records:
+        lines.append("Records / marqueurs : " + ", ".join(str(item) for item in records))
+    if hall.get("legacy"):
+        lines.append("Héritage : " + str(hall["legacy"]))
+    return lines
+
+
+def _coach_hall_weight(player_name: str) -> int:
+    return _coach_stat_int(_coach_hall_profile(player_name).get("weight"))
 
 
 def _coach_player_birth_year(player_name: str, payload: dict[str, Any]) -> int | None:
@@ -3749,6 +3865,7 @@ def _coach_player_summary_for_comparison(player_name: str, age: int | None, payl
         "totals": totals,
         "rows": rows,
         "legend": COACH_LEGEND_PROFILES.get(player_name),
+        "hall": _coach_hall_profile(player_name),
         "source": source,
         "assists_complete": bool(rows) and len(assists_known_rows) == len(rows),
     }
@@ -3769,7 +3886,8 @@ def _coach_player_comparison_answer(question: str) -> str:
     age = _coach_detect_age(question)
     summaries = [_coach_player_summary_for_comparison(name, age, payload) for name in player_names]
     available = [summary for summary in summaries if summary.get("rows")]
-    if not available:
+    comparable = [summary for summary in summaries if summary.get("rows") or summary.get("legend") or summary.get("hall")]
+    if not comparable:
         return ""
 
     age_text = f" à {age} ans" if age else ""
@@ -3778,7 +3896,9 @@ def _coach_player_comparison_answer(question: str) -> str:
         totals = summary.get("totals") or {}
         if not summary.get("rows"):
             legend = summary.get("legend") or {}
+            hall_lines = _coach_hall_lines(summary["name"])
             if legend:
+                hall_block = "\n".join(f"• {line}" for line in hall_lines)
                 lines.append(
                     f"{summary['name']}\n"
                     f"• Profil : {legend.get('role')}\n"
@@ -3786,6 +3906,7 @@ def _coach_player_comparison_answer(question: str) -> str:
                     f"• Clubs : {', '.join(legend.get('clubs') or [])}\n"
                     f"• Période : {legend.get('era')}\n"
                     f"• Point fort : {legend.get('strength')}\n"
+                    f"{chr(10) + hall_block if hall_block else ''}\n"
                     f"• Stats détaillées : non complètes dans API-Football pour cette fenêtre historique"
                 )
                 continue
@@ -3806,16 +3927,23 @@ def _coach_player_comparison_answer(question: str) -> str:
             f"• Compétitions : {', '.join(summary.get('competitions') or []) or 'non précisées'}\n"
             f"• Saisons : {', '.join(summary.get('seasons') or [])}"
         )
+        hall_lines = _coach_hall_lines(summary["name"])
+        if hall_lines:
+            lines.append(
+                f"{summary['name']} - Hall of Fame\n"
+                + "\n".join(f"• {line}" for line in hall_lines)
+            )
 
     goals_leader = _coach_comparison_metric_leader(available, "goals")
     matches_leader = _coach_comparison_metric_leader(available, "matches")
     assists_leader = _coach_comparison_metric_leader(available, "assists")
     ranked = sorted(
-        available,
+        comparable,
         key=lambda summary: (
             _coach_stat_int((summary.get("totals") or {}).get("goals")) * 3
             + _coach_stat_int((summary.get("totals") or {}).get("assists")) * 2
             + _coach_stat_int((summary.get("totals") or {}).get("matches")) * 0.25
+            + _coach_stat_int((summary.get("hall") or {}).get("weight")) * (1.5 if not age else 0.35)
         ),
         reverse=True,
     )
@@ -3829,9 +3957,10 @@ def _coach_player_comparison_answer(question: str) -> str:
         analysis_bits.append(f"L’expérience la plus forte sur la période est pour {matches_leader['name']} avec {_coach_stat_int((matches_leader.get('totals') or {}).get('matches'))} matchs.")
     if assists_leader and _coach_stat_int((assists_leader.get("totals") or {}).get("assists")):
         analysis_bits.append(f"À la création, {assists_leader['name']} se détache sur les passes disponibles.")
-    analysis_bits.append(
-        f"{winner['name']} combine le mieux rendement offensif et présence dans les matchs disponibles."
-    )
+    if available:
+        analysis_bits.append(
+            f"{winner['name']} combine le mieux rendement offensif, présence dans les matchs disponibles et poids historique."
+        )
     legend_names = [summary["name"] for summary in summaries if summary.get("legend") and not summary.get("rows")]
     if legend_names:
         analysis_bits.append(
@@ -3839,14 +3968,32 @@ def _coach_player_comparison_answer(question: str) -> str:
             + ", ".join(legend_names)
             + ", l'analyse repose surtout sur le profil historique, car les statistiques saison par saison sont moins complètes."
         )
+    hall_summaries = [
+        f"{summary['name']} ({', '.join((summary.get('hall') or {}).get('honours') or [])})"
+        for summary in summaries
+        if summary.get("hall")
+    ]
+    if hall_summaries:
+        analysis_bits.append(
+            "La couche Hall of Fame pèse aussi dans la lecture : "
+            + " ; ".join(hall_summaries[:3])
+            + "."
+        )
 
     lines.append("Analyse\n" + "\n".join(f"• {bit}" for bit in analysis_bits))
+    if available and winner.get("rows"):
+        conclusion_detail = (
+            f"{_coach_stat_int(winner_totals.get('goals'))} buts, "
+            f"{_coach_stat_int(winner_totals.get('assists'))} passes et "
+            f"{_coach_stat_int(winner_totals.get('matches'))} matchs sur la fenêtre étudiée"
+        )
+    else:
+        hall = winner.get("hall") or {}
+        conclusion_detail = ", ".join((hall.get("honours") or [])[:3]) or "un héritage historique supérieur dans la mémoire football"
     lines.append(
         "Conclusion\n"
-        f"À ce stade de comparaison, je donne l’avantage à {winner['name']} : "
-        f"{_coach_stat_int(winner_totals.get('goals'))} buts, {_coach_stat_int(winner_totals.get('assists'))} passes "
-        f"et {_coach_stat_int(winner_totals.get('matches'))} matchs sur la fenêtre étudiée. "
-        "C’est le profil qui pèse le plus directement dans les données disponibles."
+        f"Je donne l’avantage à {winner['name']} dans cette lecture : {conclusion_detail}. "
+        "Le choix prend en compte les chiffres disponibles, mais aussi le palmarès, les distinctions individuelles et l'influence historique."
     )
     source_names = sorted({str(summary.get("source") or "") for summary in summaries if summary.get("source")})
     lines.append(f"Sources\nDonnées locales et API utilisées : {', '.join(source_names) or 'Akro du Foot'}.")
@@ -3886,6 +4033,41 @@ def _coach_historical_team_comparison_answer(question: str) -> str:
         "En clair : 1998 est plus solide, 2018 est plus explosive.",
         "Sources\nBase historique locale Akro du Foot, à enrichir avec les feuilles de match et statistiques détaillées quand elles seront disponibles.",
     ]
+    return "\n\n".join(lines)
+
+
+def _coach_legend_profile_answer(question: str) -> str:
+    player_names = _coach_detect_player_names(question)
+    if len(player_names) != 1:
+        return ""
+    player_name = player_names[0]
+    legend = COACH_LEGEND_PROFILES.get(player_name)
+    hall = _coach_hall_profile(player_name)
+    if not legend and not hall:
+        return ""
+    normalized = _normalize_football_text(question)
+    if not any(term in normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique"}):
+        return ""
+    hall_lines = _coach_hall_lines(player_name)
+    lines = [
+        "Résumé",
+        f"{player_name} est une figure majeure du football, avec un profil de {legend.get('role') if legend else 'joueur historique'}."
+    ]
+    if legend:
+        lines.append(
+            f"Profil\n"
+            f"• Nation : {legend.get('nation')}\n"
+            f"• Clubs majeurs : {', '.join(legend.get('clubs') or [])}\n"
+            f"• Période : {legend.get('era')}\n"
+            f"• Point fort : {legend.get('strength')}"
+        )
+    if hall_lines:
+        lines.append("Hall of Fame\n" + "\n".join(f"• {line}" for line in hall_lines))
+    lines.append(
+        "Conclusion\n"
+        f"Pour parler de {player_name}, il faut donc regarder plus que les statistiques : son palmarès, ses distinctions et son influence historique font partie de sa vraie valeur football."
+    )
+    lines.append("Sources\nMémoire Hall of Fame Akro du Foot et données locales Coach.")
     return "\n\n".join(lines)
 
 
