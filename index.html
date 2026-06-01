@@ -931,8 +931,8 @@
     .mini-player-number { color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); border-radius: 999px; padding: 2px 7px; font-size: 11px; font-weight: 950; }
     .form-analysis { padding: 13px; border: 1px solid rgba(50,211,162,0.20); border-radius: 14px; background: linear-gradient(135deg, rgba(50,211,162,0.10), rgba(31,111,235,0.08)); color: #e8fff8; font-weight: 800; line-height: 1.45; }
     .alltime-list { display: grid; gap: 10px; }
-    .chatbot-dialog { width: min(520px, 100%); max-height: 80vh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; }
-    .chatbot-messages { padding: 14px; display: grid; gap: 10px; align-content: start; overflow-y: auto; min-height: 220px; max-height: none; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
+    .chatbot-dialog { width: min(880px, calc(100vw - 32px)); max-height: min(88vh, 860px); display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; overflow: hidden; }
+    .chatbot-messages { padding: 18px; display: grid; gap: 14px; align-content: start; overflow-y: auto; min-height: 320px; max-height: none; scrollbar-width: thin; scrollbar-color: rgba(245,201,107,0.55) rgba(255,255,255,0.08); }
     .chatbot-messages::-webkit-scrollbar { width: 8px; }
     .chatbot-messages::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
     .chatbot-messages::-webkit-scrollbar-thumb { background: rgba(245,201,107,0.55); border-radius: 999px; }
@@ -943,12 +943,14 @@
     .recent-result.win { color: #9af6d3; background: rgba(50,211,162,0.15); }
     .recent-result.draw { color: #ffe1a0; background: rgba(245,201,107,0.14); }
     .recent-result.loss { color: #ffb4bd; background: rgba(239,51,64,0.14); }
-    .chatbot-message { max-width: 86%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.07); color: #dfeeff; line-height: 1.48; font-size: 14px; white-space: normal; }
-    .chatbot-message p { margin: 0 0 8px; }
+    .chatbot-message { max-width: min(92%, 720px); padding: 13px 15px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.07); color: #dfeeff; line-height: 1.58; font-size: 14px; white-space: normal; }
+    .chatbot-message p { margin: 0 0 12px; }
     .chatbot-message p:last-child { margin-bottom: 0; }
+    .chatbot-message p strong { display: inline-block; margin-bottom: 2px; color: #ffe1a0; font-size: 15px; font-weight: 950; }
     .chatbot-message ul { margin: 8px 0 0; padding-left: 18px; }
     .chatbot-message.user { justify-self: end; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); }
     .chatbot-message.bot { justify-self: start; }
+    .chatbot-message.bot p:last-child { color: rgba(214,229,247,0.72); font-size: 12px; font-style: italic; }
     .chatbot-message.is-thinking { color: #ffe1a0; border-color: rgba(245,201,107,0.28); background: linear-gradient(135deg, rgba(245,201,107,0.12), rgba(31,111,235,0.10)); }
     .chatbot-message.is-thinking::after { content: ""; display: inline-block; width: 28px; height: 8px; margin-left: 7px; border-radius: 999px; background: radial-gradient(circle, #ffe1a0 35%, transparent 38%) 0 50% / 9px 9px repeat-x; animation: coachThinking 1s linear infinite; }
     @keyframes coachThinking { to { background-position: 9px 50%; } }
@@ -10795,8 +10797,15 @@ grant select, insert, update on public.profiles to authenticated;`;
     function formatChatbotContent(text) {
       const clean = chatbotEscape(text).trim();
       const paragraphs = clean.split(/\n{2,}/).map(part => part.trim()).filter(Boolean);
-      if (paragraphs.length > 1) return paragraphs.map(part => `<p>${part.replace(/\n/g, '<br>')}</p>`).join('');
-      return `<p>${clean.replace(/\n/g, '<br>')}</p>`;
+      const renderParagraph = part => {
+        const lines = part.split(/\n/);
+        if (lines.length > 1 && lines[0].length <= 48 && !lines[0].includes('•')) {
+          return `<p><strong>${lines[0]}</strong><br>${lines.slice(1).join('<br>')}</p>`;
+        }
+        return `<p>${part.replace(/\n/g, '<br>')}</p>`;
+      };
+      if (paragraphs.length > 1) return paragraphs.map(renderParagraph).join('');
+      return renderParagraph(clean);
     }
 
     function coachVerificationMarkup(verification) {

@@ -1795,16 +1795,9 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
     normalized = _normalize_football_text(question)
     recent = _recent_history_text(history)
     if any(term in normalized for term in {"compare", "comparaison", "versus", "vs", "plus fort", "meilleur"}) and len(_coach_detect_player_names(question)) >= 2:
-        stats_context = _coach_player_stats_context(question)
-        if stats_context:
-            age = _coach_detect_age(question)
-            age_text = f" à âge équivalent ({age} ans)" if age else ""
-            return (
-                f"Résumé : je peux comparer ces joueurs{age_text} avec les données disponibles dans Akro/Supabase.\n\n"
-                f"Données utilisées :\n{stats_context}\n\n"
-                "Analyse : les chiffres ci-dessus donnent la base objective. Pour départager proprement, il faut ensuite pondérer le contexte : rôle exact, championnat, niveau de l’équipe, compétition européenne, sélection et titres disponibles dans la période.\n\n"
-                "Conclusion : si une ligne indique que la statistique détaillée est absente, je ne l’invente pas. Elle pourra être enrichie via API-Football puis conservée en base pour les prochaines questions."
-            )
+        comparison_answer = _coach_player_comparison_answer(question)
+        if comparison_answer:
+            return comparison_answer
     supabase_answer = _supabase_local_answer(normalized)
     if supabase_answer:
         return supabase_answer
@@ -3588,6 +3581,115 @@ def _coach_player_stats_context(question: str) -> str:
     if _api_football_enabled():
         intro += " puis enrichies à la demande via API-Football si nécessaire"
     return intro + ":\n" + "\n".join(lines)
+
+
+def _coach_player_summary_for_comparison(player_name: str, age: int | None, payload: dict[str, Any]) -> dict[str, Any]:
+    seasons = _coach_seasons_for_age(player_name, age, payload) if age else []
+    if not seasons:
+        seasons = [str(datetime.now(timezone.utc).year - 1), str(datetime.now(timezone.utc).year)]
+    rows = _coach_player_stats_rows(player_name, seasons)
+    source = "Supabase"
+    if not rows:
+        rows = _coach_api_player_stats(player_name, seasons)
+        source = "API-Football + Supabase"
+    rows = _coach_unique_stat_rows(rows)
+    assists_known_rows = [row for row in rows if row.get("assists") not in (None, "")]
+    totals = {
+        "matches": sum(_coach_stat_int(row.get("appearances")) for row in rows),
+        "minutes": sum(_coach_stat_int(row.get("minutes")) for row in rows),
+        "goals": sum(_coach_stat_int(row.get("goals")) for row in rows),
+        "assists": sum(_coach_stat_int(row.get("assists")) for row in assists_known_rows),
+    }
+    return {
+        "name": player_name,
+        "seasons": sorted({str(row.get("season")) for row in rows if row.get("season")}) or seasons,
+        "teams": sorted({str(row.get("team_name") or "") for row in rows if row.get("team_name")})[:5],
+        "competitions": sorted({str(row.get("league_name") or "") for row in rows if row.get("league_name")})[:5],
+        "totals": totals,
+        "rows": rows,
+        "source": source,
+        "assists_complete": bool(rows) and len(assists_known_rows) == len(rows),
+    }
+
+
+def _coach_comparison_metric_leader(summaries: list[dict[str, Any]], key: str) -> dict[str, Any] | None:
+    available = [summary for summary in summaries if summary.get("rows")]
+    if not available:
+        return None
+    return max(available, key=lambda summary: _coach_stat_int((summary.get("totals") or {}).get(key)))
+
+
+def _coach_player_comparison_answer(question: str) -> str:
+    player_names = _coach_detect_player_names(question)
+    if len(player_names) < 2:
+        return ""
+    payload = _football_supabase_payload()
+    age = _coach_detect_age(question)
+    summaries = [_coach_player_summary_for_comparison(name, age, payload) for name in player_names]
+    available = [summary for summary in summaries if summary.get("rows")]
+    if not available:
+        return ""
+
+    age_text = f" à {age} ans" if age else ""
+    lines: list[str] = [f"Résumé\nComparaison{age_text} sur les saisons disponibles."]
+    for summary in summaries:
+        totals = summary.get("totals") or {}
+        if not summary.get("rows"):
+            lines.append(
+                f"{summary['name']}\n"
+                "• Statistiques détaillées : indisponibles pour cette fenêtre\n"
+                f"• Saisons recherchées : {', '.join(summary.get('seasons') or [])}"
+            )
+            continue
+        assists_note = "" if summary.get("assists_complete") else " (donnée parfois absente selon API-Football)"
+        lines.append(
+            f"{summary['name']}\n"
+            f"• Matchs : {_coach_stat_int(totals.get('matches'))}\n"
+            f"• Minutes : {_coach_stat_int(totals.get('minutes'))}\n"
+            f"• Buts : {_coach_stat_int(totals.get('goals'))}\n"
+            f"• Passes : {_coach_stat_int(totals.get('assists'))}{assists_note}\n"
+            f"• Clubs : {', '.join(summary.get('teams') or []) or 'non précisés'}\n"
+            f"• Compétitions : {', '.join(summary.get('competitions') or []) or 'non précisées'}\n"
+            f"• Saisons : {', '.join(summary.get('seasons') or [])}"
+        )
+
+    goals_leader = _coach_comparison_metric_leader(available, "goals")
+    matches_leader = _coach_comparison_metric_leader(available, "matches")
+    assists_leader = _coach_comparison_metric_leader(available, "assists")
+    ranked = sorted(
+        available,
+        key=lambda summary: (
+            _coach_stat_int((summary.get("totals") or {}).get("goals")) * 3
+            + _coach_stat_int((summary.get("totals") or {}).get("assists")) * 2
+            + _coach_stat_int((summary.get("totals") or {}).get("matches")) * 0.25
+        ),
+        reverse=True,
+    )
+    winner = ranked[0]
+    winner_totals = winner.get("totals") or {}
+
+    analysis_bits = []
+    if goals_leader:
+        analysis_bits.append(f"Le meilleur volume de buts ressort côté {goals_leader['name']} avec {_coach_stat_int((goals_leader.get('totals') or {}).get('goals'))} buts.")
+    if matches_leader:
+        analysis_bits.append(f"L’expérience la plus forte sur la période est pour {matches_leader['name']} avec {_coach_stat_int((matches_leader.get('totals') or {}).get('matches'))} matchs.")
+    if assists_leader and _coach_stat_int((assists_leader.get("totals") or {}).get("assists")):
+        analysis_bits.append(f"À la création, {assists_leader['name']} se détache sur les passes disponibles.")
+    analysis_bits.append(
+        f"{winner['name']} combine le mieux rendement offensif et présence dans les matchs disponibles."
+    )
+
+    lines.append("Analyse\n" + "\n".join(f"• {bit}" for bit in analysis_bits))
+    lines.append(
+        "Conclusion\n"
+        f"À ce stade de comparaison, je donne l’avantage à {winner['name']} : "
+        f"{_coach_stat_int(winner_totals.get('goals'))} buts, {_coach_stat_int(winner_totals.get('assists'))} passes "
+        f"et {_coach_stat_int(winner_totals.get('matches'))} matchs sur la fenêtre étudiée. "
+        "C’est le profil qui pèse le plus directement dans les données disponibles."
+    )
+    source_names = sorted({str(summary.get("source") or "") for summary in summaries if summary.get("source")})
+    lines.append(f"Sources\nDonnées locales et API utilisées : {', '.join(source_names) or 'Akro du Foot'}.")
+    return "\n\n".join(lines)
 
 
 def _coach_match_score(haystack: str, terms: list[str]) -> int:
