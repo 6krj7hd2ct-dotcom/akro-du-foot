@@ -1698,7 +1698,19 @@ def _detect_conversation_context(history: list[dict[str, str]], question: str, c
     intent = str(client_context.get("lastIntent", "") or "")
     comparison_entity = str(client_context.get("lastComparisonEntity", "") or "")
 
-    players = {"mbappe": "Kylian Mbappé", "kylian mbappe": "Kylian Mbappé", "messi": "Lionel Messi", "ronaldo": "Cristiano Ronaldo", "cristiano ronaldo": "Cristiano Ronaldo", "haaland": "Erling Haaland", "erling haaland": "Erling Haaland", "neymar": "Neymar", "benzema": "Karim Benzema"}
+    players = {
+        "mbappe": "Kylian Mbappé", "kylian mbappe": "Kylian Mbappé",
+        "messi": "Lionel Messi", "lionel messi": "Lionel Messi",
+        "ronaldo": "Cristiano Ronaldo", "cristiano ronaldo": "Cristiano Ronaldo",
+        "haaland": "Erling Haaland", "erling haaland": "Erling Haaland",
+        "neymar": "Neymar", "benzema": "Karim Benzema",
+        "ronaldinho": "Ronaldinho",
+        "zidane": "Zinedine Zidane", "zinedine zidane": "Zinedine Zidane",
+        "henry": "Thierry Henry", "thierry henry": "Thierry Henry",
+        "platini": "Michel Platini", "michel platini": "Michel Platini",
+        "maradona": "Diego Maradona", "diego maradona": "Diego Maradona",
+        "pele": "Pelé", "pelé": "Pelé",
+    }
     clubs = {"psg": "PSG", "paris saint germain": "PSG", "om": "OM", "marseille": "OM", "real madrid": "Real Madrid", "barca": "Barcelona", "barcelona": "Barcelona", "manchester city": "Manchester City"}
     competitions = {"ligue des champions": "Ligue des Champions", "champions league": "Ligue des Champions", "coupe du monde": "Coupe du Monde", "euro": "Euro", "ligue 1": "Ligue 1", "ballon d or": "Ballon d'Or"}
 
@@ -1802,7 +1814,7 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
         comparison_answer = _coach_player_comparison_answer(question)
         if comparison_answer:
             return comparison_answer
-    legend_answer = _coach_legend_profile_answer(question)
+    legend_answer = _coach_legend_profile_answer(question, history)
     if legend_answer:
         return legend_answer
     supabase_answer = _supabase_local_answer(normalized)
@@ -3181,81 +3193,151 @@ COACH_LEGEND_PROFILES = {
 COACH_HALL_OF_FAME_MEMORY = {
     "Lionel Messi": {
         "nicknames": ["La Pulga"],
+        "ballon_dor": ["2009", "2010", "2011", "2012", "2015", "2019", "2021", "2023"],
+        "world_cup": ["Champion du Monde 2022"],
+        "continental": ["Copa América 2021"],
+        "champions_league": ["2006", "2009", "2011", "2015"],
+        "major_clubs": ["FC Barcelone", "PSG", "Inter Miami"],
         "honours": ["8 Ballons d'Or", "Champion du Monde 2022", "Vainqueur Copa América 2021", "4 Ligues des Champions"],
         "distinctions": ["The Best FIFA", "Ballon d'Or Coupe du Monde 2014 et 2022"],
         "records": ["Recordman de Ballons d'Or", "référence historique du FC Barcelone"],
+        "moments": ["saison 2011-2012 record", "Coupe du Monde 2022", "années Guardiola au Barça"],
+        "style": "meneur-buteur total, dribble court, dernière passe, finition et contrôle du rythme.",
         "legacy": "souvent cité comme le joueur le plus complet de l'ère moderne par son mélange buts, création, dribble et continuité.",
         "weight": 100,
     },
     "Cristiano Ronaldo": {
         "nicknames": ["CR7"],
+        "ballon_dor": ["2008", "2013", "2014", "2016", "2017"],
+        "world_cup": [],
+        "continental": ["Euro 2016", "Ligue des Nations 2019"],
+        "champions_league": ["2008", "2014", "2016", "2017", "2018"],
+        "major_clubs": ["Manchester United", "Real Madrid", "Juventus", "Al Nassr"],
         "honours": ["5 Ballons d'Or", "Champion d'Europe 2016", "5 Ligues des Champions"],
         "distinctions": ["multiple FIFA World Player / The Best", "Soulier d'or européen multiple"],
         "records": ["meilleur buteur historique de la Ligue des Champions", "référence absolue du buteur moderne"],
+        "moments": ["triplés européens avec le Real Madrid", "Euro 2016 avec le Portugal", "finale de Ligue des Champions 2008"],
+        "style": "buteur d'élite, jeu aérien, appel dans la surface, puissance et obsession du rendement.",
         "legacy": "incarne le rendement, la longévité, l'exigence physique et l'impact décisif dans les grands rendez-vous européens.",
         "weight": 98,
     },
     "Kylian Mbappé": {
         "nicknames": ["Kyks"],
+        "ballon_dor": [],
+        "world_cup": ["Champion du Monde 2018", "Finaliste Coupe du Monde 2022"],
+        "continental": [],
+        "champions_league": ["2025"],
+        "major_clubs": ["AS Monaco", "PSG", "Real Madrid"],
         "honours": ["Champion du Monde 2018", "Finaliste Coupe du Monde 2022", "Ligue des Champions 2025"],
         "distinctions": ["Soulier d'or Coupe du Monde 2022"],
         "records": ["un des joueurs les plus précoces de l'histoire en Coupe du Monde"],
+        "moments": ["éclosion Monaco 2017", "Coupe du Monde 2018", "triplé en finale 2022"],
+        "style": "attaquant de rupture, vitesse extrême, appels profonds et finition en transition.",
         "legacy": "référence de vitesse, d'attaque de profondeur et de précocité au très haut niveau.",
         "weight": 84,
     },
     "Neymar": {
         "nicknames": ["Ney"],
+        "ballon_dor": [],
+        "world_cup": [],
+        "continental": ["Copa Libertadores 2011", "Médaille d'or olympique 2016"],
+        "champions_league": ["2015"],
+        "major_clubs": ["Santos", "FC Barcelone", "PSG", "Al Hilal"],
         "honours": ["Ligue des Champions 2015", "Copa Libertadores 2011", "Médaille d'or olympique 2016"],
         "distinctions": ["icône technique du Brésil moderne", "membre majeur du trio MSN au Barça"],
         "records": ["parmi les plus grands buteurs de l'histoire de la sélection brésilienne"],
+        "moments": ["Remontada 2017", "trio MSN 2014-2017", "titre olympique 2016 avec le Brésil"],
+        "style": "dribbleur créatif, un contre un, conduite de balle spectaculaire et dernière passe.",
         "legacy": "créateur spectaculaire, dribbleur d'élite et joueur qui a marqué toute une génération par son style.",
         "weight": 82,
     },
     "Ronaldinho": {
         "nicknames": ["Ronnie", "O Bruxo"],
+        "ballon_dor": ["2005"],
+        "world_cup": ["Champion du Monde 2002"],
+        "continental": ["Copa América 1999", "Copa Libertadores 2013"],
+        "champions_league": ["2006"],
+        "major_clubs": ["Grêmio", "PSG", "FC Barcelone", "AC Milan", "Atlético Mineiro"],
         "honours": ["Ballon d'Or 2005", "Champion du Monde 2002", "Ligue des Champions 2006", "Copa América 1999"],
         "distinctions": ["FIFA World Player 2004 et 2005"],
         "records": ["icône du FC Barcelone", "symbole du football-spectacle des années 2000"],
+        "moments": ["ovation à Santiago Bernabéu en 2005", "Ligue des Champions 2006 avec le Barça", "Coupe du Monde 2002"],
+        "style": "dribble, improvisation, passes impossibles, coups francs et magie dans les petits espaces.",
         "legacy": "considéré comme l'un des meilleurs dribbleurs de l'histoire, avec une influence énorme sur une génération de joueurs.",
         "weight": 90,
     },
     "Zinedine Zidane": {
         "nicknames": ["Zizou"],
+        "ballon_dor": ["1998"],
+        "world_cup": ["Champion du Monde 1998", "Finaliste Coupe du Monde 2006"],
+        "continental": ["Euro 2000"],
+        "champions_league": ["2002"],
+        "major_clubs": ["Juventus", "Real Madrid", "Bordeaux", "Cannes"],
         "honours": ["Ballon d'Or 1998", "Champion du Monde 1998", "Champion d'Europe 2000", "Ligue des Champions 2002"],
         "distinctions": ["FIFA World Player 1998, 2000 et 2003"],
         "records": ["légende Juventus et Real Madrid", "buteur de la finale de Ligue des Champions 2002"],
+        "moments": ["doublé en finale de Coupe du Monde 1998", "volée de Glasgow en finale de Ligue des Champions 2002", "Euro 2000"],
+        "style": "meneur de jeu calme, toucher de balle, protection du ballon, vision et maîtrise du tempo.",
         "legacy": "considéré comme l'un des plus grands milieux de terrain de l'histoire par son contrôle du tempo et ses grands matchs.",
         "weight": 94,
     },
     "Thierry Henry": {
         "nicknames": ["Titi"],
+        "ballon_dor": [],
+        "world_cup": ["Champion du Monde 1998"],
+        "continental": ["Euro 2000"],
+        "champions_league": ["2009"],
+        "major_clubs": ["Monaco", "Arsenal", "FC Barcelone", "New York Red Bulls"],
         "honours": ["Champion du Monde 1998", "Champion d'Europe 2000", "Ligue des Champions 2009"],
         "distinctions": ["Soulier d'or européen", "icône de Premier League"],
         "records": ["meilleur buteur historique d'Arsenal", "meilleur buteur des Bleus pendant de longues années"],
+        "moments": ["Arsenal Invincibles 2003-2004", "années Wenger", "triplé 2009 avec le Barça"],
+        "style": "attaquant lancé côté gauche, vitesse, finition enroulée et intelligence d'appel.",
         "legacy": "attaquant complet, référence d'Arsenal et de la Premier League par sa vitesse, sa finition et son élégance.",
         "weight": 86,
     },
     "Michel Platini": {
         "nicknames": ["Le Roi Michel"],
+        "ballon_dor": ["1983", "1984", "1985"],
+        "world_cup": [],
+        "continental": ["Euro 1984"],
+        "champions_league": ["1985"],
+        "major_clubs": ["Nancy", "Saint-Étienne", "Juventus"],
         "honours": ["3 Ballons d'Or consécutifs", "Champion d'Europe 1984", "Coupe des clubs champions 1985"],
         "distinctions": ["meilleur joueur et meilleur buteur de l'Euro 1984"],
         "records": ["9 buts à l'Euro 1984", "légende du football français et de la Juventus"],
+        "moments": ["Euro 1984", "trois Ballons d'Or consécutifs", "Juventus des années 1980"],
+        "style": "meneur-buteur, vision, coups francs, jeu long et arrivée dans la surface.",
         "legacy": "meneur-buteur rarissime, symbole d'une France techniquement dominante dans les années 1980.",
         "weight": 91,
     },
     "Diego Maradona": {
         "nicknames": ["El Pibe de Oro"],
+        "ballon_dor": ["Ballon d'Or d'honneur"],
+        "world_cup": ["Champion du Monde 1986", "Finaliste Coupe du Monde 1990"],
+        "continental": [],
+        "champions_league": [],
+        "major_clubs": ["Argentinos Juniors", "Boca Juniors", "FC Barcelone", "Napoli"],
         "honours": ["Champion du Monde 1986", "Finaliste Coupe du Monde 1990", "2 titres de Serie A avec Napoli"],
         "distinctions": ["Ballon d'Or d'honneur France Football"],
         "records": ["auteur du But du siècle", "icône absolue du football argentin"],
+        "moments": ["Coupe du Monde 1986", "But du siècle contre l'Angleterre", "titres historiques avec Napoli"],
+        "style": "meneur total, dribble bas, conduite sous pression, créativité et leadership émotionnel.",
         "legacy": "l'un des plus grands joueurs de l'histoire, capable de porter une sélection ou un club au-delà de son niveau collectif.",
         "weight": 97,
     },
     "Pelé": {
         "nicknames": ["O Rei"],
+        "ballon_dor": ["Ballon d'Or d'honneur"],
+        "world_cup": ["Champion du Monde 1958", "Champion du Monde 1962", "Champion du Monde 1970"],
+        "continental": ["2 Copa Libertadores"],
+        "champions_league": [],
+        "major_clubs": ["Santos", "New York Cosmos"],
         "honours": ["3 Coupes du Monde", "2 Copa Libertadores", "multiples titres avec Santos"],
         "distinctions": ["Athlète du siècle pour plusieurs institutions sportives"],
         "records": ["seul joueur triple champion du monde", "symbole mondial du football brésilien"],
+        "moments": ["Coupe du Monde 1958 à 17 ans", "Brésil 1970", "ère Santos dominante"],
+        "style": "attaquant complet, finition, jeu aérien, passe, mobilité et sens du spectacle.",
         "legacy": "figure fondatrice du football moderne, référence historique du buteur créatif et de la domination internationale.",
         "weight": 99,
     },
@@ -4036,8 +4118,32 @@ def _coach_historical_team_comparison_answer(question: str) -> str:
     return "\n\n".join(lines)
 
 
-def _coach_legend_profile_answer(question: str) -> str:
+def _coach_recent_hall_player(history: list[dict[str, str]]) -> str:
+    for item in reversed(history[-8:]):
+        for name in _coach_detect_player_names(str(item.get("content") or "")):
+            if COACH_LEGEND_PROFILES.get(name) or _coach_hall_profile(name):
+                return name
+    return ""
+
+
+def _coach_hall_value(values: list[str], empty: str = "aucun titre majeur renseigné") -> str:
+    return ", ".join(values) if values else empty
+
+
+def _coach_role_phrase(role: str) -> str:
+    clean = str(role or "joueur historique").strip()
+    if not clean:
+        clean = "joueur historique"
+    prefix = "d'" if clean[:1].lower() in {"a", "e", "i", "o", "u", "y"} else "de "
+    return prefix + clean
+
+
+def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | None = None) -> str:
     player_names = _coach_detect_player_names(question)
+    if not player_names and history:
+        player = _coach_recent_hall_player(history)
+        if player:
+            player_names = [player]
     if len(player_names) != 1:
         return ""
     player_name = player_names[0]
@@ -4046,26 +4152,59 @@ def _coach_legend_profile_answer(question: str) -> str:
     if not legend and not hall:
         return ""
     normalized = _normalize_football_text(question)
-    if not any(term in normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique"}):
+    if not any(term in normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique", "ballon", "gagne", "gagné", "remporte", "remporté"}):
         return ""
-    hall_lines = _coach_hall_lines(player_name)
+    ballon_dor = list(hall.get("ballon_dor") or [])
+    asks_ballon_dor = "ballon" in normalized
+    if asks_ballon_dor and ballon_dor:
+        if any("honneur" in _normalize_football_text(item) for item in ballon_dor):
+            opening = f"{player_name} possède une reconnaissance Ballon d'Or honorifique : {_coach_hall_value(ballon_dor)}."
+        else:
+            opening = f"Oui, {player_name} a gagné le Ballon d'Or : {_coach_hall_value(ballon_dor)}."
+    elif asks_ballon_dor:
+        opening = f"Non, {player_name} n'a pas remporté le Ballon d'Or, mais son héritage reste majeur."
+    else:
+        opening = f"{player_name} est une figure majeure du football, avec un profil {_coach_role_phrase(legend.get('role') if legend else 'joueur historique')}."
     lines = [
         "Résumé",
-        f"{player_name} est une figure majeure du football, avec un profil de {legend.get('role') if legend else 'joueur historique'}."
+        opening,
+        "Palmarès complet\n"
+        f"• Ballon d'Or : {_coach_hall_value(ballon_dor, 'aucun Ballon d’Or remporté')}\n"
+        f"• Coupe du Monde : {_coach_hall_value(list(hall.get('world_cup') or []), 'aucun titre mondial renseigné')}\n"
+        f"• Euro / Copa América : {_coach_hall_value(list(hall.get('continental') or []), 'aucun titre continental majeur renseigné')}\n"
+        f"• Ligue des Champions : {_coach_hall_value(list(hall.get('champions_league') or []), 'aucune Ligue des Champions renseignée')}\n"
+        f"• Distinctions FIFA / individuelles : {_coach_hall_value(list(hall.get('distinctions') or []), 'aucune distinction majeure renseignée')}",
     ]
     if legend:
         lines.append(
-            f"Profil\n"
+            f"Clubs emblématiques\n"
+            f"• {', '.join(hall.get('major_clubs') or legend.get('clubs') or [])}\n"
             f"• Nation : {legend.get('nation')}\n"
-            f"• Clubs majeurs : {', '.join(legend.get('clubs') or [])}\n"
-            f"• Période : {legend.get('era')}\n"
-            f"• Point fort : {legend.get('strength')}"
+            f"• Période : {legend.get('era')}"
         )
-    if hall_lines:
-        lines.append("Hall of Fame\n" + "\n".join(f"• {line}" for line in hall_lines))
+    else:
+        lines.append(f"Clubs emblématiques\n• {', '.join(hall.get('major_clubs') or []) or 'clubs majeurs non renseignés'}")
+    moments = list(hall.get("moments") or [])
+    lines.append(
+        "Moments marquants\n"
+        + ("\n".join(f"• {item}" for item in moments) if moments else "• Moments marquants à compléter dans la mémoire Hall of Fame.")
+    )
+    lines.append(
+        "Style de jeu\n"
+        f"• {hall.get('style') or legend.get('strength') if legend else hall.get('style') or 'style à compléter dans la mémoire Hall of Fame'}"
+    )
+    records = list(hall.get("records") or [])
+    nicknames = list(hall.get("nicknames") or [])
+    lines.append(
+        "Héritage\n"
+        f"• Surnom(s) : {_coach_hall_value(nicknames, 'aucun surnom principal renseigné')}\n"
+        + ("\n".join(f"• {item}" for item in records) + "\n" if records else "")
+        + f"• {hall.get('legacy') or 'héritage à compléter dans la mémoire Hall of Fame'}"
+    )
     lines.append(
         "Conclusion\n"
-        f"Pour parler de {player_name}, il faut donc regarder plus que les statistiques : son palmarès, ses distinctions et son influence historique font partie de sa vraie valeur football."
+        f"Pour juger {player_name}, il faut regarder les chiffres, mais aussi le palmarès, les moments de légende et l'influence sur l'histoire du jeu. "
+        "C'est cette lecture Hall of Fame qui sert de référence historique au Coach."
     )
     lines.append("Sources\nMémoire Hall of Fame Akro du Foot et données locales Coach.")
     return "\n\n".join(lines)
