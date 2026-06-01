@@ -2461,6 +2461,7 @@ def _api_football_cache_key(endpoint: str, params: dict[str, Any]) -> str:
 
 def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int | None = None) -> list[dict[str, Any]]:
     if not _api_football_enabled():
+        print(f"[coach-api-football] API_FOOTBALL_KEY absente endpoint={endpoint}", flush=True)
         return []
     endpoint = endpoint.strip("/")
     clean_params = {key: str(value) for key, value in params.items() if value not in (None, "")}
@@ -2494,6 +2495,8 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
             print(f"[coach-api-football] status={response.status_code} endpoint={endpoint}", flush=True)
             return []
         payload = response.json()
+        if isinstance(payload, dict) and payload.get("errors"):
+            print(f"[coach-api-football] errors endpoint={endpoint} params={clean_params} errors={str(payload.get('errors'))[:220]}", flush=True)
         _supabase_service_request(
             "POST",
             "coach_api_cache?on_conflict=cache_key",
@@ -2507,6 +2510,7 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
             prefer="resolution=merge-duplicates,return=minimal",
         )
         rows = payload.get("response") if isinstance(payload, dict) else []
+        print(f"[coach-api-football] fetched endpoint={endpoint} params={clean_params} rows={len(rows) if isinstance(rows, list) else 0}", flush=True)
         return rows if isinstance(rows, list) else []
     except Exception as exc:
         print(f"[coach-api-football] erreur endpoint={endpoint}: {exc}", flush=True)
@@ -3068,18 +3072,59 @@ def _coach_stat_int(value: Any) -> int:
         return 0
 
 
+def _coach_player_api_search_terms(player_name: str) -> list[str]:
+    normalized = _normalize_football_text(player_name)
+    aliases = {
+        "lionel messi": ["messi", "lionel messi"],
+        "cristiano ronaldo": ["cristiano ronaldo", "cristiano", "ronaldo"],
+        "kylian mbappe": ["kylian mbappe", "mbappe"],
+        "erling haaland": ["erling haaland", "haaland"],
+        "neymar": ["neymar"],
+    }
+    terms = aliases.get(normalized, [])
+    if not terms:
+        parts = normalized.split()
+        terms = [normalized]
+        if parts:
+            terms.append(parts[-1])
+    out: list[str] = []
+    for term in terms:
+        clean = _normalize_football_text(term)
+        if len(clean) >= 4 and clean not in out:
+            out.append(clean)
+    return out
+
+
+def _coach_api_player_matches(api_name: str, requested_name: str) -> bool:
+    requested_terms = _coach_query_terms(_normalize_football_text(requested_name))
+    if _coach_match_score(_normalize_football_text(api_name), requested_terms) > 0:
+        return True
+    api_norm = _normalize_football_text(api_name)
+    return any(term and term in api_norm for term in _coach_player_api_search_terms(requested_name))
+
+
 def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[str, Any]]:
     if not _api_football_enabled() or not seasons:
         return []
     collected: list[dict[str, Any]] = []
     for season in seasons[:4]:
-        rows = _api_football_get("players", {"search": player_name, "season": season})
-        for item in rows[:3]:
+        rows: list[dict[str, Any]] = []
+        seen_api_players: set[str] = set()
+        for search_term in _coach_player_api_search_terms(player_name):
+            for item in _api_football_get("players", {"search": search_term, "season": season}):
+                player = item.get("player") if isinstance(item, dict) else {}
+                api_id = str(player.get("id") or "") if isinstance(player, dict) else ""
+                dedupe_key = api_id or json.dumps(player, sort_keys=True, ensure_ascii=False)
+                if dedupe_key in seen_api_players:
+                    continue
+                seen_api_players.add(dedupe_key)
+                rows.append(item)
+        for item in rows[:8]:
             player = item.get("player") if isinstance(item, dict) else {}
             if not isinstance(player, dict):
                 continue
             api_name = str(player.get("name") or "").strip()
-            if not api_name or _coach_match_score(_normalize_football_text(api_name), _coach_query_terms(_normalize_football_text(player_name))) <= 0:
+            if not api_name or not _coach_api_player_matches(api_name, player_name):
                 continue
             for stat in item.get("statistics") or []:
                 if not isinstance(stat, dict):
@@ -3092,7 +3137,7 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                 row = {
                     "api_id": f"{player.get('id')}:{team.get('id') or ''}:{league.get('id') or ''}:{season}",
                     "player_api_id": str(player.get("id") or ""),
-                    "player_name": api_name,
+                    "player_name": player_name,
                     "team_api_id": str(team.get("id") or ""),
                     "team_name": str(team.get("name") or ""),
                     "league_api_id": str(league.get("id") or ""),
@@ -3106,7 +3151,7 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                     "yellow_cards": _coach_stat_int(cards.get("yellow")),
                     "red_cards": _coach_stat_int(cards.get("red")),
                     "rating": None,
-                    "raw_data": {"player": player, "statistics": stat},
+                    "raw_data": {"player": player, "statistics": stat, "api_player_name": api_name},
                     "source": "api-football",
                 }
                 try:
@@ -3115,12 +3160,16 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                     row["rating"] = None
                 collected.append(row)
     if collected and _supabase_service_enabled():
-        _supabase_service_request(
+        saved = _supabase_service_request(
             "POST",
             "coach_player_season_stats?on_conflict=api_id",
             json=collected[:80],
             prefer="resolution=merge-duplicates,return=minimal",
         )
+        if saved is None:
+            print(f"[coach-api-football] upsert coach_player_season_stats failed player={player_name} rows={len(collected[:80])}", flush=True)
+        else:
+            print(f"[coach-api-football] upsert coach_player_season_stats ok player={player_name} rows={len(collected[:80])}", flush=True)
     return collected
 
 
