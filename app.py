@@ -958,6 +958,8 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                             "Quand l'utilisateur dit que ta réponse précédente est fausse, relis l'historique fourni, identifie précisément l'affirmation contestée, reconnais l'erreur et corrige sans te défendre. "
                             "Pour les records, meilleurs buteurs, statistiques joueurs, transferts, classements et compétitions en cours, utilise d'abord le bloc Vérification fourni. "
                             "Si ce bloc indique une vérification limitée, dis-le clairement et évite les certitudes absolues. "
+                            "Quand le bloc Données football pertinentes contient des éléments locaux, cite-les brièvement dans une section Données utilisées avant ton analyse. "
+                            "Si une donnée manque dans Supabase ou dans le site, dis-le proprement et n'invente jamais un score, un classement, un effectif ou une statistique. "
                             "Ne répète jamais une donnée historique sensible sans préciser si elle vient d'une source vérifiée récemment. "
                             "Pour l'actualité, ne jamais inventer : si aucune donnée récente n'est présente dans le site, réponds exactement : "
                             "Je n'ai pas encore cette information dans les données du site. "
@@ -1074,6 +1076,7 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
                             "Donne une fiche claire avec résumé, club ou sélection si pertinent, statistiques disponibles, infos importantes. "
                             "Reste 100% football et n'invente pas d'actualité si elle n'est pas dans les données. "
                             "Pour les records, meilleurs buteurs, statistiques, classements et transferts, appuie-toi d'abord sur le bloc Vérification. "
+                            "Quand des données locales sont fournies, structure si utile avec Résumé, Données utilisées, Analyse et Conclusion. "
                             "Si la vérification est limitée, signale-le et évite les affirmations catégoriques."
                         ),
                     },
@@ -2717,6 +2720,9 @@ def _coach_supabase_context(question: str) -> str:
     if not question or not _supabase_service_enabled():
         return ""
     normalized = _normalize_football_text(question)
+    context = _coach_local_football_context(normalized)
+    if context:
+        return context
     payload = _football_supabase_payload()
     snippets = []
     for team in payload.get("teams", [])[:120]:
@@ -2768,39 +2774,266 @@ def _coach_supabase_context(question: str) -> str:
     return "\n".join(snippets[:8])
 
 
+def _coach_query_terms(normalized_question: str) -> list[str]:
+    stopwords = {
+        "avec", "dans", "pour", "quoi", "quel", "quelle", "quels", "quelles", "donne", "explique",
+        "analyse", "compare", "contre", "classement", "match", "matches", "joueur", "joueurs",
+        "coach", "entraineur", "entraîneur", "equipe", "équipe", "club", "clubs", "saison",
+        "competition", "compétition", "forme", "recent", "récente", "dernier", "derniers",
+        "pronostic", "favori", "palmares", "palmarès", "bracket", "phase", "finale",
+    }
+    return [word for word in normalized_question.split() if len(word) > 2 and word not in stopwords]
+
+
+def _coach_match_score(haystack: str, terms: list[str]) -> int:
+    if not haystack or not terms:
+        return 0
+    return sum(2 if re.search(rf"(^|\s){re.escape(term)}($|\s)", haystack) else 1 for term in terms if term in haystack)
+
+
+def _coach_pick_relevant_rows(rows: list[dict[str, Any]], terms: list[str], fields: list[str], limit: int = 5) -> list[dict[str, Any]]:
+    ranked = []
+    for row in rows:
+        haystack = _normalize_football_text(" ".join(str(row.get(field, "")) for field in fields))
+        score = _coach_match_score(haystack, terms)
+        if score:
+            ranked.append((score, row))
+    ranked.sort(key=lambda item: item[0], reverse=True)
+    return [row for _, row in ranked[:limit]]
+
+
+def _coach_team_recent_matches(team_name: str, matches: list[dict[str, Any]], limit: int = 5) -> list[dict[str, Any]]:
+    key = _normalize_football_text(team_name)
+    team_matches = [
+        match for match in matches
+        if key and key in {
+            _normalize_football_text(match.get("home_team", "")),
+            _normalize_football_text(match.get("away_team", "")),
+        }
+    ]
+    return sorted(team_matches, key=lambda item: str(item.get("date") or ""), reverse=True)[:limit]
+
+
+def _coach_match_line(match: dict[str, Any]) -> str:
+    home = match.get("home_team") or "Équipe A"
+    away = match.get("away_team") or "Équipe B"
+    score = _real_score_label(match) if match.get("home_score") != "" and match.get("away_score") != "" else "score non disponible"
+    status = match.get("status") or "statut non disponible"
+    competition = match.get("competition") or "compétition non précisée"
+    date = match.get("date") or "date non disponible"
+    return f"{home} vs {away} · {competition} · {date} · {status} · {score}"
+
+
+def _coach_team_context(team: dict[str, Any], matches: list[dict[str, Any]]) -> str:
+    parts = [f"- Équipe: {team.get('name') or 'Équipe'}"]
+    if team.get("type"):
+        parts.append(f"type: {team['type']}")
+    if team.get("country"):
+        parts.append(f"pays: {team['country']}")
+    if team.get("competition"):
+        parts.append(f"compétition liée: {team['competition']}")
+    if team.get("coach"):
+        parts.append(f"coach: {team['coach']}")
+    squad = team.get("squad") or []
+    if squad:
+        by_position: dict[str, list[str]] = {}
+        for player in squad:
+            position = str(player.get("position") or "poste non précisé")
+            name = str(player.get("name") or "").strip()
+            if name:
+                by_position.setdefault(position, []).append(name)
+        sample = []
+        for position, names in list(by_position.items())[:4]:
+            sample.append(f"{position}: {', '.join(names[:5])}")
+        parts.append(f"effectif synchronisé: {len(squad)} joueurs")
+        if sample:
+            parts.append("joueurs par poste: " + " | ".join(sample))
+    recent = _coach_team_recent_matches(team.get("name") or "", matches, 4)
+    if recent:
+        parts.append("matchs récents/prochains: " + "; ".join(_coach_match_line(match) for match in recent))
+    return " · ".join(parts)
+
+
+def _coach_player_context(player: dict[str, Any]) -> str:
+    parts = [f"- Joueur: {player.get('name') or 'Joueur'}"]
+    if player.get("position"):
+        parts.append(f"poste: {player['position']}")
+    if player.get("nationality"):
+        parts.append(f"nationalité: {player['nationality']}")
+    if player.get("teams"):
+        parts.append("équipes liées: " + ", ".join(player.get("teams")[:3]))
+    if player.get("birth_date"):
+        parts.append(f"naissance: {player['birth_date']}")
+    if player.get("updated_at"):
+        parts.append(f"maj: {player['updated_at']}")
+    return " · ".join(parts)
+
+
+def _coach_competition_context(competition: dict[str, Any], matches: list[dict[str, Any]]) -> str:
+    name = competition.get("name") or "Compétition"
+    season = competition.get("season") or "saison non précisée"
+    comp_key = _normalize_football_text(name)
+    comp_matches = [match for match in matches if comp_key and comp_key in _normalize_football_text(match.get("competition", ""))]
+    completed = [match for match in comp_matches if match.get("completed")]
+    upcoming = [match for match in comp_matches if not match.get("completed")]
+    lines = [f"- Compétition: {name} · saison {season} · matchs Supabase: {len(comp_matches)}"]
+    if completed:
+        lines.append("derniers résultats: " + "; ".join(_coach_match_line(match) for match in completed[:4]))
+    if upcoming:
+        lines.append("prochains matchs: " + "; ".join(_coach_match_line(match) for match in upcoming[:4]))
+    return "\n".join(lines)
+
+
+def _coach_standings_context(normalized_question: str) -> str:
+    leagues = _read_json(LEAGUES_CACHE_FILE, {}).get("leagues", {})
+    aliases = {
+        "ligue 1": "ligue1",
+        "liga": "laliga",
+        "premier league": "premierleague",
+        "serie a": "seriea",
+        "bundesliga": "bundesliga",
+    }
+    selected_keys = []
+    for label, key in aliases.items():
+        if label in normalized_question:
+            selected_keys.append(key)
+    if not selected_keys and any(term in normalized_question for term in {"classement", "championnat", "championnats"}):
+        selected_keys = list(leagues.keys())[:5]
+    lines = []
+    for key in selected_keys:
+        league = leagues.get(key) or {}
+        groups = league.get("standings", [])
+        if groups:
+            lines.append(f"- Classement {league.get('name', key)}: {_standings_summary(groups[:1])}")
+    return "\n".join(lines)
+
+
+def _coach_local_football_context(normalized_question: str) -> str:
+    payload = _football_supabase_payload()
+    terms = _coach_query_terms(normalized_question)
+    if not terms and not any(term in normalized_question for term in {"classement", "champions league", "ligue des champions", "coupe du monde", "euro"}):
+        return ""
+    teams = _coach_pick_relevant_rows(payload.get("teams", []), terms, ["name", "short_name", "code", "country", "competition"], 4)
+    players = _coach_pick_relevant_rows(payload.get("players", []), terms, ["name", "firstname", "lastname", "nationality", "position"], 5)
+    coaches = _coach_pick_relevant_rows(payload.get("coaches", []), terms, ["name", "nationality"], 3)
+    competitions = _coach_pick_relevant_rows(payload.get("competitions", []), terms, ["name", "type", "season"], 3)
+    matches = _coach_pick_relevant_rows(payload.get("matches", []), terms, ["home_team", "away_team", "competition", "phase", "season", "status"], 6)
+    all_matches = payload.get("matches", [])
+    sections: list[str] = []
+    if teams:
+        sections.append("Équipes trouvées:\n" + "\n".join(_coach_team_context(team, all_matches) for team in teams))
+    if players:
+        sections.append("Joueurs trouvés:\n" + "\n".join(_coach_player_context(player) for player in players))
+    if coaches:
+        sections.append("Coachs trouvés:\n" + "\n".join(
+            "- Coach: " + " · ".join(
+                part for part in [
+                    coach.get("name") or "Coach",
+                    f"nationalité: {coach['nationality']}" if coach.get("nationality") else "",
+                    f"maj: {coach['updated_at']}" if coach.get("updated_at") else "",
+                ] if part
+            )
+            for coach in coaches
+        ))
+    if matches:
+        sections.append("Matchs trouvés:\n" + "\n".join(f"- {_coach_match_line(match)}" for match in matches))
+    if competitions:
+        sections.append("Compétitions trouvées:\n" + "\n".join(_coach_competition_context(comp, all_matches) for comp in competitions))
+    standings = _coach_standings_context(normalized_question)
+    if standings:
+        sections.append("Classements locaux:\n" + standings)
+    if not sections:
+        return ""
+    counts = payload.get("counts") or {}
+    header = (
+        "Recherche locale Akro/Supabase utilisée. "
+        f"Base disponible: {counts.get('teams', 0)} équipes, {counts.get('players', 0)} joueurs, "
+        f"{counts.get('coaches', 0)} coachs, {counts.get('matches', 0)} matchs."
+    )
+    return (header + "\n" + "\n\n".join(sections))[:7000]
+
+
 def _supabase_local_answer(normalized_question: str) -> str:
     if not normalized_question or not _supabase_service_enabled():
         return ""
-    if not any(term in normalized_question for term in {"coach", "entraineur", "effectif", "joueur", "joueurs", "match", "calendrier", "club", "equipe"}):
+    if not any(term in normalized_question for term in {"coach", "entraineur", "entraîneur", "selectionneur", "sélectionneur", "effectif", "joueur", "joueurs", "match", "calendrier", "club", "equipe", "équipe", "classement", "compare", "comparaison", "forme", "resultat", "résultat", "pronostic"}):
         return ""
     payload = _football_supabase_payload()
-    words = [word for word in normalized_question.split() if len(word) > 2]
-    team = None
-    for candidate in payload.get("teams", []):
-        haystack = _normalize_football_text(f"{candidate.get('name', '')} {candidate.get('short_name', '')} {candidate.get('code', '')}")
-        if haystack and any(word in haystack for word in words):
-            team = candidate
-            break
-    if not team:
+    words = _coach_query_terms(normalized_question)
+    teams = _coach_pick_relevant_rows(payload.get("teams", []), words, ["name", "short_name", "code", "country", "competition"], 3)
+    players = _coach_pick_relevant_rows(payload.get("players", []), words, ["name", "firstname", "lastname", "nationality", "position"], 2)
+    matches = _coach_pick_relevant_rows(payload.get("matches", []), words, ["home_team", "away_team", "competition", "phase", "season", "status"], 5)
+    if any(term in normalized_question for term in {"classement", "tableau", "leader"}):
+        standings = _coach_standings_context(normalized_question)
+        if standings:
+            return f"Résumé : voici le classement disponible dans les données locales.\n\nDonnées utilisées :\n{standings}\n\nConclusion : je m’appuie uniquement sur le classement publié dans Akro/Supabase."
+    if len(teams) >= 2 and any(term in normalized_question for term in {"compare", "comparaison", "versus", "vs", "contre"}):
+        first, second = teams[0], teams[1]
+        first_matches = _coach_team_recent_matches(first.get("name") or "", payload.get("matches", []), 3)
+        second_matches = _coach_team_recent_matches(second.get("name") or "", payload.get("matches", []), 3)
+        first_squad = len(first.get("squad") or [])
+        second_squad = len(second.get("squad") or [])
+        return (
+            f"Résumé : comparaison locale entre {first.get('name')} et {second.get('name')}.\n\n"
+            f"Données utilisées : {first.get('name')} ({first_squad} joueurs liés, coach {first.get('coach') or 'non renseigné'}); "
+            f"{second.get('name')} ({second_squad} joueurs liés, coach {second.get('coach') or 'non renseigné'}).\n\n"
+            f"Analyse : derniers matchs {first.get('name')} : {'; '.join(_coach_match_line(match) for match in first_matches) or 'non disponibles'}. "
+            f"Derniers matchs {second.get('name')} : {'; '.join(_coach_match_line(match) for match in second_matches) or 'non disponibles'}.\n\n"
+            "Conclusion : je peux comparer la dynamique, mais je reste prudent si les statistiques détaillées attaque/défense ne sont pas encore synchronisées."
+        )
+    team = teams[0] if teams else None
+    if not team and not players and not matches:
         return ""
+    if players and any(term in normalized_question for term in {"joueur", "poste", "selection", "sélection", "nation", "club", "stats", "statistiques"}):
+        player = players[0]
+        details = []
+        if player.get("position"):
+            details.append(f"poste : {player['position']}")
+        if player.get("nationality"):
+            details.append(f"nationalité : {player['nationality']}")
+        if player.get("teams"):
+            details.append("équipe(s) liée(s) : " + ", ".join(player.get("teams")[:3]))
+        if player.get("birth_date"):
+            details.append(f"naissance : {player['birth_date']}")
+        return (
+            f"Résumé : {player.get('name') or 'ce joueur'} est présent dans les données locales.\n\n"
+            f"Données utilisées : {'; '.join(details) if details else 'fiche joueur partielle, statistiques détaillées absentes'}.\n\n"
+            "Conclusion : je n’invente pas de total de buts ou de passes si la statistique n’est pas synchronisée."
+        )
     name = team.get("name") or "cette équipe"
-    if any(term in normalized_question for term in {"coach", "entraineur", "selectionneur"}):
+    if any(term in normalized_question for term in {"coach", "entraineur", "entraîneur", "selectionneur", "sélectionneur"}):
         coach = team.get("coach")
         if coach:
-            return f"Résumé : {name} est entraîné par {coach}.\n\nSource locale : Supabase/API-Football synchronisé."
+            return f"Résumé : {name} est entraîné par {coach}.\n\nDonnées utilisées : fiche équipe Supabase/API-Football synchronisée.\n\nConclusion : si le staff change, il faudra attendre la prochaine synchronisation pour l’actualiser."
     if any(term in normalized_question for term in {"effectif", "joueur", "joueurs"}):
         squad = team.get("squad") or []
         if squad:
-            names = ", ".join(player.get("name", "") for player in squad[:12] if player.get("name"))
-            return f"Résumé : l’effectif synchronisé de {name} contient notamment {names}.\n\nSource locale : Supabase/API-Football synchronisé."
-    if any(term in normalized_question for term in {"match", "calendrier", "resultat", "résultat"}):
+            by_position: dict[str, list[str]] = {}
+            for player in squad:
+                if player.get("name"):
+                    by_position.setdefault(str(player.get("position") or "poste non précisé"), []).append(player["name"])
+            position_lines = "; ".join(f"{position}: {', '.join(names[:5])}" for position, names in list(by_position.items())[:5])
+            return f"Résumé : l’effectif synchronisé de {name} contient {len(squad)} joueurs.\n\nDonnées utilisées : {position_lines or ', '.join(player.get('name', '') for player in squad[:12] if player.get('name'))}.\n\nConclusion : je peux détailler un poste précis si tu veux."
+    if any(term in normalized_question for term in {"match", "calendrier", "resultat", "résultat", "forme", "pronostic"}):
         matches = [
             match for match in payload.get("matches", [])
             if name in {match.get("home_team"), match.get("away_team")}
         ][:5]
         if matches:
-            lines = "; ".join(f"{match.get('home_team')} vs {match.get('away_team')} ({match.get('competition')}, {match.get('status')})" for match in matches)
-            return f"Résumé : voici les matchs synchronisés pour {name} : {lines}.\n\nSource locale : Supabase/API-Football synchronisé."
+            lines = "; ".join(_coach_match_line(match) for match in matches)
+            caution = "\n\nConclusion : pour un pronostic, je peux donner une lecture sportive prudente, jamais un conseil de pari réel." if "pronostic" in normalized_question else "\n\nConclusion : la forme récente dépend des matchs actuellement synchronisés."
+            return f"Résumé : voici les matchs synchronisés pour {name}.\n\nDonnées utilisées : {lines}.{caution}"
+    if team:
+        squad_count = len(team.get("squad") or [])
+        coach = team.get("coach") or "coach non renseigné"
+        recent = _coach_team_recent_matches(name, payload.get("matches", []), 3)
+        recent_line = "; ".join(_coach_match_line(match) for match in recent) if recent else "aucun match synchronisé récent/prochain"
+        return (
+            f"Résumé : {name} est présent dans les données locales Akro/Supabase.\n\n"
+            f"Données utilisées : {team.get('type') or 'équipe'} · {team.get('country') or 'pays non renseigné'} · {squad_count} joueurs liés · {coach}. "
+            f"Matchs : {recent_line}.\n\n"
+            "Conclusion : je peux approfondir l’effectif, le coach, la forme ou comparer cette équipe avec une autre."
+        )
     return ""
 
 
