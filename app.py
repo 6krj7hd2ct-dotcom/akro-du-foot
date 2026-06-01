@@ -2573,6 +2573,7 @@ def _football_supabase_payload() -> dict[str, Any]:
             "competition": competition_name or "Compétition",
             "season": match.get("season") or "",
             "phase": match.get("round") or "",
+            "raw_data": raw_match,
             "date": match.get("match_date") or "",
             "status": match.get("status") or "",
             "venue": match.get("venue_name") or "",

@@ -10095,8 +10095,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (!final) return null;
         const homeScore = matchScoreValue(final, 'home');
         const awayScore = matchScoreValue(final, 'away');
-        const penaltyHome = matchNumber(final.home_penalty_score);
-        const penaltyAway = matchNumber(final.away_penalty_score);
+        const rawScore = final.raw_data && typeof final.raw_data === 'object' && final.raw_data.score && typeof final.raw_data.score === 'object' ? final.raw_data.score : {};
+        const rawPenalty = rawScore.penalty && typeof rawScore.penalty === 'object' ? rawScore.penalty : {};
+        const penaltyHome = matchNumber(final.home_penalty_score ?? rawPenalty.home);
+        const penaltyAway = matchNumber(final.away_penalty_score ?? rawPenalty.away);
         const score = homeScore !== null && awayScore !== null
           ? `${homeScore} - ${awayScore}${penaltyHome !== null && penaltyAway !== null ? ` tab ${penaltyHome}-${penaltyAway}` : ''}`
           : '';
@@ -10302,6 +10304,11 @@ grant select, insert, update on public.profiles to authenticated;`;
               ? TEAM_MATCHES.filter(match => normalizeTeamName(match?.competition || '').includes('champions'))
               : [];
             const championsKnockoutMatches = championsMatches.filter(match => championsSupabaseRoundType(match));
+            const championsPsgArsenalFinal = championsKnockoutMatches.find(match => {
+              const isFinal = championsSupabaseRoundType(match) === 'final';
+              const teams = [normalizeTeamName(match?.home_team || ''), normalizeTeamName(match?.away_team || '')].join(' | ');
+              return isFinal && teams.includes('paris') && teams.includes('arsenal');
+            }) || null;
             console.info('[champions-2025-bracket]', {
               kind,
               selected,
@@ -10328,6 +10335,7 @@ grant select, insert, update on public.profiles to authenticated;`;
                 fixture_status: match.fixture_status || match.raw_data?.fixture?.status?.short || '',
                 match_status: match.match_status || match.raw_data?.fixture?.status?.long || ''
               })),
+              championsPsgArsenalFinal,
               championsFinalMatches: championsMatches
                 .filter(match => normalizeTeamName(match?.phase || '').includes('final'))
                 .map(match => ({
