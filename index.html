@@ -10035,13 +10035,27 @@ grant select, insert, update on public.profiles to authenticated;`;
         return '';
       };
       const isFinishedSupabaseMatch = match => {
-        const status = normalizeTeamName(match?.status || '');
+        const rawStatus = match?.status || match?.fixture_status || match?.match_status || match?.raw_data?.fixture?.status?.short || match?.raw_data?.fixture?.status?.long || '';
+        const status = normalizeTeamName(rawStatus);
         return Boolean(match?.completed) || ['ft', 'aet', 'pen'].includes(status) || status.includes('match finished') || status.includes('termine');
       };
       const matchNumber = value => {
         if (value === undefined || value === null || String(value).trim() === '') return null;
         const number = Number(value);
         return Number.isFinite(number) ? number : null;
+      };
+      const matchScoreValue = (match, side) => {
+        const isHome = side === 'home';
+        const rawScore = match?.raw_data && typeof match.raw_data === 'object' && match.raw_data.score && typeof match.raw_data.score === 'object' ? match.raw_data.score : {};
+        const rawGoals = match?.raw_data && typeof match.raw_data === 'object' && match.raw_data.goals && typeof match.raw_data.goals === 'object' ? match.raw_data.goals : {};
+        const candidates = isHome
+          ? [match?.home_score, match?.home_goals, match?.goals_home, rawGoals.home, rawScore.fulltime?.home, rawScore.extratime?.home]
+          : [match?.away_score, match?.away_goals, match?.goals_away, rawGoals.away, rawScore.fulltime?.away, rawScore.extratime?.away];
+        for (const candidate of candidates) {
+          const value = matchNumber(candidate);
+          if (value !== null) return value;
+        }
+        return null;
       };
       const championsSupabaseTieKey = match => [match.home_team, match.away_team].map(teamName => normalizeTeamName(teamName)).sort().join('|');
       const championsSupabaseTieMatch = (roundType, matches) => {
@@ -10051,8 +10065,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         let awayTotal = 0;
         let hasScore = false;
         ordered.forEach(match => {
-          const homeScore = matchNumber(match.home_score);
-          const awayScore = matchNumber(match.away_score);
+          const homeScore = matchScoreValue(match, 'home');
+          const awayScore = matchScoreValue(match, 'away');
           if (homeScore === null || awayScore === null) return;
           hasScore = true;
           if (normalizeTeamName(match.home_team) === normalizeTeamName(first.home_team)) {
@@ -10079,8 +10093,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           .filter(match => championsSupabaseRoundType(match) === 'final')
           .sort((a, b) => Number(isFinishedSupabaseMatch(b)) - Number(isFinishedSupabaseMatch(a)) || String(b.date || '').localeCompare(String(a.date || '')))[0];
         if (!final) return null;
-        const homeScore = matchNumber(final.home_score);
-        const awayScore = matchNumber(final.away_score);
+        const homeScore = matchScoreValue(final, 'home');
+        const awayScore = matchScoreValue(final, 'away');
         const penaltyHome = matchNumber(final.home_penalty_score);
         const penaltyAway = matchNumber(final.away_penalty_score);
         const score = homeScore !== null && awayScore !== null
@@ -10122,8 +10136,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           .filter(match => championsSupabaseRoundType(match) === 'final')
           .sort((a, b) => Number(isFinishedSupabaseMatch(b)) - Number(isFinishedSupabaseMatch(a)) || String(b.date || '').localeCompare(String(a.date || '')))[0];
         if (!final || !isFinishedSupabaseMatch(final)) return null;
-        const homeScore = matchNumber(final.home_score);
-        const awayScore = matchNumber(final.away_score);
+        const homeScore = matchScoreValue(final, 'home');
+        const awayScore = matchScoreValue(final, 'away');
         if (homeScore === null || awayScore === null) return null;
         const rawScore = final.raw_data && typeof final.raw_data === 'object' && final.raw_data.score && typeof final.raw_data.score === 'object' ? final.raw_data.score : {};
         const rawPenalty = rawScore.penalty && typeof rawScore.penalty === 'object' ? rawScore.penalty : {};
@@ -10303,8 +10317,16 @@ grant select, insert, update on public.profiles to authenticated;`;
                 away_team: match.away_team || '',
                 home_score: match.home_score ?? '',
                 away_score: match.away_score ?? '',
+                home_goals: match.home_goals ?? '',
+                away_goals: match.away_goals ?? '',
+                goals_home: match.goals_home ?? '',
+                goals_away: match.goals_away ?? '',
+                fulltime_home: match.raw_data?.score?.fulltime?.home ?? '',
+                fulltime_away: match.raw_data?.score?.fulltime?.away ?? '',
                 date: match.date || '',
-                status: match.status || ''
+                status: match.status || '',
+                fixture_status: match.fixture_status || match.raw_data?.fixture?.status?.short || '',
+                match_status: match.match_status || match.raw_data?.fixture?.status?.long || ''
               })),
               championsFinalMatches: championsMatches
                 .filter(match => normalizeTeamName(match?.phase || '').includes('final'))
