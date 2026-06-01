@@ -481,19 +481,17 @@
     .big5-item .club-logo { width: 18px; height: 18px; flex-basis: 18px; }
     .big5-item .player-stat { font-size: 22px; margin-top: 5px; }
     .news-hero-visual { position: absolute; z-index: 0; right: clamp(22px, 6vw, 86px); top: 50%; width: clamp(250px, 30vw, 390px); aspect-ratio: 1.05; transform: translateY(-50%); pointer-events: none; filter: drop-shadow(0 24px 48px rgba(0,0,0,0.32)); }
-    .news-hero-visual::before { content: ""; position: absolute; inset: 8% 2% 0 10%; border-radius: 34px; background: radial-gradient(circle at 50% 42%, rgba(239,51,64,0.38), transparent 34%), radial-gradient(circle at 58% 48%, rgba(245,201,107,0.20), transparent 44%); filter: blur(6px); }
-    .news-visual-panel { position: absolute; inset: 12% 7% 7% 12%; border: 1px solid rgba(255,255,255,0.18); border-radius: 28px; background: linear-gradient(145deg, rgba(5,16,31,0.97), rgba(72,13,28,0.86)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 0 0 1px rgba(239,51,64,0.18); overflow: hidden; }
-    .news-visual-panel::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(239,51,64,0.22) 0 1px, transparent 1px 100%), linear-gradient(180deg, rgba(255,255,255,0.08), transparent 38%); background-size: 48px 100%, 100% 100%; opacity: .78; }
-    .news-visual-score { position: absolute; left: 9%; right: 9%; top: 15%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.24); background: linear-gradient(135deg, rgba(239,51,64,0.88), rgba(128,16,32,0.82)); color: #fff; font-weight: 950; }
-    .news-visual-score strong { color: #fff; font-size: 20px; text-shadow: 0 0 18px rgba(255,255,255,0.28); }
-    .news-visual-score span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .news-visual-score span:last-child { text-align: right; }
-    .news-visual-article { position: absolute; left: 10%; right: 32%; bottom: 15%; display: grid; gap: 8px; padding: 15px; border-radius: 18px; border: 1px solid rgba(99,232,255,0.22); background: rgba(4,14,28,0.78); backdrop-filter: blur(8px); }
-    .news-visual-tag { width: fit-content; padding: 5px 8px; border-radius: 999px; background: #ef3340; color: #fff; font-size: 10px; font-weight: 950; text-transform: uppercase; box-shadow: 0 0 18px rgba(239,51,64,0.48); }
-    .news-visual-headline { width: 100%; height: 10px; border-radius: 999px; background: #f4f8ff; box-shadow: 0 17px 0 rgba(244,248,255,0.72), 0 34px 0 rgba(156,181,207,0.48); }
-    .news-visual-ball { position: absolute; right: 8%; bottom: 12%; width: 34%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 32%, #fff 0 16%, transparent 17%), conic-gradient(from 18deg, #f8fbff 0 13%, #07111f 14% 25%, #f8fbff 26% 47%, #07111f 48% 59%, #f8fbff 60% 100%); box-shadow: inset -12px -16px 28px rgba(0,0,0,0.24), 0 0 30px rgba(99,232,255,0.18); }
-    .news-visual-feed { position: absolute; right: 11%; top: 40%; display: grid; gap: 6px; }
-    .news-visual-feed i { display: block; width: 72px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.88); box-shadow: 0 15px 0 rgba(239,51,64,0.88), 0 30px 0 rgba(245,201,107,0.72); }
+    .news-hero-visual::before { content: ""; position: absolute; inset: 7% 0 3% 9%; border-radius: 34px; background: radial-gradient(circle at 48% 42%, rgba(239,51,64,0.34), transparent 34%), radial-gradient(circle at 70% 35%, rgba(99,232,255,0.16), transparent 40%); filter: blur(7px); }
+    .news-visual-panel { position: absolute; inset: 10% 6% 7% 10%; border: 1px solid rgba(255,255,255,0.16); border-radius: 28px; background: linear-gradient(145deg, rgba(5,16,31,0.94), rgba(22,38,62,0.86)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 0 0 1px rgba(239,51,64,0.16); overflow: hidden; }
+    .news-visual-panel::before { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, rgba(239,51,64,0.18), transparent 34%), linear-gradient(180deg, rgba(255,255,255,0.08), transparent 42%); opacity: .86; }
+    .news-visual-paper { position: absolute; border-radius: 14px 14px 10px 10px; background: linear-gradient(180deg, #f7f1e7, #d9d7d2); border: 1px solid rgba(255,255,255,0.54); box-shadow: 0 18px 34px rgba(0,0,0,0.28); overflow: hidden; }
+    .news-visual-paper-main { left: 17%; right: 12%; top: 15%; bottom: 12%; transform: rotate(-4deg); }
+    .news-visual-paper-back { left: 10%; right: 20%; top: 23%; bottom: 7%; transform: rotate(7deg); opacity: .78; background: linear-gradient(180deg, #dce6ef, #b6c3d1); }
+    .news-visual-paper::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 30px; background: linear-gradient(90deg, #ef3340 0 38%, #07111f 38% 100%); }
+    .news-visual-paper::after { content: ""; position: absolute; left: 12%; right: 12%; top: 48px; height: 12px; border-radius: 999px; background: #07111f; box-shadow: 0 22px 0 rgba(7,17,31,0.54), 0 44px 0 rgba(7,17,31,0.30), 86px 72px 0 -2px rgba(239,51,64,0.84), 0 96px 0 rgba(7,17,31,0.24); }
+    .news-visual-tag { position: absolute; left: 23%; top: 19%; z-index: 2; width: fit-content; padding: 6px 9px; border-radius: 999px; background: #ef3340; color: #fff; font-size: 10px; font-weight: 950; text-transform: uppercase; box-shadow: 0 0 18px rgba(239,51,64,0.52); }
+    .news-visual-mic { position: absolute; right: 13%; bottom: 16%; width: 28%; height: 14%; border-radius: 999px 999px 18px 18px; transform: rotate(-10deg); background: linear-gradient(90deg, #f7f1e7, #9db2c6); box-shadow: inset 42px 0 0 #ef3340, 0 16px 24px rgba(0,0,0,0.26); }
+    .news-visual-football { position: absolute; right: 13%; top: 23%; width: 19%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 32%, #fff 0 17%, transparent 18%), conic-gradient(from 18deg, #f8fbff 0 13%, #07111f 14% 25%, #f8fbff 26% 47%, #07111f 48% 59%, #f8fbff 60% 100%); box-shadow: inset -7px -10px 18px rgba(0,0,0,0.22), 0 0 26px rgba(99,232,255,0.18); }
     .hall-hero::after { display: none; }
     .hall-standings-board { display: grid; gap: 14px; }
     .hall-league-row { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.11); border-radius: 18px; background: linear-gradient(135deg, rgba(7,17,31,0.92), rgba(18,43,70,0.70)); box-shadow: 0 16px 38px rgba(0,0,0,0.18); }
@@ -544,10 +542,14 @@
     .hall-feature-card.is-club .hall-feature-visual img { max-width: 112px; height: 112px; object-position: center; }
     .hall-feature-silhouette { width: 82px; height: 118px; align-self: end; border-radius: 42px 42px 22px 22px; background: radial-gradient(circle at 50% 21%, rgba(225,238,252,0.96) 0 20%, transparent 21%), linear-gradient(180deg, rgba(180,204,228,0.92), rgba(92,124,156,0.76)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 18px 28px rgba(0,0,0,0.34); opacity: .94; }
     .hall-hero-visual { position: absolute; z-index: 0; right: clamp(28px, 7vw, 110px); top: 50%; width: clamp(230px, 28vw, 370px); aspect-ratio: 1.08; transform: translateY(-50%); pointer-events: none; filter: drop-shadow(0 26px 48px rgba(0,0,0,0.34)); }
-    .hall-visual-podium { position: absolute; inset: 9% 5% 3%; border-radius: 30px; border: 1px solid rgba(245,201,107,0.24); background: radial-gradient(circle at 50% 18%, rgba(245,201,107,0.28), transparent 30%), linear-gradient(145deg, rgba(7,17,31,0.95), rgba(32,39,64,0.86)); overflow: hidden; }
-    .hall-visual-podium::before { content: ""; position: absolute; left: 20%; right: 20%; bottom: 17%; height: 32%; border-radius: 18px 18px 8px 8px; background: linear-gradient(180deg, #ffe1a0, #c4932d); box-shadow: -72px 32px 0 -9px rgba(170,190,215,0.92), 72px 42px 0 -13px rgba(148,168,195,0.82); }
-    .hall-visual-podium::after { content: ""; position: absolute; left: 50%; top: 19%; width: 34%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle at 36% 30%, #fff8d8, #d5a63a 48%, #7b5315); box-shadow: 0 0 30px rgba(245,201,107,0.36); }
-    .hall-visual-stars { position: absolute; inset: 0; background: radial-gradient(circle at 22% 25%, #ffe1a0 0 2px, transparent 3px), radial-gradient(circle at 78% 23%, #9fe9ff 0 2px, transparent 3px), radial-gradient(circle at 64% 72%, #fff 0 1px, transparent 2px); opacity: .9; }
+    .hall-visual-podium { position: absolute; inset: 9% 5% 3%; border-radius: 30px; border: 1px solid rgba(245,201,107,0.24); background: radial-gradient(circle at 50% 18%, rgba(245,201,107,0.22), transparent 28%), linear-gradient(145deg, rgba(7,17,31,0.96), rgba(22,43,70,0.84)); overflow: hidden; }
+    .hall-visual-podium::before { content: ""; position: absolute; left: 12%; right: 12%; bottom: 12%; height: 9%; border-radius: 999px; background: rgba(245,201,107,0.22); box-shadow: 0 0 34px rgba(245,201,107,0.18); }
+    .hall-visual-podium::after { content: ""; position: absolute; left: 50%; top: 12%; width: 18%; height: 27%; transform: translateX(-50%); border-radius: 9px 9px 18px 18px; background: linear-gradient(180deg, #fff4bf, #d0a13c 58%, #7a5418); box-shadow: -12px 18px 0 -9px #d0a13c, 12px 18px 0 -9px #d0a13c, 0 0 24px rgba(245,201,107,0.34); }
+    .hall-podium-step { position: absolute; bottom: 18%; display: grid; place-items: center; width: 31%; border: 1px solid rgba(255,255,255,0.22); color: rgba(7,17,31,0.86); font-size: clamp(26px, 4.3vw, 50px); line-height: 1; font-weight: 950; text-shadow: 0 1px 0 rgba(255,255,255,0.30); box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 20px 34px rgba(0,0,0,0.30); }
+    .hall-podium-step.step-1 { left: 34.5%; height: 40%; border-radius: 18px 18px 9px 9px; background: linear-gradient(180deg, #fff1a8, #d0a13c 62%, #9b6b1e); }
+    .hall-podium-step.step-2 { left: 9%; height: 30%; border-radius: 16px 16px 9px 9px; background: linear-gradient(180deg, #f4f7fb, #aeb9c7 62%, #798796); }
+    .hall-podium-step.step-3 { right: 9%; height: 24%; border-radius: 16px 16px 9px 9px; background: linear-gradient(180deg, #f3c08a, #b06d34 64%, #7a3f1e); }
+    .hall-podium-title { position: absolute; left: 50%; bottom: 5%; transform: translateX(-50%); color: #ffe1a0; font-size: 12px; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
     @media (max-width: 980px) { .hall-scorer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 980px) { .hall-feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 760px) { .hall-top3-grid, .hall-scorer-grid, .hall-feature-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } .hall-league-actions { justify-content: flex-start; } .hall-team-card { padding-right: 102px; } }
@@ -1446,9 +1448,6 @@
       .hero::after { right: 18px; top: auto; bottom: 28px; opacity: 0.30; }
       .hero-logo-mark { right: 18px; top: auto; bottom: 30px; transform: none; width: clamp(92px, 25vw, 138px); opacity: 0.62; }
       .news-hero-visual { right: 16px; top: auto; bottom: 22px; width: clamp(150px, 38vw, 220px); transform: none; opacity: .82; }
-      .news-visual-score { font-size: 11px; padding: 8px; }
-      .news-visual-score strong { font-size: 15px; }
-      .news-visual-article { padding: 10px; }
       .league-focus-backdrop { right: 20px; top: auto; bottom: 26px; opacity: 0.24; width: clamp(110px, 34vw, 170px); }
       .section-head { align-items: start; flex-direction: column; }
       .section-note { text-align: left; }
@@ -1770,13 +1769,11 @@
       <section class="hero news-hero">
         <div class="news-hero-visual" aria-hidden="true">
           <div class="news-visual-panel">
-            <div class="news-visual-score"><span>PSG</span><strong>2-1</strong><span>ARS</span></div>
-            <div class="news-visual-feed"><i></i></div>
-            <div class="news-visual-article">
-              <span class="news-visual-tag">Breaking</span>
-              <span class="news-visual-headline"></span>
-            </div>
-            <div class="news-visual-ball"></div>
+            <div class="news-visual-paper news-visual-paper-back"></div>
+            <div class="news-visual-paper news-visual-paper-main"></div>
+            <span class="news-visual-tag">Breaking news</span>
+            <span class="news-visual-football"></span>
+            <span class="news-visual-mic"></span>
           </div>
         </div>
         <div class="hero-content">
@@ -1847,7 +1844,12 @@
     <section class="tab-panel" id="tab-hall" data-tab-panel="hall">
       <section class="hero hall-hero">
         <div class="hall-hero-visual" aria-hidden="true">
-          <div class="hall-visual-podium"><span class="hall-visual-stars"></span></div>
+          <div class="hall-visual-podium">
+            <span class="hall-podium-step step-2">2</span>
+            <span class="hall-podium-step step-1">1</span>
+            <span class="hall-podium-step step-3">3</span>
+            <span class="hall-podium-title">Legends</span>
+          </div>
         </div>
         <div class="hero-content">
           <div class="kicker"><span class="ball"></span> Hall of fame</div>
@@ -3683,8 +3685,8 @@
     }, HONOURS_LISTS);
     ALL_TIME_LISTS['global-goals'] = {
       players: [
-        {rank: 1, name: 'Cristiano Ronaldo', country: 'Portugal', value: 938, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
-        {rank: 2, name: 'Lionel Messi', country: 'Argentine', value: 879, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
+        {rank: 1, name: 'Cristiano Ronaldo', country: 'Portugal', value: 969, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
+        {rank: 2, name: 'Lionel Messi', country: 'Argentine', value: 896, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/arg.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30981.png'},
         {rank: 3, name: 'Pelé', country: 'Brésil', value: 762, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
         {rank: 4, name: 'Romário', country: 'Brésil', value: 755, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
         {rank: 5, name: 'Josef Bican', country: 'Autriche / Tchécoslovaquie', value: 722, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/aut.png'},
@@ -3872,8 +3874,8 @@
     };
     ALL_TIME_LISTS['goat-most-appearances'] = {
       players: [
-        {rank: 1, name: 'Peter Shilton', country: 'Angleterre', value: 1390, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
-        {rank: 2, name: 'Fábio', country: 'Brésil', value: 1320, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
+        {rank: 1, name: 'Fábio', country: 'Brésil', value: 1427, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png', photo_url: 'https://upload.wikimedia.org/wikipedia/commons/0/04/F%C3%A1bio_Deivson_Lopes_Maciel_of_Cruzeiro_EC_%28cropped%29.jpg'},
+        {rank: 2, name: 'Peter Shilton', country: 'Angleterre', value: 1390, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/eng.png'},
         {rank: 3, name: 'Cristiano Ronaldo', country: 'Portugal', value: 1270, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/por.png', photo_url: 'https://images.fotmob.com/image_resources/playerimages/30893.png'},
         {rank: 4, name: 'Rogério Ceni', country: 'Brésil', value: 1237, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
         {rank: 5, name: 'Roberto Carlos', country: 'Brésil', value: 1130, flag_url: 'https://a.espncdn.com/i/teamlogos/countries/500/bra.png'},
@@ -8511,6 +8513,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     const HALL_GOAT_PHOTOS = {
       'cristiano ronaldo': 'https://images.fotmob.com/image_resources/playerimages/30893.png',
       'lionel messi': 'https://images.fotmob.com/image_resources/playerimages/30981.png',
+      'fabio': 'https://upload.wikimedia.org/wikipedia/commons/0/04/F%C3%A1bio_Deivson_Lopes_Maciel_of_Cruzeiro_EC_%28cropped%29.jpg',
       'miroslav klose': 'https://upload.wikimedia.org/wikipedia/commons/8/8c/2016209185719_2016-07-27_Champions_for_Charity_-_Sven_-_1D_X_-_0149_-_DV3P4742_mod.jpg',
       'norberto mendez': 'https://upload.wikimedia.org/wikipedia/commons/0/07/Tucho_mendez.jpg',
       'samuel etoo': 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Samuel_2011.jpg',
@@ -8553,7 +8556,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       const group = String(label || '').toLocaleLowerCase('fr-FR');
       const isGoat = group === 'goat';
       const visual = isGoat
-        ? (leader.photo_url || hallFeaturePhotoFor(leader.name) || item.image || '')
+        ? (leader.photo_url || hallFeaturePhotoFor(leader.name) || '')
         : (leader.flag_url || item.image || '');
       const flag = leader.flag_url || item.image || '';
       const styleParts = [];
