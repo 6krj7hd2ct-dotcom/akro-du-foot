@@ -2568,7 +2568,7 @@ def _football_supabase_payload() -> dict[str, Any]:
             competition_for_team.setdefault(str(home.get("id")), str(competition_name))
         if away and competition_name:
             competition_for_team.setdefault(str(away.get("id")), str(competition_name))
-        public_matches.append({
+        public_match = {
             "id": match.get("api_id") or match.get("id") or "",
             "competition": competition_name or "Compétition",
             "season": match.get("season") or "",
@@ -2586,7 +2586,18 @@ def _football_supabase_payload() -> dict[str, Any]:
             "home_penalty_score": "" if raw_penalty.get("home") is None else str(raw_penalty.get("home")),
             "away_penalty_score": "" if raw_penalty.get("away") is None else str(raw_penalty.get("away")),
             "completed": str(match.get("status") or "").lower() in {"ft", "aet", "pen", "terminé", "match finished"},
-        })
+        }
+        match_search = " ".join([
+            str(competition_name or ""),
+            str(match.get("round") or ""),
+            str(home.get("name") if home else ""),
+            str(away.get("name") if away else ""),
+        ]).lower()
+        if "champions" in match_search and "final" in match_search and "paris" in match_search and "arsenal" in match_search:
+            print("[champions-final-debug] raw_supabase_match=" + json.dumps(match, ensure_ascii=False, default=str), flush=True)
+            print("[champions-final-debug] raw_data=" + json.dumps(raw_match, ensure_ascii=False, default=str), flush=True)
+            print("[champions-final-debug] transformed_public_match=" + json.dumps(public_match, ensure_ascii=False, default=str), flush=True)
+        public_matches.append(public_match)
 
     public_teams = []
     player_team_names: dict[str, list[str]] = {}
