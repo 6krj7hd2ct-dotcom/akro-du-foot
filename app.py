@@ -659,6 +659,10 @@ def community_payload() -> dict[str, Any]:
     supabase = _read_supabase_community(matches)
     source_predictions = supabase.get("predictions") if supabase.get("available") else community.get("predictions", [])
     predictions = _predictions_with_points(source_predictions or [], matches)
+    if supabase.get("available"):
+        changed_profiles = _sync_supabase_prediction_points(predictions, matches)
+        for profile_id, pseudo in changed_profiles:
+            _sync_supabase_user_totals(profile_id, pseudo, matches)
     profiles = _community_profiles(predictions, matches, supabase.get("badges", {}))
     if supabase.get("available"):
         _enrich_profiles_with_supabase_users(profiles, supabase.get("users", []))
@@ -3754,6 +3758,9 @@ def _prediction_from_supabase(row: dict[str, Any], user_by_id: dict[str, dict[st
         "match_id": row.get("match_id", ""),
         "home_score": row.get("predicted_home_score", row.get("home_score")),
         "away_score": row.get("predicted_away_score", row.get("away_score")),
+        "stored_actual_home_score": row.get("actual_home_score"),
+        "stored_actual_away_score": row.get("actual_away_score"),
+        "stored_status": row.get("status"),
         "stored_points": row.get("points", 0),
         "created_at": row.get("created_at", ""),
         "updated_at": row.get("updated_at", ""),
@@ -3851,17 +3858,36 @@ def _sync_supabase_user_totals(user_id: str, pseudo: str, matches: dict[str, dic
     else:
         _supabase_request("POST", "profile_stats", json=patch)
     _award_supabase_badge(user_id, level)
-    _sync_supabase_prediction_points(scored)
+    _sync_supabase_prediction_points(scored, matches)
 
 
-def _sync_supabase_prediction_points(predictions: list[dict[str, Any]]) -> None:
+def _sync_supabase_prediction_points(predictions: list[dict[str, Any]], matches: dict[str, dict[str, Any]] | None = None) -> set[tuple[str, str]]:
+    changed_profiles: set[tuple[str, str]] = set()
     for prediction in predictions:
         prediction_id = prediction.get("id")
         if prediction_id is None:
             continue
-        if int(prediction.get("stored_points", -1) or -1) == int(prediction.get("points", 0) or 0):
+        match = (matches or {}).get(str(prediction.get("match_id", "")))
+        patch: dict[str, Any] = {}
+        points = int(prediction.get("points", 0) or 0)
+        if int(prediction.get("stored_points", -1) or -1) != points:
+            patch["points"] = points
+        if match:
+            actual_home = _to_score(match.get("home_score"))
+            actual_away = _to_score(match.get("away_score"))
+            status = "completed" if match.get("completed") else "pending"
+            if _to_score(prediction.get("stored_actual_home_score")) != actual_home:
+                patch["actual_home_score"] = actual_home
+            if _to_score(prediction.get("stored_actual_away_score")) != actual_away:
+                patch["actual_away_score"] = actual_away
+            if str(prediction.get("stored_status") or "") != status:
+                patch["status"] = status
+        if not patch:
             continue
-        _supabase_request("PATCH", f"predictions?id=eq.{quote(str(prediction_id), safe='')}", json={"points": int(prediction.get("points", 0) or 0)})
+        saved = _supabase_request("PATCH", f"predictions?id=eq.{quote(str(prediction_id), safe='')}", json=patch)
+        if saved is not None and prediction.get("user_id") and ("points" in patch or patch.get("status") == "completed"):
+            changed_profiles.add((str(prediction.get("user_id")), str(prediction.get("pseudo") or "Utilisateur")))
+    return changed_profiles
 
 
 def _award_supabase_badge(user_id: str, level: dict[str, Any]) -> None:
@@ -3936,6 +3962,7 @@ def _all_dashboard_matches(worldcup_data: dict[str, Any], champions_data: dict[s
 
 def _add_match(out: dict[str, dict[str, Any]], match: dict[str, Any], phase: str) -> None:
     match_id = str(match.get("id") or f"{phase}-{match.get('home_team')}-{match.get('away_team')}-{match.get('date')}")
+    match = _apply_prediction_match_overrides(match, phase)
     out[match_id] = {
         "id": match_id,
         "phase": phase,
@@ -3948,7 +3975,43 @@ def _add_match(out: dict[str, dict[str, Any]], match: dict[str, Any], phase: str
         "away_score": match.get("away_score", ""),
         "status": match.get("status", ""),
         "completed": bool(match.get("completed")),
+        "winner_team": match.get("winner_team", ""),
+        "winner_side": match.get("winner_side", ""),
+        "penalty_home_score": match.get("penalty_home_score", ""),
+        "penalty_away_score": match.get("penalty_away_score", ""),
         "locked": _is_locked(match),
+    }
+
+
+def _normalized_match_team(value: Any) -> str:
+    return re.sub(r"\s+", " ", _normalize_football_text(value)).strip()
+
+
+def _apply_prediction_match_overrides(match: dict[str, Any], phase: str) -> dict[str, Any]:
+    home = _normalized_match_team(match.get("home_team"))
+    away = _normalized_match_team(match.get("away_team"))
+    is_champions_final = (
+        str(match.get("id") or "") == "401862897"
+        or (
+            "final" in _normalize_football_text(phase)
+            and home in {"paris saint germain", "psg", "paris sg"}
+            and away == "arsenal"
+            and str(match.get("date") or "").startswith("2026-05-30")
+        )
+    )
+    if not is_champions_final:
+        return match
+    return {
+        **match,
+        "home_score": 1,
+        "away_score": 1,
+        "status": "Terminé",
+        "status_state": "post",
+        "completed": True,
+        "winner_team": match.get("home_team") or "Paris Saint-Germain",
+        "winner_side": "home",
+        "penalty_home_score": 4,
+        "penalty_away_score": 3,
     }
 
 
@@ -4072,6 +4135,10 @@ def _points(prediction: dict[str, Any], match: dict[str, Any] | None) -> int:
         return 0
     if pred_home == real_home and pred_away == real_away:
         return 3
+    winner_side = str(match.get("winner_side") or "").lower()
+    if winner_side in {"home", "away"}:
+        predicted_side = "draw" if pred_home == pred_away else "home" if pred_home > pred_away else "away"
+        return 1 if predicted_side == winner_side else 0
     return 1 if _result(pred_home, pred_away) == _result(real_home, real_away) else 0
 
 
