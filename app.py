@@ -2599,7 +2599,10 @@ def _football_supabase_payload() -> dict[str, Any]:
         if (
             len(champions_knockout_debug_rows) < 10
             and "champions" in str(competition_name or "").lower()
-            and str(match.get("season") or "") in {"2025", "2025-2026"}
+            and (
+                str(match.get("season") or "") in {"2025", "2025-2026", "2026"}
+                or str(match.get("match_date") or "").startswith(("2025-", "2026-"))
+            )
             and any(token in normalized_phase for token in ("final", "semi", "quarter", "round of 16", "8th", "knockout"))
         ):
             champions_knockout_debug_rows.append({
