@@ -16,6 +16,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote, urlparse
+from zoneinfo import ZoneInfo
 
 try:
     from flask import Flask, Response, jsonify, request, send_file
@@ -85,6 +86,7 @@ MATCH_ARTICLE_GENERATION_RUNNING = False
 HALL_OF_FAME_REFRESH_LOCK = threading.Lock()
 HALL_OF_FAME_REFRESH_LAST_RUN = 0.0
 HALL_OF_FAME_REFRESH_RUNNING = False
+HALL_OF_FAME_TIMEZONE = ZoneInfo(os.environ.get("AKRO_HALL_OF_FAME_TIMEZONE", "Europe/Paris"))
 FOOTBALL_SUPABASE_CACHE_LOCK = threading.Lock()
 FOOTBALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
 SUPABASE_FAILED_PATHS: dict[str, float] = {}
@@ -215,12 +217,17 @@ def refresh_global_news_payload(filter_key: str = "all") -> dict[str, Any]:
 def hall_of_fame_payload() -> dict[str, Any]:
     _schedule_hall_of_fame_refresh()
     cache = _read_json(HALL_OF_FAME_CACHE_FILE, {})
+    if not isinstance(cache, dict) or not isinstance(cache.get("lists"), dict) or not cache.get("lists"):
+        _refresh_hall_of_fame_cache()
+        cache = _read_json(HALL_OF_FAME_CACHE_FILE, {})
     lists = cache.get("lists") if isinstance(cache, dict) else {}
+    sources = cache.get("sources") if isinstance(cache, dict) else []
     return {
         "generated_at": cache.get("generated_at", "") if isinstance(cache, dict) else "",
         "checked_at": cache.get("checked_at", "") if isinstance(cache, dict) else "",
         "status": cache.get("status", "fallback") if isinstance(cache, dict) else "fallback",
         "lists": lists if isinstance(lists, dict) else {},
+        "sources": sources if isinstance(sources, list) else [],
     }
 
 
@@ -229,7 +236,7 @@ def _hall_of_fame_refresh_enabled() -> bool:
 
 
 def _seconds_until_next_hall_of_fame_refresh(now: datetime | None = None) -> float:
-    now = now or datetime.now().astimezone()
+    now = now.astimezone(HALL_OF_FAME_TIMEZONE) if now else datetime.now(HALL_OF_FAME_TIMEZONE)
     target = now.replace(hour=8, minute=0, second=0, microsecond=0)
     if now >= target:
         target = target + timedelta(days=1)
@@ -276,6 +283,7 @@ def _refresh_hall_of_fame_cache() -> None:
             "checked_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "status": "updated" if reliable_lists else "fallback",
             "lists": reliable_lists or (previous.get("lists") if isinstance(previous, dict) and isinstance(previous.get("lists"), dict) else {}),
+            "sources": curated.get("sources", []) if isinstance(curated, dict) and isinstance(curated.get("sources"), list) else (previous.get("sources", []) if isinstance(previous, dict) and isinstance(previous.get("sources"), list) else []),
         }
         HALL_OF_FAME_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
         HALL_OF_FAME_CACHE_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
