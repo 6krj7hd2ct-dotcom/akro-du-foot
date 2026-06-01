@@ -2795,13 +2795,31 @@
         TEAMS_DETAILS[team.name] = mergeTeamDetails(team.name);
       });
       if (typeof TEAM_MATCHES !== 'undefined' && Array.isArray(TEAM_MATCHES)) {
-        const seen = new Map(TEAM_MATCHES.map((match, index) => [String(match.id || `${match.home_team}-${match.away_team}-${match.date}`), index]));
+        const matchCanonicalKey = match => [
+          normalizeTeamName(match?.competition || ''),
+          normalizeTeamName(match?.phase || match?.round || ''),
+          String(match?.date || '').slice(0, 10),
+          normalizeTeamName(match?.home_team || ''),
+          normalizeTeamName(match?.away_team || '')
+        ].join('|');
+        const seen = new Map();
+        TEAM_MATCHES.forEach((match, index) => {
+          const idKey = String(match.id || `${match.home_team}-${match.away_team}-${match.date}`);
+          const canonicalKey = matchCanonicalKey(match);
+          if (idKey) seen.set(idKey, index);
+          if (canonicalKey) seen.set(canonicalKey, index);
+        });
         (AKRO_SUPABASE_FOOTBALL.matches || []).forEach(match => {
           const key = String(match.id || `${match.home_team}-${match.away_team}-${match.date}`);
-          if (seen.has(key)) {
-            TEAM_MATCHES[seen.get(key)] = {...TEAM_MATCHES[seen.get(key)], ...match};
+          const canonicalKey = matchCanonicalKey(match);
+          const existingIndex = seen.has(key) ? seen.get(key) : seen.get(canonicalKey);
+          if (existingIndex !== undefined) {
+            TEAM_MATCHES[existingIndex] = {...TEAM_MATCHES[existingIndex], ...match};
+            if (key) seen.set(key, existingIndex);
+            if (canonicalKey) seen.set(canonicalKey, existingIndex);
           } else {
             seen.set(key, TEAM_MATCHES.length);
+            if (canonicalKey) seen.set(canonicalKey, TEAM_MATCHES.length);
             TEAM_MATCHES.push(match);
           }
         });
