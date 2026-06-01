@@ -2540,6 +2540,7 @@ def _football_supabase_payload() -> dict[str, Any]:
 
     public_matches = []
     competition_for_team: dict[str, str] = {}
+    champions_knockout_debug_rows: list[dict[str, Any]] = []
     def _team_logo_url(row: dict[str, Any] | None) -> str:
         if not row:
             return ""
@@ -2594,11 +2595,32 @@ def _football_supabase_payload() -> dict[str, Any]:
             str(away.get("name") if away else ""),
         ]).lower()
         print("[champions-final-debug] reached", flush=True)
+        normalized_phase = str(match.get("round") or "").lower()
+        if (
+            len(champions_knockout_debug_rows) < 10
+            and "champions" in str(competition_name or "").lower()
+            and str(match.get("season") or "") in {"2025", "2025-2026"}
+            and any(token in normalized_phase for token in ("final", "semi", "quarter", "round of 16", "8th", "knockout"))
+        ):
+            champions_knockout_debug_rows.append({
+                "competition": competition_name or "",
+                "season": match.get("season") or "",
+                "phase": match.get("round") or "",
+                "round": match.get("round") or "",
+                "home_team": home.get("name") if home else "",
+                "away_team": away.get("name") if away else "",
+                "status": match.get("status") or "",
+                "home_score": "" if match.get("home_score") is None else str(match.get("home_score")),
+                "away_score": "" if match.get("away_score") is None else str(match.get("away_score")),
+            })
         if "champions" in match_search and "final" in match_search and "paris" in match_search and "arsenal" in match_search:
             print("[champions-final-debug] raw_supabase_match=" + json.dumps(match, ensure_ascii=False, default=str), flush=True)
             print("[champions-final-debug] raw_data=" + json.dumps(raw_match, ensure_ascii=False, default=str), flush=True)
             print("[champions-final-debug] transformed_public_match=" + json.dumps(public_match, ensure_ascii=False, default=str), flush=True)
         public_matches.append(public_match)
+
+    if champions_knockout_debug_rows:
+        print("[champions-knockout-debug] first_rows=" + json.dumps(champions_knockout_debug_rows, ensure_ascii=False, default=str), flush=True)
 
     public_teams = []
     player_team_names: dict[str, list[str]] = {}
