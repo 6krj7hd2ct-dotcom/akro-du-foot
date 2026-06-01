@@ -3184,12 +3184,40 @@ def _coach_player_reference(player_name: str, payload: dict[str, Any] | None = N
     return reference
 
 
+def _coach_known_player_requires_strict_identity(player_name: str) -> bool:
+    return player_name in {"Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé"}
+
+
+def _coach_api_player_birth(player: dict[str, Any]) -> str:
+    return str((player.get("birth") or {}).get("date") or player.get("birth_date") or "")[:10]
+
+
+def _coach_api_player_nationality(player: dict[str, Any]) -> str:
+    return str(player.get("nationality") or "")
+
+
 def _coach_api_profile_name(player: dict[str, Any]) -> str:
     direct = str(player.get("name") or "").strip()
     full = " ".join(str(player.get(key) or "").strip() for key in ("firstname", "lastname")).strip()
     if direct and full:
         return f"{direct} {full}"
     return direct or full
+
+
+def _coach_player_identity_is_strict_match(player: dict[str, Any], requested_name: str, payload: dict[str, Any] | None = None) -> tuple[bool, list[str]]:
+    if not _coach_known_player_requires_strict_identity(requested_name):
+        return True, []
+    reference = _coach_player_reference(requested_name, payload)
+    reasons: list[str] = []
+    expected_birth = str(reference.get("birth_date") or COACH_PLAYER_BIRTH_DATES.get(requested_name) or "")[:10]
+    api_birth = _coach_api_player_birth(player)
+    if expected_birth and api_birth != expected_birth:
+        reasons.append(f"naissance attendue {expected_birth}, reçue {api_birth or 'absente'}")
+    expected_nationalities = _coach_normalized_values(list(reference.get("nationalities") or []))
+    api_nationality = _normalize_football_text(_coach_api_player_nationality(player))
+    if expected_nationalities and api_nationality not in expected_nationalities:
+        reasons.append(f"nationalité attendue {sorted(expected_nationalities)}, reçue {_coach_api_player_nationality(player) or 'absente'}")
+    return not reasons, reasons
 
 
 def _coach_player_confidence(player: dict[str, Any], requested_name: str, payload: dict[str, Any] | None = None) -> tuple[int, list[str]]:
@@ -3212,7 +3240,7 @@ def _coach_player_confidence(player: dict[str, Any], requested_name: str, payloa
         reasons.append("alias reconnu")
 
     expected_birth = str(reference.get("birth_date") or COACH_PLAYER_BIRTH_DATES.get(requested_name) or "")[:10]
-    api_birth = str((player.get("birth") or {}).get("date") or player.get("birth_date") or "")[:10]
+    api_birth = _coach_api_player_birth(player)
     if expected_birth and api_birth:
         if api_birth == expected_birth:
             score += 45
@@ -3225,7 +3253,7 @@ def _coach_player_confidence(player: dict[str, Any], requested_name: str, payloa
             reasons.append(f"naissance incompatible {api_birth}")
 
     expected_nationalities = _coach_normalized_values(list(reference.get("nationalities") or []))
-    api_nationality = _normalize_football_text(str(player.get("nationality") or ""))
+    api_nationality = _normalize_football_text(_coach_api_player_nationality(player))
     if expected_nationalities and api_nationality:
         if api_nationality in expected_nationalities:
             score += 25
@@ -3243,6 +3271,17 @@ def _coach_player_confidence(player: dict[str, Any], requested_name: str, payloa
 
 def _coach_player_confidence_threshold(player_name: str) -> int:
     return 70 if player_name in COACH_PLAYER_MATCH_HINTS else 45
+
+
+def _coach_team_matches_known_player(team_name: str, player_name: str, payload: dict[str, Any] | None = None) -> bool:
+    if not _coach_known_player_requires_strict_identity(player_name):
+        return True
+    reference = _coach_player_reference(player_name, payload)
+    expected_clubs = _coach_normalized_values(list(reference.get("clubs") or []))
+    normalized_team = _normalize_football_text(team_name)
+    if not expected_clubs or not normalized_team:
+        return False
+    return any(club and (club in normalized_team or normalized_team in club) for club in expected_clubs)
 
 
 def _coach_api_player_matches(api_name: str, requested_name: str) -> bool:
@@ -3276,13 +3315,16 @@ def _coach_api_player_profiles(player_name: str) -> list[dict[str, Any]]:
                 continue
             matched = bool(api_name and _coach_api_player_matches(api_name, player_name))
             confidence, reasons = _coach_player_confidence(player, player_name, payload)
+            strict_ok, strict_reasons = _coach_player_identity_is_strict_match(player, player_name, payload)
             print(
                 f"[coach-enrich] profile_candidate player={player_name} api_name={api_name or '-'} "
-                f"api_id={api_id} matched={matched} confidence={confidence} threshold={threshold} "
-                f"reasons={'; '.join(reasons) or '-'}",
+                f"api_id={api_id} birth={_coach_api_player_birth(player) or '-'} "
+                f"nationality={_coach_api_player_nationality(player) or '-'} matched={matched} "
+                f"strict_ok={strict_ok} confidence={confidence} threshold={threshold} "
+                f"reasons={'; '.join(reasons + strict_reasons) or '-'}",
                 flush=True,
             )
-            if not matched or confidence < threshold or api_id in seen_api_players:
+            if not matched or not strict_ok or confidence < threshold or api_id in seen_api_players:
                 continue
             seen_api_players.add(api_id)
             player["_coach_match_confidence"] = confidence
@@ -3293,7 +3335,8 @@ def _coach_api_player_profiles(player_name: str) -> list[dict[str, Any]]:
         best = profiles[0]
         print(
             f"[coach-enrich] profile_selected player={player_name} api_name={_coach_api_profile_name(best)} "
-            f"api_id={best.get('id')} confidence={best.get('_coach_match_confidence')} "
+            f"api_id={best.get('id')} birth={_coach_api_player_birth(best) or '-'} "
+            f"nationality={_coach_api_player_nationality(best) or '-'} confidence={best.get('_coach_match_confidence')} "
             f"reasons={'; '.join(best.get('_coach_match_reasons') or [])}",
             flush=True,
         )
@@ -3365,12 +3408,20 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
                 cards = stat.get("cards") if isinstance(stat.get("cards"), dict) else {}
                 team = stat.get("team") if isinstance(stat.get("team"), dict) else {}
                 league = stat.get("league") if isinstance(stat.get("league"), dict) else {}
+                team_name = str(team.get("name") or "")
+                if not _coach_team_matches_known_player(team_name, player_name):
+                    print(
+                        f"[coach-enrich] stat_rejected player={player_name} season={season} "
+                        f"api_id={player.get('id') or '-'} team={team_name or '-'} reason=club_incoherent",
+                        flush=True,
+                    )
+                    continue
                 row = {
                     "api_id": f"{player.get('id')}:{team.get('id') or ''}:{league.get('id') or ''}:{season}",
                     "player_api_id": str(player.get("id") or ""),
                     "player_name": player_name,
                     "team_api_id": str(team.get("id") or ""),
-                    "team_name": str(team.get("name") or ""),
+                    "team_name": team_name,
                     "league_api_id": str(league.get("id") or ""),
                     "league_name": str(league.get("name") or ""),
                     "season": str(season),
