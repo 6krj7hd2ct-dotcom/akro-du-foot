@@ -15,7 +15,7 @@ from datetime import date, datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import quote, urlparse
+from urllib.parse import quote, urlencode, urlparse
 from zoneinfo import ZoneInfo
 
 try:
@@ -2466,9 +2466,10 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
     endpoint = endpoint.strip("/")
     clean_params = {key: str(value) for key, value in params.items() if value not in (None, "")}
     safe_url = f"{API_FOOTBALL_BASE_URL}/{endpoint}"
+    full_url = f"{safe_url}?{urlencode(clean_params)}" if clean_params else safe_url
     api_key = os.environ.get("API_FOOTBALL_KEY", "").strip()
     print(
-        f"[coach-api-football] request_prepare url={safe_url} params={clean_params} "
+        f"[coach-api-football] request_prepare url={full_url} params={clean_params} "
         f"key_configured={bool(api_key)} key_len={len(api_key)}",
         flush=True,
     )
@@ -2491,20 +2492,26 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
                         f"rows={len(rows) if isinstance(rows, list) else 0}",
                         flush=True,
                     )
+                    if isinstance(rows, list):
+                        print(
+                            f"[coach-api-football] cache_sample endpoint={endpoint} "
+                            f"sample={json.dumps(rows[:1], ensure_ascii=False)[:900]}",
+                            flush=True,
+                        )
                     return rows if isinstance(rows, list) else []
         except ValueError:
             pass
     try:
         import requests
 
-        print(f"[coach-api-football] http_start url={safe_url} params={clean_params}", flush=True)
+        print(f"[coach-api-football] http_start url={full_url} params={clean_params}", flush=True)
         response = requests.get(
             safe_url,
             params=clean_params,
             headers={"x-apisports-key": os.environ.get("API_FOOTBALL_KEY", "").strip()},
             timeout=COACH_API_FOOTBALL_TIMEOUT,
         )
-        print(f"[coach-api-football] http_done status={response.status_code} url={safe_url} params={clean_params}", flush=True)
+        print(f"[coach-api-football] http_done status={response.status_code} url={full_url} params={clean_params}", flush=True)
         if response.status_code >= 400:
             print(f"[coach-api-football] http_error status={response.status_code} endpoint={endpoint} body={response.text[:220]}", flush=True)
             return []
@@ -2525,6 +2532,12 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
         )
         rows = payload.get("response") if isinstance(payload, dict) else []
         print(f"[coach-api-football] fetched endpoint={endpoint} params={clean_params} rows={len(rows) if isinstance(rows, list) else 0}", flush=True)
+        if isinstance(rows, list):
+            print(
+                f"[coach-api-football] raw_sample endpoint={endpoint} "
+                f"sample={json.dumps(rows[:1], ensure_ascii=False)[:900]}",
+                flush=True,
+            )
         return rows if isinstance(rows, list) else []
     except Exception as exc:
         print(f"[coach-api-football] erreur endpoint={endpoint}: {exc}", flush=True)
@@ -3117,6 +3130,39 @@ def _coach_api_player_matches(api_name: str, requested_name: str) -> bool:
     return any(term and term in api_norm for term in _coach_player_api_search_terms(requested_name))
 
 
+def _coach_api_player_profiles(player_name: str) -> list[dict[str, Any]]:
+    profiles: list[dict[str, Any]] = []
+    seen_api_players: set[str] = set()
+    for search_term in _coach_player_api_search_terms(player_name):
+        api_rows = _api_football_get("players/profiles", {"search": search_term})
+        print(
+            f"[coach-enrich] profile_rows player={player_name} search={search_term} count={len(api_rows)}",
+            flush=True,
+        )
+        for item in api_rows:
+            player = item.get("player") if isinstance(item, dict) else {}
+            if not isinstance(player, dict):
+                continue
+            api_id = str(player.get("id") or "")
+            api_name = str(player.get("name") or " ".join(
+                str(player.get(key) or "") for key in ("firstname", "lastname")
+            )).strip()
+            if not api_id:
+                continue
+            matched = bool(api_name and _coach_api_player_matches(api_name, player_name))
+            print(
+                f"[coach-enrich] profile_candidate player={player_name} api_name={api_name or '-'} "
+                f"api_id={api_id} matched={matched}",
+                flush=True,
+            )
+            if not matched or api_id in seen_api_players:
+                continue
+            seen_api_players.add(api_id)
+            profiles.append(player)
+    print(f"[coach-enrich] profiles_matched player={player_name} count={len(profiles)}", flush=True)
+    return profiles
+
+
 def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[str, Any]]:
     print(
         f"[coach-enrich] player_start player={player_name} seasons={seasons} "
@@ -3129,15 +3175,22 @@ def _coach_api_player_stats(player_name: str, seasons: list[str]) -> list[dict[s
     collected: list[dict[str, Any]] = []
     search_terms = _coach_player_api_search_terms(player_name)
     print(f"[coach-enrich] search_terms player={player_name} terms={search_terms}", flush=True)
+    profiles = _coach_api_player_profiles(player_name)
+    if not profiles:
+        print(f"[coach-enrich] player_skip player={player_name} reason=no_api_profile_match", flush=True)
+        return []
     for season in seasons[:4]:
         rows: list[dict[str, Any]] = []
         seen_api_players: set[str] = set()
         print(f"[coach-enrich] season_start player={player_name} season={season}", flush=True)
-        for search_term in search_terms:
-            api_rows = _api_football_get("players", {"search": search_term, "season": season})
+        for profile in profiles[:4]:
+            profile_id = str(profile.get("id") or "")
+            if not profile_id:
+                continue
+            api_rows = _api_football_get("players", {"id": profile_id, "season": season})
             print(
                 f"[coach-enrich] api_rows player={player_name} season={season} "
-                f"search={search_term} count={len(api_rows)}",
+                f"profile_id={profile_id} count={len(api_rows)}",
                 flush=True,
             )
             for item in api_rows:
