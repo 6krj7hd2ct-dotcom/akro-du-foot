@@ -10309,6 +10309,7 @@ grant select, insert, update on public.profiles to authenticated;`;
               const teams = [normalizeTeamName(match?.home_team || ''), normalizeTeamName(match?.away_team || '')].join(' | ');
               return isFinal && teams.includes('paris') && teams.includes('arsenal');
             }) || null;
+            window.__championsPsgArsenalFinal = championsPsgArsenalFinal;
             console.info('[champions-2025-bracket]', {
               kind,
               selected,
