@@ -493,16 +493,23 @@
     .hall-standings-board { display: grid; gap: 14px; }
     .hall-league-row { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.11); border-radius: 18px; background: linear-gradient(135deg, rgba(7,17,31,0.92), rgba(18,43,70,0.70)); box-shadow: 0 16px 38px rgba(0,0,0,0.18); }
     .hall-league-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
-    .hall-league-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 17px; font-weight: 950; }
-    .hall-league-title::before { content: ""; width: 9px; height: 28px; border-radius: 999px; background: linear-gradient(180deg, var(--gold), rgba(99,232,255,0.70)); box-shadow: 0 0 18px rgba(245,201,107,0.18); }
+    .hall-league-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 18px; font-weight: 950; }
+    .hall-league-logo { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; object-fit: contain; padding: 3px; background: rgba(255,255,255,0.94); border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 10px 24px rgba(0,0,0,0.22); }
+    .hall-league-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
     .hall-top3-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-    .hall-team-card { position: relative; overflow: hidden; min-height: 118px; display: grid; align-content: center; gap: 8px; padding: 14px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.10), rgba(245,201,107,0.08)); }
-    .hall-team-card::before { content: ""; position: absolute; right: 10px; top: 50%; width: 88px; height: 88px; transform: translateY(-50%); background: var(--club-logo, none) center / contain no-repeat; opacity: .20; pointer-events: none; filter: saturate(1.12); }
+    .hall-team-card { position: relative; overflow: hidden; min-height: 124px; display: grid; align-content: center; gap: 9px; padding: 16px 112px 16px 16px; border: 1px solid rgba(99,232,255,0.22); border-radius: 14px; background: linear-gradient(145deg, rgba(99,232,255,0.10), rgba(245,201,107,0.08)); }
+    .hall-team-card::before { content: ""; position: absolute; right: 12px; top: 50%; width: 94px; height: 94px; transform: translateY(-50%); background: var(--club-logo, none) center / contain no-repeat; opacity: 1; pointer-events: none; filter: drop-shadow(0 14px 24px rgba(0,0,0,0.28)); }
     .hall-team-card > * { position: relative; z-index: 1; }
-    .hall-rank { width: 28px; height: 28px; display: inline-grid; place-items: center; border-radius: 999px; color: #07111f; background: linear-gradient(180deg, #ffe1a0, #d5a63a); font-size: 12px; font-weight: 950; }
-    .hall-team-name { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 18px; line-height: 1.08; font-weight: 950; }
+    .hall-team-name { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 22px; line-height: 1.06; font-weight: 950; }
     .hall-team-meta { color: #bcd0e5; font-size: 12px; font-weight: 850; }
-    @media (max-width: 760px) { .hall-top3-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } }
+    .hall-standings-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+    .hall-standings-table th { color: #91a9c4; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; text-align: left; padding: 0 8px 4px; }
+    .hall-standings-table td { padding: 10px 8px; background: rgba(255,255,255,0.055); border-top: 1px solid rgba(255,255,255,0.09); border-bottom: 1px solid rgba(255,255,255,0.09); color: #d9e7f8; font-weight: 850; }
+    .hall-standings-table td:first-child { border-left: 1px solid rgba(255,255,255,0.09); border-radius: 12px 0 0 12px; color: #ffe1a0; width: 42px; text-align: center; }
+    .hall-standings-table td:last-child { border-right: 1px solid rgba(255,255,255,0.09); border-radius: 0 12px 12px 0; }
+    .hall-standing-team { display: flex; align-items: center; gap: 9px; color: #fff; font-weight: 950; }
+    .hall-standing-team .flag { width: 24px; height: 24px; flex-basis: 24px; object-fit: contain; }
+    @media (max-width: 760px) { .hall-top3-grid { grid-template-columns: 1fr; } .hall-league-head { align-items: flex-start; flex-direction: column; } .hall-league-actions { justify-content: flex-start; } .hall-team-card { padding-right: 102px; } }
     @media (max-width: 860px) {
       .player-card { min-height: 108px; padding: 12px 78px 12px 12px; }
       .player-card .avatar-wrap, .player-card .avatar { width: 70px; height: 92px; }
@@ -8044,6 +8051,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       ['seriea', 'Serie A'],
       ['bundesliga', 'Bundesliga']
     ];
+    const HALL_LEAGUE_LOGOS = {
+      ligue1: 'https://a.espncdn.com/i/leaguelogos/soccer/500/fra.1.png',
+      laliga: 'https://a.espncdn.com/i/leaguelogos/soccer/500/esp.1.png',
+      premierleague: 'https://a.espncdn.com/i/leaguelogos/soccer/500/eng.1.png',
+      seriea: 'https://a.espncdn.com/i/leaguelogos/soccer/500/ita.1.png',
+      bundesliga: 'https://a.espncdn.com/i/leaguelogos/soccer/500/ger.1.png'
+    };
 
     function hallLeagueTeamCard(team, index) {
       const name = team.team || team.name || 'À déterminer';
@@ -8052,10 +8066,46 @@ grant select, insert, update on public.profiles to authenticated;`;
       const played = team.played || team.matches_played || team.mj || '—';
       const style = logo ? ` style="--club-logo:url(${leagueEscape(logo)})"` : '';
       return `<article class="hall-team-card"${style}>
-        <span class="hall-rank">#${leagueEscape(team.rank || index + 1)}</span>
-        <div class="hall-team-name">${leagueFlag(logo)}<span>${leagueEscape(name)}</span></div>
+        <div class="hall-team-name"><span>${leagueEscape(name)}</span></div>
         <div class="hall-team-meta">${leagueEscape(points)} pts · ${leagueEscape(played)} MJ</div>
       </article>`;
+    }
+
+    function hallLeagueStandingRows(league) {
+      const teams = leagueStandingsTeams(league);
+      return teams.map((team, index) => {
+        const name = team.team || team.name || 'À déterminer';
+        const logo = team.flag_url || team.logo_url || leagueClubLogo(name);
+        return `<tr>
+          <td>${leagueEscape(team.rank || index + 1)}</td>
+          <td><span class="hall-standing-team">${leagueFlag(logo)}<span>${leagueEscape(name)}</span></span></td>
+          <td>${leagueEscape(team.played || team.matches_played || team.mj || '—')}</td>
+          <td>${leagueEscape(team.wins || team.v || '—')}</td>
+          <td>${leagueEscape(team.draws || team.n || '—')}</td>
+          <td>${leagueEscape(team.losses || team.d || '—')}</td>
+          <td>${leagueEscape(team.goal_diff || team.diff || '—')}</td>
+          <td><strong>${leagueEscape(team.points || team.pts || '—')}</strong></td>
+        </tr>`;
+      }).join('');
+    }
+
+    function openHallLeagueStandings(key) {
+      const league = (LEAGUES_DATA?.leagues || {})[key] || {};
+      const modal = document.getElementById('allTimeModal');
+      const title = document.getElementById('allTimeTitle');
+      const source = document.getElementById('allTimeSource');
+      const body = document.getElementById('allTimeBody');
+      if (!modal || !title || !source || !body) return;
+      title.textContent = `Classement ${league.name || 'championnat'}`;
+      source.textContent = 'Classement complet de la saison sélectionnée';
+      const rows = hallLeagueStandingRows(league);
+      body.innerHTML = rows ? `<div class="table-scroll"><table class="hall-standings-table">
+        <thead><tr><th>#</th><th>Club</th><th>MJ</th><th>V</th><th>N</th><th>D</th><th>Diff</th><th>Pts</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>` : '<div class="empty">Classement indisponible.</div>';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.getElementById('allTimeClose')?.focus();
     }
 
     async function renderHallOfFame() {
@@ -8072,15 +8122,26 @@ grant select, insert, update on public.profiles to authenticated;`;
         const league = (LEAGUES_DATA.leagues || {})[key] || {};
         const teams = leagueStandingsTeams(league).slice(0, 3);
         const cards = teams.length ? teams.map(hallLeagueTeamCard).join('') : '<div class="empty">Classement indisponible.</div>';
+        const logo = HALL_LEAGUE_LOGOS[key] || '';
         return `<article class="hall-league-row">
           <div class="hall-league-head">
-            <div class="hall-league-title">${leagueEscape(league.name || label)}</div>
-            <button class="alltime-badge history-badge" type="button" data-alltime="league-history-${leagueEscape(key)}">Palmarès</button>
+            <div class="hall-league-title">${logo ? `<img class="hall-league-logo" src="${leagueEscape(logo)}" alt="" onerror="this.style.display='none'">` : ''}<span>${leagueEscape(league.name || label)}</span></div>
+            <div class="hall-league-actions">
+              <button class="alltime-badge history-badge" type="button" data-alltime="league-history-${leagueEscape(key)}">Palmarès</button>
+              <button class="alltime-badge history-badge" type="button" data-hall-standing="${leagueEscape(key)}">Classement</button>
+            </div>
           </div>
           <div class="hall-top3-grid">${cards}</div>
         </article>`;
       }).join('');
     }
+
+    document.addEventListener('click', async (event) => {
+      const trigger = event.target.closest('[data-hall-standing]');
+      if (!trigger) return;
+      await ensureLeagueData();
+      openHallLeagueStandings(trigger.dataset.hallStanding);
+    });
 
     function leagueTabIsActive() {
       return document.querySelector('[data-tab-panel="leagues"]')?.classList.contains('is-active');
