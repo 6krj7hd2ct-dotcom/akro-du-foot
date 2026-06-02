@@ -5175,15 +5175,27 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     async function openGoatModal() {
-      await loadSupabaseFootballData();
-      if (typeof loadHallOfFameUpdates === 'function') await loadHallOfFameUpdates();
-      await loadGoatPlayerTags();
+      const modal = document.getElementById('goatModal');
+      const setup = document.getElementById('goatSetup');
+      const arena = document.getElementById('goatArena');
+      const result = document.getElementById('goatResult');
+      const status = document.getElementById('goatSetupStatus');
+      if (!modal || !setup || !arena || !result) return;
+      setup.hidden = false;
+      arena.hidden = true;
+      result.hidden = true;
+      if (status) status.textContent = 'Chargement des joueurs...';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      try {
+        await loadSupabaseFootballData();
+        if (typeof loadHallOfFameUpdates === 'function') await loadHallOfFameUpdates();
+        await loadGoatPlayerTags();
+      } catch (error) {
+        console.warn('[the-goat] ouverture avec données locales', error);
+      }
       renderGoatSetup();
-      document.getElementById('goatSetup').hidden = false;
-      document.getElementById('goatArena').hidden = true;
-      document.getElementById('goatResult').hidden = true;
-      document.getElementById('goatModal')?.classList.add('is-open');
-      document.getElementById('goatModal')?.setAttribute('aria-hidden', 'false');
+      if (status) status.textContent = '';
     }
 
     function closeGoatModal() {
