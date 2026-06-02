@@ -232,7 +232,42 @@ def hall_of_fame_payload() -> dict[str, Any]:
         "status": cache.get("status", "fallback") if isinstance(cache, dict) else "fallback",
         "lists": lists if isinstance(lists, dict) else {},
         "sources": sources if isinstance(sources, list) else [],
+        "profiles": _hall_of_fame_supabase_profiles_payload(),
     }
+
+
+def _hall_of_fame_supabase_profiles_payload() -> list[dict[str, Any]]:
+    if not _supabase_service_enabled():
+        return []
+    rows = _supabase_service_request(
+        "GET",
+        "hall_of_fame_players?"
+        "select=name,display_name,photo_url,nationality,position,era,clubs,national_team,"
+        "ballon_dor_count,ballon_dor_years,world_cup_titles,euro_titles,copa_america_titles,"
+        "champions_league_titles,fifa_awards,major_records,iconic_moments,nickname,legacy,"
+        "playing_style,why_legend,goat_score,hall_of_fame_tier,source,last_enriched_at"
+        "&order=goat_score.desc&limit=800",
+    )
+    if not isinstance(rows, list):
+        return []
+    profiles: list[dict[str, Any]] = []
+    for row in rows:
+        name = str(row.get("name") or row.get("display_name") or "").strip()
+        if not name:
+            continue
+        profiles.append({
+            "name": name,
+            "display_name": str(row.get("display_name") or name).strip(),
+            "photo_url": str(row.get("photo_url") or "").strip(),
+            "nationality": str(row.get("nationality") or row.get("national_team") or "").strip(),
+            "position": str(row.get("position") or "").strip(),
+            "era": str(row.get("era") or "").strip(),
+            "clubs": _coach_json_list(row.get("clubs")),
+            "source": str(row.get("source") or "hall_of_fame_players").strip(),
+            "goat_score": _coach_stat_int(row.get("goat_score")),
+            "tier": str(row.get("hall_of_fame_tier") or "").strip(),
+        })
+    return profiles
 
 
 def _hall_of_fame_refresh_enabled() -> bool:

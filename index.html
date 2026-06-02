@@ -3731,7 +3731,8 @@
       const label = count > 1 ? (award.labelPlural || `${award.label}s`) : award.label;
       return `<article class="award-history-card"><div class="award-history-photo">${photo}<span${fallbackHidden}>${escapeHtml(awardHistoryInitials(item.name))}</span></div><div class="award-history-main"><strong>${safeName}</strong><div class="award-history-years">${escapeHtml(years.join(', '))}</div></div><div class="award-history-count">${count} ${escapeHtml(label)}</div></article>`;
     }
-    function openAwardHistory(key) {
+    async function openAwardHistory(key) {
+      if (typeof loadHallOfFameUpdates === 'function') await loadHallOfFameUpdates();
       const data = AWARD_HISTORY_DATA[key];
       const modal = document.getElementById('awardHistoryModal');
       const title = document.getElementById('awardHistoryTitle');
@@ -4132,6 +4133,7 @@
     const allTimeClose = document.getElementById('allTimeClose');
 
     function allTimeAvatar(player) {
+      player = enrichHallPlayer(player || {});
       return player.photo_url
         ? `<img class="mini-avatar" src="${escapeHtml(player.photo_url)}" alt="">`
         : player.flag_url
@@ -4140,6 +4142,7 @@
     }
 
     function allTimeRow(player, label) {
+      player = enrichHallPlayer(player || {});
       const country = player.country || player.team || 'Pays non disponible';
       const years = player.years ? `<div class="subtle">${escapeHtml(player.years)}</div>` : '';
       return `<article class="alltime-row">
@@ -4150,7 +4153,8 @@
       </article>`;
     }
 
-    function openAllTime(kind) {
+    async function openAllTime(kind) {
+      if (typeof loadHallOfFameUpdates === 'function') await loadHallOfFameUpdates();
       const config = ALL_TIME_LISTS[kind] || ALL_TIME_LISTS.scorers;
       allTimeTitle.textContent = config.title;
       allTimeBody.innerHTML = config.players && config.players.length
@@ -9139,8 +9143,120 @@ grant select, insert, update on public.profiles to authenticated;`;
       'samuel etoo': 'https://images.fotmob.com/image_resources/playerimages/33639.png',
       'peter shilton': 'https://upload.wikimedia.org/wikipedia/commons/4/43/Peter_Shilton.png'
     };
+    let HALL_OF_FAME_PROFILE_INDEX = {};
+    let HALL_OF_FAME_PROFILE_AUDIT = {missingPhotos: [], absentFromProfiles: [], duplicates: []};
+
+    function hallProfileAliases(profile) {
+      const values = [profile?.name, profile?.display_name].filter(Boolean);
+      const aliases = new Set();
+      values.forEach(value => {
+        const normalized = hallFeatureNameKey(value);
+        if (!normalized) return;
+        aliases.add(normalized);
+        const parts = normalized.split(' ').filter(Boolean);
+        if (parts.length >= 2) {
+          const last = parts[parts.length - 1];
+          if (last.length >= 4) aliases.add(last);
+          const tail = parts.slice(-2).join(' ');
+          const compactTail = parts.slice(-2).join('');
+          if (compactTail.length >= 4) {
+            aliases.add(tail);
+            aliases.add(compactTail);
+          }
+          if (['van', 'von', 'de', 'del', 'da', 'di'].includes(parts[parts.length - 2])) aliases.add(tail);
+        }
+      });
+      return [...aliases];
+    }
+
+    function setHallOfFameProfiles(profiles) {
+      const aliasMap = {};
+      const aliasCounts = {};
+      (Array.isArray(profiles) ? profiles : []).forEach(profile => {
+        hallProfileAliases(profile).forEach(alias => {
+          aliasCounts[alias] = (aliasCounts[alias] || 0) + 1;
+        });
+      });
+      (Array.isArray(profiles) ? profiles : []).forEach(profile => {
+        hallProfileAliases(profile).forEach(alias => {
+          const exact = [profile.name, profile.display_name].map(hallFeatureNameKey).includes(alias);
+          if (exact || aliasCounts[alias] === 1) aliasMap[alias] = profile;
+        });
+      });
+      HALL_OF_FAME_PROFILE_INDEX = aliasMap;
+    }
+
+    function hallProfileForName(name) {
+      return HALL_OF_FAME_PROFILE_INDEX[hallFeatureNameKey(name)] || null;
+    }
+
+    function enrichHallPlayer(player) {
+      const profile = hallProfileForName(player?.name);
+      if (!profile) return player;
+      return {
+        ...player,
+        name: profile.display_name || profile.name || player.name,
+        country: profile.nationality || player.country,
+        photo_url: profile.photo_url || player.photo_url,
+        hall_of_fame_source: profile.source || 'hall_of_fame_players'
+      };
+    }
+
+    function enrichHallList(list) {
+      if (!list || !Array.isArray(list.players)) return list;
+      const seen = new Set();
+      return {
+        ...list,
+        players: list.players.map(enrichHallPlayer).filter(player => {
+          const key = `${hallFeatureNameKey(player.name)}|${player.rank || ''}|${player.value || ''}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+      };
+    }
+
+    function enrichHallStaticData() {
+      Object.keys(ALL_TIME_LISTS || {}).forEach(key => {
+        ALL_TIME_LISTS[key] = enrichHallList(ALL_TIME_LISTS[key]);
+      });
+      Object.values(AWARD_HISTORY_DATA || {}).forEach(award => {
+        if (!Array.isArray(award.winners)) return;
+        award.winners = award.winners.map(winner => {
+          const enriched = enrichHallPlayer({name: winner.name, photo_url: winner.photo});
+          return {...winner, name: enriched.name, photo: enriched.photo_url || winner.photo};
+        });
+      });
+    }
+
+    function auditHallStaticData() {
+      const absent = new Set();
+      const missingPhotos = new Set();
+      const duplicateKeys = new Set();
+      Object.entries(ALL_TIME_LISTS || {}).forEach(([listKey, list]) => {
+        if (/history|club-|nation-|league-/.test(String(listKey || ''))) return;
+        const names = {};
+        (list.players || []).forEach(player => {
+          const key = hallFeatureNameKey(player.name);
+          names[key] = (names[key] || 0) + 1;
+          if (!hallProfileForName(player.name)) absent.add(player.name);
+          if (!player.photo_url && hallProfileForName(player.name)?.photo_url) missingPhotos.add(player.name);
+        });
+        Object.entries(names).forEach(([key, count]) => {
+          if (count > 1) duplicateKeys.add(key);
+        });
+      });
+      HALL_OF_FAME_PROFILE_AUDIT = {
+        missingPhotos: [...missingPhotos].sort(),
+        absentFromProfiles: [...absent].sort(),
+        duplicates: [...duplicateKeys].sort()
+      };
+      window.__hallOfFameAudit = HALL_OF_FAME_PROFILE_AUDIT;
+      return HALL_OF_FAME_PROFILE_AUDIT;
+    }
 
     function hallScorerCard(player) {
+      player = enrichHallPlayer(player || {});
       const initials = String(player.name || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || '?';
       const avatar = player.photo_url
         ? `<img src="${leagueEscape(player.photo_url)}" alt="${leagueEscape(player.name || '')}" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false;"><span hidden>${leagueEscape(initials)}</span>`
@@ -9172,7 +9288,7 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function hallFeatureCard(item, label) {
       const list = ALL_TIME_LISTS[item.target] || {};
-      const leader = (list.players || [])[0] || {};
+      const leader = enrichHallPlayer((list.players || [])[0] || {});
       const group = String(label || '').toLocaleLowerCase('fr-FR');
       const isGoat = group === 'goat';
       const visual = isGoat
@@ -9264,11 +9380,14 @@ grant select, insert, update on public.profiles to authenticated;`;
       hallOfFameUpdatesPromise = fetch('/api/hall-of-fame', { cache: 'no-store' })
         .then(response => response.ok ? response.json() : null)
         .then(data => {
+          setHallOfFameProfiles(data && Array.isArray(data.profiles) ? data.profiles : []);
           const lists = data && typeof data === 'object' ? data.lists || {} : {};
           Object.entries(lists).forEach(([key, value]) => {
             if (!value || !Array.isArray(value.players) || !value.players.length) return;
             ALL_TIME_LISTS[key] = { ...(ALL_TIME_LISTS[key] || {}), ...value };
           });
+          enrichHallStaticData();
+          auditHallStaticData();
           return data;
         })
         .catch(() => null);
