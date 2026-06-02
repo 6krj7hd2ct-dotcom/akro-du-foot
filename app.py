@@ -1689,9 +1689,23 @@ def _format_chat_history(history: list[dict[str, str]]) -> str:
 
 def _coach_is_player_followup_question(normalized_question: str) -> bool:
     return bool(
-        re.search(r"\b(il|lui|son|sa|ses)\b", normalized_question)
-        or any(term in normalized_question for term in {"ce joueur", "cette legende", "cette légende", "a t il", "fait il", "possede t il", "possède t il"})
+        re.search(r"\b(il|lui|son|sa|ses|celui ci|celui la|celui là)\b", normalized_question)
+        or any(term in normalized_question for term in {"ce joueur", "cette legende", "cette légende", "cet entraineur", "cet entraîneur", "a t il", "fait il", "possede t il", "possède t il"})
     )
+
+
+def _coach_is_comparison_followup_question(normalized_question: str) -> bool:
+    return bool(
+        any(term in normalized_question for term in {"lequel", "qui a", "qui est", "qui etait", "qui était", "qui marque", "qui gagne", "meilleur palmares", "meilleur palmarès", "plus de trophees", "plus de trophées", "plus influent", "en selection", "en sélection", "et en", "a le plus", "marque le plus"})
+    )
+
+
+def _coach_recent_comparison_players(history: list[dict[str, str]]) -> list[str]:
+    for item in reversed(history[-10:]):
+        names = _coach_detect_player_names(str(item.get("content") or ""))
+        if len(names) >= 2:
+            return names[:2]
+    return []
 
 
 def _detect_conversation_context(history: list[dict[str, str]], question: str, client_context: dict[str, Any]) -> dict[str, str]:
@@ -1721,21 +1735,34 @@ def _detect_conversation_context(history: list[dict[str, str]], question: str, c
     clubs = {"psg": "PSG", "paris saint germain": "PSG", "om": "OM", "marseille": "OM", "real madrid": "Real Madrid", "barca": "Barcelona", "barcelona": "Barcelona", "manchester city": "Manchester City"}
     competitions = {"ligue des champions": "Ligue des Champions", "champions league": "Ligue des Champions", "coupe du monde": "Coupe du Monde", "euro": "Euro", "ligue 1": "Ligue 1", "ballon d or": "Ballon d'Or"}
 
+    current_players: list[str] = []
     current_player = ""
     for key, value in players.items():
         if _normalized_contains(qn, key):
+            if value not in current_players:
+                current_players.append(value)
             current_player = value
         elif not entity and _normalized_contains(history_text, key):
             entity, entity_type = value, "player"
 
-    if current_player:
+    if len(current_players) >= 2:
+        entity, entity_type = current_players[0], "player"
+        comparison_entity = current_players[1]
+        intent = "compare"
+    elif current_player:
         if any(term in qn for term in {"compare", "compar", "versus", "vs", "avec"}) and entity and current_player != entity:
             comparison_entity = current_player
             intent = "compare"
         else:
             entity, entity_type = current_player, "player"
+    elif not comparison_entity and _coach_is_comparison_followup_question(qn):
+        recent_pair = _coach_recent_comparison_players(history)
+        if len(recent_pair) >= 2:
+            entity, entity_type = recent_pair[0], "player"
+            comparison_entity = recent_pair[1]
+            intent = "compare"
 
-    keep_player_subject = entity_type == "player" and bool(entity) and _coach_is_player_followup_question(qn) and not current_player
+    keep_player_subject = entity_type == "player" and bool(entity) and (_coach_is_player_followup_question(qn) or _coach_is_comparison_followup_question(qn)) and not current_player
     for key, value in clubs.items():
         if keep_player_subject:
             break
@@ -1781,6 +1808,7 @@ def _resolve_followup_question(question: str, context_state: dict[str, str]) -> 
     ambiguous = (
         len(qn.split()) <= 5
         or _coach_is_player_followup_question(qn)
+        or _coach_is_comparison_followup_question(qn)
         or any(term in qn for term in {"et en", "cette saison", "son club", "sa selection", "sa sélection", "nombre de but", "compare avec", "et lui", "ses buts", "sa stat", "son style", "son exploit", "ses exploits", "cette legende", "cette légende"})
     )
     if not ambiguous:
@@ -1824,7 +1852,8 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
     historical_answer = _coach_historical_team_comparison_answer(question)
     if historical_answer:
         return historical_answer
-    if any(term in normalized for term in {"compare", "comparaison", "versus", "vs", "plus fort", "meilleur"}) and len(_coach_detect_player_names(question)) >= 2:
+    comparison_terms = {"compare", "comparaison", "versus", "vs", "plus fort", "meilleur", "palmares", "palmarès", "trophees", "trophées", "selection", "sélection", "influent", "marque", "buts", "lequel"}
+    if (any(term in normalized for term in comparison_terms) or _coach_is_comparison_followup_question(normalized)) and len(_coach_detect_player_names(question)) >= 2:
         comparison_answer = _coach_player_comparison_answer(question)
         if comparison_answer:
             return comparison_answer
@@ -4006,6 +4035,13 @@ def _coach_player_comparison_answer(question: str) -> str:
                     f"• Stats détaillées : non complètes dans API-Football pour cette fenêtre historique"
                 )
                 continue
+            if hall_lines:
+                lines.append(
+                    f"{summary['name']}\n"
+                    + "\n".join(f"• {line}" for line in hall_lines)
+                    + "\n• Stats détaillées : non complètes dans API-Football pour cette fenêtre"
+                )
+                continue
             lines.append(
                 f"{summary['name']}\n"
                 "• Statistiques détaillées : indisponibles pour cette fenêtre\n"
@@ -4172,6 +4208,7 @@ def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | 
     if not (
         any(term in user_question_normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique", "ballon", "gagne", "gagné", "remporte", "remporté", "exploit", "style", "ligue des champions", "champions", "coupe du monde", "marque", "marqué", "finale", "selection", "sélection", "equipe de france", "équipe de france", "titre", "titres"})
         or (from_history and _coach_is_player_followup_question(user_question_normalized))
+        or (player_names and len(user_question_normalized.split()) <= 3)
     ):
         return ""
     ballon_dor = list(hall.get("ballon_dor") or [])
@@ -4205,10 +4242,11 @@ def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | 
         "Résumé",
         opening,
         "Palmarès complet\n"
-        f"• Ballon d'Or : {_coach_hall_value(ballon_dor, 'aucun Ballon d’Or remporté')}\n"
-        f"• Coupe du Monde : {_coach_hall_value(list(hall.get('world_cup') or []), 'aucun titre mondial renseigné')}\n"
-        f"• Euro / Copa América : {_coach_hall_value(list(hall.get('continental') or []), 'aucun titre continental majeur renseigné')}\n"
-        f"• Ligue des Champions : {_coach_hall_value(list(hall.get('champions_league') or []), 'aucune Ligue des Champions renseignée')}\n"
+        f"• Ballon d'Or : {len(ballon_dor)} - {_coach_hall_value(ballon_dor, 'aucun Ballon d’Or remporté')}\n"
+        f"• Coupe du Monde : {len(list(hall.get('world_cup') or []))} - {_coach_hall_value(list(hall.get('world_cup') or []), 'aucun titre mondial renseigné')}\n"
+        f"• Euro / Copa América : {len(list(hall.get('continental') or []))} - {_coach_hall_value(list(hall.get('continental') or []), 'aucun titre continental majeur renseigné')}\n"
+        f"• Ligue des Champions : {len(list(hall.get('champions_league') or []))} - {_coach_hall_value(list(hall.get('champions_league') or []), 'aucune Ligue des Champions renseignée')}\n"
+        f"• Principaux trophées : {_coach_hall_value(list(hall.get('honours') or []), 'palmarès majeur à compléter')}\n"
         f"• Distinctions FIFA / individuelles : {_coach_hall_value(list(hall.get('distinctions') or []), 'aucune distinction majeure renseignée')}",
     ]
     if legend:
