@@ -4835,7 +4835,30 @@ grant select, insert, update on public.profiles to authenticated;`;
     let publishedGoatSessionCache = [];
     let ownUserBracketCache = [];
     const goatPhoto = id => `https://images.fotmob.com/image_resources/playerimages/${id}.png`;
+    const GOAT_SAFE_PHOTOS = {
+      'cristiano ronaldo': goatPhoto(30893),
+      'lionel messi': goatPhoto(30981),
+      'ronaldo nazario': goatPhoto(93179),
+      'ronaldo nazário': goatPhoto(93179),
+      ronaldinho: goatPhoto(30743),
+      neymar: goatPhoto(19533),
+      'karim benzema': goatPhoto(26166),
+      'luka modric': goatPhoto(31097),
+      'luka modrić': goatPhoto(31097),
+      'robert lewandowski': goatPhoto(93447),
+      'zlatan ibrahimovic': goatPhoto(35724),
+      'zlatan ibrahimović': goatPhoto(35724),
+      'didier drogba': goatPhoto(30822),
+      'fabio cannavaro': goatPhoto(34520),
+      'pavel nedved': goatPhoto(30725),
+      'pavel nedvěd': goatPhoto(30725),
+      'luis figo': goatPhoto(30696),
+      'luís figo': goatPhoto(30696),
+      rivaldo: goatPhoto(39728),
+      'zinedine zidane': goatPhoto(38422)
+    };
     const GOAT_POSITIONS = [
+      ['all', 'Tous'],
       ['attackers', 'Attaquants'],
       ['midfielders', 'Milieux'],
       ['defenders', 'Défenseurs'],
@@ -4906,7 +4929,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       {name:'Lev Yashin', position:'goalkeepers', nation:'Russia', clubs:['Dynamo Moscow'], photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Lev_Yashin_1965.jpg/500px-Lev_Yashin_1965.jpg', contexts:['worldcup','euro']},
       {name:'Dino Zoff', position:'goalkeepers', nation:'Italy', clubs:['Juventus','Napoli'], photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Dino_Zoff_%281974%29.jpg/500px-Dino_Zoff_%281974%29.jpg', contexts:['worldcup','euro']}
     ];
-    let goatState = {position: 'attackers', context: 'all', contextValue: '', players: [], index: 1, champion: null, challenger: null, path: [], saved: null};
+    let goatState = {position: 'all', context: 'all', contextValue: '', players: [], index: 1, champion: null, challenger: null, path: [], saved: null};
     let GOAT_PLAYER_TAGS = [];
     let goatPlayerTagsPromise = null;
 
@@ -4996,6 +5019,7 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function goatPositionMatches(player, position) {
       const target = String(position || 'attackers');
+      if (target === 'all') return true;
       if (player.positionGroup) return player.positionGroup === target;
       if (Array.isArray(player.positionKeys) && player.positionKeys.length) return player.positionKeys.includes(target);
       if (Array.isArray(player.position)) return player.position.includes(target);
@@ -5007,8 +5031,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       return goatNormalize(player.name);
     }
 
+    function goatTrustedPhotoForName(name, candidates = []) {
+      const key = goatNormalize(name);
+      if (GOAT_SAFE_PHOTOS[key]) return GOAT_SAFE_PHOTOS[key];
+      if (typeof hallTrustedPhotoForName === 'function') return hallTrustedPhotoForName(name, candidates);
+      return candidates.map(value => String(value || '').trim()).find(Boolean) || '';
+    }
+
     function goatAddPlayer(list, seen, player) {
-      const photo = hallTrustedPhotoForName(player?.name, [player?.photo, player?.photo_url, player?.image_url]);
+      const photo = goatTrustedPhotoForName(player?.name, [player?.photo, player?.photo_url, player?.image_url]);
       if (!player?.name || !photo) return;
       const key = goatPlayerKey(player);
       if (!key || seen.has(key)) return;
@@ -5157,6 +5188,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       const valueSelect = document.getElementById('goatContextValue');
       const valueLabel = valueRow?.querySelector('label');
       const count = document.getElementById('goatPoolCount');
+      const startButton = document.getElementById('goatStartButton');
+      const status = document.getElementById('goatSetupStatus');
       if (!positions || !contexts || !valueSelect || !count) return;
       positions.innerHTML = GOAT_POSITIONS.map(([key, label]) => `<button class="goat-choice ${goatState.position === key ? 'is-active' : ''}" type="button" data-goat-position="${escapeHtml(key)}">${escapeHtml(label)}</button>`).join('');
       contexts.innerHTML = GOAT_CONTEXTS.map(([key, label]) => `<button class="goat-choice ${goatState.context === key ? 'is-active' : ''}" type="button" data-goat-context="${escapeHtml(key)}">${escapeHtml(label)}</button>`).join('');
@@ -5170,7 +5203,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       } else {
         goatState.contextValue = '';
       }
-      count.textContent = goatFilteredPlayers().length;
+      const available = goatFilteredPlayers().length;
+      count.textContent = available;
+      if (startButton) startButton.disabled = available < 2;
+      if (status && status.textContent === 'Chargement des joueurs...') status.textContent = '';
       goatApplyTheme();
     }
 
@@ -8044,6 +8080,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         document.getElementById('goatArena').hidden = true;
         document.getElementById('goatResult').hidden = true;
         renderGoatSetup();
+        return;
       }
     });
     document.addEventListener('input', (event) => {
@@ -8070,8 +8107,15 @@ grant select, insert, update on public.profiles to authenticated;`;
     });
     document.getElementById('userProfileClose')?.addEventListener('click', closeUserProfile);
     profileGameRankingClose?.addEventListener('click', closeProfileGameRanking);
-    document.getElementById('goatButton')?.addEventListener('click', openGoatModal);
-    document.getElementById('goatClose')?.addEventListener('click', closeGoatModal);
+    document.getElementById('goatButton')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      openGoatModal();
+    });
+    document.getElementById('goatClose')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      closeGoatModal();
+    });
     document.getElementById('goatStartButton')?.addEventListener('click', startGoatSession);
     document.getElementById('goatContextValue')?.addEventListener('change', event => {
       goatState.contextValue = event.target.value || '';
