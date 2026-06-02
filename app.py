@@ -1687,6 +1687,13 @@ def _format_chat_history(history: list[dict[str, str]]) -> str:
     return "\n".join(f"{item['role']}: {item['content']}" for item in history[-20:])
 
 
+def _coach_is_player_followup_question(normalized_question: str) -> bool:
+    return bool(
+        re.search(r"\b(il|lui|son|sa|ses)\b", normalized_question)
+        or any(term in normalized_question for term in {"ce joueur", "cette legende", "cette légende", "a t il", "fait il", "possede t il", "possède t il"})
+    )
+
+
 def _detect_conversation_context(history: list[dict[str, str]], question: str, client_context: dict[str, Any]) -> dict[str, str]:
     history_text = _normalize_football_text(" ".join(item.get("content", "") for item in history[-10:]))
     text = _normalize_football_text(history_text + " " + question)
@@ -1728,7 +1735,10 @@ def _detect_conversation_context(history: list[dict[str, str]], question: str, c
         else:
             entity, entity_type = current_player, "player"
 
+    keep_player_subject = entity_type == "player" and bool(entity) and _coach_is_player_followup_question(qn) and not current_player
     for key, value in clubs.items():
+        if keep_player_subject:
+            break
         if _normalized_contains(qn, key) or (not entity and _normalized_contains(text, key)):
             entity, entity_type = value, "club"
     for key, value in competitions.items():
@@ -1768,7 +1778,11 @@ def _detect_conversation_context(history: list[dict[str, str]], question: str, c
 
 def _resolve_followup_question(question: str, context_state: dict[str, str]) -> str:
     qn = _normalize_football_text(question)
-    ambiguous = len(qn.split()) <= 5 or any(term in qn for term in {"et en", "cette saison", "son club", "sa selection", "sa sélection", "nombre de but", "compare avec", "et lui", "ses buts", "sa stat"})
+    ambiguous = (
+        len(qn.split()) <= 5
+        or _coach_is_player_followup_question(qn)
+        or any(term in qn for term in {"et en", "cette saison", "son club", "sa selection", "sa sélection", "nombre de but", "compare avec", "et lui", "ses buts", "sa stat", "son style", "son exploit", "ses exploits", "cette legende", "cette légende"})
+    )
     if not ambiguous:
         return question
     parts = []
@@ -4140,10 +4154,12 @@ def _coach_role_phrase(role: str) -> str:
 
 def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | None = None) -> str:
     player_names = _coach_detect_player_names(question)
+    from_history = False
     if not player_names and history:
         player = _coach_recent_hall_player(history)
         if player:
             player_names = [player]
+            from_history = True
     if len(player_names) != 1:
         return ""
     player_name = player_names[0]
@@ -4152,10 +4168,14 @@ def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | 
     if not legend and not hall:
         return ""
     normalized = _normalize_football_text(question)
-    if not any(term in normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique", "ballon", "gagne", "gagné", "remporte", "remporté"}):
+    user_question_normalized = _normalize_football_text(str(question).split("(contexte conversationnel", 1)[0])
+    if not (
+        any(term in user_question_normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique", "ballon", "gagne", "gagné", "remporte", "remporté", "exploit", "style", "ligue des champions", "champions", "coupe du monde", "marque", "marqué", "finale", "selection", "sélection", "equipe de france", "équipe de france", "titre", "titres"})
+        or (from_history and _coach_is_player_followup_question(user_question_normalized))
+    ):
         return ""
     ballon_dor = list(hall.get("ballon_dor") or [])
-    asks_ballon_dor = "ballon" in normalized
+    asks_ballon_dor = "ballon" in user_question_normalized
     if asks_ballon_dor and ballon_dor:
         if any("honneur" in _normalize_football_text(item) for item in ballon_dor):
             opening = f"{player_name} possède une reconnaissance Ballon d'Or honorifique : {_coach_hall_value(ballon_dor)}."
@@ -4163,6 +4183,22 @@ def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | 
             opening = f"Oui, {player_name} a gagné le Ballon d'Or : {_coach_hall_value(ballon_dor)}."
     elif asks_ballon_dor:
         opening = f"Non, {player_name} n'a pas remporté le Ballon d'Or, mais son héritage reste majeur."
+    elif any(term in user_question_normalized for term in {"equipe de france", "équipe de france", "selection", "sélection"}) and (legend or hall):
+        nation = str((legend or {}).get("nation") or "")
+        if "france" in _normalize_football_text(nation):
+            opening = f"Oui, {player_name} fait clairement partie des grandes légendes de l'équipe de France."
+        else:
+            opening = f"{player_name} est une légende majeure de sa sélection, même si ce n'est pas une figure de l'équipe de France."
+    elif "exploit" in user_question_normalized:
+        moments = list(hall.get("moments") or [])
+        opening = f"Son plus grand exploit est probablement : {moments[0]}." if moments else f"{player_name} a plusieurs exploits majeurs dans sa carrière."
+    elif "ligue des champions" in user_question_normalized or "champions" in user_question_normalized:
+        titles = list(hall.get("champions_league") or [])
+        opening = f"{player_name} possède {len(titles)} Ligue(s) des Champions : {_coach_hall_value(titles)}." if titles else f"{player_name} n'a pas de Ligue des Champions renseignée dans la mémoire Hall of Fame."
+    elif "finale" in user_question_normalized and "coupe du monde" in user_question_normalized:
+        moments = list(hall.get("moments") or [])
+        final_moments = [item for item in moments if "finale" in _normalize_football_text(item) or "coupe du monde" in _normalize_football_text(item)]
+        opening = f"Oui, moment majeur : {final_moments[0]}." if final_moments else f"{player_name} a une histoire forte en Coupe du Monde, mais le détail de finale est à compléter."
     else:
         opening = f"{player_name} est une figure majeure du football, avec un profil {_coach_role_phrase(legend.get('role') if legend else 'joueur historique')}."
     lines = [
