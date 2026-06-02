@@ -998,6 +998,19 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
     if not _looks_like_football_question(resolved_question, merged_history):
         return {"answer": COACH_REFUSAL}, 200
 
+    hall_priority_answer = _coach_legend_profile_answer(resolved_question, merged_history)
+    if hall_priority_answer:
+        answer = _format_coach_answer(hall_priority_answer)
+        verification = _coach_hall_verification()
+        if session_id:
+            _save_coach_message_supabase(session_id, "assistant", answer, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
+        return {
+            "answer": answer,
+            "detected_context": context_state,
+            "resolved_question": resolved_question,
+            "verification": verification,
+        }, 200
+
     verified_fact = _verified_coach_fact_answer(resolved_question, merged_history)
     if verified_fact:
         answer = _format_coach_answer(verified_fact["answer"])
@@ -1115,6 +1128,18 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
 
     if not _looks_like_football_question(query, []):
         return {"answer": COACH_REFUSAL, "source": "refusal", "cached": False}, 200
+
+    hall_priority_answer = _coach_legend_profile_answer(query, [])
+    if hall_priority_answer:
+        answer = _format_coach_answer(hall_priority_answer)
+        return {
+            "answer": answer,
+            "source": "hall_of_fame",
+            "cached": False,
+            "normalized_query": normalized_query,
+            "entity_type": entity_type or "player",
+            "verification": _coach_hall_verification(),
+        }, 200
 
     live_sensitive = _coach_needs_recent_verification(normalized_query)
     bypass_cache = _coach_should_bypass_answer_cache(query)
@@ -1539,6 +1564,17 @@ def _local_coach_verification(base: dict[str, Any]) -> dict[str, Any]:
         "label": "Local",
         "confidence": min(int(base.get("confidence") or 64), 64),
         "sources": ["Données locales Akro"],
+    })
+
+
+def _coach_hall_verification() -> dict[str, Any]:
+    return _public_coach_verification({
+        "status": "verified",
+        "label": "Hall of Fame",
+        "confidence": 96,
+        "checked_at": datetime.now(timezone.utc).date().isoformat(),
+        "sources": ["Mémoire Hall of Fame Akro du Foot"],
+        "freshness": "référence historique locale prioritaire",
     })
 
 
@@ -3447,6 +3483,7 @@ def _coach_should_bypass_answer_cache(question: str) -> bool:
         _coach_is_comparison_question(question)
         or _coach_detect_age(question)
         or re.search(r"\b(19|20)\d{2}\b", normalized)
+        or "ballon" in normalized
         or any(term in normalized for term in {"ronaldinho", "zidane", "henry", "platini", "maradona", "pele", "pelé"})
     )
 
