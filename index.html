@@ -2591,7 +2591,7 @@
             <div class="pseudo-row">
               <label for="whoMode">Mode</label>
               <select id="whoMode">
-                <option value="simple">Simple</option>
+                <option value="simple">Photo</option>
                 <option value="silhouette">Silhouette</option>
               </select>
             </div>
@@ -2600,6 +2600,7 @@
               <select id="whoCategory">
                 <option value="clubs">Clubs</option>
                 <option value="nations">Nations</option>
+                <option value="hall-of-fame">Hall of Fame</option>
               </select>
             </div>
           </div>
@@ -2612,11 +2613,11 @@
         <div class="quiz-stage" id="whoStage" hidden>
           <div class="quiz-progress">
             <span id="whoProgressText">Question 1/10</span>
-            <span id="whoModeBadge">Simple</span>
+            <span id="whoModeBadge">Photo</span>
           </div>
           <div class="who-timer-track" aria-hidden="true"><div class="who-timer-fill" id="whoTimerFill"></div></div>
           <article class="quiz-card">
-            <div class="who-timer"><span id="whoTimerText">15s</span><span id="whoContextBadge">Amateur · Simple</span></div>
+            <div class="who-timer"><span id="whoTimerText">15s</span><span id="whoContextBadge">Amateur · Photo</span></div>
             <div class="who-player-panel">
               <div class="who-photo-card" id="whoPhotoCard">
                 <img class="who-player-photo" id="whoPlayerPhoto" src="" alt="Joueur à deviner">
@@ -4290,7 +4291,7 @@
     ];
     const QUIZ_REQUIRED_THEME_KEYS = ['general', 'club', 'nation', 'worldcup', 'euro', 'champions'];
     const WHO_REQUIRED_MODE_KEYS = ['simple', 'silhouette'];
-    const WHO_MODE_LABELS = {simple: 'Simple', silhouette: 'Silhouette'};
+    const WHO_MODE_LABELS = {simple: 'Photo', silhouette: 'Silhouette'};
     const WHO_TIMER_SECONDS = {
       simple: {amateur: 15, pro: 15, expert: 15, legende: 20, crack: 20, consultant: 20, coach: 20},
       silhouette: {amateur: 20, pro: 20, expert: 20, legende: 30, crack: 30, consultant: 30, coach: 30}
@@ -9144,6 +9145,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       'peter shilton': 'https://upload.wikimedia.org/wikipedia/commons/4/43/Peter_Shilton.png'
     };
     let HALL_OF_FAME_PROFILE_INDEX = {};
+    let HALL_OF_FAME_PROFILES = [];
     let HALL_OF_FAME_PROFILE_AUDIT = {missingPhotos: [], absentFromProfiles: [], duplicates: []};
 
     function hallProfileAliases(profile) {
@@ -9170,14 +9172,15 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function setHallOfFameProfiles(profiles) {
+      HALL_OF_FAME_PROFILES = Array.isArray(profiles) ? profiles : [];
       const aliasMap = {};
       const aliasCounts = {};
-      (Array.isArray(profiles) ? profiles : []).forEach(profile => {
+      HALL_OF_FAME_PROFILES.forEach(profile => {
         hallProfileAliases(profile).forEach(alias => {
           aliasCounts[alias] = (aliasCounts[alias] || 0) + 1;
         });
       });
-      (Array.isArray(profiles) ? profiles : []).forEach(profile => {
+      HALL_OF_FAME_PROFILES.forEach(profile => {
         hallProfileAliases(profile).forEach(alias => {
           const exact = [profile.name, profile.display_name].map(hallFeatureNameKey).includes(alias);
           if (exact || aliasCounts[alias] === 1) aliasMap[alias] = profile;
@@ -10206,7 +10209,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     const whoFinalMessage = document.getElementById('whoFinalMessage');
     const whoBadgeList = document.getElementById('whoBadgeList');
     const WHO_DIFFICULTIES = Object.fromEntries(QUIZ_LEVELS.map(([key, label]) => [key, {label, badge: `Qui est-ce ? ${label}`, key: `who_${key}`}]));
-    const WHO_CATEGORY_LABELS = {clubs: 'Clubs', nations: 'Nations'};
+    const WHO_CATEGORY_LABELS = {clubs: 'Clubs', nations: 'Nations', 'hall-of-fame': 'Hall of Fame'};
     const WHO_DIFFICULTY_TIERS = {
       amateur: [1],
       pro: [1, 2],
@@ -10215,6 +10218,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       crack: [5, 6],
       consultant: [6, 7],
       coach: [6, 7]
+    };
+    const WHO_HALL_DIFFICULTY_ORDER = {amateur: 1, pro: 2, expert: 3, legende: 4, crack: 4, consultant: 4, coach: 4};
+    const WHO_HALL_DIFFICULTY_NAMES = {
+      amateur: ['Lionel Messi', 'Cristiano Ronaldo', 'Ronaldo Nazário', 'Zinedine Zidane', 'Ronaldinho', 'Pelé', 'Diego Maradona', 'Kylian Mbappé'],
+      pro: ['Didier Drogba', 'Samuel Eto’o', 'Samuel Eto\'o', 'Gianluigi Buffon', 'Paolo Maldini', 'Luís Figo', 'Luis Figo', 'Rivaldo', 'Robert Lewandowski', 'Neymar'],
+      expert: ['Gerd Müller', 'Gerd Muller', 'Zico', 'Sócrates', 'Socrates', 'Franco Baresi', 'Daniel Passarella', 'Gaetano Scirea', 'Lothar Matthäus', 'Lothar Matthaus', 'Marco van Basten'],
+      legende: ['Roberto Rivelino', 'Rivelino', 'Hugo Sánchez', 'Hugo Sanchez', 'Roger Milla', 'Hristo Stoichkov', 'Bobby Moore', 'Carlos Alberto', 'Didi', 'Nilton Santos']
     };
     const whoPhoto = id => `https://images.fotmob.com/image_resources/playerimages/${id}.png`;
     const WHO_FALLBACK_PLAYERS = [
@@ -10328,7 +10338,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       }).join('');
       const unlockedLabel = QUIZ_LEVELS[unlocked]?.[1] || 'Amateur';
       whoProgression.innerHTML = `
-        <div class="subtle">Niveau débloqué : <strong>${quizEscape(unlockedLabel)}</strong>. Valide Simple et Silhouette pour ouvrir le niveau suivant.</div>
+        <div class="subtle">Niveau débloqué : <strong>${quizEscape(unlockedLabel)}</strong>. Valide Photo et Silhouette pour ouvrir le niveau suivant.</div>
         <div class="quiz-progress-tags">${levelTags}</div>
         <div class="quiz-progress-tags">${modeTags}</div>
       `;
@@ -10455,11 +10465,29 @@ grant select, insert, update on public.profiles to authenticated;`;
       return typeof focusFallbackIcon === 'function' ? focusFallbackIcon(name) : '';
     }
 
+    function whoHallDifficultyForProfile(profile = {}) {
+      const key = hallFeatureNameKey(profile.display_name || profile.name);
+      const direct = Object.entries(WHO_HALL_DIFFICULTY_NAMES).find(([, names]) => names.some(name => hallFeatureNameKey(name) === key));
+      if (direct) return direct[0];
+      const score = Number(profile.goat_score || 0);
+      if (score >= 96) return 'amateur';
+      if (score >= 90) return 'pro';
+      if (score >= 85) return 'expert';
+      return 'legende';
+    }
+
+    function whoHallTierForProfile(profile = {}) {
+      const level = whoHallDifficultyForProfile(profile);
+      const tierMap = {amateur: 1, pro: 2, expert: 4, legende: 6};
+      return tierMap[level] || 6;
+    }
+
     function whoAddPlayer(pool, seen, player) {
       const name = String(player?.name || player?.player_name || '').trim();
       const photo = String(player?.photo_url || player?.photo || player?.image_url || '').trim();
       const key = whoPlayerKey(name);
-      if (!name || !photo.includes('playerimages') || seen.has(key)) return;
+      const isHallProfile = player?.source === 'hall_of_fame';
+      if (!name || !photo || (!isHallProfile && !photo.includes('playerimages')) || seen.has(key)) return;
       seen.add(key);
       pool.push({
         name,
@@ -10469,7 +10497,12 @@ grant select, insert, update on public.profiles to authenticated;`;
         position: whoPositionCode(player.position),
         number: String(player.number || player.shirt_number || '').trim(),
         tier: Number(player.tier || 4),
-        categories: Array.isArray(player.categories) ? player.categories : ['clubs']
+        categories: Array.isArray(player.categories) ? player.categories : ['clubs'],
+        source: player.source || '',
+        hallDifficulty: player.hallDifficulty || '',
+        hallTier: player.hallTier || '',
+        era: player.era || '',
+        clubs: Array.isArray(player.clubs) ? player.clubs : []
       });
     }
 
@@ -10509,8 +10542,45 @@ grant select, insert, update on public.profiles to authenticated;`;
       return pool.filter(player => player.photo && player.categories?.length).slice(0, 160);
     }
 
+    function buildWhoHallOfFamePool() {
+      const pool = [];
+      const seen = new Set();
+      (Array.isArray(HALL_OF_FAME_PROFILES) ? HALL_OF_FAME_PROFILES : []).forEach(profile => {
+        const clubs = Array.isArray(profile.clubs) ? profile.clubs.filter(Boolean) : [];
+        whoAddPlayer(pool, seen, {
+          name: profile.display_name || profile.name,
+          photo_url: profile.photo_url,
+          nationality: profile.nationality,
+          position: profile.position,
+          club: clubs[0] || 'Hall of Fame',
+          number: 'HOF',
+          tier: whoHallTierForProfile(profile),
+          categories: ['hall-of-fame'],
+          source: 'hall_of_fame',
+          hallDifficulty: whoHallDifficultyForProfile(profile),
+          hallTier: profile.hall_of_fame_tier || profile.tier || '',
+          era: profile.era || '',
+          clubs
+        });
+      });
+      return pool;
+    }
+
+    function whoHallPoolForDifficulty(pool, difficulty) {
+      const requestedRank = WHO_HALL_DIFFICULTY_ORDER[difficulty || 'amateur'] || 1;
+      let filtered = pool.filter(player => (WHO_HALL_DIFFICULTY_ORDER[player.hallDifficulty || 'legende'] || 4) <= requestedRank);
+      if (filtered.length < 14 && requestedRank < 4) {
+        filtered = pool.filter(player => (WHO_HALL_DIFFICULTY_ORDER[player.hallDifficulty || 'legende'] || 4) <= requestedRank + 1);
+      }
+      if (filtered.length < 14) filtered = pool;
+      return filtered;
+    }
+
     function whoPoolForConfig(config) {
       const category = config?.category || 'clubs';
+      if (category === 'hall-of-fame') {
+        return whoHallPoolForDifficulty(buildWhoHallOfFamePool(), config?.difficulty || 'amateur');
+      }
       const tiers = WHO_DIFFICULTY_TIERS[config?.difficulty || 'amateur'] || WHO_DIFFICULTY_TIERS.amateur;
       const base = buildWhoPlayerPool().filter(player => player.categories.includes(category));
       let pool = base.filter(player => tiers.includes(Number(player.tier || 4)));
@@ -10565,6 +10635,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function openWhoModal() {
+      if (typeof loadHallOfFameUpdates === 'function') loadHallOfFameUpdates();
       updateWhoControls();
       showWhoSetup();
       whoModal?.classList.add('is-open');
@@ -10611,7 +10682,7 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
     }
 
-    function startWhoGame() {
+    async function startWhoGame() {
       if (whoState.pendingResult) {
         finishWhoGame();
         return;
@@ -10626,6 +10697,12 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
       const difficultyMeta = WHO_DIFFICULTIES[difficulty] || WHO_DIFFICULTIES.amateur;
       const config = {difficulty, difficultyLabel: difficultyMeta.label, badgeName: difficultyMeta.badge, badgeKey: difficultyMeta.key, mode: whoMode?.value || 'simple', category: whoCategory?.value || 'clubs'};
+      if (config.category === 'hall-of-fame' && typeof loadHallOfFameUpdates === 'function') {
+        if (whoProfileNote) whoProfileNote.textContent = 'Chargement des légendes Hall of Fame...';
+        if (whoStartButton) whoStartButton.disabled = true;
+        await loadHallOfFameUpdates();
+        if (whoStartButton) whoStartButton.disabled = false;
+      }
       const questions = buildWhoQuestions(config);
       if (questions.length < 10) {
         if (whoProfileNote) whoProfileNote.textContent = 'Pas assez de joueurs avec photo pour lancer le jeu proprement.';
@@ -10645,8 +10722,8 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (!current) return;
       whoState.answered = false;
       if (whoProgressText) whoProgressText.textContent = `Question ${whoState.index + 1}/10`;
-      if (whoModeBadge) whoModeBadge.textContent = WHO_MODE_LABELS[whoState.config.mode] || 'Simple';
-      if (whoContextBadge) whoContextBadge.textContent = `${whoState.config.difficultyLabel} · ${WHO_MODE_LABELS[whoState.config.mode] || 'Simple'} · ${WHO_CATEGORY_LABELS[whoState.config.category] || 'Clubs'}`;
+      if (whoModeBadge) whoModeBadge.textContent = WHO_MODE_LABELS[whoState.config.mode] || 'Photo';
+      if (whoContextBadge) whoContextBadge.textContent = `${whoState.config.difficultyLabel} · ${WHO_MODE_LABELS[whoState.config.mode] || 'Photo'} · ${WHO_CATEGORY_LABELS[whoState.config.category] || 'Clubs'}`;
       if (whoQuestion) whoQuestion.textContent = 'Qui est ce joueur ?';
       if (whoScoreText) whoScoreText.textContent = `${whoState.score}/10`;
       if (whoFeedback) {
@@ -10677,9 +10754,9 @@ grant select, insert, update on public.profiles to authenticated;`;
       }
       if (whoNumberBadge) whoNumberBadge.textContent = current.player.number || '--';
       if (whoPositionBadge) whoPositionBadge.textContent = current.player.position || 'J';
-      const badgeImage = whoState.config.category === 'nations' ? whoNationFlag(current.player.nation) : whoTeamLogo(current.player.club);
+      const badgeImage = whoState.config.category === 'nations' || whoState.config.category === 'hall-of-fame' ? whoNationFlag(current.player.nation) : whoTeamLogo(current.player.club);
       if (whoIdentityBadge) {
-        whoIdentityBadge.innerHTML = badgeImage ? `<img src="${quizEscape(badgeImage)}" alt="">` : (whoState.config.category === 'nations' ? 'NAT' : 'CLB');
+        whoIdentityBadge.innerHTML = badgeImage ? `<img src="${quizEscape(badgeImage)}" alt="">` : (whoState.config.category === 'nations' ? 'NAT' : whoState.config.category === 'hall-of-fame' ? 'HOF' : 'CLB');
       }
       if (whoAnswers) whoAnswers.innerHTML = current.answers.map(answer => `<button class="quiz-answer" type="button" data-answer="${quizEscape(answer)}">${quizEscape(answer)}</button>`).join('');
       startWhoTimer();
