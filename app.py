@@ -92,7 +92,7 @@ HALL_OF_FAME_REFRESH_RUNNING = False
 HALL_OF_FAME_TIMEZONE = ZoneInfo(os.environ.get("AKRO_HALL_OF_FAME_TIMEZONE", "Europe/Paris"))
 FOOTBALL_SUPABASE_CACHE_LOCK = threading.Lock()
 FOOTBALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
-COACH_HALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "profiles": {}}
+COACH_HALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "profiles": {}, "ambiguous": {}}
 SUPABASE_FAILED_PATHS: dict[str, float] = {}
 WIKIPEDIA_VERIFICATION_CACHE: dict[str, tuple[float, list[str]]] = {}
 WIKIPEDIA_VERIFICATION_CACHE_TTL = max(300, int(os.environ.get("AKRO_WIKIPEDIA_CACHE_TTL", "21600")))
@@ -3517,14 +3517,20 @@ COACH_HALL_OF_FAME_MEMORY = {
 def _coach_detect_player_names(question: str) -> list[str]:
     normalized = _normalize_football_text(question)
     names: list[str] = []
-    for name in _coach_detect_hall_player_names(question):
+    hall_names = _coach_detect_hall_player_names(question)
+    ambiguous_hall_aliases = _coach_hall_ambiguous_matches(question) if not hall_names else {}
+    for name in hall_names:
         if name not in names:
             names.append(name)
     for alias, name in COACH_PLAYER_ALIASES.items():
+        if alias in ambiguous_hall_aliases:
+            continue
         if alias == "ronaldo" and "ronaldo nazario" in normalized:
             continue
         if alias in normalized and name not in names:
             names.append(name)
+    if ambiguous_hall_aliases and not names:
+        return []
     if names and not _coach_is_explicit_comparison_question(f" {normalized} "):
         return names[:1]
     if len(names) >= 2:
@@ -3665,6 +3671,8 @@ def _coach_hall_alias_candidates(name: str, display_name: str = "") -> set[str]:
             last_name = parts[-1]
             if len(last_name) >= 4:
                 aliases.add(last_name)
+            if parts[0] == "ronaldo":
+                aliases.add("ronaldo")
             if len(parts) >= 2:
                 split_last_name = " ".join(parts[-2:])
                 compact_last_name = "".join(parts[-2:])
@@ -3691,11 +3699,12 @@ def _coach_hall_supabase_profiles() -> dict[str, dict[str, Any]]:
         "ballon_dor_count,ballon_dor_years,world_cup_titles,euro_titles,copa_america_titles,"
         "champions_league_titles,fifa_awards,major_records,iconic_moments,nickname,legacy,"
         "playing_style,why_legend,goat_score,hall_of_fame_tier,source,last_enriched_at"
-        "&order=goat_score.desc&limit=300",
+        "&order=goat_score.desc&limit=800",
     )
     profiles: dict[str, dict[str, Any]] = {}
+    ambiguous: dict[str, list[str]] = {}
     if isinstance(rows, list):
-        alias_counts: dict[str, int] = {}
+        alias_profiles: dict[str, list[str]] = {}
         prepared: list[tuple[str, str, dict[str, Any], set[str]]] = []
         for row in rows:
             name = str(row.get("name") or row.get("display_name") or "").strip()
@@ -3705,14 +3714,19 @@ def _coach_hall_supabase_profiles() -> dict[str, dict[str, Any]]:
             aliases = _coach_hall_alias_candidates(name, display_name)
             prepared.append((name, display_name, row, aliases))
             for alias in aliases:
-                alias_counts[alias] = alias_counts.get(alias, 0) + 1
+                label = display_name or name
+                alias_profiles.setdefault(alias, [])
+                if label not in alias_profiles[alias]:
+                    alias_profiles[alias].append(label)
+        ambiguous = {alias: names for alias, names in alias_profiles.items() if len(names) > 1}
         for name, display_name, row, aliases in prepared:
             profile = _coach_hall_row_to_memory(row)
             exact_aliases = {_normalize_football_text(name), _normalize_football_text(display_name)}
             for alias in aliases:
-                if alias in exact_aliases or alias_counts.get(alias, 0) == 1:
+                if alias in exact_aliases or len(alias_profiles.get(alias, [])) == 1:
                     profiles[alias] = profile
     COACH_HALL_SUPABASE_CACHE["profiles"] = profiles
+    COACH_HALL_SUPABASE_CACHE["ambiguous"] = ambiguous
     COACH_HALL_SUPABASE_CACHE["expires_at"] = time.time() + 600
     return profiles
 
@@ -3746,6 +3760,38 @@ def _coach_detect_hall_player_names(question: str) -> list[str]:
         if name and name not in names:
             names.append(name)
     return names
+
+
+def _coach_hall_ambiguous_matches(question: str) -> dict[str, list[str]]:
+    normalized = _normalize_football_text(question)
+    if not normalized:
+        return {}
+    _coach_hall_supabase_profiles()
+    haystack = f" {normalized} "
+    ambiguous = COACH_HALL_SUPABASE_CACHE.get("ambiguous") or {}
+    matches: dict[str, list[str]] = {}
+    for alias, names in ambiguous.items():
+        if len(alias) >= 4 and f" {alias} " in haystack:
+            matches[alias] = list(names)
+    return matches
+
+
+def _coach_hall_ambiguity_answer(question: str) -> str:
+    if _coach_detect_hall_player_names(question):
+        return ""
+    matches = _coach_hall_ambiguous_matches(question)
+    if not matches:
+        return ""
+    alias, names = max(matches.items(), key=lambda item: len(item[0]))
+    choices = ", ".join(names[:5])
+    return (
+        "Résumé\n"
+        f"Le nom « {alias.title()} » est ambigu dans le Hall of Fame Akro.\n\n"
+        "Choix possibles\n"
+        f"• {choices}\n\n"
+        "Conclusion\n"
+        "Dis-moi lequel tu veux analyser et je répondrai uniquement avec sa fiche Hall of Fame, sans aller chercher des joueurs parasites."
+    )
 
 
 def _coach_hall_lines(player_name: str) -> list[str]:
@@ -4592,6 +4638,9 @@ def _coach_player_historical_event_answer(question: str, history: list[dict[str,
 
 
 def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | None = None) -> str:
+    ambiguity_answer = _coach_hall_ambiguity_answer(question)
+    if ambiguity_answer:
+        return ambiguity_answer
     player_names = _coach_detect_player_names(question)
     from_history = False
     if not player_names and history:
