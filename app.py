@@ -92,6 +92,7 @@ HALL_OF_FAME_REFRESH_RUNNING = False
 HALL_OF_FAME_TIMEZONE = ZoneInfo(os.environ.get("AKRO_HALL_OF_FAME_TIMEZONE", "Europe/Paris"))
 FOOTBALL_SUPABASE_CACHE_LOCK = threading.Lock()
 FOOTBALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
+COACH_HALL_SUPABASE_CACHE: dict[str, Any] = {"expires_at": 0.0, "profiles": {}}
 SUPABASE_FAILED_PATHS: dict[str, float] = {}
 WIKIPEDIA_VERIFICATION_CACHE: dict[str, tuple[float, list[str]]] = {}
 WIKIPEDIA_VERIFICATION_CACHE_TTL = max(300, int(os.environ.get("AKRO_WIKIPEDIA_CACHE_TTL", "21600")))
@@ -3551,8 +3552,95 @@ def _coach_should_bypass_answer_cache(question: str) -> bool:
     )
 
 
+def _coach_json_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(item) for item in value if str(item or "").strip()]
+    return []
+
+
+def _coach_hall_row_to_memory(row: dict[str, Any]) -> dict[str, Any]:
+    ballon_years = _coach_json_list(row.get("ballon_dor_years"))
+    world_cups = _coach_json_list(row.get("world_cup_titles"))
+    euros = _coach_json_list(row.get("euro_titles"))
+    copas = _coach_json_list(row.get("copa_america_titles"))
+    champions = _coach_json_list(row.get("champions_league_titles"))
+    fifa_awards = _coach_json_list(row.get("fifa_awards"))
+    records = _coach_json_list(row.get("major_records"))
+    moments = _coach_json_list(row.get("iconic_moments"))
+    clubs = _coach_json_list(row.get("clubs"))
+    honours: list[str] = []
+    ballon_count = _coach_stat_int(row.get("ballon_dor_count"))
+    if ballon_count:
+        honours.append(f"{ballon_count} Ballon(s) d'Or")
+    if world_cups:
+        honours.append("Coupe(s) du Monde : " + ", ".join(world_cups))
+    if euros:
+        honours.append("Euro(s) : " + ", ".join(euros))
+    if copas:
+        honours.append("Copa América : " + ", ".join(copas))
+    if champions:
+        honours.append("Ligue(s) des Champions : " + ", ".join(champions))
+    nickname = str(row.get("nickname") or "").strip()
+    return {
+        "nicknames": [nickname] if nickname else [],
+        "ballon_dor": ballon_years,
+        "world_cup": [f"Champion du Monde {year}" for year in world_cups],
+        "continental": [f"Euro {year}" for year in euros] + [f"Copa América {year}" for year in copas],
+        "champions_league": champions,
+        "major_clubs": clubs,
+        "honours": honours,
+        "distinctions": fifa_awards,
+        "records": records,
+        "moments": moments,
+        "style": str(row.get("playing_style") or ""),
+        "legacy": str(row.get("legacy") or row.get("why_legend") or ""),
+        "why_legend": str(row.get("why_legend") or ""),
+        "weight": _coach_stat_int(row.get("goat_score")),
+        "photo_url": str(row.get("photo_url") or ""),
+        "national_team": str(row.get("national_team") or ""),
+        "position": str(row.get("position") or ""),
+        "era": str(row.get("era") or ""),
+        "source": str(row.get("source") or "hall_of_fame_players"),
+    }
+
+
+def _coach_hall_supabase_profiles() -> dict[str, dict[str, Any]]:
+    if not _supabase_service_enabled():
+        return {}
+    cached = COACH_HALL_SUPABASE_CACHE.get("profiles")
+    if cached and COACH_HALL_SUPABASE_CACHE.get("expires_at", 0) > time.time():
+        return cached
+    rows = _supabase_service_request(
+        "GET",
+        "hall_of_fame_players?"
+        "select=name,display_name,photo_url,nationality,position,era,clubs,national_team,"
+        "ballon_dor_count,ballon_dor_years,world_cup_titles,euro_titles,copa_america_titles,"
+        "champions_league_titles,fifa_awards,major_records,iconic_moments,nickname,legacy,"
+        "playing_style,why_legend,goat_score,hall_of_fame_tier,source,last_enriched_at"
+        "&order=goat_score.desc&limit=300",
+    )
+    profiles: dict[str, dict[str, Any]] = {}
+    if isinstance(rows, list):
+        for row in rows:
+            name = str(row.get("name") or row.get("display_name") or "").strip()
+            if not name:
+                continue
+            profiles[_normalize_football_text(name)] = _coach_hall_row_to_memory(row)
+    COACH_HALL_SUPABASE_CACHE["profiles"] = profiles
+    COACH_HALL_SUPABASE_CACHE["expires_at"] = time.time() + 600
+    return profiles
+
+
 def _coach_hall_profile(player_name: str) -> dict[str, Any]:
-    return COACH_HALL_OF_FAME_MEMORY.get(player_name, {})
+    fallback = dict(COACH_HALL_OF_FAME_MEMORY.get(player_name, {}))
+    supabase_profile = _coach_hall_supabase_profiles().get(_normalize_football_text(player_name), {})
+    if not supabase_profile:
+        return fallback
+    merged = dict(fallback)
+    for key, value in supabase_profile.items():
+        if value not in (None, "", [], {}):
+            merged[key] = value
+    return merged
 
 
 def _coach_hall_lines(player_name: str) -> list[str]:
