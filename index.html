@@ -1197,19 +1197,22 @@
     .votes-bracket-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.065); color: #eaf4ff; font: inherit; font-size: 12px; font-weight: 950; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .votes-bracket-button:hover, .votes-bracket-button:focus-visible { transform: translateY(-1px); border-color: rgba(245,201,107,0.44); background: rgba(245,201,107,0.12); outline: none; }
     .votes-bracket-button.is-voted { color: #07111f; border-color: rgba(245,201,107,0.76); background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
-    .goat-dialog { width: min(1180px, 96vw); max-height: calc(100vh - var(--live-bar-height) - 24px); overflow: hidden; }
-    .goat-body { display: grid; gap: 16px; overflow-y: auto; }
-    .goat-shell { position: relative; display: grid; gap: 18px; padding: 16px; border-radius: 22px; border: 1px solid rgba(255,255,255,0.12); background: radial-gradient(circle at 18% 8%, rgba(245,201,107,0.18), transparent 34%), linear-gradient(135deg, rgba(8,24,46,0.96), rgba(4,13,25,0.98)); overflow: hidden; }
+    .goat-dialog { width: min(1040px, 96vw); max-height: calc(100vh - var(--live-bar-height) - 24px); overflow: hidden; }
+    .goat-body { display: grid; gap: 12px; overflow-y: auto; }
+    .goat-shell { position: relative; display: grid; gap: 14px; padding: 14px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.12); background: radial-gradient(circle at 18% 8%, rgba(245,201,107,0.18), transparent 34%), linear-gradient(135deg, rgba(8,24,46,0.96), rgba(4,13,25,0.98)); overflow: hidden; }
     .goat-shell::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--goat-bg, radial-gradient(circle at 82% 18%, rgba(245,201,107,0.2), transparent 32%)); opacity: .92; }
     .goat-shell > * { position: relative; z-index: 1; }
     .goat-shell.theme-worldcup { --goat-bg: radial-gradient(circle at 78% 18%, rgba(255,221,126,0.34), transparent 30%), linear-gradient(120deg, rgba(110,74,12,0.38), transparent 60%); }
     .goat-shell.theme-euro { --goat-bg: radial-gradient(circle at 76% 16%, rgba(255,220,80,0.22), transparent 24%), linear-gradient(120deg, rgba(25,90,190,0.36), rgba(255,255,255,0.06) 45%, transparent 74%); }
     .goat-shell.theme-champions { --goat-bg: radial-gradient(circle at 78% 18%, rgba(210,225,255,0.24), transparent 28%), linear-gradient(120deg, rgba(20,48,110,0.5), transparent 72%); }
+    .goat-shell.theme-copa { --goat-bg: radial-gradient(circle at 78% 18%, rgba(116,172,223,0.24), transparent 28%), linear-gradient(120deg, rgba(0,156,59,0.32), rgba(255,223,0,0.16), transparent 72%); }
+    .goat-shell.theme-ballon_dor, .goat-shell.theme-legend { --goat-bg: radial-gradient(circle at 78% 18%, rgba(255,225,160,0.32), transparent 30%), linear-gradient(120deg, rgba(92,62,10,0.36), transparent 68%); }
+    .goat-shell.theme-era { --goat-bg: radial-gradient(circle at 78% 18%, rgba(180,210,255,0.18), transparent 30%), linear-gradient(120deg, rgba(60,42,120,0.28), transparent 68%); }
     .goat-shell.theme-nation { --goat-bg: linear-gradient(120deg, var(--goat-primary, rgba(22,74,160,0.55)), transparent 46%), radial-gradient(circle at 82% 16%, var(--goat-secondary, rgba(255,255,255,0.22)), transparent 30%); }
     .goat-shell.theme-club { --goat-bg: linear-gradient(120deg, var(--goat-primary, rgba(22,60,130,0.56)), transparent 46%), radial-gradient(circle at 82% 16%, var(--goat-secondary, rgba(190,25,55,0.25)), transparent 30%); }
-    .goat-setup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .goat-choice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-    .goat-choice { appearance: none; border: 1px solid rgba(255,255,255,0.13); border-radius: 16px; background: rgba(255,255,255,0.065); color: #eef6ff; padding: 13px; text-align: left; font: inherit; font-weight: 950; cursor: pointer; transition: border-color .16s ease, background .16s ease, transform .16s ease; }
+    .goat-setup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .goat-choice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; }
+    .goat-choice { appearance: none; border: 1px solid rgba(255,255,255,0.13); border-radius: 13px; background: rgba(255,255,255,0.065); color: #eef6ff; padding: 10px 11px; text-align: left; font: inherit; font-weight: 950; cursor: pointer; transition: border-color .16s ease, background .16s ease, transform .16s ease; }
     .goat-choice:hover, .goat-choice:focus-visible, .goat-choice.is-active { border-color: rgba(245,201,107,0.55); background: rgba(245,201,107,0.12); transform: translateY(-1px); outline: none; }
     .goat-context-select { width: 100%; min-height: 44px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.08); color: #f5fbff; padding: 0 12px; font: inherit; font-weight: 850; }
     .goat-duel-board { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; gap: 14px; min-height: 390px; }
@@ -1219,6 +1222,7 @@
     .goat-player-meta { position: relative; z-index: 2; display: grid; gap: 6px; padding: 18px; }
     .goat-player-meta strong { font-size: clamp(22px, 3vw, 34px); line-height: 1; color: #fff3c4; }
     .goat-player-meta span { color: #dbe9f8; font-weight: 850; }
+    .goat-player-note { color: rgba(234,244,255,0.82); font-size: 12px; line-height: 1.32; font-weight: 800; }
     .goat-vs { align-self: center; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(180deg, #ffe4a3, #c99125); color: #061322; font-weight: 1000; box-shadow: 0 18px 40px rgba(245,201,107,0.26); }
     .goat-progress { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: #c7d7e9; font-weight: 850; }
     .goat-path { display: flex; gap: 7px; flex-wrap: wrap; }
@@ -1672,7 +1676,7 @@
           <div class="global-actions" aria-label="Actions rapides">
             <button class="action-button game-header-button" type="button" id="quizButton">Quiz</button>
             <button class="action-button game-header-button" type="button" id="whoButton">Qui est-ce ?</button>
-            <button class="action-button game-header-button" type="button" id="goatButton">THE GOAT</button>
+            <button class="action-button game-header-button" type="button" id="goatButton">The Goat</button>
             <button class="action-button game-header-button" type="button" id="communityHeaderButton">A vos votes</button>
           </div>
         </div>
@@ -2778,8 +2782,8 @@
       <header class="team-modal-head">
         <div class="alltime-rank">🏆</div>
         <div>
-          <div class="team-modal-title" id="goatModalTitle">THE GOAT</div>
-          <div class="subtle" id="goatModalSubtitle">Construis ton GOAT personnel duel après duel.</div>
+          <div class="team-modal-title" id="goatModalTitle">The Goat</div>
+          <div class="subtle" id="goatModalSubtitle">Choisis le meilleur joueur selon tes critères.</div>
         </div>
         <button class="modal-close" type="button" id="goatClose" aria-label="Fermer">×</button>
       </header>
@@ -2788,7 +2792,7 @@
           <section id="goatSetup">
             <div class="team-info-label">1. Choisis le poste</div>
             <div class="goat-choice-grid" id="goatPositionChoices"></div>
-            <div class="team-info-label" style="margin-top:14px;">2. Choisis le contexte</div>
+            <div class="team-info-label" style="margin-top:14px;">2. Mode de jeu</div>
             <div class="goat-choice-grid" id="goatContextChoices"></div>
             <div class="goat-setup-grid" style="margin-top:12px;">
               <div class="pseudo-row" id="goatContextValueRow" hidden>
@@ -2801,7 +2805,7 @@
               </div>
               <div class="pseudo-row">
                 <label>Session</label>
-                <button class="action-button" type="button" id="goatStartButton">Lancer THE GOAT</button>
+                <button class="action-button" type="button" id="goatStartButton">Lancer le jeu</button>
               </div>
             </div>
             <div class="community-status" id="goatSetupStatus"></div>
@@ -4724,7 +4728,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         ['pronos', 'Pronos', profile?.level || 'Débutant'],
         ['quiz', 'Quiz', highestQuizLevel(profile?.badges || [], profile?.quiz_results || []) || 'Amateur'],
         ['who', 'Qui est-ce ?', highestWhoLevel(profile?.badges || [], profile?.quiz_results || []) || 'Amateur'],
-        ['the-goat', 'THE GOAT', 'Nouveau']
+        ['the-goat', 'The Goat', 'Nouveau']
       ];
     }
 
@@ -4841,14 +4845,18 @@ grant select, insert, update on public.profiles to authenticated;`;
       ['all', 'Tous'],
       ['nation', 'Nation'],
       ['club', 'Club'],
+      ['legend', 'Légende'],
       ['worldcup', 'Coupe du Monde'],
       ['euro', 'Euro'],
-      ['champions', 'Ligue des Champions']
+      ['copa', 'Copa América'],
+      ['champions', 'Ligue des Champions'],
+      ['ballon_dor', 'Ballon d’Or'],
+      ['era', 'Époque']
     ];
     const GOAT_POSITION_ALIASES = {
       attackers: ['attaquant', 'attacker', 'forward', 'striker', 'winger', 'ailier', 'bu', 'ag', 'ad', 'cf'],
       midfielders: ['milieu', 'midfielder', 'mdef', 'mc', 'mdc', 'mo', 'cm', 'dm', 'am'],
-      defenders: ['defenseur', 'defender', 'centre back', 'fullback', 'latéral', 'lateral', 'dc', 'dd', 'dg', 'cb', 'rb', 'lb'],
+      defenders: ['defenseur', 'defender', 'défenseur', 'centre back', 'fullback', 'latéral', 'lateral', 'dc', 'dd', 'dg', 'cb', 'rb', 'lb'],
       goalkeepers: ['gardien', 'goalkeeper', 'keeper', 'gk', 'g']
     };
     const GOAT_THEME_COLORS = {
@@ -4899,9 +4907,91 @@ grant select, insert, update on public.profiles to authenticated;`;
       {name:'Dino Zoff', position:'goalkeepers', nation:'Italy', clubs:['Juventus','Napoli'], photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Dino_Zoff_%281974%29.jpg/500px-Dino_Zoff_%281974%29.jpg', contexts:['worldcup','euro']}
     ];
     let goatState = {position: 'attackers', context: 'all', contextValue: '', players: [], index: 1, champion: null, challenger: null, path: [], saved: null};
+    let GOAT_PLAYER_TAGS = [];
+    let goatPlayerTagsPromise = null;
 
     function goatNormalize(value) {
       return normalizeFootballName(value);
+    }
+
+    function goatTagKey(name) {
+      return goatNormalize(name);
+    }
+
+    async function loadGoatPlayerTags() {
+      if (goatPlayerTagsPromise) return goatPlayerTagsPromise;
+      if (!akroSupabase) {
+        GOAT_PLAYER_TAGS = [];
+        return GOAT_PLAYER_TAGS;
+      }
+      goatPlayerTagsPromise = supabaseStep('select goat_player_tags', akroSupabase
+        .from('goat_player_tags')
+        .select('player_name,tag_type,tag_value')
+        .limit(8000), 10000)
+        .then(({data, error}) => {
+          if (error) throw error;
+          GOAT_PLAYER_TAGS = Array.isArray(data) ? data : [];
+          return GOAT_PLAYER_TAGS;
+        })
+        .catch(error => {
+          logSupabaseError('lecture goat_player_tags impossible', error);
+          GOAT_PLAYER_TAGS = [];
+          return GOAT_PLAYER_TAGS;
+        });
+      return goatPlayerTagsPromise;
+    }
+
+    function goatTagsForName(name) {
+      const key = goatTagKey(name);
+      return (GOAT_PLAYER_TAGS || []).filter(tag => goatTagKey(tag.player_name) === key);
+    }
+
+    function goatTagValues(name, type) {
+      return goatTagsForName(name)
+        .filter(tag => goatNormalize(tag.tag_type) === goatNormalize(type))
+        .map(tag => String(tag.tag_value || '').trim())
+        .filter(Boolean);
+    }
+
+    function goatUnique(values = []) {
+      const seen = new Set();
+      const out = [];
+      values.filter(Boolean).forEach(value => {
+        const key = goatNormalize(value);
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        out.push(value);
+      });
+      return out;
+    }
+
+    function goatPositionKeysFromText(value) {
+      const raw = goatNormalize(value || '');
+      return GOAT_POSITIONS
+        .map(([key]) => key)
+        .filter(key => (GOAT_POSITION_ALIASES[key] || []).some(alias => raw.includes(goatNormalize(alias)) || goatNormalize(alias).includes(raw)));
+    }
+
+    function goatContextsFromProfile(profile = {}) {
+      const contexts = [];
+      if ((profile.world_cup_titles || []).length) contexts.push('worldcup');
+      if ((profile.euro_titles || []).length) contexts.push('euro');
+      if ((profile.copa_america_titles || []).length) contexts.push('copa');
+      if ((profile.champions_league_titles || []).length) contexts.push('champions');
+      if (Number(profile.ballon_dor_count || 0) > 0 || (profile.ballon_dor_years || []).length) contexts.push('ballon_dor');
+      return contexts;
+    }
+
+    function goatSummaryForProfile(profile = {}) {
+      const parts = [];
+      const awards = [];
+      if (Number(profile.ballon_dor_count || 0) > 0) awards.push(`${profile.ballon_dor_count} Ballon${Number(profile.ballon_dor_count) > 1 ? 's' : ''} d’Or`);
+      if ((profile.world_cup_titles || []).length) awards.push(`Coupe du Monde ${profile.world_cup_titles.join(', ')}`);
+      if ((profile.champions_league_titles || []).length) awards.push(`C1 ${profile.champions_league_titles.length}x`);
+      if (awards.length) parts.push(awards.join(' · '));
+      if (profile.playing_style) parts.push(profile.playing_style);
+      if (!parts.length && profile.why_legend) parts.push(profile.why_legend);
+      return parts.join(' · ');
     }
 
     function goatPositionMatches(player, position) {
@@ -4922,7 +5012,24 @@ grant select, insert, update on public.profiles to authenticated;`;
       const key = goatPlayerKey(player);
       if (!key || seen.has(key)) return;
       seen.add(key);
-      const positionKeys = Array.isArray(player.position) ? player.position : [];
+      const tagContexts = goatTagValues(player.name, 'context');
+      const positionTags = goatTagValues(player.name, 'position');
+      const nationTags = goatTagValues(player.name, 'nation');
+      const clubTags = goatTagValues(player.name, 'club');
+      const eraTags = goatTagValues(player.name, 'era');
+      const contextTags = goatTagsForName(player.name)
+        .filter(tag => ['worldcup', 'euro', 'copa', 'champions', 'ballon_dor'].includes(goatNormalize(tag.tag_type)))
+        .map(tag => goatNormalize(tag.tag_type));
+      const rawPositionValue = goatNormalize(player.position || '');
+      const positionKeys = goatUnique([
+        ...(Array.isArray(player.position) ? player.position : []),
+        ...(GOAT_POSITIONS.some(([key]) => key === rawPositionValue) ? [rawPositionValue] : []),
+        ...positionTags,
+        ...goatPositionKeysFromText(player.position || player.positionGroup || '')
+      ]).map(value => {
+        const normalized = goatNormalize(value);
+        return GOAT_POSITIONS.some(([key]) => key === normalized) ? normalized : (GOAT_POSITIONS.find(([key]) => (GOAT_POSITION_ALIASES[key] || []).some(alias => normalized.includes(goatNormalize(alias)) || goatNormalize(alias).includes(normalized))) || [normalized])[0];
+      }).filter(key => GOAT_POSITIONS.some(([known]) => known === key));
       const positionLabel = positionKeys.length
         ? positionKeys.map(pos => (GOAT_POSITIONS.find(([key]) => key === pos) || [pos, pos])[1]).join(' / ')
         : (player.position || '');
@@ -4931,25 +5038,54 @@ grant select, insert, update on public.profiles to authenticated;`;
         position: positionLabel,
         positionKeys,
         positionGroup: player.positionGroup || player.position_group || '',
-        nation: player.nation || player.nationality || '',
-        clubs: Array.isArray(player.clubs) ? player.clubs : (Array.isArray(player.teams) ? player.teams : [player.club || player.team].filter(Boolean)),
-        contexts: Array.isArray(player.contexts) ? player.contexts : [],
+        nation: nationTags[0] || player.nation || player.nationality || '',
+        clubs: goatUnique([...(Array.isArray(player.clubs) ? player.clubs : (Array.isArray(player.teams) ? player.teams : [player.club || player.team].filter(Boolean))), ...clubTags]),
+        contexts: goatUnique([...(Array.isArray(player.contexts) ? player.contexts : []), ...tagContexts, ...contextTags]).map(goatNormalize),
+        eras: goatUnique([player.era || '', ...eraTags]),
         photo: player.photo || player.photo_url || '',
-        source: player.source || 'Supabase'
+        source: player.source || 'Supabase',
+        isLegend: Boolean(player.isLegend),
+        summary: player.summary || '',
+        majorTitles: player.majorTitles || ''
       });
     }
 
     function goatPlayerPoolBase() {
       const players = [];
       const seen = new Set();
-      GOAT_CURATED_PLAYERS.forEach(player => goatAddPlayer(players, seen, {...player, source: 'Akro Hall'}));
+      (Array.isArray(HALL_OF_FAME_PROFILES) ? HALL_OF_FAME_PROFILES : []).forEach(profile => {
+        const clubs = Array.isArray(profile.clubs) ? profile.clubs.filter(Boolean) : [];
+        goatAddPlayer(players, seen, {
+          name: profile.display_name || profile.name,
+          position: goatPositionKeysFromText(profile.position),
+          positionGroup: '',
+          nation: profile.nationality || profile.national_team || '',
+          clubs,
+          photo: profile.photo_url,
+          contexts: goatContextsFromProfile(profile),
+          era: profile.era || '',
+          source: 'hall_of_fame_players',
+          isLegend: true,
+          summary: goatSummaryForProfile(profile),
+          majorTitles: goatUnique([
+            Number(profile.ballon_dor_count || 0) > 0 ? `${profile.ballon_dor_count} Ballon d’Or` : '',
+            (profile.world_cup_titles || []).length ? 'Coupe du Monde' : '',
+            (profile.euro_titles || []).length ? 'Euro' : '',
+            (profile.copa_america_titles || []).length ? 'Copa América' : '',
+            (profile.champions_league_titles || []).length ? 'Ligue des Champions' : ''
+          ]).join(' · ')
+        });
+      });
       (AKRO_SUPABASE_FOOTBALL.players || []).forEach(player => goatAddPlayer(players, seen, {
-        name: player.name,
+        name: player.display_name || player.full_name || player.name,
         position: player.position,
-        nation: player.nationality,
-        clubs: player.teams || [],
+        nation: player.nationality || player.national_team,
+        clubs: player.career_clubs || player.teams || [player.current_club].filter(Boolean),
         photo: player.photo_url,
-        contexts: []
+        contexts: [],
+        era: player.era || '',
+        summary: player.playing_style || '',
+        source: 'players'
       }));
       (AKRO_SUPABASE_FOOTBALL.teams || []).forEach(team => {
         (team.squad || []).forEach(player => goatAddPlayer(players, seen, {
@@ -4961,6 +5097,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           contexts: team.type === 'nation' ? ['worldcup'] : (goatNormalize(team.competition).includes('champions') ? ['champions'] : [])
         }));
       });
+      GOAT_CURATED_PLAYERS.forEach(player => goatAddPlayer(players, seen, {...player, source: 'Akro fallback'}));
       return players;
     }
 
@@ -4971,8 +5108,10 @@ grant select, insert, update on public.profiles to authenticated;`;
         if (!goatPositionMatches(player, goatState.position)) return false;
         if (!player.photo) return false;
         if (context === 'all') return true;
+        if (context === 'legend') return player.isLegend;
         if (context === 'nation') return goatNormalize(player.nation) === value;
         if (context === 'club') return (player.clubs || []).some(club => goatNormalize(club) === value);
+        if (context === 'era') return (player.eras || []).some(era => goatNormalize(era) === value);
         return (player.contexts || []).map(goatNormalize).includes(goatNormalize(context));
       });
     }
@@ -4983,8 +5122,16 @@ grant select, insert, update on public.profiles to authenticated;`;
       source.forEach(player => {
         if (context === 'nation' && player.nation) values.set(goatNormalize(player.nation), player.nation);
         if (context === 'club') (player.clubs || []).forEach(club => values.set(goatNormalize(club), club));
+        if (context === 'era') (player.eras || []).forEach(era => values.set(goatNormalize(era), era));
       });
       return Array.from(values.values()).sort((a, b) => a.localeCompare(b));
+    }
+
+    function goatContextValueLabel(context = goatState.context) {
+      if (context === 'nation') return 'Nation';
+      if (context === 'club') return 'Club';
+      if (context === 'era') return 'Époque';
+      return 'Filtre exact';
     }
 
     function goatApplyTheme() {
@@ -5007,13 +5154,15 @@ grant select, insert, update on public.profiles to authenticated;`;
       const contexts = document.getElementById('goatContextChoices');
       const valueRow = document.getElementById('goatContextValueRow');
       const valueSelect = document.getElementById('goatContextValue');
+      const valueLabel = valueRow?.querySelector('label');
       const count = document.getElementById('goatPoolCount');
       if (!positions || !contexts || !valueSelect || !count) return;
       positions.innerHTML = GOAT_POSITIONS.map(([key, label]) => `<button class="goat-choice ${goatState.position === key ? 'is-active' : ''}" type="button" data-goat-position="${escapeHtml(key)}">${escapeHtml(label)}</button>`).join('');
       contexts.innerHTML = GOAT_CONTEXTS.map(([key, label]) => `<button class="goat-choice ${goatState.context === key ? 'is-active' : ''}" type="button" data-goat-context="${escapeHtml(key)}">${escapeHtml(label)}</button>`).join('');
-      const needsValue = goatState.context === 'nation' || goatState.context === 'club';
+      const needsValue = goatState.context === 'nation' || goatState.context === 'club' || goatState.context === 'era';
       valueRow.hidden = !needsValue;
       if (needsValue) {
+        if (valueLabel) valueLabel.textContent = goatContextValueLabel(goatState.context);
         const values = goatContextValues(goatState.context);
         if (!values.some(value => goatNormalize(value) === goatNormalize(goatState.contextValue))) goatState.contextValue = values[0] || '';
         valueSelect.innerHTML = values.map(value => `<option value="${escapeHtml(value)}" ${goatNormalize(value) === goatNormalize(goatState.contextValue) ? 'selected' : ''}>${escapeHtml(value)}</option>`).join('');
@@ -5026,6 +5175,8 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     async function openGoatModal() {
       await loadSupabaseFootballData();
+      if (typeof loadHallOfFameUpdates === 'function') await loadHallOfFameUpdates();
+      await loadGoatPlayerTags();
       renderGoatSetup();
       document.getElementById('goatSetup').hidden = false;
       document.getElementById('goatArena').hidden = true;
@@ -5064,6 +5215,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         <div class="goat-player-meta">
           <strong>${escapeHtml(player.name)}</strong>
           <span>${escapeHtml([player.nation, (player.clubs || [])[0], player.position].filter(Boolean).join(' · '))}</span>
+          ${player.majorTitles ? `<em class="goat-player-note">${escapeHtml(player.majorTitles)}</em>` : ''}
+          ${player.summary ? `<em class="goat-player-note">${escapeHtml(player.summary)}</em>` : ''}
         </div>
       </button>`;
     }
@@ -5099,8 +5252,18 @@ grant select, insert, update on public.profiles to authenticated;`;
       return goatState.contextValue ? `${label} · ${goatState.contextValue}` : label;
     }
 
+    function goatPositionLabelForKey(key) {
+      return (GOAT_POSITIONS.find(([itemKey]) => itemKey === key) || ['', key || ''])[1];
+    }
+
+    function goatContextLabelForRow(row = {}) {
+      if (row.share_card?.context) return row.share_card.context;
+      const label = (GOAT_CONTEXTS.find(([key]) => key === row.context_type) || [row.context_type, row.context_type])[1];
+      return row.context_value ? `${label} · ${row.context_value}` : label;
+    }
+
     function goatPositionLabel() {
-      return (GOAT_POSITIONS.find(([key]) => key === goatState.position) || ['', goatState.position])[1];
+      return goatPositionLabelForKey(goatState.position);
     }
 
     function renderGoatResult() {
@@ -5111,10 +5274,10 @@ grant select, insert, update on public.profiles to authenticated;`;
       result.innerHTML = `<div class="goat-result-card">
         <div class="goat-result-photo"><img src="${escapeHtml(winner.photo)}" alt="${escapeHtml(winner.name)}" loading="lazy"></div>
         <div class="goat-result-main">
-          <span class="alltime-badge">THE GOAT</span>
+          <span class="alltime-badge">The Goat</span>
           <h3>${escapeHtml(winner.name)}</h3>
           <div class="goat-share-card">
-            <strong>${escapeHtml(winner.name)} est ton GOAT ${escapeHtml(goatPositionLabel().toLowerCase())}</strong>
+            <strong>${escapeHtml(winner.name)} est ton Goat ${escapeHtml(goatPositionLabel().toLowerCase())}</strong>
             <div class="subtle">${escapeHtml(goatContextLabel())} · ${escapeHtml(new Date().toLocaleDateString('fr-FR'))}</div>
             <div class="goat-path">${goatState.path.map(item => `<span>${escapeHtml(item.winner)} > ${escapeHtml(item.loser)}</span>`).join('')}</div>
           </div>
@@ -5130,7 +5293,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     async function saveGoatResult() {
       const status = document.getElementById('goatSaveStatus');
       if (!akroSupabase || !akroProfile?.id) {
-        if (status) status.textContent = 'Connecte-toi pour publier ton GOAT.';
+        if (status) status.textContent = 'Connecte-toi pour publier ton Goat.';
         return;
       }
       const winner = goatState.champion;
@@ -5156,7 +5319,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         refreshVotesNotification();
         if (status) status.textContent = 'Publié dans A vos votes.';
       } catch (error) {
-        logSupabaseError('erreur publication THE GOAT', error);
+        logSupabaseError('erreur publication The Goat', error);
         if (status) status.textContent = 'Publication impossible. Vérifie que le SQL the_goat.sql est appliqué.';
       }
     }
@@ -5652,7 +5815,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         quiz: 'Classement Quiz',
         who: 'Classement Qui est-ce ?',
         pronos: 'Classement Pronos',
-        'the-goat': 'Classement THE GOAT'
+        'the-goat': 'Classement The Goat'
       };
       profileGameRankingTitle.textContent = labels[game] || 'Classement';
       profileGameRankingSubtitle.textContent = game === 'the-goat' ? 'Résultats publiés et votes communautaires' : 'Niveaux et scores cumulés des membres';
@@ -5681,7 +5844,7 @@ grant select, insert, update on public.profiles to authenticated;`;
           <article class="profile-info-card"><span>Pronostics</span><strong>${escapeHtml(pronos)} pts</strong><em>Points issus des pronostics.</em></article>
           <article class="profile-info-card"><span>Quiz</span><strong>${escapeHtml(quiz)} pts</strong><em>${escapeHtml(gameScoreSummary(profile, 'quiz').label)} bonnes réponses.</em></article>
           <article class="profile-info-card"><span>Qui est-ce ?</span><strong>${escapeHtml(who)} pts</strong><em>${escapeHtml(gameScoreSummary(profile, 'who').label)} bonnes réponses.</em></article>
-          <article class="profile-info-card"><span>THE GOAT</span><strong>0 pt</strong><em>Votes communautaires non ajoutés au classement général pour le moment.</em></article>
+          <article class="profile-info-card"><span>The Goat</span><strong>0 pt</strong><em>Votes communautaires non ajoutés au classement général pour le moment.</em></article>
           <article class="profile-info-card"><span>Total</span><strong>${escapeHtml(total)} pts</strong><em>Classement général.</em></article>
         </div>
       `);
@@ -5934,18 +6097,19 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function renderPublishedGoatSessions(sessions, votes) {
-      if (!sessions.length) return '<div class="empty">Aucun résultat THE GOAT publié pour le moment.</div>';
+      if (!sessions.length) return '<div class="empty">Aucun résultat The Goat publié pour le moment.</div>';
       return `<div class="votes-bracket-list">${sessions.map(row => {
         const author = profileById(row.profile_id);
         const counts = voteCountsForGoat(row, votes);
         const voted = currentVoteForGoat(row, votes);
-        const context = row.context_value ? `${row.context_type} · ${row.context_value}` : row.context_type;
+        const context = goatContextLabelForRow(row);
+        const positionLabel = row.share_card?.position || goatPositionLabelForKey(row.position_group);
         return `<article class="profile-placeholder-card user-bracket-card votes-bracket-card goat-community-card">
           <img class="goat-community-photo" src="${escapeHtml(row.winner_photo_url)}" alt="${escapeHtml(row.winner_player_name)}" loading="lazy">
           <div class="votes-bracket-main">
             <div class="votes-bracket-author">
               ${avatarImage(author?.avatar_url || '', 'profile-avatar', author)}
-              <div><span class="votes-bracket-title">${escapeHtml(author?.pseudo || 'Profil')} a choisi ${escapeHtml(row.winner_player_name)}</span><div class="subtle">THE GOAT · ${escapeHtml(row.position_group || '')} · ${escapeHtml(context)} · ${escapeHtml(profileDate(row.created_at))}</div></div>
+              <div><span class="votes-bracket-title">${escapeHtml(author?.pseudo || 'Profil')} a choisi ${escapeHtml(row.winner_player_name)}</span><div class="subtle">The Goat · ${escapeHtml(positionLabel || '')} · ${escapeHtml(context)} · ${escapeHtml(profileDate(row.created_at))}</div></div>
             </div>
             <div class="votes-bracket-footer">
               <div class="votes-bracket-actions">
@@ -5967,8 +6131,8 @@ grant select, insert, update on public.profiles to authenticated;`;
         publishedWorldCupBracketCache = brackets;
         publishedGoatSessionCache = goatSessions;
         markVotesViewed(brackets);
-        openProfileInfoModal('A vos votes', 'Brackets et THE GOAT publiés', `
-          <div class="team-info-label">THE GOAT</div>
+        openProfileInfoModal('A vos votes', 'Brackets et The Goat publiés', `
+          <div class="team-info-label">The Goat</div>
           ${renderPublishedGoatSessions(goatSessions, goatVotes)}
           <div class="team-info-label" style="margin-top:14px;">Brackets Coupe du Monde 2026</div>
           ${renderPublishedWorldCupBrackets(brackets, votes)}
@@ -6016,8 +6180,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           }, {onConflict: 'goat_session_id,profile_id'}), 10000);
         await openVotesFromHeader();
       } catch (error) {
-        logSupabaseError('erreur vote THE GOAT', error);
-        openProfileInfoModal('A vos votes', 'Vote impossible', '<div class="empty">Impossible d’enregistrer ton vote THE GOAT pour le moment.</div>');
+        logSupabaseError('erreur vote The Goat', error);
+        openProfileInfoModal('A vos votes', 'Vote impossible', '<div class="empty">Impossible d’enregistrer ton vote The Goat pour le moment.</div>');
       }
     }
 
@@ -7520,7 +7684,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         ['pronos', 'Pronos', profile.level || 'Débutant'],
         ['quiz', 'Quiz', quizLevel || 'Non commencé'],
         ['who', 'Qui est-ce ?', whoLevel || 'Non commencé'],
-        ['the-goat', 'THE GOAT', 'Nouveau']
+        ['the-goat', 'The Goat', 'Nouveau']
       ];
       const generalRank = profileGeneralRank(profile) || profile.rank;
       const rankText = generalRank ? (Number(generalRank) <= 10 ? `Top 10 · classé #${generalRank}` : `Classé #${generalRank}`) : 'Non classé';
