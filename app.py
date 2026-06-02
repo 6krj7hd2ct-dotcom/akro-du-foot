@@ -998,6 +998,19 @@ def football_chatbot_response(payload: dict[str, Any]) -> tuple[dict[str, Any], 
     if not _looks_like_football_question(resolved_question, merged_history):
         return {"answer": COACH_REFUSAL}, 200
 
+    historical_event_answer = _coach_player_historical_event_answer(resolved_question, merged_history)
+    if historical_event_answer:
+        answer = _format_coach_answer(historical_event_answer)
+        verification = _coach_hall_verification()
+        if session_id:
+            _save_coach_message_supabase(session_id, "assistant", answer, context_state.get("lastEntity", ""), context_state.get("lastIntent", ""))
+        return {
+            "answer": answer,
+            "detected_context": context_state,
+            "resolved_question": resolved_question,
+            "verification": verification,
+        }, 200
+
     hall_priority_answer = _coach_legend_profile_answer(resolved_question, merged_history)
     if hall_priority_answer:
         answer = _format_coach_answer(hall_priority_answer)
@@ -1128,6 +1141,18 @@ def search_coach_response(payload: dict[str, Any]) -> tuple[dict[str, Any], int]
 
     if not _looks_like_football_question(query, []):
         return {"answer": COACH_REFUSAL, "source": "refusal", "cached": False}, 200
+
+    historical_event_answer = _coach_player_historical_event_answer(query, [])
+    if historical_event_answer:
+        answer = _format_coach_answer(historical_event_answer)
+        return {
+            "answer": answer,
+            "source": "historical_memory",
+            "cached": False,
+            "normalized_query": normalized_query,
+            "entity_type": entity_type or "player",
+            "verification": _coach_hall_verification(),
+        }, 200
 
     hall_priority_answer = _coach_legend_profile_answer(query, [])
     if hall_priority_answer:
@@ -1736,8 +1761,23 @@ def _coach_is_comparison_followup_question(normalized_question: str) -> bool:
     )
 
 
+def _coach_is_historical_followup_question(normalized_question: str) -> bool:
+    return bool(
+        any(
+            term in normalized_question
+            for term in {
+                "coupe du monde", "world cup", "finale", "ce tournoi", "cette finale", "tournoi",
+                "euro", "copa america", "copa américa", "ligue des champions", "champions league",
+                "ballon d or", "trophee", "trophée", "palmares", "palmarès", "exploit",
+            }
+        )
+    )
+
+
 def _coach_recent_comparison_players(history: list[dict[str, str]]) -> list[str]:
     for item in reversed(history[-10:]):
+        if str(item.get("role") or "") != "user":
+            continue
         names = _coach_detect_player_names(str(item.get("content") or ""))
         if len(names) >= 2:
             return names[:2]
@@ -1746,6 +1786,7 @@ def _coach_recent_comparison_players(history: list[dict[str, str]]) -> list[str]
 
 def _detect_conversation_context(history: list[dict[str, str]], question: str, client_context: dict[str, Any]) -> dict[str, str]:
     history_text = _normalize_football_text(" ".join(item.get("content", "") for item in history[-10:]))
+    user_history_text = _normalize_football_text(" ".join(item.get("content", "") for item in history[-10:] if item.get("role") == "user"))
     text = _normalize_football_text(history_text + " " + question)
     qn = _normalize_football_text(question)
     entity = str(client_context.get("lastEntity", "") or "")
@@ -1778,7 +1819,7 @@ def _detect_conversation_context(history: list[dict[str, str]], question: str, c
             if value not in current_players:
                 current_players.append(value)
             current_player = value
-        elif not entity and _normalized_contains(history_text, key):
+        elif not entity and _normalized_contains(user_history_text, key):
             entity, entity_type = value, "player"
 
     if len(current_players) >= 2:
@@ -1791,21 +1832,25 @@ def _detect_conversation_context(history: list[dict[str, str]], question: str, c
             intent = "compare"
         else:
             entity, entity_type = current_player, "player"
-    elif not comparison_entity and _coach_is_comparison_followup_question(qn):
+    elif not comparison_entity and _coach_is_comparison_followup_question(qn) and not _coach_is_historical_followup_question(qn):
         recent_pair = _coach_recent_comparison_players(history)
         if len(recent_pair) >= 2:
             entity, entity_type = recent_pair[0], "player"
             comparison_entity = recent_pair[1]
             intent = "compare"
 
-    keep_player_subject = entity_type == "player" and bool(entity) and (_coach_is_player_followup_question(qn) or _coach_is_comparison_followup_question(qn)) and not current_player
+    keep_player_subject = entity_type == "player" and bool(entity) and (
+        _coach_is_player_followup_question(qn)
+        or _coach_is_comparison_followup_question(qn)
+        or _coach_is_historical_followup_question(qn)
+    ) and not current_player
     for key, value in clubs.items():
         if keep_player_subject:
             break
-        if _normalized_contains(qn, key) or (not entity and _normalized_contains(text, key)):
+        if _normalized_contains(qn, key) or (not entity and _normalized_contains(user_history_text, key)):
             entity, entity_type = value, "club"
     for key, value in competitions.items():
-        if _normalized_contains(qn, key) or (not competition and _normalized_contains(text, key)):
+        if _normalized_contains(qn, key) or (not competition and _normalized_contains(user_history_text, key)):
             competition = value
 
     if any(term in qn for term in {"nombre de but", "but", "buts"}):
@@ -1845,6 +1890,7 @@ def _resolve_followup_question(question: str, context_state: dict[str, str]) -> 
         len(qn.split()) <= 5
         or _coach_is_player_followup_question(qn)
         or _coach_is_comparison_followup_question(qn)
+        or _coach_is_historical_followup_question(qn)
         or any(term in qn for term in {"et en", "cette saison", "son club", "sa selection", "sa sélection", "nombre de but", "compare avec", "et lui", "ses buts", "sa stat", "son style", "son exploit", "ses exploits", "cette legende", "cette légende"})
     )
     if not ambiguous:
@@ -1888,6 +1934,9 @@ def _local_coach_answer(question: str, history: list[dict[str, str]]) -> str:
     historical_answer = _coach_historical_team_comparison_answer(question)
     if historical_answer:
         return historical_answer
+    player_historical_answer = _coach_player_historical_event_answer(question, history)
+    if player_historical_answer:
+        return player_historical_answer
     comparison_terms = {"compare", "comparaison", "versus", "vs", "plus fort", "meilleur", "palmares", "palmarès", "trophees", "trophées", "selection", "sélection", "influent", "marque", "buts", "lequel"}
     if (any(term in normalized for term in comparison_terms) or _coach_is_comparison_followup_question(normalized)) and len(_coach_detect_player_names(question)) >= 2:
         comparison_answer = _coach_player_comparison_answer(question)
@@ -3283,6 +3332,20 @@ COACH_HALL_OF_FAME_MEMORY = {
         "moments": ["saison 2011-2012 record", "Coupe du Monde 2022", "années Guardiola au Barça"],
         "style": "meneur-buteur total, dribble court, dernière passe, finition et contrôle du rythme.",
         "legacy": "souvent cité comme le joueur le plus complet de l'ère moderne par son mélange buts, création, dribble et continuité.",
+        "tournaments": {
+            "world_cup_2022": {
+                "label": "Coupe du Monde 2022",
+                "team": "Argentine",
+                "result": "Champion du Monde",
+                "final_opponent": "France",
+                "final_score": "Argentine 3-3 France, victoire argentine 4-2 aux tirs au but",
+                "final_won": True,
+                "final_scorers": ["Lionel Messi", "Ángel Di María", "Kylian Mbappé"],
+                "player_final": "Messi a marqué deux buts en finale, dont un penalty, puis a transformé son tir au but.",
+                "player_role": "Capitaine, meneur offensif et joueur central de l'Argentine. Il a guidé le jeu, porté les temps forts et terminé Ballon d'Or du tournoi avec 7 buts et 3 passes décisives.",
+                "summary": "Tournoi de consécration pour Messi : leadership, efficacité, création et titre mondial au bout d'une finale historique contre la France.",
+            },
+        },
         "weight": 100,
     },
     "Cristiano Ronaldo": {
@@ -4207,6 +4270,8 @@ def _coach_historical_team_comparison_answer(question: str) -> str:
 
 def _coach_recent_hall_player(history: list[dict[str, str]]) -> str:
     for item in reversed(history[-8:]):
+        if str(item.get("role") or "") != "user":
+            continue
         for name in _coach_detect_player_names(str(item.get("content") or "")):
             if COACH_LEGEND_PROFILES.get(name) or _coach_hall_profile(name):
                 return name
@@ -4223,6 +4288,106 @@ def _coach_role_phrase(role: str) -> str:
         clean = "joueur historique"
     prefix = "d'" if clean[:1].lower() in {"a", "e", "i", "o", "u", "y"} else "de "
     return prefix + clean
+
+
+def _coach_recent_historical_event_key(history: list[dict[str, str]]) -> str:
+    for item in reversed(history[-8:]):
+        text = _normalize_football_text(str(item.get("content") or ""))
+        if ("coupe du monde" in text or "world cup" in text or "finale" in text) and "2022" in text:
+            return "world_cup_2022"
+        if "argentine 3 3 france" in text or "4 2 aux tirs au but" in text or "france" in text and "argentine" in text and "messi" in text:
+            return "world_cup_2022"
+    return ""
+
+
+def _coach_detect_historical_event_key(question: str, history: list[dict[str, str]]) -> str:
+    normalized = _normalize_football_text(str(question).split("(contexte conversationnel", 1)[0])
+    if ("coupe du monde" in normalized or "world cup" in normalized) and "2022" in normalized:
+        return "world_cup_2022"
+    if "finale" in normalized and "2022" in normalized:
+        return "world_cup_2022"
+    if any(term in normalized for term in {"cette finale", "ce tournoi", "dans ce tournoi", "qui a marque en finale", "qui a marqué en finale", "a gagne cette finale", "a gagné cette finale"}):
+        return _coach_recent_historical_event_key(history)
+    return ""
+
+
+def _coach_player_historical_event_answer(question: str, history: list[dict[str, str]] | None = None) -> str:
+    history = history or []
+    user_question = str(question).split("(contexte conversationnel", 1)[0]
+    player_names = _coach_detect_player_names(user_question)
+    if not player_names:
+        context_match = re.search(r"sujet=([^,\)]+)", str(question))
+        context_player = context_match.group(1).strip() if context_match else ""
+        if context_player and _coach_hall_profile(context_player):
+            player_names = [context_player]
+    if not player_names:
+        recent_player = _coach_recent_hall_player(history)
+        if recent_player:
+            player_names = [recent_player]
+    if len(player_names) != 1:
+        return ""
+    player_name = player_names[0]
+    hall = _coach_hall_profile(player_name)
+    tournaments = hall.get("tournaments") if isinstance(hall.get("tournaments"), dict) else {}
+    if not tournaments:
+        return ""
+    event_key = _coach_detect_historical_event_key(question, history)
+    if not event_key or event_key not in tournaments:
+        return ""
+    event = tournaments[event_key]
+    normalized = _normalize_football_text(str(question).split("(contexte conversationnel", 1)[0])
+    label = str(event.get("label") or "tournoi")
+    team = str(event.get("team") or "sa sélection")
+    result = str(event.get("result") or "résultat non renseigné")
+    opponent = str(event.get("final_opponent") or "adversaire non renseigné")
+    final_score = str(event.get("final_score") or "score non renseigné")
+    scorers = [str(item) for item in event.get("final_scorers") or []]
+    player_final = str(event.get("player_final") or "")
+    player_role = str(event.get("player_role") or "")
+    summary = str(event.get("summary") or "")
+
+    if any(term in normalized for term in {"contre qui", "adversaire"}):
+        direct = f"En finale de la {label}, {player_name} a joué contre {opponent}."
+    elif any(term in normalized for term in {"a gagne", "a gagné", "remporte", "remporté", "cette finale"}):
+        if event.get("final_won") is True:
+            direct = f"Oui, {player_name} a gagné cette finale avec {team}. {final_score}."
+        elif event.get("final_won") is False:
+            direct = f"Non, {player_name} n'a pas gagné cette finale. {final_score}."
+        else:
+            direct = f"Le résultat de cette finale est à compléter dans la mémoire historique. {final_score}."
+    elif any(term in normalized for term in {"qui a marque", "qui a marqué", "buteur", "buteurs"}):
+        scorers_text = ", ".join(scorers) if scorers else "buteurs non renseignés"
+        direct = f"Les grands noms au tableau d'affichage de cette finale : {scorers_text}. {player_final}".strip()
+    elif any(term in normalized for term in {"role", "rôle", "tournoi"}):
+        direct = player_role or summary or f"{player_name} a joué un rôle majeur dans ce tournoi."
+    elif any(term in normalized for term in {"a t il joue", "a-t-il joué", "joue la coupe du monde", "joué la coupe du monde"}):
+        direct = f"Oui, {player_name} a joué la {label} avec {team}, et l'a terminée avec le statut : {result}."
+    else:
+        direct = summary or f"{player_name} est associé à {label} avec {team}."
+
+    lines = [
+        "Résumé",
+        direct,
+        "Finale / tournoi\n"
+        f"• Compétition : {label}\n"
+        f"• Équipe : {team}\n"
+        f"• Résultat : {result}\n"
+        f"• Finale : {team} vs {opponent}\n"
+        f"• Score : {final_score}\n"
+        f"• Buteurs marquants : {', '.join(scorers) if scorers else 'à compléter'}",
+    ]
+    if player_final or player_role:
+        lines.append(
+            "Rôle du joueur\n"
+            + (f"• {player_final}\n" if player_final else "")
+            + (f"• {player_role}" if player_role else "")
+        )
+    lines.append(
+        "Conclusion\n"
+        f"Pour cette question, la bonne lecture est historique : {player_name} doit être évalué dans le contexte de {label}, pas à partir de son club actuel."
+    )
+    lines.append("Sources\nMémoire Hall of Fame Akro du Foot et contexte historique local.")
+    return "\n\n".join(lines)
 
 
 def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | None = None) -> str:
