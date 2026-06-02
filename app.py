@@ -1768,7 +1768,7 @@ def _coach_is_explicit_comparison_question(normalized_question: str) -> bool:
             term in normalized_question
             for term in {
                 " compare ", "comparaison", " versus ", " vs ", " contre ", " face a ", " face à ",
-                "entre ", "plus fort", "meilleur entre", "qui est le meilleur", "qui etait le meilleur",
+                "entre ", " ou ", "plus fort", "meilleur entre", "qui est le meilleur", "qui etait le meilleur",
                 "qui était le meilleur", "lequel", "qui a le plus", "qui marque le plus",
             }
         )
@@ -3517,7 +3517,12 @@ COACH_HALL_OF_FAME_MEMORY = {
 def _coach_detect_player_names(question: str) -> list[str]:
     normalized = _normalize_football_text(question)
     names: list[str] = []
+    for name in _coach_detect_hall_player_names(question):
+        if name not in names:
+            names.append(name)
     for alias, name in COACH_PLAYER_ALIASES.items():
+        if alias == "ronaldo" and "ronaldo nazario" in normalized:
+            continue
         if alias in normalized and name not in names:
             names.append(name)
     if names and not _coach_is_explicit_comparison_question(f" {normalized} "):
@@ -3598,6 +3603,8 @@ def _coach_json_list(value: Any) -> list[str]:
 
 
 def _coach_hall_row_to_memory(row: dict[str, Any]) -> dict[str, Any]:
+    name = str(row.get("name") or row.get("display_name") or "").strip()
+    display_name = str(row.get("display_name") or name).strip()
     ballon_years = _coach_json_list(row.get("ballon_dor_years"))
     world_cups = _coach_json_list(row.get("world_cup_titles"))
     euros = _coach_json_list(row.get("euro_titles"))
@@ -3621,6 +3628,8 @@ def _coach_hall_row_to_memory(row: dict[str, Any]) -> dict[str, Any]:
         honours.append("Ligue(s) des Champions : " + ", ".join(champions))
     nickname = str(row.get("nickname") or "").strip()
     return {
+        "name": name,
+        "display_name": display_name,
         "nicknames": [nickname] if nickname else [],
         "ballon_dor": ballon_years,
         "world_cup": [f"Champion du Monde {year}" for year in world_cups],
@@ -3643,6 +3652,32 @@ def _coach_hall_row_to_memory(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _coach_hall_alias_candidates(name: str, display_name: str = "") -> set[str]:
+    values = {name, display_name}
+    aliases: set[str] = set()
+    for value in values:
+        normalized = _normalize_football_text(value)
+        if not normalized:
+            continue
+        aliases.add(normalized)
+        parts = normalized.split()
+        if len(parts) >= 2:
+            last_name = parts[-1]
+            if len(last_name) >= 4:
+                aliases.add(last_name)
+            if len(parts) >= 2:
+                split_last_name = " ".join(parts[-2:])
+                compact_last_name = "".join(parts[-2:])
+                if len(compact_last_name) >= 4:
+                    aliases.add(split_last_name)
+                    aliases.add(compact_last_name)
+            if len(parts[-2]) <= 3 and len(last_name) >= 4:
+                aliases.add(" ".join(parts[-2:]))
+            if len(parts) >= 3 and parts[-2] in {"van", "von", "de", "del", "da", "di"}:
+                aliases.add(" ".join(parts[-2:]))
+    return aliases
+
+
 def _coach_hall_supabase_profiles() -> dict[str, dict[str, Any]]:
     if not _supabase_service_enabled():
         return {}
@@ -3660,11 +3695,23 @@ def _coach_hall_supabase_profiles() -> dict[str, dict[str, Any]]:
     )
     profiles: dict[str, dict[str, Any]] = {}
     if isinstance(rows, list):
+        alias_counts: dict[str, int] = {}
+        prepared: list[tuple[str, str, dict[str, Any], set[str]]] = []
         for row in rows:
             name = str(row.get("name") or row.get("display_name") or "").strip()
+            display_name = str(row.get("display_name") or name).strip()
             if not name:
                 continue
-            profiles[_normalize_football_text(name)] = _coach_hall_row_to_memory(row)
+            aliases = _coach_hall_alias_candidates(name, display_name)
+            prepared.append((name, display_name, row, aliases))
+            for alias in aliases:
+                alias_counts[alias] = alias_counts.get(alias, 0) + 1
+        for name, display_name, row, aliases in prepared:
+            profile = _coach_hall_row_to_memory(row)
+            exact_aliases = {_normalize_football_text(name), _normalize_football_text(display_name)}
+            for alias in aliases:
+                if alias in exact_aliases or alias_counts.get(alias, 0) == 1:
+                    profiles[alias] = profile
     COACH_HALL_SUPABASE_CACHE["profiles"] = profiles
     COACH_HALL_SUPABASE_CACHE["expires_at"] = time.time() + 600
     return profiles
@@ -3680,6 +3727,25 @@ def _coach_hall_profile(player_name: str) -> dict[str, Any]:
         if value not in (None, "", [], {}):
             merged[key] = value
     return merged
+
+
+def _coach_detect_hall_player_names(question: str) -> list[str]:
+    normalized = _normalize_football_text(question)
+    if not normalized:
+        return []
+    haystack = f" {normalized} "
+    names: list[str] = []
+    profiles = _coach_hall_supabase_profiles()
+    for alias in sorted(profiles, key=len, reverse=True):
+        if len(alias) < 4:
+            continue
+        if f" {alias} " not in haystack:
+            continue
+        profile = profiles.get(alias) or {}
+        name = str(profile.get("display_name") or profile.get("name") or "").strip()
+        if name and name not in names:
+            names.append(name)
+    return names
 
 
 def _coach_hall_lines(player_name: str) -> list[str]:
@@ -4192,13 +4258,14 @@ def _coach_player_stats_context(question: str) -> str:
     return intro + ":\n" + "\n".join(lines)
 
 
-def _coach_player_summary_for_comparison(player_name: str, age: int | None, payload: dict[str, Any]) -> dict[str, Any]:
+def _coach_player_summary_for_comparison(player_name: str, age: int | None, payload: dict[str, Any], use_stats: bool = True) -> dict[str, Any]:
     seasons = _coach_seasons_for_age(player_name, age, payload) if age else []
     if not seasons:
         seasons = [str(datetime.now(timezone.utc).year - 1), str(datetime.now(timezone.utc).year)]
-    rows = _coach_player_stats_rows(player_name, seasons)
+    hall = _coach_hall_profile(player_name)
+    rows = _coach_player_stats_rows(player_name, seasons) if use_stats else []
     source = "Supabase"
-    if not rows:
+    if use_stats and not rows:
         rows = _coach_api_player_stats(player_name, seasons)
         source = "API-Football + Supabase"
     rows = _coach_unique_stat_rows(rows)
@@ -4217,7 +4284,7 @@ def _coach_player_summary_for_comparison(player_name: str, age: int | None, payl
         "totals": totals,
         "rows": rows,
         "legend": COACH_LEGEND_PROFILES.get(player_name),
-        "hall": _coach_hall_profile(player_name),
+        "hall": hall,
         "source": source,
         "assists_complete": bool(rows) and len(assists_known_rows) == len(rows),
     }
@@ -4236,7 +4303,14 @@ def _coach_player_comparison_answer(question: str) -> str:
         return ""
     payload = _football_supabase_payload()
     age = _coach_detect_age(question)
-    summaries = [_coach_player_summary_for_comparison(name, age, payload) for name in player_names]
+    normalized = _normalize_football_text(question)
+    stats_terms = {"stat", "stats", "buts", "but", "passes", "matchs", "matches", "minutes", "age", "ans"}
+    hall_only_comparison = (
+        not age
+        and all(_coach_hall_profile(name) for name in player_names)
+        and not any(term in normalized for term in stats_terms)
+    )
+    summaries = [_coach_player_summary_for_comparison(name, age, payload, use_stats=not hall_only_comparison) for name in player_names]
     available = [summary for summary in summaries if summary.get("rows")]
     comparable = [summary for summary in summaries if summary.get("rows") or summary.get("legend") or summary.get("hall")]
     if not comparable:
