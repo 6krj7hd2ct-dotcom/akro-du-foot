@@ -1762,6 +1762,33 @@ def _coach_is_comparison_followup_question(normalized_question: str) -> bool:
     )
 
 
+def _coach_is_explicit_comparison_question(normalized_question: str) -> bool:
+    return bool(
+        any(
+            term in normalized_question
+            for term in {
+                " compare ", "comparaison", " versus ", " vs ", " contre ", " face a ", " face à ",
+                "entre ", "plus fort", "meilleur entre", "qui est le meilleur", "qui etait le meilleur",
+                "qui était le meilleur", "lequel", "qui a le plus", "qui marque le plus",
+            }
+        )
+    )
+
+
+def _coach_is_hall_only_question(normalized_question: str) -> bool:
+    return bool(
+        any(
+            term in normalized_question
+            for term in {
+                "palmares", "palmarès", "legende", "légende", "ballon d or", "ballon d'or",
+                "heritage", "héritage", "carriere", "carrière", "style de jeu", "pourquoi est il celebre",
+                "pourquoi est-il celebre", "pourquoi est il célèbre", "pourquoi est-il célèbre",
+                "pourquoi est il connu", "exploit", "trophee", "trophée", "distinction", "record",
+            }
+        )
+    )
+
+
 def _coach_is_historical_followup_question(normalized_question: str) -> bool:
     return bool(
         any(
@@ -3493,15 +3520,27 @@ def _coach_detect_player_names(question: str) -> list[str]:
     for alias, name in COACH_PLAYER_ALIASES.items():
         if alias in normalized and name not in names:
             names.append(name)
+    if names and not _coach_is_explicit_comparison_question(f" {normalized} "):
+        return names[:1]
     if len(names) >= 2:
         return names[:4]
     payload = _football_supabase_payload()
     terms = _coach_query_terms(normalized)
     for player in _coach_pick_relevant_rows(payload.get("players", []), terms, ["name", "firstname", "lastname"], 4):
-        name = str(player.get("name") or "").strip()
+        name = _coach_public_player_display_name(player)
         if name and name not in names:
             names.append(name)
     return names[:4]
+
+
+def _coach_public_player_display_name(player: dict[str, Any]) -> str:
+    name = str(player.get("name") or "").strip()
+    firstname = str(player.get("firstname") or "").strip()
+    lastname = str(player.get("lastname") or "").strip()
+    full = " ".join(part for part in [firstname, lastname] if part).strip()
+    if full and re.match(r"^[A-ZÀ-Ý]\\.?\\s+\\S+", name):
+        return full
+    return full or name
 
 
 def _coach_detect_age(question: str) -> int | None:
@@ -4496,7 +4535,7 @@ def _coach_legend_profile_answer(question: str, history: list[dict[str, str]] | 
     normalized = _normalize_football_text(question)
     user_question_normalized = _normalize_football_text(str(question).split("(contexte conversationnel", 1)[0])
     if not (
-        any(term in user_question_normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique", "ballon", "gagne", "gagné", "remporte", "remporté", "exploit", "style", "ligue des champions", "champions", "coupe du monde", "marque", "marqué", "finale", "selection", "sélection", "equipe de france", "équipe de france", "titre", "titres"})
+        any(term in user_question_normalized for term in {"palmares", "palmarès", "heritage", "héritage", "surnom", "legende", "légende", "qui est", "parle", "explique", "ballon", "gagne", "gagné", "remporte", "remporté", "exploit", "style", "carriere", "carrière", "celebre", "célèbre", "connu", "ligue des champions", "champions", "coupe du monde", "marque", "marqué", "finale", "selection", "sélection", "equipe de france", "équipe de france", "titre", "titres"})
         or (from_history and _coach_is_player_followup_question(user_question_normalized))
         or (player_names and len(user_question_normalized.split()) <= 3)
     ):
@@ -5087,6 +5126,14 @@ def admin_sync_cancel_response(payload: dict[str, Any]) -> tuple[dict[str, Any],
 
 
 def _coach_relevant_supabase_context(question: str) -> dict[str, str]:
+    normalized = _normalize_football_text(question)
+    player_names = _coach_detect_player_names(question)
+    if len(player_names) == 1 and _coach_hall_profile(player_names[0]) and _coach_is_hall_only_question(normalized) and not _coach_is_explicit_comparison_question(f" {normalized} "):
+        hall_lines = _coach_hall_lines(player_names[0])
+        return {
+            "source": "Supabase Hall of Fame",
+            "context": "\n".join(f"- {line}" for line in hall_lines),
+        }
     player_stats_context = _coach_player_stats_context(question)
     if player_stats_context:
         return {"source": "Supabase/API-Football player statistics", "context": player_stats_context}
