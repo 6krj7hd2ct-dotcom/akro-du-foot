@@ -406,17 +406,19 @@
     .match-summary-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at right top, rgba(245,201,107,0.15), transparent 36%), radial-gradient(circle at left bottom, rgba(99,232,255,0.10), transparent 34%); pointer-events: none; }
     .match-summary-card > * { position: relative; z-index: 1; }
     .match-summary-head, .match-summary-line, .match-summary-bottom { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; min-width: 0; }
+    .match-summary-head { align-items: flex-start; }
     .match-summary-line { align-items: center; }
     .match-summary-bottom { align-items: flex-end; margin-top: 2px; }
+    .match-summary-meta-stack { flex: 0 0 auto; display: grid; justify-items: end; gap: 7px; max-width: 48%; }
     .match-summary-competition { flex: 0 0 auto; border-radius: 999px; padding: 5px 9px; background: rgba(245,201,107,0.14); border: 1px solid rgba(245,201,107,0.30); color: #ffe1a0; font-size: 10px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
     .match-summary-date { flex: 0 0 auto; color: #94a7bc; font-size: 11px; font-weight: 850; text-align: right; white-space: nowrap; }
-    .match-summary-teams { color: #fff; font-size: 16px; font-weight: 700; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .match-summary-team-line { min-width: 0; display: inline-flex; align-items: center; gap: 7px; overflow: hidden; vertical-align: middle; }
-    .match-summary-team-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+    .match-summary-teams { min-width: 0; color: #fff; font-size: 16px; font-weight: 750; line-height: 1.25; white-space: normal; }
+    .match-summary-team-line { min-width: 0; display: inline-flex; align-items: center; gap: 7px; vertical-align: middle; }
+    .match-summary-team-name { min-width: 0; white-space: normal; font-weight: 750; }
     .match-summary-logo { width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; object-fit: contain; object-position: center; padding: 2px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.16); }
     .match-summary-vs { color: #9fb0c2; font-size: 12px; font-weight: 950; text-transform: uppercase; }
     .match-summary-score { border-radius: 999px; padding: 5px 9px; color: #07111f; background: linear-gradient(180deg, #ffffff, #c8d6e6); font-size: 12px; font-weight: 950; white-space: nowrap; }
-    .match-summary-title { min-width: 0; margin: 0; color: #fff; font-size: clamp(20px, 2vw, 27px); line-height: 1.04; font-weight: 950; letter-spacing: 0; }
+    .match-summary-title { min-width: 0; margin: 0; color: #fff; font-size: clamp(18px, 1.45vw, 23px); line-height: 1.08; font-weight: 950; letter-spacing: 0; }
     .match-summary-text { min-width: 0; margin: 0; color: #c9d7e7; font-size: 13px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .match-summary-link { align-self: end; color: var(--gold); font-size: 13px; font-weight: 950; }
     .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -1287,6 +1289,7 @@
     .reward-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(210,222,238,0.78)); color: #07111f; font-weight: 950; box-shadow: 0 0 0 1px rgba(245,201,107,0.22); }
     .top-rank .reward-badge { background: linear-gradient(180deg, #ffe1a0, #d5a63a); }
     .live-events-ticker { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; min-height: 46px; max-height: 54px; overflow: hidden; border: 1px solid rgba(239,51,64,0.34); border-radius: 14px; background: linear-gradient(90deg, rgba(20,8,18,0.96), rgba(10,31,56,0.86)); box-shadow: 0 14px 28px rgba(0,0,0,0.18); }
+    .live-events-ticker[hidden] { display: none !important; }
     .live-main-anchor { display: none; height: 0; }
     .live-main-ticker {
       position: fixed;
@@ -3261,6 +3264,31 @@
       return '';
     }
 
+    function shortMatchArticleTitle(article) {
+      const rawTitle = String(article?.title || '').trim();
+      const normalized = normalizeFootballName(rawTitle);
+      if (rawTitle && !normalized.includes('resume automatique du match') && rawTitle.length <= 42) return rawTitle;
+      const scoreText = String(article?.score || '');
+      const numbers = scoreText.match(/\d+/g)?.map(Number) || [];
+      const homeScore = numbers[0];
+      const awayScore = numbers[1];
+      const hasPenalties = /tab|pen/i.test(scoreText);
+      if (hasPenalties) return 'Au bout du suspense';
+      if (Number.isFinite(homeScore) && Number.isFinite(awayScore)) {
+        const diff = Math.abs(homeScore - awayScore);
+        const total = homeScore + awayScore;
+        if (diff >= 3) return 'Victoire maîtrisée';
+        if (diff === 0 && total >= 4) return 'Match de folie';
+        if (diff === 0) return 'Match fermé';
+        if (diff === 1 && total >= 4) return 'Scénario cruel';
+        if (diff === 1) return 'Duel tactique';
+      }
+      const competition = normalizeFootballName(article?.competition || '');
+      if (competition.includes('champions league') || competition.includes('ligue des champions')) return 'Soirée européenne';
+      if (competition.includes('coupe du monde') || competition.includes('world cup')) return 'Exploit majuscule';
+      return rawTitle || 'Résumé du match';
+    }
+
     const STATIC_MATCH_ARTICLES = [{
       match_id: 'champions-final-2025-2026-psg-arsenal',
       slug: 'paris-back-2-back',
@@ -3300,18 +3328,20 @@
       container.innerHTML = articles.map(article => {
         const href = article.url || `/actus/resume/${encodeURIComponent(article.slug || '')}`;
         const emoji = matchArticleEmoji(article);
-        const title = `${emoji ? `${emoji} ` : ''}${article.title || 'Résumé disponible'}`;
+        const title = `${emoji ? `${emoji} ` : ''}${shortMatchArticleTitle(article)}`;
         const teams = article.home_team || article.away_team
           ? `${matchArticleTeamLine(article.home_team, article.home_logo_url)} <span class="match-summary-vs">vs</span> ${matchArticleTeamLine(article.away_team, article.away_logo_url)}`
           : escapeHtml(article.teams || 'Match');
         return `<a class="match-summary-card" href="${escapeHtml(href)}">
           <div class="match-summary-head">
             <h3 class="match-summary-title">${escapeHtml(title)}</h3>
-            <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
+            <div class="match-summary-meta-stack">
+              <span class="match-summary-competition">${escapeHtml(article.competition || 'Compétition')}</span>
+              <span class="match-summary-score">${escapeHtml(article.score || '')}</span>
+            </div>
           </div>
           <div class="match-summary-line">
             <span class="match-summary-teams">${teams}</span>
-            <span class="match-summary-score">${escapeHtml(article.score || '')}</span>
           </div>
           <div class="match-summary-bottom">
             <p class="match-summary-text">${escapeHtml(article.summary || '')}${article.winner ? ` Vainqueur : ${escapeHtml(article.winner)}.` : ''}</p>
@@ -7442,7 +7472,7 @@ grant select, insert, update on public.profiles to authenticated;`;
     function renderLiveEventsTicker(matches) {
       if (!communityLiveTicker) return;
       const today = (matches || []).filter(isTodayMatch).sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
-      const events = today.filter(match => statusClass(match) === 'live').map(liveEventLabel);
+      const events = today.filter(isStrictLiveTickerMatch).map(liveEventLabel);
       if (!events.length) {
         communityLiveTicker.hidden = true;
         communityLiveTicker.classList.add('no-scroll');
@@ -7453,6 +7483,13 @@ grant select, insert, update on public.profiles to authenticated;`;
       communityLiveTicker.classList.remove('no-scroll');
       const items = [...events, ...events].map(liveEventMarkup).join('');
       communityLiveTicker.innerHTML = `<div class="live-events-badge">LIVE</div><div class="live-events-window"><div class="live-events-track">${items}</div></div>`;
+    }
+
+    function isStrictLiveTickerMatch(match) {
+      const statuses = rawMatchStatus(match).map(normalizeTeamName);
+      const accepted = new Set(['1h', '2h', 'et', 'bt', 'p', 'live']);
+      const rejected = new Set(['ns', 'ft', 'aet', 'pen', 'postp', 'cancelled', 'canceled']);
+      return statuses.some(status => accepted.has(status)) && !statuses.some(status => rejected.has(status));
     }
 
     window.__akroLiveMock = function __akroLiveMock(status = '1H') {

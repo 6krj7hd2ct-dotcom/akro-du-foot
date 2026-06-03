@@ -2904,7 +2904,7 @@ def _match_article_payload(match: dict[str, Any], team_by_id: dict[str, str], co
     score = f"{home_score}-{away_score}"
     penalties = _match_article_penalty_score(match)
     score_title = f"{score} ({penalties} TAB)" if penalties else score
-    title = f"{home} {score_title} {away} : résumé automatique du match"
+    title = _match_article_short_title(home_score, away_score, penalties, competition)
     if penalties:
         summary = f"{home} et {away} se sont quittés sur un score de {score} avant une séance de tirs au but conclue à {penalties}."
     elif home_score == away_score:
@@ -2925,6 +2925,29 @@ def _match_article_payload(match: dict[str, Any], team_by_id: dict[str, str], co
         "status": "published",
         "published_at": datetime.now(timezone.utc).isoformat(),
     }
+
+
+def _match_article_short_title(home_score: int, away_score: int, penalties: str, competition: str) -> str:
+    if penalties:
+        return "Au bout du suspense"
+    diff = abs(home_score - away_score)
+    total = home_score + away_score
+    if diff >= 3:
+        return "Victoire maîtrisée"
+    if diff == 0 and total >= 4:
+        return "Match de folie"
+    if diff == 0:
+        return "Match fermé"
+    if diff == 1 and total >= 4:
+        return "Scénario cruel"
+    if diff == 1:
+        return "Duel tactique"
+    normalized = _normalize_football_text(competition)
+    if "champions league" in normalized or "ligue des champions" in normalized:
+        return "Soirée européenne"
+    if "coupe du monde" in normalized or "world cup" in normalized:
+        return "Exploit majuscule"
+    return "Résumé du match"
 
 
 def _match_article_slug(match: dict[str, Any], home: str, away: str) -> str:
