@@ -81,6 +81,7 @@ LIVE_SCORE_REFRESH_LOCK = threading.Lock()
 LIVE_SCORE_LAST_REFRESH_AT = 0.0
 LIVE_SCORE_REFRESHING = False
 LIVE_SCORE_LAST_ERROR = ""
+LIVE_SCORE_LAST_DURATION = 0.0
 MATCH_ARTICLE_GENERATION_INTERVAL = 300
 MATCH_ARTICLE_GENERATION_DELAY_SECONDS = 15 * 60
 MATCH_ARTICLE_GENERATION_LOCK = threading.Lock()
@@ -360,6 +361,7 @@ MATCH_ARTICLES_MIN_DATE = date(2026, 4, 28)
 
 
 def match_articles_payload(limit: int = 12, focus: str = "") -> dict[str, Any]:
+    _schedule_match_article_generation()
     safe_limit = max(1, min(int(limit or 12), 12))
     focus_teams = _match_article_focus_teams(focus)
     articles = _dedupe_match_articles([
@@ -544,6 +546,18 @@ def _is_official_match_article_competition(value: Any) -> bool:
         or "champions league" in normalized
         or "ligue des champions" in normalized
     )
+
+
+def _is_match_article_friendly_candidate(match: dict[str, Any], competition: str) -> bool:
+    normalized = _normalize_football_text(f"{competition} {match.get('round') or ''}")
+    return "friendly" in normalized or "friendlies" in normalized or "amical" in normalized or "amicaux" in normalized
+
+
+def _should_generate_match_article(match: dict[str, Any], competition_by_id: dict[str, str]) -> bool:
+    competition = competition_by_id.get(str(match.get("competition_id") or "")) or ""
+    if not _match_article_is_recent_enough(match.get("match_date")):
+        return False
+    return _is_official_match_article_competition(competition) or _is_match_article_friendly_candidate(match, competition)
 
 
 def _match_article_focus_teams(value: str) -> list[str]:
@@ -823,8 +837,34 @@ def community_payload() -> dict[str, Any]:
         "matches": list(matches.values()),
         "live_refreshing": LIVE_SCORE_REFRESHING,
         "live_refresh_error": LIVE_SCORE_LAST_ERROR,
+        "live_refresh_interval_seconds": LIVE_SCORE_REFRESH_INTERVAL,
+        "live_refresh_duration_seconds": round(LIVE_SCORE_LAST_DURATION, 2),
+        "live_cache": _live_cache_state(),
         "storage": "supabase" if supabase.get("available") else "json",
     }
+
+
+def _live_cache_state() -> dict[str, Any]:
+    items = []
+    now = datetime.now(timezone.utc)
+    for label, path in (
+        ("Coupe du Monde", CACHE_FILE),
+        ("Ligue des Champions", CHAMPIONS_LEAGUE_CACHE_FILE),
+        ("Championnats", LEAGUES_CACHE_FILE),
+    ):
+        payload = _read_json(path, {})
+        generated = str(payload.get("generated_at") or "")
+        age_seconds = None
+        if generated:
+            try:
+                generated_at = datetime.fromisoformat(generated.replace("Z", "+00:00"))
+                if generated_at.tzinfo is None:
+                    generated_at = generated_at.replace(tzinfo=timezone.utc)
+                age_seconds = max(0, int((now - generated_at).total_seconds()))
+            except ValueError:
+                age_seconds = None
+        items.append({"label": label, "generated_at": generated, "age_seconds": age_seconds})
+    return {"items": items, "max_age_seconds": max((item["age_seconds"] or 0 for item in items), default=0)}
 
 
 def _live_score_refresh_enabled() -> bool:
@@ -874,9 +914,11 @@ def _generate_match_articles() -> None:
 
 
 def _refresh_live_score_caches() -> None:
-    global LIVE_SCORE_REFRESHING, LIVE_SCORE_LAST_ERROR
+    global LIVE_SCORE_REFRESHING, LIVE_SCORE_LAST_ERROR, LIVE_SCORE_LAST_DURATION
     env = dict(os.environ)
     env["AKRO_RENDER_HTML_DURING_UPDATE"] = "0"
+    env["AKRO_FORCE_EXTERNAL_REFRESH"] = os.environ.get("AKRO_LIVE_FORCE_EXTERNAL_REFRESH", "1")
+    start = time.time()
     try:
         result = subprocess.run(
             [env.get("PYTHON_BIN", sys.executable), str(BASE_DIR / "update_dashboard.py")],
@@ -891,13 +933,15 @@ def _refresh_live_score_caches() -> None:
     except Exception as error:
         LIVE_SCORE_LAST_ERROR = str(error)
     finally:
+        LIVE_SCORE_LAST_DURATION = time.time() - start
         LIVE_SCORE_REFRESHING = False
 
 
 if app:
     @app.get("/api/community")
     def get_community():
-        _schedule_live_score_refresh()
+        force_live = str(request.args.get("force_live", "")).strip().lower() in {"1", "true", "yes", "on"}
+        _schedule_live_score_refresh(force=force_live)
         return jsonify(community_payload())
 
     @app.get("/api/supabase-public-config")
@@ -951,6 +995,17 @@ if app:
     @app.get("/api/match-articles")
     def match_articles():
         return jsonify(match_articles_payload(focus=request.args.get("focus", "")))
+
+    @app.get("/api/match-articles/refresh")
+    def refresh_match_articles():
+        if not _is_admin_key(request.args.get("admin_key", "")):
+            return jsonify({"error": "admin_key requis"}), 403
+        created = _generate_match_articles_once()
+        return jsonify({
+            "created": created,
+            "delay_seconds": MATCH_ARTICLE_GENERATION_DELAY_SECONDS,
+            "articles": match_articles_payload().get("articles", []),
+        })
 
     @app.get("/actus/resume/<slug>")
     def match_article_detail(slug: str):
@@ -2440,7 +2495,9 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/healthz":
             self._send_json({"status": "ok"})
         elif path == "/api/community":
-            _schedule_live_score_refresh()
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            force_live = _url_decode(query.get("force_live", "")).strip().lower() in {"1", "true", "yes", "on"}
+            _schedule_live_score_refresh(force=force_live)
             self._send_json(community_payload())
         elif path == "/api/supabase-public-config":
             url, key = _supabase_config()
@@ -2472,6 +2529,17 @@ class CommunityHandler(BaseHTTPRequestHandler):
         elif path == "/api/match-articles":
             query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
             self._send_json(match_articles_payload(focus=_url_decode(query.get("focus", ""))))
+        elif path == "/api/match-articles/refresh":
+            query = dict(item.split("=", 1) if "=" in item else (item, "") for item in urlparse(self.path).query.split("&") if item)
+            if not _is_admin_key(_url_decode(query.get("admin_key", ""))):
+                self._send_json({"error": "admin_key requis"}, 403)
+            else:
+                created = _generate_match_articles_once()
+                self._send_json({
+                    "created": created,
+                    "delay_seconds": MATCH_ARTICLE_GENERATION_DELAY_SECONDS,
+                    "articles": match_articles_payload().get("articles", []),
+                })
         elif path == "/actus/resumes":
             self._send_html(match_articles_archive_html(), no_store=True)
         elif path.startswith("/actus/resume/"):
@@ -2763,11 +2831,12 @@ def _api_football_get(endpoint: str, params: dict[str, Any], *, cache_ttl: int |
 
 def _generate_match_articles_once() -> int:
     cutoff = datetime.fromtimestamp(time.time() - MATCH_ARTICLE_GENERATION_DELAY_SECONDS, timezone.utc).isoformat()
+    min_date = datetime.combine(MATCH_ARTICLES_MIN_DATE, datetime.min.time(), timezone.utc).isoformat()
     matches = _supabase_service_request(
         "GET",
         "matches?"
         "select=id,api_id,competition_id,season,round,status,match_date,venue_name,home_team_id,away_team_id,home_score,away_score,raw_data,updated_at"
-        f"&status=in.(FT,AET,PEN)&updated_at=lte.{quote(cutoff, safe='')}&order=updated_at.asc&limit=20",
+        f"&status=in.(FT,AET,PEN)&match_date=gte.{quote(min_date, safe='')}&updated_at=lte.{quote(cutoff, safe='')}&order=updated_at.desc&limit=80",
     )
     if not isinstance(matches, list) or not matches:
         return 0
@@ -2807,6 +2876,8 @@ def _generate_match_articles_once() -> int:
 
     created = 0
     for match in candidates:
+        if not _should_generate_match_article(match, competition_by_id):
+            continue
         article = _match_article_payload(match, team_by_id, competition_by_id)
         if not article:
             continue

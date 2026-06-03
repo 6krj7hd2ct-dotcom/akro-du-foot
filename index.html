@@ -7022,23 +7022,58 @@ grant select, insert, update on public.profiles to authenticated;`;
       });
     }
 
+    function rawMatchStatus(match) {
+      const raw = match?.raw_data && typeof match.raw_data === 'object' ? match.raw_data : {};
+      const fixture = raw.fixture && typeof raw.fixture === 'object' ? raw.fixture : {};
+      const fixtureStatus = fixture.status && typeof fixture.status === 'object' ? fixture.status : {};
+      return [
+        match?.status,
+        match?.fixture_status,
+        match?.match_status,
+        match?.status_short,
+        match?.status_long,
+        fixtureStatus.short,
+        fixtureStatus.long,
+        raw.status,
+        raw.status_short,
+        raw.status_long
+      ].filter(value => value !== null && value !== undefined && String(value).trim());
+    }
+
     function statusClass(match) {
-      const status = normalizeTeamName(match.status);
-      if (match.completed || status === 'termine' || status === 'ft' || status === 'aet' || status === 'pen') return 'done';
-      return ['live', '1h', '2h', 'ht', 'mi temps', 'in progress', 'match live'].includes(status) ? 'live' : '';
+      const statuses = rawMatchStatus(match).map(normalizeTeamName);
+      if (match?.completed || statuses.some(status => ['termine', 'ft', 'aet', 'pen', 'match finished'].includes(status))) return 'done';
+      const liveStatuses = new Set(['live', '1h', '2h', 'et', 'bt', 'p', 'susp', 'int', 'ht', 'mi temps', 'halftime', 'half time', 'in progress', 'match live', 'first half', 'second half', 'extra time', 'break time']);
+      return statuses.some(status => liveStatuses.has(status)) ? 'live' : '';
+    }
+
+    function matchScoreParts(match) {
+      const raw = match?.raw_data && typeof match.raw_data === 'object' ? match.raw_data : {};
+      const goals = raw.goals && typeof raw.goals === 'object' ? raw.goals : {};
+      const score = raw.score && typeof raw.score === 'object' ? raw.score : {};
+      const fulltime = score.fulltime && typeof score.fulltime === 'object' ? score.fulltime : {};
+      const candidates = [
+        [match?.home_score, match?.away_score],
+        [match?.home_goals, match?.away_goals],
+        [match?.goals_home, match?.goals_away],
+        [goals.home, goals.away],
+        [fulltime.home, fulltime.away]
+      ];
+      for (const [home, away] of candidates) {
+        if (home !== '' && away !== '' && home !== null && away !== null && home !== undefined && away !== undefined) {
+          return [home, away];
+        }
+      }
+      return null;
     }
 
     function hasMatchScore(match) {
-      return match.home_score !== '' &&
-        match.away_score !== '' &&
-        match.home_score !== null &&
-        match.away_score !== null &&
-        match.home_score !== undefined &&
-        match.away_score !== undefined;
+      return Boolean(matchScoreParts(match));
     }
 
     function matchCenter(match) {
-      return hasMatchScore(match) ? `${match.home_score} - ${match.away_score}` : shortDate(match.date).split(' ').pop() || 'VS';
+      const score = matchScoreParts(match);
+      return score ? `${score[0]} - ${score[1]}` : shortDate(match.date).split(' ').pop() || 'VS';
     }
 
     function followTeamButton(name, flagUrl, away = false) {
@@ -7061,11 +7096,24 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function followStatusLabel(match) {
-      const normalizedStatus = normalizeTeamName(match.status);
+      const normalizedStatuses = rawMatchStatus(match).map(normalizeTeamName);
       const status = statusClass(match);
       if (status === 'done') return 'FIN';
-      if (status === 'live') return ['ht', 'mi temps'].includes(normalizedStatus) ? 'MT' : 'EN DIRECT';
+      if (status === 'live') {
+        if (normalizedStatuses.some(item => ['ht', 'mi temps', 'halftime', 'half time'].includes(item))) return 'MT';
+        const minute = matchMinute(match);
+        return minute ? `EN DIRECT · ${minute}'` : 'EN DIRECT';
+      }
       return 'À venir';
+    }
+
+    function matchMinute(match) {
+      const raw = match?.raw_data && typeof match.raw_data === 'object' ? match.raw_data : {};
+      const fixture = raw.fixture && typeof raw.fixture === 'object' ? raw.fixture : {};
+      const fixtureStatus = fixture.status && typeof fixture.status === 'object' ? fixture.status : {};
+      const value = match?.minute ?? match?.elapsed ?? match?.match_minute ?? fixtureStatus.elapsed ?? raw.elapsed;
+      const minute = Number(value);
+      return Number.isFinite(minute) && minute > 0 ? Math.floor(minute) : '';
     }
 
     function normalizeTeamName(value) {
@@ -7178,12 +7226,14 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function normalizeCommunityMatch(match) {
       const status = String(match.status || '').trim();
-      const normalizedStatus = normalizeTeamName(status);
-      const completed = Boolean(match.completed) || ['termine', 'ft', 'aet', 'pen', 'match finished'].includes(normalizedStatus);
+      const score = matchScoreParts(match);
+      const completed = statusClass(match) === 'done';
       return {
         ...match,
         competition: isInternationalFriendly(match) ? 'Amical' : (match.competition || 'Compétition'),
         status: status || (completed ? 'Terminé' : 'À venir'),
+        home_score: score ? score[0] : (match.home_score ?? ''),
+        away_score: score ? score[1] : (match.away_score ?? ''),
         completed
       };
     }
@@ -7362,11 +7412,11 @@ grant select, insert, update on public.profiles to authenticated;`;
 
     function liveEventLabel(match) {
       const score = matchCenter(match).replace(' - ', '-');
-      const normalizedStatus = normalizeTeamName(match.status);
+      const normalizedStatuses = rawMatchStatus(match).map(normalizeTeamName);
       const status = statusClass(match);
       const competition = liveCompetitionAbbr(match);
       if (status === 'live') {
-        const statusLabel = ['ht', 'mi temps'].includes(normalizedStatus) ? 'MT' : 'EN DIRECT';
+        const statusLabel = normalizedStatuses.some(item => ['ht', 'mi temps', 'halftime', 'half time'].includes(item)) ? 'MT' : 'EN DIRECT';
         return {type: 'goal', competition, statusLabel, home: match.home_team, center: score, away: match.away_team};
       }
       if (status === 'done') return {type: 'end', competition, statusLabel: 'FIN', home: match.home_team, center: score, away: match.away_team};
@@ -7392,16 +7442,36 @@ grant select, insert, update on public.profiles to authenticated;`;
     function renderLiveEventsTicker(matches) {
       if (!communityLiveTicker) return;
       const today = (matches || []).filter(isTodayMatch).sort((a, b) => matchTimestamp(a) - matchTimestamp(b));
-      const events = today.map(liveEventLabel);
+      const events = today.filter(match => statusClass(match) === 'live').map(liveEventLabel);
       if (!events.length) {
+        communityLiveTicker.hidden = true;
         communityLiveTicker.classList.add('no-scroll');
-        communityLiveTicker.innerHTML = '<div class="live-events-badge">LIVE</div><div class="live-events-window"><div class="live-events-track"><span class="live-event">Aucune notification live aujourd’hui</span></div></div>';
+        communityLiveTicker.innerHTML = '';
         return;
       }
+      communityLiveTicker.hidden = false;
       communityLiveTicker.classList.remove('no-scroll');
       const items = [...events, ...events].map(liveEventMarkup).join('');
       communityLiveTicker.innerHTML = `<div class="live-events-badge">LIVE</div><div class="live-events-window"><div class="live-events-track">${items}</div></div>`;
     }
+
+    window.__akroLiveMock = function __akroLiveMock(status = '1H') {
+      const now = new Date();
+      const match = {
+        id: `mock-live-${Date.now()}`,
+        competition: 'Coupe du Monde',
+        date: now.toISOString(),
+        home_team: 'France',
+        away_team: 'Sénégal',
+        home_score: status === 'NS' ? '' : 1,
+        away_score: status === 'NS' ? '' : 0,
+        status,
+        completed: ['FT', 'AET', 'PEN'].includes(String(status).toUpperCase()),
+        raw_data: {fixture: {status: {short: status, long: status, elapsed: status === 'HT' ? 45 : 37}}}
+      };
+      renderFollowMatches([match]);
+      return match;
+    };
 
     async function sharePage() {
       const url = location.href;
@@ -7949,7 +8019,8 @@ grant select, insert, update on public.profiles to authenticated;`;
           setLiveRefreshState(false, 'Mode fichier statique : scores en cache');
           return;
         }
-        const response = await fetch(`/api/community?ts=${Date.now()}`, {cache: 'no-store'});
+        const forceParam = force ? '&force_live=1' : '';
+        const response = await fetch(`/api/community?ts=${Date.now()}${forceParam}`, {cache: 'no-store'});
         if (!response.ok) throw new Error('community refresh failed');
         const data = await response.json();
         if (Array.isArray(data.predictions) && data.predictions.length) {
