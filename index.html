@@ -4932,6 +4932,10 @@ grant select, insert, update on public.profiles to authenticated;`;
     let goatState = {position: 'all', context: 'all', contextValue: '', players: [], index: 1, champion: null, challenger: null, path: [], saved: null};
     let GOAT_PLAYER_TAGS = [];
     let goatPlayerTagsPromise = null;
+    let goatPoolCache = null;
+    let goatPoolCacheSignature = '';
+    let goatPoolRefreshPromise = null;
+    const GOAT_POOL_STORAGE_KEY = 'akro_the_goat_pool_v1';
 
     function goatNormalize(value) {
       return normalizeFootballName(value);
@@ -5031,6 +5035,49 @@ grant select, insert, update on public.profiles to authenticated;`;
       return goatNormalize(player.name);
     }
 
+    function goatPoolSignature() {
+      return [
+        HALL_OF_FAME_PROFILES?.length || 0,
+        AKRO_SUPABASE_FOOTBALL.players?.length || 0,
+        AKRO_SUPABASE_FOOTBALL.teams?.length || 0,
+        GOAT_PLAYER_TAGS?.length || 0
+      ].join('|');
+    }
+
+    function goatInvalidatePoolCache() {
+      goatPoolCache = null;
+      goatPoolCacheSignature = '';
+    }
+
+    function goatStorePoolCache(players) {
+      goatPoolCache = Array.isArray(players) ? players : [];
+      goatPoolCacheSignature = goatPoolSignature();
+      try {
+        localStorage.setItem(GOAT_POOL_STORAGE_KEY, JSON.stringify({
+          signature: goatPoolCacheSignature,
+          players: goatPoolCache,
+          savedAt: Date.now()
+        }));
+      } catch (error) {
+        // Le cache mémoire suffit si le navigateur refuse un gros localStorage.
+      }
+    }
+
+    function goatRestoreStoredPool() {
+      if (goatPoolCache) return goatPoolCache;
+      try {
+        const cached = JSON.parse(localStorage.getItem(GOAT_POOL_STORAGE_KEY) || 'null');
+        if (cached && Array.isArray(cached.players) && cached.players.length) {
+          goatPoolCache = cached.players;
+          goatPoolCacheSignature = cached.signature || '';
+          return goatPoolCache;
+        }
+      } catch (error) {
+        localStorage.removeItem(GOAT_POOL_STORAGE_KEY);
+      }
+      return null;
+    }
+
     function goatTrustedPhotoForName(name, candidates = []) {
       const key = goatNormalize(name);
       if (GOAT_SAFE_PHOTOS[key]) return GOAT_SAFE_PHOTOS[key];
@@ -5083,6 +5130,12 @@ grant select, insert, update on public.profiles to authenticated;`;
     }
 
     function goatPlayerPoolBase() {
+      const signature = goatPoolSignature();
+      if (goatPoolCache && goatPoolCacheSignature === signature) return goatPoolCache;
+      if (!goatPoolCache) {
+        const restored = goatRestoreStoredPool();
+        if (restored) return restored;
+      }
       const players = [];
       const seen = new Set();
       (Array.isArray(HALL_OF_FAME_PROFILES) ? HALL_OF_FAME_PROFILES : []).forEach(profile => {
@@ -5130,6 +5183,7 @@ grant select, insert, update on public.profiles to authenticated;`;
         }));
       });
       GOAT_CURATED_PLAYERS.forEach(player => goatAddPlayer(players, seen, {...player, source: 'Akro fallback'}));
+      goatStorePoolCache(players);
       return players;
     }
 
@@ -5210,7 +5264,28 @@ grant select, insert, update on public.profiles to authenticated;`;
       goatApplyTheme();
     }
 
-    async function openGoatModal() {
+    function refreshGoatPoolInBackground() {
+      if (goatPoolRefreshPromise) return goatPoolRefreshPromise;
+      goatPoolRefreshPromise = (async () => {
+        try {
+          await Promise.allSettled([
+            loadSupabaseFootballData(),
+            typeof loadHallOfFameUpdates === 'function' ? loadHallOfFameUpdates() : Promise.resolve(null),
+            loadGoatPlayerTags()
+          ]);
+          goatInvalidatePoolCache();
+          goatPlayerPoolBase();
+          renderGoatSetup();
+        } catch (error) {
+          console.warn('[the-goat] rafraîchissement différé impossible', error);
+        } finally {
+          goatPoolRefreshPromise = null;
+        }
+      })();
+      return goatPoolRefreshPromise;
+    }
+
+    function openGoatModal() {
       const modal = document.getElementById('goatModal');
       const setup = document.getElementById('goatSetup');
       const arena = document.getElementById('goatArena');
@@ -5223,15 +5298,9 @@ grant select, insert, update on public.profiles to authenticated;`;
       if (status) status.textContent = 'Chargement des joueurs...';
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
-      try {
-        await loadSupabaseFootballData();
-        if (typeof loadHallOfFameUpdates === 'function') await loadHallOfFameUpdates();
-        await loadGoatPlayerTags();
-      } catch (error) {
-        console.warn('[the-goat] ouverture avec données locales', error);
-      }
+      goatRestoreStoredPool();
       renderGoatSetup();
-      if (status) status.textContent = '';
+      refreshGoatPoolInBackground();
     }
 
     function closeGoatModal() {
