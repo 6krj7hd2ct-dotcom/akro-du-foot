@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09T23:59:31+00:00",
+  "generated_at": "2026-06-10T12:45:02+00:00",
   "competition": "Championnats européens",
   "selected_league": "ligue1",
   "leagues": {
@@ -7,7 +7,7 @@
       "key": "ligue1",
       "name": "Ligue 1",
       "country": "France",
-      "generated_at": "2026-06-09T23:59:31+00:00",
+      "generated_at": "2026-06-10T12:45:02+00:00",
       "standings": [
         {
           "name": "French Ligue 1 2025-26",
@@ -11739,78 +11739,48 @@
       "upcoming_matches": [],
       "top_scorers": [
         {
-          "rank": 1,
-          "name": "Esteban Lepaul",
-          "team": "Stade Rennais",
+          "name": "Estéban Lepaul",
+          "team": "Rennes",
+          "team_id": 9851,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9851.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/1280225.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "34",
-          "value": "21",
-          "team_id": 9851,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9851.png",
+          "played": "",
+          "value": 21,
+          "rank": 1,
           "country": ""
         },
         {
-          "rank": 2,
-          "name": "Mason Greenwood",
-          "team": "Marseille",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://images.fotmob.com/image_resources/playerimages/950473.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "32",
-          "value": "16",
-          "team_id": 8592,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8592.png",
-          "country": ""
-        },
-        {
-          "rank": 3,
           "name": "Joaquín Panichelli",
           "team": "Strasbourg",
+          "team_id": 9848,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9848.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/1408580.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "27",
-          "value": "16",
-          "team_id": 9848,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9848.png",
+          "played": "",
+          "value": 16,
+          "rank": 2,
           "country": ""
         },
         {
-          "rank": 4,
-          "name": "Folarin Balogun",
-          "team": "AS Monaco",
+          "name": "Mason Greenwood",
+          "team": "Marseille",
+          "team_id": 8592,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8592.png",
           "country_code": "",
           "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/282643.png",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/950473.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "30",
-          "value": "13",
-          "team_id": "",
-          "team_logo_url": "",
-          "country": ""
-        },
-        {
-          "rank": 5,
-          "name": "Lassine Sinayoko",
-          "team": "AJ Auxerre",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/271137.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "32",
-          "value": "12",
-          "team_id": "",
-          "team_logo_url": "",
+          "played": "",
+          "value": 16,
+          "rank": 3,
           "country": ""
         }
       ],
@@ -11864,15 +11834,6 @@
       "focused_club": "Paris Saint-Germain",
       "focused_club_next_match": null,
       "focused_club_news": {
-        "AS Monaco": [
-          {
-            "title": "Coupe du monde 2026: comment l’attraction américaine Folarin Balogun a préparé \"son\" Mondial à domicile",
-            "source": "RMC Sport",
-            "date": "2026-06-09T13:56:35+00:00",
-            "summary": "Meilleur buteur de l’AS Monaco cette saison, Folarin Balogun sera l’une des vedettes de 'Team USA' pour la Coupe du monde 2026 a domicile. L’attaquant américain veut \"aller le plus loin possible\" et espère…",
-            "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-comment-l-attraction-americaine-folarin-balogun-a-prepare-son-mondial-a-domicile_AV-202606090605.html"
-          }
-        ],
         "Angers": [
           {
             "title": "Ligue 1 : Stéphane Gilli remplace Alejandre Dujeux à Angers",
@@ -11895,23 +11856,39 @@
           {
             "title": "France-Côte d'Ivoire : revivez la défaite des Bleus face aux Eléphants en match de préparation à la Coupe du monde",
             "source": "France Info",
-            "date": "2026-06-09T23:57:58+00:00",
+            "date": "2026-06-10T12:44:22+00:00",
             "summary": "Avant de s'envoler pour les Etats-Unis, les Bleus disputent deux matchs de préparation en France. Le premier avait lieu face aux Ivoiriens, jeudi, à Nantes (1-2).",
             "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/direct-france-cote-d-ivoire-premiere-revue-d-effectif-en-vue-de-la-coupe-du-monde-suivez-le-match-de-preparation-des-bleus-a-nantes_8043014.html#xtor=RSS-3-%5Bgeneral%5D"
           },
           {
-            "title": "Anthony Lopes remercie le FC Nantes",
-            "source": "SO FOOT",
-            "date": "2026-06-09T09:55:23+00:00",
-            "summary": "",
-            "url": "https://www.sofoot.com/breves/anthony-lopes-remercie-le-fc-nantes"
+            "title": "Didier Deschamps",
+            "source": "RMC Sport",
+            "date": "2026-06-10T07:11:59+00:00",
+            "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+            "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+          }
+        ],
+        "Paris Saint-Germain": [
+          {
+            "title": "Lionel Messi",
+            "source": "RMC Sport",
+            "date": "2026-06-10T11:58:27+00:00",
+            "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
+            "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
+          },
+          {
+            "title": "\"Ils sont non-négociables\": Vitinha et Joao Neves vont rester au PSG, assure leur agent Jorge Mendes",
+            "source": "RMC Sport",
+            "date": "2026-06-10T10:21:57+00:00",
+            "summary": "Alors qu’ils font saliver les plus grands clubs européens, Vitinha et Joao Neves vont poursuivre leur aventure avec le PSG, après le back to back en Ligue des champions. Jorge Mendes, l’agent des deux milieux…",
+            "url": "https://rmcsport.bfmtv.com/football/transferts/ils-sont-non-negociables-vitinha-et-joao-neves-vont-rester-au-psg-assure-leur-agent-jorge-mendes_AV-202606100459.html"
           }
         ],
         "Stade Rennais": [
           {
             "title": "Ousmane Dembélé",
             "source": "RMC Sport",
-            "date": "2026-06-09T17:00:31+00:00",
+            "date": "2026-06-10T09:11:35+00:00",
             "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
             "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
           }
@@ -12250,7 +12227,7 @@
       "key": "laliga",
       "name": "Liga",
       "country": "Espagne",
-      "generated_at": "2026-06-09T23:59:31+00:00",
+      "generated_at": "2026-06-10T12:45:02+00:00",
       "standings": [
         {
           "name": "2025-26 LALIGA",
@@ -24016,78 +23993,48 @@
       "upcoming_matches": [],
       "top_scorers": [
         {
-          "rank": 1,
           "name": "Kylian Mbappé",
           "team": "Real Madrid",
+          "team_id": 8633,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
           "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
           "all_time_rank": "",
-          "played": "31",
-          "value": "25",
-          "team_id": 8633,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
+          "played": "",
+          "value": 25,
+          "rank": 1,
           "country": "France"
         },
         {
-          "rank": 2,
           "name": "Vedat Muriqi",
           "team": "Mallorca",
+          "team_id": 8661,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8661.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/517052.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "37",
-          "value": "23",
-          "team_id": 8661,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8661.png",
+          "played": "",
+          "value": 23,
+          "rank": 2,
           "country": ""
         },
         {
-          "rank": 3,
           "name": "Ante Budimir",
           "team": "Osasuna",
+          "team_id": 8371,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8371.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/251269.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "37",
-          "value": "17",
-          "team_id": 8371,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8371.png",
-          "country": ""
-        },
-        {
-          "rank": 4,
-          "name": "Vinícius Júnior",
-          "team": "Real Madrid",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/252107.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "36",
-          "value": "16",
-          "team_id": "",
-          "team_logo_url": "",
-          "country": ""
-        },
-        {
-          "rank": 5,
-          "name": "Ferran Torres",
-          "team": "Barcelona",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/265869.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "33",
-          "value": "16",
-          "team_id": "",
-          "team_logo_url": "",
+          "played": "",
+          "value": 17,
+          "rank": 3,
           "country": ""
         }
       ],
@@ -24152,34 +24099,62 @@
         ],
         "Barcelona": [
           {
+            "title": "Argentine-Islande: \"Je ne me souvenais pas de lui\", Messi \"surpris\" de jouer contre le fils de son ancien coéquipier au Barça",
+            "source": "RMC Sport",
+            "date": "2026-06-10T11:58:27+00:00",
+            "summary": "Après la victoire de l’Argentine face à l’Islande en match de préparation à la Coupe du monde 2026, mardi à Auburn (3-0), Lionel Messi a été interpellé par un adversaire un peu particulier: l’attaquant Andri…",
+            "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-islande-je-ne-me-souvenais-pas-de-lui-messi-surpris-de-jouer-contre-le-fils-de-son-ancien-coequipier-au-barca_AV-202606100512.html"
+          },
+          {
+            "title": "Lionel Messi",
+            "source": "RMC Sport",
+            "date": "2026-06-10T11:58:27+00:00",
+            "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
+            "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
+          },
+          {
+            "title": "Vitinha, Martinez, Mateus... Les 5 infos mercato du 10 juin à la mi-journée",
+            "source": "RMC Sport",
+            "date": "2026-06-10T10:19:13+00:00",
+            "summary": "Vitinha et Joao Neves intransférables… Emiliano Martinez veut rejoindre la Juve… Mourinho veut une recrue au Real Madrid… Alvaro Morata rassure le Barça…",
+            "url": "https://rmcsport.bfmtv.com/football/transferts/video-vitinha-martinez-mateus-les-5-infos-mercato-du-10-juin-a-la-mi-journee_VN-202606100457.html"
+          },
+          {
+            "title": "Mercato : Le Barça aurait pris sa décision pour Marcus Rashford",
+            "source": "SO FOOT",
+            "date": "2026-06-10T10:08:56+00:00",
+            "summary": "",
+            "url": "https://www.sofoot.com/breves/mercato-le-barca-aurait-pris-sa-decision-pour-marcus-rashford"
+          },
+          {
             "title": "Ousmane Dembélé",
             "source": "RMC Sport",
-            "date": "2026-06-09T17:00:31+00:00",
+            "date": "2026-06-10T09:11:35+00:00",
             "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
             "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
+          },
+          {
+            "title": "Lamine Yamal",
+            "source": "RMC Sport",
+            "date": "2026-06-10T09:05:43+00:00",
+            "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
+            "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
           }
         ],
         "Real Madrid": [
           {
-            "title": "Real Madrid",
+            "title": "Vitinha, Martinez, Mateus... Les 5 infos mercato du 10 juin à la mi-journée",
             "source": "RMC Sport",
-            "date": "2026-06-09T21:53:59+00:00",
-            "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
-            "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+            "date": "2026-06-10T10:19:13+00:00",
+            "summary": "Vitinha et Joao Neves intransférables… Emiliano Martinez veut rejoindre la Juve… Mourinho veut une recrue au Real Madrid… Alvaro Morata rassure le Barça…",
+            "url": "https://rmcsport.bfmtv.com/football/transferts/video-vitinha-martinez-mateus-les-5-infos-mercato-du-10-juin-a-la-mi-journee_VN-202606100457.html"
           },
           {
-            "title": "Mercato: Benfica annonce le départ de José Mourinho, attendu au Real Madrid",
+            "title": "Comme en 2010, l'Espagne peut-elle réaliser le doublé Euro/Coupe du Monde ?",
             "source": "RMC Sport",
-            "date": "2026-06-09T21:53:58+00:00",
-            "summary": "Attendu au Real Madrid, José Mourinho n'est officiellement plus l'entraîneur de Benfica. Le club portugais assure que le club espagnol va payer 15 millions d'euros pour faire revenir le technicien portugais.",
-            "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-benfica-annonce-le-depart-de-jose-mourinho-attendu-au-real-madrid_AP-202606090943.html"
-          },
-          {
-            "title": "Les Bleues qualifiées pour le Mondial 2027, \"un rêve de petite fille\" pour Malard",
-            "source": "RMC Sport",
-            "date": "2026-06-09T21:36:50+00:00",
-            "summary": "Grâce à sa victoire 1-0 ce mardi face à l'Irlande, l'équipe de France participera bien à la Coupe du monde 2027 au Brésil. L'unique buteuse de la rencontre Melvine Malard va réaliser \"un rêve de petite fille\".",
-            "url": "https://rmcsport.bfmtv.com/football/video-les-bleues-qualifiees-pour-le-mondial-2027-un-reve-de-petite-fille-pour-malard_VN-202606090940.html"
+            "date": "2026-06-10T06:43:49+00:00",
+            "summary": "Du 11 juin au 19 juillet, les États-Unis, le Canada et le Mexique accueillent une Coupe du monde XXL nouvelle version : 48 équipes, 104 matchs, une compétition inédite à suivre sur RMC. L'After Coupe du Monde…",
+            "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-comme-en-2010-l-espagne-peut-elle-realiser-le-double-euro-coupe-du-monde_VN-202606100270.html"
           },
           {
             "title": "Benfica officialise le départ de José Mourinho, tout proche du Real Madrid",
@@ -24187,20 +24162,6 @@
             "date": "2026-06-09T21:34:06+00:00",
             "summary": "",
             "url": "https://www.sofoot.com/breves/benfica-officialise-le-depart-de-jose-mourinho-tout-proche-du-real-madrid"
-          },
-          {
-            "title": "DIRECT. Mercato: Benfica annonce le départ de José Mourinho, attendu au Real Madrid",
-            "source": "RMC Sport",
-            "date": "2026-06-09T21:25:07+00:00",
-            "summary": "Suivez en live toutes les infos et rumeurs du mercato qui ouvrira ses portes le lundi 15 juin en France. Les choses s'agitent avant la Coupe du monde, notamment sur les bancs de plusieurs clubs de Ligue 1…",
-            "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-8-juin-2026_LN-202606080240.html"
-          },
-          {
-            "title": "Mercato: la réponse très moqueuse de l'Atlético de Madrid à l'offre de 150 millions d'euros du Real pour Julian Alvarez",
-            "source": "RMC Sport",
-            "date": "2026-06-09T19:38:18+00:00",
-            "summary": "L’Atletico a publié mardi plusieurs messages ironiques et moqueurs après le communiqué du Real Madrid sur l’offre de 150 millions d’euros formulée pour Julian Alvarez lors du mercato.",
-            "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-la-reponse-tres-moqueuse-de-l-atletico-de-madrid-a-l-offre-de-150-millions-d-euros-du-real-pour-julian-alvarez_AV-202606090882.html"
           },
           {
             "title": "Liga : L’Atlético de Madrid se paye la tête du Real Madrid après le communiqué sur Julian Álvarez",
@@ -24222,13 +24183,6 @@
             "date": "2026-06-09T18:21:43+00:00",
             "summary": "",
             "url": "https://www.sofoot.com/breves/liga-le-real-madrid-officialise-le-depart-de-son-entraineur-alvaro-arbeloa"
-          },
-          {
-            "title": "Ce n'était pas Olise: le Real Madrid annonce avoir transmis une offre de 150 millions d'euros pour Julian Alvarez",
-            "source": "RMC Sport",
-            "date": "2026-06-09T18:06:14+00:00",
-            "summary": "Le Real Madrid a annoncé par communiqué ce mardi avoir proposé 150 millions d'euros à l'Atlético de Madrid pour le transfert de Julian Alvarez. Une offre refusée par les Colchoneros mais qui a permis à…",
-            "url": "https://rmcsport.bfmtv.com/football/transferts/ce-n-etait-pas-olise-le-real-madrid-annonce-avoir-transmis-une-offre-de-150-millions-d-euros-pour-julian-alvarez_AV-202606090835.html"
           }
         ]
       },
@@ -24599,7 +24553,7 @@
       "key": "bundesliga",
       "name": "Bundesliga",
       "country": "Allemagne",
-      "generated_at": "2026-06-09T23:59:31+00:00",
+      "generated_at": "2026-06-10T12:45:02+00:00",
       "standings": [
         {
           "name": "2025-26 German Bundesliga",
@@ -36331,78 +36285,48 @@
       "upcoming_matches": [],
       "top_scorers": [
         {
-          "rank": 1,
           "name": "Harry Kane",
-          "team": "Bayern Munich",
+          "team": "Bayern München",
+          "team_id": 9823,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
           "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
           "all_time_rank": "",
-          "played": "31",
-          "value": "36",
-          "team_id": 9823,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
+          "played": "",
+          "value": 36,
+          "rank": 1,
           "country": "England"
         },
         {
-          "rank": 2,
           "name": "Deniz Undav",
           "team": "VfB Stuttgart",
+          "team_id": 10269,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10269.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/661519.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "29",
-          "value": "19",
-          "team_id": 10269,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10269.png",
+          "played": "",
+          "value": 19,
+          "rank": 2,
           "country": ""
         },
         {
-          "rank": 3,
           "name": "Serhou Guirassy",
           "team": "Borussia Dortmund",
+          "team_id": 9789,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9789.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/448540.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "33",
-          "value": "17",
-          "team_id": 9789,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9789.png",
-          "country": ""
-        },
-        {
-          "rank": 4,
-          "name": "Patrik Schick",
-          "team": "Bayer Leverkusen",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/212330.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "28",
-          "value": "16",
-          "team_id": "",
-          "team_logo_url": "",
-          "country": ""
-        },
-        {
-          "rank": 5,
-          "name": "Luis Díaz",
-          "team": "Bayern Munich",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/257390.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "32",
-          "value": "15",
-          "team_id": "",
-          "team_logo_url": "",
+          "played": "",
+          "value": 17,
+          "rank": 3,
           "country": ""
         }
       ],
@@ -36789,7 +36713,7 @@
       "key": "premierleague",
       "name": "Premier League",
       "country": "Angleterre",
-      "generated_at": "2026-06-09T23:59:31+00:00",
+      "generated_at": "2026-06-10T12:45:02+00:00",
       "standings": [
         {
           "name": "English Premier League 2025-2026",
@@ -48555,78 +48479,48 @@
       "upcoming_matches": [],
       "top_scorers": [
         {
-          "rank": 1,
           "name": "Erling Haaland",
           "team": "Manchester City",
+          "team_id": 8456,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8456.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "35",
-          "value": "27",
-          "team_id": 8456,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8456.png",
+          "played": "",
+          "value": 27,
+          "rank": 1,
           "country": ""
         },
         {
-          "rank": 2,
           "name": "Igor Thiago",
           "team": "Brentford",
+          "team_id": 9937,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9937.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/1302005.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "38",
-          "value": "22",
-          "team_id": 9937,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9937.png",
+          "played": "",
+          "value": 22,
+          "rank": 2,
           "country": ""
         },
         {
-          "rank": 3,
           "name": "Antoine Semenyo",
           "team": "Manchester City",
+          "team_id": 8456,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8456.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/933576.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "37",
-          "value": "17",
-          "team_id": 8456,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8456.png",
-          "country": ""
-        },
-        {
-          "rank": 4,
-          "name": "Ollie Watkins",
-          "team": "Aston Villa",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/198825.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "37",
-          "value": "16",
-          "team_id": "",
-          "team_logo_url": "",
-          "country": ""
-        },
-        {
-          "rank": 5,
-          "name": "Morgan Gibbs-White",
-          "team": "Nottingham Forest",
-          "country_code": "",
-          "flag_url": "",
-          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/243396.png",
-          "country_flag_url": "",
-          "all_time_rank": "",
-          "played": "37",
-          "value": "15",
-          "team_id": "",
-          "team_logo_url": "",
+          "played": "",
+          "value": 17,
+          "rank": 3,
           "country": ""
         }
       ],
@@ -48682,11 +48576,11 @@
       "focused_club_news": {
         "Arsenal": [
           {
-            "title": "Coupe du monde 2026: Sénégal, Ouzbékistan... des contrôles très poussés des douanes américaines font polémique",
+            "title": "Coupe du monde 2026: \"je les mets au-dessus des autres\", Wenger voit les Bleus champions du monde cet été",
             "source": "RMC Sport",
-            "date": "2026-06-09T17:08:30+00:00",
-            "summary": "Les Etats-Unis accueillent la majeure partie de la Coupe du monde 2026, dotés d'un arsenal sécuritaire important. Les autorités locales sont déjà déterminées à gérer les arrivées autour des matchs le plus…",
-            "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-senegal-ouzbekistan-des-controles-tres-pousses-sur-le-tarmac-font-polemique_AV-202606090356.html"
+            "date": "2026-06-10T06:44:59+00:00",
+            "summary": "Dans un entretien accordé mercredi au Figaro, l'ancien entraîneur d'Arsenal et désormais directeur du développement du football mondial à la FIFA Arsène Wenger se confie à un peu plus de 24 heures du début de…",
+            "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-je-les-mets-au-dessus-des-autres-wenger-voit-les-bleus-champions-du-monde-cet-ete_AV-202606100252.html"
           }
         ],
         "Crystal Palace": [
@@ -48696,6 +48590,24 @@
             "date": "2026-06-09T14:38:05+00:00",
             "summary": "",
             "url": "https://www.sofoot.com/breves/mercato-pierre-sage-va-sengager-avec-crystal-palace-en-angleterre"
+          }
+        ],
+        "Manchester City": [
+          {
+            "title": "Riyad Mahrez",
+            "source": "RMC Sport",
+            "date": "2026-06-10T09:11:35+00:00",
+            "summary": "Riyad Mahrez est né le 21 février 1991 à Sarcelles. Il est international algérien et évolue au poste d’ailier droit à Manchester City. Joueur essentiel avec l’Algérie, l’attaquant a remporté en 2019 la Coupe…",
+            "url": "https://rmcsport.bfmtv.com/football/riyad-mahrez_DN-202108310567.html"
+          }
+        ],
+        "Manchester United": [
+          {
+            "title": "Manchester United annonce le départ libre de trois joueurs du club",
+            "source": "SO FOOT",
+            "date": "2026-06-10T10:41:02+00:00",
+            "summary": "",
+            "url": "https://www.sofoot.com/breves/manchester-united-annonce-le-depart-libre-de-trois-joueurs-du-club"
           }
         ]
       },
@@ -49066,7 +48978,7 @@
       "key": "seriea",
       "name": "Serie A",
       "country": "Italie",
-      "generated_at": "2026-06-09T23:59:31+00:00",
+      "generated_at": "2026-06-10T12:45:02+00:00",
       "standings": [
         {
           "name": "2026-2027 Italian Serie A",
@@ -60843,6 +60755,15 @@
             "summary": "",
             "url": "https://www.sofoot.com/breves/mercato-mason-greenwood-om-aurait-boucle-un-accord-avec-las-roma-selon-la-presse-italienne"
           }
+        ],
+        "Juventus": [
+          {
+            "title": "Emiliano Martínez se dirige vers la Juventus",
+            "source": "SO FOOT",
+            "date": "2026-06-10T11:05:14+00:00",
+            "summary": "",
+            "url": "https://www.sofoot.com/breves/emiliano-martinez-se-dirige-vers-la-juventus"
+          }
         ]
       },
       "clubs": [
@@ -61262,69 +61183,69 @@
   },
   "big5_top_scorers": [
     {
-      "rank": 1,
-      "name": "Esteban Lepaul",
-      "team": "Stade Rennais",
+      "name": "Estéban Lepaul",
+      "team": "Rennes",
+      "team_id": 9851,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9851.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1280225.png",
       "country_flag_url": "",
       "all_time_rank": "",
-      "played": "34",
-      "value": "21",
-      "team_id": 9851,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9851.png",
+      "played": "",
+      "value": 21,
+      "rank": 1,
       "country": "",
       "league_key": "ligue1",
       "league": "Ligue 1"
     },
     {
-      "rank": 1,
       "name": "Kylian Mbappé",
       "team": "Real Madrid",
+      "team_id": 8633,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
       "all_time_rank": "",
-      "played": "31",
-      "value": "25",
-      "team_id": 8633,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
+      "played": "",
+      "value": 25,
+      "rank": 1,
       "country": "France",
       "league_key": "laliga",
       "league": "Liga"
     },
     {
-      "rank": 1,
       "name": "Harry Kane",
-      "team": "Bayern Munich",
+      "team": "Bayern München",
+      "team_id": 9823,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
       "all_time_rank": "",
-      "played": "31",
-      "value": "36",
-      "team_id": 9823,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
+      "played": "",
+      "value": 36,
+      "rank": 1,
       "country": "England",
       "league_key": "bundesliga",
       "league": "Bundesliga"
     },
     {
-      "rank": 1,
       "name": "Erling Haaland",
       "team": "Manchester City",
+      "team_id": 8456,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8456.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
       "country_flag_url": "",
       "all_time_rank": "",
-      "played": "35",
-      "value": "27",
-      "team_id": 8456,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8456.png",
+      "played": "",
+      "value": 27,
+      "rank": 1,
       "country": "",
       "league_key": "premierleague",
       "league": "Premier League"
@@ -61334,30 +61255,373 @@
     {
       "title": "France-Côte d'Ivoire : revivez la défaite des Bleus face aux Eléphants en match de préparation à la Coupe du monde",
       "source": "France Info",
-      "date": "2026-06-09T23:57:58+00:00",
+      "date": "2026-06-10T12:44:22+00:00",
       "summary": "Avant de s'envoler pour les Etats-Unis, les Bleus disputent deux matchs de préparation en France. Le premier avait lieu face aux Ivoiriens, jeudi, à Nantes (1-2).",
       "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/direct-france-cote-d-ivoire-premiere-revue-d-effectif-en-vue-de-la-coupe-du-monde-suivez-le-match-de-preparation-des-bleus-a-nantes_8043014.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "Real Madrid",
+      "title": "Coupe du monde 2026: l'ONU tape du poing sur la table concernant les mesures d'entrée sur le sol américain",
       "source": "RMC Sport",
-      "date": "2026-06-09T21:53:59+00:00",
-      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+      "date": "2026-06-10T12:29:23+00:00",
+      "summary": "Volker Türk, haut-commissionnaire des Nations unies aux droits de l'Homme, a réagi aux polémiques qui entachent la préparation de la Coupe du monde 2026 aux Etats-Unis. Face aux images de joueurs fouillés sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-onu-tape-du-poing-sur-la-table-concernant-les-mesures-d-entree-sur-le-sol-americain_AP-202606100529.html"
     },
     {
-      "title": "Jose Mourinho",
+      "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus décollent pour Boston",
       "source": "RMC Sport",
-      "date": "2026-06-09T21:53:59+00:00",
-      "summary": "José Mário dos Santos Mourinho Félix, plus couramment appelé José Mourinho, né le 26 janvier 1963 à Setúbal, est un charismatique entraîneur de football portugais. Vainqueur de la Ligue des champions avec…",
-      "url": "https://rmcsport.bfmtv.com/football/jose-mourinho_DN-202108310520.html"
+      "date": "2026-06-10T12:20:44+00:00",
+      "summary": "La Coupe du monde 2026 débute jeudi 11 juin et se déroulera jusqu'au 19 juillet au Mexique, aux Etats-Unis et au Canada. Avant le top départ des matchs, retrouvez toutes les informations essentielles dans…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-arrivees-des-equipes-aux-etats-unis-traitement-de-l-equipe-d-iran-chaleur-forfaits-toutes-les-infos-en-live_LN-202606070295.html"
     },
     {
-      "title": "Mercato: Benfica annonce le départ de José Mourinho, attendu au Real Madrid",
+      "title": "DIRECT. Mercato: Demba Ba bientôt nommé directeur sportif du Havre",
       "source": "RMC Sport",
-      "date": "2026-06-09T21:53:58+00:00",
-      "summary": "Attendu au Real Madrid, José Mourinho n'est officiellement plus l'entraîneur de Benfica. Le club portugais assure que le club espagnol va payer 15 millions d'euros pour faire revenir le technicien portugais.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-benfica-annonce-le-depart-de-jose-mourinho-attendu-au-real-madrid_AP-202606090943.html"
+      "date": "2026-06-10T12:13:24+00:00",
+      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui ouvrira ses portes le lundi 15 juin en France. Les choses s'agitent avant la Coupe du monde, notamment sur les bancs de plusieurs clubs de Ligue 1…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-8-juin-2026_LN-202606080240.html"
+    },
+    {
+      "title": "Le guide très pratique du Mondial 2026",
+      "source": "SO FOOT",
+      "date": "2026-06-10T12:00:23+00:00",
+      "summary": "C’est parti pour la 23e Coupe du monde.",
+      "url": "https://www.sofoot.com/articles/le-guide-tres-pratique-du-mondial-2026"
+    },
+    {
+      "title": "Coupe du monde 2026: la qualification historique d'Haïti est-elle le début d'un conte de fée au Mondial?",
+      "source": "RMC Sport",
+      "date": "2026-06-10T11:58:44+00:00",
+      "summary": "AFTER COUPE DU MONDE. C'est l'un des exploits de ce Mondial. Haïti s'est qualifié pour la Coupe du monde 2026. Pour leur deuxième participation, les hommes de Sébastien Migné vont devoir défier le Maroc, le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-qualification-historique-d-haiti-est-elle-le-debut-d-un-conte-de-fee-au-mondial_AV-202606100513.html"
+    },
+    {
+      "title": "Argentine-Islande: \"Je ne me souvenais pas de lui\", Messi \"surpris\" de jouer contre le fils de son ancien coéquipier au Barça",
+      "source": "RMC Sport",
+      "date": "2026-06-10T11:58:27+00:00",
+      "summary": "Après la victoire de l’Argentine face à l’Islande en match de préparation à la Coupe du monde 2026, mardi à Auburn (3-0), Lionel Messi a été interpellé par un adversaire un peu particulier: l’attaquant Andri…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-islande-je-ne-me-souvenais-pas-de-lui-messi-surpris-de-jouer-contre-le-fils-de-son-ancien-coequipier-au-barca_AV-202606100512.html"
+    },
+    {
+      "title": "Lionel Messi",
+      "source": "RMC Sport",
+      "date": "2026-06-10T11:58:27+00:00",
+      "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
+      "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
+    },
+    {
+      "title": "Omar Artan accueilli en héros en Somalie",
+      "source": "SO FOOT",
+      "date": "2026-06-10T11:53:48+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/omar-artan-accueilli-en-heros-en-somalie"
+    },
+    {
+      "title": "L'arbitre somalien Omar Abdulkadir Artan accueilli en héros à Mogadiscio",
+      "source": "RMC Sport",
+      "date": "2026-06-10T11:48:56+00:00",
+      "summary": "Evincé des Etats-Unis après s'être vu refuser l'accès au territoire américain malgré son statut d'arbitre sélectionné pour la Coupe du monde, Omar Abdulkadir Artan a effectué son retour en Somalie ce…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-l-arbitre-somalien-omar-abdulkadir-artan-accueilli-en-heros-a-mogadiscio_VN-202606100508.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Une préparation inquiétante\", le Sénégal en plein doute avant le match contre la France",
+      "source": "RMC Sport",
+      "date": "2026-06-10T11:47:17+00:00",
+      "summary": "Le match nul concédé par le Sénégal contre l’Arabie saoudite (0-0) jeudi en match amical met en alerte la presse sénégalaise à une semaine de son premier match contre la France à la Coupe du monde, le 17 juin…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-une-preparation-inquietante-le-senegal-en-plein-doute-avant-le-match-contre-la-france_AV-202606100506.html"
+    },
+    {
+      "title": "Surprenant mais vrai: cette pièce de l'hôtel des Bleus dans laquelle Warren Zaïre-Emery aura interdiction d'entrer pendant la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-10T11:22:12+00:00",
+      "summary": "Les Bleus débarquent ce mercredi aux États-Unis pour la Coupe du monde 2026 et vont s'installer dans leur camp de base de Boston. Mais l'un des 26 joueurs de l'équipe de France n'aura pas les mêmes droits que…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/surprenant-mais-vrai-cette-piece-de-l-hotel-des-bleus-dans-laquelle-warren-zaire-emery-aura-interdiction-d-entrer_AV-202606100494.html"
+    },
+    {
+      "title": "Emiliano Martínez se dirige vers la Juventus",
+      "source": "SO FOOT",
+      "date": "2026-06-10T11:05:14+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/emiliano-martinez-se-dirige-vers-la-juventus"
+    },
+    {
+      "title": "Mondial 2026 : pourquoi le stade Azteca, qui va accueillir le match d’ouverture, est le plus mythique de l’histoire ?",
+      "source": "SO FOOT",
+      "date": "2026-06-10T11:00:38+00:00",
+      "summary": "Après Pelé et Maradona, quelle légende va marquer le lieu de son empreinte en 2026 ?",
+      "url": "https://www.sofoot.com/articles/mondial-2026-pourquoi-le-stade-azteca-qui-va-accueillir-le-match-douverture-est-le-plus-mythique-de-lhistoire"
+    },
+    {
+      "title": "Coupe du monde 2026: 10 secondes pour les changements, main sur la bouche interdite, plus de VAR... Tout savoir sur les nouvelles règles du Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-10T10:46:59+00:00",
+      "summary": "La Fifa a confirmé dans une version animée tous les changements de règles qui seront effectifs lors de la Coupe du monde (11 juin-19 juillet). Elles ont notamment pour but de réduire les gains de temps et…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-10-secondes-pour-les-changements-main-sur-la-bouche-interdite-plus-de-var-tout-savoir-sur-les-nouvelles-regles-du-mondial_AV-202606100477.html"
+    },
+    {
+      "title": "Coupe du monde 2026: l’Autriche peut-elle retrouver sa gloire d’antan au Mondial?",
+      "source": "RMC Sport",
+      "date": "2026-06-10T10:43:09+00:00",
+      "summary": "AFTER COUPE DU MONDE. La Coupe du monde 2026 débute le 11 juin prochain au Mexique, aux États-Unis et au Canada. RMC Sport fait le tour des sélections qualifiées et de leurs chances dans la compétition. Place…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-autriche-peut-elle-retrouver-sa-gloire-d-antan-au-mondial_AV-202606100474.html"
+    },
+    {
+      "title": "Manchester United annonce le départ libre de trois joueurs du club",
+      "source": "SO FOOT",
+      "date": "2026-06-10T10:41:02+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/manchester-united-annonce-le-depart-libre-de-trois-joueurs-du-club"
+    },
+    {
+      "title": "Une spidercam manque d’écraser un cameraman lors de Hongrie-Kazakhstan",
+      "source": "SO FOOT",
+      "date": "2026-06-10T10:26:24+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/une-spidercam-manque-decraser-un-cameraman-lors-de-hongrie-kazakhstan"
+    },
+    {
+      "title": "\"Ils sont non-négociables\": Vitinha et Joao Neves vont rester au PSG, assure leur agent Jorge Mendes",
+      "source": "RMC Sport",
+      "date": "2026-06-10T10:21:57+00:00",
+      "summary": "Alors qu’ils font saliver les plus grands clubs européens, Vitinha et Joao Neves vont poursuivre leur aventure avec le PSG, après le back to back en Ligue des champions. Jorge Mendes, l’agent des deux milieux…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/ils-sont-non-negociables-vitinha-et-joao-neves-vont-rester-au-psg-assure-leur-agent-jorge-mendes_AV-202606100459.html"
+    },
+    {
+      "title": "Vitinha, Martinez, Mateus... Les 5 infos mercato du 10 juin à la mi-journée",
+      "source": "RMC Sport",
+      "date": "2026-06-10T10:19:13+00:00",
+      "summary": "Vitinha et Joao Neves intransférables… Emiliano Martinez veut rejoindre la Juve… Mourinho veut une recrue au Real Madrid… Alvaro Morata rassure le Barça…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/video-vitinha-martinez-mateus-les-5-infos-mercato-du-10-juin-a-la-mi-journee_VN-202606100457.html"
+    },
+    {
+      "title": "Mercato : Le Barça aurait pris sa décision pour Marcus Rashford",
+      "source": "SO FOOT",
+      "date": "2026-06-10T10:08:56+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mercato-le-barca-aurait-pris-sa-decision-pour-marcus-rashford"
+    },
+    {
+      "title": "Mercato : Yves Bissouma quitte Tottenham, un autre joueur prolonge",
+      "source": "SO FOOT",
+      "date": "2026-06-10T09:57:37+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mercato-yves-bissouma-quitte-tottenham-un-autre-joueur-prolonge"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Je vous promets que lors du prochain Mondial nous ferons l'histoire\", l'arbitre somalien Omar Abdulkadir Artan accueilli en héros à Mogadiscio après avoir été refoulé par les Etats-Unis",
+      "source": "RMC Sport",
+      "date": "2026-06-10T09:43:33+00:00",
+      "summary": "Evincé des Etats-Unis après s'être vu refuser l'accès au territoire américain malgré son statut d'arbitre sélectionné pour la Coupe du monde, Omar Abdulkadir Artan a effectué son retour en Somalie ce…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-je-vous-promets-que-lors-du-prochain-mondial-nous-ferons-l-histoire-l-arbitre-somalien-omar-abdulkadir-artan-accueilli-en-heros-a-mogadiscio-apres-avoir-ete-refoule-par-les-etats-unis_AV-202606100416.html"
+    },
+    {
+      "title": "Arsène Wenger voit la France remporter la Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-06-10T09:32:28+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/arsene-wenger-voit-la-france-remporter-la-coupe-du-monde"
+    },
+    {
+      "title": "Coupe du monde 2026: famille, aller-retour à Madrid ou Munich... comment les Bleus ont passé leur jour off avant le départ aux Etats-Unis",
+      "source": "RMC Sport",
+      "date": "2026-06-10T09:19:56+00:00",
+      "summary": "Avant de s'envoler collectivement pour les Etats-Unis ce mercredi, les joueurs de l'équipe de France ont pu bénéficier d'une journée libre la veille. L'occasion pour certains de faire un aller-retour à Madrid…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-journee-a-madrid-anniversaire-fete-des-peres-l-ultime-journee-de-repos-du-groupe-france-avant-le-grand-depart_AP-202606100395.html"
+    },
+    {
+      "title": "Riyad Mahrez",
+      "source": "RMC Sport",
+      "date": "2026-06-10T09:11:35+00:00",
+      "summary": "Riyad Mahrez est né le 21 février 1991 à Sarcelles. Il est international algérien et évolue au poste d’ailier droit à Manchester City. Joueur essentiel avec l’Algérie, l’attaquant a remporté en 2019 la Coupe…",
+      "url": "https://rmcsport.bfmtv.com/football/riyad-mahrez_DN-202108310567.html"
+    },
+    {
+      "title": "Ousmane Dembélé",
+      "source": "RMC Sport",
+      "date": "2026-06-10T09:11:35+00:00",
+      "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
+      "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
+    },
+    {
+      "title": "La Maison-Blanche endosse la responsabilité de l’exclusion de l’arbitre somalien de la Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-06-10T09:06:50+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/la-maison-blanche-endosse-la-responsabilite-de-lexclusion-de-larbitre-somalien-de-la-coupe-du-monde"
+    },
+    {
+      "title": "Lamine Yamal",
+      "source": "RMC Sport",
+      "date": "2026-06-10T09:05:43+00:00",
+      "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
+      "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
+    },
+    {
+      "title": "Coupe du monde 2026: l'Espagne peut-elle assumer son statut de grande favorite?",
+      "source": "RMC Sport",
+      "date": "2026-06-10T09:05:42+00:00",
+      "summary": "AFTER COUPE DU MONDE. La Coupe du monde 2026 débute le 11 juin prochain au Mexique, aux États-Unis et au Canada. RMC Sport fait le tour des sélections qualifiées et de leurs chances dans la compétition. Place…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-espagne-peut-elle-assumer-son-statut-de-grande-favorite_AV-202606100379.html"
+    },
+    {
+      "title": "Téléchargez l’application SO FOOT sur iPhone et Android",
+      "source": "SO FOOT",
+      "date": "2026-06-10T09:00:15+00:00",
+      "summary": "Téléchargez-la sur iPhone ou Android !",
+      "url": "https://www.sofoot.com/articles/telechargez-lapplication-so-foot-sur-iphone-et-android"
+    },
+    {
+      "title": "On a frôlé le drame: une caméra aérienne s’est écrasée sur la pelouse pendant le match Hongrie-Kazakhstan",
+      "source": "RMC Sport",
+      "date": "2026-06-10T08:52:47+00:00",
+      "summary": "Une caméra aérienne s’est détachée de son câble avant de s’écraser sur la pelouse mardi pendant le match amical entre la Hongrie et le Kazakhstan (3-1). Miraculeusement, personne n’a été touché.",
+      "url": "https://rmcsport.bfmtv.com/football/matchs-amicaux/on-a-frole-le-drame-une-camera-aerienne-s-est-ecrasee-sur-la-pelouse-pendant-le-match-hongrie-kazakhstan_AV-202606100370.html"
+    },
+    {
+      "title": "La ministre des Sports Marina Ferrari a offert un cadeau bien particulier aux Bleus avant la Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-06-10T08:42:13+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/la-ministre-des-sports-marina-ferrari-a-offert-un-cadeau-bien-particulier-aux-bleus-avant-la-coupe-du-monde"
+    },
+    {
+      "title": "Coupe du monde 2026: \"J'ai dû être stupide et il a dû avoir beaucoup d'entraîneurs stupides pour le placer en pointe\", Deschamps tranche le débat sur le poste de Mbappé",
+      "source": "RMC Sport",
+      "date": "2026-06-10T08:35:53+00:00",
+      "summary": "Dans un entretien accordé au quotidien britannique le Guardian, Didier Deschamps se confie en longueur sur plusieurs aspects, notamment son statut de sélectionneur au sommet de la hiérarchie mondiale.…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-j-ai-du-etre-stupide-et-il-a-du-avoir-beaucoup-d-entraineurs-stupides-pour-le-placer-en-pointe-deschamps-tranche-le-debat-sur-le-poste-de-mbappe_AV-202606100358.html"
+    },
+    {
+      "title": "Sous-vêtements, affaires de toilettes : que trouve-t-on dans l’avion qui emmène l’équipe de France aux États-Unis",
+      "source": "SO FOOT",
+      "date": "2026-06-10T08:26:06+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/sous-vetements-affaires-de-toilettes-que-trouve-t-on-dans-lavion-qui-emmene-lequipe-de-france-aux-etats-unis"
+    },
+    {
+      "title": "La France en route vers une troisième étoile ?",
+      "source": "RMC Sport",
+      "date": "2026-06-10T08:04:08+00:00",
+      "summary": "Du 11 juin au 19 juillet, les États-Unis, le Canada et le Mexique accueillent une Coupe du monde XXL nouvelle version : 48 équipes, 104 matchs, une compétition inédite à suivre sur RMC. L'After Coupe du Monde…",
+      "url": "https://rmcsport.bfmtv.com/football/video-la-france-en-route-vers-une-troisieme-etoile_VN-202606100344.html"
+    },
+    {
+      "title": "Les écoles de Mexico fermées le jour du match d’ouverture de la Coupe du monde 2026",
+      "source": "SO FOOT",
+      "date": "2026-06-10T07:57:23+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/les-ecoles-de-mexico-fermees-le-jour-du-match-douverture-de-la-coupe-du-monde-2026"
+    },
+    {
+      "title": "Coupe du monde 2026: l'Argentine peut-elle viser le back-to-back pour la der de Lionel Messi?",
+      "source": "RMC Sport",
+      "date": "2026-06-10T07:46:00+00:00",
+      "summary": "AFTER COUPE DU MONDE. La Coupe du monde 2026 débute le 11 juin prochain au Mexique, aux États-Unis et au Canada. RMC Sport fait le tour des sélections qualifiées et de leurs chances dans la compétition.…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-argentine-peut-elle-viser-le-back-to-back-pour-la-der-de-lionel-messi_AV-202606100025.html"
+    },
+    {
+      "title": "L’Irak, futur adversaire de la France au Mondial 2026, s’incline contre le Venezuela en amical",
+      "source": "SO FOOT",
+      "date": "2026-06-10T07:45:12+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/lirak-futur-adversaire-de-la-france-au-mondial-2026-sincline-contre-le-venezuela-en-amical"
+    },
+    {
+      "title": "Argentine : Large victoire face à l’Islande (3-0) et nouveau record pour Lionel Messi",
+      "source": "SO FOOT",
+      "date": "2026-06-10T07:27:10+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/argentine-large-victoire-face-a-lislande-3-0-et-nouveau-record-pour-lionel-messi"
+    },
+    {
+      "title": "Premier adversaire de la France, le Sénégal concède le match nul contre l’Arabie saoudite pour son dernier match amical de préparation au Mondial 2026",
+      "source": "SO FOOT",
+      "date": "2026-06-10T07:24:08+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/premier-adversaire-de-la-france-le-senegal-concede-le-match-nul-contre-larabie-saoudite-pour-son-dernier-match-amical-de-preparation-au-mondial-206"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-10T07:11:59+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "\"Pour vous porter chance\": la ministre des Sports a offert des pierres porte-bonheur aux Bleus avant la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-10T07:11:59+00:00",
+      "summary": "Le Canard Enchaîné révèle que Marina Ferrari, la ministre des Sports, a offert aux joueurs de l’équipe de France des pierres censées avoir des vertus spéciales avant la Coupe du monde 2026 en Amérique. Elle…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pour-vous-porter-chance-la-ministre-des-sports-a-offert-des-pierres-porte-bonheur-aux-bleus-avant-la-coupe-du-monde-2026_AV-202606100293.html"
+    },
+    {
+      "title": "PODCAST. Perpétuité pour les violeurs, Cédric crée la panique et France 98 version comédie musicale : ça dit quoi ce 10 juin ?",
+      "source": "France Info",
+      "date": "2026-06-10T07:09:00+00:00",
+      "summary": "Ce mercredi 10 juin, Sébastien Lecornu propose d'alourdir les peines pour les viols sur mineurs, le Crédit Agricole a provoqué une panique avec une notification envoyée par erreur et une comédie musicale sur…",
+      "url": "https://www.franceinfo.fr/replay-radio/ca-dit-quoi/podcast-perpetuite-pour-les-violeurs-cedric-cree-la-panique-et-france-98-version-comedie-musicale-ca-dit-quoi-ce-10-juin_8043704.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Claude Le Roy reprend du service sur le banc du Congo",
+      "source": "SO FOOT",
+      "date": "2026-06-10T07:02:48+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/claude-le-roy-reprend-du-service-sur-le-banc-du-congo"
+    },
+    {
+      "title": "Coupe du monde 2026: horaires, chaînes TV... Tout savoir sur la diffusion des matchs du Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-10T06:46:00+00:00",
+      "summary": "La Coupe du monde 2026 débute ce jeudi 11 juin aux États-Unis, au Mexique et au Canada, pour s'achever le 19 juillet par la grande finale à New York. Sur quelles chaînes TV et à quelle heure suivre les matchs…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-horaires-chaines-tv-tout-savoir-sur-la-diffusion-des-matchs-du-mondial_AV-202606100024.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"je les mets au-dessus des autres\", Wenger voit les Bleus champions du monde cet été",
+      "source": "RMC Sport",
+      "date": "2026-06-10T06:44:59+00:00",
+      "summary": "Dans un entretien accordé mercredi au Figaro, l'ancien entraîneur d'Arsenal et désormais directeur du développement du football mondial à la FIFA Arsène Wenger se confie à un peu plus de 24 heures du début de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-je-les-mets-au-dessus-des-autres-wenger-voit-les-bleus-champions-du-monde-cet-ete_AV-202606100252.html"
+    },
+    {
+      "title": "Comme en 2010, l'Espagne peut-elle réaliser le doublé Euro/Coupe du Monde ?",
+      "source": "RMC Sport",
+      "date": "2026-06-10T06:43:49+00:00",
+      "summary": "Du 11 juin au 19 juillet, les États-Unis, le Canada et le Mexique accueillent une Coupe du monde XXL nouvelle version : 48 équipes, 104 matchs, une compétition inédite à suivre sur RMC. L'After Coupe du Monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-comme-en-2010-l-espagne-peut-elle-realiser-le-double-euro-coupe-du-monde_VN-202606100270.html"
+    },
+    {
+      "title": "\"Une page noire\", \"un constat écoeurant\"... Mokolo déplore le renvoi de l'arbitre Omar Artan à quelques jours du Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-10T06:42:35+00:00",
+      "summary": "Le renvoi de l'arbitre somalien Omar Artan des Etats-Unis où il devait diriger des matchs de la Coupe du monde démontre un \"constat écoeurant\" et la première page noire de la compétition selon Elton Mokolo.",
+      "url": "https://rmcsport.bfmtv.com/football/video-une-page-noire-un-constat-ecoeurant-mokolo-deplore-le-traitement-de-l-arbitre-omar-artan-a-quelques-jours-du-mondial_VN-202606100254.html"
+    },
+    {
+      "title": "Coupe du monde 2026: fin de la rumeur, l'Iran arrivera bien la veille de son premier match à Los Angeles",
+      "source": "RMC Sport",
+      "date": "2026-06-10T06:28:37+00:00",
+      "summary": "Comme annoncé par RMC Sport ces dernières heures, l'Iran arrivera bien aux Etats-Unis la veille de son premier match à la Coupe du monde, contre la Nouvelle-Zélande le 15 juin (le 16 à 3h en France). Une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-fin-de-la-rumeur-l-iran-arrivera-bien-la-veille-de-son-premier-match-a-los-angeles_AV-202606100227.html"
+    },
+    {
+      "title": "World Cup 2026 : le dispositif de crazy de SoFoot.com !",
+      "source": "SO FOOT",
+      "date": "2026-06-10T05:00:31+00:00",
+      "summary": "Demandez le programme !",
+      "url": "https://www.sofoot.com/articles/world-cup-2026-le-dispositif-de-crazy-de-sofoot-com"
+    },
+    {
+      "title": "Oubliez Yamal, Ronaldo, Messi et Mbappé… Voici les dix vraies stars de la Coupe du monde 2026",
+      "source": "SO FOOT",
+      "date": "2026-06-10T04:00:40+00:00",
+      "summary": "Oubliez Yamal, Messi, Ronaldo et Mbappé.",
+      "url": "https://www.sofoot.com/articles/oubliez-yamal-ronaldo-messi-et-mbappe-voici-les-dix-vraies-stars-de-la-coupe-du-monde-2026"
+    },
+    {
+      "title": "Hervé Mathoux : « De ce que j’ai pu voir, les Argentins ne détestent pas les Français »",
+      "source": "SO FOOT",
+      "date": "2026-06-10T04:00:18+00:00",
+      "summary": "Voyage dans cette Argentine où le racisme est décomplexé.",
+      "url": "https://www.sofoot.com/articles/herve-mathoux-de-ce-que-jai-pu-voir-les-argentins-ne-detestent-pas-les-francais"
     },
     {
       "title": "La France, l’Espagne, l’Allemagne et le Danemark qualifiés pour la Coupe du monde 2027",
@@ -61367,18 +61631,11 @@
       "url": "https://www.sofoot.com/breves/apres-la-france-lespagne-lallemagne-et-le-danemark-qualifies-pour-la-coupe-du-monde-2027"
     },
     {
-      "title": "Best of des buts amateurs du week-end du 06 et 07 juin 2026 !",
+      "title": "Best of des buts amateurs du week-end du 6 et 7 juin 2026 !",
       "source": "SO FOOT",
       "date": "2026-06-09T21:44:52+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/best-of-des-buts-amateurs-du-week-end-du-06-et-07-juin-2026"
-    },
-    {
-      "title": "Les Bleues qualifiées pour le Mondial 2027, \"un rêve de petite fille\" pour Malard",
-      "source": "RMC Sport",
-      "date": "2026-06-09T21:36:50+00:00",
-      "summary": "Grâce à sa victoire 1-0 ce mardi face à l'Irlande, l'équipe de France participera bien à la Coupe du monde 2027 au Brésil. L'unique buteuse de la rencontre Melvine Malard va réaliser \"un rêve de petite fille\".",
-      "url": "https://rmcsport.bfmtv.com/football/video-les-bleues-qualifiees-pour-le-mondial-2027-un-reve-de-petite-fille-pour-malard_VN-202606090940.html"
     },
     {
       "title": "Benfica officialise le départ de José Mourinho, tout proche du Real Madrid",
@@ -61386,13 +61643,6 @@
       "date": "2026-06-09T21:34:06+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/benfica-officialise-le-depart-de-jose-mourinho-tout-proche-du-real-madrid"
-    },
-    {
-      "title": "DIRECT. Mercato: Benfica annonce le départ de José Mourinho, attendu au Real Madrid",
-      "source": "RMC Sport",
-      "date": "2026-06-09T21:25:07+00:00",
-      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui ouvrira ses portes le lundi 15 juin en France. Les choses s'agitent avant la Coupe du monde, notamment sur les bancs de plusieurs clubs de Ligue 1…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-8-juin-2026_LN-202606080240.html"
     },
     {
       "title": "Coupe du monde 2026 : le maire de Clermont-Ferrand instaure un couvre-feu pour les moins de 16 ans",
@@ -61409,25 +61659,11 @@
       "url": "https://www.sofoot.com/articles/les-notes-de-koh-lanta-les-reliques-du-destin-episode-15"
     },
     {
-      "title": "Coupe du monde 2026: \"C'était pour une très bonne raison\", la Maison Blanche assume le renvoi de l'arbitre somalien",
-      "source": "RMC Sport",
-      "date": "2026-06-09T21:13:12+00:00",
-      "summary": "Andrew Giuliani, le patron de l'équipe de la Maison Blanche chargée de l'organisation de la Coupe du monde 2026, a affirmé que le refoulement de l'arbitre Omar Artan était dû à \"de bonnes raisons\".",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-c-etait-pour-une-tres-bonne-raison-la-maison-blanche-assume-le-renvoi-de-l-arbitre-somalien_AV-202606090920.html"
-    },
-    {
       "title": "Coupe du monde 2027 : les Bleues qualifiées pour le Mondial au Brésil après leur victoire contre l'Irlande",
       "source": "France Info",
       "date": "2026-06-09T21:11:30+00:00",
       "summary": "Grâce à un retourné acrobatique de Melvine Malard, en première période, les joueuses de Laurent Bonadei sont qualifiées devant l'Irlande et les Pays-Bas.",
       "url": "https://www.franceinfo.fr/sports/foot/coupe-du-monde-2027-les-bleues-qualifiees-pour-le-mondial-au-bresil-apres-leur-victoire-contre-l-irlande_8052881.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "France-Irlande: dans la douleur, les Bleues se qualifient pour la Coupe du monde 2027 au Brésil",
-      "source": "RMC Sport",
-      "date": "2026-06-09T20:55:39+00:00",
-      "summary": "L'équipe de France féminine devait gagner contre l'Irlande pour se qualifier directement pour la Coupe du monde 2027. C'est chose faite grâce à un unique but (bijou) de Melvine Malard pour faire sauter le…",
-      "url": "https://rmcsport.bfmtv.com/football/feminin/coupe-du-monde/direct-france-irlande-suivez-le-match-de-qualification-a-la-coupe-du-monde-feminine-2027-en-live_LS-202606090697.html"
     },
     {
       "title": "L’équipe de France féminine se qualifie pour la Coupe du monde 2027",
@@ -61444,46 +61680,11 @@
       "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-lacces-au-stade-azteque-de-mexico-bloque-par-des-manifestants"
     },
     {
-      "title": "Coupe du monde 2026: non, la photo du sélectionneur du Sénégal Pape Thiaw fouillé à l'aéroport n'est pas réelle",
-      "source": "RMC Sport",
-      "date": "2026-06-09T20:30:52+00:00",
-      "summary": "De nombreux internautes se sont insurgés après la publication d’images des fouilles subies par l’équipe du Sénégal lors d’un déplacement aux États-Unis avant son match amical contre l’Arabie saoudite. Un…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-non-la-photo-du-selectionneur-du-senegal-pape-thiaw-fouille-a-l-aeroport-n-est-pas-reelle_AV-202606090909.html"
-    },
-    {
-      "title": "Coupe du monde 2026: une menace sur le match d'ouverture? Pourquoi de grosses manifestations ont lieu à Mexico avant le Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-09T20:18:34+00:00",
-      "summary": "Ces derniers jours, les manifestations d'enseignants profitent de l’organisation de la Coupe du monde 2026 pour faire avancer leurs revendications. Blocages dans les rues, du stade Azteca… La tension est à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-une-menace-sur-le-match-d-ouverture-pourquoi-de-grosses-manifestations-ont-lieu-a-mexico-avant-le-mondial_AV-202606090900.html"
-    },
-    {
-      "title": "DIRECT. Coupe du monde 2026, toutes les infos: le stade du match d'ouverture bloqué par des manifestants à Mexico",
-      "source": "RMC Sport",
-      "date": "2026-06-09T20:14:16+00:00",
-      "summary": "La Coupe du monde 2026 débute jeudi 11 juin et se déroulera jusqu'au 19 juillet au Mexique, aux Etats-Unis et au Canada. Avant le top départ des matchs, retrouvez toutes les informations essentielles dans…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-arrivees-des-equipes-aux-etats-unis-traitement-de-l-equipe-d-iran-chaleur-forfaits-toutes-les-infos-en-live_LN-202606070295.html"
-    },
-    {
       "title": "Coupe du monde 2026 : le Sénégal rétablit la vérité sur les images des contrôles de sécurité de ses joueurs à l’aéroport",
       "source": "SO FOOT",
       "date": "2026-06-09T20:01:16+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-le-senegal-retablit-la-verite-sur-les-images-des-controles-de-securite-de-ses-joueurs-a-laeroport"
-    },
-    {
-      "title": "Atlético de Madrid",
-      "source": "RMC Sport",
-      "date": "2026-06-09T19:38:19+00:00",
-      "summary": "L'Atlético de Madrid est un club espagnol fondé en 1903, qui évolue en Liga. Ses couleurs sont le rouge et le blanc. Ses joueurs sont surnommés les Colchoneros. Le Français Antoine Griezmann est devenu le…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/atletico-de-madrid_DN-202406110400.html"
-    },
-    {
-      "title": "Mercato: la réponse très moqueuse de l'Atlético de Madrid à l'offre de 150 millions d'euros du Real pour Julian Alvarez",
-      "source": "RMC Sport",
-      "date": "2026-06-09T19:38:18+00:00",
-      "summary": "L’Atletico a publié mardi plusieurs messages ironiques et moqueurs après le communiqué du Real Madrid sur l’offre de 150 millions d’euros formulée pour Julian Alvarez lors du mercato.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-la-reponse-tres-moqueuse-de-l-atletico-de-madrid-a-l-offre-de-150-millions-d-euros-du-real-pour-julian-alvarez_AV-202606090882.html"
     },
     {
       "title": "Ligue 1 : Stéphane Gilli remplace Alejandre Dujeux à Angers",
@@ -61500,25 +61701,11 @@
       "url": "https://www.sofoot.com/breves/liga-latletico-de-madrid-se-paye-la-tete-du-real-madrid-apres-le-communique-sur-julian-alvarez"
     },
     {
-      "title": "Coupe du monde 2026: les manifestations s'intensifient à Mexico, l'accès au stade du match d'ouverture bloqué",
-      "source": "RMC Sport",
-      "date": "2026-06-09T18:57:47+00:00",
-      "summary": "Alors que des manifestations d'enseignants en colère se succèdent à Mexico depuis plusieurs jours, ces derniers ont bloqué ce mardi l'accès à l'estadio Azteca, qui doit accueillir jeudi le match d'ouverture…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-026-les-manifestations-s-intensifient-a-mexico-l-acces-au-stade-du-match-d-ouverture-bloque_AP-202606090864.html"
-    },
-    {
       "title": "Liga : Le Real Madrid affirme avoir fait une offre pour Julian Álvarez… refusée par l’Atlético de Madrid",
       "source": "SO FOOT",
       "date": "2026-06-09T18:46:35+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/liga-le-real-madrid-affirme-avoir-fait-une-offre-pour-julian-alvarez-refusee-par-latletico-madrid"
-    },
-    {
-      "title": "Coupe du monde 2026: pourquoi on risque de voir de nombreux sièges vides dans les stades du Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-09T18:37:26+00:00",
-      "summary": "La Fifa n’a pas encore vendu toutes les places disponibles pour les matchs de la Coupe du monde 2026 à deux jours du début de la compétition organisée au Canada, aux États-Unis et au Mexique. Au risque de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-on-risque-de-voir-de-nombreux-sieges-vides-dans-les-stades-du-mondial_AV-202606090852.html"
     },
     {
       "title": "Liga : le Real Madrid officialise le départ de son entraîneur Álvaro Arbeloa",
@@ -61528,13 +61715,6 @@
       "url": "https://www.sofoot.com/breves/liga-le-real-madrid-officialise-le-depart-de-son-entraineur-alvaro-arbeloa"
     },
     {
-      "title": "Coupe du monde 2026: Clermont-Ferrand décrète un couvre-feu pendant tout le Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-09T18:17:51+00:00",
-      "summary": "Le maire de Clermont-Ferrand, pour éviter d'éventuels débordements, a décidé d'instaurer un couvre-feu pour les moins de 16 ans non accompagnés durant la Coupe du monde 2026.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-clermont-ferrand-decrete-un-couvre-feu-pendant-tout-le-mondial_AV-202606090845.html"
-    },
-    {
       "title": "Alexandre Dujeux succède à Olivier Pantaloni sur le banc de Lorient",
       "source": "SO FOOT",
       "date": "2026-06-09T18:09:31+00:00",
@@ -61542,46 +61722,11 @@
       "url": "https://www.sofoot.com/breves/alexandre-dujeux-succes-a-olivier-pantaloni-sur-le-banc-de-lorient"
     },
     {
-      "title": "Ce n'était pas Olise: le Real Madrid annonce avoir transmis une offre de 150 millions d'euros pour Julian Alvarez",
-      "source": "RMC Sport",
-      "date": "2026-06-09T18:06:14+00:00",
-      "summary": "Le Real Madrid a annoncé par communiqué ce mardi avoir proposé 150 millions d'euros à l'Atlético de Madrid pour le transfert de Julian Alvarez. Une offre refusée par les Colchoneros mais qui a permis à…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/ce-n-etait-pas-olise-le-real-madrid-annonce-avoir-transmis-une-offre-de-150-millions-d-euros-pour-julian-alvarez_AV-202606090835.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le beau pactole que vont toucher les arbitres du Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-09T17:59:05+00:00",
-      "summary": "Les arbitres sélectionnés pour diriger des matchs pendant le Mondial 2026 toucheront une prime XXL pour cinq semaines de travail pendant la compétition. Des bonus supplémentaires seront aussi être versés aux…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-beau-pactole-que-vont-toucher-les-arbitres-du-mondial_AV-202606090832.html"
-    },
-    {
       "title": "Cancer grave à 18 mois : la folle histoire de Jayden Nelson, nouveau sélectionné avec le Canada",
       "source": "SO FOOT",
       "date": "2026-06-09T17:10:15+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/cancer-grave-a-18-mois-la-folle-histoire-de-jayden-nelson-nouveau-selectionne-avec-le-canada"
-    },
-    {
-      "title": "Coupe du monde 2026: Sénégal, Ouzbékistan... des contrôles très poussés des douanes américaines font polémique",
-      "source": "RMC Sport",
-      "date": "2026-06-09T17:08:30+00:00",
-      "summary": "Les Etats-Unis accueillent la majeure partie de la Coupe du monde 2026, dotés d'un arsenal sécuritaire important. Les autorités locales sont déjà déterminées à gérer les arrivées autour des matchs le plus…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-senegal-ouzbekistan-des-controles-tres-pousses-sur-le-tarmac-font-polemique_AV-202606090356.html"
-    },
-    {
-      "title": "Ousmane Dembélé",
-      "source": "RMC Sport",
-      "date": "2026-06-09T17:00:31+00:00",
-      "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
-      "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
-    },
-    {
-      "title": "\"On continuera à sacrifier le Ballon d’or\": le coup de gueule de Larqué contre le positionnement de Dembélé chez les Bleus",
-      "source": "RMC Sport",
-      "date": "2026-06-09T17:00:30+00:00",
-      "summary": "Positionné derrière Mbappé ce lundi face à l’Irlande du Nord pour le dernier match amical de l’équipe de France avant la Coupe du monde 2026, Ousmane Dembélé va devoir trouver sa juste place avec les Bleus,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/on-continuera-a-sacrifier-le-ballon-d-or-le-coup-de-gueule-de-larque-contre-le-positionnement-de-dembele-chez-les-bleus_AV-202606090779.html"
     },
     {
       "title": "Coupe du monde 2026 : Pourquoi le renvoi de l’arbitre somalien Omar Artan à la frontière américaine est problématique",
@@ -61596,13 +61741,6 @@
       "date": "2026-06-09T16:02:59+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/condamne-par-la-justice-lajax-doit-2-millions-a-une-agence-de-scouting"
-    },
-    {
-      "title": "Coupe du monde 2026: arbitre refoulé, contrôles poussés, Iran… A deux jours du début de la compétition, les polémiques pleuvent sur le Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-09T15:49:39+00:00",
-      "summary": "À deux jours du coup d’envoi de la Coupe du monde 2026 aux États-Unis, au Canada et au Mexique, l’événement se retrouve déjà au cœur d’une succession de controverses. Problèmes de visas, contrôles douaniers…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-arbitre-refoule-controles-pousses-iran-a-deux-jours-du-debut-de-la-competition-les-polemiques-pleuvent-sur-le-mondial_AV-202606090693.html"
     },
     {
       "title": "Coupe du monde 2026 : la sélection anglaise touchée par un tremblement de terre",
@@ -61647,32 +61785,11 @@
       "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-le-frere-de-ronald-araujo-se-paye-marcelo-bielsa-selectionneur-de-luruguay"
     },
     {
-      "title": "Mercato: Greenwood se rapproche de la Roma, qui aurait bouclé un accord avec l'ailier de l'OM, selon la presse italienne",
-      "source": "RMC Sport",
-      "date": "2026-06-09T14:03:00+00:00",
-      "summary": "Qualifié pour la prochaine Ligue des champions, l'AS Rome souhaiterait faire de Mason Greenwood le fer de lance de son attaque la saison prochaine. Les discussions entre les deux parties seraient avancées, à…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-greenwood-voudrait-rejoindre-la-roma-qui-aurait-boucle-un-accord-avec-l-ailier-de-l-om-selon-la-presse-italienne_AV-202606090619.html"
-    },
-    {
       "title": "Mondial 2026 : Mike Maignan peut-il mieux faire ?",
       "source": "SO FOOT",
       "date": "2026-06-09T14:00:23+00:00",
       "summary": "La France a besoin de Magic Mike pour chercher la troisième étoile.",
       "url": "https://www.sofoot.com/articles/mondial-2026-mike-maignan-peut-il-mieux-faire"
-    },
-    {
-      "title": "Messi en route pour un BACK TO BACK ? Présentation de l'Argentine",
-      "source": "RMC Sport",
-      "date": "2026-06-09T14:00:00+00:00",
-      "summary": "Du 11 juin au 19 juillet, les États-Unis, le Canada et le Mexique accueillent une Coupe du monde XXL nouvelle version : 48 équipes, 104 matchs, une compétition inédite à suivre sur RMC. L'After Coupe du Monde…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-messi-en-route-pour-un-back-to-back-presentation-de-l-argentine_VN-202606090461.html"
-    },
-    {
-      "title": "Coupe du monde 2026: comment l’attraction américaine Folarin Balogun a préparé \"son\" Mondial à domicile",
-      "source": "RMC Sport",
-      "date": "2026-06-09T13:56:35+00:00",
-      "summary": "Meilleur buteur de l’AS Monaco cette saison, Folarin Balogun sera l’une des vedettes de 'Team USA' pour la Coupe du monde 2026 a domicile. L’attaquant américain veut \"aller le plus loin possible\" et espère…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-comment-l-attraction-americaine-folarin-balogun-a-prepare-son-mondial-a-domicile_AV-202606090605.html"
     },
     {
       "title": "Les remplaçants de l’équipe de France disputeront des matchs amicaux pour garder le rythme pendant le Mondial",
@@ -61689,207 +61806,11 @@
       "url": "https://www.sofoot.com/breves/le-copresident-de-west-ham-accuse-dabus-sexuels-par-7-femmes"
     },
     {
-      "title": "Coupe du monde 2026: après la fusillade près de son camp de base, la sélection anglaise touchée par un tremblement de terre",
-      "source": "RMC Sport",
-      "date": "2026-06-09T13:09:20+00:00",
-      "summary": "Un séisme de magnitude 6,1 a touché Orlando ce lundi. La sélection anglaise était présente sur place, à deux jours de son dernier match de préparation à la Coupe du monde 2026.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-apres-la-fusillade-pres-de-son-camp-de-base-la-selection-anglaise-touchee-par-un-tremblement-de-terre_AV-202606090589.html"
-    },
-    {
-      "title": "Coupe du monde 2026: l'Iran accuse les Etats-Unis d'avoir supprimé leur quota de billets pour leurs fans",
-      "source": "RMC Sport",
-      "date": "2026-06-09T13:07:52+00:00",
-      "summary": "Mardi, l'Iran a accusé les Etats-Unis de lui avoir retiré son quota de tickets réservés à ses fans. La Fédération iranienne s'est dite \"dans l'incapacité de fournir le moindre billet aux supporters\" iraniens…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-iran-accuse-les-etats-unis-d-avoir-supprime-leur-quota-de-billets-pour-leurs-fans_AV-202606090586.html"
-    },
-    {
       "title": "« Il vient probablement de signer la fin de sa carrière  » : la nouvelle frayeur de Christian Eriksen avec le Danemark",
       "source": "SO FOOT",
       "date": "2026-06-09T13:00:09+00:00",
       "summary": "Les questions soulevées par le nouveau malaise de Christian Eriksen avec le Danemark, cinq ans après l’Euro.",
       "url": "https://www.sofoot.com/articles/il-vient-probablement-de-signer-la-fin-de-sa-carriere-la-nouvelle-frayeur-de-christian-eriksen-avec-le-danemark"
-    },
-    {
-      "title": "Luis Muriel offre un titre à son club en Colombie",
-      "source": "SO FOOT",
-      "date": "2026-06-09T12:52:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/luis-muriel-offre-un-titre-a-son-club-en-colombie"
-    },
-    {
-      "title": "Cole Palmer et João Pedro ont tourné dans le dernier clip de Madonna",
-      "source": "SO FOOT",
-      "date": "2026-06-09T12:24:43+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/cole-palmer-et-joao-pedro-ont-tourne-dans-le-dernier-clip-de-madonna"
-    },
-    {
-      "title": "Ben Aziz Zagré, international burkinabé, meurt à 27 ans d'un cancer du genou",
-      "source": "RMC Sport",
-      "date": "2026-06-09T12:24:02+00:00",
-      "summary": "International burkinabé (1 sélection), Ben Aziz Zagré est mort à 27 ans, des suites d'un cancer du genou. Il avait pris sa retraite l'été dernier, stoppé par la maladie.",
-      "url": "https://rmcsport.bfmtv.com/football/ben-aziz-zagre-international-burkinabe-meurt-a-27-ans-d-un-cancer-du-genou_AN-202606090553.html"
-    },
-    {
-      "title": "Coupe du monde 2026: la Jordanie de Mousa Al-Tamari pourra-t-elle continuer à écrire l'histoire?",
-      "source": "RMC Sport",
-      "date": "2026-06-09T12:23:52+00:00",
-      "summary": "AFTER COUPE DU MONDE. La Coupe du monde 2026 débute le 11 juin prochain au Mexique, aux États-Unis et au Canada. RMC Sport fait le tour des sélections qualifiées et de leurs chances dans la compétition. La…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-jordanie-de-mousa-al-tamari-pourra-t-elle-continuer-a-ecrire-l-histoire_AV-202606090551.html"
-    },
-    {
-      "title": "Coupe du monde 2026: la Somalie défend l'\"intégrité\" de son arbitre refoulé des Etats-Unis",
-      "source": "RMC Sport",
-      "date": "2026-06-09T12:14:14+00:00",
-      "summary": "Le ministère de la Jeunesse et des Sports de la Somalie a défendu mardi \"l'intégrité\" de l'arbitre somalien Omar Abdulkarim Artan, refoulé samedi à son entrée aux Etats-Unis alors qu'il devait officier durant…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-somalie-defend-l-integrite-de-son-arbitre-refoule-des-etats-unis_AD-202606090549.html"
-    },
-    {
-      "title": "Coupe du monde 2026: que vaut la Corée du Sud de Son Heung-min et Lee Kang-in ?",
-      "source": "RMC Sport",
-      "date": "2026-06-09T12:04:53+00:00",
-      "summary": "AFTER COUPE DU MONDE. Demi-finaliste de la dernière Coupe d'Asie, la Corée du Sud s'est qualifiée pour la Coupe du monde 2026. Pour leur douzième participation, les coéquipiers de Kang-in Lee vont devoir…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-que-vaut-la-coree-du-sud-de-son-heung-min-et-lee-kang-in_AV-202606090543.html"
-    },
-    {
-      "title": "Ben Yedder se prend pour Maradona et marque de la main au Maroc",
-      "source": "SO FOOT",
-      "date": "2026-06-09T11:28:57+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ben-yedder-se-prend-pour-maradona-et-marque-de-la-main-au-maroc"
-    },
-    {
-      "title": "Privé de Coupe du monde, l’arbitre Omar Artan remercie la FIFA",
-      "source": "SO FOOT",
-      "date": "2026-06-09T11:05:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/prive-de-coupe-du-monde-larbitre-omar-artan-remercie-la-fifa"
-    },
-    {
-      "title": "Pour leur dernier match de prépa, les Algériens ne seront pas diffusés et joueront à huis clos",
-      "source": "SO FOOT",
-      "date": "2026-06-09T11:01:14+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/pour-leur-dernier-match-de-prepa-les-algeriens-ne-seront-pas-diffuses-et-joueront-a-huis-clos"
-    },
-    {
-      "title": "L’Ouzbékistan fouillé par des chiens renifleurs avant un match amical à New York",
-      "source": "SO FOOT",
-      "date": "2026-06-09T10:43:50+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/louzbekistan-fouille-par-des-chiens-renifleurs-avant-un-match-amical-a-new-york"
-    },
-    {
-      "title": "L’Iran n’a pas reçu de places pour ses supporters et accuse les États-Unis",
-      "source": "SO FOOT",
-      "date": "2026-06-09T10:28:21+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/liran-na-pas-recu-de-places-pour-ses-supporters-et-accuse-les-etats-unis"
-    },
-    {
-      "title": "Kieran Trippier rebondit en Championship",
-      "source": "SO FOOT",
-      "date": "2026-06-09T10:11:21+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/kieran-trippier-rebondit-en-championship"
-    },
-    {
-      "title": "Sondage : S’il fallait en sortir un du XI de l’équipe de France, qui de Kylian Mbappé ou Ousmane Dembélé sacrifieriez-vous ?",
-      "source": "SO FOOT",
-      "date": "2026-06-09T10:00:50+00:00",
-      "summary": "Un capitaine et un Ballon d’or sont sur le même bateau, qui tombe à l’eau ?",
-      "url": "https://www.sofoot.com/articles/sondage-sil-fallait-en-sortir-un-du-xi-de-lequipe-de-france-qui-de-kylian-mbappe-ou-ousmane-dembele-sacrifieriez-vous"
-    },
-    {
-      "title": "Le Règlement : « L’idée avec Bad Football était de faire quelque chose de rapide et fun à jouer entre potes »",
-      "source": "SO FOOT",
-      "date": "2026-06-09T10:00:03+00:00",
-      "summary": "L’un des plus gros youtubeurs musique de France lance un jeu vidéo de foot.",
-      "url": "https://www.sofoot.com/articles/le-reglement-lidee-avec-bad-football-etait-de-faire-quelque-chose-de-rapide-et-fun-a-jouer-entre-potes"
-    },
-    {
-      "title": "Anthony Lopes remercie le FC Nantes",
-      "source": "SO FOOT",
-      "date": "2026-06-09T09:55:23+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/anthony-lopes-remercie-le-fc-nantes"
-    },
-    {
-      "title": "La lettre touchante de l’épouse de Diogo Jota à Andrew Robertson pour le Mondial",
-      "source": "SO FOOT",
-      "date": "2026-06-09T09:30:12+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/la-lettre-touchante-de-lepouse-de-diogo-jota-a-andrew-robertson-pour-le-mondial"
-    },
-    {
-      "title": "La proposition de loi pour la réforme de la gouvernance du foot français examinée à l’Assemblée nationale le 29 juin",
-      "source": "SO FOOT",
-      "date": "2026-06-09T09:16:33+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/la-proposition-de-loi-pour-la-reforme-de-la-gouvernance-du-foot-francais-examinee-a-lassemblee-nationale-le-29-juin"
-    },
-    {
-      "title": "Mondial 2026 : après les serpents, la Suisse menacée par un incendie",
-      "source": "SO FOOT",
-      "date": "2026-06-09T08:34:20+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-apres-les-serpents-la-suisse-menacee-par-un-incendie"
-    },
-    {
-      "title": "L’Espagne se refait la cerise contre le Pérou pour le dernier match amical avant le Mondial 2026",
-      "source": "SO FOOT",
-      "date": "2026-06-09T07:55:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/lespagne-se-refait-la-cerise-contre-le-perou-pour-le-dernier-match-amical-avant-le-mondial-2026"
-    },
-    {
-      "title": "Manu Koné a été victime de la nouvelle règle des changements face à l’Irlande du Nord",
-      "source": "SO FOOT",
-      "date": "2026-06-09T07:38:55+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/manu-kone-a-ete-victime-de-la-nouvelle-regle-des-changements-face-a-lirlande-du-nord"
-    },
-    {
-      "title": "Mondial 2026 : la France ne se rassure pas défensivement lors des matchs de préparation",
-      "source": "SO FOOT",
-      "date": "2026-06-09T07:23:12+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-la-france-ne-se-rassure-pas-defensivement-lors-des-matchs-de-preparation"
-    },
-    {
-      "title": "La FIFA se plie aux exigences des USA concernant l’arbitre somalien privé du Mondial 2026",
-      "source": "SO FOOT",
-      "date": "2026-06-09T07:17:29+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/la-fifa-se-plie-aux-exigences-des-usa-concernant-larbitre-somalien-prive-du-mondial-2026"
-    },
-    {
-      "title": "Après sa perf contre l’Irlande du Nord, Michael Olise a pris une place de choix dans les annales des Bleus",
-      "source": "SO FOOT",
-      "date": "2026-06-09T06:57:38+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/apres-sa-perf-contre-lirlande-du-nord-michael-olise-a-pris-une-place-de-choix-dans-les-annales-des-bleus"
-    },
-    {
-      "title": "Bleus : Kylian Mbappé, Ousmane Dembélé ou les deux sur le terrain à la Coupe du monde 2026 ?",
-      "source": "SO FOOT",
-      "date": "2026-06-09T04:00:55+00:00",
-      "summary": "Le capitaine des Bleus et le Ballon d’or vont-ils pouvoir cohabiter sur le terrain au Mondial ?",
-      "url": "https://www.sofoot.com/articles/bleus-kylian-mbappe-ousmane-dembele-ou-les-deux-sur-le-terrain-a-la-coupe-du-monde-2026"
-    },
-    {
-      "title": "Mondial 2027 : L’équipe de France féminine joue son dernier match de qualification face à l’Irlande dans l’indifférence générale à deux jours du début de la Coupe du monde masculine",
-      "source": "SO FOOT",
-      "date": "2026-06-09T04:00:10+00:00",
-      "summary": "Pendant ce temps-là, les Bleues jouent leur qualif’ pour leur Coupe du monde.",
-      "url": "https://www.sofoot.com/articles/mondial-2027-lequipe-de-france-feminine-joue-son-dernier-match-de-qualification-face-a-lirlande-dans-lindifference-generale-a-deux-jours-du-debut-de-la-coupe-du-monde-masculine"
-    },
-    {
-      "title": "Coupe du monde 2026 : Olise de retour à droite, un duo Tchouameni-Rabiot, un doute sur l'aile gauche... Les enseignements des deux matchs de préparation des Bleus",
-      "source": "France Info",
-      "date": "2026-06-09T03:30:02+00:00",
-      "summary": "L'équipe de France a logiquement battu l'Irlande du Nord en amical, lundi, deux jours avant de s'envoler aux Etats-Unis pour la Coupe du monde.",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-2026-olise-de-retour-a-droite-un-duo-tchouameni-rabiot-un-doute-sur-l-aile-gauche-les-enseignements-des-deux-matchs-de-preparation-des-bleus_8051141.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "news_sources": [
@@ -61983,5 +61904,21 @@
       "url": "https://www.lephoceen.fr/rss"
     }
   ],
-  "errors": []
+  "errors": [
+    "classement Ligue 1 ESPN: ValueError",
+    "buteurs Ligue 1 ESPN: ValueError",
+    "passeurs Ligue 1 ESPN: ValueError",
+    "classement Liga ESPN: ValueError",
+    "buteurs Liga ESPN: ValueError",
+    "passeurs Liga ESPN: ValueError",
+    "classement Bundesliga ESPN: ValueError",
+    "buteurs Bundesliga ESPN: ValueError",
+    "passeurs Bundesliga ESPN: ValueError",
+    "classement Premier League ESPN: ValueError",
+    "buteurs Premier League ESPN: ValueError",
+    "passeurs Premier League ESPN: ValueError",
+    "classement Serie A ESPN: ValueError",
+    "buteurs Serie A ESPN: ValueError",
+    "passeurs Serie A ESPN: ValueError"
+  ]
 }
