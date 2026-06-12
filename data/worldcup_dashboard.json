@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11T21:32:15+00:00",
+  "generated_at": "2026-06-12T11:57:05+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -36,11 +36,11 @@
           "away_espn_id": "450",
           "home_country_code": "KOR",
           "away_country_code": "CZE",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
+          "home_score": "2",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "Estadio Akron",
           "city": "Guadalajara"
         },
@@ -2019,27 +2019,46 @@
   ],
   "today_matches": [
     {
-      "id": "760415",
-      "date": "2026-06-11T19:00Z",
-      "home_team": "Mexico",
-      "away_team": "South Africa",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
-      "home_espn_id": "203",
-      "away_espn_id": "467",
-      "home_country_code": "MEX",
-      "away_country_code": "RSA",
+      "id": "760414",
+      "date": "2026-06-12T02:00Z",
+      "home_team": "South Korea",
+      "away_team": "Czechia",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
+      "home_espn_id": "451",
+      "away_espn_id": "450",
+      "home_country_code": "KOR",
+      "away_country_code": "CZE",
       "home_score": "2",
-      "away_score": "0",
+      "away_score": "1",
       "status": "Terminé",
       "status_state": "post",
       "completed": true,
-      "venue": "Estadio Banorte",
-      "city": "Mexico City"
+      "venue": "Estadio Akron",
+      "city": "Guadalajara"
+    },
+    {
+      "id": "760416",
+      "date": "2026-06-12T19:00Z",
+      "home_team": "Canada",
+      "away_team": "Bosnia-Herzegovina",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
+      "home_espn_id": "206",
+      "away_espn_id": "452",
+      "home_country_code": "CAN",
+      "away_country_code": "BIH",
+      "home_score": "",
+      "away_score": "",
+      "status": "À venir",
+      "status_state": "pre",
+      "completed": false,
+      "venue": "BMO Field",
+      "city": "Toronto"
     }
   ],
   "group_matches_total": 72,
-  "group_matches_remaining": 71,
+  "group_matches_remaining": 70,
   "knockout_matches_total": 32,
   "knockout_matches_remaining": 32,
   "competition_stage": "Phase de groupes",
@@ -2824,6 +2843,36 @@
   },
   "top_scorers": [
     {
+      "name": "Hyun-Gyu Oh",
+      "team": "Korea Republic",
+      "team_id": 7804,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/7804.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1044299.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 1,
+      "country": ""
+    },
+    {
+      "name": "In-Beom Hwang",
+      "team": "Korea Republic",
+      "team_id": 7804,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/7804.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/623698.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 2,
+      "country": ""
+    },
+    {
       "name": "Julián Quiñones",
       "team": "Mexico",
       "team_id": 6710,
@@ -2835,22 +2884,7 @@
       "all_time_rank": "",
       "played": "",
       "value": 1,
-      "rank": 1,
-      "country": ""
-    },
-    {
-      "name": "Raul Jiménez",
-      "team": "Mexico",
-      "team_id": 6710,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6710.png",
-      "country_code": "",
-      "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/292313.png",
-      "country_flag_url": "",
-      "all_time_rank": "",
-      "played": "",
-      "value": 1,
-      "rank": 2,
+      "rank": 3,
       "country": ""
     }
   ],
@@ -2871,18 +2905,33 @@
       "country": ""
     },
     {
-      "name": "Érik Lira",
-      "team": "Mexico",
-      "team_id": 6710,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6710.png",
+      "name": "In-Beom Hwang",
+      "team": "Korea Republic",
+      "team_id": 7804,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/7804.png",
       "country_code": "",
       "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/971628.png",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/623698.png",
       "country_flag_url": "",
       "all_time_rank": "",
       "played": "",
       "value": 1,
       "rank": 2,
+      "country": ""
+    },
+    {
+      "name": "Kang-In Lee",
+      "team": "Korea Republic",
+      "team_id": 7804,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/7804.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/940976.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 3,
       "country": ""
     }
   ],
@@ -3001,181 +3050,202 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus vont vivre leur premier entraînement aux Etats-Unis",
+      "title": "Coupe du monde 2026: Rayan Cherki a un petit problème après son arrivée aux Etats-Unis avec les Bleus",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:13:16+00:00",
-      "summary": "La Coupe du monde 2026 se tient du 11 juin au 19 juillet aux Etats-Unis, au Mexique et au Canada, sur fond de tensions autour de l'accueil réservé par les Américains à certaines sélections comme l'Iran ou…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-ouverture-du-mondial-conferences-de-presse-polemiques-blessures-toutes-les-infos-en-live_LN-202606110324.html"
+      "date": "2026-06-12T11:40:09+00:00",
+      "summary": "Rayan Cherki a visiblement eu du mal à digérer le décalage horaire entre la France et les Etats-Unis pour le Mondial. Le milieu offensif tricolore a confié avoir passé une première nuit un peu différente qu’à…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-rayan-cherki-a-un-petit-probleme-apres-son-arrivee-aux-etats-unis-avec-les-bleus_AV-202606120515.html"
     },
     {
-      "title": "Coupe du monde 2026: \"On est vraiment très à l'aise\", les Bleus ont pris leur quartier dans leur camp d’entraînement",
+      "title": "Coupe du monde 2026: un groupe lié à l'Iran affirme avoir hacké des drones du FBI, une nouvelle menace sur le Mondial?",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:08:44+00:00",
-      "summary": "Arrivés mercredi à Boston, les joueurs de l’équipe de France ont participé ce jeudi à leur première séance d’entraînement à l'université de Bentley à Waltham. Malgré la chaleur, les Tricolores sont bien…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-est-vraiment-tres-a-l-aise-les-bleus-ont-pris-leur-quartier-dans-leur-camp-d-entrainement_AD-202606110971.html"
+      "date": "2026-06-12T11:28:50+00:00",
+      "summary": "Le groupe de hackers Handala, lié à l'Iran, dit avoir accédé à des drones FPV utilisés par le FBI aux Etats-Unis, et menace de les écraser durant la Coupe du monde sur \"certaines équipes\".",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-groupe-lie-a-l-iran-affirme-avoir-hacke-des-drones-du-fbi-une-nouvelle-menace-sur-le-mondial_AV-202606120514.html"
     },
     {
-      "title": "DIRECT. Mexique-Afrique du Sud: deux buts, trois rouges... Match d'ouverture à rebondissements à Mexico",
+      "title": "Coupe du monde 2026: seize ans après, le chambrage du Mexicain Quinones après son but face à l'Afrique du Sud",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:08:07+00:00",
-      "summary": "Entrée en matière réussie pour le Mexique, largement supérieur à une faible Afrique du Sud, jeudi pour le coup d'envoi de son Mondial (2-0). Grâce à ses attaquants Julian Quinones et Raul Jimenez, le pays…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-afrique-du-sud-suivez-en-live-la-ceremonie-et-le-match-d-ouverture-de-la-coupe-du-monde-2026-en-live_LS-202606110394.html"
+      "date": "2026-06-12T11:07:14+00:00",
+      "summary": "La Coupe du monde 2026 s'est ouverte jeudi avec un match à rebondissements remporté par le Mexique face à l'Afrique du Sud (2-0). Auteur du premier but à la 9e minute, Julian Quinones a célébré en reprenant…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-seize-ans-apres-le-chambrage-du-mexicain-quinones-apres-son-but-face-a-l-afrique-du-sud_AV-202606120507.html"
     },
     {
-      "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe A",
+      "title": "THIERRY HENRY QUI ? Le foot loin d'être roi aux US - Daily#02",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:06:32+00:00",
-      "summary": "Le match d'ouverture de la Coupe du monde 2026 a vu le Mexique l'emporter tranquillement ce jeudi face à l'Afrique du Sud (2-0), au stade Azteca de Mexico. Dans ce groupe A, la Corée du Sud et la Tchéquie…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-a_AV-202606110970.html"
+      "date": "2026-06-12T11:00:48+00:00",
+      "summary": "Il paraît que les Etats-Unis ne sont pas un pays de foot. Pourtant, David Beckham a son étoile à Hollywood, Thierry Henry une rue à son nom à Manhattan et Kylian Mbappé est l'un des visages les plus connus de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-thierry-henry-qui-le-foot-loin-d-etre-roi-aux-us-daily-02_VN-202606120506.html"
     },
     {
-      "title": "Coupe du monde : \"pas de recette miracle\" face à la chaleur témoignent Lacroix et Samba",
+      "title": "Coupe du monde 2026: \"Il ne faut pas être aussi dur avec lui\", Dembélé prend la défense de Mbappé face aux critiques",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:47:24+00:00",
-      "summary": "Les Bleus sont bien arrivés à Boston pour débuter leur Coupe du monde 2026. Sous la chaleur américaine, Maxence Lacroix et Brice Samba sont venus raconter cette adaptation express aux températures élevées.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-coupe-du-monde-pas-de-recette-miracle-face-a-la-chaleur-temoignent-lacroix-et-samba_VN-202606110965.html"
+      "date": "2026-06-12T10:45:10+00:00",
+      "summary": "Ousmane Dembélé s’est exprimé en marge des débuts de l’équipe de France au Mondial 2026. La star de l’équipe de France a pris la défense de Kylian Mbappé face aux nombreuses critiques contre lui.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-faut-pas-etre-aussi-dur-avec-lui-dembele-prend-la-defense-de-mbappe-face-aux-critiques_AV-202606120488.html"
     },
     {
-      "title": "Coupe du monde 2026: l'ambiance enfin au rendez-vous aux Etats-Unis et au Mexique",
+      "title": "Coupe du monde 2026: un stade annoncé plein mais des centaines de sièges vides dès le deuxième match",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:34:31+00:00",
-      "summary": "Lancée jeudi au stade Aztèque, la Coupe du monde 2026 a débuté dans une ambiance de fête à Mexico. On a aussi enfin ressenti l'atmosphère du Mondial dans les rues de Los Angeles.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-afrique-du-sud-l-ambiance-coupe-du-monde-enfin-au-rendez-vous-aux-etats-unis-et-au-mexique_AV-202606110957.html"
+      "date": "2026-06-12T10:00:43+00:00",
+      "summary": "Malgré l'annonce d'un stade plein et la promesse d'une billetterie prise d'assaut la veille par Gianni Infantino, plusieurs centaines de places sont restées vides lors du match Corée du Sud-Tchéquie (2-1),…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-stade-annonce-plein-mais-des-centaines-de-sieges-vides-des-le-deuxieme-match_AV-202606120457.html"
     },
     {
-      "title": "Coupe du monde 2026: la Fifa dévoile le salaire de son président, Gianni Infantino",
+      "title": "DIRECT. Coupe du monde 2026: premiers matchs, polémiques, conférences de presse... Toutes les infos du 12 juin en live",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:25:09+00:00",
-      "summary": "Tous les ans, la Fifa publie le montant des salaires de tous ses employés. Gianni Infantino, le président de l'organisation mondiale du football, ne fait pas exception.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-fifa-devoile-le-salaire-de-son-president-gianni-infantino_AV-202606110950.html"
+      "date": "2026-06-12T09:52:06+00:00",
+      "summary": "La Coupe du monde 2026 a débuté jeudi par la victoire du Mexique contre l'Afrique du Sud et va se poursuivre jusqu'au 19 juillet. En attendant l'entrée en lice de la France, ne ratez aucune information sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-premiers-matchs-polemiques-conferences-de-presse-toutes-les-infos-du-12-juin-en-live_LN-202606120289.html"
     },
     {
-      "title": "\"Ce serait moche ça\", Mbappé cash sur une piste de Deschamps en sélection après les Bleus",
+      "title": "Coupe du monde 2026: les deux joueurs les plus excitants du Mondial selon Zlatan Ibrahimovic et Thierry Henry",
       "source": "RMC Sport",
-      "date": "2026-06-11T19:46:22+00:00",
-      "summary": "Interrogé par M6 avant le coup d'envoi de la Coupe du monde 2026, le capitaine de l’équipe de France, Kylian Mbappé, s’est exprimé sur le sélectionneur Didier Deschamps dont l'avenir après le Mondial est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-serait-moche-ca-mbappe-cash-sur-une-piste-de-deschamps-en-selection-apres-les-bleus_AV-202606110934.html"
+      "date": "2026-06-12T09:28:45+00:00",
+      "summary": "Zlatan Ibrahimovic et Thierry Henry ont dévoilé les noms des joueurs qu’ils sont impatients de voir joueur pendant la Coupe du monde 2026. Les deux légendes ont opté pour deux phénomènes de l’équipe de France…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-deux-joueurs-les-plus-excitants-du-mondial-selon-zlatan-ibrahimovic-et-thierry-henry_AV-202606120429.html"
     },
     {
-      "title": "Mexique-Afrique du Sud: la vidéo du premier but de la Coupe du monde 2026 signé Quinones",
+      "title": "Etats-Unis - Paraguay: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
       "source": "RMC Sport",
-      "date": "2026-06-11T19:35:48+00:00",
-      "summary": "Le Mexicain Julian Quinones a marqué ce jeudi le premier but de la Coupe du monde 2026, à l'occasion du match d'ouverture opposant Mexique à l'Afrique du Sud au stade Azteca.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-afrique-du-sud-la-video-du-premier-but-de-la-coupe-du-monde-2026-signe-quinones_AV-202606110929.html"
+      "date": "2026-06-12T08:00:00+00:00",
+      "summary": "La Coupe du monde 2026 débute dans le groupe D. Pays co-organisateur, les États-Unis lancent leur tournoi face au Paraguay, à Los Angeles, devant leur public. Voici toutes les informations pour suivre cette…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/usa-paraguay-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-la-coupe-du-monde-2026-en-direct_AN-202606120024.html"
     },
     {
-      "title": "\"J’ai honte de ce qu’est devenu mon sport\": pourquoi Dugarry est très en colère avant la Coupe du monde 2026",
+      "title": "Coupe du monde 2026: pourquoi le Mexicain Raul Jimenez porte un bandeau alors qu'il a les cheveux courts",
       "source": "RMC Sport",
-      "date": "2026-06-11T18:31:53+00:00",
-      "summary": "Avant le match d’ouverture de la Coupe du monde 2026 Mexique-Afrique du Sud (21h), Christophe Dugarry a exprimé sa colère concernant les multiples polémiques qui entourent la compétition depuis quelques jours.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/j-ai-honte-de-ce-qu-est-devenu-mon-sport-pourquoi-dugarry-est-tres-en-colere-avant-la-coupe-du-monde-2026_AV-202606110894.html"
+      "date": "2026-06-12T07:52:48+00:00",
+      "summary": "À 35 ans, Raul Jimenez a inscrit le premier but de sa carrière en Coupe du monde jeudi lors de la victoire du Mexique contre l'Afrique du Sud (2-0). L'attaquant a fondu en larmes près de six ans après avoir…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-le-mexicain-raul-jimenez-porte-un-bandeau-alors-qu-il-a-les-cheveux-courts_AV-202606120356.html"
     },
     {
-      "title": "Coupe du monde 2026: la belle histoire d'amour entre une supportrice sud-africaine et un fan mexicain, 16 ans après leur rencontre au Mondial 2010",
+      "title": "Coupe du monde 2026: c'est quoi le ludo, ce jeu qui amuse tant Mbappé, Dembélé et Cherki pendant les voyages des Bleus?",
       "source": "RMC Sport",
-      "date": "2026-06-11T17:36:50+00:00",
-      "summary": "Omar et Charlene sont deux supporters du Mexique et de l'Afrique du Sud qui se sont rencontrés lors du Mondial 2010 en Afrique du Sud. 16 ans plus tard, le couple désormais marié va assister au match…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-belle-histoire-d-amour-entre-une-supportrice-sud-africaine-et-un-fan-mexicain-16-ans-apres-leur-rencontre-au-mondial-2010_AV-202606110846.html"
+      "date": "2026-06-12T07:30:16+00:00",
+      "summary": "Les joueurs de l'équipe de France sont arrivés à Boston mercredi, où ils se sont installés pour la Coupe du monde 2026. Et pendant le vol, certains d'entre eux dont le capitaine Kylian Mbappé ont passé le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-c-est-quoi-le-ludo-ce-jeu-qui-amuse-tant-mbappe-dembele-et-cherki-pendant-les-voyages-des-bleus_AV-202606120333.html"
     },
     {
-      "title": "\"Nous sommes tous hypocrites\": les mots forts du sélectionneur norvégien sur les polémiques de la Coupe du monde 2026",
+      "title": "Canada - Bosnie-Herzégovine: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
       "source": "RMC Sport",
-      "date": "2026-06-11T17:11:41+00:00",
-      "summary": "Avant même de débuter ce jeudi par une affiche entre le Mexique et l'Afrique du Sud (21h), la Coupe du monde 2026 a été plombée par une succession de polémiques. En conférence de presse, le sélectionneur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/nous-sommes-tous-hypocrites-les-mots-forts-du-selectionneur-norvegien-sur-les-polemiques-de-la-coupe-du-monde-2026_AV-202606110823.html"
+      "date": "2026-06-12T07:10:26+00:00",
+      "summary": "Deuxième pays hôte de la Coupe du monde 2026 à lancer sa compétition après le Mexique, le Canada affronte la Bosnie-Herzégovine ce vendredi au BMO Field de Toronto. Un duel entre les coéquipiers de Jonathan…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/canada-bosnie-herzegovine-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606120316.html"
     },
     {
-      "title": "Coupe du monde 2026: \"Il m'a demandé si j'étais bourré\", comment Ouédraogo a appris sa sélection de dernière minute avec l'Allemagne",
+      "title": "Coupe du monde 2026: \"Il ne s’agit pas d’une rechute\", les explications surprenantes d'Aguerd sur son forfait avec le Maroc",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:37:32+00:00",
-      "summary": "Assan Ouédraogo a été appelé à la dernière minute par Julian Nagelsmann après le forfait de Lennart Karl pour disputer la Coupe du monde avec l'Allemagne. Le jeune milieu de terrain a avoué en conférence de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-m-a-demande-si-j-etais-bourre-comment-ouedraogo-a-appris-sa-selection-de-derniere-minute-avec-l-allemagne_AV-202606110786.html"
+      "date": "2026-06-12T05:57:18+00:00",
+      "summary": "Pourtant présent à l'entraînement mercredi, Nayef Aguerd est finalement forfait pour la Coupe du monde 2026, comme l'a acté l'équipe du Maroc jeudi. Le défenseur, qui a traîné une blessure aux adducteurs tout…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-s-agit-pas-d-une-rechute-les-explications-surprenantes-d-aguerd-sur-son-forfait-avec-le-maroc_AV-202606120229.html"
     },
     {
-      "title": "Un handicap pour la France? Le classement des équipes les plus \"fatiguées\" avant la Coupe du monde",
+      "title": "Coupe du monde 2026: pourquoi tous les joueurs portent des chaussures roses?",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:24:18+00:00",
-      "summary": "Selon des statistiques de la BBC, l’équipe de France aborde la Coupe du monde 2026 avec les joueurs ayant le plus joué depuis le 15 juin 2025, il y a un an.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-handicap-pour-la-france-le-classement-des-equipes-les-plus-fatiguees-avant-la-coupe-du-monde_AV-202606110773.html"
+      "date": "2026-06-12T05:37:52+00:00",
+      "summary": "Les deux premiers matchs de la Coupe du monde 2026 ont affiché la couleur tendance de cette édition pour les chaussures: le rose, porté par une très grande majorité des joueurs.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-tous-les-joueurs-portent-des-chaussures-roses_AV-202606120212.html"
     },
     {
-      "title": "Coupe du Monde 2026: des encas à grignoter devant le match d'ouverture Mexique-Afrique du Sud",
+      "title": "Corée du sud-Tchéquie: la Corée du Sud renverse tout et lance sa Coupe du monde 2026 par un succès",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:07:43+00:00",
-      "summary": "À l'occasion du Mondial de football qui s'ouvre ce jeudi 11 juin, avec le match Mexique - Afrique du Sud, la cheffe mexicaine Mercedes Ahumada propose des snacks à déguster devant sa télé.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-des-encas-a-grignoter-devant-le-match-d-ouverture-mexique-afrique-du-sud_AV-202606110754.html"
+      "date": "2026-06-12T05:12:40+00:00",
+      "summary": "Deuxième match de la Coupe du monde 2026 au programme avec la Corée du Sud qui affrontait la Tchéquie dans la nuit de jeudi à vendredi, et qui s'est imposée.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coree-du-sud-tchequie-suivez-le-2e-match-de-la-coupe-du-monde-2026-en-live_LS-202606110598.html"
     },
     {
-      "title": "Coupe du monde 2026: \"Un écran noir au moment d'un penalty\", l'Arcom lance la chasse au streaming illégal via les IPTV",
+      "title": "Coupe du monde 2026: un fan allemand a fait une crise cardiaque avant le match d'ouverture",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:00:34+00:00",
-      "summary": "A l'heure du lancement de la Coupe du monde 2026, l'Arcom met en place son dispositif testé lors de Roland-Garros consistant à s'attaquer plus durement au streaming illégal via les IPTV. Seul 54 des 104…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-ecran-noir-au-moment-d-un-penalty-l-arcom-lance-la-chasse-au-streaming-illegal-via-les-iptv_AV-202606110739.html"
+      "date": "2026-06-12T05:08:00+00:00",
+      "summary": "Un spectateur allemand a été victime d'une crise cardiaque sur le parvis du stade Azteca avant le match d'ouverture de la Coupe du monde entre le Mexique et l'Afrique du Sud (2-0), jeudi.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-fan-allemand-a-fait-une-crise-cardiaque-avant-le-match-d-ouverture_AV-202606120180.html"
     },
     {
-      "title": "Coupe du monde 2026: double bonne nouvelle pour l'Espagne concernant Lamine Yamal et Nico Williams",
+      "title": "Deux buts, 3 expulsions, le Mondial est parti fort, classement et résultats de la Coupe du monde",
       "source": "RMC Sport",
-      "date": "2026-06-11T15:10:10+00:00",
-      "summary": "Tous les deux blessés depuis plusieurs semaines, Lamine Yamal et Nico Williams devraient pouvoir jouer lors du premier match de l'Espagne à la Coupe du monde 2026 selon la Cadena Ser. Des nouvelles…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-double-bonne-nouvelle-pour-l-espagne-concernant-lamine-yamal-et-nico-williams_AV-202606110704.html"
+      "date": "2026-06-12T04:34:51+00:00",
+      "summary": "Le Mexique s'est imposé dans le match d'ouverture de la Coupe du monde 2026, contre l'Afrique du Sud. Le pays hôte a même joué une partie du match à 11 contre 9, avant d'être réduit à 10. Dans l'autre match…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-deux-buts-3-expulsions-le-mondial-est-parti-fort-classement-et-resultats-de-la-coupe-du-monde_VN-202606120144.html"
     },
     {
-      "title": "Coupe du monde 2026: accord trouvé entre la FFF et les Bleus sur les primes et les places pour les familles",
+      "title": "Coupe du monde 2026: deux fans mexicains se filment sur un but de leur équipe et deviennent la risée du monde",
       "source": "RMC Sport",
-      "date": "2026-06-11T14:54:41+00:00",
-      "summary": "Un accord a bien été finalisé ces dernières heures entre la FFF et les joueurs de l'équipe de France concernant les primes de cette Coupe du monde 2026. Mais aussi concernant le nombre de places attribuées…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-accord-trouve-entre-la-fff-et-les-bleus-sur-les-primes-et-les-places-pour-les-familles_AV-202606110689.html"
-    },
-    {
-      "title": "Coupe du monde 2026: six-mètres, touches, changements... Tout savoir sur les nouvelles règles contre le gain de temps",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:44:57+00:00",
-      "summary": "La Coupe du monde 2026, qui débute ce jeudi 11 juin, va permettre à la Fifa d'étrenner une série de nouvelles règles. Parmi celles-ci, la possibilité pour l'arbitre de sanctionner les équipes qui cherchent à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-six-metres-touches-changements-tout-savoir-sur-les-nouvelles-regles-du-compte-a-rebours_AV-202606110679.html"
-    },
-    {
-      "title": "Sandwichs, bière et sodas: les spectateurs attablés au bord de la pelouse lors d’Angleterre-Costa Rica à Orlando amusent les réseaux",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:44:40+00:00",
-      "summary": "Lors du match de préparation à la Coupe du monde 2026 entre l’Angleterre et le Costa Rica, mercredi à Orlando (3-0), des tables étaient dressées le long du terrain, avec boisson et nourriture pour les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sandwichs-biere-et-sodas-les-spectateurs-attables-au-bord-de-la-pelouse-lors-d-angleterre-costa-rica-a-orlando-amusent-les-reseaux_AV-202606110678.html"
-    },
-    {
-      "title": "Interdiction des fan zones en cas de débordement: le rappel du ministre de l'Intérieur avant la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:39:47+00:00",
-      "summary": "Alors que plusieurs fan zones et sites accueillant du public vont ouvrir en France pour la Coupe du monde 2026, le ministre de l'Intérieur a adressé un message de fermeté aux préfets et responsables de police…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/interdiction-des-fan-zones-en-cas-de-debordement-le-rappel-du-ministre-de-l-interieur-avant-la-coupe-du-monde-2026_AV-202606110673.html"
+      "date": "2026-06-12T04:18:32+00:00",
+      "summary": "Deux fans mexicains surpris en train de filmer leur célébration sur le but de Raul Jimenez lors de la victoire contre l'Afrique du Sud (2-0) sont devenus viraux sur les réseaux sociaux et symbolisent une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-fans-mexicains-se-filment-sur-un-but-de-leur-equipe-et-deviennent-la-risee-du-monde_AV-202606120122.html"
     }
   ],
   "france_news": [
     {
-      "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus vont vivre leur premier entraînement aux Etats-Unis",
+      "title": "Coupe du monde 2026: Rayan Cherki a un petit problème après son arrivée aux Etats-Unis avec les Bleus",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:13:16+00:00",
-      "summary": "La Coupe du monde 2026 se tient du 11 juin au 19 juillet aux Etats-Unis, au Mexique et au Canada, sur fond de tensions autour de l'accueil réservé par les Américains à certaines sélections comme l'Iran ou…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-ouverture-du-mondial-conferences-de-presse-polemiques-blessures-toutes-les-infos-en-live_LN-202606110324.html"
+      "date": "2026-06-12T11:40:09+00:00",
+      "summary": "Rayan Cherki a visiblement eu du mal à digérer le décalage horaire entre la France et les Etats-Unis pour le Mondial. Le milieu offensif tricolore a confié avoir passé une première nuit un peu différente qu’à…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-rayan-cherki-a-un-petit-probleme-apres-son-arrivee-aux-etats-unis-avec-les-bleus_AV-202606120515.html"
     },
     {
-      "title": "Coupe du monde 2026: \"On est vraiment très à l'aise\", les Bleus ont pris leur quartier dans leur camp d’entraînement",
+      "title": "Coupe du monde 2026: \"Il ne faut pas être aussi dur avec lui\", Dembélé prend la défense de Mbappé face aux critiques",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:08:44+00:00",
-      "summary": "Arrivés mercredi à Boston, les joueurs de l’équipe de France ont participé ce jeudi à leur première séance d’entraînement à l'université de Bentley à Waltham. Malgré la chaleur, les Tricolores sont bien…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-est-vraiment-tres-a-l-aise-les-bleus-ont-pris-leur-quartier-dans-leur-camp-d-entrainement_AD-202606110971.html"
+      "date": "2026-06-12T10:45:10+00:00",
+      "summary": "Ousmane Dembélé s’est exprimé en marge des débuts de l’équipe de France au Mondial 2026. La star de l’équipe de France a pris la défense de Kylian Mbappé face aux nombreuses critiques contre lui.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-faut-pas-etre-aussi-dur-avec-lui-dembele-prend-la-defense-de-mbappe-face-aux-critiques_AV-202606120488.html"
     },
     {
-      "title": "Coupe du monde : \"pas de recette miracle\" face à la chaleur témoignent Lacroix et Samba",
+      "title": "Ousmane Dembélé",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:47:24+00:00",
-      "summary": "Les Bleus sont bien arrivés à Boston pour débuter leur Coupe du monde 2026. Sous la chaleur américaine, Maxence Lacroix et Brice Samba sont venus raconter cette adaptation express aux températures élevées.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-coupe-du-monde-pas-de-recette-miracle-face-a-la-chaleur-temoignent-lacroix-et-samba_VN-202606110965.html"
+      "date": "2026-06-12T10:45:10+00:00",
+      "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
+      "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
     },
     {
-      "title": "\"Ce serait moche ça\", Mbappé cash sur une piste de Deschamps en sélection après les Bleus",
+      "title": "DIRECT. Coupe du monde 2026: premiers matchs, polémiques, conférences de presse... Toutes les infos du 12 juin en live",
       "source": "RMC Sport",
-      "date": "2026-06-11T19:46:22+00:00",
-      "summary": "Interrogé par M6 avant le coup d'envoi de la Coupe du monde 2026, le capitaine de l’équipe de France, Kylian Mbappé, s’est exprimé sur le sélectionneur Didier Deschamps dont l'avenir après le Mondial est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-serait-moche-ca-mbappe-cash-sur-une-piste-de-deschamps-en-selection-apres-les-bleus_AV-202606110934.html"
+      "date": "2026-06-12T09:52:06+00:00",
+      "summary": "La Coupe du monde 2026 a débuté jeudi par la victoire du Mexique contre l'Afrique du Sud et va se poursuivre jusqu'au 19 juillet. En attendant l'entrée en lice de la France, ne ratez aucune information sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-premiers-matchs-polemiques-conferences-de-presse-toutes-les-infos-du-12-juin-en-live_LN-202606120289.html"
+    },
+    {
+      "title": "Coupe du monde 2026: les deux joueurs les plus excitants du Mondial selon Zlatan Ibrahimovic et Thierry Henry",
+      "source": "RMC Sport",
+      "date": "2026-06-12T09:28:45+00:00",
+      "summary": "Zlatan Ibrahimovic et Thierry Henry ont dévoilé les noms des joueurs qu’ils sont impatients de voir joueur pendant la Coupe du monde 2026. Les deux légendes ont opté pour deux phénomènes de l’équipe de France…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-deux-joueurs-les-plus-excitants-du-mondial-selon-zlatan-ibrahimovic-et-thierry-henry_AV-202606120429.html"
+    },
+    {
+      "title": "\"Je me suis trompé, j'ai pris mes vêtements d'hiver !\" : à Boston, l'équipe de France apprivoise la chaleur, son premier adversaire à la Coupe du monde",
+      "source": "France Info",
+      "date": "2026-06-12T09:17:00+00:00",
+      "summary": "Au lendemain de leur atterrissage aux Etats-Unis, les Bleus ont découvert leur centre d'entraînement pour la compétition, dans la banlieue de Boston, jeudi.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/a-boston-les-bleus-apprivoisent-la-chaleur-leur-premier-adversaire-au-mondial_8056538.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "\"On vient vérifier qu'ils sont bien là\" : avant leur premier match de Coupe du monde, les Bleus attirent les curieux pour leur entraînement à Boston",
+      "source": "France Info",
+      "date": "2026-06-12T07:32:51+00:00",
+      "summary": "Arrivés jeudi à leur camp de base, à Boston, les Bleus ont découvert leur terrain d'entraînement sur le stade de l'université de Bentley et sont déjà épiés par les étudiants restants.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/on-vient-verifier-qu-ils-sont-bien-la-avant-leur-premier-match-de-coupe-du-monde-les-bleus-attirent-les-curieux-pour-leur-entrainement-a-boston_8057015.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde 2026: c'est quoi le ludo, ce jeu qui amuse tant Mbappé, Dembélé et Cherki pendant les voyages des Bleus?",
+      "source": "RMC Sport",
+      "date": "2026-06-12T07:30:16+00:00",
+      "summary": "Les joueurs de l'équipe de France sont arrivés à Boston mercredi, où ils se sont installés pour la Coupe du monde 2026. Et pendant le vol, certains d'entre eux dont le capitaine Kylian Mbappé ont passé le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-c-est-quoi-le-ludo-ce-jeu-qui-amuse-tant-mbappe-dembele-et-cherki-pendant-les-voyages-des-bleus_AV-202606120333.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-12T06:33:22+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "\"Cette équipe de France 2026 est meilleure qu'en 2018\" estime Paul Pogba chez Rothen s'enflamme",
+      "source": "RMC Sport",
+      "date": "2026-06-12T04:23:30+00:00",
+      "summary": "\"Sur le papier, ils sont beaucoup plus forts qu'en 2018, mais c'est le groupe qui joue. Tu as le meilleur joueur du championnat allemand, français, et meilleur buteur du championnat espagnol\", résume Paul…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-cette-equipe-de-france-2026-est-meilleure-qu-en-2018-estime-paul-pogba-chez-rothen-s-enflamme_VN-202606120132.html"
     },
     {
       "title": "Coupe du monde 2026 : à l'ouverture, \"le climat est pesant\", estime le président de la Fédération française de football",
@@ -3183,41 +3253,6 @@
       "date": "2026-06-11T16:53:24+00:00",
       "summary": "\"Il y a un certain nombre de nuages noirs qui flottent sur la planète\", à l'ouverture de la Coupe du monde, estime jeudi Philippe Diallo sur franceinfo.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-a-l-ouverture-le-climat-est-pesant-estime-le-president-de-la-federation-francaise-de-football_8056310.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:32:20+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
-      "title": "Lucas Hernandez",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:32:20+00:00",
-      "summary": "Lucas Hernandez est un footballeur français et l'équipe de France et du Bayern Munich. Il a remporté la Coupe du monde en 2018 en étant titulaire au poste d'arrière gauche. Il peut aussi jouer en défense…",
-      "url": "https://rmcsport.bfmtv.com/football/lucas-hernandez_DN-202211100445.html"
-    },
-    {
-      "title": "\"Il ne faut pas dire des choses comme ça\": Deschamps a appelé Lucas Hernandez après une déclaration sur les Bleus",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:32:20+00:00",
-      "summary": "Dans une interview pour le magazine GQ, Didier Deschamps révèle avoir échangé avec Lucas Hernandez après ses déclarations enflammées de mars dernier. Le défenseur parisien avait expliqué que l'équipe de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/il-ne-faut-pas-dire-des-choses-comme-ca-deschamps-a-appele-lucas-hernandez-apres-une-declaration-sur-les-bleus_AV-202606110779.html"
-    },
-    {
-      "title": "Un handicap pour la France? Le classement des équipes les plus \"fatiguées\" avant la Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:24:18+00:00",
-      "summary": "Selon des statistiques de la BBC, l’équipe de France aborde la Coupe du monde 2026 avec les joueurs ayant le plus joué depuis le 15 juin 2025, il y a un an.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-handicap-pour-la-france-le-classement-des-equipes-les-plus-fatiguees-avant-la-coupe-du-monde_AV-202606110773.html"
-    },
-    {
-      "title": "Coupe du monde 2026: accord trouvé entre la FFF et les Bleus sur les primes et les places pour les familles",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:54:41+00:00",
-      "summary": "Un accord a bien été finalisé ces dernières heures entre la FFF et les joueurs de l'équipe de France concernant les primes de cette Coupe du monde 2026. Mais aussi concernant le nombre de places attribuées…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-accord-trouve-entre-la-fff-et-les-bleus-sur-les-primes-et-les-places-pour-les-familles_AV-202606110689.html"
     },
     {
       "title": "Coupe du monde 2026 : Les Bleus ont pris leur premier bain de foule à Boston",
@@ -3309,597 +3344,576 @@
       "date": "2026-06-08T13:23:20+00:00",
       "summary": "Le sélectionneur dirige son dernier match en tant que sélectionneur sur le sol français, lundi, à Pierre-Mauroy.",
       "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/france-irlande-du-nord-la-deniere-de-didier-deschamps-en-france-devant-son-public-avant-l-amerique_8049197.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Dernier match en France pour Didier Deschamps : \"Ça me touche\", confie Adrien Rabiot au sujet du sélectionneur des Bleus, qui quittera ses fonctions après le Mondial",
-      "source": "France Info",
-      "date": "2026-06-08T10:06:01+00:00",
-      "summary": "La France affronte l'Irlande du Nord ce lundi soir dans le cadre d'un match amical, avant le coup d'envoi de la Coupe du Monde 2026 aux États-Unis. Pour Didier Deschamps, ce Mondial sera le dernier : le…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/dernier-match-en-france-pour-didier-deschamps-ca-me-touche-confie-adrien-rabiot-au-sujet-du-selectionneur-des-bleus-qui-quittera-ses-fonctions-apres-le-mondial_8050244.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
-      "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus vont vivre leur premier entraînement aux Etats-Unis",
+      "title": "Coupe du monde 2026: Rayan Cherki a un petit problème après son arrivée aux Etats-Unis avec les Bleus",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:13:16+00:00",
-      "summary": "La Coupe du monde 2026 se tient du 11 juin au 19 juillet aux Etats-Unis, au Mexique et au Canada, sur fond de tensions autour de l'accueil réservé par les Américains à certaines sélections comme l'Iran ou…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-ouverture-du-mondial-conferences-de-presse-polemiques-blessures-toutes-les-infos-en-live_LN-202606110324.html"
+      "date": "2026-06-12T11:40:09+00:00",
+      "summary": "Rayan Cherki a visiblement eu du mal à digérer le décalage horaire entre la France et les Etats-Unis pour le Mondial. Le milieu offensif tricolore a confié avoir passé une première nuit un peu différente qu’à…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-rayan-cherki-a-un-petit-probleme-apres-son-arrivee-aux-etats-unis-avec-les-bleus_AV-202606120515.html"
     },
     {
-      "title": "Coupe du monde 2026: \"On est vraiment très à l'aise\", les Bleus ont pris leur quartier dans leur camp d’entraînement",
+      "title": "Coupe du monde 2026: un groupe lié à l'Iran affirme avoir hacké des drones du FBI, une nouvelle menace sur le Mondial?",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:08:44+00:00",
-      "summary": "Arrivés mercredi à Boston, les joueurs de l’équipe de France ont participé ce jeudi à leur première séance d’entraînement à l'université de Bentley à Waltham. Malgré la chaleur, les Tricolores sont bien…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-est-vraiment-tres-a-l-aise-les-bleus-ont-pris-leur-quartier-dans-leur-camp-d-entrainement_AD-202606110971.html"
+      "date": "2026-06-12T11:28:50+00:00",
+      "summary": "Le groupe de hackers Handala, lié à l'Iran, dit avoir accédé à des drones FPV utilisés par le FBI aux Etats-Unis, et menace de les écraser durant la Coupe du monde sur \"certaines équipes\".",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-groupe-lie-a-l-iran-affirme-avoir-hacke-des-drones-du-fbi-une-nouvelle-menace-sur-le-mondial_AV-202606120514.html"
     },
     {
-      "title": "DIRECT. Mexique-Afrique du Sud: deux buts, trois rouges... Match d'ouverture à rebondissements à Mexico",
+      "title": "Coupe du monde 2026: seize ans après, le chambrage du Mexicain Quinones après son but face à l'Afrique du Sud",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:08:07+00:00",
-      "summary": "Entrée en matière réussie pour le Mexique, largement supérieur à une faible Afrique du Sud, jeudi pour le coup d'envoi de son Mondial (2-0). Grâce à ses attaquants Julian Quinones et Raul Jimenez, le pays…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-afrique-du-sud-suivez-en-live-la-ceremonie-et-le-match-d-ouverture-de-la-coupe-du-monde-2026-en-live_LS-202606110394.html"
+      "date": "2026-06-12T11:07:14+00:00",
+      "summary": "La Coupe du monde 2026 s'est ouverte jeudi avec un match à rebondissements remporté par le Mexique face à l'Afrique du Sud (2-0). Auteur du premier but à la 9e minute, Julian Quinones a célébré en reprenant…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-seize-ans-apres-le-chambrage-du-mexicain-quinones-apres-son-but-face-a-l-afrique-du-sud_AV-202606120507.html"
     },
     {
-      "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe A",
+      "title": "THIERRY HENRY QUI ? Le foot loin d'être roi aux US - Daily#02",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:06:32+00:00",
-      "summary": "Le match d'ouverture de la Coupe du monde 2026 a vu le Mexique l'emporter tranquillement ce jeudi face à l'Afrique du Sud (2-0), au stade Azteca de Mexico. Dans ce groupe A, la Corée du Sud et la Tchéquie…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-a_AV-202606110970.html"
+      "date": "2026-06-12T11:00:48+00:00",
+      "summary": "Il paraît que les Etats-Unis ne sont pas un pays de foot. Pourtant, David Beckham a son étoile à Hollywood, Thierry Henry une rue à son nom à Manhattan et Kylian Mbappé est l'un des visages les plus connus de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-thierry-henry-qui-le-foot-loin-d-etre-roi-aux-us-daily-02_VN-202606120506.html"
     },
     {
-      "title": "Coupe du monde : \"pas de recette miracle\" face à la chaleur témoignent Lacroix et Samba",
+      "title": "Coupe du monde 2026: \"Il ne faut pas être aussi dur avec lui\", Dembélé prend la défense de Mbappé face aux critiques",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:47:24+00:00",
-      "summary": "Les Bleus sont bien arrivés à Boston pour débuter leur Coupe du monde 2026. Sous la chaleur américaine, Maxence Lacroix et Brice Samba sont venus raconter cette adaptation express aux températures élevées.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-coupe-du-monde-pas-de-recette-miracle-face-a-la-chaleur-temoignent-lacroix-et-samba_VN-202606110965.html"
+      "date": "2026-06-12T10:45:10+00:00",
+      "summary": "Ousmane Dembélé s’est exprimé en marge des débuts de l’équipe de France au Mondial 2026. La star de l’équipe de France a pris la défense de Kylian Mbappé face aux nombreuses critiques contre lui.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-faut-pas-etre-aussi-dur-avec-lui-dembele-prend-la-defense-de-mbappe-face-aux-critiques_AV-202606120488.html"
     },
     {
-      "title": "Coupe du monde 2026: l'ambiance enfin au rendez-vous aux Etats-Unis et au Mexique",
+      "title": "Coupe du monde 2026: un stade annoncé plein mais des centaines de sièges vides dès le deuxième match",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:34:31+00:00",
-      "summary": "Lancée jeudi au stade Aztèque, la Coupe du monde 2026 a débuté dans une ambiance de fête à Mexico. On a aussi enfin ressenti l'atmosphère du Mondial dans les rues de Los Angeles.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-afrique-du-sud-l-ambiance-coupe-du-monde-enfin-au-rendez-vous-aux-etats-unis-et-au-mexique_AV-202606110957.html"
+      "date": "2026-06-12T10:00:43+00:00",
+      "summary": "Malgré l'annonce d'un stade plein et la promesse d'une billetterie prise d'assaut la veille par Gianni Infantino, plusieurs centaines de places sont restées vides lors du match Corée du Sud-Tchéquie (2-1),…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-stade-annonce-plein-mais-des-centaines-de-sieges-vides-des-le-deuxieme-match_AV-202606120457.html"
     },
     {
-      "title": "Coupe du monde 2026: la Fifa dévoile le salaire de son président, Gianni Infantino",
+      "title": "DIRECT. Coupe du monde 2026: premiers matchs, polémiques, conférences de presse... Toutes les infos du 12 juin en live",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:25:09+00:00",
-      "summary": "Tous les ans, la Fifa publie le montant des salaires de tous ses employés. Gianni Infantino, le président de l'organisation mondiale du football, ne fait pas exception.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-fifa-devoile-le-salaire-de-son-president-gianni-infantino_AV-202606110950.html"
+      "date": "2026-06-12T09:52:06+00:00",
+      "summary": "La Coupe du monde 2026 a débuté jeudi par la victoire du Mexique contre l'Afrique du Sud et va se poursuivre jusqu'au 19 juillet. En attendant l'entrée en lice de la France, ne ratez aucune information sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-premiers-matchs-polemiques-conferences-de-presse-toutes-les-infos-du-12-juin-en-live_LN-202606120289.html"
     },
     {
-      "title": "\"Ce serait moche ça\", Mbappé cash sur une piste de Deschamps en sélection après les Bleus",
+      "title": "Coupe du monde 2026: les deux joueurs les plus excitants du Mondial selon Zlatan Ibrahimovic et Thierry Henry",
       "source": "RMC Sport",
-      "date": "2026-06-11T19:46:22+00:00",
-      "summary": "Interrogé par M6 avant le coup d'envoi de la Coupe du monde 2026, le capitaine de l’équipe de France, Kylian Mbappé, s’est exprimé sur le sélectionneur Didier Deschamps dont l'avenir après le Mondial est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-serait-moche-ca-mbappe-cash-sur-une-piste-de-deschamps-en-selection-apres-les-bleus_AV-202606110934.html"
+      "date": "2026-06-12T09:28:45+00:00",
+      "summary": "Zlatan Ibrahimovic et Thierry Henry ont dévoilé les noms des joueurs qu’ils sont impatients de voir joueur pendant la Coupe du monde 2026. Les deux légendes ont opté pour deux phénomènes de l’équipe de France…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-deux-joueurs-les-plus-excitants-du-mondial-selon-zlatan-ibrahimovic-et-thierry-henry_AV-202606120429.html"
     },
     {
-      "title": "Mexique-Afrique du Sud: la vidéo du premier but de la Coupe du monde 2026 signé Quinones",
+      "title": "Etats-Unis - Paraguay: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
       "source": "RMC Sport",
-      "date": "2026-06-11T19:35:48+00:00",
-      "summary": "Le Mexicain Julian Quinones a marqué ce jeudi le premier but de la Coupe du monde 2026, à l'occasion du match d'ouverture opposant Mexique à l'Afrique du Sud au stade Azteca.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-afrique-du-sud-la-video-du-premier-but-de-la-coupe-du-monde-2026-signe-quinones_AV-202606110929.html"
+      "date": "2026-06-12T08:00:00+00:00",
+      "summary": "La Coupe du monde 2026 débute dans le groupe D. Pays co-organisateur, les États-Unis lancent leur tournoi face au Paraguay, à Los Angeles, devant leur public. Voici toutes les informations pour suivre cette…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/usa-paraguay-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-la-coupe-du-monde-2026-en-direct_AN-202606120024.html"
     },
     {
-      "title": "\"J’ai honte de ce qu’est devenu mon sport\": pourquoi Dugarry est très en colère avant la Coupe du monde 2026",
+      "title": "Coupe du monde 2026: pourquoi le Mexicain Raul Jimenez porte un bandeau alors qu'il a les cheveux courts",
       "source": "RMC Sport",
-      "date": "2026-06-11T18:31:53+00:00",
-      "summary": "Avant le match d’ouverture de la Coupe du monde 2026 Mexique-Afrique du Sud (21h), Christophe Dugarry a exprimé sa colère concernant les multiples polémiques qui entourent la compétition depuis quelques jours.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/j-ai-honte-de-ce-qu-est-devenu-mon-sport-pourquoi-dugarry-est-tres-en-colere-avant-la-coupe-du-monde-2026_AV-202606110894.html"
+      "date": "2026-06-12T07:52:48+00:00",
+      "summary": "À 35 ans, Raul Jimenez a inscrit le premier but de sa carrière en Coupe du monde jeudi lors de la victoire du Mexique contre l'Afrique du Sud (2-0). L'attaquant a fondu en larmes près de six ans après avoir…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-le-mexicain-raul-jimenez-porte-un-bandeau-alors-qu-il-a-les-cheveux-courts_AV-202606120356.html"
     },
     {
-      "title": "Coupe du monde 2026: la belle histoire d'amour entre une supportrice sud-africaine et un fan mexicain, 16 ans après leur rencontre au Mondial 2010",
+      "title": "Coupe du monde 2026: c'est quoi le ludo, ce jeu qui amuse tant Mbappé, Dembélé et Cherki pendant les voyages des Bleus?",
       "source": "RMC Sport",
-      "date": "2026-06-11T17:36:50+00:00",
-      "summary": "Omar et Charlene sont deux supporters du Mexique et de l'Afrique du Sud qui se sont rencontrés lors du Mondial 2010 en Afrique du Sud. 16 ans plus tard, le couple désormais marié va assister au match…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-belle-histoire-d-amour-entre-une-supportrice-sud-africaine-et-un-fan-mexicain-16-ans-apres-leur-rencontre-au-mondial-2010_AV-202606110846.html"
+      "date": "2026-06-12T07:30:16+00:00",
+      "summary": "Les joueurs de l'équipe de France sont arrivés à Boston mercredi, où ils se sont installés pour la Coupe du monde 2026. Et pendant le vol, certains d'entre eux dont le capitaine Kylian Mbappé ont passé le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-c-est-quoi-le-ludo-ce-jeu-qui-amuse-tant-mbappe-dembele-et-cherki-pendant-les-voyages-des-bleus_AV-202606120333.html"
     },
     {
-      "title": "\"Nous sommes tous hypocrites\": les mots forts du sélectionneur norvégien sur les polémiques de la Coupe du monde 2026",
+      "title": "Canada - Bosnie-Herzégovine: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
       "source": "RMC Sport",
-      "date": "2026-06-11T17:11:41+00:00",
-      "summary": "Avant même de débuter ce jeudi par une affiche entre le Mexique et l'Afrique du Sud (21h), la Coupe du monde 2026 a été plombée par une succession de polémiques. En conférence de presse, le sélectionneur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/nous-sommes-tous-hypocrites-les-mots-forts-du-selectionneur-norvegien-sur-les-polemiques-de-la-coupe-du-monde-2026_AV-202606110823.html"
+      "date": "2026-06-12T07:10:26+00:00",
+      "summary": "Deuxième pays hôte de la Coupe du monde 2026 à lancer sa compétition après le Mexique, le Canada affronte la Bosnie-Herzégovine ce vendredi au BMO Field de Toronto. Un duel entre les coéquipiers de Jonathan…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/canada-bosnie-herzegovine-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606120316.html"
     },
     {
-      "title": "Coupe du monde 2026: \"Il m'a demandé si j'étais bourré\", comment Ouédraogo a appris sa sélection de dernière minute avec l'Allemagne",
+      "title": "Coupe du monde 2026: \"Il ne s’agit pas d’une rechute\", les explications surprenantes d'Aguerd sur son forfait avec le Maroc",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:37:32+00:00",
-      "summary": "Assan Ouédraogo a été appelé à la dernière minute par Julian Nagelsmann après le forfait de Lennart Karl pour disputer la Coupe du monde avec l'Allemagne. Le jeune milieu de terrain a avoué en conférence de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-m-a-demande-si-j-etais-bourre-comment-ouedraogo-a-appris-sa-selection-de-derniere-minute-avec-l-allemagne_AV-202606110786.html"
+      "date": "2026-06-12T05:57:18+00:00",
+      "summary": "Pourtant présent à l'entraînement mercredi, Nayef Aguerd est finalement forfait pour la Coupe du monde 2026, comme l'a acté l'équipe du Maroc jeudi. Le défenseur, qui a traîné une blessure aux adducteurs tout…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-s-agit-pas-d-une-rechute-les-explications-surprenantes-d-aguerd-sur-son-forfait-avec-le-maroc_AV-202606120229.html"
     },
     {
-      "title": "Un handicap pour la France? Le classement des équipes les plus \"fatiguées\" avant la Coupe du monde",
+      "title": "Coupe du monde 2026: pourquoi tous les joueurs portent des chaussures roses?",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:24:18+00:00",
-      "summary": "Selon des statistiques de la BBC, l’équipe de France aborde la Coupe du monde 2026 avec les joueurs ayant le plus joué depuis le 15 juin 2025, il y a un an.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-handicap-pour-la-france-le-classement-des-equipes-les-plus-fatiguees-avant-la-coupe-du-monde_AV-202606110773.html"
+      "date": "2026-06-12T05:37:52+00:00",
+      "summary": "Les deux premiers matchs de la Coupe du monde 2026 ont affiché la couleur tendance de cette édition pour les chaussures: le rose, porté par une très grande majorité des joueurs.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-tous-les-joueurs-portent-des-chaussures-roses_AV-202606120212.html"
     },
     {
-      "title": "Coupe du Monde 2026: des encas à grignoter devant le match d'ouverture Mexique-Afrique du Sud",
+      "title": "Corée du sud-Tchéquie: la Corée du Sud renverse tout et lance sa Coupe du monde 2026 par un succès",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:07:43+00:00",
-      "summary": "À l'occasion du Mondial de football qui s'ouvre ce jeudi 11 juin, avec le match Mexique - Afrique du Sud, la cheffe mexicaine Mercedes Ahumada propose des snacks à déguster devant sa télé.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-des-encas-a-grignoter-devant-le-match-d-ouverture-mexique-afrique-du-sud_AV-202606110754.html"
+      "date": "2026-06-12T05:12:40+00:00",
+      "summary": "Deuxième match de la Coupe du monde 2026 au programme avec la Corée du Sud qui affrontait la Tchéquie dans la nuit de jeudi à vendredi, et qui s'est imposée.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coree-du-sud-tchequie-suivez-le-2e-match-de-la-coupe-du-monde-2026-en-live_LS-202606110598.html"
     },
     {
-      "title": "Coupe du monde 2026: \"Un écran noir au moment d'un penalty\", l'Arcom lance la chasse au streaming illégal via les IPTV",
+      "title": "Coupe du monde 2026: un fan allemand a fait une crise cardiaque avant le match d'ouverture",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:00:34+00:00",
-      "summary": "A l'heure du lancement de la Coupe du monde 2026, l'Arcom met en place son dispositif testé lors de Roland-Garros consistant à s'attaquer plus durement au streaming illégal via les IPTV. Seul 54 des 104…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-ecran-noir-au-moment-d-un-penalty-l-arcom-lance-la-chasse-au-streaming-illegal-via-les-iptv_AV-202606110739.html"
+      "date": "2026-06-12T05:08:00+00:00",
+      "summary": "Un spectateur allemand a été victime d'une crise cardiaque sur le parvis du stade Azteca avant le match d'ouverture de la Coupe du monde entre le Mexique et l'Afrique du Sud (2-0), jeudi.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-fan-allemand-a-fait-une-crise-cardiaque-avant-le-match-d-ouverture_AV-202606120180.html"
     },
     {
-      "title": "Coupe du monde 2026: double bonne nouvelle pour l'Espagne concernant Lamine Yamal et Nico Williams",
+      "title": "Deux buts, 3 expulsions, le Mondial est parti fort, classement et résultats de la Coupe du monde",
       "source": "RMC Sport",
-      "date": "2026-06-11T15:10:10+00:00",
-      "summary": "Tous les deux blessés depuis plusieurs semaines, Lamine Yamal et Nico Williams devraient pouvoir jouer lors du premier match de l'Espagne à la Coupe du monde 2026 selon la Cadena Ser. Des nouvelles…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-double-bonne-nouvelle-pour-l-espagne-concernant-lamine-yamal-et-nico-williams_AV-202606110704.html"
+      "date": "2026-06-12T04:34:51+00:00",
+      "summary": "Le Mexique s'est imposé dans le match d'ouverture de la Coupe du monde 2026, contre l'Afrique du Sud. Le pays hôte a même joué une partie du match à 11 contre 9, avant d'être réduit à 10. Dans l'autre match…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-deux-buts-3-expulsions-le-mondial-est-parti-fort-classement-et-resultats-de-la-coupe-du-monde_VN-202606120144.html"
     },
     {
-      "title": "Coupe du monde 2026: accord trouvé entre la FFF et les Bleus sur les primes et les places pour les familles",
+      "title": "Coupe du monde 2026: deux fans mexicains se filment sur un but de leur équipe et deviennent la risée du monde",
       "source": "RMC Sport",
-      "date": "2026-06-11T14:54:41+00:00",
-      "summary": "Un accord a bien été finalisé ces dernières heures entre la FFF et les joueurs de l'équipe de France concernant les primes de cette Coupe du monde 2026. Mais aussi concernant le nombre de places attribuées…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-accord-trouve-entre-la-fff-et-les-bleus-sur-les-primes-et-les-places-pour-les-familles_AV-202606110689.html"
-    },
-    {
-      "title": "Coupe du monde 2026: six-mètres, touches, changements... Tout savoir sur les nouvelles règles contre le gain de temps",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:44:57+00:00",
-      "summary": "La Coupe du monde 2026, qui débute ce jeudi 11 juin, va permettre à la Fifa d'étrenner une série de nouvelles règles. Parmi celles-ci, la possibilité pour l'arbitre de sanctionner les équipes qui cherchent à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-six-metres-touches-changements-tout-savoir-sur-les-nouvelles-regles-du-compte-a-rebours_AV-202606110679.html"
-    },
-    {
-      "title": "Sandwichs, bière et sodas: les spectateurs attablés au bord de la pelouse lors d’Angleterre-Costa Rica à Orlando amusent les réseaux",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:44:40+00:00",
-      "summary": "Lors du match de préparation à la Coupe du monde 2026 entre l’Angleterre et le Costa Rica, mercredi à Orlando (3-0), des tables étaient dressées le long du terrain, avec boisson et nourriture pour les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sandwichs-biere-et-sodas-les-spectateurs-attables-au-bord-de-la-pelouse-lors-d-angleterre-costa-rica-a-orlando-amusent-les-reseaux_AV-202606110678.html"
-    },
-    {
-      "title": "Interdiction des fan zones en cas de débordement: le rappel du ministre de l'Intérieur avant la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:39:47+00:00",
-      "summary": "Alors que plusieurs fan zones et sites accueillant du public vont ouvrir en France pour la Coupe du monde 2026, le ministre de l'Intérieur a adressé un message de fermeté aux préfets et responsables de police…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/interdiction-des-fan-zones-en-cas-de-debordement-le-rappel-du-ministre-de-l-interieur-avant-la-coupe-du-monde-2026_AV-202606110673.html"
+      "date": "2026-06-12T04:18:32+00:00",
+      "summary": "Deux fans mexicains surpris en train de filmer leur célébration sur le but de Raul Jimenez lors de la victoire contre l'Afrique du Sud (2-0) sont devenus viraux sur les réseaux sociaux et symbolisent une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-fans-mexicains-se-filment-sur-un-but-de-leur-equipe-et-deviennent-la-risee-du-monde_AV-202606120122.html"
     }
   ],
   "all_news": [
     {
-      "title": "Mexique 2-0 Afrique du Sud : Le Mexique réussit son entrée dans la compétition, les comms RMC",
+      "title": "Coupe du monde 2026: Rayan Cherki a un petit problème après son arrivée aux Etats-Unis avec les Bleus",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:27:38+00:00",
-      "summary": "Entrée en matière réussie pour le Mexique, qui s'est imposé face à l'Afrique du Sud ce jeudi pour le coup d'envoi de la Coupe du monde (2-0). Revivez les meilleurs moments de la rencontre avec les comms RMC.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-mexique-2-0-afrique-du-sud-le-mexique-reussit-son-entree-dans-la-competition-les-comms-rmc_VN-202606110988.html"
+      "date": "2026-06-12T11:40:09+00:00",
+      "summary": "Rayan Cherki a visiblement eu du mal à digérer le décalage horaire entre la France et les Etats-Unis pour le Mondial. Le milieu offensif tricolore a confié avoir passé une première nuit un peu différente qu’à…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-rayan-cherki-a-un-petit-probleme-apres-son-arrivee-aux-etats-unis-avec-les-bleus_AV-202606120515.html"
     },
     {
-      "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus vont vivre leur premier entraînement aux Etats-Unis",
+      "title": "Coupe du monde 2026: un groupe lié à l'Iran affirme avoir hacké des drones du FBI, une nouvelle menace sur le Mondial?",
       "source": "RMC Sport",
-      "date": "2026-06-11T21:13:16+00:00",
-      "summary": "La Coupe du monde 2026 se tient du 11 juin au 19 juillet aux Etats-Unis, au Mexique et au Canada, sur fond de tensions autour de l'accueil réservé par les Américains à certaines sélections comme l'Iran ou…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-ouverture-du-mondial-conferences-de-presse-polemiques-blessures-toutes-les-infos-en-live_LN-202606110324.html"
+      "date": "2026-06-12T11:28:50+00:00",
+      "summary": "Le groupe de hackers Handala, lié à l'Iran, dit avoir accédé à des drones FPV utilisés par le FBI aux Etats-Unis, et menace de les écraser durant la Coupe du monde sur \"certaines équipes\".",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-groupe-lie-a-l-iran-affirme-avoir-hacke-des-drones-du-fbi-une-nouvelle-menace-sur-le-mondial_AV-202606120514.html"
     },
     {
-      "title": "Revivez la victoire du Mexique contre l’Afrique du Sud (2-0)",
+      "title": "Alavés se sépare de Mariano Díaz",
       "source": "SO FOOT",
-      "date": "2026-06-11T21:10:52+00:00",
+      "date": "2026-06-12T11:13:24+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-mexique-afrique-du-sud"
+      "url": "https://www.sofoot.com/breves/alaves-se-separe-de-mariano-diaz"
     },
     {
-      "title": "Coupe du monde 2026: \"On est vraiment très à l'aise\", les Bleus ont pris leur quartier dans leur camp d’entraînement",
-      "source": "RMC Sport",
-      "date": "2026-06-11T21:08:44+00:00",
-      "summary": "Arrivés mercredi à Boston, les joueurs de l’équipe de France ont participé ce jeudi à leur première séance d’entraînement à l'université de Bentley à Waltham. Malgré la chaleur, les Tricolores sont bien…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-est-vraiment-tres-a-l-aise-les-bleus-ont-pris-leur-quartier-dans-leur-camp-d-entrainement_AD-202606110971.html"
-    },
-    {
-      "title": "DIRECT. Mexique-Afrique du Sud: deux buts, trois rouges... Match d'ouverture à rebondissements à Mexico",
-      "source": "RMC Sport",
-      "date": "2026-06-11T21:08:07+00:00",
-      "summary": "Entrée en matière réussie pour le Mexique, largement supérieur à une faible Afrique du Sud, jeudi pour le coup d'envoi de son Mondial (2-0). Grâce à ses attaquants Julian Quinones et Raul Jimenez, le pays…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-afrique-du-sud-suivez-en-live-la-ceremonie-et-le-match-d-ouverture-de-la-coupe-du-monde-2026-en-live_LS-202606110394.html"
-    },
-    {
-      "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe A",
-      "source": "RMC Sport",
-      "date": "2026-06-11T21:06:32+00:00",
-      "summary": "Le match d'ouverture de la Coupe du monde 2026 a vu le Mexique l'emporter tranquillement ce jeudi face à l'Afrique du Sud (2-0), au stade Azteca de Mexico. Dans ce groupe A, la Corée du Sud et la Tchéquie…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-a_AV-202606110970.html"
-    },
-    {
-      "title": "Mondial 2026 : Le Mexique lance parfaitement sa Coupe du monde face à l’Afrique du Sud",
+      "title": "Mercato : Le Bayern Munich prêt à refuser une offre dingue pour Michael Olise",
       "source": "SO FOOT",
-      "date": "2026-06-11T21:05:09+00:00",
-      "summary": "On a déjà un qualifié pour les 16es.",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-mexique-lance-parfaitement-sa-coupe-du-monde-face-a-lafrique-du-sud"
-    },
-    {
-      "title": "Coupe du monde : \"pas de recette miracle\" face à la chaleur témoignent Lacroix et Samba",
-      "source": "RMC Sport",
-      "date": "2026-06-11T20:47:24+00:00",
-      "summary": "Les Bleus sont bien arrivés à Boston pour débuter leur Coupe du monde 2026. Sous la chaleur américaine, Maxence Lacroix et Brice Samba sont venus raconter cette adaptation express aux températures élevées.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-coupe-du-monde-pas-de-recette-miracle-face-a-la-chaleur-temoignent-lacroix-et-samba_VN-202606110965.html"
-    },
-    {
-      "title": "Japon : Forfait pour la Coupe du monde, Wataru Endo annonce sa retraite internationale",
-      "source": "SO FOOT",
-      "date": "2026-06-11T20:39:24+00:00",
+      "date": "2026-06-12T11:08:24+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/breves/japon-forfait-pour-la-coupe-du-monde-wataru-endo-annonce-sa-retraite-internationale"
+      "url": "https://www.sofoot.com/breves/mercato-le-bayern-munich-pret-a-refuser-une-offre-dingue-pour-michael-olise"
     },
     {
-      "title": "Coupe du monde 2026: l'ambiance enfin au rendez-vous aux Etats-Unis et au Mexique",
+      "title": "Coupe du monde 2026: seize ans après, le chambrage du Mexicain Quinones après son but face à l'Afrique du Sud",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:34:31+00:00",
-      "summary": "Lancée jeudi au stade Aztèque, la Coupe du monde 2026 a débuté dans une ambiance de fête à Mexico. On a aussi enfin ressenti l'atmosphère du Mondial dans les rues de Los Angeles.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-afrique-du-sud-l-ambiance-coupe-du-monde-enfin-au-rendez-vous-aux-etats-unis-et-au-mexique_AV-202606110957.html"
+      "date": "2026-06-12T11:07:14+00:00",
+      "summary": "La Coupe du monde 2026 s'est ouverte jeudi avec un match à rebondissements remporté par le Mexique face à l'Afrique du Sud (2-0). Auteur du premier but à la 9e minute, Julian Quinones a célébré en reprenant…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-seize-ans-apres-le-chambrage-du-mexicain-quinones-apres-son-but-face-a-l-afrique-du-sud_AV-202606120507.html"
     },
     {
-      "title": "Coupe du monde 2026 : les Bleus ont-ils pris un risque en arrivant tardivement aux États-Unis ?",
+      "title": "THIERRY HENRY QUI ? Le foot loin d'être roi aux US - Daily#02",
+      "source": "RMC Sport",
+      "date": "2026-06-12T11:00:48+00:00",
+      "summary": "Il paraît que les Etats-Unis ne sont pas un pays de foot. Pourtant, David Beckham a son étoile à Hollywood, Thierry Henry une rue à son nom à Manhattan et Kylian Mbappé est l'un des visages les plus connus de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-thierry-henry-qui-le-foot-loin-d-etre-roi-aux-us-daily-02_VN-202606120506.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Will Still signe son retour en Ligue 1",
+      "source": "RMC Sport",
+      "date": "2026-06-12T10:59:35+00:00",
+      "summary": "Suivez en live toutes les infos et rumeurs du mercato déjà agité dans certains clubs comme le Real Madrid avec l'arrivée de José Mourinho et de plusieurs joueurs. Les clubs s'activent dans l'ombre de la Coupe…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-12-juin-2026_LN-202606120382.html"
+    },
+    {
+      "title": "Jürgen Klopp n’a pas été séduit par le match d’ouverture",
       "source": "SO FOOT",
-      "date": "2026-06-11T20:25:22+00:00",
+      "date": "2026-06-12T10:53:07+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-les-bleus-ont-ils-pris-une-risque-en-arrivant-tardivement-aux-etats-unis"
+      "url": "https://www.sofoot.com/breves/jurgen-klopp-na-pas-ete-seduit-par-le-match-douverture"
     },
     {
-      "title": "Coupe du monde 2026: la Fifa dévoile le salaire de son président, Gianni Infantino",
+      "title": "Mercato: qui est Dino Toppmöller, le futur entraîneur du RC Lens?",
       "source": "RMC Sport",
-      "date": "2026-06-11T20:25:09+00:00",
-      "summary": "Tous les ans, la Fifa publie le montant des salaires de tous ses employés. Gianni Infantino, le président de l'organisation mondiale du football, ne fait pas exception.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-fifa-devoile-le-salaire-de-son-president-gianni-infantino_AV-202606110950.html"
+      "date": "2026-06-12T10:51:08+00:00",
+      "summary": "Il n'y a plus de surprise quant à l'identité du prochain entraîneur du RC Lens. Dino Toppmöller va s'engager pour deux saisons avec Lens.",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/rc-lens/mercato-qui-est-dino-toppmoller-le-futur-entraineur-du-rc-lens_AV-202606120492.html"
     },
     {
-      "title": "Mondial 2026 : Le but mexicain parmi les plus rapides de l’histoire de la Coupe du monde",
+      "title": "\"On va passer 3000 litres de bière\": la Coupe du monde, période décisive pour les bars et restaurants",
+      "source": "RMC Sport",
+      "date": "2026-06-12T10:46:49+00:00",
+      "summary": "C'est le mois le plus attendu de l'année pour les bars et restaurant avec le début de la Coupe du monde. Dans ce secteur en difficulté, on espère que la fréquentation sera au rendez-vous.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/on-va-passer-3000-litres-de-biere-la-coupe-du-monde-periode-decisive-pour-les-bars-et-restaurants_AV-202606120489.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Il ne faut pas être aussi dur avec lui\", Dembélé prend la défense de Mbappé face aux critiques",
+      "source": "RMC Sport",
+      "date": "2026-06-12T10:45:10+00:00",
+      "summary": "Ousmane Dembélé s’est exprimé en marge des débuts de l’équipe de France au Mondial 2026. La star de l’équipe de France a pris la défense de Kylian Mbappé face aux nombreuses critiques contre lui.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-faut-pas-etre-aussi-dur-avec-lui-dembele-prend-la-defense-de-mbappe-face-aux-critiques_AV-202606120488.html"
+    },
+    {
+      "title": "Ousmane Dembélé",
+      "source": "RMC Sport",
+      "date": "2026-06-12T10:45:10+00:00",
+      "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
+      "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
+    },
+    {
+      "title": "Le sélectionneur de l’Australie Tony Popovic prolonge avant son entrée en lice en Coupe du monde",
       "source": "SO FOOT",
-      "date": "2026-06-11T19:56:17+00:00",
+      "date": "2026-06-12T10:19:43+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-but-mexicain-parmi-les-plus-rapides-de-lhistoire-de-la-coupe-du-monde"
+      "url": "https://www.sofoot.com/breves/le-selectionneur-de-laustralie-tony-popovic-prolonge-avant-leur-entree-en-lice-en-coupe-du-monde"
     },
     {
-      "title": "\"Ce serait moche ça\", Mbappé cash sur une piste de Deschamps en sélection après les Bleus",
-      "source": "RMC Sport",
-      "date": "2026-06-11T19:46:22+00:00",
-      "summary": "Interrogé par M6 avant le coup d'envoi de la Coupe du monde 2026, le capitaine de l’équipe de France, Kylian Mbappé, s’est exprimé sur le sélectionneur Didier Deschamps dont l'avenir après le Mondial est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-serait-moche-ca-mbappe-cash-sur-une-piste-de-deschamps-en-selection-apres-les-bleus_AV-202606110934.html"
-    },
-    {
-      "title": "Mexique-Afrique du Sud: la vidéo du premier but de la Coupe du monde 2026 signé Quinones",
-      "source": "RMC Sport",
-      "date": "2026-06-11T19:35:48+00:00",
-      "summary": "Le Mexicain Julian Quinones a marqué ce jeudi le premier but de la Coupe du monde 2026, à l'occasion du match d'ouverture opposant Mexique à l'Afrique du Sud au stade Azteca.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-afrique-du-sud-la-video-du-premier-but-de-la-coupe-du-monde-2026-signe-quinones_AV-202606110929.html"
-    },
-    {
-      "title": "En direct : États-Unis – Paraguay",
+      "title": "Le Lensois Nidal Čelik forfait pour la Coupe du monde avec la Bosnie-Herzégovine",
       "source": "SO FOOT",
-      "date": "2026-06-11T19:35:14+00:00",
+      "date": "2026-06-12T10:05:50+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-etats-unis-paraguay"
+      "url": "https://www.sofoot.com/breves/le-lensois-nidal-celik-forfait-pour-la-coupe-du-monde-avec-la-bosnie-herzegovine"
     },
     {
-      "title": "Mercato: le Real Madrid poursuit ses grandes manœuvres, Bernardo Silva en approche",
+      "title": "Top 10 : ils ont un lien fort avec les États-Unis, participeront à la Coupe du monde 2026 mais pas avec la Team USA",
+      "source": "SO FOOT",
+      "date": "2026-06-12T10:00:57+00:00",
+      "summary": "Un petit tour de table qui ne plaira pas à Mauricio Pochettino.",
+      "url": "https://www.sofoot.com/articles/top-10-ils-ont-un-lien-fort-avec-les-etats-unis-participeront-a-la-coupe-du-monde-2026-mais-pas-avec-la-team-usa"
+    },
+    {
+      "title": "Coupe du monde 2026: un stade annoncé plein mais des centaines de sièges vides dès le deuxième match",
       "source": "RMC Sport",
-      "date": "2026-06-11T19:27:55+00:00",
-      "summary": "Libre de tout contrat après son départ de Manchester City, Bernardo Silva devrait s'engager avec le Real Madrid, selon le journaliste italien Fabrizio Romano.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-le-real-madrid-poursuit-ses-grandes-man-uvres-bernardo-silva-en-approche_AV-202606110927.html"
-    },
-    {
-      "title": "Mondial 2026 : Les Bleus ont fait plier la FFF concernant les primes et les places pour les matchs",
-      "source": "SO FOOT",
-      "date": "2026-06-11T19:26:57+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-les-bleus-ont-fait-plier-la-fff-concernant-les-primes-et-les-places-pour-les-matchs"
-    },
-    {
-      "title": "Le Real Madrid officialise l’arrivée de José Mourinho",
-      "source": "SO FOOT",
-      "date": "2026-06-11T18:58:25+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/le-real-madrid-officialise-larrivee-de-jose-mourinho"
-    },
-    {
-      "title": "Mercato: c'est officiel, José Mourinho est de retour au Real Madrid",
-      "source": "RMC Sport",
-      "date": "2026-06-11T18:55:28+00:00",
-      "summary": "Il ne manquait plus que l'annonce officielle, c'est désormais chose faite: José Mourinho est le nouvel entraîneur du Real Madrid, 13 ans après son premier passage au club.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-c-est-officiel-jose-mourinho-est-de-retour-au-real-madrid_AV-202606110908.html"
-    },
-    {
-      "title": "Mondial 2026 : Suivez la cérémonie d’ouverture en direct",
-      "source": "SO FOOT",
-      "date": "2026-06-11T18:48:44+00:00",
-      "summary": "Et c’est parti pour un long mois de folies...",
-      "url": "https://www.sofoot.com/articles/mondial-2026-suivez-la-ceremonie-douverture-en-direct"
-    },
-    {
-      "title": "\"J’ai honte de ce qu’est devenu mon sport\": pourquoi Dugarry est très en colère avant la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-11T18:31:53+00:00",
-      "summary": "Avant le match d’ouverture de la Coupe du monde 2026 Mexique-Afrique du Sud (21h), Christophe Dugarry a exprimé sa colère concernant les multiples polémiques qui entourent la compétition depuis quelques jours.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/j-ai-honte-de-ce-qu-est-devenu-mon-sport-pourquoi-dugarry-est-tres-en-colere-avant-la-coupe-du-monde-2026_AV-202606110894.html"
-    },
-    {
-      "title": "Harris Belkebla prolonge officiellement avec le SCO",
-      "source": "SO FOOT",
-      "date": "2026-06-11T18:24:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/harris-belkebla-prolonge-officiellement-avec-le-sco"
-    },
-    {
-      "title": "DIRECT. Mercato: Mourinho de retour au Real, c'est officiel",
-      "source": "RMC Sport",
-      "date": "2026-06-11T18:21:35+00:00",
-      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui ouvrira ses portes le lundi 15 juin en France. Les choses s'agitent avant la Coupe du monde, notamment sur les bancs de plusieurs clubs de Ligue 1…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-8-juin-2026_LN-202606080240.html"
-    },
-    {
-      "title": "Zinédine Zidane fait construire un complexe de padel sur une parcelle agricole",
-      "source": "SO FOOT",
-      "date": "2026-06-11T18:08:58+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/zinedine-zidane-fait-construire-un-complexe-de-padel-sur-une-parcelle-agricole"
-    },
-    {
-      "title": "Coupe du monde 2026: la belle histoire d'amour entre une supportrice sud-africaine et un fan mexicain, 16 ans après leur rencontre au Mondial 2010",
-      "source": "RMC Sport",
-      "date": "2026-06-11T17:36:50+00:00",
-      "summary": "Omar et Charlene sont deux supporters du Mexique et de l'Afrique du Sud qui se sont rencontrés lors du Mondial 2010 en Afrique du Sud. 16 ans plus tard, le couple désormais marié va assister au match…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-belle-histoire-d-amour-entre-une-supportrice-sud-africaine-et-un-fan-mexicain-16-ans-apres-leur-rencontre-au-mondial-2010_AV-202606110846.html"
-    },
-    {
-      "title": "Waldemar Kita pourrait bientôt vendre le FC Nantes",
-      "source": "SO FOOT",
-      "date": "2026-06-11T17:30:35+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/waldemar-kita-pourrait-bientot-vendre-le-fc-nantes"
-    },
-    {
-      "title": "\"Nous sommes tous hypocrites\": les mots forts du sélectionneur norvégien sur les polémiques de la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-11T17:11:41+00:00",
-      "summary": "Avant même de débuter ce jeudi par une affiche entre le Mexique et l'Afrique du Sud (21h), la Coupe du monde 2026 a été plombée par une succession de polémiques. En conférence de presse, le sélectionneur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/nous-sommes-tous-hypocrites-les-mots-forts-du-selectionneur-norvegien-sur-les-polemiques-de-la-coupe-du-monde-2026_AV-202606110823.html"
-    },
-    {
-      "title": "Pronostic Corée du Sud Tchéquie : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-06-11T17:00:17+00:00",
-      "summary": "Pronostic Corée du Sud Tchéquie : analyse complète, statistiques et notre pari « Corée du Sud vainqueur » pour la Coupe du monde. Découvrez les cotes !",
-      "url": "https://www.sofoot.com/breves/pronostic-coree-du-sud-tchequie-analyse-cotes-et-prono-coupe-du-monde"
-    },
-    {
-      "title": "Coupe du monde 2026 : à l'ouverture, \"le climat est pesant\", estime le président de la Fédération française de football",
-      "source": "France Info",
-      "date": "2026-06-11T16:53:24+00:00",
-      "summary": "\"Il y a un certain nombre de nuages noirs qui flottent sur la planète\", à l'ouverture de la Coupe du monde, estime jeudi Philippe Diallo sur franceinfo.",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-a-l-ouverture-le-climat-est-pesant-estime-le-president-de-la-federation-francaise-de-football_8056310.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Aulas mis sur la touche à la Métropole de Lyon ?",
-      "source": "SO FOOT",
-      "date": "2026-06-11T16:43:31+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/aulas-mis-sur-la-touche-a-la-metropole-de-lyon"
+      "date": "2026-06-12T10:00:43+00:00",
+      "summary": "Malgré l'annonce d'un stade plein et la promesse d'une billetterie prise d'assaut la veille par Gianni Infantino, plusieurs centaines de places sont restées vides lors du match Corée du Sud-Tchéquie (2-1),…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-stade-annonce-plein-mais-des-centaines-de-sieges-vides-des-le-deuxieme-match_AV-202606120457.html"
     },
     {
       "title": "En direct : Canada – Bosnie-Herzégovine",
       "source": "SO FOOT",
-      "date": "2026-06-11T16:38:43+00:00",
+      "date": "2026-06-12T10:00:43+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-canada-bosnie-herzegovine"
     },
     {
-      "title": "Coupe du monde 2026: \"Il m'a demandé si j'étais bourré\", comment Ouédraogo a appris sa sélection de dernière minute avec l'Allemagne",
+      "title": "DIRECT. Coupe du monde 2026: premiers matchs, polémiques, conférences de presse... Toutes les infos du 12 juin en live",
       "source": "RMC Sport",
-      "date": "2026-06-11T16:37:32+00:00",
-      "summary": "Assan Ouédraogo a été appelé à la dernière minute par Julian Nagelsmann après le forfait de Lennart Karl pour disputer la Coupe du monde avec l'Allemagne. Le jeune milieu de terrain a avoué en conférence de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-m-a-demande-si-j-etais-bourre-comment-ouedraogo-a-appris-sa-selection-de-derniere-minute-avec-l-allemagne_AV-202606110786.html"
+      "date": "2026-06-12T09:52:06+00:00",
+      "summary": "La Coupe du monde 2026 a débuté jeudi par la victoire du Mexique contre l'Afrique du Sud et va se poursuivre jusqu'au 19 juillet. En attendant l'entrée en lice de la France, ne ratez aucune information sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-premiers-matchs-polemiques-conferences-de-presse-toutes-les-infos-du-12-juin-en-live_LN-202606120289.html"
     },
     {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:32:20+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
-      "title": "Lucas Hernandez",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:32:20+00:00",
-      "summary": "Lucas Hernandez est un footballeur français et l'équipe de France et du Bayern Munich. Il a remporté la Coupe du monde en 2018 en étant titulaire au poste d'arrière gauche. Il peut aussi jouer en défense…",
-      "url": "https://rmcsport.bfmtv.com/football/lucas-hernandez_DN-202211100445.html"
-    },
-    {
-      "title": "\"Il ne faut pas dire des choses comme ça\": Deschamps a appelé Lucas Hernandez après une déclaration sur les Bleus",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:32:20+00:00",
-      "summary": "Dans une interview pour le magazine GQ, Didier Deschamps révèle avoir échangé avec Lucas Hernandez après ses déclarations enflammées de mars dernier. Le défenseur parisien avait expliqué que l'équipe de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/il-ne-faut-pas-dire-des-choses-comme-ca-deschamps-a-appele-lucas-hernandez-apres-une-declaration-sur-les-bleus_AV-202606110779.html"
-    },
-    {
-      "title": "Un handicap pour la France? Le classement des équipes les plus \"fatiguées\" avant la Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:24:18+00:00",
-      "summary": "Selon des statistiques de la BBC, l’équipe de France aborde la Coupe du monde 2026 avec les joueurs ayant le plus joué depuis le 15 juin 2025, il y a un an.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-handicap-pour-la-france-le-classement-des-equipes-les-plus-fatiguees-avant-la-coupe-du-monde_AV-202606110773.html"
-    },
-    {
-      "title": "Coupe du Monde 2026: des encas à grignoter devant le match d'ouverture Mexique-Afrique du Sud",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:07:43+00:00",
-      "summary": "À l'occasion du Mondial de football qui s'ouvre ce jeudi 11 juin, avec le match Mexique - Afrique du Sud, la cheffe mexicaine Mercedes Ahumada propose des snacks à déguster devant sa télé.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-des-encas-a-grignoter-devant-le-match-d-ouverture-mexique-afrique-du-sud_AV-202606110754.html"
-    },
-    {
-      "title": "Première Ligue : L’Olympique de Marseille féminin annonce sa première recrue du mercato estival avec l’arrivée de Maureen Cosson en provenance du FC Nantes",
+      "title": "Le beau clin d’œil dans la célébration de Julian Quiñones",
       "source": "SO FOOT",
-      "date": "2026-06-11T16:06:13+00:00",
+      "date": "2026-06-12T09:43:39+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/breves/premiere-ligue-lolympique-de-marseille-feminin-annonce-sa-premiere-recrue-du-mercato-estival-avec-larrivee-de-maureen-cosson-en-provenance-du-fc-nantes"
-    },
-    {
-      "title": "L’Arcom veut bloquer les IPTV pendant la Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-06-11T16:03:16+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/larcom-veut-bloquer-les-iptv-pendant-la-coupe-du-monde"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Un écran noir au moment d'un penalty\", l'Arcom lance la chasse au streaming illégal via les IPTV",
-      "source": "RMC Sport",
-      "date": "2026-06-11T16:00:34+00:00",
-      "summary": "A l'heure du lancement de la Coupe du monde 2026, l'Arcom met en place son dispositif testé lors de Roland-Garros consistant à s'attaquer plus durement au streaming illégal via les IPTV. Seul 54 des 104…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-ecran-noir-au-moment-d-un-penalty-l-arcom-lance-la-chasse-au-streaming-illegal-via-les-iptv_AV-202606110739.html"
-    },
-    {
-      "title": "Julian Nagelsmann a cru qu’Assan Ouédraogo était bourré",
-      "source": "SO FOOT",
-      "date": "2026-06-11T15:46:16+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/julian-nagelsmann-a-cru-quassan-ouedraogo-etait-bourre"
-    },
-    {
-      "title": "PSG : Gabriel Moscardo se dirige vers un nouveau prêt",
-      "source": "SO FOOT",
-      "date": "2026-06-11T15:42:57+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/psg-gabriel-moscardo-se-dirige-vers-un-nouveau-pret"
-    },
-    {
-      "title": "Jean-Michel Aulas",
-      "source": "RMC Sport",
-      "date": "2026-06-11T15:13:16+00:00",
-      "summary": "Jean-Michel Aulas est un ex-dirigeant sportif français né le 22 mars 1949 à L'Arbresle. Président historique de l'Olympique lyonnais de sa reprise en juin 1987 à sa cession à John Textor en mai 2023, il a…",
-      "url": "https://rmcsport.bfmtv.com/football/jean-michel-aulas_DN-202308300486.html"
-    },
-    {
-      "title": "Tottenham continue de se renforcer en défense avec Marcos Senesi",
-      "source": "SO FOOT",
-      "date": "2026-06-11T15:12:14+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/tottenham-continue-de-se-renforcer-en-defense-avec-marcos-senesi"
-    },
-    {
-      "title": "Coupe du monde 2026: double bonne nouvelle pour l'Espagne concernant Lamine Yamal et Nico Williams",
-      "source": "RMC Sport",
-      "date": "2026-06-11T15:10:10+00:00",
-      "summary": "Tous les deux blessés depuis plusieurs semaines, Lamine Yamal et Nico Williams devraient pouvoir jouer lors du premier match de l'Espagne à la Coupe du monde 2026 selon la Cadena Ser. Des nouvelles…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-double-bonne-nouvelle-pour-l-espagne-concernant-lamine-yamal-et-nico-williams_AV-202606110704.html"
+      "url": "https://www.sofoot.com/breves/le-beau-clin-doeil-dans-la-celebration-de-julian-quinones"
     },
     {
       "title": "Lamine Yamal",
       "source": "RMC Sport",
-      "date": "2026-06-11T15:10:10+00:00",
+      "date": "2026-06-12T09:28:46+00:00",
       "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
       "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
     },
     {
-      "title": "Ander Herrera n’est plus un joueur de Boca Juniors",
+      "title": "Coupe du monde 2026: les deux joueurs les plus excitants du Mondial selon Zlatan Ibrahimovic et Thierry Henry",
+      "source": "RMC Sport",
+      "date": "2026-06-12T09:28:45+00:00",
+      "summary": "Zlatan Ibrahimovic et Thierry Henry ont dévoilé les noms des joueurs qu’ils sont impatients de voir joueur pendant la Coupe du monde 2026. Les deux légendes ont opté pour deux phénomènes de l’équipe de France…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-deux-joueurs-les-plus-excitants-du-mondial-selon-zlatan-ibrahimovic-et-thierry-henry_AV-202606120429.html"
+    },
+    {
+      "title": "Équipe de France : Ousmane Dembélé déplore les critiques contre Kylian Mbappé",
       "source": "SO FOOT",
-      "date": "2026-06-11T15:09:34+00:00",
+      "date": "2026-06-12T09:23:38+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/breves/ander-herrera-nest-plus-un-joueur-de-boca-juniors"
+      "url": "https://www.sofoot.com/breves/equipe-de-france-ousmane-dembele-deplore-les-critiques-contre-kylian-mbappe"
     },
     {
-      "title": "Coupe du monde 2026: accord trouvé entre la FFF et les Bleus sur les primes et les places pour les familles",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:54:41+00:00",
-      "summary": "Un accord a bien été finalisé ces dernières heures entre la FFF et les joueurs de l'équipe de France concernant les primes de cette Coupe du monde 2026. Mais aussi concernant le nombre de places attribuées…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-accord-trouve-entre-la-fff-et-les-bleus-sur-les-primes-et-les-places-pour-les-familles_AV-202606110689.html"
-    },
-    {
-      "title": "Le Celtic récompense son héros",
-      "source": "SO FOOT",
-      "date": "2026-06-11T14:45:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/le-celtic-recompense-son-heros"
-    },
-    {
-      "title": "Coupe du monde 2026: six-mètres, touches, changements... Tout savoir sur les nouvelles règles contre le gain de temps",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:44:57+00:00",
-      "summary": "La Coupe du monde 2026, qui débute ce jeudi 11 juin, va permettre à la Fifa d'étrenner une série de nouvelles règles. Parmi celles-ci, la possibilité pour l'arbitre de sanctionner les équipes qui cherchent à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-six-metres-touches-changements-tout-savoir-sur-les-nouvelles-regles-du-compte-a-rebours_AV-202606110679.html"
-    },
-    {
-      "title": "Sandwichs, bière et sodas: les spectateurs attablés au bord de la pelouse lors d’Angleterre-Costa Rica à Orlando amusent les réseaux",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:44:40+00:00",
-      "summary": "Lors du match de préparation à la Coupe du monde 2026 entre l’Angleterre et le Costa Rica, mercredi à Orlando (3-0), des tables étaient dressées le long du terrain, avec boisson et nourriture pour les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sandwichs-biere-et-sodas-les-spectateurs-attables-au-bord-de-la-pelouse-lors-d-angleterre-costa-rica-a-orlando-amusent-les-reseaux_AV-202606110678.html"
-    },
-    {
-      "title": "Interdiction des fan zones en cas de débordement: le rappel du ministre de l'Intérieur avant la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-11T14:39:47+00:00",
-      "summary": "Alors que plusieurs fan zones et sites accueillant du public vont ouvrir en France pour la Coupe du monde 2026, le ministre de l'Intérieur a adressé un message de fermeté aux préfets et responsables de police…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/interdiction-des-fan-zones-en-cas-de-debordement-le-rappel-du-ministre-de-l-interieur-avant-la-coupe-du-monde-2026_AV-202606110673.html"
-    },
-    {
-      "title": "Coupe du monde 2026 : Les Bleus ont pris leur premier bain de foule à Boston",
+      "title": "\"Je me suis trompé, j'ai pris mes vêtements d'hiver !\" : à Boston, l'équipe de France apprivoise la chaleur, son premier adversaire à la Coupe du monde",
       "source": "France Info",
-      "date": "2026-06-11T14:36:20+00:00",
-      "summary": "Jeudi 11 juin, l'Équipe de France est arrivée à Boston, aux États-Unis, où elle a reçu un chaleureux accueil de la part des supporters français. Les Bleus entreront officiellement dans la compétition mardi,…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/les-bleus-ont-pris-leur-premier-bain-de-foule-a-boston_8055731.html#xtor=RSS-3-%5Bgeneral%5D"
+      "date": "2026-06-12T09:17:00+00:00",
+      "summary": "Au lendemain de leur atterrissage aux Etats-Unis, les Bleus ont découvert leur centre d'entraînement pour la compétition, dans la banlieue de Boston, jeudi.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/a-boston-les-bleus-apprivoisent-la-chaleur-leur-premier-adversaire-au-mondial_8056538.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Pronostic États-Unis Paraguay : analyse, cotes et prono Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-06-12T09:03:37+00:00",
+      "summary": "États-Unis – Paraguay : découvrez notre analyse, les cotes et notre pronostic victoire États-Unis pour ce match d’ouverture de la Coupe du monde à Los Angeles.",
+      "url": "https://www.sofoot.com/breves/pronostic-etats-unis-paraguay-analyse-cotes-et-prono-coupe-du-monde"
+    },
+    {
+      "title": "Pronostic Canada Bosnie-Herzégovine : analyse, cotes et prono Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-06-12T09:01:31+00:00",
+      "summary": "Canada – Bosnie-Herzégovine : analyse complète, cotes, et notre pronostic Coupe du monde. Pariez sur la victoire du Canada ou moins de 2,5 buts dans ce match.",
+      "url": "https://www.sofoot.com/breves/pronostic-canada-bosnia-herzegovina-analyse-cotes-et-prono-coupe-du-monde"
+    },
+    {
+      "title": "Coupe du monde 2026 : la FIFA gonfle-t-elle les chiffres de sa billetterie ?",
+      "source": "SO FOOT",
+      "date": "2026-06-12T08:44:39+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-la-fifa-gonfle-t-elle-les-chiffres-de-sa-billetterie"
+    },
+    {
+      "title": "Carton d’audience pour le match d’ouverture du Mondial 2026 entre le Mexique et l’Afrique du Sud",
+      "source": "SO FOOT",
+      "date": "2026-06-12T08:32:06+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/carton-daudience-pour-le-match-douverture-du-mondial-2026-entre-le-mexique-et-lafrique-du-sud"
+    },
+    {
+      "title": "La composition de la Suède déjà divulguée à quelques jours de son premier match du Mondial",
+      "source": "SO FOOT",
+      "date": "2026-06-12T08:10:34+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/la-composition-de-la-suede-deja-divulguee-a-quelques-jours-de-leur-premier-match-du-mondial"
+    },
+    {
+      "title": "Coupe du monde 2026 : Dubioza Kolektiv : « La Bosnie vit une sorte de folie collective » avant Canada – Bosnie-Herzégovine",
+      "source": "SO FOOT",
+      "date": "2026-06-12T08:00:58+00:00",
+      "summary": "Entretien avec le groupe bosnien Dubioza Kolektiv, à l’origine de LA chanson de ce Mondial.",
+      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-dubioza-kolektiv-la-bosnie-vit-une-sorte-de-folie-collective-avant-canada-bosnie-herzegovine"
+    },
+    {
+      "title": "Etats-Unis - Paraguay: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+      "source": "RMC Sport",
+      "date": "2026-06-12T08:00:00+00:00",
+      "summary": "La Coupe du monde 2026 débute dans le groupe D. Pays co-organisateur, les États-Unis lancent leur tournoi face au Paraguay, à Los Angeles, devant leur public. Voici toutes les informations pour suivre cette…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/usa-paraguay-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-la-coupe-du-monde-2026-en-direct_AN-202606120024.html"
+    },
+    {
+      "title": "Nayef Aguerd confirme son forfait pour le Mondial avec le Maroc",
+      "source": "SO FOOT",
+      "date": "2026-06-12T07:58:41+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/nayef-aguerd-confirme-son-forfait-pour-le-mondial-avec-le-maroc"
+    },
+    {
+      "title": "Coupe du monde 2026: pourquoi le Mexicain Raul Jimenez porte un bandeau alors qu'il a les cheveux courts",
+      "source": "RMC Sport",
+      "date": "2026-06-12T07:52:48+00:00",
+      "summary": "À 35 ans, Raul Jimenez a inscrit le premier but de sa carrière en Coupe du monde jeudi lors de la victoire du Mexique contre l'Afrique du Sud (2-0). L'attaquant a fondu en larmes près de six ans après avoir…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-le-mexicain-raul-jimenez-porte-un-bandeau-alors-qu-il-a-les-cheveux-courts_AV-202606120356.html"
+    },
+    {
+      "title": "Coupe du monde 2026 – Belgique : Thibaut Courtois évoque sa retraite internationale",
+      "source": "SO FOOT",
+      "date": "2026-06-12T07:40:09+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-belgique-thibaut-courtois-evoque-sa-retraite-internationale"
+    },
+    {
+      "title": "\"On vient vérifier qu'ils sont bien là\" : avant leur premier match de Coupe du monde, les Bleus attirent les curieux pour leur entraînement à Boston",
+      "source": "France Info",
+      "date": "2026-06-12T07:32:51+00:00",
+      "summary": "Arrivés jeudi à leur camp de base, à Boston, les Bleus ont découvert leur terrain d'entraînement sur le stade de l'université de Bentley et sont déjà épiés par les étudiants restants.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/on-vient-verifier-qu-ils-sont-bien-la-avant-leur-premier-match-de-coupe-du-monde-les-bleus-attirent-les-curieux-pour-leur-entrainement-a-boston_8057015.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde 2026: c'est quoi le ludo, ce jeu qui amuse tant Mbappé, Dembélé et Cherki pendant les voyages des Bleus?",
+      "source": "RMC Sport",
+      "date": "2026-06-12T07:30:16+00:00",
+      "summary": "Les joueurs de l'équipe de France sont arrivés à Boston mercredi, où ils se sont installés pour la Coupe du monde 2026. Et pendant le vol, certains d'entre eux dont le capitaine Kylian Mbappé ont passé le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-c-est-quoi-le-ludo-ce-jeu-qui-amuse-tant-mbappe-dembele-et-cherki-pendant-les-voyages-des-bleus_AV-202606120333.html"
+    },
+    {
+      "title": "\"L'effet de surprise n'arrivera plus\", le Maroc peut-il (encore) atteindre les demies ?",
+      "source": "RMC Sport",
+      "date": "2026-06-12T07:13:59+00:00",
+      "summary": "Le Maroc avait marqué les esprits en 2022, en atteignant les demi-finales de la Coupe du monde. Une première pour une nation africaine. Les Marocains peuvent-ils rééditer l'exploit cette année ? Seb Piocelle…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-l-effet-de-surprise-n-arrivera-plus-le-maroc-peut-il-encore-atteindre-les-demies_VN-202606120319.html"
+    },
+    {
+      "title": "Événement : soirée de projection So Foot pour France – Sénégal à la Coupe du Monde à partir de 18h30",
+      "source": "SO FOOT",
+      "date": "2026-06-12T07:11:43+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/evenement-soiree-de-projection-so-foot-pour-france-senegal-a-la-coupe-du-monde-a-partir-de-18h30"
+    },
+    {
+      "title": "Canada - Bosnie-Herzégovine: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+      "source": "RMC Sport",
+      "date": "2026-06-12T07:10:26+00:00",
+      "summary": "Deuxième pays hôte de la Coupe du monde 2026 à lancer sa compétition après le Mexique, le Canada affronte la Bosnie-Herzégovine ce vendredi au BMO Field de Toronto. Un duel entre les coéquipiers de Jonathan…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/canada-bosnie-herzegovine-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606120316.html"
+    },
+    {
+      "title": "Paul Pogba rêve toujours d’un retour avec les Bleus",
+      "source": "SO FOOT",
+      "date": "2026-06-12T07:01:40+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/paul-pogba-reve-toujours-dun-retour-avec-les-bleus"
+    },
+    {
+      "title": "Jesse Marsch (sélectionneur américain du Canada) : « Quand je vois le bordel qui se passe dans mon pays, honnêtement, je me sens plus canadien »",
+      "source": "SO FOOT",
+      "date": "2026-06-12T07:00:18+00:00",
+      "summary": "Le coach étasunien mène les Canucks à ce qui est aussi leur Mondial.",
+      "url": "https://www.sofoot.com/articles/jesse-marsch-selectionneur-americain-du-canada-quand-je-vois-le-bordel-qui-se-passe-dans-mon-pays-honnetement-je-me-sens-plus-canadien"
+    },
+    {
+      "title": "Sur quelle chaîne regarder le match États-Unis – Paraguay ?",
+      "source": "SO FOOT",
+      "date": "2026-06-12T07:00:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/sur-quelle-chaine-regarder-le-match-etats-unis-paraguay"
+    },
+    {
+      "title": "Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-06-12T06:51:49+00:00",
+      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
+      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+    },
+    {
+      "title": "Mercato: la volte-face de Bernardo Silva qui va retrouver Kylian Mbappé",
+      "source": "RMC Sport",
+      "date": "2026-06-12T06:51:48+00:00",
+      "summary": "Selon la presse espagnole, Bernardo Silva devait s'engager avec l'Atlético de Madrid avant d'opter pour le grand rival de la capitale espagnole, le Real Madrid où il retrouvera un certain Kylian Mbappé.",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-la-volte-face-de-bernardo-silva-qui-va-retrouver-kylian-mbappe_AV-202606120293.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-12T06:33:22+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Il ne s’agit pas d’une rechute\", les explications surprenantes d'Aguerd sur son forfait avec le Maroc",
+      "source": "RMC Sport",
+      "date": "2026-06-12T05:57:18+00:00",
+      "summary": "Pourtant présent à l'entraînement mercredi, Nayef Aguerd est finalement forfait pour la Coupe du monde 2026, comme l'a acté l'équipe du Maroc jeudi. Le défenseur, qui a traîné une blessure aux adducteurs tout…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-s-agit-pas-d-une-rechute-les-explications-surprenantes-d-aguerd-sur-son-forfait-avec-le-maroc_AV-202606120229.html"
+    },
+    {
+      "title": "Coupe du monde 2026: pourquoi tous les joueurs portent des chaussures roses?",
+      "source": "RMC Sport",
+      "date": "2026-06-12T05:37:52+00:00",
+      "summary": "Les deux premiers matchs de la Coupe du monde 2026 ont affiché la couleur tendance de cette édition pour les chaussures: le rose, porté par une très grande majorité des joueurs.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-tous-les-joueurs-portent-des-chaussures-roses_AV-202606120212.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Calendrier, résultats et classement du groupe A (après la première journée)",
+      "source": "RMC Sport",
+      "date": "2026-06-12T05:28:43+00:00",
+      "summary": "Après le premier match, le Mexique et la Corée du Sud ont pris une option pour la qualification. La Tchéquie et l'Afrique du Sud sont dans le dur.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-a-apres-la-premiere-journee_AV-202606120204.html"
+    },
+    {
+      "title": "Corée du sud-Tchéquie: la Corée du Sud renverse tout et lance sa Coupe du monde 2026 par un succès",
+      "source": "RMC Sport",
+      "date": "2026-06-12T05:12:40+00:00",
+      "summary": "Deuxième match de la Coupe du monde 2026 au programme avec la Corée du Sud qui affrontait la Tchéquie dans la nuit de jeudi à vendredi, et qui s'est imposée.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coree-du-sud-tchequie-suivez-le-2e-match-de-la-coupe-du-monde-2026-en-live_LS-202606110598.html"
+    },
+    {
+      "title": "Coupe du monde 2026: un fan allemand a fait une crise cardiaque avant le match d'ouverture",
+      "source": "RMC Sport",
+      "date": "2026-06-12T05:08:00+00:00",
+      "summary": "Un spectateur allemand a été victime d'une crise cardiaque sur le parvis du stade Azteca avant le match d'ouverture de la Coupe du monde entre le Mexique et l'Afrique du Sud (2-0), jeudi.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-fan-allemand-a-fait-une-crise-cardiaque-avant-le-match-d-ouverture_AV-202606120180.html"
+    },
+    {
+      "title": "L’ancien milieu de Manchester City Bernardo Silva proche de rejoindre le Real Madrid",
+      "source": "SO FOOT",
+      "date": "2026-06-12T05:02:25+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/lancien-milieu-de-manchester-city-bernardo-silva-proche-de-rejoindre-le-real-madrid"
+    },
+    {
+      "title": "Le Canada démarre son Mondial sans son capitaine Alphonso Davies et sans le Niçois Moïse Bombito",
+      "source": "SO FOOT",
+      "date": "2026-06-12T04:42:20+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/le-canada-demarre-son-mondial-sans-son-capitaine-alphonso-davies-et-sans-le-nicois-moise-bombito"
+    },
+    {
+      "title": "Deux buts, 3 expulsions, le Mondial est parti fort, classement et résultats de la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-12T04:34:51+00:00",
+      "summary": "Le Mexique s'est imposé dans le match d'ouverture de la Coupe du monde 2026, contre l'Afrique du Sud. Le pays hôte a même joué une partie du match à 11 contre 9, avant d'être réduit à 10. Dans l'autre match…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-deux-buts-3-expulsions-le-mondial-est-parti-fort-classement-et-resultats-de-la-coupe-du-monde_VN-202606120144.html"
+    },
+    {
+      "title": "\"Sur le papier, cette génération est plus forte que celle de 2018\", assure Paul Pogba",
+      "source": "RMC Sport",
+      "date": "2026-06-12T04:33:00+00:00",
+      "summary": "Le champion du monde et joueur de Monaco est l'invité exceptionnel de Rothen s'enflamme sur RMC, ce vendredi 12 juin à 18h.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sur-le-papier-cette-generation-est-plus-forte-que-celle-de-2018-assure-paul-pogba_AV-202606120047.html"
+    },
+    {
+      "title": "Brito, champion du monde 1970 avec le Brésil, est décédé",
+      "source": "SO FOOT",
+      "date": "2026-06-12T04:32:33+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/brito-champion-du-monde-1970-avec-le-bresil-est-decede"
+    },
+    {
+      "title": "\"Cette équipe de France 2026 est meilleure qu'en 2018\" estime Paul Pogba chez Rothen s'enflamme",
+      "source": "RMC Sport",
+      "date": "2026-06-12T04:23:30+00:00",
+      "summary": "\"Sur le papier, ils sont beaucoup plus forts qu'en 2018, mais c'est le groupe qui joue. Tu as le meilleur joueur du championnat allemand, français, et meilleur buteur du championnat espagnol\", résume Paul…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-cette-equipe-de-france-2026-est-meilleure-qu-en-2018-estime-paul-pogba-chez-rothen-s-enflamme_VN-202606120132.html"
+    },
+    {
+      "title": "Coupe du monde 2026: deux fans mexicains se filment sur un but de leur équipe et deviennent la risée du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-12T04:18:32+00:00",
+      "summary": "Deux fans mexicains surpris en train de filmer leur célébration sur le but de Raul Jimenez lors de la victoire contre l'Afrique du Sud (2-0) sont devenus viraux sur les réseaux sociaux et symbolisent une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-fans-mexicains-se-filment-sur-un-but-de-leur-equipe-et-deviennent-la-risee-du-monde_AV-202606120122.html"
     },
     {
       "title": "En direct : Corée du Sud-Tchéquie",
       "source": "SO FOOT",
-      "date": "2026-06-11T14:35:33+00:00",
+      "date": "2026-06-12T04:06:00+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-coree-du-sud-tchequie"
     },
     {
-      "title": "Le bus de la Tchéquie bloque la route au Mexique",
+      "title": "« Quand il y a des grandes compétitions comme un Mondial, les femmes journalistes de sport disparaissent »",
       "source": "SO FOOT",
-      "date": "2026-06-11T14:01:15+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/le-bus-de-la-tchequie-bloque-la-route-au-mexique"
+      "date": "2026-06-12T04:00:47+00:00",
+      "summary": "Parmi les journalistes français accrédités au Mondial, 6% sont des femmes.",
+      "url": "https://www.sofoot.com/articles/quand-il-y-a-des-grandes-competitions-comme-un-mondial-les-femmes-journalistes-de-sport-disparaissent"
     },
     {
-      "title": "Toulouse impose un couvre-feu pour la Coupe du monde",
+      "title": "La Corée du Sud domine la Tchéquie et peut déjà entrevoir les seizièmes de finale",
       "source": "SO FOOT",
-      "date": "2026-06-11T13:32:50+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/toulouse-impose-un-couvre-feu-pour-la-coupe-du-monde"
+      "date": "2026-06-12T03:55:50+00:00",
+      "summary": "La Tchéquie a raté sa finale NBA.",
+      "url": "https://www.sofoot.com/breves/la-coree-du-sud-domine-la-tchequie-et-peut-deja-entrevoir-les-seiziemes-de-finale"
     },
     {
-      "title": "L’UEFA inflige un joli camouflet à la FIFA",
+      "title": "La pause fraîcheur de Mexique-Afrique du Sud a été plus longue que prévue à cause de la pub de Fox News",
       "source": "SO FOOT",
-      "date": "2026-06-11T13:26:54+00:00",
+      "date": "2026-06-12T03:00:26+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/breves/luefa-inflige-un-joli-camouflet-a-la-fifa"
-    },
-    {
-      "title": "Les supporters allemands viendront au stade grâce à des navettes financées par les joueurs",
-      "source": "SO FOOT",
-      "date": "2026-06-11T13:23:00+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/les-supporters-allemands-viendront-au-stade-grace-a-des-navettes-financees-par-les-joueurs"
-    },
-    {
-      "title": "Mercato : Le PSG confirme le départ de Mary Earps",
-      "source": "SO FOOT",
-      "date": "2026-06-11T13:02:00+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-le-psg-confirme-le-depart-de-mary-earps"
+      "url": "https://www.sofoot.com/breves/la-pause-fraicheur-de-mexique-afrique-du-sud-a-ete-plus-longue-que-prevue-a-cause-de-la-pub-de-fox-nexs"
     }
   ],
   "focused_team_news": {
-    "Argentina": [
+    "Bosnia-Herzegovina": [
       {
-        "title": "Jorge Sampaoli a enfin trouvé un banc en Argentine",
+        "title": "Pronostic Canada Bosnie-Herzégovine : analyse, cotes et prono Coupe du monde",
         "source": "SO FOOT",
-        "date": "2026-06-11T09:13:25+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/jorge-sampaoli-a-enfin-trouve-un-banc-en-argentine"
+        "date": "2026-06-12T09:01:31+00:00",
+        "summary": "Canada – Bosnie-Herzégovine : analyse complète, cotes, et notre pronostic Coupe du monde. Pariez sur la victoire du Canada ou moins de 2,5 buts dans ce match.",
+        "url": "https://www.sofoot.com/breves/pronostic-canada-bosnia-herzegovina-analyse-cotes-et-prono-coupe-du-monde"
       }
     ],
     "Brazil": [
+      {
+        "title": "Brito, champion du monde 1970 avec le Brésil, est décédé",
+        "source": "SO FOOT",
+        "date": "2026-06-12T04:32:33+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/brito-champion-du-monde-1970-avec-le-bresil-est-decede"
+      },
       {
         "title": "Coupe du monde 2027 : les Bleues qualifiées pour le Mondial au Brésil après leur victoire contre l'Irlande",
         "source": "France Info",
@@ -3910,139 +3924,165 @@
     ],
     "Canada": [
       {
-        "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus vont vivre leur premier entraînement aux Etats-Unis",
-        "source": "RMC Sport",
-        "date": "2026-06-11T21:13:16+00:00",
-        "summary": "La Coupe du monde 2026 se tient du 11 juin au 19 juillet aux Etats-Unis, au Mexique et au Canada, sur fond de tensions autour de l'accueil réservé par les Américains à certaines sélections comme l'Iran ou…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-ouverture-du-mondial-conferences-de-presse-polemiques-blessures-toutes-les-infos-en-live_LN-202606110324.html"
-      },
-      {
         "title": "En direct : Canada – Bosnie-Herzégovine",
         "source": "SO FOOT",
-        "date": "2026-06-11T16:38:43+00:00",
+        "date": "2026-06-12T10:00:43+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/articles/en-direct-canada-bosnie-herzegovine"
+      },
+      {
+        "title": "Pronostic Canada Bosnie-Herzégovine : analyse, cotes et prono Coupe du monde",
+        "source": "SO FOOT",
+        "date": "2026-06-12T09:01:31+00:00",
+        "summary": "Canada – Bosnie-Herzégovine : analyse complète, cotes, et notre pronostic Coupe du monde. Pariez sur la victoire du Canada ou moins de 2,5 buts dans ce match.",
+        "url": "https://www.sofoot.com/breves/pronostic-canada-bosnia-herzegovina-analyse-cotes-et-prono-coupe-du-monde"
+      },
+      {
+        "title": "Coupe du monde 2026 : Dubioza Kolektiv : « La Bosnie vit une sorte de folie collective » avant Canada – Bosnie-Herzégovine",
+        "source": "SO FOOT",
+        "date": "2026-06-12T08:00:58+00:00",
+        "summary": "Entretien avec le groupe bosnien Dubioza Kolektiv, à l’origine de LA chanson de ce Mondial.",
+        "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-dubioza-kolektiv-la-bosnie-vit-une-sorte-de-folie-collective-avant-canada-bosnie-herzegovine"
+      },
+      {
+        "title": "Canada - Bosnie-Herzégovine: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+        "source": "RMC Sport",
+        "date": "2026-06-12T07:10:26+00:00",
+        "summary": "Deuxième pays hôte de la Coupe du monde 2026 à lancer sa compétition après le Mexique, le Canada affronte la Bosnie-Herzégovine ce vendredi au BMO Field de Toronto. Un duel entre les coéquipiers de Jonathan…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/canada-bosnie-herzegovine-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606120316.html"
+      },
+      {
+        "title": "Jesse Marsch (sélectionneur américain du Canada) : « Quand je vois le bordel qui se passe dans mon pays, honnêtement, je me sens plus canadien »",
+        "source": "SO FOOT",
+        "date": "2026-06-12T07:00:18+00:00",
+        "summary": "Le coach étasunien mène les Canucks à ce qui est aussi leur Mondial.",
+        "url": "https://www.sofoot.com/articles/jesse-marsch-selectionneur-americain-du-canada-quand-je-vois-le-bordel-qui-se-passe-dans-mon-pays-honnetement-je-me-sens-plus-canadien"
+      },
+      {
+        "title": "Le Canada démarre son Mondial sans son capitaine Alphonso Davies et sans le Niçois Moïse Bombito",
+        "source": "SO FOOT",
+        "date": "2026-06-12T04:42:20+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/le-canada-demarre-son-mondial-sans-son-capitaine-alphonso-davies-et-sans-le-nicois-moise-bombito"
       }
     ],
     "France": [
       {
-        "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus vont vivre leur premier entraînement aux Etats-Unis",
+        "title": "Coupe du monde 2026: Rayan Cherki a un petit problème après son arrivée aux Etats-Unis avec les Bleus",
         "source": "RMC Sport",
-        "date": "2026-06-11T21:13:16+00:00",
-        "summary": "La Coupe du monde 2026 se tient du 11 juin au 19 juillet aux Etats-Unis, au Mexique et au Canada, sur fond de tensions autour de l'accueil réservé par les Américains à certaines sélections comme l'Iran ou…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-ouverture-du-mondial-conferences-de-presse-polemiques-blessures-toutes-les-infos-en-live_LN-202606110324.html"
+        "date": "2026-06-12T11:40:09+00:00",
+        "summary": "Rayan Cherki a visiblement eu du mal à digérer le décalage horaire entre la France et les Etats-Unis pour le Mondial. Le milieu offensif tricolore a confié avoir passé une première nuit un peu différente qu’à…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-rayan-cherki-a-un-petit-probleme-apres-son-arrivee-aux-etats-unis-avec-les-bleus_AV-202606120515.html"
       },
       {
-        "title": "Coupe du monde 2026: \"On est vraiment très à l'aise\", les Bleus ont pris leur quartier dans leur camp d’entraînement",
+        "title": "Coupe du monde 2026: \"Il ne faut pas être aussi dur avec lui\", Dembélé prend la défense de Mbappé face aux critiques",
         "source": "RMC Sport",
-        "date": "2026-06-11T21:08:44+00:00",
-        "summary": "Arrivés mercredi à Boston, les joueurs de l’équipe de France ont participé ce jeudi à leur première séance d’entraînement à l'université de Bentley à Waltham. Malgré la chaleur, les Tricolores sont bien…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-est-vraiment-tres-a-l-aise-les-bleus-ont-pris-leur-quartier-dans-leur-camp-d-entrainement_AD-202606110971.html"
+        "date": "2026-06-12T10:45:10+00:00",
+        "summary": "Ousmane Dembélé s’est exprimé en marge des débuts de l’équipe de France au Mondial 2026. La star de l’équipe de France a pris la défense de Kylian Mbappé face aux nombreuses critiques contre lui.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-ne-faut-pas-etre-aussi-dur-avec-lui-dembele-prend-la-defense-de-mbappe-face-aux-critiques_AV-202606120488.html"
       },
       {
-        "title": "Coupe du monde : \"pas de recette miracle\" face à la chaleur témoignent Lacroix et Samba",
+        "title": "DIRECT. Coupe du monde 2026: premiers matchs, polémiques, conférences de presse... Toutes les infos du 12 juin en live",
         "source": "RMC Sport",
-        "date": "2026-06-11T20:47:24+00:00",
-        "summary": "Les Bleus sont bien arrivés à Boston pour débuter leur Coupe du monde 2026. Sous la chaleur américaine, Maxence Lacroix et Brice Samba sont venus raconter cette adaptation express aux températures élevées.",
-        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-coupe-du-monde-pas-de-recette-miracle-face-a-la-chaleur-temoignent-lacroix-et-samba_VN-202606110965.html"
+        "date": "2026-06-12T09:52:06+00:00",
+        "summary": "La Coupe du monde 2026 a débuté jeudi par la victoire du Mexique contre l'Afrique du Sud et va se poursuivre jusqu'au 19 juillet. En attendant l'entrée en lice de la France, ne ratez aucune information sur…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-premiers-matchs-polemiques-conferences-de-presse-toutes-les-infos-du-12-juin-en-live_LN-202606120289.html"
       },
       {
-        "title": "Coupe du monde 2026 : les Bleus ont-ils pris un risque en arrivant tardivement aux États-Unis ?",
+        "title": "Coupe du monde 2026: les deux joueurs les plus excitants du Mondial selon Zlatan Ibrahimovic et Thierry Henry",
+        "source": "RMC Sport",
+        "date": "2026-06-12T09:28:45+00:00",
+        "summary": "Zlatan Ibrahimovic et Thierry Henry ont dévoilé les noms des joueurs qu’ils sont impatients de voir joueur pendant la Coupe du monde 2026. Les deux légendes ont opté pour deux phénomènes de l’équipe de France…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-deux-joueurs-les-plus-excitants-du-mondial-selon-zlatan-ibrahimovic-et-thierry-henry_AV-202606120429.html"
+      },
+      {
+        "title": "Équipe de France : Ousmane Dembélé déplore les critiques contre Kylian Mbappé",
         "source": "SO FOOT",
-        "date": "2026-06-11T20:25:22+00:00",
+        "date": "2026-06-12T09:23:38+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-les-bleus-ont-ils-pris-une-risque-en-arrivant-tardivement-aux-etats-unis"
+        "url": "https://www.sofoot.com/breves/equipe-de-france-ousmane-dembele-deplore-les-critiques-contre-kylian-mbappe"
       },
       {
-        "title": "\"Ce serait moche ça\", Mbappé cash sur une piste de Deschamps en sélection après les Bleus",
-        "source": "RMC Sport",
-        "date": "2026-06-11T19:46:22+00:00",
-        "summary": "Interrogé par M6 avant le coup d'envoi de la Coupe du monde 2026, le capitaine de l’équipe de France, Kylian Mbappé, s’est exprimé sur le sélectionneur Didier Deschamps dont l'avenir après le Mondial est…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-serait-moche-ca-mbappe-cash-sur-une-piste-de-deschamps-en-selection-apres-les-bleus_AV-202606110934.html"
-      },
-      {
-        "title": "Mondial 2026 : Les Bleus ont fait plier la FFF concernant les primes et les places pour les matchs",
-        "source": "SO FOOT",
-        "date": "2026-06-11T19:26:57+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-les-bleus-ont-fait-plier-la-fff-concernant-les-primes-et-les-places-pour-les-matchs"
-      },
-      {
-        "title": "DIRECT. Mercato: Mourinho de retour au Real, c'est officiel",
-        "source": "RMC Sport",
-        "date": "2026-06-11T18:21:35+00:00",
-        "summary": "Suivez en live toutes les infos et rumeurs du mercato qui ouvrira ses portes le lundi 15 juin en France. Les choses s'agitent avant la Coupe du monde, notamment sur les bancs de plusieurs clubs de Ligue 1…",
-        "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-8-juin-2026_LN-202606080240.html"
-      },
-      {
-        "title": "Coupe du monde 2026 : à l'ouverture, \"le climat est pesant\", estime le président de la Fédération française de football",
+        "title": "\"Je me suis trompé, j'ai pris mes vêtements d'hiver !\" : à Boston, l'équipe de France apprivoise la chaleur, son premier adversaire à la Coupe du monde",
         "source": "France Info",
-        "date": "2026-06-11T16:53:24+00:00",
-        "summary": "\"Il y a un certain nombre de nuages noirs qui flottent sur la planète\", à l'ouverture de la Coupe du monde, estime jeudi Philippe Diallo sur franceinfo.",
-        "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-a-l-ouverture-le-climat-est-pesant-estime-le-president-de-la-federation-francaise-de-football_8056310.html#xtor=RSS-3-%5Bgeneral%5D"
+        "date": "2026-06-12T09:17:00+00:00",
+        "summary": "Au lendemain de leur atterrissage aux Etats-Unis, les Bleus ont découvert leur centre d'entraînement pour la compétition, dans la banlieue de Boston, jeudi.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/a-boston-les-bleus-apprivoisent-la-chaleur-leur-premier-adversaire-au-mondial_8056538.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "\"On vient vérifier qu'ils sont bien là\" : avant leur premier match de Coupe du monde, les Bleus attirent les curieux pour leur entraînement à Boston",
+        "source": "France Info",
+        "date": "2026-06-12T07:32:51+00:00",
+        "summary": "Arrivés jeudi à leur camp de base, à Boston, les Bleus ont découvert leur terrain d'entraînement sur le stade de l'université de Bentley et sont déjà épiés par les étudiants restants.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/on-vient-verifier-qu-ils-sont-bien-la-avant-leur-premier-match-de-coupe-du-monde-les-bleus-attirent-les-curieux-pour-leur-entrainement-a-boston_8057015.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Coupe du monde 2026: c'est quoi le ludo, ce jeu qui amuse tant Mbappé, Dembélé et Cherki pendant les voyages des Bleus?",
+        "source": "RMC Sport",
+        "date": "2026-06-12T07:30:16+00:00",
+        "summary": "Les joueurs de l'équipe de France sont arrivés à Boston mercredi, où ils se sont installés pour la Coupe du monde 2026. Et pendant le vol, certains d'entre eux dont le capitaine Kylian Mbappé ont passé le…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-c-est-quoi-le-ludo-ce-jeu-qui-amuse-tant-mbappe-dembele-et-cherki-pendant-les-voyages-des-bleus_AV-202606120333.html"
+      },
+      {
+        "title": "Événement : soirée de projection So Foot pour France – Sénégal à la Coupe du Monde à partir de 18h30",
+        "source": "SO FOOT",
+        "date": "2026-06-12T07:11:43+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/evenement-soiree-de-projection-so-foot-pour-france-senegal-a-la-coupe-du-monde-a-partir-de-18h30"
+      },
+      {
+        "title": "Paul Pogba rêve toujours d’un retour avec les Bleus",
+        "source": "SO FOOT",
+        "date": "2026-06-12T07:01:40+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/paul-pogba-reve-toujours-dun-retour-avec-les-bleus"
       },
       {
         "title": "Didier Deschamps",
         "source": "RMC Sport",
-        "date": "2026-06-11T16:32:20+00:00",
+        "date": "2026-06-12T06:33:22+00:00",
         "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
         "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
       },
       {
-        "title": "Lucas Hernandez",
+        "title": "\"Cette équipe de France 2026 est meilleure qu'en 2018\" estime Paul Pogba chez Rothen s'enflamme",
         "source": "RMC Sport",
-        "date": "2026-06-11T16:32:20+00:00",
-        "summary": "Lucas Hernandez est un footballeur français et l'équipe de France et du Bayern Munich. Il a remporté la Coupe du monde en 2018 en étant titulaire au poste d'arrière gauche. Il peut aussi jouer en défense…",
-        "url": "https://rmcsport.bfmtv.com/football/lucas-hernandez_DN-202211100445.html"
-      },
-      {
-        "title": "\"Il ne faut pas dire des choses comme ça\": Deschamps a appelé Lucas Hernandez après une déclaration sur les Bleus",
-        "source": "RMC Sport",
-        "date": "2026-06-11T16:32:20+00:00",
-        "summary": "Dans une interview pour le magazine GQ, Didier Deschamps révèle avoir échangé avec Lucas Hernandez après ses déclarations enflammées de mars dernier. Le défenseur parisien avait expliqué que l'équipe de…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/il-ne-faut-pas-dire-des-choses-comme-ca-deschamps-a-appele-lucas-hernandez-apres-une-declaration-sur-les-bleus_AV-202606110779.html"
-      },
-      {
-        "title": "Un handicap pour la France? Le classement des équipes les plus \"fatiguées\" avant la Coupe du monde",
-        "source": "RMC Sport",
-        "date": "2026-06-11T16:24:18+00:00",
-        "summary": "Selon des statistiques de la BBC, l’équipe de France aborde la Coupe du monde 2026 avec les joueurs ayant le plus joué depuis le 15 juin 2025, il y a un an.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-handicap-pour-la-france-le-classement-des-equipes-les-plus-fatiguees-avant-la-coupe-du-monde_AV-202606110773.html"
+        "date": "2026-06-12T04:23:30+00:00",
+        "summary": "\"Sur le papier, ils sont beaucoup plus forts qu'en 2018, mais c'est le groupe qui joue. Tu as le meilleur joueur du championnat allemand, français, et meilleur buteur du championnat espagnol\", résume Paul…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-cette-equipe-de-france-2026-est-meilleure-qu-en-2018-estime-paul-pogba-chez-rothen-s-enflamme_VN-202606120132.html"
       }
     ],
     "Iran": [
       {
-        "title": "DIRECT. Coupe du monde 2026, toutes les infos: les Bleus vont vivre leur premier entraînement aux Etats-Unis",
+        "title": "Coupe du monde 2026: un groupe lié à l'Iran affirme avoir hacké des drones du FBI, une nouvelle menace sur le Mondial?",
         "source": "RMC Sport",
-        "date": "2026-06-11T21:13:16+00:00",
-        "summary": "La Coupe du monde 2026 se tient du 11 juin au 19 juillet aux Etats-Unis, au Mexique et au Canada, sur fond de tensions autour de l'accueil réservé par les Américains à certaines sélections comme l'Iran ou…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-ouverture-du-mondial-conferences-de-presse-polemiques-blessures-toutes-les-infos-en-live_LN-202606110324.html"
-      }
-    ],
-    "Mexico": [
-      {
-        "title": "DIRECT. Mexique-Afrique du Sud: deux buts, trois rouges... Match d'ouverture à rebondissements à Mexico",
-        "source": "RMC Sport",
-        "date": "2026-06-11T21:08:07+00:00",
-        "summary": "Entrée en matière réussie pour le Mexique, largement supérieur à une faible Afrique du Sud, jeudi pour le coup d'envoi de son Mondial (2-0). Grâce à ses attaquants Julian Quinones et Raul Jimenez, le pays…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-afrique-du-sud-suivez-en-live-la-ceremonie-et-le-match-d-ouverture-de-la-coupe-du-monde-2026-en-live_LS-202606110394.html"
-      },
-      {
-        "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe A",
-        "source": "RMC Sport",
-        "date": "2026-06-11T21:06:32+00:00",
-        "summary": "Le match d'ouverture de la Coupe du monde 2026 a vu le Mexique l'emporter tranquillement ce jeudi face à l'Afrique du Sud (2-0), au stade Azteca de Mexico. Dans ce groupe A, la Corée du Sud et la Tchéquie…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-a_AV-202606110970.html"
-      },
-      {
-        "title": "Coupe du monde 2026: l'ambiance enfin au rendez-vous aux Etats-Unis et au Mexique",
-        "source": "RMC Sport",
-        "date": "2026-06-11T20:34:31+00:00",
-        "summary": "Lancée jeudi au stade Aztèque, la Coupe du monde 2026 a débuté dans une ambiance de fête à Mexico. On a aussi enfin ressenti l'atmosphère du Mondial dans les rues de Los Angeles.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-afrique-du-sud-l-ambiance-coupe-du-monde-enfin-au-rendez-vous-aux-etats-unis-et-au-mexique_AV-202606110957.html"
+        "date": "2026-06-12T11:28:50+00:00",
+        "summary": "Le groupe de hackers Handala, lié à l'Iran, dit avoir accédé à des drones FPV utilisés par le FBI aux Etats-Unis, et menace de les écraser durant la Coupe du monde sur \"certaines équipes\".",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-groupe-lie-a-l-iran-affirme-avoir-hacke-des-drones-du-fbi-une-nouvelle-menace-sur-le-mondial_AV-202606120514.html"
       }
     ],
     "Paraguay": [
+      {
+        "title": "Pronostic États-Unis Paraguay : analyse, cotes et prono Coupe du monde",
+        "source": "SO FOOT",
+        "date": "2026-06-12T09:03:37+00:00",
+        "summary": "États-Unis – Paraguay : découvrez notre analyse, les cotes et notre pronostic victoire États-Unis pour ce match d’ouverture de la Coupe du monde à Los Angeles.",
+        "url": "https://www.sofoot.com/breves/pronostic-etats-unis-paraguay-analyse-cotes-et-prono-coupe-du-monde"
+      },
+      {
+        "title": "Etats-Unis - Paraguay: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+        "source": "RMC Sport",
+        "date": "2026-06-12T08:00:00+00:00",
+        "summary": "La Coupe du monde 2026 débute dans le groupe D. Pays co-organisateur, les États-Unis lancent leur tournoi face au Paraguay, à Los Angeles, devant leur public. Voici toutes les informations pour suivre cette…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/usa-paraguay-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-la-coupe-du-monde-2026-en-direct_AN-202606120024.html"
+      },
+      {
+        "title": "Sur quelle chaîne regarder le match États-Unis – Paraguay ?",
+        "source": "SO FOOT",
+        "date": "2026-06-12T07:00:00+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/sur-quelle-chaine-regarder-le-match-etats-unis-paraguay"
+      },
       {
         "title": "En direct : États-Unis – Paraguay",
         "source": "SO FOOT",
@@ -4052,6 +4092,20 @@
       }
     ],
     "Senegal": [
+      {
+        "title": "Événement : soirée de projection So Foot pour France – Sénégal à la Coupe du Monde à partir de 18h30",
+        "source": "SO FOOT",
+        "date": "2026-06-12T07:11:43+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/evenement-soiree-de-projection-so-foot-pour-france-senegal-a-la-coupe-du-monde-a-partir-de-18h30"
+      },
+      {
+        "title": "Coupe du monde 2026 : un match Désiré Doué-Bradley Barcola pour une place de titulaire à France-Sénégal ?",
+        "source": "SO FOOT",
+        "date": "2026-06-11T22:16:09+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-un-match-desire-doue-bradley-barcola-pour-une-place-de-titulaire-a-france-senegal"
+      },
       {
         "title": "Les Bleus de Didier Deschamps sont arrivés aux États-Unis",
         "source": "France Info",
@@ -4183,6 +4237,28 @@
   ],
   "players_index": [
     {
+      "name": "Hyun-Gyu Oh",
+      "club_current": "Korea Republic",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1044299.png",
+      "associated_team": "Korea Republic",
+      "updated_at": "2026-06-12T11:57:05+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "In-Beom Hwang",
+      "club_current": "Korea Republic",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/623698.png",
+      "associated_team": "Korea Republic",
+      "updated_at": "2026-06-12T11:57:05+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
       "name": "Julián Quiñones",
       "club_current": "Mexico",
       "country": "",
@@ -4190,18 +4266,18 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/720560.png",
       "associated_team": "Mexico",
-      "updated_at": "2026-06-11T21:32:15+00:00",
+      "updated_at": "2026-06-12T11:57:05+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
-      "name": "Raul Jiménez",
-      "club_current": "Mexico",
+      "name": "Kang-In Lee",
+      "club_current": "Korea Republic",
       "country": "",
       "position": "",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/292313.png",
-      "associated_team": "Mexico",
-      "updated_at": "2026-06-11T21:32:15+00:00",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/940976.png",
+      "associated_team": "Korea Republic",
+      "updated_at": "2026-06-12T11:57:05+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4212,18 +4288,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/720737.png",
       "associated_team": "Mexico",
-      "updated_at": "2026-06-11T21:32:15+00:00",
-      "source": "FotMob/ESPN stats"
-    },
-    {
-      "name": "Érik Lira",
-      "club_current": "Mexico",
-      "country": "",
-      "position": "",
-      "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/971628.png",
-      "associated_team": "Mexico",
-      "updated_at": "2026-06-11T21:32:15+00:00",
+      "updated_at": "2026-06-12T11:57:05+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
