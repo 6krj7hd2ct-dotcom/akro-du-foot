@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-20T16:50:40+00:00",
+  "generated_at": "2026-06-20T18:45:28+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [
     {
@@ -1527,10 +1527,10 @@
           "away_espn_id": "466",
           "home_country_code": "NED",
           "away_country_code": "SWE",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
+          "home_score": "4",
+          "away_score": "1",
+          "status": "LIVE",
+          "status_state": "in",
           "completed": false,
           "venue": "NRG Stadium",
           "city": "Houston, Texas"
@@ -2999,10 +2999,10 @@
       "away_espn_id": "466",
       "home_country_code": "NED",
       "away_country_code": "SWE",
-      "home_score": "",
-      "away_score": "",
-      "status": "À venir",
-      "status_state": "pre",
+      "home_score": "4",
+      "away_score": "1",
+      "status": "LIVE",
+      "status_state": "in",
       "completed": false,
       "venue": "NRG Stadium",
       "city": "Houston, Texas"
@@ -3881,6 +3881,21 @@
   ],
   "top_assists": [
     {
+      "name": "Alexander Isak",
+      "team": "Sweden",
+      "team_id": 8520,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8520.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 3,
+      "rank": 1,
+      "country": ""
+    },
+    {
       "name": "Joshua Kimmich",
       "team": "Germany",
       "team_id": 8570,
@@ -3892,7 +3907,7 @@
       "all_time_rank": "",
       "played": "",
       "value": 2,
-      "rank": 1,
+      "rank": 2,
       "country": ""
     },
     {
@@ -3903,21 +3918,6 @@
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750027.png",
-      "country_flag_url": "",
-      "all_time_rank": "",
-      "played": "",
-      "value": 2,
-      "rank": 2,
-      "country": ""
-    },
-    {
-      "name": "Deniz Undav",
-      "team": "Germany",
-      "team_id": 8570,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8570.png",
-      "country_code": "",
-      "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/661519.png",
       "country_flag_url": "",
       "all_time_rank": "",
       "played": "",
@@ -4041,11 +4041,25 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "DIRECT. Pays-Bas - Suède: suivez en live le match du groupe F de la Coupe du monde 2026",
+      "title": "DIRECT. Pays-Bas - Suède: Gakpo signe lui aussi un doublé, les Pays-Bas se baladent à Houston",
       "source": "RMC Sport",
-      "date": "2026-06-20T16:49:33+00:00",
+      "date": "2026-06-20T18:43:05+00:00",
       "summary": "Une belle affiche dans le groupe F du Mondial. Tenus en échec par le Japon (2-2) lors de la première journée, les Pays-Bas vont tenter de faire mieux contre une Suède qui a elle écrasé la Tunisie (5-1). Coup…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-suede-suivez-en-live-le-match-du-groupe-f-de-la-coupe-du-monde-2026_LS-202606200142.html"
+    },
+    {
+      "title": "DIRECT. Allemagne - Côte d'Ivoire: suivez en live le match du groupe E de la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:37:58+00:00",
+      "summary": "Après avoir écrasé Curaçao lors de la 1re journée du Mondial (7-1), l'Allemagne va tenter de valider son billet pour les 16es de finale dans le groupe E face à la Côte d'Ivoire, qui a elle-même lancé son…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-cote-d-ivoire-suivez-en-live-le-match-du-groupe-e-de-la-coupe-du-monde-2026_LS-202606200169.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"une des pires équipes du Brésil que j'ai vue\", Larqué fracasse la Seleçao et est \"triste pour le peuple brésilien\"",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:14:05+00:00",
+      "summary": "Sur RMC ce samedi, Jean-Michel Larqué a vivement critiqué le Brésil, vainqueur 3-0 de Haïti mais loin d’être rassurant depuis le début de la Coupe du monde.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-une-des-pires-equipes-du-bresil-que-j-ai-vue-larque-fracasse-la-selecao-et-est-triste-pour-le-peuple-bresilien_AV-202606200344.html"
     },
     {
       "title": "Coupe du monde 2026: \"Lamine Yamal s’est moqué de moi\", l'Espagnol Borja Iglesias revient sur son moment de solitude après avoir été recalé par la sécurité",
@@ -4116,39 +4130,46 @@
       "date": "2026-06-20T11:42:35+00:00",
       "summary": "Harry Maguire a été objet d’une scène originale dans les rues de New York. Non retenu pour défendre les couleurs des Three Lions au Mondial, le défenseur anglais a tout de même été aperçu aux États-Unis, en…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-non-selectionne-avec-l-angleterre-harry-maguire-apercu-en-train-de-distribuer-des-vignettes-panini-en-plein-new-york_AV-202606200237.html"
-    },
-    {
-      "title": "DIRECT. France-Irak, J-2: toutes les infos et les prises de parole en live avant le deuxième match des Bleus à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:07:35+00:00",
-      "summary": "Avant de prendre la direction de Philadelphie dimanche à la veille de la rencontre face à l'Irak (lundi, 23h), les Bleus passent leur dernière journée à Boston ce samedi. Une conférence de presse est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-j-2-toutes-les-infos-et-les-prises-de-parole-en-live-avant-le-deuxieme-match-des-bleus-a-la-coupe-du-monde-2026_LN-202606200217.html"
-    },
-    {
-      "title": "Coupe du monde 2026: carton rouge obligatoire pour un joueur qui se couvre la bouche? Ce que dit vraiment la règle à l'origine de l'exclusion d'Almiron",
-      "source": "RMC Sport",
-      "date": "2026-06-20T09:35:13+00:00",
-      "summary": "Pour la première fois, un arbitre de la Coupe du monde a appliqué une nouvelle précision de l'alinéa 4 de la Loi 12 de l'Ifab visant à endiguer les débordements racistes ou injurieux. Et c'est Miguel Almiron,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-carton-rouge-obligatoire-pour-un-joueur-qui-se-couvre-la-bouche-ce-que-dit-vraiment-la-regle-a-l-origine-de-l-exclusion-d-almiron_AV-202606200199.html"
-    },
-    {
-      "title": "\"Éliminés le 20 juin d'un tournoi qui se termine le 19 juillet\": la presse turque sans pitié après le fiasco de Montella et ses hommes à la Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-20T08:31:22+00:00",
-      "summary": "Après l'élimination de la Turquie dès la phase de poules de la Coupe du monde 2026, ce samedi, le sélectionneur Vincenzo Montella se retrouve en première ligne sur le banc des accusés. Les cadres de l'équipe…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/elimines-le-20-juin-d-un-tournoi-qui-se-termine-le-19-juillet-la-presse-turque-sans-pitie-apres-le-fiasco-de-montella-et-ses-hommes-a-la-coupe-du-monde_AV-202606200184.html"
     }
   ],
   "france_news": [
     {
       "title": "France-Sénégal : revivez la victoire des Bleus et le record de Kylian Mbappé, pour leur entrée en lice dans la Coupe du monde 2026",
       "source": "France Info",
-      "date": "2026-06-20T16:50:58+00:00",
+      "date": "2026-06-20T18:45:58+00:00",
       "summary": "L'équipe de France a ouvert sa compétition avec une victoire aux Sénégalais à New York, mardi soir. Le capitaine Kylian Mbappé s'est illustré avec un doublé qui fait de lui le meilleur buteur de l'histoire…",
       "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-france-senegal-les-bleus-debutent-leur-coupe-du-monde-2026-a-new-york-suivez-avec-nous-le-premier-match-de-l-equipe-de-didier-deschamps-a-21-heures_8061320.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "Les Irrésistibles Français lancent un appel pour ne pas habiller Rocky à Philadelphie",
+      "title": "France-Irak: pourquoi un carton des Bleus ne les aiderait pas forcément à terminer premiers de leur groupe",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:38:24+00:00",
+      "summary": "Après sa victoire inaugurale contre le Sénégal (3-1), l'équipe de France affronte l'Irak ce lundi à 23h (heure française). Mais un large succès face à l'équipe la plus faible de leur poule n'aiderait pas…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-pourquoi-un-carton-des-bleus-ne-les-aiderait-pas-forcement-a-terminer-premiers-de-leur-groupe_AV-202606200351.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:21:37+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "\"Pendant 48h, il m'en a voulu\": le jour où Le Graët a énervé Deschamps en une petite phrase",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:21:36+00:00",
+      "summary": "Dans les colonnes de Ouest France, l'ancien président de la FFF Noël Le Graët est revenu sur le jour où il a eu un véritable désaccord avec Didier Deschamps à propos... de la tactique.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pendant-48h-il-m-en-a-voulu-le-jour-ou-le-graet-a-enerve-deschamps-en-une-petite-phrase_AV-202606200346.html"
+    },
+    {
+      "title": "Et en plus ils s'échangent des tuyaux: quand Désiré Doué apprend un nouveau dribble à Michael Olise",
+      "source": "RMC Sport",
+      "date": "2026-06-20T17:24:20+00:00",
+      "summary": "Les deux attaquants de l'équipe de France Désiré Doué et Michael Olise se sont amusés à répéter des dribbles à l'entraînement avant leur deuxième match de Coupe du monde face à l'Irak. L'occasion pour le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/et-en-plus-ils-s-echangent-des-tuyaux-quand-desire-doue-apprend-un-nouveau-dribble-a-michael-olise_AV-202606200333.html"
+    },
+    {
+      "title": "Gare à la malédiction: pourquoi les Irrésistibles Français lancent un appel pour ne pas habiller Rocky à Philadelphie",
       "source": "RMC Sport",
       "date": "2026-06-20T16:30:00+00:00",
       "summary": "Recommandation pour éviter une malédiction avant le match des Bleus face à l'Irak lundi soir.",
@@ -4183,25 +4204,11 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-coup-dur-pour-les-supporters-des-bleus-le-maillot-exterieur-vert-mente-est-en-rupture-de-stock_AV-202606200245.html"
     },
     {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:56:42+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
       "title": "\"L'Espagne, vous connaissez?\": Deschamps met en garde les Bleus contre tout excès de confiance face à l’Irak",
       "source": "RMC Sport",
       "date": "2026-06-20T10:56:19+00:00",
       "summary": "Avant de disputer le 2e match de la Coupe du monde face à l’Irak, lundi à Philadelphie (23h), le sélectionneur de l’équipe de France Didier Deschamps a averti ses joueurs : il ne faudra surtout pas…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/l-espagne-vous-connaissez-deschamps-met-en-garde-les-bleus-contre-tout-exces-de-confiance-face-a-l-irak_AV-202606200230.html"
-    },
-    {
-      "title": "DIRECT. France-Irak, J-2: toutes les infos et les prises de parole en live avant le deuxième match des Bleus à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:07:35+00:00",
-      "summary": "Avant de prendre la direction de Philadelphie dimanche à la veille de la rencontre face à l'Irak (lundi, 23h), les Bleus passent leur dernière journée à Boston ce samedi. Une conférence de presse est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-j-2-toutes-les-infos-et-les-prises-de-parole-en-live-avant-le-deuxieme-match-des-bleus-a-la-coupe-du-monde-2026_LN-202606200217.html"
     },
     {
       "title": "\"On en vient à miser sur des résultats improbables\" : dans les coulisses de MonPetitProno, l'appli qui fait vibrer des millions de Français pendant la Coupe du monde de foot",
@@ -4293,29 +4300,29 @@
       "date": "2026-06-16T21:50:08+00:00",
       "summary": "L'équipe de France a signé une belle victoire face au Sénégal pour son entrée en lice dans le Mondial, mardi soir.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/on-a-eu-un-peu-d-apprehension-au-debut-ensuite-on-a-pu-derouler-un-peu-plus-reagit-didier-deschamps-apres-la-premiere-victoire-de-la-france-a-la-coupe-du-monde_8064764.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Avec un doublé contre le Sénégal à la Coupe du monde, Kylian Mbappé dépasse Olivier Giroud et devient meilleur buteur de l'histoire de l'équipe de France",
-      "source": "France Info",
-      "date": "2026-06-16T21:20:04+00:00",
-      "summary": "En inscrivant deux buts face au Sénégal, lundi à New York, l'attaquant de 27 ans dépasse déjà les 57 buts d'Olivier Giroud.",
-      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/football-avec-un-double-contre-le-senegal-kylian-mbappe-depasse-olivier-giroud-et-devient-meilleur-buteur-de-l-histoire-de-l-equipe-de-france_8045114.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "L'équipe de France souffre mais finit par s'imposer contre le Sénégal pour son premier match à la Coupe du monde 2026",
-      "source": "France Info",
-      "date": "2026-06-16T21:16:33+00:00",
-      "summary": "Kylian Mbappé, double buteur contre le Sénégal, est devenu le meilleur buteur de l'histoire des Bleus devant Olivier Giroud et a participé à la victoire de l'équipe de France pour son entrée en lice dans le…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/l-equipe-de-france-souffre-mais-finit-par-s-imposer-contre-le-senegal-pour-son-premier-match-a-la-coupe-du-monde-2026_8064701.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
-      "title": "DIRECT. Pays-Bas - Suède: suivez en live le match du groupe F de la Coupe du monde 2026",
+      "title": "DIRECT. Pays-Bas - Suède: Gakpo signe lui aussi un doublé, les Pays-Bas se baladent à Houston",
       "source": "RMC Sport",
-      "date": "2026-06-20T16:49:33+00:00",
+      "date": "2026-06-20T18:43:05+00:00",
       "summary": "Une belle affiche dans le groupe F du Mondial. Tenus en échec par le Japon (2-2) lors de la première journée, les Pays-Bas vont tenter de faire mieux contre une Suède qui a elle écrasé la Tunisie (5-1). Coup…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-suede-suivez-en-live-le-match-du-groupe-f-de-la-coupe-du-monde-2026_LS-202606200142.html"
+    },
+    {
+      "title": "DIRECT. Allemagne - Côte d'Ivoire: suivez en live le match du groupe E de la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:37:58+00:00",
+      "summary": "Après avoir écrasé Curaçao lors de la 1re journée du Mondial (7-1), l'Allemagne va tenter de valider son billet pour les 16es de finale dans le groupe E face à la Côte d'Ivoire, qui a elle-même lancé son…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-cote-d-ivoire-suivez-en-live-le-match-du-groupe-e-de-la-coupe-du-monde-2026_LS-202606200169.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"une des pires équipes du Brésil que j'ai vue\", Larqué fracasse la Seleçao et est \"triste pour le peuple brésilien\"",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:14:05+00:00",
+      "summary": "Sur RMC ce samedi, Jean-Michel Larqué a vivement critiqué le Brésil, vainqueur 3-0 de Haïti mais loin d’être rassurant depuis le début de la Coupe du monde.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-une-des-pires-equipes-du-bresil-que-j-ai-vue-larque-fracasse-la-selecao-et-est-triste-pour-le-peuple-bresilien_AV-202606200344.html"
     },
     {
       "title": "Coupe du monde 2026: \"Lamine Yamal s’est moqué de moi\", l'Espagnol Borja Iglesias revient sur son moment de solitude après avoir été recalé par la sécurité",
@@ -4386,43 +4393,92 @@
       "date": "2026-06-20T11:42:35+00:00",
       "summary": "Harry Maguire a été objet d’une scène originale dans les rues de New York. Non retenu pour défendre les couleurs des Three Lions au Mondial, le défenseur anglais a tout de même été aperçu aux États-Unis, en…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-non-selectionne-avec-l-angleterre-harry-maguire-apercu-en-train-de-distribuer-des-vignettes-panini-en-plein-new-york_AV-202606200237.html"
-    },
-    {
-      "title": "DIRECT. France-Irak, J-2: toutes les infos et les prises de parole en live avant le deuxième match des Bleus à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:07:35+00:00",
-      "summary": "Avant de prendre la direction de Philadelphie dimanche à la veille de la rencontre face à l'Irak (lundi, 23h), les Bleus passent leur dernière journée à Boston ce samedi. Une conférence de presse est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-j-2-toutes-les-infos-et-les-prises-de-parole-en-live-avant-le-deuxieme-match-des-bleus-a-la-coupe-du-monde-2026_LN-202606200217.html"
-    },
-    {
-      "title": "Coupe du monde 2026: carton rouge obligatoire pour un joueur qui se couvre la bouche? Ce que dit vraiment la règle à l'origine de l'exclusion d'Almiron",
-      "source": "RMC Sport",
-      "date": "2026-06-20T09:35:13+00:00",
-      "summary": "Pour la première fois, un arbitre de la Coupe du monde a appliqué une nouvelle précision de l'alinéa 4 de la Loi 12 de l'Ifab visant à endiguer les débordements racistes ou injurieux. Et c'est Miguel Almiron,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-carton-rouge-obligatoire-pour-un-joueur-qui-se-couvre-la-bouche-ce-que-dit-vraiment-la-regle-a-l-origine-de-l-exclusion-d-almiron_AV-202606200199.html"
-    },
-    {
-      "title": "\"Éliminés le 20 juin d'un tournoi qui se termine le 19 juillet\": la presse turque sans pitié après le fiasco de Montella et ses hommes à la Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-20T08:31:22+00:00",
-      "summary": "Après l'élimination de la Turquie dès la phase de poules de la Coupe du monde 2026, ce samedi, le sélectionneur Vincenzo Montella se retrouve en première ligne sur le banc des accusés. Les cadres de l'équipe…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/elimines-le-20-juin-d-un-tournoi-qui-se-termine-le-19-juillet-la-presse-turque-sans-pitie-apres-le-fiasco-de-montella-et-ses-hommes-a-la-coupe-du-monde_AV-202606200184.html"
     }
   ],
   "all_news": [
     {
       "title": "France-Sénégal : revivez la victoire des Bleus et le record de Kylian Mbappé, pour leur entrée en lice dans la Coupe du monde 2026",
       "source": "France Info",
-      "date": "2026-06-20T16:50:58+00:00",
+      "date": "2026-06-20T18:45:58+00:00",
       "summary": "L'équipe de France a ouvert sa compétition avec une victoire aux Sénégalais à New York, mardi soir. Le capitaine Kylian Mbappé s'est illustré avec un doublé qui fait de lui le meilleur buteur de l'histoire…",
       "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-france-senegal-les-bleus-debutent-leur-coupe-du-monde-2026-a-new-york-suivez-avec-nous-le-premier-match-de-l-equipe-de-didier-deschamps-a-21-heures_8061320.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "DIRECT. Pays-Bas - Suède: suivez en live le match du groupe F de la Coupe du monde 2026",
+      "title": "DIRECT. Pays-Bas - Suède: Gakpo signe lui aussi un doublé, les Pays-Bas se baladent à Houston",
       "source": "RMC Sport",
-      "date": "2026-06-20T16:49:33+00:00",
+      "date": "2026-06-20T18:43:05+00:00",
       "summary": "Une belle affiche dans le groupe F du Mondial. Tenus en échec par le Japon (2-2) lors de la première journée, les Pays-Bas vont tenter de faire mieux contre une Suède qui a elle écrasé la Tunisie (5-1). Coup…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-suede-suivez-en-live-le-match-du-groupe-f-de-la-coupe-du-monde-2026_LS-202606200142.html"
+    },
+    {
+      "title": "France-Irak: pourquoi un carton des Bleus ne les aiderait pas forcément à terminer premiers de leur groupe",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:38:24+00:00",
+      "summary": "Après sa victoire inaugurale contre le Sénégal (3-1), l'équipe de France affronte l'Irak ce lundi à 23h (heure française). Mais un large succès face à l'équipe la plus faible de leur poule n'aiderait pas…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-pourquoi-un-carton-des-bleus-ne-les-aiderait-pas-forcement-a-terminer-premiers-de-leur-groupe_AV-202606200351.html"
+    },
+    {
+      "title": "DIRECT. Allemagne - Côte d'Ivoire: suivez en live le match du groupe E de la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:37:58+00:00",
+      "summary": "Après avoir écrasé Curaçao lors de la 1re journée du Mondial (7-1), l'Allemagne va tenter de valider son billet pour les 16es de finale dans le groupe E face à la Côte d'Ivoire, qui a elle-même lancé son…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-cote-d-ivoire-suivez-en-live-le-match-du-groupe-e-de-la-coupe-du-monde-2026_LS-202606200169.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:21:37+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "\"Pendant 48h, il m'en a voulu\": le jour où Le Graët a énervé Deschamps en une petite phrase",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:21:36+00:00",
+      "summary": "Dans les colonnes de Ouest France, l'ancien président de la FFF Noël Le Graët est revenu sur le jour où il a eu un véritable désaccord avec Didier Deschamps à propos... de la tactique.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pendant-48h-il-m-en-a-voulu-le-jour-ou-le-graet-a-enerve-deschamps-en-une-petite-phrase_AV-202606200346.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"une des pires équipes du Brésil que j'ai vue\", Larqué fracasse la Seleçao et est \"triste pour le peuple brésilien\"",
+      "source": "RMC Sport",
+      "date": "2026-06-20T18:14:05+00:00",
+      "summary": "Sur RMC ce samedi, Jean-Michel Larqué a vivement critiqué le Brésil, vainqueur 3-0 de Haïti mais loin d’être rassurant depuis le début de la Coupe du monde.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-une-des-pires-equipes-du-bresil-que-j-ai-vue-larque-fracasse-la-selecao-et-est-triste-pour-le-peuple-bresilien_AV-202606200344.html"
+    },
+    {
+      "title": "Un coup de pression en hautes sphères: vers un débloquage rapide du dossier du contrat de Pape Thiaw?",
+      "source": "RMC Sport",
+      "date": "2026-06-20T17:57:48+00:00",
+      "summary": "Les tensions extra-sportives autour de l'équipe du Sénégal ont été largement ébruitées dans la presse ces dernières heures. Au point que la Fédération a été plus qu'invitée à régler ces problèmes pour éviter…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-coup-de-pression-en-hautes-spheres-vers-un-debloquage-rapide-du-dossier-du-contrat-de-pape-thiaw_AV-202606200340.html"
+    },
+    {
+      "title": "Et en plus ils s'échangent des tuyaux: quand Désiré Doué apprend un nouveau dribble à Michael Olise",
+      "source": "RMC Sport",
+      "date": "2026-06-20T17:24:20+00:00",
+      "summary": "Les deux attaquants de l'équipe de France Désiré Doué et Michael Olise se sont amusés à répéter des dribbles à l'entraînement avant leur deuxième match de Coupe du monde face à l'Irak. L'occasion pour le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/et-en-plus-ils-s-echangent-des-tuyaux-quand-desire-doue-apprend-un-nouveau-dribble-a-michael-olise_AV-202606200333.html"
+    },
+    {
+      "title": "Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-06-20T17:14:11+00:00",
+      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
+      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+    },
+    {
+      "title": "Mercato: \"Aucun contact direct ou indirect\", le Real Madrid éteint la rumeur Michael Olise",
+      "source": "RMC Sport",
+      "date": "2026-06-20T17:14:10+00:00",
+      "summary": "Récemment au centre de l’attention médiatique en raison d’une folle rumeur concernant un potentiel transfert de Michael Olise, le Real a calmé le jeu ce samedi en réfutant toute spéculation autour du joueur…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-aucun-contact-direct-ou-indirect-le-real-madrid-eteint-la-rumeur-michael-olise_AV-202606200330.html"
+    },
+    {
+      "title": "Aucun but en Coupe du monde depuis 289 minutes: l’inquiétante stat de l’Espagne avant de défier l’Arabie saoudite",
+      "source": "RMC Sport",
+      "date": "2026-06-20T17:01:16+00:00",
+      "summary": "Incapable de marquer face au Cap-Vert (0-0) pour son premier match de Coupe du monde, l'Espagne n'a plus fait trembler les filets en phase finale d'un Mondial depuis le dernier match de poules de la Coupe du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/aucun-but-en-coupe-du-monde-depuis-289-minutes-l-inquietante-stat-de-l-espagne-avant-de-defier-l-arabie-saoudite_AV-202606200328.html"
     },
     {
       "title": "Jambe cassée mais sourire aux lèvres: les images émouvantes d'Ismaël Koné retrouvant ses coéquipiers après son opération",
@@ -4430,6 +4486,13 @@
       "date": "2026-06-20T16:46:48+00:00",
       "summary": "Gravement blessé lors du match contre le Qatar dans la nuit de jeudi à vendredi, Ismaël Koné est sorti de l'hôpital après s'être fait opérer et a déjà rejoint ses coéquipiers, ce samedi. Le Canadien, passé…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/jambe-cassee-mais-sourire-aux-levres-les-images-emouvantes-d-ismael-kone-retrouvant-ses-coequipiers-apres-son-operation_AV-202606200325.html"
+    },
+    {
+      "title": "En direct : Pays-Bas – Suède",
+      "source": "SO FOOT",
+      "date": "2026-06-20T16:45:09+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-pays-bas-suede"
     },
     {
       "title": "Coupe du monde 2026: \"Lamine Yamal s’est moqué de moi\", l'Espagnol Borja Iglesias revient sur son moment de solitude après avoir été recalé par la sécurité",
@@ -4446,11 +4509,18 @@
       "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-toutes-les-informations-et-rumeurs-du-18-juin-en-live_LN-202606180441.html"
     },
     {
-      "title": "Les Irrésistibles Français lancent un appel pour ne pas habiller Rocky à Philadelphie",
+      "title": "Gare à la malédiction: pourquoi les Irrésistibles Français lancent un appel pour ne pas habiller Rocky à Philadelphie",
       "source": "RMC Sport",
       "date": "2026-06-20T16:30:00+00:00",
       "summary": "Recommandation pour éviter une malédiction avant le match des Bleus face à l'Irak lundi soir.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/les-irresistibles-francais-lancent-un-appel-pour-ne-pas-habiller-rocky-a-philadelphie_AV-202606200019.html"
+    },
+    {
+      "title": "Coupe du monde 2026 : L’opération du milieu de terrain du Canada Ismaël Koné s’est bien passée",
+      "source": "SO FOOT",
+      "date": "2026-06-20T16:27:36+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-loperation-du-milieu-de-terrain-du-canada-ismael-kone-sest-bien-passee"
     },
     {
       "title": "France-Irak: garder les mêmes ou faire tourner? Pourquoi ce match est important dans la gestion des remplaçants",
@@ -4523,10 +4593,10 @@
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/herve-renard_DN-202304090319.html"
     },
     {
-      "title": "Mondial 2026 : On a suivi Brésil – Haïti à Cayenne en Guyanne",
+      "title": "Mondial 2026 : On a suivi Brésil – Haïti à Cayenne en Guyane",
       "source": "SO FOOT",
       "date": "2026-06-20T15:00:04+00:00",
-      "summary": "Un match pour célébrer cette culture de la mixité en Guyanne.",
+      "summary": "Un match pour célébrer cette culture de la mixité en Guyane.",
       "url": "https://www.sofoot.com/articles/mondial-2026-on-a-suivi-bresil-haiti-a-cayenne-en-guyanne"
     },
     {
@@ -4663,13 +4733,6 @@
       "url": "https://www.sofoot.com/breves/pronostic-pays-bas-suede-analyse-cotes-et-prono-mondial-2026"
     },
     {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:56:42+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
       "title": "\"L'Espagne, vous connaissez?\": Deschamps met en garde les Bleus contre tout excès de confiance face à l’Irak",
       "source": "RMC Sport",
       "date": "2026-06-20T10:56:19+00:00",
@@ -4684,32 +4747,11 @@
       "url": "https://www.sofoot.com/breves/equipe-de-france-didier-deschamps-se-mefie-de-lirak-a-la-coupe-du-monde"
     },
     {
-      "title": "\"Si l’accouchement ne se passe pas bien et qu’il n’est pas là...\": un joueur doit-il choisir entre la naissance de son enfant et une Coupe du monde?",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:42:05+00:00",
-      "summary": "Engagé à la Coupe du monde avec les Diables Rouges, Jérémy Doku pourrait momentanément quitter ses coéquipiers pour assister à la naissance de son premier enfant. Un choix qui a suscité des critiques, mais…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/si-l-accouchement-ne-se-passe-pas-bien-et-qu-il-n-est-pas-la-un-joueur-doit-il-choisir-entre-la-naissance-de-son-enfant-et-une-coupe-du-monde_AV-202606200225.html"
-    },
-    {
-      "title": "Ronaldinho de RETOUR pour REMPLACER Neymar ?! Daily #10",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:24:43+00:00",
-      "summary": "Ce n'est pas un poisson d'avril au mois de juin. Le légendaire Ronaldinho va sortir de sa retraite et s'engager à Ravenne, en 3e division italienne. A 46 ans, l'ancien Ballon d'Or était au stade pour voir la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-ronaldinho-de-retour-pour-remplacer-neymar-daily-10_VN-202606200222.html"
-    },
-    {
       "title": "Coupe du monde : le sélectionneur de l’Allemagne Julian Nagelsmann complimente le nouvel entraîneur de Lens Dino Toppmöller",
       "source": "SO FOOT",
       "date": "2026-06-20T10:22:47+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/coupe-du-monde-le-selectionneur-de-lallemagne-julian-nagelsmann-evoque-le-nouvel-entraineur-de-lens-dino-toppmoller"
-    },
-    {
-      "title": "DIRECT. France-Irak, J-2: toutes les infos et les prises de parole en live avant le deuxième match des Bleus à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-20T10:07:35+00:00",
-      "summary": "Avant de prendre la direction de Philadelphie dimanche à la veille de la rencontre face à l'Irak (lundi, 23h), les Bleus passent leur dernière journée à Boston ce samedi. Une conférence de presse est…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-j-2-toutes-les-infos-et-les-prises-de-parole-en-live-avant-le-deuxieme-match-des-bleus-a-la-coupe-du-monde-2026_LN-202606200217.html"
     },
     {
       "title": "Coupe du monde : William Saliba apprécie l’ambiance du vestiaire de l’équipe de France",
@@ -4726,13 +4768,6 @@
       "url": "https://www.sofoot.com/breves/non-selectionne-par-langleterre-a-la-coupe-du-monde-harry-maguire-vend-des-albums-panini-a-new-york"
     },
     {
-      "title": "Coupe du monde 2026: carton rouge obligatoire pour un joueur qui se couvre la bouche? Ce que dit vraiment la règle à l'origine de l'exclusion d'Almiron",
-      "source": "RMC Sport",
-      "date": "2026-06-20T09:35:13+00:00",
-      "summary": "Pour la première fois, un arbitre de la Coupe du monde a appliqué une nouvelle précision de l'alinéa 4 de la Loi 12 de l'Ifab visant à endiguer les débordements racistes ou injurieux. Et c'est Miguel Almiron,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-carton-rouge-obligatoire-pour-un-joueur-qui-se-couvre-la-bouche-ce-que-dit-vraiment-la-regle-a-l-origine-de-l-exclusion-d-almiron_AV-202606200199.html"
-    },
-    {
       "title": "Coupe du monde : le joueur de l’Écosse Ryan Christie se plaint de l’arbitrage face au Maroc",
       "source": "SO FOOT",
       "date": "2026-06-20T09:16:19+00:00",
@@ -4740,25 +4775,11 @@
       "url": "https://www.sofoot.com/breves/coupe-du-monde-le-joueur-de-lecosse-ryan-christie-se-plaint-de-larbitrage-face-au-maroc"
     },
     {
-      "title": "Coupe du monde 2026: le tableau complet des 16es de finale du Mondial avec toutes les équipes qualifiées",
-      "source": "RMC Sport",
-      "date": "2026-06-20T09:12:29+00:00",
-      "summary": "La phase de poules de la Coupe du monde se poursuit et les sélections valident leur qualification pour les seizièmes de finale les unes après les autres. Voici le tableau complet des matchs à élimination…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-16es-de-finale-du-mondial-avec-toutes-les-equipes-qualifiees_AV-202606190519.html"
-    },
-    {
       "title": "En direct : Allemagne-Côte d’Ivoire",
       "source": "SO FOOT",
       "date": "2026-06-20T09:00:54+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-allemagne-cote-divoire"
-    },
-    {
-      "title": "Coupe du monde : \"C'est l'école des fans\", une compétition trop favorable aux grandes nations ?",
-      "source": "RMC Sport",
-      "date": "2026-06-20T08:58:04+00:00",
-      "summary": "Une Coupe du monde avec trop de nations qualifiées ? Ce samedi matin, les Grandes Gueules du Sport se demandent si ce début de mondial a été emballant. Les avis divergent, surtout sur la qualité des…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-du-monde-c-est-l-ecole-des-fans-une-competition-trop-favorable-aux-grandes-nations_VN-202606200193.html"
     },
     {
       "title": "En direct : Tunisie-Japon",
@@ -4775,13 +4796,6 @@
       "url": "https://www.sofoot.com/breves/coupe-du-monde-lattaquant-du-real-madrid-arda-guler-sexcuse-suite-a-lelimination-precoce-de-la-turquie"
     },
     {
-      "title": "\"Éliminés le 20 juin d'un tournoi qui se termine le 19 juillet\": la presse turque sans pitié après le fiasco de Montella et ses hommes à la Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-20T08:31:22+00:00",
-      "summary": "Après l'élimination de la Turquie dès la phase de poules de la Coupe du monde 2026, ce samedi, le sélectionneur Vincenzo Montella se retrouve en première ligne sur le banc des accusés. Les cadres de l'équipe…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/elimines-le-20-juin-d-un-tournoi-qui-se-termine-le-19-juillet-la-presse-turque-sans-pitie-apres-le-fiasco-de-montella-et-ses-hommes-a-la-coupe-du-monde_AV-202606200184.html"
-    },
-    {
       "title": "La team US vue du Mexique à la Coupe du monde : « Si tu es un vrai Mexicain, tu ne peux pas supporter les États-Unis »",
       "source": "SO FOOT",
       "date": "2026-06-20T08:30:14+00:00",
@@ -4796,48 +4810,27 @@
       "url": "https://www.sofoot.com/breves/lhomonyme-de-kylian-mbappe-embete-par-des-controleurs-dans-les-transports-en-communs"
     },
     {
-      "title": "Mort de Diogo Jota",
-      "source": "RMC Sport",
-      "date": "2026-06-20T08:05:09+00:00",
-      "summary": "Le footballeur portugais Diogo Jota est mort le jeudi 3 juillet 2025 dan un accident de la route, aux côtés de son frère. Il avait 28 ans et s'était marié 12 jours avant l'accident avec la mère de ses trois…",
-      "url": "https://rmcsport.bfmtv.com/football/mort-de-diogo-jota_DN-202507030442.html"
-    },
-    {
-      "title": "Cristiano Ronaldo",
-      "source": "RMC Sport",
-      "date": "2026-06-20T08:05:09+00:00",
-      "summary": "Cristiano Ronaldo dos Santos Aveiro, plus souvent appelé Ronaldo ou Cristiano Ronaldo et surnommé CR7, est né le 5 février 1985 à Funchal à Madère. A l'été 2021, il est retourné jouer au club où il s'était…",
-      "url": "https://rmcsport.bfmtv.com/football/cristiano-ronaldo_DN-202108310501.html"
-    },
-    {
       "title": "Coupe du monde : Raphinha a été touché à la cuisse droite avec le Brésil",
       "source": "SO FOOT",
       "date": "2026-06-20T07:51:14+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/coupe-du-monde-raphinha-a-ete-touche-a-la-cuisse-droite-avec-le-bresil"
-    },
-    {
-      "title": "Coupe du monde : le message de Cristiano Ronaldo à la suite du cyberharcélement subi par João Neves",
-      "source": "SO FOOT",
-      "date": "2026-06-20T07:24:23+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-le-message-de-cristiano-ronaldo-suite-au-cyberharcelement-subi-par-joao-neves"
-    },
-    {
-      "title": "Coupe du monde 2026 : Zion Suzuki : peau noire, gants dorés au Japon",
-      "source": "SO FOOT",
-      "date": "2026-06-20T07:00:41+00:00",
-      "summary": "La trajectoire d’un garçon qui a recalé Manchester United et dribblé les vagues de racisme au Japon.",
-      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-zion-suzuki-peau-noire-gants-dores-au-japon"
     }
   ],
   "focused_team_news": {
     "Brazil": [
       {
-        "title": "Mondial 2026 : On a suivi Brésil – Haïti à Cayenne en Guyanne",
+        "title": "Coupe du monde 2026: \"une des pires équipes du Brésil que j'ai vue\", Larqué fracasse la Seleçao et est \"triste pour le peuple brésilien\"",
+        "source": "RMC Sport",
+        "date": "2026-06-20T18:14:05+00:00",
+        "summary": "Sur RMC ce samedi, Jean-Michel Larqué a vivement critiqué le Brésil, vainqueur 3-0 de Haïti mais loin d’être rassurant depuis le début de la Coupe du monde.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-une-des-pires-equipes-du-bresil-que-j-ai-vue-larque-fracasse-la-selecao-et-est-triste-pour-le-peuple-bresilien_AV-202606200344.html"
+      },
+      {
+        "title": "Mondial 2026 : On a suivi Brésil – Haïti à Cayenne en Guyane",
         "source": "SO FOOT",
         "date": "2026-06-20T15:00:04+00:00",
-        "summary": "Un match pour célébrer cette culture de la mixité en Guyanne.",
+        "summary": "Un match pour célébrer cette culture de la mixité en Guyane.",
         "url": "https://www.sofoot.com/articles/mondial-2026-on-a-suivi-bresil-haiti-a-cayenne-en-guyanne"
       },
       {
@@ -4899,11 +4892,11 @@
     ],
     "Canada": [
       {
-        "title": "Coupe du monde 2026 : Avec le Canada, Jonathan David renforce un record de la Juventus",
+        "title": "Coupe du monde 2026 : L’opération du milieu de terrain du Canada Ismaël Koné s’est bien passée",
         "source": "SO FOOT",
-        "date": "2026-06-19T20:10:28+00:00",
+        "date": "2026-06-20T16:27:36+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-avec-le-canada-jonathan-david-renforce-un-record-de-la-juventus"
+        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-loperation-du-milieu-de-terrain-du-canada-ismael-kone-sest-bien-passee"
       }
     ],
     "Cape Verde": [
@@ -4916,6 +4909,13 @@
       }
     ],
     "Curaçao": [
+      {
+        "title": "DIRECT. Allemagne - Côte d'Ivoire: suivez en live le match du groupe E de la Coupe du monde 2026",
+        "source": "RMC Sport",
+        "date": "2026-06-20T18:37:58+00:00",
+        "summary": "Après avoir écrasé Curaçao lors de la 1re journée du Mondial (7-1), l'Allemagne va tenter de valider son billet pour les 16es de finale dans le groupe E face à la Côte d'Ivoire, qui a elle-même lancé son…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-cote-d-ivoire-suivez-en-live-le-match-du-groupe-e-de-la-coupe-du-monde-2026_LS-202606200169.html"
+      },
       {
         "title": "Équateur - Curaçao : à quelle heure et sur quelle chaîne TV regarder le match de la Coupe du Monde en direct ?",
         "source": "RMC Sport",
@@ -4951,12 +4951,40 @@
       {
         "title": "France-Sénégal : revivez la victoire des Bleus et le record de Kylian Mbappé, pour leur entrée en lice dans la Coupe du monde 2026",
         "source": "France Info",
-        "date": "2026-06-20T16:50:58+00:00",
+        "date": "2026-06-20T18:45:58+00:00",
         "summary": "L'équipe de France a ouvert sa compétition avec une victoire aux Sénégalais à New York, mardi soir. Le capitaine Kylian Mbappé s'est illustré avec un doublé qui fait de lui le meilleur buteur de l'histoire…",
         "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-france-senegal-les-bleus-debutent-leur-coupe-du-monde-2026-a-new-york-suivez-avec-nous-le-premier-match-de-l-equipe-de-didier-deschamps-a-21-heures_8061320.html#xtor=RSS-3-%5Bgeneral%5D"
       },
       {
-        "title": "Les Irrésistibles Français lancent un appel pour ne pas habiller Rocky à Philadelphie",
+        "title": "France-Irak: pourquoi un carton des Bleus ne les aiderait pas forcément à terminer premiers de leur groupe",
+        "source": "RMC Sport",
+        "date": "2026-06-20T18:38:24+00:00",
+        "summary": "Après sa victoire inaugurale contre le Sénégal (3-1), l'équipe de France affronte l'Irak ce lundi à 23h (heure française). Mais un large succès face à l'équipe la plus faible de leur poule n'aiderait pas…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-pourquoi-un-carton-des-bleus-ne-les-aiderait-pas-forcement-a-terminer-premiers-de-leur-groupe_AV-202606200351.html"
+      },
+      {
+        "title": "Didier Deschamps",
+        "source": "RMC Sport",
+        "date": "2026-06-20T18:21:37+00:00",
+        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+      },
+      {
+        "title": "\"Pendant 48h, il m'en a voulu\": le jour où Le Graët a énervé Deschamps en une petite phrase",
+        "source": "RMC Sport",
+        "date": "2026-06-20T18:21:36+00:00",
+        "summary": "Dans les colonnes de Ouest France, l'ancien président de la FFF Noël Le Graët est revenu sur le jour où il a eu un véritable désaccord avec Didier Deschamps à propos... de la tactique.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pendant-48h-il-m-en-a-voulu-le-jour-ou-le-graet-a-enerve-deschamps-en-une-petite-phrase_AV-202606200346.html"
+      },
+      {
+        "title": "Et en plus ils s'échangent des tuyaux: quand Désiré Doué apprend un nouveau dribble à Michael Olise",
+        "source": "RMC Sport",
+        "date": "2026-06-20T17:24:20+00:00",
+        "summary": "Les deux attaquants de l'équipe de France Désiré Doué et Michael Olise se sont amusés à répéter des dribbles à l'entraînement avant leur deuxième match de Coupe du monde face à l'Irak. L'occasion pour le…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/et-en-plus-ils-s-echangent-des-tuyaux-quand-desire-doue-apprend-un-nouveau-dribble-a-michael-olise_AV-202606200333.html"
+      },
+      {
+        "title": "Gare à la malédiction: pourquoi les Irrésistibles Français lancent un appel pour ne pas habiller Rocky à Philadelphie",
         "source": "RMC Sport",
         "date": "2026-06-20T16:30:00+00:00",
         "summary": "Recommandation pour éviter une malédiction avant le match des Bleus face à l'Irak lundi soir.",
@@ -5003,42 +5031,21 @@
         "date": "2026-06-20T12:15:25+00:00",
         "summary": "En pleine période de Coupe du monde, il est quasiment devenu impossible - en ligne ou en boutique physique - de se procurer le maillot extérieur de l'équipe de France.",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-coup-dur-pour-les-supporters-des-bleus-le-maillot-exterieur-vert-mente-est-en-rupture-de-stock_AV-202606200245.html"
-      },
-      {
-        "title": "Didier Deschamps",
-        "source": "RMC Sport",
-        "date": "2026-06-20T10:56:42+00:00",
-        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-      },
-      {
-        "title": "\"L'Espagne, vous connaissez?\": Deschamps met en garde les Bleus contre tout excès de confiance face à l’Irak",
-        "source": "RMC Sport",
-        "date": "2026-06-20T10:56:19+00:00",
-        "summary": "Avant de disputer le 2e match de la Coupe du monde face à l’Irak, lundi à Philadelphie (23h), le sélectionneur de l’équipe de France Didier Deschamps a averti ses joueurs : il ne faudra surtout pas…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/l-espagne-vous-connaissez-deschamps-met-en-garde-les-bleus-contre-tout-exces-de-confiance-face-a-l-irak_AV-202606200230.html"
-      },
-      {
-        "title": "Équipe de France : Didier Deschamps se méfie de l’Irak à la Coupe du monde",
-        "source": "SO FOOT",
-        "date": "2026-06-20T10:53:06+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/equipe-de-france-didier-deschamps-se-mefie-de-lirak-a-la-coupe-du-monde"
-      },
-      {
-        "title": "DIRECT. France-Irak, J-2: toutes les infos et les prises de parole en live avant le deuxième match des Bleus à la Coupe du monde 2026",
-        "source": "RMC Sport",
-        "date": "2026-06-20T10:07:35+00:00",
-        "summary": "Avant de prendre la direction de Philadelphie dimanche à la veille de la rencontre face à l'Irak (lundi, 23h), les Bleus passent leur dernière journée à Boston ce samedi. Une conférence de presse est…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-j-2-toutes-les-infos-et-les-prises-de-parole-en-live-avant-le-deuxieme-match-des-bleus-a-la-coupe-du-monde-2026_LN-202606200217.html"
       }
     ],
     "Haiti": [
       {
-        "title": "Mondial 2026 : On a suivi Brésil – Haïti à Cayenne en Guyanne",
+        "title": "Coupe du monde 2026: \"une des pires équipes du Brésil que j'ai vue\", Larqué fracasse la Seleçao et est \"triste pour le peuple brésilien\"",
+        "source": "RMC Sport",
+        "date": "2026-06-20T18:14:05+00:00",
+        "summary": "Sur RMC ce samedi, Jean-Michel Larqué a vivement critiqué le Brésil, vainqueur 3-0 de Haïti mais loin d’être rassurant depuis le début de la Coupe du monde.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-une-des-pires-equipes-du-bresil-que-j-ai-vue-larque-fracasse-la-selecao-et-est-triste-pour-le-peuple-bresilien_AV-202606200344.html"
+      },
+      {
+        "title": "Mondial 2026 : On a suivi Brésil – Haïti à Cayenne en Guyane",
         "source": "SO FOOT",
         "date": "2026-06-20T15:00:04+00:00",
-        "summary": "Un match pour célébrer cette culture de la mixité en Guyanne.",
+        "summary": "Un match pour célébrer cette culture de la mixité en Guyane.",
         "url": "https://www.sofoot.com/articles/mondial-2026-on-a-suivi-bresil-haiti-a-cayenne-en-guyanne"
       },
       {
@@ -5129,9 +5136,23 @@
       {
         "title": "France-Sénégal : revivez la victoire des Bleus et le record de Kylian Mbappé, pour leur entrée en lice dans la Coupe du monde 2026",
         "source": "France Info",
-        "date": "2026-06-20T16:50:58+00:00",
+        "date": "2026-06-20T18:45:58+00:00",
         "summary": "L'équipe de France a ouvert sa compétition avec une victoire aux Sénégalais à New York, mardi soir. Le capitaine Kylian Mbappé s'est illustré avec un doublé qui fait de lui le meilleur buteur de l'histoire…",
         "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-france-senegal-les-bleus-debutent-leur-coupe-du-monde-2026-a-new-york-suivez-avec-nous-le-premier-match-de-l-equipe-de-didier-deschamps-a-21-heures_8061320.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "France-Irak: pourquoi un carton des Bleus ne les aiderait pas forcément à terminer premiers de leur groupe",
+        "source": "RMC Sport",
+        "date": "2026-06-20T18:38:24+00:00",
+        "summary": "Après sa victoire inaugurale contre le Sénégal (3-1), l'équipe de France affronte l'Irak ce lundi à 23h (heure française). Mais un large succès face à l'équipe la plus faible de leur poule n'aiderait pas…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-pourquoi-un-carton-des-bleus-ne-les-aiderait-pas-forcement-a-terminer-premiers-de-leur-groupe_AV-202606200351.html"
+      },
+      {
+        "title": "Un coup de pression en hautes sphères: vers un débloquage rapide du dossier du contrat de Pape Thiaw?",
+        "source": "RMC Sport",
+        "date": "2026-06-20T17:57:48+00:00",
+        "summary": "Les tensions extra-sportives autour de l'équipe du Sénégal ont été largement ébruitées dans la presse ces dernières heures. Au point que la Fédération a été plus qu'invitée à régler ces problèmes pour éviter…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-coup-de-pression-en-hautes-spheres-vers-un-debloquage-rapide-du-dossier-du-contrat-de-pape-thiaw_AV-202606200340.html"
       },
       {
         "title": "Coupe du monde : comment Dayot Upamecano est devenu le pilier de la défense de l'équipe de France",
@@ -5188,20 +5209,6 @@
         "date": "2026-06-16T21:50:08+00:00",
         "summary": "L'équipe de France a signé une belle victoire face au Sénégal pour son entrée en lice dans le Mondial, mardi soir.",
         "url": "https://www.franceinfo.fr/coupe-du-monde/on-a-eu-un-peu-d-apprehension-au-debut-ensuite-on-a-pu-derouler-un-peu-plus-reagit-didier-deschamps-apres-la-premiere-victoire-de-la-france-a-la-coupe-du-monde_8064764.html#xtor=RSS-3-%5Bgeneral%5D"
-      },
-      {
-        "title": "Avec un doublé contre le Sénégal à la Coupe du monde, Kylian Mbappé dépasse Olivier Giroud et devient meilleur buteur de l'histoire de l'équipe de France",
-        "source": "France Info",
-        "date": "2026-06-16T21:20:04+00:00",
-        "summary": "En inscrivant deux buts face au Sénégal, lundi à New York, l'attaquant de 27 ans dépasse déjà les 57 buts d'Olivier Giroud.",
-        "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/football-avec-un-double-contre-le-senegal-kylian-mbappe-depasse-olivier-giroud-et-devient-meilleur-buteur-de-l-histoire-de-l-equipe-de-france_8045114.html#xtor=RSS-3-%5Bgeneral%5D"
-      },
-      {
-        "title": "L'équipe de France souffre mais finit par s'imposer contre le Sénégal pour son premier match à la Coupe du monde 2026",
-        "source": "France Info",
-        "date": "2026-06-16T21:16:33+00:00",
-        "summary": "Kylian Mbappé, double buteur contre le Sénégal, est devenu le meilleur buteur de l'histoire des Bleus devant Olivier Giroud et a participé à la victoire de l'équipe de France pour son entrée en lice dans le…",
-        "url": "https://www.franceinfo.fr/coupe-du-monde/l-equipe-de-france-souffre-mais-finit-par-s-imposer-contre-le-senegal-pour-son-premier-match-a-la-coupe-du-monde-2026_8064701.html#xtor=RSS-3-%5Bgeneral%5D"
       }
     ],
     "Uruguay": [
@@ -5332,6 +5339,17 @@
   "errors": [],
   "players_index": [
     {
+      "name": "Alexander Isak",
+      "club_current": "Sweden",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
+      "associated_team": "Sweden",
+      "updated_at": "2026-06-20T18:45:28+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
       "name": "Brahim Díaz",
       "club_current": "Morocco",
       "country": "",
@@ -5339,18 +5357,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750027.png",
       "associated_team": "Morocco",
-      "updated_at": "2026-06-20T16:50:40+00:00",
-      "source": "FotMob/ESPN stats"
-    },
-    {
-      "name": "Deniz Undav",
-      "club_current": "Germany",
-      "country": "",
-      "position": "",
-      "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/661519.png",
-      "associated_team": "Germany",
-      "updated_at": "2026-06-20T16:50:40+00:00",
+      "updated_at": "2026-06-20T18:45:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5361,7 +5368,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/282643.png",
       "associated_team": "United States",
-      "updated_at": "2026-06-20T16:50:40+00:00",
+      "updated_at": "2026-06-20T18:45:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5372,7 +5379,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/304572.png",
       "associated_team": "Morocco",
-      "updated_at": "2026-06-20T16:50:40+00:00",
+      "updated_at": "2026-06-20T18:45:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5383,7 +5390,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/273499.png",
       "associated_team": "Canada",
-      "updated_at": "2026-06-20T16:50:40+00:00",
+      "updated_at": "2026-06-20T18:45:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5394,7 +5401,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/460632.png",
       "associated_team": "Germany",
-      "updated_at": "2026-06-20T16:50:40+00:00",
+      "updated_at": "2026-06-20T18:45:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5405,7 +5412,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/45843.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-06-20T16:50:40+00:00",
+      "updated_at": "2026-06-20T18:45:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5416,7 +5423,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/252107.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-06-20T16:50:40+00:00",
+      "updated_at": "2026-06-20T18:45:28+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
