@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-21T21:42:58+00:00",
+  "generated_at": "2026-06-21T23:45:32+00:00",
   "competition": "Championnats européens",
   "selected_league": "ligue1",
   "leagues": {
@@ -7,7 +7,7 @@
       "key": "ligue1",
       "name": "Ligue 1",
       "country": "France",
-      "generated_at": "2026-06-21T21:42:58+00:00",
+      "generated_at": "2026-06-21T23:45:32+00:00",
       "standings": [
         {
           "name": "French Ligue 1 2026-27",
@@ -11742,6 +11742,15 @@
       "focused_club": "Paris Saint-Germain",
       "focused_club_next_match": null,
       "focused_club_news": {
+        "Nantes": [
+          {
+            "title": "Didier Deschamps",
+            "source": "RMC Sport",
+            "date": "2026-06-21T22:06:47+00:00",
+            "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+            "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+          }
+        ],
         "Nice": [
           {
             "title": "Coupe du monde : le latéral de l’OGC Nice Ali Abdi critique les choix de la fédération tunisienne",
@@ -11772,13 +11781,6 @@
             "date": "2026-06-21T19:47:25+00:00",
             "summary": "A la veille de France-Irak, lundi soir au Mondial américain, le capitaine des Bleus Kylian Mbappé est passé devant la presse. Il est revenu sur le doublé du PSG en Ligue des champions, doublé gagné sans Mbappé.",
             "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-irak-l-equipe-qui-gagne-a-toujours-raison-l-eloge-de-mbappe-sur-le-double-du-psg-en-c1_VN-202606210386.html"
-          },
-          {
-            "title": "Neymar",
-            "source": "RMC Sport",
-            "date": "2026-06-21T18:13:27+00:00",
-            "summary": "Avec son look et son talent indéniable balle au pied, Neymar Junior fait partie des icônes incontournables du foot mondial. Après un long passage au Barça, il rejoint le PSG à l'été 2017 pour un montant…",
-            "url": "https://rmcsport.bfmtv.com/football/neymar_DN-201501260352.html"
           }
         ],
         "Stade Rennais": [
@@ -12158,7 +12160,7 @@
       "key": "laliga",
       "name": "Liga",
       "country": "Espagne",
-      "generated_at": "2026-06-21T21:42:58+00:00",
+      "generated_at": "2026-06-21T23:45:32+00:00",
       "standings": [
         {
           "name": "2025-26 LALIGA",
@@ -23924,48 +23926,78 @@
       "upcoming_matches": [],
       "top_scorers": [
         {
+          "rank": 1,
           "name": "Kylian Mbappé",
           "team": "Real Madrid",
-          "team_id": 8633,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
           "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
           "all_time_rank": "",
-          "played": "",
-          "value": 25,
-          "rank": 1,
+          "played": "31",
+          "value": "25",
+          "team_id": 8633,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
           "country": "France"
         },
         {
+          "rank": 2,
           "name": "Vedat Muriqi",
           "team": "Mallorca",
-          "team_id": 8661,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8661.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/517052.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "",
-          "value": 23,
-          "rank": 2,
+          "played": "37",
+          "value": "23",
+          "team_id": 8661,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8661.png",
           "country": ""
         },
         {
+          "rank": 3,
           "name": "Ante Budimir",
           "team": "Osasuna",
-          "team_id": 8371,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8371.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/251269.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "",
-          "value": 17,
-          "rank": 3,
+          "played": "37",
+          "value": "17",
+          "team_id": 8371,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8371.png",
+          "country": ""
+        },
+        {
+          "rank": 4,
+          "name": "Vinícius Júnior",
+          "team": "Real Madrid",
+          "country_code": "",
+          "flag_url": "",
+          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/252107.png",
+          "country_flag_url": "",
+          "all_time_rank": "",
+          "played": "36",
+          "value": "16",
+          "team_id": "",
+          "team_logo_url": "",
+          "country": ""
+        },
+        {
+          "rank": 5,
+          "name": "Ferran Torres",
+          "team": "Barcelona",
+          "country_code": "",
+          "flag_url": "",
+          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/265869.png",
+          "country_flag_url": "",
+          "all_time_rank": "",
+          "played": "33",
+          "value": "16",
+          "team_id": "",
+          "team_logo_url": "",
           "country": ""
         }
       ],
@@ -24026,20 +24058,6 @@
             "date": "2026-06-21T20:27:48+00:00",
             "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
             "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
-          },
-          {
-            "title": "Neymar",
-            "source": "RMC Sport",
-            "date": "2026-06-21T18:13:27+00:00",
-            "summary": "Avec son look et son talent indéniable balle au pied, Neymar Junior fait partie des icônes incontournables du foot mondial. Après un long passage au Barça, il rejoint le PSG à l'été 2017 pour un montant…",
-            "url": "https://rmcsport.bfmtv.com/football/neymar_DN-201501260352.html"
-          },
-          {
-            "title": "Lamine Yamal",
-            "source": "RMC Sport",
-            "date": "2026-06-21T18:08:31+00:00",
-            "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
-            "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
           }
         ],
         "Real Madrid": [
@@ -24426,7 +24444,7 @@
       "key": "bundesliga",
       "name": "Bundesliga",
       "country": "Allemagne",
-      "generated_at": "2026-06-21T21:42:58+00:00",
+      "generated_at": "2026-06-21T23:45:32+00:00",
       "standings": [
         {
           "name": "2025-26 German Bundesliga",
@@ -36158,48 +36176,78 @@
       "upcoming_matches": [],
       "top_scorers": [
         {
+          "rank": 1,
           "name": "Harry Kane",
-          "team": "Bayern München",
-          "team_id": 9823,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
+          "team": "Bayern Munich",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
           "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
           "all_time_rank": "",
-          "played": "",
-          "value": 36,
-          "rank": 1,
+          "played": "31",
+          "value": "36",
+          "team_id": 9823,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
           "country": "England"
         },
         {
+          "rank": 2,
           "name": "Deniz Undav",
           "team": "VfB Stuttgart",
-          "team_id": 10269,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10269.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/661519.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "",
-          "value": 19,
-          "rank": 2,
+          "played": "29",
+          "value": "19",
+          "team_id": 10269,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10269.png",
           "country": ""
         },
         {
+          "rank": 3,
           "name": "Serhou Guirassy",
           "team": "Borussia Dortmund",
-          "team_id": 9789,
-          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9789.png",
           "country_code": "",
           "flag_url": "",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/448540.png",
           "country_flag_url": "",
           "all_time_rank": "",
-          "played": "",
-          "value": 17,
-          "rank": 3,
+          "played": "33",
+          "value": "17",
+          "team_id": 9789,
+          "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9789.png",
+          "country": ""
+        },
+        {
+          "rank": 4,
+          "name": "Patrik Schick",
+          "team": "Bayer Leverkusen",
+          "country_code": "",
+          "flag_url": "",
+          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/212330.png",
+          "country_flag_url": "",
+          "all_time_rank": "",
+          "played": "28",
+          "value": "16",
+          "team_id": "",
+          "team_logo_url": "",
+          "country": ""
+        },
+        {
+          "rank": 5,
+          "name": "Luis Díaz",
+          "team": "Bayern Munich",
+          "country_code": "",
+          "flag_url": "",
+          "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/257390.png",
+          "country_flag_url": "",
+          "all_time_rank": "",
+          "played": "32",
+          "value": "15",
+          "team_id": "",
+          "team_logo_url": "",
           "country": ""
         }
       ],
@@ -36586,7 +36634,7 @@
       "key": "premierleague",
       "name": "Premier League",
       "country": "Angleterre",
-      "generated_at": "2026-06-21T21:42:58+00:00",
+      "generated_at": "2026-06-21T23:45:32+00:00",
       "standings": [
         {
           "name": "2026-27 English Premier League",
@@ -48354,17 +48402,7 @@
       "top_assists": [],
       "focused_club": "Manchester City",
       "focused_club_next_match": null,
-      "focused_club_news": {
-        "Aston Villa": [
-          {
-            "title": "Équipe de France : \"J'ai un rôle de grand frère\", confie Lucas Digne",
-            "source": "RMC Sport",
-            "date": "2026-06-21T16:24:21+00:00",
-            "summary": "Lucas Digne est désormais un cadre de l'Équipe de France. Le latéral gauche joue cet été sa deuxième Coupe du monde avec le maillot bleu. Le joueur d'Aston Villa revient au micro de RMC Sport sur son rôle au…",
-            "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-equipe-de-france-j-ai-un-role-de-grand-frere-confie-lucas-digne_VN-202606210342.html"
-          }
-        ]
-      },
+      "focused_club_news": {},
       "clubs": [
         "AFC Bournemouth",
         "Arsenal",
@@ -48783,7 +48821,7 @@
       "key": "seriea",
       "name": "Serie A",
       "country": "Italie",
-      "generated_at": "2026-06-21T21:42:58+00:00",
+      "generated_at": "2026-06-21T23:45:32+00:00",
       "standings": [
         {
           "name": "2026-2027 Italian Serie A",
@@ -60969,35 +61007,35 @@
   },
   "big5_top_scorers": [
     {
+      "rank": 1,
       "name": "Kylian Mbappé",
       "team": "Real Madrid",
-      "team_id": 8633,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 25,
-      "rank": 1,
+      "played": "31",
+      "value": "25",
+      "team_id": 8633,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
       "country": "France",
       "league_key": "laliga",
       "league": "Liga"
     },
     {
+      "rank": 1,
       "name": "Harry Kane",
-      "team": "Bayern München",
-      "team_id": 9823,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
+      "team": "Bayern Munich",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 36,
-      "rank": 1,
+      "played": "31",
+      "value": "36",
+      "team_id": 9823,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
       "country": "England",
       "league_key": "bundesliga",
       "league": "Bundesliga"
@@ -61005,18 +61043,81 @@
   ],
   "all_news": [
     {
+      "title": "DIRECT. Uruguay-Cap-Vert: les Requins bleus en route vers un nouvel exploit ?",
+      "source": "RMC Sport",
+      "date": "2026-06-21T23:44:29+00:00",
+      "summary": "Après son immense exploit face à l'Espagne (0-0), le Cap-Vert s'avance \"sans peur\" face à l'Uruguay, comme l'a confirmé son sélectionneur. Surpris par l'Arabie saoudite lors de la première journée, les hommes…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-uruguay-cap-vert-suivez-le-match-du-groupe-h-de-la-coupe-du-monde-en-live_LS-202606210291.html"
+    },
+    {
+      "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe G",
+      "source": "RMC Sport",
+      "date": "2026-06-21T23:35:32+00:00",
+      "summary": "La Coupe du monde 2026 a débuté jeudi 11 juin aux États-Unis, au Mexique et au Canada. Découvrez les résultats, le classement et le calendrier du groupe G du Mondial 2026.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-g_AV-202606150989.html"
+    },
+    {
+      "title": "Espagne 4-0 Arabie Saoudite : la Roja s'est réveillée, le débrief complet de l'After foot",
+      "source": "RMC Sport",
+      "date": "2026-06-21T23:22:48+00:00",
+      "summary": "Après un match nul frustrant contre le Cap-Vert (0-0), l'Espagne a écrasé l'Arabie saoudite pour son deuxième match dans cette Coupe du monde (4-0) avec notamment un Lamine Yamal de retour dans le onze de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-espagne-4-0-arabie-saoudite-la-roja-s-est-reveillee-le-debrief-complet-de-l-after-foot_VN-202606210439.html"
+    },
+    {
+      "title": "Sénégal : \"Chacun poursuit ses intérêts personnels\" regrette Riolo",
+      "source": "RMC Sport",
+      "date": "2026-06-21T23:02:35+00:00",
+      "summary": "Après la défaite contre la France (3-1) en match d'ouverture de la Coupe du monde, le Sénégal affrontera la Norvège lundi dans un match primordial pour continuer à espérer une qualification. Mais en…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-senegal-chacun-poursuit-ses-interets-personnels-regrette-riolo_VN-202606210433.html"
+    },
+    {
+      "title": "DIRECT. Nouvelle-Zélande-Egypte: suivez le match du groupe G de la Coupe du monde en live",
+      "source": "RMC Sport",
+      "date": "2026-06-21T22:45:00+00:00",
+      "summary": "Après avoir tenu en échec la Belgique (1-1), l'Egypte de Mohamed Salah veut se rapprocher d'une qualification pour la phase finale de la Coupe du monde en cas de succès face à la Nouvelle-Zélande, qui a…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-nouvelle-zelande-egypte-suivez-le-match-du-groupe-g-de-la-coupe-du-monde-en-live_LS-202606210294.html"
+    },
+    {
+      "title": "France-Irak: trois changements et un repositionnement? La compo probable des Bleus pour leur deuxième match de Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-21T22:30:00+00:00",
+      "summary": "L'équipe de France va aborder ce lundi son deuxième match de cette Coupe du monde 2026 après sa belle victoire contre le Sénégal (3-1) acquise en deuxième mi-temps. Place désormais à la rencontre contre…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-trois-changements-et-un-repositionnement-la-compo-probable-des-bleus-pour-leur-deuxieme-match-de-coupe-du-monde_AV-202606210425.html"
+    },
+    {
+      "title": "Coupe du monde : \"Je vais essayer de donner la meilleure image de mon pays\", s'engage Kylian Mbappé à la veille de France-Irak",
+      "source": "France Info",
+      "date": "2026-06-21T22:21:55+00:00",
+      "summary": "Contrairement au premier rendez-vous du Mondial, le capitaine des Bleus a accompagné Didier Deschamps pour la conférence de presse de veille de match, dimanche.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-je-vais-essayer-de-donner-la-meilleure-image-de-mon-pays-s-engage-kylian-mbappe-a-la-veille-de-france-irak_8073131.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "France-Irak :\"Deschamps ne fera pas longtemps de câlinothérapie\" insiste L'After",
+      "source": "RMC Sport",
+      "date": "2026-06-21T22:12:23+00:00",
+      "summary": "Deschamps face à ses choix. Le coach des Bleus Didier Deschamps n'a pas dévoilé tous ses choix à la veille d'affronter l'Irak, au Mondial américain. Face aux débats sur son quatuor offensif, la place de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-irak-deschamps-ne-fera-pas-longtemps-de-calinotherapie-insiste-l-after_VN-202606210426.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-21T22:06:47+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Difficile au niveau des mollets\", la mauvaise pelouse du MetLife Stadium a laissé des traces chez les Bleus",
+      "source": "RMC Sport",
+      "date": "2026-06-21T22:06:47+00:00",
+      "summary": "Avant le deuxième match de l’équipe de France face à l’Irak, ce lundi (23h) au Lincoln Financial Field de Philadelphie, Didier Deschamps est revenu sur le mauvais état de la pelouse du MetLife Stadium, qui a…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-difficile-au-niveau-des-mollets-la-mauvaise-pelouse-du-met-life-stadium-a-laisse-des-traces-chez-les-bleus_AV-202606210420.html"
+    },
+    {
       "title": "Mondial 2026 : Aurélien Tchouaméni est absent de l’entraînement des Bleus à la veille de la rencontre face à l’Irak",
       "source": "SO FOOT",
       "date": "2026-06-21T21:37:23+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/mondial-2026-aurelien-tchouameni-est-absent-de-lentrainement-des-bleus-a-la-veille-de-la-rencontre-face-a-lirak"
-    },
-    {
-      "title": "DIRECT. Uruguay-Cap-Vert: suivez le match du groupe H de la Coupe du monde en live",
-      "source": "RMC Sport",
-      "date": "2026-06-21T21:35:23+00:00",
-      "summary": "Après son immense exploit face à l'Espagne (0-0), le Cap-Vert s'avance \"sans peur\" face à l'Uruguay, comme l'a confirmé son sélectionneur. Surpris par l'Arabie saoudite lors de la première journée, les hommes…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-uruguay-cap-vert-suivez-le-match-du-groupe-h-de-la-coupe-du-monde-en-live_LS-202606210291.html"
     },
     {
       "title": "Belgique 0-0 Iran : le débrief complet de la nouvelle contre-performance des Diables Rouges",
@@ -61066,13 +61167,6 @@
       "date": "2026-06-21T21:11:00+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-belgique-iran"
-    },
-    {
-      "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe G",
-      "source": "RMC Sport",
-      "date": "2026-06-21T21:07:36+00:00",
-      "summary": "La Coupe du monde 2026 a débuté jeudi 11 juin aux États-Unis, au Mexique et au Canada. Découvrez les résultats, le classement et le calendrier du groupe G du Mondial 2026.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-g_AV-202606150989.html"
     },
     {
       "title": "Mondial 2026 : En infériorité numérique pendant vingt minutes après l’expulsion de Ngoy, la Belgique concède le match nul face à l’Iran",
@@ -61250,60 +61344,11 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-espagne-4-0-arabie-saoudite-les-comms-rmc-de-la-balade-de-la-roja_VN-202606210370.html"
     },
     {
-      "title": "Coupe du monde 2026: Cristiano Ronaldo va-t-il pleurer? Neymar va-t-il jouer? Les paris les plus improbables du Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-21T18:13:27+00:00",
-      "summary": "La plateforme de marchés de prédiction Polymarket, qui permet à des internautes de miser leur argent sur des événements (et qui est interdite en France), propose des paris pour la Coupe du monde. Certains…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-cristiano-ronaldo-va-t-il-pleurer-neymar-va-t-il-jouer-les-paris-les-plus-improbables-du-mondial_AV-202606210367.html"
-    },
-    {
-      "title": "Cristiano Ronaldo",
-      "source": "RMC Sport",
-      "date": "2026-06-21T18:13:27+00:00",
-      "summary": "Cristiano Ronaldo dos Santos Aveiro, plus souvent appelé Ronaldo ou Cristiano Ronaldo et surnommé CR7, est né le 5 février 1985 à Funchal à Madère. A l'été 2021, il est retourné jouer au club où il s'était…",
-      "url": "https://rmcsport.bfmtv.com/football/cristiano-ronaldo_DN-202108310501.html"
-    },
-    {
-      "title": "Neymar",
-      "source": "RMC Sport",
-      "date": "2026-06-21T18:13:27+00:00",
-      "summary": "Avec son look et son talent indéniable balle au pied, Neymar Junior fait partie des icônes incontournables du foot mondial. Après un long passage au Barça, il rejoint le PSG à l'été 2017 pour un montant…",
-      "url": "https://rmcsport.bfmtv.com/football/neymar_DN-201501260352.html"
-    },
-    {
-      "title": "Une première à la Coupe du monde depuis Pelé: Lamine Yamal affole encore les statistiques avec l'Espagne",
-      "source": "RMC Sport",
-      "date": "2026-06-21T18:08:31+00:00",
-      "summary": "Premier buteur de l'Espagne face à l'Arabie saoudite en match de poule de la Coupe du monde 2026 ce dimanche, Lamine Yamal est une nouvelle fois entré dans l'histoire par sa précocité.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/une-premiere-a-la-coupe-du-monde-depuis-pele-lamine-yamal-affole-encore-les-statistiques-avec-l-espagne_AV-202606210366.html"
-    },
-    {
-      "title": "Lamine Yamal",
-      "source": "RMC Sport",
-      "date": "2026-06-21T18:08:31+00:00",
-      "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
-      "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
-    },
-    {
-      "title": "Espagne-Arabie saoudite: le réveil de la Roja a fait très mal, Yamal lance vraiment sa Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-21T18:07:29+00:00",
-      "summary": "Après un match nul frustrant contre le Cap-Vert (0-0), l'Espagne, citée parmi les nations favorites de la Coupe du monde 2026, a écrasé l'Arabie saoudite (4-0) avec un Lamine Yamal de retour dans le onze de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-espagne-arabie-saoudite-suivez-le-match-de-la-coupe-du-monde-2026-en-live_LS-202606210257.html"
-    },
-    {
       "title": "Mondial 2026 : L’Espagne tyrannise l’Arabie saoudite grâce à Lamine Yamal et Mikel Oyarzabal et s’ouvre la voie des 16es de finale",
       "source": "SO FOOT",
       "date": "2026-06-21T18:06:15+00:00",
       "summary": "Hervé Renard devrait être rappelé sur le banc saoudien pour la fin de la phase de poules.",
       "url": "https://www.sofoot.com/articles/mondial-2026-lespagne-tyrannise-larabie-saoudite-grace-a-lamine-yamal-et-mikel-oyarzabal-et-souvre-la-voie-des-16es-de-finale"
-    },
-    {
-      "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe H",
-      "source": "RMC Sport",
-      "date": "2026-06-21T18:02:30+00:00",
-      "summary": "La Coupe du monde 2026 a débuté jeudi 11 juin aux États-Unis, au Mexique et au Canada. Découvrez les résultats, le classement et le calendrier du groupe H du Mondial 2026.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-h_AV-202606150898.html"
     },
     {
       "title": "Mondial 2026 : Le premier but de Lamine Yamal en Coupe du monde avec l’Espagne face à l’Arabie saoudite, Mikel Oyarzabal signe le doublé le plus rapide de l’histoire de l’Espagne",
@@ -61556,13 +61601,6 @@
       "date": "2026-06-21T01:33:44+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/des-fans-bresiliens-saident-de-rocky-pour-faire-perdre-largentine"
-    },
-    {
-      "title": "Malade, Jérémy Doku déclare forfait contre l’Iran",
-      "source": "SO FOOT",
-      "date": "2026-06-20T23:28:45+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/malade-jeremy-doku-declare-forfait-contre-liran"
     }
   ],
   "news_sources": [
@@ -61656,21 +61694,5 @@
       "url": "https://www.lephoceen.fr/rss"
     }
   ],
-  "errors": [
-    "classement Ligue 1 ESPN: ValueError",
-    "buteurs Ligue 1 ESPN: ValueError",
-    "passeurs Ligue 1 ESPN: ValueError",
-    "classement Liga ESPN: ValueError",
-    "buteurs Liga ESPN: ValueError",
-    "passeurs Liga ESPN: ValueError",
-    "classement Bundesliga ESPN: ValueError",
-    "buteurs Bundesliga ESPN: ValueError",
-    "passeurs Bundesliga ESPN: ValueError",
-    "classement Premier League ESPN: ValueError",
-    "buteurs Premier League ESPN: ValueError",
-    "passeurs Premier League ESPN: ValueError",
-    "classement Serie A ESPN: ValueError",
-    "buteurs Serie A ESPN: ValueError",
-    "passeurs Serie A ESPN: ValueError"
-  ]
+  "errors": []
 }
