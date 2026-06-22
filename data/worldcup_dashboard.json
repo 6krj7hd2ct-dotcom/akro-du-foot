@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T12:25:41+00:00",
+  "generated_at": "2026-06-22T17:50:06+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -777,10 +777,10 @@
           "away_espn_id": "474",
           "home_country_code": "ARG",
           "away_country_code": "AUT",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
+          "home_score": "1",
+          "away_score": "0",
+          "status": "LIVE",
+          "status_state": "in",
           "completed": false,
           "venue": "AT&T Stadium",
           "city": "Arlington, Texas"
@@ -2048,10 +2048,10 @@
       "away_espn_id": "474",
       "home_country_code": "ARG",
       "away_country_code": "AUT",
-      "home_score": "",
-      "away_score": "",
-      "status": "À venir",
-      "status_state": "pre",
+      "home_score": "1",
+      "away_score": "0",
+      "status": "LIVE",
+      "status_state": "in",
       "completed": false,
       "venue": "AT&T Stadium",
       "city": "Arlington, Texas"
@@ -2862,21 +2862,6 @@
   },
   "top_scorers": [
     {
-      "name": "Deniz Undav",
-      "team": "Germany",
-      "team_id": 8570,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8570.png",
-      "country_code": "",
-      "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/661519.png",
-      "country_flag_url": "",
-      "all_time_rank": "",
-      "played": "",
-      "value": 3,
-      "rank": 1,
-      "country": ""
-    },
-    {
       "name": "Lionel Messi",
       "team": "Argentina",
       "team_id": 6706,
@@ -2884,6 +2869,21 @@
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 4,
+      "rank": 1,
+      "country": ""
+    },
+    {
+      "name": "Deniz Undav",
+      "team": "Germany",
+      "team_id": 8570,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8570.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/661519.png",
       "country_flag_url": "",
       "all_time_rank": "",
       "played": "",
@@ -3069,18 +3069,102 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "DIRECT. Argentine-Autriche: Messi entre un peu plus dans l'histoire du foot, suivez le match en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:48:53+00:00",
+      "summary": "Toutes deux vainqueures de leur premier match de la Coupe du monde 2026, l'Argentine et l'Autriche se retrouvent ce lundi à l'AT&T Stadium d'Arlington. Le coup d'envoi rencontre, commentée en direct sur RMC…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-autriche-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220523.html"
+    },
+    {
+      "title": "DIRECT. Mercato : toutes les infos et rumeurs du 22 juin 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:17:44+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "DIRECT. Algérie-Jordanie: suivez le match du groupe J de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:13:25+00:00",
+      "summary": "Défaites d'entrée par l'Autriche et l'Argentine dans cette Coupe du monde 2026, la Jordanie et l'Algérie se retrouvent dans la nuit de lundi à mardi au Levi's Stadium de Santa Clara. Un match de la peur qui…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-algerie-jordanie-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220546.html"
+    },
+    {
+      "title": "Jordanie-Algérie: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:41:41+00:00",
+      "summary": "La Jordanie affronte l'Algérie dans le groupe J du Mondial 2026 dans la nuit de lundi à mardi. Un match d'une importance cruciale entre deux équipes qui jouent leur survie dans ce Mondial.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/jordanie-algerie-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606220809.html"
+    },
+    {
+      "title": "Coupe du monde 2026: gros coup dur pour l'Allemagne, Nico Schlotterbeck forfait pour la suite du Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:39:10+00:00",
+      "summary": "Gros coup dur pour l'Allemagne qui perd un défenseur central. Nico Schlotterbeck s'est blessé au ligament interne de la cheville gauche face à la Côte d'Ivoire, il est contraint de déclarer forfait pour le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-gros-coup-dur-pour-l-allemagne-nico-schlotterbeck-forfait-pour-la-suite-du-mondial_AN-202606220804.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Lumumba Vea\", le supporter iconique de la RD Congo, est enfin arrivé au Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:09:40+00:00",
+      "summary": "\"Lumumba Vea\", supporter congolais devenu célèbre dans le monde entier lors de la dernière CAN pour être resté complètement immobile lors des matchs de son pays, vient d'arriver au Mexique. Il avait loupé le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-lumumba-vea-le-supporter-iconique-de-la-rd-congo-est-enfin-arrive-au-mondial_AV-202606220769.html"
+    },
+    {
+      "title": "\"Tu sens que le maillot est lourd\": Saliba décrit la pression supplémentaire qui entoure les joueurs de l’équipe de France",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:01:07+00:00",
+      "summary": "Avant d’affronter l’Irak avec l’équipe de France, ce lundi (23h) à la Coupe du monde 2026, William Saliba, qui est aujourd’hui un cadre d’Arsenal, explique à quel point les attentes sont différentes en club…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/tu-sens-que-le-maillot-est-lourd-saliba-decrit-la-pression-supplementaire-qui-entoure-les-joueurs-de-l-equipe-de-france_AV-202606220754.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde 2026: Nico Schlotterbeck contrait de déclarer forfait pour la suite du Mondial avec la Mannschaft",
+      "source": "RMC Sport",
+      "date": "2026-06-22T15:43:28+00:00",
+      "summary": "La deuxième journée de la phase de poule de la Coupe du monde 2026 se poursuit. Alors que certaines nations savent déjà si elles accèderont aux phases finales ou rentreront à la maison à la fin de la semaine…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-suivez-toutes-les-infos-sur-la-phase-de-poule-de-la-competition-en-live_LN-202606210304.html"
+    },
+    {
+      "title": "Coupe du Monde 2026: la détestable sortie raciste de l'ancien attaquant serbe Rade Bogdanovic sur les joueurs noirs",
+      "source": "RMC Sport",
+      "date": "2026-06-22T15:30:02+00:00",
+      "summary": "L’ancien attaquant international yougoslave Rade Bogdanovic, devenu consultant pour la télévision serbe, a tenu des propos racistes en direct sur la télévision publique, au moment de commenter l’expulsion du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-detestable-sortie-raciste-de-l-ancien-attaquant-serbe-rade-bogdanovic-sur-les-joueurs-noirs_AV-202606220735.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Salah porté en triomphe, enceinte géante et pogos dans la foule… Les Égyptiens ont fêté leur succès historique dans les rues de Vancouver",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:58:28+00:00",
+      "summary": "L’Égypte a décroché la première victoire de son histoire en Coupe du monde en battant la Nouvelle-Zélande ce lundi au Canada (3-1). Un succès que les Pharaons ont célébré dans les vestiaires, puis dans les…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-salah-porte-en-triomphe-enceinte-geante-et-pogos-dans-la-foule-les-egyptiens-ont-fete-leur-succes-historique-dans-les-rues-de-vancouver_AV-202606220708.html"
+    },
+    {
+      "title": "Coupe du monde 2026: les joueurs de Curaçao autorisés à partager leur chambre avec leurs familles",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:01:21+00:00",
+      "summary": "Dick Advocaat, entraîneur de l'équipe nationale de Curaçao qui a ramené le premier point en Coupe du monde de son histoire au pays, autorisent les joueurs à partager leur chambre avec leurs familles, une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde-2026-les-joueurs-de-curacao-autorises-a-partager-leur-chambre-avec-leurs-familles_AV-202606220661.html"
+    },
+    {
+      "title": "Coupe du monde 2026: moderne, bruyant, mythique... Voici nos stades coups de cœur de ce Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:23:16+00:00",
+      "summary": "Les reporters de RMC Sport qui sillonnent l'Amérique du Nord pendant cette Coupe du monde 2026 commencent à avoir bien pratiqué les stades de ce Mondial. Voici leurs coups de cœur.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-moderne-bruyant-mythique-voici-nos-stades-coups-de-c-ur-de-ce-mondial_AN-202606220629.html"
+    },
+    {
+      "title": "Coupe du monde 2026: les chiffres le prouvent, on voit plus de football lors de ce Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T12:33:14+00:00",
+      "summary": "Selon une étude menée par Opta, le temps de jeu effectif de la Coupe du monde 2026 est bien meilleur que lors des dernières éditions en Russie et au Qatar. On le doit notamment à l’application de nouvelles…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-chiffres-le-prouvent-on-voit-plus-de-football-lors-de-ce-mondial_AV-202606220582.html"
+    },
+    {
       "title": "Coupe du monde 2026: \"Que faisons-nous ici?\", \"comme un acteur has been\"... la presse belge se déchaîne contre Rudi Garcia et le vieillissant Kevin De Bruyne",
       "source": "RMC Sport",
       "date": "2026-06-22T11:41:48+00:00",
       "summary": "La presse belge perd patience contre le sélectionneur Rudi Garcia et le milieu Kevin De Bruyne au lendemain du match nul contre l'Iran (0-0) à la Coupe du monde 2026.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-que-faisons-nous-ici-comme-un-acteur-has-been-la-presse-belge-se-dechaine-contre-rudi-garcia-et-le-vieillissant-kevin-de-bruyne_AV-202606220530.html"
-    },
-    {
-      "title": "DIRECT. Coupe du monde 2026: Amoura va manquer la fin de la phase de groupes avec l'Algérie",
-      "source": "RMC Sport",
-      "date": "2026-06-22T11:23:30+00:00",
-      "summary": "La deuxième journée de la phase de poule de la Coupe du monde 2026 se poursuit. Alors que certaines nations savent déjà si elles accèderont aux phases finales ou rentreront à la maison à la fin de la semaine…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-suivez-toutes-les-infos-sur-la-phase-de-poule-de-la-competition-en-live_LN-202606210304.html"
     },
     {
       "title": "Coupe du monde 2026: Mbappé dit ce qu’il doit faire pour devenir \"le meilleur joueur de l’histoire de équipe de France\"",
@@ -3095,78 +3179,64 @@
       "date": "2026-06-22T10:58:45+00:00",
       "summary": "Après le match nul de l’Iran face à la Belgique dimanche (0-0), Amir Ghalenoei a poussé plusieurs coups de gueule. Le sélectionneur iranien regrette notamment l’absence de solidarité des autres entraîneurs du…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-aucune-reaction-le-selectionneur-de-l-iran-denonce-l-absence-de-soutien-des-autres-entraineurs_AV-202606220508.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"On vient pour voir toutes ces stars\", ces supporters étrangers qui soutiennent l'Équipe de France",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:46:02+00:00",
-      "summary": "L'Équipe de France est portée par la ferveur de ses supporters à la Coupe du monde 2026. Pour le Mondial en Amérique du Nord, les Bleus peuvent également compter sur le soutien des supporters étrangers.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-vient-pour-voir-toutes-ces-stars-ces-supporters-etrangers-qui-soutiennent-l-equipe-de-france_AV-202606220495.html"
-    },
-    {
-      "title": "Coupe du monde 2026: et pendant ce temps-là, Antoine Griezmann ouvre une boutique de cartes à collectionner",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:27:49+00:00",
-      "summary": "Deux ans après l’annonce de sa retraite internationale, Antoine Griezmann se prépare à quitter à Madrid et l’Atlético pour rejoindre les Etats-Unis où l’équipe de France dispute actuellement la Coupe du monde…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-et-pendant-ce-temps-la-antoine-griezmann-ouvre-une-boutique-de-cartes-a-collectionner_AV-202606220480.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Nous n’avons pas l’obligation de lui passer le ballon\", Conceiçao relance la polémique autour de Cristiano Ronaldo",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:56:27+00:00",
-      "summary": "L’attaquant portugais Francisco Conceiçao a affirmé en conférence de presse qu’il ne se sent pas obligé de systématiquement faire la passe à Cristiano Ronaldo, malgré son statut au Portugal.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-nous-n-avons-pas-l-obligation-de-lui-passer-le-ballon-conceicao-relance-la-polemique-autour-de-cristiano-ronaldo_AV-202606220454.html"
-    },
-    {
-      "title": "Coupe du monde 2026: 22h, 23h… ces horaires tardifs auxquels les Bleus ne devraient pas échapper à partir des 16es",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:48:42+00:00",
-      "summary": "En cas de victoire ce lundi (23h, heure française) contre l’Irak, la France serait qualifiée pour les 16es de finales qu’elle disputerait le 30 juin. Si elle termine première de son groupe, elle devrait…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-22h-23h-ces-horaires-tardifs-auxquels-les-bleus-ne-devraient-pas-echapper-a-partir-des-16es_AV-202606220445.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Raphinha endetté? La folle rumeur lancée par un champion du monde brésilien en 2002",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:30:54+00:00",
-      "summary": "Désormais commentateur sportif, le champion du monde 2002, Vampeta, dit avoir entendu un \"ragot\" dans les coulisses du Mondial, affirmant que Raphinha aurait d'importants problèmes financiers et familiaux.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-raphinha-endette-la-folle-rumeur-lancee-par-un-champion-du-monde-bresilien-en-2002_AV-202606220427.html"
-    },
-    {
-      "title": "Coupe du monde 2026: coup dur pour l'Algérie, Amoura forfait pour la fin de la phase de groupes",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:01:39+00:00",
-      "summary": "Blessé lors de l'entraînement samedi, Mohamed Amoura va manquer au moins les deux prochains matchs de l'Algérie en Coupe du monde. L'attaquant est touché à une cuisse.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-coup-dur-pour-l-algerie-amoura-forfait-pour-la-fin-de-la-phase-de-groupes_AP-202606220403.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le message de paix laissé par les Iraniens dans le vestiaire après le match contre la Belgique",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:59:09+00:00",
-      "summary": "Les joueurs de l’Iran ont laissé un puisant message de paix dans leur vestiaire du stade de Los Angeles après le match nul contre la Belgique (0-0), dimanche de lors de la Coupe du monde 2026. Ils ont aussi…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-message-de-paix-laisse-par-les-iraniens-dans-le-vestiaire-apres-le-match-contre-la-belgique_AV-202606220401.html"
-    },
-    {
-      "title": "Belgique-Iran: \"Je me suis endormi, je laisse mes collègues en parler\", l'analyse cash de Zlatan Ibrahimovic, consultant à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:06:19+00:00",
-      "summary": "Assommé par la nouvelle performance soporifique de la Belgique à la Coupe du monde 2026 contre l'Iran ce dimanche (0-0), Zlatan Ibrahimovic, consultant pour la télévision américaine, n'avait pas grand-chose à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/belgique-iran-je-me-suis-endormi-je-laisse-mes-collegues-en-parler-l-analyse-cash-de-zlatan-ibrahimovic-consultant-a-la-coupe-du-monde-2026_AV-202606220367.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Bielsa nous a appris le fair-play...\", le sélectionneur du Cap-Vert déçu du comportement de l'Uruguay",
-      "source": "RMC Sport",
-      "date": "2026-06-22T07:59:33+00:00",
-      "summary": "Alors qu'ils menaient 1-0, les joueurs du Cap-Vert ont vu l'Uruguay égaliser juste avant la pause à la Coupe du monde 2026. Un but bien valable, mais qui n'était pas fair-play a en écouter les dires de Pedro…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-bielsa-nous-a-appris-le-fair-play-le-selectionneur-du-cap-vert-decu-du-comportement-de-l-uruguay_AV-202606220358.html"
     }
   ],
   "france_news": [
     {
-      "title": "DIRECT. France-Irak: suivez le match des Bleus à la Coupe du monde 2026 en live",
+      "title": "DIRECT. France-Irak: suivez le deuxième match des Bleus à la Coupe du monde 2026 en live",
       "source": "RMC Sport",
-      "date": "2026-06-22T12:02:37+00:00",
-      "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, lundi à 23h à Philadelphie. Kylian Mbappé et les Bleus tenteront de…",
+      "date": "2026-06-22T17:48:12+00:00",
+      "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, ce lundi à Philadelphie (23h, heure de Paris). Kylian Mbappé et les…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-suivez-le-match-des-bleus-a-la-coupe-du-monde-2026-en-live_LS-202606220301.html"
+    },
+    {
+      "title": "Équipe de France : \"Barcola est de mieux en mieux\", estime Rothen",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:38:38+00:00",
+      "summary": "Pour la deuxième rencontre de l'équipe de France dans cette Coupe du monde, Bradley Barcola sera titulaire face à l'Irak ce lundi. Le joueur parisien va tenter de se faire une place dans l'attaque des Bleus.…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-barcola-est-de-mieux-en-mieux-estime-rothen_VN-202606220866.html"
+    },
+    {
+      "title": "Pourquoi la victoire contre l'Irak est-elle si importante pour l'équipe de France de Didier Deschamps à la Coupe du monde ?",
+      "source": "France Info",
+      "date": "2026-06-22T17:37:22+00:00",
+      "summary": "L'équipe de France affronte l'Irak lundi, pour la deuxième journée de la phase de poules, et pourrait, selon le résultat de cette rencontre, se frayer un chemin plus agréable lors des matchs à élimination…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/france-irak-pourquoi-une-victoire-est-elle-si-importante-pour-les-hommes-de-didier-deschamps-a-la-coupe-du-monde_8073575.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "\"Ce n'est pas une petite équipe\"... Pourquoi Didier Deschamps refuse de sous-estimer l'Irak deuxième adversaire de l'équipe de France à la Coupe du monde",
+      "source": "France Info",
+      "date": "2026-06-22T16:40:32+00:00",
+      "summary": "L'équipe de France aborde son deuxième match du Mondial avec le statut d'immense favorite mais toutes les précautions ont été prises pour éviter un relâchement face à un adversaire qui peut faire des dégâts…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-ce-n-est-pas-une-petite-equipe-pourquoi-didier-deschamps-refuse-de-sous-estimer-l-irak_8072777.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "\"Tu sens que le maillot est lourd\": Saliba décrit la pression supplémentaire qui entoure les joueurs de l’équipe de France",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:01:07+00:00",
+      "summary": "Avant d’affronter l’Irak avec l’équipe de France, ce lundi (23h) à la Coupe du monde 2026, William Saliba, qui est aujourd’hui un cadre d’Arsenal, explique à quel point les attentes sont différentes en club…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/tu-sens-que-le-maillot-est-lourd-saliba-decrit-la-pression-supplementaire-qui-entoure-les-joueurs-de-l-equipe-de-france_AV-202606220754.html"
+    },
+    {
+      "title": "Karim Benzema",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:26:15+00:00",
+      "summary": "Devenu un taulier du Real Madrid, Karim Benzema est revenu en équipe de France peu avant l'Euro 2021 après une impasse de 5 ans due à l'afffaire de la sextape et à ses échanges avec le sélectionneur Didier…",
+      "url": "https://rmcsport.bfmtv.com/football/karim-benzema_DN-201506210107.html"
+    },
+    {
+      "title": "Coupe du monde : à droite, dans l'axe, sur le banc... Comment utiliser au mieux Ousmane Dembélé en équipe de France ?",
+      "source": "France Info",
+      "date": "2026-06-22T13:08:46+00:00",
+      "summary": "Depuis ses débuts internationaux en 2017, l'attaquant parisien n'a jamais réussi à jouer les premiers rôles avec les Bleus. Son récent Ballon d'or n'y a rien changé.",
+      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/coupe-du-monde-a-droite-dans-l-axe-sur-le-banc-comment-utiliser-au-mieux-ousmane-dembele-en-equipe-de-france_8070872.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Comment éviter de se faire spoiler les buts par ses voisins lors des matchs de la Coupe du monde ?",
+      "source": "France Info",
+      "date": "2026-06-22T12:59:14+00:00",
+      "summary": "Pendant la Coupe du monde, plusieurs secondes peuvent séparer deux téléspectateurs qui regardent pourtant le même match. On vous explique pourquoi vous vous faites parfois spoiler les buts (et comment…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/comment-eviter-de-se-faire-spoiler-les-buts-par-ses-voisins-lors-des-matchs-de-la-coupe-du-monde_8070830.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
       "title": "Coupe du monde 2026: Mbappé dit ce qu’il doit faire pour devenir \"le meilleur joueur de l’histoire de équipe de France\"",
@@ -3174,97 +3244,6 @@
       "date": "2026-06-22T11:13:29+00:00",
       "summary": "Considéré comme le deuxième meilleur joueur de l’histoire des Bleus selon un récent sondage, Kylian Mbappé sait ce qu’il lui reste à faire pour détrôner Zinédine Zidane. Il a confié la recette du succès au…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-mbappe-dit-ce-qu-il-doit-faire-pour-devenir-le-meilleur-joueur-de-l-histoire-de-equipe-de-france_AV-202606220520.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"On vient pour voir toutes ces stars\", ces supporters étrangers qui soutiennent l'Équipe de France",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:46:02+00:00",
-      "summary": "L'Équipe de France est portée par la ferveur de ses supporters à la Coupe du monde 2026. Pour le Mondial en Amérique du Nord, les Bleus peuvent également compter sur le soutien des supporters étrangers.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-vient-pour-voir-toutes-ces-stars-ces-supporters-etrangers-qui-soutiennent-l-equipe-de-france_AV-202606220495.html"
-    },
-    {
-      "title": "France-Irak : pourquoi la victoire est-elle si importante pour les hommes de Didier Deschamps à la Coupe du monde ?",
-      "source": "France Info",
-      "date": "2026-06-22T10:40:03+00:00",
-      "summary": "L'équipe de France affronte l'Irak lundi, pour la deuxième journée de la phase de poules, et pourrait, selon le résultat de cette rencontre, se frayer un chemin plus agréable lors des matchs à élimination…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/france-irak-pourquoi-une-victoire-est-elle-si-importante-pour-les-hommes-de-didier-deschamps-a-la-coupe-du-monde_8073575.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Coupe du monde 2026: et pendant ce temps-là, Antoine Griezmann ouvre une boutique de cartes à collectionner",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:27:49+00:00",
-      "summary": "Deux ans après l’annonce de sa retraite internationale, Antoine Griezmann se prépare à quitter à Madrid et l’Atlético pour rejoindre les Etats-Unis où l’équipe de France dispute actuellement la Coupe du monde…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-et-pendant-ce-temps-la-antoine-griezmann-ouvre-une-boutique-de-cartes-a-collectionner_AV-202606220480.html"
-    },
-    {
-      "title": "Antoine Griezmann",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:27:49+00:00",
-      "summary": "Antoine Griezmann, surnommé aussi « Grizi » ou « Grizou » est né le 21 mars 1991 à Mâcon. Il est footballeur international français évoluant au poste d'attaquant ou milieu offensif à l'Atlético de Madrid, en…",
-      "url": "https://rmcsport.bfmtv.com/football/antoine-griezmann_DN-202108310489.html"
-    },
-    {
-      "title": "Mbappé en mode Rocky face à l’Irak ? 🥊 Daily #12",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:18:46+00:00",
-      "summary": "Nuit historique entre la première victoire égyptienne et les deux premiers buts du Cap-Vert en Coupe du monde. Ce lundi soir l’équipe de France défie l’Irak à Philadelphie, la ville de Rocky Balboa.…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-mbappe-en-mode-rocky-face-a-l-irak-daily-12_VN-202606220493.html"
-    },
-    {
-      "title": "\"France, FOR SURE !\" Ces supporters étrangers qui soutiennent les Bleus",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:55:19+00:00",
-      "summary": "Notre reporter aux USA Loïc Lefort a rencontré des supporters des soutiennent l'équipe de France, lors de ce Mondial américain.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-for-sure-ces-supporters-etrangers-qui-soutiennent-les-bleus_VN-202606220457.html"
-    },
-    {
-      "title": "Coupe du monde 2026: 22h, 23h… ces horaires tardifs auxquels les Bleus ne devraient pas échapper à partir des 16es",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:48:42+00:00",
-      "summary": "En cas de victoire ce lundi (23h, heure française) contre l’Irak, la France serait qualifiée pour les 16es de finales qu’elle disputerait le 30 juin. Si elle termine première de son groupe, elle devrait…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-22h-23h-ces-horaires-tardifs-auxquels-les-bleus-ne-devraient-pas-echapper-a-partir-des-16es_AV-202606220445.html"
-    },
-    {
-      "title": "France-Irak: record de buts, sélections, passes décisives... les temps de passage fous de Mbappé avant sa 100e cape en Bleu",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:34:21+00:00",
-      "summary": "Nouveau meilleur buteur de l'histoire de l'équipe de France, Kylian Mbappé devrait connaître sa 100e cape en Bleu ce lundi soir contre l'Irak à la Coupe du monde (23h, heure française). Une barre atteinte à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-record-de-buts-selections-passes-decisives-les-temps-de-passage-fous-de-mbappe-avant-sa-100e-cape-en-bleu_AV-202606220429.html"
-    },
-    {
-      "title": "\"La Côte d'Ivoire doit maintenant exploser son plafond de verre\" pousse Acherchour",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:01:25+00:00",
-      "summary": "La Côte d'Ivoire a encore impressionné face à l'Allemagne mais a encore perdu (2-1); En course pour finir deuxièmes de leur groupe, et peut-être affronter la France en 16e si les Bleus terminent premiers, les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-la-cote-d-ivoire-doit-maintenant-exploser-son-plafond-de-verre-pousse-acherchour_VN-202606220406.html"
-    },
-    {
-      "title": "France-Irak :\"Deschamps ne fera pas longtemps de câlinothérapie\" insiste L'After",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:08:00+00:00",
-      "summary": "Deschamps face à ses choix. Le coach des Bleus Didier Deschamps n'a pas dévoilé tous ses choix à la veille d'affronter l'Irak, au Mondial américain. Face aux débats sur son quatuor offensif, la place de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-irak-deschamps-ne-fera-pas-longtemps-de-calinotherapie-insiste-l-after_VN-202606210426.html"
-    },
-    {
-      "title": "France-Irak: à quelle heure et sur quelle chaîne TV voir le match des Bleus à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-22T07:36:14+00:00",
-      "summary": "Après sa victoire face au Sénégal (3-1), l’équipe de France dispute son deuxième match à la Coupe du monde 2026 face à l’Irak, lundi soir à Philadelphie. Les Bleus de Kylian Mbappé tenteront de se qualifier…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-a-quelle-heure-et-sur-quelle-chaine-tv-voir-le-match-des-bleus-a-la-coupe-du-monde-2026_AV-202606220335.html"
-    },
-    {
-      "title": "France-Irak : \"Ce n'est pas une petite équipe\"... Pourquoi Didier Deschamps refuse de sous-estimer le deuxième adversaire des Bleus à la Coupe du monde",
-      "source": "France Info",
-      "date": "2026-06-22T07:21:21+00:00",
-      "summary": "L'équipe de France aborde son deuxième match du Mondial avec le statut d'immense favorite mais toutes les précautions ont été prises pour éviter un relâchement face à un adversaire qui peut faire des dégâts…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-ce-n-est-pas-une-petite-equipe-pourquoi-didier-deschamps-refuse-de-sous-estimer-l-irak_8072777.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Coupe du monde : à droite, dans l'axe, sur le banc... Comment utiliser au mieux Ousmane Dembélé en équipe de France ?",
-      "source": "France Info",
-      "date": "2026-06-22T04:45:01+00:00",
-      "summary": "Depuis ses débuts internationaux en 2017, l'attaquant parisien n'a jamais réussi à jouer les premiers rôles avec les Bleus. Son récent Ballon d'or n'y a rien changé.",
-      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/coupe-du-monde-a-droite-dans-l-axe-sur-le-banc-comment-utiliser-au-mieux-ousmane-dembele-en-equipe-de-france_8070872.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
       "title": "\"Je vais essayer de donner la meilleure image de mon pays\", s'engage Kylian Mbappé à la veille du match de la Coupe du monde France-Irak",
@@ -3281,11 +3260,11 @@
       "url": "https://www.franceinfo.fr/coupe-du-monde/dans-les-coulisses-de-l-equipe-de-france-de-football-avant-le-match-contre-l-irak_8073134.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "Comment éviter de se faire spoiler les buts par ses voisins lors des matchs de la Coupe du monde ?",
+      "title": "Kylian Mbappé superstar aux États-Unis",
       "source": "France Info",
-      "date": "2026-06-21T19:45:01+00:00",
-      "summary": "Pendant la Coupe du monde, plusieurs secondes peuvent séparer deux téléspectateurs qui regardent pourtant le même match. On vous explique pourquoi vous vous faites parfois spoiler les buts (et comment…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/comment-eviter-de-se-faire-spoiler-les-buts-par-ses-voisins-lors-des-matchs-de-la-coupe-du-monde_8070830.html#xtor=RSS-3-%5Bgeneral%5D"
+      "date": "2026-06-21T06:00:01+00:00",
+      "summary": "Depuis le début de cette Coupe du monde, Kylian Mbappé suscite un véritable engouement pour les Américains. L'attaquant français est devenu l'une des principales attractions des entrainements de l'Équipe de…",
+      "url": "https://www.franceinfo.fr/sports/kylian-mbappe-superstar-aux-etats-unis_8069288.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
       "title": "Coupe du monde : \"Je ne suis pas à 100%, mais il faut serrer les dents\", reconnaît William Saliba, gêné par des douleurs au dos",
@@ -3328,22 +3307,148 @@
       "date": "2026-06-18T07:24:34+00:00",
       "summary": "Après l'entrée en lice réussie à New York, l'équipe de France avait ouvert à la presse sa séance d'entraînement, mercredi.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-mbappe-en-spectateur-match-avec-des-jeunes-americains-gusto-touche-au-pied-decrassage-peu-ordinaire-pour-les-bleus-a-boston_8066708.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde 2026 : après la barre des 58 buts, ces autres records de l'équipe de France que Kylian Mbappé est parti pour battre",
+      "source": "France Info",
+      "date": "2026-06-17T09:04:28+00:00",
+      "summary": "Le capitaine des Bleus a dépassé Olivier Giroud, mardi, en inscrivant un doublé dans le premier match des Bleus à la Coupe du monde, contre le Sénégal (3-1).",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-apres-la-barre-des-58-buts-ces-autres-records-de-l-equipe-de-france-que-kylian-mbappe-est-parti-pour-battre_8038721.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Mondial 2026 : la joie des supporters après la victoire des Bleus contre le Sénégal mardi soir",
+      "source": "France Info",
+      "date": "2026-06-17T08:56:32+00:00",
+      "summary": "Les supporters des Bleus étaient fous de joie mardi soir, après la victoire 3-1 de la France face au Sénégal. L'équipe de France a ainsi débuté sa Coupe du monde 2026 en fanfare. Les joueurs de Didier…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/mondial-2026-la-joie-des-supporters-apres-la-victoire-des-bleus-contre-le-senegal-mardi-soir_8065607.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "On vous explique la célébration \"flûte traversière\" de Kylian Mbappé après son but face au Sénégal",
+      "source": "France Info",
+      "date": "2026-06-17T08:28:10+00:00",
+      "summary": "Lors du premier match de la France dans le Mondial 2026, le capitaine des Bleus a respecté une promesse faite à un animateur d'une célèbre émission américaine. Dans sa jeunesse, l'attaquant des Bleus a joué…",
+      "url": "https://www.franceinfo.fr/sports/foot/kylian-mbappe/coupe-du-monde-2026-on-vous-explique-la-celebration-flute-traversiere-de-kylian-mbappe-apres-son-but-face-au-senegal_8065418.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "On refait France-Sénégal avec les supporters",
+      "source": "France Info",
+      "date": "2026-06-17T08:04:01+00:00",
+      "summary": "🇫🇷⚽️ Les supporters qui étaient au MetLife Stadium sont passés de l'inquiétude et l’ennui à l’exultation avec une 2ème mi-temps fantastique entre la France et le Sénégal. Dithyrambiques sur les Bleus, les…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/on-refait-france-senegal-avec-les-supporters_8065538.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Du néant à la symphonie, comment Michael Olise a complètement changé le match de la France contre le Sénégal lors de sa première en Coupe du monde",
+      "source": "France Info",
+      "date": "2026-06-17T07:22:19+00:00",
+      "summary": "Son baptême du feu a demandé un temps d'adaptation, mardi, mais l'attaquant de 23 ans a fini par retrouver son influence devenue indispensable à la création tricolore.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-du-neant-a-la-symphonie-comment-michael-olise-a-completement-change-le-match-des-bleus-contre-le-senegal_8064800.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "PODCAST. Un record battu pour les Bleus, travailler plus pour gagner plus et retour d'un serial killer : ça dit quoi ce 17 juin ?",
+      "source": "France Info",
+      "date": "2026-06-17T06:46:57+00:00",
+      "summary": "Ce mercredi 17 juin, Kylian Mbappé est devenu le meilleur buteur de l'histoire de l'équipe de France, les salariés du privé préfèrent gagner plus d'argent que de profiter de leur vie personnelle et Francis…",
+      "url": "https://www.franceinfo.fr/replay-radio/ca-dit-quoi/podcast-un-record-battu-pour-les-bleus-travailler-plus-pour-gagner-plus-et-retour-d-un-serial-killer-ca-dit-quoi-ce-17-juin_8054711.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
+      "title": "DIRECT. Argentine-Autriche: Messi entre un peu plus dans l'histoire du foot, suivez le match en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:48:53+00:00",
+      "summary": "Toutes deux vainqueures de leur premier match de la Coupe du monde 2026, l'Argentine et l'Autriche se retrouvent ce lundi à l'AT&T Stadium d'Arlington. Le coup d'envoi rencontre, commentée en direct sur RMC…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-autriche-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220523.html"
+    },
+    {
+      "title": "DIRECT. Mercato : toutes les infos et rumeurs du 22 juin 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:17:44+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "DIRECT. Algérie-Jordanie: suivez le match du groupe J de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:13:25+00:00",
+      "summary": "Défaites d'entrée par l'Autriche et l'Argentine dans cette Coupe du monde 2026, la Jordanie et l'Algérie se retrouvent dans la nuit de lundi à mardi au Levi's Stadium de Santa Clara. Un match de la peur qui…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-algerie-jordanie-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220546.html"
+    },
+    {
+      "title": "Jordanie-Algérie: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:41:41+00:00",
+      "summary": "La Jordanie affronte l'Algérie dans le groupe J du Mondial 2026 dans la nuit de lundi à mardi. Un match d'une importance cruciale entre deux équipes qui jouent leur survie dans ce Mondial.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/jordanie-algerie-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606220809.html"
+    },
+    {
+      "title": "Coupe du monde 2026: gros coup dur pour l'Allemagne, Nico Schlotterbeck forfait pour la suite du Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:39:10+00:00",
+      "summary": "Gros coup dur pour l'Allemagne qui perd un défenseur central. Nico Schlotterbeck s'est blessé au ligament interne de la cheville gauche face à la Côte d'Ivoire, il est contraint de déclarer forfait pour le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-gros-coup-dur-pour-l-allemagne-nico-schlotterbeck-forfait-pour-la-suite-du-mondial_AN-202606220804.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Lumumba Vea\", le supporter iconique de la RD Congo, est enfin arrivé au Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:09:40+00:00",
+      "summary": "\"Lumumba Vea\", supporter congolais devenu célèbre dans le monde entier lors de la dernière CAN pour être resté complètement immobile lors des matchs de son pays, vient d'arriver au Mexique. Il avait loupé le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-lumumba-vea-le-supporter-iconique-de-la-rd-congo-est-enfin-arrive-au-mondial_AV-202606220769.html"
+    },
+    {
+      "title": "\"Tu sens que le maillot est lourd\": Saliba décrit la pression supplémentaire qui entoure les joueurs de l’équipe de France",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:01:07+00:00",
+      "summary": "Avant d’affronter l’Irak avec l’équipe de France, ce lundi (23h) à la Coupe du monde 2026, William Saliba, qui est aujourd’hui un cadre d’Arsenal, explique à quel point les attentes sont différentes en club…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/tu-sens-que-le-maillot-est-lourd-saliba-decrit-la-pression-supplementaire-qui-entoure-les-joueurs-de-l-equipe-de-france_AV-202606220754.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde 2026: Nico Schlotterbeck contrait de déclarer forfait pour la suite du Mondial avec la Mannschaft",
+      "source": "RMC Sport",
+      "date": "2026-06-22T15:43:28+00:00",
+      "summary": "La deuxième journée de la phase de poule de la Coupe du monde 2026 se poursuit. Alors que certaines nations savent déjà si elles accèderont aux phases finales ou rentreront à la maison à la fin de la semaine…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-suivez-toutes-les-infos-sur-la-phase-de-poule-de-la-competition-en-live_LN-202606210304.html"
+    },
+    {
+      "title": "Coupe du Monde 2026: la détestable sortie raciste de l'ancien attaquant serbe Rade Bogdanovic sur les joueurs noirs",
+      "source": "RMC Sport",
+      "date": "2026-06-22T15:30:02+00:00",
+      "summary": "L’ancien attaquant international yougoslave Rade Bogdanovic, devenu consultant pour la télévision serbe, a tenu des propos racistes en direct sur la télévision publique, au moment de commenter l’expulsion du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-detestable-sortie-raciste-de-l-ancien-attaquant-serbe-rade-bogdanovic-sur-les-joueurs-noirs_AV-202606220735.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Salah porté en triomphe, enceinte géante et pogos dans la foule… Les Égyptiens ont fêté leur succès historique dans les rues de Vancouver",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:58:28+00:00",
+      "summary": "L’Égypte a décroché la première victoire de son histoire en Coupe du monde en battant la Nouvelle-Zélande ce lundi au Canada (3-1). Un succès que les Pharaons ont célébré dans les vestiaires, puis dans les…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-salah-porte-en-triomphe-enceinte-geante-et-pogos-dans-la-foule-les-egyptiens-ont-fete-leur-succes-historique-dans-les-rues-de-vancouver_AV-202606220708.html"
+    },
+    {
+      "title": "Coupe du monde 2026: les joueurs de Curaçao autorisés à partager leur chambre avec leurs familles",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:01:21+00:00",
+      "summary": "Dick Advocaat, entraîneur de l'équipe nationale de Curaçao qui a ramené le premier point en Coupe du monde de son histoire au pays, autorisent les joueurs à partager leur chambre avec leurs familles, une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde-2026-les-joueurs-de-curacao-autorises-a-partager-leur-chambre-avec-leurs-familles_AV-202606220661.html"
+    },
+    {
+      "title": "Coupe du monde 2026: moderne, bruyant, mythique... Voici nos stades coups de cœur de ce Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:23:16+00:00",
+      "summary": "Les reporters de RMC Sport qui sillonnent l'Amérique du Nord pendant cette Coupe du monde 2026 commencent à avoir bien pratiqué les stades de ce Mondial. Voici leurs coups de cœur.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-moderne-bruyant-mythique-voici-nos-stades-coups-de-c-ur-de-ce-mondial_AN-202606220629.html"
+    },
+    {
+      "title": "Coupe du monde 2026: les chiffres le prouvent, on voit plus de football lors de ce Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T12:33:14+00:00",
+      "summary": "Selon une étude menée par Opta, le temps de jeu effectif de la Coupe du monde 2026 est bien meilleur que lors des dernières éditions en Russie et au Qatar. On le doit notamment à l’application de nouvelles…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-chiffres-le-prouvent-on-voit-plus-de-football-lors-de-ce-mondial_AV-202606220582.html"
+    },
+    {
       "title": "Coupe du monde 2026: \"Que faisons-nous ici?\", \"comme un acteur has been\"... la presse belge se déchaîne contre Rudi Garcia et le vieillissant Kevin De Bruyne",
       "source": "RMC Sport",
       "date": "2026-06-22T11:41:48+00:00",
       "summary": "La presse belge perd patience contre le sélectionneur Rudi Garcia et le milieu Kevin De Bruyne au lendemain du match nul contre l'Iran (0-0) à la Coupe du monde 2026.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-que-faisons-nous-ici-comme-un-acteur-has-been-la-presse-belge-se-dechaine-contre-rudi-garcia-et-le-vieillissant-kevin-de-bruyne_AV-202606220530.html"
-    },
-    {
-      "title": "DIRECT. Coupe du monde 2026: Amoura va manquer la fin de la phase de groupes avec l'Algérie",
-      "source": "RMC Sport",
-      "date": "2026-06-22T11:23:30+00:00",
-      "summary": "La deuxième journée de la phase de poule de la Coupe du monde 2026 se poursuit. Alors que certaines nations savent déjà si elles accèderont aux phases finales ou rentreront à la maison à la fin de la semaine…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-suivez-toutes-les-infos-sur-la-phase-de-poule-de-la-competition-en-live_LN-202606210304.html"
     },
     {
       "title": "Coupe du monde 2026: Mbappé dit ce qu’il doit faire pour devenir \"le meilleur joueur de l’histoire de équipe de France\"",
@@ -3358,92 +3463,218 @@
       "date": "2026-06-22T10:58:45+00:00",
       "summary": "Après le match nul de l’Iran face à la Belgique dimanche (0-0), Amir Ghalenoei a poussé plusieurs coups de gueule. Le sélectionneur iranien regrette notamment l’absence de solidarité des autres entraîneurs du…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-aucune-reaction-le-selectionneur-de-l-iran-denonce-l-absence-de-soutien-des-autres-entraineurs_AV-202606220508.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"On vient pour voir toutes ces stars\", ces supporters étrangers qui soutiennent l'Équipe de France",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:46:02+00:00",
-      "summary": "L'Équipe de France est portée par la ferveur de ses supporters à la Coupe du monde 2026. Pour le Mondial en Amérique du Nord, les Bleus peuvent également compter sur le soutien des supporters étrangers.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-vient-pour-voir-toutes-ces-stars-ces-supporters-etrangers-qui-soutiennent-l-equipe-de-france_AV-202606220495.html"
-    },
-    {
-      "title": "Coupe du monde 2026: et pendant ce temps-là, Antoine Griezmann ouvre une boutique de cartes à collectionner",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:27:49+00:00",
-      "summary": "Deux ans après l’annonce de sa retraite internationale, Antoine Griezmann se prépare à quitter à Madrid et l’Atlético pour rejoindre les Etats-Unis où l’équipe de France dispute actuellement la Coupe du monde…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-et-pendant-ce-temps-la-antoine-griezmann-ouvre-une-boutique-de-cartes-a-collectionner_AV-202606220480.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Nous n’avons pas l’obligation de lui passer le ballon\", Conceiçao relance la polémique autour de Cristiano Ronaldo",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:56:27+00:00",
-      "summary": "L’attaquant portugais Francisco Conceiçao a affirmé en conférence de presse qu’il ne se sent pas obligé de systématiquement faire la passe à Cristiano Ronaldo, malgré son statut au Portugal.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-nous-n-avons-pas-l-obligation-de-lui-passer-le-ballon-conceicao-relance-la-polemique-autour-de-cristiano-ronaldo_AV-202606220454.html"
-    },
-    {
-      "title": "Coupe du monde 2026: 22h, 23h… ces horaires tardifs auxquels les Bleus ne devraient pas échapper à partir des 16es",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:48:42+00:00",
-      "summary": "En cas de victoire ce lundi (23h, heure française) contre l’Irak, la France serait qualifiée pour les 16es de finales qu’elle disputerait le 30 juin. Si elle termine première de son groupe, elle devrait…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-22h-23h-ces-horaires-tardifs-auxquels-les-bleus-ne-devraient-pas-echapper-a-partir-des-16es_AV-202606220445.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Raphinha endetté? La folle rumeur lancée par un champion du monde brésilien en 2002",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:30:54+00:00",
-      "summary": "Désormais commentateur sportif, le champion du monde 2002, Vampeta, dit avoir entendu un \"ragot\" dans les coulisses du Mondial, affirmant que Raphinha aurait d'importants problèmes financiers et familiaux.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-raphinha-endette-la-folle-rumeur-lancee-par-un-champion-du-monde-bresilien-en-2002_AV-202606220427.html"
-    },
-    {
-      "title": "Coupe du monde 2026: coup dur pour l'Algérie, Amoura forfait pour la fin de la phase de groupes",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:01:39+00:00",
-      "summary": "Blessé lors de l'entraînement samedi, Mohamed Amoura va manquer au moins les deux prochains matchs de l'Algérie en Coupe du monde. L'attaquant est touché à une cuisse.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-coup-dur-pour-l-algerie-amoura-forfait-pour-la-fin-de-la-phase-de-groupes_AP-202606220403.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le message de paix laissé par les Iraniens dans le vestiaire après le match contre la Belgique",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:59:09+00:00",
-      "summary": "Les joueurs de l’Iran ont laissé un puisant message de paix dans leur vestiaire du stade de Los Angeles après le match nul contre la Belgique (0-0), dimanche de lors de la Coupe du monde 2026. Ils ont aussi…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-message-de-paix-laisse-par-les-iraniens-dans-le-vestiaire-apres-le-match-contre-la-belgique_AV-202606220401.html"
-    },
-    {
-      "title": "Belgique-Iran: \"Je me suis endormi, je laisse mes collègues en parler\", l'analyse cash de Zlatan Ibrahimovic, consultant à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:06:19+00:00",
-      "summary": "Assommé par la nouvelle performance soporifique de la Belgique à la Coupe du monde 2026 contre l'Iran ce dimanche (0-0), Zlatan Ibrahimovic, consultant pour la télévision américaine, n'avait pas grand-chose à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/belgique-iran-je-me-suis-endormi-je-laisse-mes-collegues-en-parler-l-analyse-cash-de-zlatan-ibrahimovic-consultant-a-la-coupe-du-monde-2026_AV-202606220367.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Bielsa nous a appris le fair-play...\", le sélectionneur du Cap-Vert déçu du comportement de l'Uruguay",
-      "source": "RMC Sport",
-      "date": "2026-06-22T07:59:33+00:00",
-      "summary": "Alors qu'ils menaient 1-0, les joueurs du Cap-Vert ont vu l'Uruguay égaliser juste avant la pause à la Coupe du monde 2026. Un but bien valable, mais qui n'était pas fair-play a en écouter les dires de Pedro…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-bielsa-nous-a-appris-le-fair-play-le-selectionneur-du-cap-vert-decu-du-comportement-de-l-uruguay_AV-202606220358.html"
     }
   ],
   "all_news": [
     {
-      "title": "Mondial 2026 – Le sélectionneur espagnol, Luis de la Fuente, pense que Mikel Oyarzabal peut entrer dans l’histoire",
-      "source": "SO FOOT",
-      "date": "2026-06-22T12:09:17+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-selectionneur-espagnol-luis-de-la-fuente-pense-que-mikel-oyarzabal-peut-entrer-dans-lhistoire"
+      "title": "DIRECT. Argentine-Autriche: Messi entre un peu plus dans l'histoire du foot, suivez le match en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:48:53+00:00",
+      "summary": "Toutes deux vainqueures de leur premier match de la Coupe du monde 2026, l'Argentine et l'Autriche se retrouvent ce lundi à l'AT&T Stadium d'Arlington. Le coup d'envoi rencontre, commentée en direct sur RMC…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-autriche-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220523.html"
     },
     {
-      "title": "DIRECT. France-Irak: suivez le match des Bleus à la Coupe du monde 2026 en live",
+      "title": "DIRECT. France-Irak: suivez le deuxième match des Bleus à la Coupe du monde 2026 en live",
       "source": "RMC Sport",
-      "date": "2026-06-22T12:02:37+00:00",
-      "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, lundi à 23h à Philadelphie. Kylian Mbappé et les Bleus tenteront de…",
+      "date": "2026-06-22T17:48:12+00:00",
+      "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, ce lundi à Philadelphie (23h, heure de Paris). Kylian Mbappé et les…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-suivez-le-match-des-bleus-a-la-coupe-du-monde-2026-en-live_LS-202606220301.html"
     },
     {
-      "title": "Pronostic France Irak : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-06-22T11:42:26+00:00",
-      "summary": "France – Irak : pronostic pour la Coupe du monde 2026. Analyse du match et conseil sur la victoire de la France. Découvrez notre analyse complète.",
-      "url": "https://www.sofoot.com/breves/pronostic-france-irak-analyse-cotes-et-prono-coupe-du-monde"
+      "title": "Michele Kang devient propriétaire de l'OL, une bonne nouvelle avant la DNCG",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:39:33+00:00",
+      "summary": "Jusque-là actionnaire minoritaire d'un Olympique lyonnais qu'elle s'affaire à remettre dans le droit chemin financier depuis l'été 2025, Michele Kang a bouclé ce lundi la reprise du club rhodanien, dont le…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-lyon/michele-kang-devient-proprietaire-de-l-ol-une-bonne-nouvelle-avant-la-dncg_AV-202606220865.html"
+    },
+    {
+      "title": "Équipe de France : \"Barcola est de mieux en mieux\", estime Rothen",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:38:38+00:00",
+      "summary": "Pour la deuxième rencontre de l'équipe de France dans cette Coupe du monde, Bradley Barcola sera titulaire face à l'Irak ce lundi. Le joueur parisien va tenter de se faire une place dans l'attaque des Bleus.…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-barcola-est-de-mieux-en-mieux-estime-rothen_VN-202606220866.html"
+    },
+    {
+      "title": "Pourquoi la victoire contre l'Irak est-elle si importante pour l'équipe de France de Didier Deschamps à la Coupe du monde ?",
+      "source": "France Info",
+      "date": "2026-06-22T17:37:22+00:00",
+      "summary": "L'équipe de France affronte l'Irak lundi, pour la deuxième journée de la phase de poules, et pourrait, selon le résultat de cette rencontre, se frayer un chemin plus agréable lors des matchs à élimination…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/france-irak-pourquoi-une-victoire-est-elle-si-importante-pour-les-hommes-de-didier-deschamps-a-la-coupe-du-monde_8073575.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "DIRECT. Mercato : toutes les infos et rumeurs du 22 juin 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:17:44+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "DIRECT. Algérie-Jordanie: suivez le match du groupe J de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-22T17:13:25+00:00",
+      "summary": "Défaites d'entrée par l'Autriche et l'Argentine dans cette Coupe du monde 2026, la Jordanie et l'Algérie se retrouvent dans la nuit de lundi à mardi au Levi's Stadium de Santa Clara. Un match de la peur qui…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-algerie-jordanie-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220546.html"
+    },
+    {
+      "title": "Jordanie-Algérie: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:41:41+00:00",
+      "summary": "La Jordanie affronte l'Algérie dans le groupe J du Mondial 2026 dans la nuit de lundi à mardi. Un match d'une importance cruciale entre deux équipes qui jouent leur survie dans ce Mondial.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/jordanie-algerie-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606220809.html"
+    },
+    {
+      "title": "\"Ce n'est pas une petite équipe\"... Pourquoi Didier Deschamps refuse de sous-estimer l'Irak deuxième adversaire de l'équipe de France à la Coupe du monde",
+      "source": "France Info",
+      "date": "2026-06-22T16:40:32+00:00",
+      "summary": "L'équipe de France aborde son deuxième match du Mondial avec le statut d'immense favorite mais toutes les précautions ont été prises pour éviter un relâchement face à un adversaire qui peut faire des dégâts…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-ce-n-est-pas-une-petite-equipe-pourquoi-didier-deschamps-refuse-de-sous-estimer-l-irak_8072777.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde 2026: gros coup dur pour l'Allemagne, Nico Schlotterbeck forfait pour la suite du Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:39:10+00:00",
+      "summary": "Gros coup dur pour l'Allemagne qui perd un défenseur central. Nico Schlotterbeck s'est blessé au ligament interne de la cheville gauche face à la Côte d'Ivoire, il est contraint de déclarer forfait pour le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-gros-coup-dur-pour-l-allemagne-nico-schlotterbeck-forfait-pour-la-suite-du-mondial_AN-202606220804.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Lumumba Vea\", le supporter iconique de la RD Congo, est enfin arrivé au Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:09:40+00:00",
+      "summary": "\"Lumumba Vea\", supporter congolais devenu célèbre dans le monde entier lors de la dernière CAN pour être resté complètement immobile lors des matchs de son pays, vient d'arriver au Mexique. Il avait loupé le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-lumumba-vea-le-supporter-iconique-de-la-rd-congo-est-enfin-arrive-au-mondial_AV-202606220769.html"
+    },
+    {
+      "title": "Coupe du monde : Salah célèbre la victoire égyptienne dans les rues de Vancouver",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:09:09+00:00",
+      "summary": "Après la victoire égyptienne sur le score de 3-1 face à la Nouvelle-Zélande, Mo Salah a été aperçu dans les rues de Vancouver. Le numéro 10 égyptien a été porté en guise de célébration, lui qui a inscrit le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-du-monde-salah-celebre-la-victoire-egyptienne-dans-les-rues-de-vancouver_VN-202606220771.html"
+    },
+    {
+      "title": "\"Tu sens que le maillot est lourd\": Saliba décrit la pression supplémentaire qui entoure les joueurs de l’équipe de France",
+      "source": "RMC Sport",
+      "date": "2026-06-22T16:01:07+00:00",
+      "summary": "Avant d’affronter l’Irak avec l’équipe de France, ce lundi (23h) à la Coupe du monde 2026, William Saliba, qui est aujourd’hui un cadre d’Arsenal, explique à quel point les attentes sont différentes en club…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/tu-sens-que-le-maillot-est-lourd-saliba-decrit-la-pression-supplementaire-qui-entoure-les-joueurs-de-l-equipe-de-france_AV-202606220754.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde 2026: Nico Schlotterbeck contrait de déclarer forfait pour la suite du Mondial avec la Mannschaft",
+      "source": "RMC Sport",
+      "date": "2026-06-22T15:43:28+00:00",
+      "summary": "La deuxième journée de la phase de poule de la Coupe du monde 2026 se poursuit. Alors que certaines nations savent déjà si elles accèderont aux phases finales ou rentreront à la maison à la fin de la semaine…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-suivez-toutes-les-infos-sur-la-phase-de-poule-de-la-competition-en-live_LN-202606210304.html"
+    },
+    {
+      "title": "Coupe du Monde 2026: la détestable sortie raciste de l'ancien attaquant serbe Rade Bogdanovic sur les joueurs noirs",
+      "source": "RMC Sport",
+      "date": "2026-06-22T15:30:02+00:00",
+      "summary": "L’ancien attaquant international yougoslave Rade Bogdanovic, devenu consultant pour la télévision serbe, a tenu des propos racistes en direct sur la télévision publique, au moment de commenter l’expulsion du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-detestable-sortie-raciste-de-l-ancien-attaquant-serbe-rade-bogdanovic-sur-les-joueurs-noirs_AV-202606220735.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Salah porté en triomphe, enceinte géante et pogos dans la foule… Les Égyptiens ont fêté leur succès historique dans les rues de Vancouver",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:58:28+00:00",
+      "summary": "L’Égypte a décroché la première victoire de son histoire en Coupe du monde en battant la Nouvelle-Zélande ce lundi au Canada (3-1). Un succès que les Pharaons ont célébré dans les vestiaires, puis dans les…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-salah-porte-en-triomphe-enceinte-geante-et-pogos-dans-la-foule-les-egyptiens-ont-fete-leur-succes-historique-dans-les-rues-de-vancouver_AV-202606220708.html"
+    },
+    {
+      "title": "Karim Benzema",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:26:15+00:00",
+      "summary": "Devenu un taulier du Real Madrid, Karim Benzema est revenu en équipe de France peu avant l'Euro 2021 après une impasse de 5 ans due à l'afffaire de la sextape et à ses échanges avec le sélectionneur Didier…",
+      "url": "https://rmcsport.bfmtv.com/football/karim-benzema_DN-201506210107.html"
+    },
+    {
+      "title": "Bad buzz estival pour Karim Benzema, épinglé par les défenseurs des animaux pour avoir posé avec un bébé tigre et un lion blanc",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:26:14+00:00",
+      "summary": "En vacances, Karim Benzema a publié sur ses réseaux des photos en compagnie d'espèces rares de tigre et de lion. Des clichés qui ne plaisent absolument pas a la Ligue des animaux qui dénonce leur utilisation…",
+      "url": "https://rmcsport.bfmtv.com/football/bad-buzz-estival-pour-karim-benzema-epingle-par-les-defenseurs-des-animaux-pour-avoir-pose-avec-un-bebe-tigre-et-un-lion-blanc_AV-202606220684.html"
+    },
+    {
+      "title": "Coupe du monde 2026: les joueurs de Curaçao autorisés à partager leur chambre avec leurs familles",
+      "source": "RMC Sport",
+      "date": "2026-06-22T14:01:21+00:00",
+      "summary": "Dick Advocaat, entraîneur de l'équipe nationale de Curaçao qui a ramené le premier point en Coupe du monde de son histoire au pays, autorisent les joueurs à partager leur chambre avec leurs familles, une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde-2026-les-joueurs-de-curacao-autorises-a-partager-leur-chambre-avec-leurs-familles_AV-202606220661.html"
+    },
+    {
+      "title": "Cristiano Ronaldo",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:46:43+00:00",
+      "summary": "Cristiano Ronaldo dos Santos Aveiro, plus souvent appelé Ronaldo ou Cristiano Ronaldo et surnommé CR7, est né le 5 février 1985 à Funchal à Madère. A l'été 2021, il est retourné jouer au club où il s'était…",
+      "url": "https://rmcsport.bfmtv.com/football/cristiano-ronaldo_DN-202108310501.html"
+    },
+    {
+      "title": "Pression maximale pour Roberto Martinez avant Portugal-Ouzbékistan: les fans réclament un onze sans Cristiano Ronaldo",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:46:42+00:00",
+      "summary": "De plus en plus critiqué le capitaine du Portugal, Cristiano Ronaldo, ne doit pas être titulaire contre l’Ouzbékistan pour le deuxième match de Coupe du monde mardi selon un sondage réalisé par A Bola. Le…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pression-maximale-pour-roberto-martinez-avant-portugal-ouzbekistan-les-fans-reclament-un-onze-sans-cristiano-ronaldo_AV-202606220649.html"
+    },
+    {
+      "title": "Jean-Michel Aulas",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:23:23+00:00",
+      "summary": "Jean-Michel Aulas est un ex-dirigeant sportif français né le 22 mars 1949 à L'Arbresle. Président historique de l'Olympique lyonnais de sa reprise en juin 1987 à sa cession à John Textor en mai 2023, il a…",
+      "url": "https://rmcsport.bfmtv.com/football/jean-michel-aulas_DN-202308300486.html"
+    },
+    {
+      "title": "Coupe du monde 2026: moderne, bruyant, mythique... Voici nos stades coups de cœur de ce Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:23:16+00:00",
+      "summary": "Les reporters de RMC Sport qui sillonnent l'Amérique du Nord pendant cette Coupe du monde 2026 commencent à avoir bien pratiqué les stades de ce Mondial. Voici leurs coups de cœur.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-moderne-bruyant-mythique-voici-nos-stades-coups-de-c-ur-de-ce-mondial_AN-202606220629.html"
+    },
+    {
+      "title": "OM: Benoît Payan, le maire de Marseille, veut une équipe \"qui ne fasse plus honte\"",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:21:50+00:00",
+      "summary": "Invité de BFM Marseille ce jeudi, Benoît Payan, le maire de Marseille, a abordé le sujet de la nouvelle présidence de l'OM par Stéphane Richard et a souhaité que la prochaine saison soit plus réussie que…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/om-benoit-payan-le-maire-de-marseille-veut-une-equipe-qui-ne-fasse-plus-honte_AV-202606220628.html"
+    },
+    {
+      "title": "Coupe du monde : à droite, dans l'axe, sur le banc... Comment utiliser au mieux Ousmane Dembélé en équipe de France ?",
+      "source": "France Info",
+      "date": "2026-06-22T13:08:46+00:00",
+      "summary": "Depuis ses débuts internationaux en 2017, l'attaquant parisien n'a jamais réussi à jouer les premiers rôles avec les Bleus. Son récent Ballon d'or n'y a rien changé.",
+      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/coupe-du-monde-a-droite-dans-l-axe-sur-le-banc-comment-utiliser-au-mieux-ousmane-dembele-en-equipe-de-france_8070872.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Arsenal",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:03:20+00:00",
+      "summary": "Arsenal est un club de football anglais évoluant en Premier League et fondé en 1886. Les joueurs sont surnommés les Gunners et évoluent à l'Emirates Stadium, stade de Londres qui a remplacé Highbury. La…",
+      "url": "https://rmcsport.bfmtv.com/football/premier-league/arsenal_DN-202304160356.html"
+    },
+    {
+      "title": "PSG-Arsenal: \"Quand je suis rentré chez moi, j'étais anéanti\", Raya traumatisé par la finale de la Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-06-22T13:03:19+00:00",
+      "summary": "Près d'un mois après la finale de Ligue des champions perdue contre le PSG, le gardien d'Arsenal, David Raya, a rappelé à quel point voir la C1 lui échapper aux tirs au but avait été douloureux. Ce qui ne l'a…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-arsenal-quand-je-suis-rentre-chez-moi-j-etais-aneanti-raya-traumatise-par-la-finale-de-la-ligue-des-champions_AV-202606220610.html"
+    },
+    {
+      "title": "Comment éviter de se faire spoiler les buts par ses voisins lors des matchs de la Coupe du monde ?",
+      "source": "France Info",
+      "date": "2026-06-22T12:59:14+00:00",
+      "summary": "Pendant la Coupe du monde, plusieurs secondes peuvent séparer deux téléspectateurs qui regardent pourtant le même match. On vous explique pourquoi vous vous faites parfois spoiler les buts (et comment…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/comment-eviter-de-se-faire-spoiler-les-buts-par-ses-voisins-lors-des-matchs-de-la-coupe-du-monde_8070830.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde 2026: les chiffres le prouvent, on voit plus de football lors de ce Mondial",
+      "source": "RMC Sport",
+      "date": "2026-06-22T12:33:14+00:00",
+      "summary": "Selon une étude menée par Opta, le temps de jeu effectif de la Coupe du monde 2026 est bien meilleur que lors des dernières éditions en Russie et au Qatar. On le doit notamment à l’application de nouvelles…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-chiffres-le-prouvent-on-voit-plus-de-football-lors-de-ce-mondial_AV-202606220582.html"
+    },
+    {
+      "title": "Lionel Messi",
+      "source": "RMC Sport",
+      "date": "2026-06-22T12:04:14+00:00",
+      "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
+      "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
     },
     {
       "title": "Coupe du monde 2026: \"Que faisons-nous ici?\", \"comme un acteur has been\"... la presse belge se déchaîne contre Rudi Garcia et le vieillissant Kevin De Bruyne",
@@ -3453,20 +3684,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-que-faisons-nous-ici-comme-un-acteur-has-been-la-presse-belge-se-dechaine-contre-rudi-garcia-et-le-vieillissant-kevin-de-bruyne_AV-202606220530.html"
     },
     {
-      "title": "Pronostic Argentine Autriche : analyse, cotes et prono Coupe du monde 2026",
-      "source": "SO FOOT",
-      "date": "2026-06-22T11:41:01+00:00",
-      "summary": "Découvrez notre pronostic pour le match Argentine – Autriche avec une analyse complète et les cotes. Pari recommandé : victoire de l'Argentine.",
-      "url": "https://www.sofoot.com/breves/pronostic-argentine-autriche-analyse-cotes-et-prono-coupe-du-monde-2026"
-    },
-    {
-      "title": "DIRECT. Coupe du monde 2026: Amoura va manquer la fin de la phase de groupes avec l'Algérie",
-      "source": "RMC Sport",
-      "date": "2026-06-22T11:23:30+00:00",
-      "summary": "La deuxième journée de la phase de poule de la Coupe du monde 2026 se poursuit. Alors que certaines nations savent déjà si elles accèderont aux phases finales ou rentreront à la maison à la fin de la semaine…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-suivez-toutes-les-infos-sur-la-phase-de-poule-de-la-competition-en-live_LN-202606210304.html"
-    },
-    {
       "title": "Coupe du monde 2026: Mbappé dit ce qu’il doit faire pour devenir \"le meilleur joueur de l’histoire de équipe de France\"",
       "source": "RMC Sport",
       "date": "2026-06-22T11:13:29+00:00",
@@ -3474,32 +3691,11 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-mbappe-dit-ce-qu-il-doit-faire-pour-devenir-le-meilleur-joueur-de-l-histoire-de-equipe-de-france_AV-202606220520.html"
     },
     {
-      "title": "6 000 dollars pour voir le Mexique avec son grand-père… et rester à la porte du stade",
-      "source": "SO FOOT",
-      "date": "2026-06-22T11:01:56+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/6-000-dollars-pour-voir-le-mexique-avec-son-grand-pere-et-rester-a-la-porte-du-stade"
-    },
-    {
-      "title": "Argentine : Lionel Messi est-il vraiment le footballeur de la gauche ?",
-      "source": "SO FOOT",
-      "date": "2026-06-22T11:00:17+00:00",
-      "summary": "Les gens de gauche qui aiment Messi, ceux de droite Ronaldo, c’est vrai cette histoire ?",
-      "url": "https://www.sofoot.com/articles/argentine-lionel-messi-est-il-vraiment-le-footballeur-de-la-gauche"
-    },
-    {
       "title": "Coupe du monde 2026: \"Aucune réaction\", le sélectionneur de l’Iran dénonce l’absence de soutien des autres entraîneurs",
       "source": "RMC Sport",
       "date": "2026-06-22T10:58:45+00:00",
       "summary": "Après le match nul de l’Iran face à la Belgique dimanche (0-0), Amir Ghalenoei a poussé plusieurs coups de gueule. Le sélectionneur iranien regrette notamment l’absence de solidarité des autres entraîneurs du…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-aucune-reaction-le-selectionneur-de-l-iran-denonce-l-absence-de-soutien-des-autres-entraineurs_AV-202606220508.html"
-    },
-    {
-      "title": "Coupe du monde 2026 : Mohammed Amoura forfait pour la fin de la phase de groupes",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:58:38+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-mohammed-amoura-forfait-pour-la-fin-de-la-phase-de-groupes"
     },
     {
       "title": "Coupe de tout le monde ou mondial élitiste, Acherchour et Chanot s'opposent",
@@ -3509,447 +3705,325 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-de-tout-le-monde-ou-mondial-elitiste-acherchour-et-chanot-s-opposent_VN-202606220507.html"
     },
     {
-      "title": "Francisco Conceição à son tour victime de cyberharcèlement après avoir parlé de Cristiano Ronaldo",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:47:05+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/francisco-conceicao-a-son-tour-victime-de-cyberharcelement-apres-avoir-parle-de-cristiano-ronaldo"
-    },
-    {
-      "title": "Coupe du monde 2026: \"On vient pour voir toutes ces stars\", ces supporters étrangers qui soutiennent l'Équipe de France",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:46:02+00:00",
-      "summary": "L'Équipe de France est portée par la ferveur de ses supporters à la Coupe du monde 2026. Pour le Mondial en Amérique du Nord, les Bleus peuvent également compter sur le soutien des supporters étrangers.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-vient-pour-voir-toutes-ces-stars-ces-supporters-etrangers-qui-soutiennent-l-equipe-de-france_AV-202606220495.html"
-    },
-    {
-      "title": "Mondial 2026 – L’Argentine pourrait avoir une partie de tableau très favorable",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:41:40+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-largentine-pourrait-avoir-une-partie-de-tableau-tres-favorable"
-    },
-    {
-      "title": "France-Irak : pourquoi la victoire est-elle si importante pour les hommes de Didier Deschamps à la Coupe du monde ?",
+      "title": "\"Je vais essayer de donner la meilleure image de mon pays\", s'engage Kylian Mbappé à la veille du match de la Coupe du monde France-Irak",
       "source": "France Info",
-      "date": "2026-06-22T10:40:03+00:00",
-      "summary": "L'équipe de France affronte l'Irak lundi, pour la deuxième journée de la phase de poules, et pourrait, selon le résultat de cette rencontre, se frayer un chemin plus agréable lors des matchs à élimination…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/france-irak-pourquoi-une-victoire-est-elle-si-importante-pour-les-hommes-de-didier-deschamps-a-la-coupe-du-monde_8073575.html#xtor=RSS-3-%5Bgeneral%5D"
+      "date": "2026-06-21T22:21:55+00:00",
+      "summary": "Contrairement au premier rendez-vous du Mondial, le capitaine des Bleus a accompagné Didier Deschamps pour la conférence de presse de veille de match, dimanche.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-je-vais-essayer-de-donner-la-meilleure-image-de-mon-pays-s-engage-kylian-mbappe-a-la-veille-de-france-irak_8073131.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "Mercato: il signe professionnel en Ligue 2 à 21 ans en remportant le \"The Voice du foot\"",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:38:55+00:00",
-      "summary": "Il est le grand gagnant du \"The Voice du foot\" organisé par le créateur de contenu Val Liénard et le Pau FC, pensionnaire de Ligue 2. Tom Saettel, 21 ans, va signer un contrat professionnel et rejoindre…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-il-signe-professionnel-en-ligue-2-a-21-ans-en-remportant-le-the-voice-du-foot_AV-202606220492.html"
-    },
-    {
-      "title": "Événement : soirée de projection So Foot pour France – Norvège le vendredi 26 juin 2026 à la Bellevilloise pour la Coupe du monde à partir de 18h30",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:35:44+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/evenement-soiree-de-projection-so-foot-pour-france-norvege-le-vendredi-26-juin-2026-a-la-bellevilloise-pour-la-coupe-du-monde-a-partir-de-18h30"
-    },
-    {
-      "title": "Téléchargez l’application SO FOOT sur iPhone et Android",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:30:15+00:00",
-      "summary": "Téléchargez-la sur iPhone ou Android !",
-      "url": "https://www.sofoot.com/articles/telechargez-lapplication-so-foot-sur-iphone-et-android"
-    },
-    {
-      "title": "Coupe du monde 2026: et pendant ce temps-là, Antoine Griezmann ouvre une boutique de cartes à collectionner",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:27:49+00:00",
-      "summary": "Deux ans après l’annonce de sa retraite internationale, Antoine Griezmann se prépare à quitter à Madrid et l’Atlético pour rejoindre les Etats-Unis où l’équipe de France dispute actuellement la Coupe du monde…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-et-pendant-ce-temps-la-antoine-griezmann-ouvre-une-boutique-de-cartes-a-collectionner_AV-202606220480.html"
-    },
-    {
-      "title": "Antoine Griezmann",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:27:49+00:00",
-      "summary": "Antoine Griezmann, surnommé aussi « Grizi » ou « Grizou » est né le 21 mars 1991 à Mâcon. Il est footballeur international français évoluant au poste d'attaquant ou milieu offensif à l'Atlético de Madrid, en…",
-      "url": "https://rmcsport.bfmtv.com/football/antoine-griezmann_DN-202108310489.html"
-    },
-    {
-      "title": "Mondial 2026 : France-Irak menacé par les orages",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:20:43+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-france-irak-menace-par-les-orages"
-    },
-    {
-      "title": "Mbappé en mode Rocky face à l’Irak ? 🥊 Daily #12",
-      "source": "RMC Sport",
-      "date": "2026-06-22T10:18:46+00:00",
-      "summary": "Nuit historique entre la première victoire égyptienne et les deux premiers buts du Cap-Vert en Coupe du monde. Ce lundi soir l’équipe de France défie l’Irak à Philadelphie, la ville de Rocky Balboa.…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-mbappe-en-mode-rocky-face-a-l-irak-daily-12_VN-202606220493.html"
-    },
-    {
-      "title": "Coupe du monde 2026 : Un ancien international yougoslave tient des propos racistes lors de Belgique-Iran",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:15:17+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-un-ancien-international-yougoslave-tient-des-propos-racistes-lors-de-belgique-iran"
-    },
-    {
-      "title": "Dominique de Villepin : «  La France doit avoir à cœur d’être à la hauteur de l’histoire de l’Irak »",
-      "source": "SO FOOT",
-      "date": "2026-06-22T10:00:17+00:00",
-      "summary": "L’ancien Premier ministre avait bien révisé ses fiches.",
-      "url": "https://www.sofoot.com/articles/dominique-de-villepin-la-france-doit-avoir-a-coeur-detre-a-la-hauteur-de-lhistoire-de-lirak"
-    },
-    {
-      "title": "Lucas Bergvall pourrait quitter Tottenham cet été",
-      "source": "SO FOOT",
-      "date": "2026-06-22T09:58:22+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/lucas-bergvall-pourrait-quitter-tottenham-cet-ete"
-    },
-    {
-      "title": "Cristiano Ronaldo",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:56:28+00:00",
-      "summary": "Cristiano Ronaldo dos Santos Aveiro, plus souvent appelé Ronaldo ou Cristiano Ronaldo et surnommé CR7, est né le 5 février 1985 à Funchal à Madère. A l'été 2021, il est retourné jouer au club où il s'était…",
-      "url": "https://rmcsport.bfmtv.com/football/cristiano-ronaldo_DN-202108310501.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Nous n’avons pas l’obligation de lui passer le ballon\", Conceiçao relance la polémique autour de Cristiano Ronaldo",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:56:27+00:00",
-      "summary": "L’attaquant portugais Francisco Conceiçao a affirmé en conférence de presse qu’il ne se sent pas obligé de systématiquement faire la passe à Cristiano Ronaldo, malgré son statut au Portugal.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-nous-n-avons-pas-l-obligation-de-lui-passer-le-ballon-conceicao-relance-la-polemique-autour-de-cristiano-ronaldo_AV-202606220454.html"
-    },
-    {
-      "title": "\"France, FOR SURE !\" Ces supporters étrangers qui soutiennent les Bleus",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:55:19+00:00",
-      "summary": "Notre reporter aux USA Loïc Lefort a rencontré des supporters des soutiennent l'équipe de France, lors de ce Mondial américain.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-for-sure-ces-supporters-etrangers-qui-soutiennent-les-bleus_VN-202606220457.html"
-    },
-    {
-      "title": "Norvège - Sénégal : à quelle heure et sur quelle chaîne TV regarder le match du Mondial en France ?",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:50:00+00:00",
-      "summary": "Battue lors de son entrée en lice, la sélection sénégalaise joue déjà gros dans ce Mondial. Face à une Norvège portée par un Erling Haaland en grande forme, les Lions de la Teranga n’ont plus vraiment le…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/norvege-senegal-a-quelle-heure-et-sur-quelle-chaine-tv-regarder-le-match-du-mondial-en-france_AN-202606220433.html"
-    },
-    {
-      "title": "Coupe du monde 2026: 22h, 23h… ces horaires tardifs auxquels les Bleus ne devraient pas échapper à partir des 16es",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:48:42+00:00",
-      "summary": "En cas de victoire ce lundi (23h, heure française) contre l’Irak, la France serait qualifiée pour les 16es de finales qu’elle disputerait le 30 juin. Si elle termine première de son groupe, elle devrait…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-22h-23h-ces-horaires-tardifs-auxquels-les-bleus-ne-devraient-pas-echapper-a-partir-des-16es_AV-202606220445.html"
-    },
-    {
-      "title": "Mondial 2026 – Le scénario pour la qualification de l’équipe de France en seizièmes de finale",
-      "source": "SO FOOT",
-      "date": "2026-06-22T09:45:08+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-scenario-pour-la-qualification-de-lequipe-de-france-en-seiziemes-de-finale"
-    },
-    {
-      "title": "En direct : Norvège – Sénégal",
-      "source": "SO FOOT",
-      "date": "2026-06-22T09:38:51+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-norvege-senegal"
-    },
-    {
-      "title": "La statistique folle de l’Uruguay sans Luis Suárez au Mondial",
-      "source": "SO FOOT",
-      "date": "2026-06-22T09:36:29+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/la-statistique-folle-de-luruguay-sans-luis-suarez-au-mondial"
-    },
-    {
-      "title": "France-Irak: record de buts, sélections, passes décisives... les temps de passage fous de Mbappé avant sa 100e cape en Bleu",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:34:21+00:00",
-      "summary": "Nouveau meilleur buteur de l'histoire de l'équipe de France, Kylian Mbappé devrait connaître sa 100e cape en Bleu ce lundi soir contre l'Irak à la Coupe du monde (23h, heure française). Une barre atteinte à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-record-de-buts-selections-passes-decisives-les-temps-de-passage-fous-de-mbappe-avant-sa-100e-cape-en-bleu_AV-202606220429.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Raphinha endetté? La folle rumeur lancée par un champion du monde brésilien en 2002",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:30:54+00:00",
-      "summary": "Désormais commentateur sportif, le champion du monde 2002, Vampeta, dit avoir entendu un \"ragot\" dans les coulisses du Mondial, affirmant que Raphinha aurait d'importants problèmes financiers et familiaux.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-raphinha-endette-la-folle-rumeur-lancee-par-un-champion-du-monde-bresilien-en-2002_AV-202606220427.html"
-    },
-    {
-      "title": "En direct : France – Irak",
-      "source": "SO FOOT",
-      "date": "2026-06-22T09:30:00+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-france-irak"
-    },
-    {
-      "title": "Mondial 2026 – Le gardien de la Belgique Thibaut Courtois s’attend à ce que la pression soit forte pour le match face à la Nouvelle-Zélande",
-      "source": "SO FOOT",
-      "date": "2026-06-22T09:22:32+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-gardien-de-la-belgique-thibaut-courtois-sattend-a-ce-que-la-pression-soit-forte-pour-le-match-face-a-la-nouvelle-zelande"
-    },
-    {
-      "title": "Coupe du monde 2026: coup dur pour l'Algérie, Amoura forfait pour la fin de la phase de groupes",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:01:39+00:00",
-      "summary": "Blessé lors de l'entraînement samedi, Mohamed Amoura va manquer au moins les deux prochains matchs de l'Algérie en Coupe du monde. L'attaquant est touché à une cuisse.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-coup-dur-pour-l-algerie-amoura-forfait-pour-la-fin-de-la-phase-de-groupes_AP-202606220403.html"
-    },
-    {
-      "title": "\"La Côte d'Ivoire doit maintenant exploser son plafond de verre\" pousse Acherchour",
-      "source": "RMC Sport",
-      "date": "2026-06-22T09:01:25+00:00",
-      "summary": "La Côte d'Ivoire a encore impressionné face à l'Allemagne mais a encore perdu (2-1); En course pour finir deuxièmes de leur groupe, et peut-être affronter la France en 16e si les Bleus terminent premiers, les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-la-cote-d-ivoire-doit-maintenant-exploser-son-plafond-de-verre-pousse-acherchour_VN-202606220406.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le message de paix laissé par les Iraniens dans le vestiaire après le match contre la Belgique",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:59:09+00:00",
-      "summary": "Les joueurs de l’Iran ont laissé un puisant message de paix dans leur vestiaire du stade de Los Angeles après le match nul contre la Belgique (0-0), dimanche de lors de la Coupe du monde 2026. Ils ont aussi…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-message-de-paix-laisse-par-les-iraniens-dans-le-vestiaire-apres-le-match-contre-la-belgique_AV-202606220401.html"
-    },
-    {
-      "title": "Sport Définition 2026 : le rendez-vous incontournable du sport business européen",
-      "source": "SO FOOT",
-      "date": "2026-06-22T08:55:27+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/sport-definition-2026-le-rendez-vous-incontournable-du-sport-business-europeen"
-    },
-    {
-      "title": "Belgique, Portugal... le même coupable d'une génération gâchée",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:35:22+00:00",
-      "summary": "Où vont la Belgique et le Portugal. Après une génération dorée, les deux sélections sont aux prises à des difficultés qu'on peut espérer passagères lors de ce Mondial américain. Pour L'After, si les deux pays…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-belgique-portugal-le-meme-coupable-d-une-generation-gachee_VN-202606220388.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Les erreurs tactiques sont toujours la responsabilité du sélectionneur\": le mea culpa de Bielsa après le nul de l’Uruguay face au Cap-Vert",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:33:45+00:00",
-      "summary": "Accroché par une épatante équipe du Cap-Vert (2-2) dimanche à Miami, l’Uruguay s’est compliquée la tâche dans la course à la qualification aux 16es de finale de la Coupe du monde 2026. Le sélectionneur de la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-erreurs-tactiques-sont-toujours-la-responsabilite-du-selectionneur-le-mea-culpa-de-bielsa-apres-le-nul-de-l-uruguay-face-au-cap-vert_AV-202606220384.html"
-    },
-    {
-      "title": "Mondial 2026 – Zlatan Ibrahimović s’est endormi devant Belgique-Iran",
-      "source": "SO FOOT",
-      "date": "2026-06-22T08:27:44+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-zlatan-ibrahimovic-sest-endormi-devant-belgique-iran"
-    },
-    {
-      "title": "France-Irak :\"Deschamps ne fera pas longtemps de câlinothérapie\" insiste L'After",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:08:00+00:00",
-      "summary": "Deschamps face à ses choix. Le coach des Bleus Didier Deschamps n'a pas dévoilé tous ses choix à la veille d'affronter l'Irak, au Mondial américain. Face aux débats sur son quatuor offensif, la place de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-irak-deschamps-ne-fera-pas-longtemps-de-calinotherapie-insiste-l-after_VN-202606210426.html"
-    },
-    {
-      "title": "Zlatan Ibrahimovic",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:06:20+00:00",
-      "summary": "De l'arrivée de Zlatan Ibrahimovic au PSG à ses derniers buts et exploits, trouvez ici toutes les dernières actualités de Zlatan.",
-      "url": "https://rmcsport.bfmtv.com/football/zlatan-ibrahimovic_DN-201304120425.html"
-    },
-    {
-      "title": "Belgique-Iran: \"Je me suis endormi, je laisse mes collègues en parler\", l'analyse cash de Zlatan Ibrahimovic, consultant à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-22T08:06:19+00:00",
-      "summary": "Assommé par la nouvelle performance soporifique de la Belgique à la Coupe du monde 2026 contre l'Iran ce dimanche (0-0), Zlatan Ibrahimovic, consultant pour la télévision américaine, n'avait pas grand-chose à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/belgique-iran-je-me-suis-endormi-je-laisse-mes-collegues-en-parler-l-analyse-cash-de-zlatan-ibrahimovic-consultant-a-la-coupe-du-monde-2026_AV-202606220367.html"
-    },
-    {
-      "title": "Tore André Flo : « Aujourd’hui, la Norvège est capable de dominer l’adversaire »",
-      "source": "SO FOOT",
-      "date": "2026-06-22T08:00:51+00:00",
-      "summary": "Rappel de ce qu’était la Norvège des années 1990.",
-      "url": "https://www.sofoot.com/articles/tore-andre-flo-aujourdhui-la-norvege-est-capable-de-dominer-ladversaire"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Bielsa nous a appris le fair-play...\", le sélectionneur du Cap-Vert déçu du comportement de l'Uruguay",
-      "source": "RMC Sport",
-      "date": "2026-06-22T07:59:33+00:00",
-      "summary": "Alors qu'ils menaient 1-0, les joueurs du Cap-Vert ont vu l'Uruguay égaliser juste avant la pause à la Coupe du monde 2026. Un but bien valable, mais qui n'était pas fair-play a en écouter les dires de Pedro…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-bielsa-nous-a-appris-le-fair-play-le-selectionneur-du-cap-vert-decu-du-comportement-de-l-uruguay_AV-202606220358.html"
-    },
-    {
-      "title": "Mondial 2026 – Le sélectionneur du Paraguay, Gustavo Alfaro, critique ouvertement la FIFA",
-      "source": "SO FOOT",
-      "date": "2026-06-22T07:57:53+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-selectionneur-du-paraguay-gustavo-alfaro-critique-ouvertement-la-fifa"
-    },
-    {
-      "title": "L’Iran remercie Los Angeles pour son accueil",
-      "source": "SO FOOT",
-      "date": "2026-06-22T07:51:38+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/liran-remercie-los-angeles-pour-son-accueil"
-    },
-    {
-      "title": "Lionel Messi",
-      "source": "RMC Sport",
-      "date": "2026-06-22T07:50:31+00:00",
-      "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
-      "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
-    },
-    {
-      "title": "Argentine-Autriche: à quelle heure et sur quelle chaîne TV regarder le match de la Coupe du monde 2026?",
-      "source": "RMC Sport",
-      "date": "2026-06-22T07:50:30+00:00",
-      "summary": "Portée par un Lionel Messi exceptionnel, l'Argentine a débuté sa Coupe du monde 2026 par un large succès face à l'Algérie (3-0). Elle affrontre l'Autriche ce lundi pour valider sa qualification en 16es de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-autriche-a-quelle-heure-et-sur-quelle-chaine-tv-regarder-le-match-de-la-coupe-du-monde-2026_AV-202606220352.html"
-    },
-    {
-      "title": "Argentine – Une statue monumentale de Lionel Messi a été inaugurée",
-      "source": "SO FOOT",
-      "date": "2026-06-22T07:37:02+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/argentine-une-statue-monumentale-de-lionel-messi-a-ete-inauguree"
-    },
-    {
-      "title": "France-Irak: à quelle heure et sur quelle chaîne TV voir le match des Bleus à la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-22T07:36:14+00:00",
-      "summary": "Après sa victoire face au Sénégal (3-1), l’équipe de France dispute son deuxième match à la Coupe du monde 2026 face à l’Irak, lundi soir à Philadelphie. Les Bleus de Kylian Mbappé tenteront de se qualifier…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-a-quelle-heure-et-sur-quelle-chaine-tv-voir-le-match-des-bleus-a-la-coupe-du-monde-2026_AV-202606220335.html"
-    },
-    {
-      "title": "Face au Cap-Vert, Federico Viñas joue le rôle du médecin, puis se rétracte quand l’Uruguay peut marquer",
-      "source": "SO FOOT",
-      "date": "2026-06-22T07:24:04+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/facde-au-cap-vert-federico-vinas-joue-le-role-du-medecin-puis-se-retracte-quand-luruguay-peut-marquer"
-    },
-    {
-      "title": "France-Irak : \"Ce n'est pas une petite équipe\"... Pourquoi Didier Deschamps refuse de sous-estimer le deuxième adversaire des Bleus à la Coupe du monde",
+      "title": "Dans les coulisses de l'équipe de France de football avant le match contre l'Irak",
       "source": "France Info",
-      "date": "2026-06-22T07:21:21+00:00",
-      "summary": "L'équipe de France aborde son deuxième match du Mondial avec le statut d'immense favorite mais toutes les précautions ont été prises pour éviter un relâchement face à un adversaire qui peut faire des dégâts…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-ce-n-est-pas-une-petite-equipe-pourquoi-didier-deschamps-refuse-de-sous-estimer-l-irak_8072777.html#xtor=RSS-3-%5Bgeneral%5D"
+      "date": "2026-06-21T21:13:51+00:00",
+      "summary": "Plus qu'un jour avant le deuxième rendez-vous des Bleus en Coupe du Monde. Ils vont quitter Boston pour la Philadelphie, où ils vont rencontrer l’Irak, lundi 22 juin. Découverte des coulisses de la…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/dans-les-coulisses-de-l-equipe-de-france-de-football-avant-le-match-contre-l-irak_8073134.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "En direct : Argentine – Autriche",
-      "source": "SO FOOT",
-      "date": "2026-06-22T07:13:50+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-argentine-autriche"
+      "title": "Kylian Mbappé superstar aux États-Unis",
+      "source": "France Info",
+      "date": "2026-06-21T06:00:01+00:00",
+      "summary": "Depuis le début de cette Coupe du monde, Kylian Mbappé suscite un véritable engouement pour les Américains. L'attaquant français est devenu l'une des principales attractions des entrainements de l'Équipe de…",
+      "url": "https://www.franceinfo.fr/sports/kylian-mbappe-superstar-aux-etats-unis_8069288.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "Mohamed Salah veut marquer l’histoire de son pays",
+      "title": "Coupe du monde : \"Je ne suis pas à 100%, mais il faut serrer les dents\", reconnaît William Saliba, gêné par des douleurs au dos",
+      "source": "France Info",
+      "date": "2026-06-21T04:15:01+00:00",
+      "summary": "Le défenseur central titulaire de l'équipe de France est surveillé de près par le staff des Bleus depuis le début du mois et a pu tenir sa place contre le Sénégal, mardi dernier.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-je-ne-suis-pas-a-100-mais-il-faut-serrer-les-dents-reconnait-william-saliba-gene-par-des-douleurs-au-dos_8071988.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "France-Brésil 1986 : dans la fournaise de Guadalajara, ce 21 juin où les Bleus ont écrit une page de leur légende",
+      "source": "France Info",
+      "date": "2026-06-21T04:00:04+00:00",
+      "summary": "Il y a 40 ans, jour pour jour, le stade mythique de Guadalajara, l'une des enceintes mexicaines de ce Mondial 2026, accueillait ce qui est considéré comme l'un des plus grands matchs de l'histoire de l'équipe…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/france-bresil-1986-dans-la-fournaise-de-guadalajara-ce-21-juin-ou-les-bleus-ont-ecrit-une-page-de-leur-legende_8066135.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "\"On en vient à miser sur des résultats improbables\" : dans les coulisses de MonPetitProno, l'appli qui fait vibrer des millions de Français pendant la Coupe du monde de foot",
+      "source": "France Info",
+      "date": "2026-06-19T05:26:15+00:00",
+      "summary": "Depuis le début de la compétition, l'application est en tête des téléchargements bat des records d'utilisateurs.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/on-en-vient-a-miser-sur-des-resultats-improbables-dans-les-coulisses-de-monpetitprono-l-appli-qui-fait-vibrer-des-millions-de-francais-pendant-la-coupe-du-monde-de-foot_8063465.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde : comment Dayot Upamecano est devenu le pilier de la défense de l'équipe de France",
+      "source": "France Info",
+      "date": "2026-06-19T05:00:01+00:00",
+      "summary": "Le défenseur central du Bayern Munich n'a pas seulement brillé contre le Sénégal, mardi. Il est l'homme de base de son secteur depuis le dernier Mondial.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-comment-dayot-upamecano-est-devenu-le-pilier-de-la-defense-de-l-equipe-de-france_8066627.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Les Bleus se recueillent en hommage à Éric Roy",
+      "source": "France Info",
+      "date": "2026-06-18T09:39:50+00:00",
+      "summary": "L'équipe de France a observé une minute de silence, mercredi 17 juin, avant son entraînement pour rendre hommage à Eric Roy, mort le même jour des suites d'un cancer du pancréas. L'entraîneur de Brest, âgé de…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/les-bleus-se-recueillent-en-hommage-a-eric-roy_8067362.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde 2026 : Comment les pauses hydratation apportent une fraîcheur tactique",
       "source": "SO FOOT",
-      "date": "2026-06-22T07:05:02+00:00",
+      "date": "2026-06-18T09:00:35+00:00",
+      "summary": "Comment ces temps morts transforment le déroulé des matchs de la Coupe du monde 2026.",
+      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-comment-les-pauses-hydratation-apportent-une-fraicheur-tactique"
+    },
+    {
+      "title": "Tuchel a piqué sa crise contre Pickford lors du match contre la Croatie",
+      "source": "SO FOOT",
+      "date": "2026-06-18T08:43:19+00:00",
       "summary": "",
-      "url": "https://www.sofoot.com/breves/mohamed-salah-veut-marquer-lhistoire-de-son-pays"
+      "url": "https://www.sofoot.com/breves/tuchel-a-pique-sa-crise-contre-pickford-lors-du-match-contre-la-croatie"
+    },
+    {
+      "title": "Ouzbékistan : Abdulkodir Khusanov découpe Luis Diaz… et un caméraman",
+      "source": "SO FOOT",
+      "date": "2026-06-18T08:22:27+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/ouzbekistan-abdulkodir-khusanov-decoupe-luis-diaz-et-un-cameraman"
+    },
+    {
+      "title": "Fabio Cannavaro sélectionneur de l’Ouzbékistan est fier de ses joueurs après leur premier match en Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-06-18T08:10:41+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/fabio-cannavaro-selectionneur-de-louzbekistan-est-fier-de-ses-joueurs-apres-leur-premier-match-en-coupe-du-monde"
+    },
+    {
+      "title": "En direct : Suisse-Bosnie",
+      "source": "SO FOOT",
+      "date": "2026-06-18T08:03:20+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-suisse-bosnie"
+    },
+    {
+      "title": "En direct : Tchéquie-Afrique du Sud",
+      "source": "SO FOOT",
+      "date": "2026-06-18T07:55:47+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-tchequie-afrique-du-sud"
+    },
+    {
+      "title": "Thierry Henry très critique concernant la performance de Cristiano Ronaldo face à la RDC",
+      "source": "SO FOOT",
+      "date": "2026-06-18T07:51:09+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/thierry-henry-tres-critique-concernant-la-performance-de-cristiano-ronaldo-face-a-la-rdc"
+    },
+    {
+      "title": "Après un problème de visa, la maman du gardien du Cap-Vert Vozinha pourra entrer aux Etats-Unis",
+      "source": "SO FOOT",
+      "date": "2026-06-18T07:30:49+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/apres-un-probleme-de-visa-la-maman-du-gardien-du-cap-vert-vozinha-pourra-entrer-aux-etats-unis"
+    },
+    {
+      "title": "Coupe du monde : Mbappé en spectateur, match avec des jeunes Américains, Gusto touché au pied... Décrassage peu ordinaire pour les Bleus à Boston",
+      "source": "France Info",
+      "date": "2026-06-18T07:24:34+00:00",
+      "summary": "Après l'entrée en lice réussie à New York, l'équipe de France avait ouvert à la presse sa séance d'entraînement, mercredi.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-mbappe-en-spectateur-match-avec-des-jeunes-americains-gusto-touche-au-pied-decrassage-peu-ordinaire-pour-les-bleus-a-boston_8066708.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Un commentateur turc suspendu de ses fonctions pour avoir confondu l’Iran et la Nouvelle-Zélande pendant quatre minutes",
+      "source": "SO FOOT",
+      "date": "2026-06-18T07:14:26+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/un-commentateur-turc-suspendu-de-ses-fonctions-pour-avoir-confondu-liran-et-la-nouvelle-zelande-pendant-quatre-minutes"
+    },
+    {
+      "title": "Équipe de France : le casse-tête des latéraux avec Jules Koundé et Théo Hernandez, des réponses davantage tactiques",
+      "source": "SO FOOT",
+      "date": "2026-06-18T06:00:03+00:00",
+      "summary": "Il est (encore) difficile de déterminer deux titulaires indiscutables à ces postes.",
+      "url": "https://www.sofoot.com/articles/equipe-de-france-le-casse-tete-des-lateraux-avec-jules-kounde-et-theo-hernandez-des-reponses-davantage-tactiques"
+    },
+    {
+      "title": "Mondial 2026 : La première causerie d’Hervé Renard avec la sélection tunisienne",
+      "source": "SO FOOT",
+      "date": "2026-06-18T04:15:35+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-la-premiere-causerie-dherve-renard-avec-la-selection-tunisienne"
+    },
+    {
+      "title": "En direct : Ouzbékistan-Colombie",
+      "source": "SO FOOT",
+      "date": "2026-06-18T04:09:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-ouzbekistan-colombie"
+    },
+    {
+      "title": "Les Mexicains seraient-ils obsédés par le physique et la couleur de leurs joueurs ?",
+      "source": "SO FOOT",
+      "date": "2026-06-18T04:00:12+00:00",
+      "summary": "Le Mexique en quête de mixité.",
+      "url": "https://www.sofoot.com/articles/les-mexicains-seraient-ils-obsedes-par-le-physique-et-la-couleur-de-leurs-joueurs"
+    },
+    {
+      "title": "Mondial 2026 : La Colombie s’impose face à l’Ouzbékistan et s’empare de la première place du groupe K",
+      "source": "SO FOOT",
+      "date": "2026-06-18T03:57:52+00:00",
+      "summary": "La logique a été respectée.",
+      "url": "https://www.sofoot.com/articles/mondial-2026-la-colombie-simpose-face-a-louzbekistan-et-sempare-de-la-premiere-place-du-groupe-k"
+    },
+    {
+      "title": "Mondial 2026 : Tout ce que partagent Harry Kane et David Beckham après être devenus les deux seuls joueurs anglais à marquer lors de trois Coupes du monde différentes",
+      "source": "SO FOOT",
+      "date": "2026-06-18T03:03:30+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-tout-ce-que-partagent-harry-kane-et-david-beckham-apres-etre-devenus-les-deux-seuls-joueurs-anglais-a-marquer-lors-de-trois-coupes-du-monde-differentes"
+    },
+    {
+      "title": "Mondial 2026 : Le discours de Thomas Tuchel à la mi-temps de la rencontre face à la Croatie a changé le visage de son équipe en seconde période",
+      "source": "SO FOOT",
+      "date": "2026-06-18T02:32:17+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-le-discours-de-thomas-tuchel-a-la-mi-temps-de-la-rencontre-face-a-la-croatie-a-change-le-visage-de-son-equipe-en-seconde-periode"
+    },
+    {
+      "title": "Mondial 2026 : Lionel Messi et Cristiano Ronaldo ne sont pas les joueurs à avoir disputé le plus de Coupes du monde dans l’histoire puisque Formiga en a joué sept avec le Brésil",
+      "source": "SO FOOT",
+      "date": "2026-06-18T01:50:49+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-lionel-messi-et-cristiano-ronaldo-ne-sont-pas-les-joueurs-a-avoir-dispute-le-plus-de-coupes-du-monde-dans-lhistoire-puisque-formiga-en-a-joue-sept-avec-le-bresil"
     }
   ],
   "focused_team_news": {
     "Argentina": [
       {
-        "title": "Pronostic Argentine Autriche : analyse, cotes et prono Coupe du monde 2026",
-        "source": "SO FOOT",
-        "date": "2026-06-22T11:41:01+00:00",
-        "summary": "Découvrez notre pronostic pour le match Argentine – Autriche avec une analyse complète et les cotes. Pari recommandé : victoire de l'Argentine.",
-        "url": "https://www.sofoot.com/breves/pronostic-argentine-autriche-analyse-cotes-et-prono-coupe-du-monde-2026"
+        "title": "DIRECT. Argentine-Autriche: Messi entre un peu plus dans l'histoire du foot, suivez le match en live",
+        "source": "RMC Sport",
+        "date": "2026-06-22T17:48:53+00:00",
+        "summary": "Toutes deux vainqueures de leur premier match de la Coupe du monde 2026, l'Argentine et l'Autriche se retrouvent ce lundi à l'AT&T Stadium d'Arlington. Le coup d'envoi rencontre, commentée en direct sur RMC…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-autriche-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220523.html"
       },
       {
-        "title": "Argentine : Lionel Messi est-il vraiment le footballeur de la gauche ?",
-        "source": "SO FOOT",
-        "date": "2026-06-22T11:00:17+00:00",
-        "summary": "Les gens de gauche qui aiment Messi, ceux de droite Ronaldo, c’est vrai cette histoire ?",
-        "url": "https://www.sofoot.com/articles/argentine-lionel-messi-est-il-vraiment-le-footballeur-de-la-gauche"
-      },
-      {
-        "title": "Mondial 2026 – L’Argentine pourrait avoir une partie de tableau très favorable",
-        "source": "SO FOOT",
-        "date": "2026-06-22T10:41:40+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-largentine-pourrait-avoir-une-partie-de-tableau-tres-favorable"
+        "title": "DIRECT. Algérie-Jordanie: suivez le match du groupe J de la Coupe du monde 2026 en live",
+        "source": "RMC Sport",
+        "date": "2026-06-22T17:13:25+00:00",
+        "summary": "Défaites d'entrée par l'Autriche et l'Argentine dans cette Coupe du monde 2026, la Jordanie et l'Algérie se retrouvent dans la nuit de lundi à mardi au Levi's Stadium de Santa Clara. Un match de la peur qui…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-algerie-jordanie-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220546.html"
       },
       {
         "title": "Lionel Messi",
         "source": "RMC Sport",
-        "date": "2026-06-22T07:50:31+00:00",
+        "date": "2026-06-22T12:04:14+00:00",
         "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
         "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
-      },
-      {
-        "title": "Argentine-Autriche: à quelle heure et sur quelle chaîne TV regarder le match de la Coupe du monde 2026?",
-        "source": "RMC Sport",
-        "date": "2026-06-22T07:50:30+00:00",
-        "summary": "Portée par un Lionel Messi exceptionnel, l'Argentine a débuté sa Coupe du monde 2026 par un large succès face à l'Algérie (3-0). Elle affrontre l'Autriche ce lundi pour valider sa qualification en 16es de…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-autriche-a-quelle-heure-et-sur-quelle-chaine-tv-regarder-le-match-de-la-coupe-du-monde-2026_AV-202606220352.html"
-      },
-      {
-        "title": "Argentine – Une statue monumentale de Lionel Messi a été inaugurée",
-        "source": "SO FOOT",
-        "date": "2026-06-22T07:37:02+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/argentine-une-statue-monumentale-de-lionel-messi-a-ete-inauguree"
-      },
-      {
-        "title": "En direct : Argentine – Autriche",
-        "source": "SO FOOT",
-        "date": "2026-06-22T07:13:50+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/articles/en-direct-argentine-autriche"
       }
     ],
     "Brazil": [
-      {
-        "title": "Coupe du monde 2026: Raphinha endetté? La folle rumeur lancée par un champion du monde brésilien en 2002",
-        "source": "RMC Sport",
-        "date": "2026-06-22T09:30:54+00:00",
-        "summary": "Désormais commentateur sportif, le champion du monde 2002, Vampeta, dit avoir entendu un \"ragot\" dans les coulisses du Mondial, affirmant que Raphinha aurait d'importants problèmes financiers et familiaux.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-raphinha-endette-la-folle-rumeur-lancee-par-un-champion-du-monde-bresilien-en-2002_AV-202606220427.html"
-      },
       {
         "title": "France-Brésil 1986 : dans la fournaise de Guadalajara, ce 21 juin où les Bleus ont écrit une page de leur légende",
         "source": "France Info",
         "date": "2026-06-21T04:00:04+00:00",
         "summary": "Il y a 40 ans, jour pour jour, le stade mythique de Guadalajara, l'une des enceintes mexicaines de ce Mondial 2026, accueillait ce qui est considéré comme l'un des plus grands matchs de l'histoire de l'équipe…",
         "url": "https://www.franceinfo.fr/coupe-du-monde/france-bresil-1986-dans-la-fournaise-de-guadalajara-ce-21-juin-ou-les-bleus-ont-ecrit-une-page-de-leur-legende_8066135.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Mondial 2026 : Lionel Messi et Cristiano Ronaldo ne sont pas les joueurs à avoir disputé le plus de Coupes du monde dans l’histoire puisque Formiga en a joué sept avec le Brésil",
+        "source": "SO FOOT",
+        "date": "2026-06-18T01:50:49+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-lionel-messi-et-cristiano-ronaldo-ne-sont-pas-les-joueurs-a-avoir-dispute-le-plus-de-coupes-du-monde-dans-lhistoire-puisque-formiga-en-a-joue-sept-avec-le-bresil"
+      },
+      {
+        "title": "Mondial 2026 – Neymar a retrouvé l’entraînement collectif avec le Brésil",
+        "source": "SO FOOT",
+        "date": "2026-06-17T18:38:40+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-neymar-a-retrouve-lentrainement-collectif-avec-le-bresil"
+      }
+    ],
+    "Canada": [
+      {
+        "title": "Coupe du monde 2026: Salah porté en triomphe, enceinte géante et pogos dans la foule… Les Égyptiens ont fêté leur succès historique dans les rues de Vancouver",
+        "source": "RMC Sport",
+        "date": "2026-06-22T14:58:28+00:00",
+        "summary": "L’Égypte a décroché la première victoire de son histoire en Coupe du monde en battant la Nouvelle-Zélande ce lundi au Canada (3-1). Un succès que les Pharaons ont célébré dans les vestiaires, puis dans les…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-salah-porte-en-triomphe-enceinte-geante-et-pogos-dans-la-foule-les-egyptiens-ont-fete-leur-succes-historique-dans-les-rues-de-vancouver_AV-202606220708.html"
+      }
+    ],
+    "Curaçao": [
+      {
+        "title": "Coupe du monde 2026: les joueurs de Curaçao autorisés à partager leur chambre avec leurs familles",
+        "source": "RMC Sport",
+        "date": "2026-06-22T14:01:21+00:00",
+        "summary": "Dick Advocaat, entraîneur de l'équipe nationale de Curaçao qui a ramené le premier point en Coupe du monde de son histoire au pays, autorisent les joueurs à partager leur chambre avec leurs familles, une…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde-2026-les-joueurs-de-curacao-autorises-a-partager-leur-chambre-avec-leurs-familles_AV-202606220661.html"
       }
     ],
     "Egypt": [
       {
-        "title": "Mbappé en mode Rocky face à l’Irak ? 🥊 Daily #12",
+        "title": "Coupe du monde : Salah célèbre la victoire égyptienne dans les rues de Vancouver",
         "source": "RMC Sport",
-        "date": "2026-06-22T10:18:46+00:00",
-        "summary": "Nuit historique entre la première victoire égyptienne et les deux premiers buts du Cap-Vert en Coupe du monde. Ce lundi soir l’équipe de France défie l’Irak à Philadelphie, la ville de Rocky Balboa.…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-mbappe-en-mode-rocky-face-a-l-irak-daily-12_VN-202606220493.html"
+        "date": "2026-06-22T16:09:09+00:00",
+        "summary": "Après la victoire égyptienne sur le score de 3-1 face à la Nouvelle-Zélande, Mo Salah a été aperçu dans les rues de Vancouver. Le numéro 10 égyptien a été porté en guise de célébration, lui qui a inscrit le…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-du-monde-salah-celebre-la-victoire-egyptienne-dans-les-rues-de-vancouver_VN-202606220771.html"
       },
       {
-        "title": "Mondial 2026 : avec un but de Mohamed Salah, l’Égypte renverse la Nouvelle-Zélande",
-        "source": "SO FOOT",
-        "date": "2026-06-22T03:03:34+00:00",
-        "summary": "Mohamed Salah est immortel.",
-        "url": "https://www.sofoot.com/articles/mondial-2026-avec-un-but-de-mohamed-salah-legypte-renverse-la-nouvelle-zelande"
-      },
-      {
-        "title": "En direct : Nouvelle-Zélande-Égypte",
-        "source": "SO FOOT",
-        "date": "2026-06-22T03:03:00+00:00",
-        "summary": "Les Pharaons à la conquête de l'Océanie.",
-        "url": "https://www.sofoot.com/articles/en-direct-nouvelle-zelande-egypte"
+        "title": "Coupe du monde 2026: Salah porté en triomphe, enceinte géante et pogos dans la foule… Les Égyptiens ont fêté leur succès historique dans les rues de Vancouver",
+        "source": "RMC Sport",
+        "date": "2026-06-22T14:58:28+00:00",
+        "summary": "L’Égypte a décroché la première victoire de son histoire en Coupe du monde en battant la Nouvelle-Zélande ce lundi au Canada (3-1). Un succès que les Pharaons ont célébré dans les vestiaires, puis dans les…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-salah-porte-en-triomphe-enceinte-geante-et-pogos-dans-la-foule-les-egyptiens-ont-fete-leur-succes-historique-dans-les-rues-de-vancouver_AV-202606220708.html"
       }
     ],
     "France": [
       {
-        "title": "DIRECT. France-Irak: suivez le match des Bleus à la Coupe du monde 2026 en live",
+        "title": "DIRECT. France-Irak: suivez le deuxième match des Bleus à la Coupe du monde 2026 en live",
         "source": "RMC Sport",
-        "date": "2026-06-22T12:02:37+00:00",
-        "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, lundi à 23h à Philadelphie. Kylian Mbappé et les Bleus tenteront de…",
+        "date": "2026-06-22T17:48:12+00:00",
+        "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, ce lundi à Philadelphie (23h, heure de Paris). Kylian Mbappé et les…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-suivez-le-match-des-bleus-a-la-coupe-du-monde-2026-en-live_LS-202606220301.html"
       },
       {
-        "title": "Pronostic France Irak : analyse, cotes et prono Coupe du monde",
-        "source": "SO FOOT",
-        "date": "2026-06-22T11:42:26+00:00",
-        "summary": "France – Irak : pronostic pour la Coupe du monde 2026. Analyse du match et conseil sur la victoire de la France. Découvrez notre analyse complète.",
-        "url": "https://www.sofoot.com/breves/pronostic-france-irak-analyse-cotes-et-prono-coupe-du-monde"
+        "title": "Équipe de France : \"Barcola est de mieux en mieux\", estime Rothen",
+        "source": "RMC Sport",
+        "date": "2026-06-22T17:38:38+00:00",
+        "summary": "Pour la deuxième rencontre de l'équipe de France dans cette Coupe du monde, Bradley Barcola sera titulaire face à l'Irak ce lundi. Le joueur parisien va tenter de se faire une place dans l'attaque des Bleus.…",
+        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-barcola-est-de-mieux-en-mieux-estime-rothen_VN-202606220866.html"
+      },
+      {
+        "title": "Pourquoi la victoire contre l'Irak est-elle si importante pour l'équipe de France de Didier Deschamps à la Coupe du monde ?",
+        "source": "France Info",
+        "date": "2026-06-22T17:37:22+00:00",
+        "summary": "L'équipe de France affronte l'Irak lundi, pour la deuxième journée de la phase de poules, et pourrait, selon le résultat de cette rencontre, se frayer un chemin plus agréable lors des matchs à élimination…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/france-irak-pourquoi-une-victoire-est-elle-si-importante-pour-les-hommes-de-didier-deschamps-a-la-coupe-du-monde_8073575.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "\"Ce n'est pas une petite équipe\"... Pourquoi Didier Deschamps refuse de sous-estimer l'Irak deuxième adversaire de l'équipe de France à la Coupe du monde",
+        "source": "France Info",
+        "date": "2026-06-22T16:40:32+00:00",
+        "summary": "L'équipe de France aborde son deuxième match du Mondial avec le statut d'immense favorite mais toutes les précautions ont été prises pour éviter un relâchement face à un adversaire qui peut faire des dégâts…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-ce-n-est-pas-une-petite-equipe-pourquoi-didier-deschamps-refuse-de-sous-estimer-l-irak_8072777.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "\"Tu sens que le maillot est lourd\": Saliba décrit la pression supplémentaire qui entoure les joueurs de l’équipe de France",
+        "source": "RMC Sport",
+        "date": "2026-06-22T16:01:07+00:00",
+        "summary": "Avant d’affronter l’Irak avec l’équipe de France, ce lundi (23h) à la Coupe du monde 2026, William Saliba, qui est aujourd’hui un cadre d’Arsenal, explique à quel point les attentes sont différentes en club…",
+        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/tu-sens-que-le-maillot-est-lourd-saliba-decrit-la-pression-supplementaire-qui-entoure-les-joueurs-de-l-equipe-de-france_AV-202606220754.html"
+      },
+      {
+        "title": "Karim Benzema",
+        "source": "RMC Sport",
+        "date": "2026-06-22T14:26:15+00:00",
+        "summary": "Devenu un taulier du Real Madrid, Karim Benzema est revenu en équipe de France peu avant l'Euro 2021 après une impasse de 5 ans due à l'afffaire de la sextape et à ses échanges avec le sélectionneur Didier…",
+        "url": "https://rmcsport.bfmtv.com/football/karim-benzema_DN-201506210107.html"
+      },
+      {
+        "title": "Coupe du monde : à droite, dans l'axe, sur le banc... Comment utiliser au mieux Ousmane Dembélé en équipe de France ?",
+        "source": "France Info",
+        "date": "2026-06-22T13:08:46+00:00",
+        "summary": "Depuis ses débuts internationaux en 2017, l'attaquant parisien n'a jamais réussi à jouer les premiers rôles avec les Bleus. Son récent Ballon d'or n'y a rien changé.",
+        "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/coupe-du-monde-a-droite-dans-l-axe-sur-le-banc-comment-utiliser-au-mieux-ousmane-dembele-en-equipe-de-france_8070872.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Comment éviter de se faire spoiler les buts par ses voisins lors des matchs de la Coupe du monde ?",
+        "source": "France Info",
+        "date": "2026-06-22T12:59:14+00:00",
+        "summary": "Pendant la Coupe du monde, plusieurs secondes peuvent séparer deux téléspectateurs qui regardent pourtant le même match. On vous explique pourquoi vous vous faites parfois spoiler les buts (et comment…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/comment-eviter-de-se-faire-spoiler-les-buts-par-ses-voisins-lors-des-matchs-de-la-coupe-du-monde_8070830.html#xtor=RSS-3-%5Bgeneral%5D"
       },
       {
         "title": "Coupe du monde 2026: Mbappé dit ce qu’il doit faire pour devenir \"le meilleur joueur de l’histoire de équipe de France\"",
@@ -3959,67 +4033,41 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-mbappe-dit-ce-qu-il-doit-faire-pour-devenir-le-meilleur-joueur-de-l-histoire-de-equipe-de-france_AV-202606220520.html"
       },
       {
-        "title": "Coupe du monde 2026: \"On vient pour voir toutes ces stars\", ces supporters étrangers qui soutiennent l'Équipe de France",
-        "source": "RMC Sport",
-        "date": "2026-06-22T10:46:02+00:00",
-        "summary": "L'Équipe de France est portée par la ferveur de ses supporters à la Coupe du monde 2026. Pour le Mondial en Amérique du Nord, les Bleus peuvent également compter sur le soutien des supporters étrangers.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-on-vient-pour-voir-toutes-ces-stars-ces-supporters-etrangers-qui-soutiennent-l-equipe-de-france_AV-202606220495.html"
-      },
-      {
-        "title": "France-Irak : pourquoi la victoire est-elle si importante pour les hommes de Didier Deschamps à la Coupe du monde ?",
+        "title": "\"Je vais essayer de donner la meilleure image de mon pays\", s'engage Kylian Mbappé à la veille du match de la Coupe du monde France-Irak",
         "source": "France Info",
-        "date": "2026-06-22T10:40:03+00:00",
-        "summary": "L'équipe de France affronte l'Irak lundi, pour la deuxième journée de la phase de poules, et pourrait, selon le résultat de cette rencontre, se frayer un chemin plus agréable lors des matchs à élimination…",
-        "url": "https://www.franceinfo.fr/coupe-du-monde/france-irak-pourquoi-une-victoire-est-elle-si-importante-pour-les-hommes-de-didier-deschamps-a-la-coupe-du-monde_8073575.html#xtor=RSS-3-%5Bgeneral%5D"
+        "date": "2026-06-21T22:21:55+00:00",
+        "summary": "Contrairement au premier rendez-vous du Mondial, le capitaine des Bleus a accompagné Didier Deschamps pour la conférence de presse de veille de match, dimanche.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-je-vais-essayer-de-donner-la-meilleure-image-de-mon-pays-s-engage-kylian-mbappe-a-la-veille-de-france-irak_8073131.html#xtor=RSS-3-%5Bgeneral%5D"
       },
       {
-        "title": "Événement : soirée de projection So Foot pour France – Norvège le vendredi 26 juin 2026 à la Bellevilloise pour la Coupe du monde à partir de 18h30",
+        "title": "Dans les coulisses de l'équipe de France de football avant le match contre l'Irak",
+        "source": "France Info",
+        "date": "2026-06-21T21:13:51+00:00",
+        "summary": "Plus qu'un jour avant le deuxième rendez-vous des Bleus en Coupe du Monde. Ils vont quitter Boston pour la Philadelphie, où ils vont rencontrer l’Irak, lundi 22 juin. Découverte des coulisses de la…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/dans-les-coulisses-de-l-equipe-de-france-de-football-avant-le-match-contre-l-irak_8073134.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Kylian Mbappé superstar aux États-Unis",
+        "source": "France Info",
+        "date": "2026-06-21T06:00:01+00:00",
+        "summary": "Depuis le début de cette Coupe du monde, Kylian Mbappé suscite un véritable engouement pour les Américains. L'attaquant français est devenu l'une des principales attractions des entrainements de l'Équipe de…",
+        "url": "https://www.franceinfo.fr/sports/kylian-mbappe-superstar-aux-etats-unis_8069288.html#xtor=RSS-3-%5Bgeneral%5D"
+      }
+    ],
+    "Ghana": [
+      {
+        "title": "En direct : Ghana – Panama",
         "source": "SO FOOT",
-        "date": "2026-06-22T10:35:44+00:00",
+        "date": "2026-06-18T01:10:00+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/articles/evenement-soiree-de-projection-so-foot-pour-france-norvege-le-vendredi-26-juin-2026-a-la-bellevilloise-pour-la-coupe-du-monde-a-partir-de-18h30"
+        "url": "https://www.sofoot.com/articles/en-direct-ghana-panama"
       },
       {
-        "title": "Coupe du monde 2026: et pendant ce temps-là, Antoine Griezmann ouvre une boutique de cartes à collectionner",
-        "source": "RMC Sport",
-        "date": "2026-06-22T10:27:49+00:00",
-        "summary": "Deux ans après l’annonce de sa retraite internationale, Antoine Griezmann se prépare à quitter à Madrid et l’Atlético pour rejoindre les Etats-Unis où l’équipe de France dispute actuellement la Coupe du monde…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-et-pendant-ce-temps-la-antoine-griezmann-ouvre-une-boutique-de-cartes-a-collectionner_AV-202606220480.html"
-      },
-      {
-        "title": "Mondial 2026 : France-Irak menacé par les orages",
+        "title": "Mondial 2026 : Sans briller, le Ghana s’impose face au Panama et réalise une excellente opération comptable pour son entrée dans la compétition",
         "source": "SO FOOT",
-        "date": "2026-06-22T10:20:43+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-france-irak-menace-par-les-orages"
-      },
-      {
-        "title": "Mbappé en mode Rocky face à l’Irak ? 🥊 Daily #12",
-        "source": "RMC Sport",
-        "date": "2026-06-22T10:18:46+00:00",
-        "summary": "Nuit historique entre la première victoire égyptienne et les deux premiers buts du Cap-Vert en Coupe du monde. Ce lundi soir l’équipe de France défie l’Irak à Philadelphie, la ville de Rocky Balboa.…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-mbappe-en-mode-rocky-face-a-l-irak-daily-12_VN-202606220493.html"
-      },
-      {
-        "title": "Dominique de Villepin : «  La France doit avoir à cœur d’être à la hauteur de l’histoire de l’Irak »",
-        "source": "SO FOOT",
-        "date": "2026-06-22T10:00:17+00:00",
-        "summary": "L’ancien Premier ministre avait bien révisé ses fiches.",
-        "url": "https://www.sofoot.com/articles/dominique-de-villepin-la-france-doit-avoir-a-coeur-detre-a-la-hauteur-de-lhistoire-de-lirak"
-      },
-      {
-        "title": "\"France, FOR SURE !\" Ces supporters étrangers qui soutiennent les Bleus",
-        "source": "RMC Sport",
-        "date": "2026-06-22T09:55:19+00:00",
-        "summary": "Notre reporter aux USA Loïc Lefort a rencontré des supporters des soutiennent l'équipe de France, lors de ce Mondial américain.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-for-sure-ces-supporters-etrangers-qui-soutiennent-les-bleus_VN-202606220457.html"
-      },
-      {
-        "title": "Norvège - Sénégal : à quelle heure et sur quelle chaîne TV regarder le match du Mondial en France ?",
-        "source": "RMC Sport",
-        "date": "2026-06-22T09:50:00+00:00",
-        "summary": "Battue lors de son entrée en lice, la sélection sénégalaise joue déjà gros dans ce Mondial. Face à une Norvège portée par un Erling Haaland en grande forme, les Lions de la Teranga n’ont plus vraiment le…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/norvege-senegal-a-quelle-heure-et-sur-quelle-chaine-tv-regarder-le-match-du-mondial-en-france_AN-202606220433.html"
+        "date": "2026-06-18T01:08:11+00:00",
+        "summary": "Pas content ? Trois points.",
+        "url": "https://www.sofoot.com/articles/mondial-2026-sans-briller-le-ghana-simpose-face-au-panama-et-realise-une-excellente-operation-comptable-pour-son-entree-dans-la-competition"
       }
     ],
     "Iran": [
@@ -4038,115 +4086,112 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-aucune-reaction-le-selectionneur-de-l-iran-denonce-l-absence-de-soutien-des-autres-entraineurs_AV-202606220508.html"
       },
       {
-        "title": "Coupe du monde 2026 : Un ancien international yougoslave tient des propos racistes lors de Belgique-Iran",
+        "title": "Un commentateur turc suspendu de ses fonctions pour avoir confondu l’Iran et la Nouvelle-Zélande pendant quatre minutes",
         "source": "SO FOOT",
-        "date": "2026-06-22T10:15:17+00:00",
+        "date": "2026-06-18T07:14:26+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-un-ancien-international-yougoslave-tient-des-propos-racistes-lors-de-belgique-iran"
-      },
-      {
-        "title": "Coupe du monde 2026: le message de paix laissé par les Iraniens dans le vestiaire après le match contre la Belgique",
-        "source": "RMC Sport",
-        "date": "2026-06-22T08:59:09+00:00",
-        "summary": "Les joueurs de l’Iran ont laissé un puisant message de paix dans leur vestiaire du stade de Los Angeles après le match nul contre la Belgique (0-0), dimanche de lors de la Coupe du monde 2026. Ils ont aussi…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-message-de-paix-laisse-par-les-iraniens-dans-le-vestiaire-apres-le-match-contre-la-belgique_AV-202606220401.html"
-      },
-      {
-        "title": "Mondial 2026 – Zlatan Ibrahimović s’est endormi devant Belgique-Iran",
-        "source": "SO FOOT",
-        "date": "2026-06-22T08:27:44+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-zlatan-ibrahimovic-sest-endormi-devant-belgique-iran"
-      },
-      {
-        "title": "Belgique-Iran: \"Je me suis endormi, je laisse mes collègues en parler\", l'analyse cash de Zlatan Ibrahimovic, consultant à la Coupe du monde 2026",
-        "source": "RMC Sport",
-        "date": "2026-06-22T08:06:19+00:00",
-        "summary": "Assommé par la nouvelle performance soporifique de la Belgique à la Coupe du monde 2026 contre l'Iran ce dimanche (0-0), Zlatan Ibrahimovic, consultant pour la télévision américaine, n'avait pas grand-chose à…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/belgique-iran-je-me-suis-endormi-je-laisse-mes-collegues-en-parler-l-analyse-cash-de-zlatan-ibrahimovic-consultant-a-la-coupe-du-monde-2026_AV-202606220367.html"
-      },
-      {
-        "title": "L’Iran remercie Los Angeles pour son accueil",
-        "source": "SO FOOT",
-        "date": "2026-06-22T07:51:38+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/liran-remercie-los-angeles-pour-son-accueil"
-      },
-      {
-        "title": "En direct : Belgique – Iran",
-        "source": "SO FOOT",
-        "date": "2026-06-21T21:11:00+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/articles/en-direct-belgique-iran"
-      },
-      {
-        "title": "Mondial 2026 : En infériorité numérique pendant vingt minutes après l’expulsion de Ngoy, la Belgique concède le match nul face à l’Iran",
-        "source": "SO FOOT",
-        "date": "2026-06-21T21:05:00+00:00",
-        "summary": "Vers un remake de 2022 ?",
-        "url": "https://www.sofoot.com/articles/mondial-2026-en-inferiorite-numerique-pendant-vingt-minutes-apres-lexpulsion-de-ngoy-la-belgique-concede-le-match-nul-face-a-liran"
+        "url": "https://www.sofoot.com/breves/un-commentateur-turc-suspendu-de-ses-fonctions-pour-avoir-confondu-liran-et-la-nouvelle-zelande-pendant-quatre-minutes"
       }
     ],
-    "Paraguay": [
+    "Jordan": [
       {
-        "title": "Mondial 2026 – Le sélectionneur du Paraguay, Gustavo Alfaro, critique ouvertement la FIFA",
+        "title": "DIRECT. Algérie-Jordanie: suivez le match du groupe J de la Coupe du monde 2026 en live",
+        "source": "RMC Sport",
+        "date": "2026-06-22T17:13:25+00:00",
+        "summary": "Défaites d'entrée par l'Autriche et l'Argentine dans cette Coupe du monde 2026, la Jordanie et l'Algérie se retrouvent dans la nuit de lundi à mardi au Levi's Stadium de Santa Clara. Un match de la peur qui…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-algerie-jordanie-suivez-le-match-du-groupe-j-de-la-coupe-du-monde-2026-en-live_LS-202606220546.html"
+      },
+      {
+        "title": "Jordanie-Algérie: à quelle heure et sur quelle chaîne TV suivre le match de la Coupe du monde 2026?",
+        "source": "RMC Sport",
+        "date": "2026-06-22T16:41:41+00:00",
+        "summary": "La Jordanie affronte l'Algérie dans le groupe J du Mondial 2026 dans la nuit de lundi à mardi. Un match d'une importance cruciale entre deux équipes qui jouent leur survie dans ce Mondial.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/jordanie-algerie-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-la-coupe-du-monde-2026_AV-202606220809.html"
+      }
+    ],
+    "Panama": [
+      {
+        "title": "En direct : Ghana – Panama",
         "source": "SO FOOT",
-        "date": "2026-06-22T07:57:53+00:00",
+        "date": "2026-06-18T01:10:00+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-le-selectionneur-du-paraguay-gustavo-alfaro-critique-ouvertement-la-fifa"
+        "url": "https://www.sofoot.com/articles/en-direct-ghana-panama"
+      },
+      {
+        "title": "Mondial 2026 : Sans briller, le Ghana s’impose face au Panama et réalise une excellente opération comptable pour son entrée dans la compétition",
+        "source": "SO FOOT",
+        "date": "2026-06-18T01:08:11+00:00",
+        "summary": "Pas content ? Trois points.",
+        "url": "https://www.sofoot.com/articles/mondial-2026-sans-briller-le-ghana-simpose-face-au-panama-et-realise-une-excellente-operation-comptable-pour-son-entree-dans-la-competition"
       }
     ],
     "Portugal": [
       {
-        "title": "Coupe du monde 2026: \"Nous n’avons pas l’obligation de lui passer le ballon\", Conceiçao relance la polémique autour de Cristiano Ronaldo",
+        "title": "Pression maximale pour Roberto Martinez avant Portugal-Ouzbékistan: les fans réclament un onze sans Cristiano Ronaldo",
         "source": "RMC Sport",
-        "date": "2026-06-22T09:56:27+00:00",
-        "summary": "L’attaquant portugais Francisco Conceiçao a affirmé en conférence de presse qu’il ne se sent pas obligé de systématiquement faire la passe à Cristiano Ronaldo, malgré son statut au Portugal.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-nous-n-avons-pas-l-obligation-de-lui-passer-le-ballon-conceicao-relance-la-polemique-autour-de-cristiano-ronaldo_AV-202606220454.html"
+        "date": "2026-06-22T13:46:42+00:00",
+        "summary": "De plus en plus critiqué le capitaine du Portugal, Cristiano Ronaldo, ne doit pas être titulaire contre l’Ouzbékistan pour le deuxième match de Coupe du monde mardi selon un sondage réalisé par A Bola. Le…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pression-maximale-pour-roberto-martinez-avant-portugal-ouzbekistan-les-fans-reclament-un-onze-sans-cristiano-ronaldo_AV-202606220649.html"
       },
       {
-        "title": "Belgique, Portugal... le même coupable d'une génération gâchée",
+        "title": "Mondial 2026 : Cristiano Ronaldo agacé en zone mixte par le résultat du Portugal face à la République démocratique du Congo",
+        "source": "SO FOOT",
+        "date": "2026-06-17T23:49:52+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-cristiano-ronaldo-agace-en-zone-mixte-par-le-resultat-du-portugal-face-a-la-republique-democratique-du-congo"
+      },
+      {
+        "title": "Mondial 2026 – Cristiano Ronaldo n’a plus marqué dans un tournoi majeur avec le Portugal depuis 10 matchs",
+        "source": "SO FOOT",
+        "date": "2026-06-17T20:40:53+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-cristiano-ronaldo-na-plus-marque-dans-un-tournoi-majeur-avec-le-portugal-depuis-10-match"
+      },
+      {
+        "title": "La « grosse fierté » de Wissa après son but historique avec la RD Congo face au Portugal",
+        "source": "SO FOOT",
+        "date": "2026-06-17T20:21:02+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/la-grosse-fierte-de-wissa-apres-son-but-historique-avec-la-rd-congo-face-au-portugal"
+      },
+      {
+        "title": "Mondial 2026 – Buteur avec le Portugal lors du nul face à la République démocratique du Congo, João Neves adore marquer de la tête",
+        "source": "SO FOOT",
+        "date": "2026-06-17T19:59:43+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-buteur-avec-le-portugal-lors-du-nul-face-a-la-republique-democratique-du-congo-joao-neves-adore-marquer-de-la-tete"
+      },
+      {
+        "title": "En direct : Portugal – RD Congo",
+        "source": "SO FOOT",
+        "date": "2026-06-17T19:10:00+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/en-direct-portugal-rd-congo"
+      },
+      {
+        "title": "Mondial 2026 – Le Portugal et la RD Congo se neutralisent",
+        "source": "SO FOOT",
+        "date": "2026-06-17T19:03:24+00:00",
+        "summary": "Spoiler : CR7 a été transparent.",
+        "url": "https://www.sofoot.com/articles/mondial-2026-le-portugal-et-la-rd-congo-se-neutralisent"
+      }
+    ],
+    "Qatar": [
+      {
+        "title": "Coupe du monde 2026: les chiffres le prouvent, on voit plus de football lors de ce Mondial",
         "source": "RMC Sport",
-        "date": "2026-06-22T08:35:22+00:00",
-        "summary": "Où vont la Belgique et le Portugal. Après une génération dorée, les deux sélections sont aux prises à des difficultés qu'on peut espérer passagères lors de ce Mondial américain. Pour L'After, si les deux pays…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-belgique-portugal-le-meme-coupable-d-une-generation-gachee_VN-202606220388.html"
+        "date": "2026-06-22T12:33:14+00:00",
+        "summary": "Selon une étude menée par Opta, le temps de jeu effectif de la Coupe du monde 2026 est bien meilleur que lors des dernières éditions en Russie et au Qatar. On le doit notamment à l’application de nouvelles…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-chiffres-le-prouvent-on-voit-plus-de-football-lors-de-ce-mondial_AV-202606220582.html"
       }
     ],
     "Senegal": [
       {
-        "title": "DIRECT. France-Irak: suivez le match des Bleus à la Coupe du monde 2026 en live",
+        "title": "DIRECT. France-Irak: suivez le deuxième match des Bleus à la Coupe du monde 2026 en live",
         "source": "RMC Sport",
-        "date": "2026-06-22T12:02:37+00:00",
-        "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, lundi à 23h à Philadelphie. Kylian Mbappé et les Bleus tenteront de…",
+        "date": "2026-06-22T17:48:12+00:00",
+        "summary": "Après une première victoire face au Sénégal (3-1), l'équipe de France dispute son deuxième match à la Coupe du monde 2026 contre l'Irak, ce lundi à Philadelphie (23h, heure de Paris). Kylian Mbappé et les…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-france-irak-suivez-le-match-des-bleus-a-la-coupe-du-monde-2026-en-live_LS-202606220301.html"
-      },
-      {
-        "title": "Norvège - Sénégal : à quelle heure et sur quelle chaîne TV regarder le match du Mondial en France ?",
-        "source": "RMC Sport",
-        "date": "2026-06-22T09:50:00+00:00",
-        "summary": "Battue lors de son entrée en lice, la sélection sénégalaise joue déjà gros dans ce Mondial. Face à une Norvège portée par un Erling Haaland en grande forme, les Lions de la Teranga n’ont plus vraiment le…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/norvege-senegal-a-quelle-heure-et-sur-quelle-chaine-tv-regarder-le-match-du-mondial-en-france_AN-202606220433.html"
-      },
-      {
-        "title": "En direct : Norvège – Sénégal",
-        "source": "SO FOOT",
-        "date": "2026-06-22T09:38:51+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/articles/en-direct-norvege-senegal"
-      },
-      {
-        "title": "France-Irak: à quelle heure et sur quelle chaîne TV voir le match des Bleus à la Coupe du monde 2026",
-        "source": "RMC Sport",
-        "date": "2026-06-22T07:36:14+00:00",
-        "summary": "Après sa victoire face au Sénégal (3-1), l’équipe de France dispute son deuxième match à la Coupe du monde 2026 face à l’Irak, lundi soir à Philadelphie. Les Bleus de Kylian Mbappé tenteront de se qualifier…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-irak-a-quelle-heure-et-sur-quelle-chaine-tv-voir-le-match-des-bleus-a-la-coupe-du-monde-2026_AV-202606220335.html"
-      },
-      {
-        "title": "Coupe du monde – France-Irak : les Bleus doivent enchaîner après leur victoire face au Sénégal",
-        "source": "SO FOOT",
-        "date": "2026-06-22T05:30:48+00:00",
-        "summary": "Quel visage pour les Bleus à Philadelphie ?",
-        "url": "https://www.sofoot.com/articles/coupe-du-monde-france-irak-les-bleus-doivent-enchainer-apres-leur-victoire-face-au-senegal"
       },
       {
         "title": "Coupe du monde : \"Je ne suis pas à 100%, mais il faut serrer les dents\", reconnaît William Saliba, gêné par des douleurs au dos",
@@ -4161,57 +4206,78 @@
         "date": "2026-06-19T05:00:01+00:00",
         "summary": "Le défenseur central du Bayern Munich n'a pas seulement brillé contre le Sénégal, mardi. Il est l'homme de base de son secteur depuis le dernier Mondial.",
         "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-comment-dayot-upamecano-est-devenu-le-pilier-de-la-defense-de-l-equipe-de-france_8066627.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Coupe du monde 2026 : après la barre des 58 buts, ces autres records de l'équipe de France que Kylian Mbappé est parti pour battre",
+        "source": "France Info",
+        "date": "2026-06-17T09:04:28+00:00",
+        "summary": "Le capitaine des Bleus a dépassé Olivier Giroud, mardi, en inscrivant un doublé dans le premier match des Bleus à la Coupe du monde, contre le Sénégal (3-1).",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-apres-la-barre-des-58-buts-ces-autres-records-de-l-equipe-de-france-que-kylian-mbappe-est-parti-pour-battre_8038721.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Mondial 2026 : la joie des supporters après la victoire des Bleus contre le Sénégal mardi soir",
+        "source": "France Info",
+        "date": "2026-06-17T08:56:32+00:00",
+        "summary": "Les supporters des Bleus étaient fous de joie mardi soir, après la victoire 3-1 de la France face au Sénégal. L'équipe de France a ainsi débuté sa Coupe du monde 2026 en fanfare. Les joueurs de Didier…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/mondial-2026-la-joie-des-supporters-apres-la-victoire-des-bleus-contre-le-senegal-mardi-soir_8065607.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "On vous explique la célébration \"flûte traversière\" de Kylian Mbappé après son but face au Sénégal",
+        "source": "France Info",
+        "date": "2026-06-17T08:28:10+00:00",
+        "summary": "Lors du premier match de la France dans le Mondial 2026, le capitaine des Bleus a respecté une promesse faite à un animateur d'une célèbre émission américaine. Dans sa jeunesse, l'attaquant des Bleus a joué…",
+        "url": "https://www.franceinfo.fr/sports/foot/kylian-mbappe/coupe-du-monde-2026-on-vous-explique-la-celebration-flute-traversiere-de-kylian-mbappe-apres-son-but-face-au-senegal_8065418.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "On refait France-Sénégal avec les supporters",
+        "source": "France Info",
+        "date": "2026-06-17T08:04:01+00:00",
+        "summary": "🇫🇷⚽️ Les supporters qui étaient au MetLife Stadium sont passés de l'inquiétude et l’ennui à l’exultation avec une 2ème mi-temps fantastique entre la France et le Sénégal. Dithyrambiques sur les Bleus, les…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/on-refait-france-senegal-avec-les-supporters_8065538.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Du néant à la symphonie, comment Michael Olise a complètement changé le match de la France contre le Sénégal lors de sa première en Coupe du monde",
+        "source": "France Info",
+        "date": "2026-06-17T07:22:19+00:00",
+        "summary": "Son baptême du feu a demandé un temps d'adaptation, mardi, mais l'attaquant de 23 ans a fini par retrouver son influence devenue indispensable à la création tricolore.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-du-neant-a-la-symphonie-comment-michael-olise-a-completement-change-le-match-des-bleus-contre-le-senegal_8064800.html#xtor=RSS-3-%5Bgeneral%5D"
       }
     ],
-    "Uruguay": [
+    "Uzbekistan": [
       {
-        "title": "La statistique folle de l’Uruguay sans Luis Suárez au Mondial",
-        "source": "SO FOOT",
-        "date": "2026-06-22T09:36:29+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/la-statistique-folle-de-luruguay-sans-luis-suarez-au-mondial"
-      },
-      {
-        "title": "Coupe du monde 2026: \"Les erreurs tactiques sont toujours la responsabilité du sélectionneur\": le mea culpa de Bielsa après le nul de l’Uruguay face au Cap-Vert",
+        "title": "Pression maximale pour Roberto Martinez avant Portugal-Ouzbékistan: les fans réclament un onze sans Cristiano Ronaldo",
         "source": "RMC Sport",
-        "date": "2026-06-22T08:33:45+00:00",
-        "summary": "Accroché par une épatante équipe du Cap-Vert (2-2) dimanche à Miami, l’Uruguay s’est compliquée la tâche dans la course à la qualification aux 16es de finale de la Coupe du monde 2026. Le sélectionneur de la…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-erreurs-tactiques-sont-toujours-la-responsabilite-du-selectionneur-le-mea-culpa-de-bielsa-apres-le-nul-de-l-uruguay-face-au-cap-vert_AV-202606220384.html"
+        "date": "2026-06-22T13:46:42+00:00",
+        "summary": "De plus en plus critiqué le capitaine du Portugal, Cristiano Ronaldo, ne doit pas être titulaire contre l’Ouzbékistan pour le deuxième match de Coupe du monde mardi selon un sondage réalisé par A Bola. Le…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pression-maximale-pour-roberto-martinez-avant-portugal-ouzbekistan-les-fans-reclament-un-onze-sans-cristiano-ronaldo_AV-202606220649.html"
       },
       {
-        "title": "Coupe du monde 2026: \"Bielsa nous a appris le fair-play...\", le sélectionneur du Cap-Vert déçu du comportement de l'Uruguay",
-        "source": "RMC Sport",
-        "date": "2026-06-22T07:59:33+00:00",
-        "summary": "Alors qu'ils menaient 1-0, les joueurs du Cap-Vert ont vu l'Uruguay égaliser juste avant la pause à la Coupe du monde 2026. Un but bien valable, mais qui n'était pas fair-play a en écouter les dires de Pedro…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-bielsa-nous-a-appris-le-fair-play-le-selectionneur-du-cap-vert-decu-du-comportement-de-l-uruguay_AV-202606220358.html"
-      },
-      {
-        "title": "Face au Cap-Vert, Federico Viñas joue le rôle du médecin, puis se rétracte quand l’Uruguay peut marquer",
+        "title": "Ouzbékistan : Abdulkodir Khusanov découpe Luis Diaz… et un caméraman",
         "source": "SO FOOT",
-        "date": "2026-06-22T07:24:04+00:00",
+        "date": "2026-06-18T08:22:27+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/breves/facde-au-cap-vert-federico-vinas-joue-le-role-du-medecin-puis-se-retracte-quand-luruguay-peut-marquer"
+        "url": "https://www.sofoot.com/breves/ouzbekistan-abdulkodir-khusanov-decoupe-luis-diaz-et-un-cameraman"
       },
       {
-        "title": "Coupe du monde 2026 : L’Uruguay se casse aussi les dents sur le Cap-Vert",
+        "title": "Fabio Cannavaro sélectionneur de l’Ouzbékistan est fier de ses joueurs après leur premier match en Coupe du monde",
         "source": "SO FOOT",
-        "date": "2026-06-22T00:04:35+00:00",
-        "summary": "Les Requins bleus sont toujours invaincus en Coupe du monde !",
-        "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-luruguay-se-casse-aussi-les-dents-sur-le-cap-vert"
-      },
-      {
-        "title": "Coupe du monde 2026 : le Cap-Vert ouvre le score contre l’Uruguay sur un superbe coup franc",
-        "source": "SO FOOT",
-        "date": "2026-06-21T22:37:38+00:00",
+        "date": "2026-06-18T08:10:41+00:00",
         "summary": "",
-        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-le-cap-vert-ouvre-le-score-contre-luruguay-sur-un-superbe-coup-franc"
+        "url": "https://www.sofoot.com/breves/fabio-cannavaro-selectionneur-de-louzbekistan-est-fier-de-ses-joueurs-apres-leur-premier-match-en-coupe-du-monde"
       },
       {
-        "title": "En direct : Uruguay-Cap-Vert",
+        "title": "En direct : Ouzbékistan-Colombie",
         "source": "SO FOOT",
-        "date": "2026-06-21T21:45:50+00:00",
-        "summary": "Deuxième exploit possible pour le Cap-Vert ?",
-        "url": "https://www.sofoot.com/articles/en-direct-uruguay-cap-vert"
+        "date": "2026-06-18T04:09:00+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/en-direct-ouzbekistan-colombie"
+      },
+      {
+        "title": "Mondial 2026 : La Colombie s’impose face à l’Ouzbékistan et s’empare de la première place du groupe K",
+        "source": "SO FOOT",
+        "date": "2026-06-18T03:57:52+00:00",
+        "summary": "La logique a été respectée.",
+        "url": "https://www.sofoot.com/articles/mondial-2026-la-colombie-simpose-face-a-louzbekistan-et-sempare-de-la-premiere-place-du-groupe-k"
       }
     ]
   },
@@ -4344,7 +4410,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
       "associated_team": "Sweden",
-      "updated_at": "2026-06-22T12:25:41+00:00",
+      "updated_at": "2026-06-22T17:50:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4355,7 +4421,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750027.png",
       "associated_team": "Morocco",
-      "updated_at": "2026-06-22T12:25:41+00:00",
+      "updated_at": "2026-06-22T17:50:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4366,7 +4432,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/661519.png",
       "associated_team": "Germany",
-      "updated_at": "2026-06-22T12:25:41+00:00",
+      "updated_at": "2026-06-22T17:50:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4377,7 +4443,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/939569.png",
       "associated_team": "Canada",
-      "updated_at": "2026-06-22T12:25:41+00:00",
+      "updated_at": "2026-06-22T17:50:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4388,7 +4454,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/460632.png",
       "associated_team": "Germany",
-      "updated_at": "2026-06-22T12:25:41+00:00",
+      "updated_at": "2026-06-22T17:50:06+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4399,7 +4465,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-06-22T12:25:41+00:00",
+      "updated_at": "2026-06-22T17:50:06+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
