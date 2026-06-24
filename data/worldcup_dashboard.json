@@ -1,10 +1,887 @@
 {
-  "generated_at": "2026-06-24T04:35:54+00:00",
+  "generated_at": "2026-06-24T08:33:25+00:00",
   "competition": "Coupe du Monde FIFA 2026",
-  "standings": [],
+  "standings": [
+    {
+      "name": "Group A",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Mexico",
+          "espn_id": "203",
+          "abbr": "MEX",
+          "country_code": "MEX",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+3",
+          "losses": "6",
+          "goals_for": "0",
+          "goals_against": "3",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "South Korea",
+          "espn_id": "451",
+          "abbr": "KOR",
+          "country_code": "KOR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "0",
+          "losses": "3",
+          "goals_for": "2",
+          "goals_against": "2",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Czechia",
+          "espn_id": "450",
+          "abbr": "CZE",
+          "country_code": "CZE",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-1",
+          "losses": "1",
+          "goals_for": "3",
+          "goals_against": "2",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "South Africa",
+          "espn_id": "467",
+          "abbr": "RSA",
+          "country_code": "RSA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-2",
+          "losses": "1",
+          "goals_for": "3",
+          "goals_against": "1",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group B",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Canada",
+          "espn_id": "206",
+          "abbr": "CAN",
+          "country_code": "CAN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+6",
+          "losses": "4",
+          "goals_for": "1",
+          "goals_against": "7",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Switzerland",
+          "espn_id": "475",
+          "abbr": "SUI",
+          "country_code": "SUI",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+3",
+          "losses": "4",
+          "goals_for": "2",
+          "goals_against": "5",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Bosnia-Herzegovina",
+          "espn_id": "452",
+          "abbr": "BIH",
+          "country_code": "BIH",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-3",
+          "losses": "1",
+          "goals_for": "5",
+          "goals_against": "2",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Qatar",
+          "espn_id": "4398",
+          "abbr": "QAT",
+          "country_code": "QAT",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-6",
+          "losses": "1",
+          "goals_for": "7",
+          "goals_against": "1",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group C",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Brazil",
+          "espn_id": "205",
+          "abbr": "BRA",
+          "country_code": "BRA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+3",
+          "losses": "4",
+          "goals_for": "1",
+          "goals_against": "4",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Morocco",
+          "espn_id": "2869",
+          "abbr": "MAR",
+          "country_code": "MAR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+1",
+          "losses": "4",
+          "goals_for": "1",
+          "goals_against": "2",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Scotland",
+          "espn_id": "580",
+          "abbr": "SCO",
+          "country_code": "SCO",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "0",
+          "losses": "3",
+          "goals_for": "1",
+          "goals_against": "1",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Haiti",
+          "espn_id": "2654",
+          "abbr": "HAI",
+          "country_code": "HAI",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-4",
+          "losses": "0",
+          "goals_for": "4",
+          "goals_against": "0",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group D",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "United States",
+          "espn_id": "660",
+          "abbr": "USA",
+          "country_code": "USA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+5",
+          "losses": "6",
+          "goals_for": "1",
+          "goals_against": "6",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Australia",
+          "espn_id": "628",
+          "abbr": "AUS",
+          "country_code": "AUS",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "0",
+          "losses": "3",
+          "goals_for": "2",
+          "goals_against": "2",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Paraguay",
+          "espn_id": "210",
+          "abbr": "PAR",
+          "country_code": "PAR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-2",
+          "losses": "3",
+          "goals_for": "4",
+          "goals_against": "2",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Türkiye",
+          "espn_id": "465",
+          "abbr": "TUR",
+          "country_code": "TUR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-3",
+          "losses": "0",
+          "goals_for": "3",
+          "goals_against": "0",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group E",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Germany",
+          "espn_id": "481",
+          "abbr": "GER",
+          "country_code": "GER",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+7",
+          "losses": "6",
+          "goals_for": "2",
+          "goals_against": "9",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Ivory Coast",
+          "espn_id": "4789",
+          "abbr": "CIV",
+          "country_code": "CIV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "0",
+          "losses": "3",
+          "goals_for": "2",
+          "goals_against": "2",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Ecuador",
+          "espn_id": "209",
+          "abbr": "ECU",
+          "country_code": "ECU",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-1",
+          "losses": "1",
+          "goals_for": "1",
+          "goals_against": "0",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Curaçao",
+          "espn_id": "11678",
+          "abbr": "CUW",
+          "country_code": "CUW",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-6",
+          "losses": "1",
+          "goals_for": "7",
+          "goals_against": "1",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group F",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Netherlands",
+          "espn_id": "449",
+          "abbr": "NED",
+          "country_code": "NED",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+4",
+          "losses": "4",
+          "goals_for": "3",
+          "goals_against": "7",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Japan",
+          "espn_id": "627",
+          "abbr": "JPN",
+          "country_code": "JPN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+4",
+          "losses": "4",
+          "goals_for": "2",
+          "goals_against": "6",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Sweden",
+          "espn_id": "466",
+          "abbr": "SWE",
+          "country_code": "SWE",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "0",
+          "losses": "3",
+          "goals_for": "6",
+          "goals_against": "6",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Tunisia",
+          "espn_id": "659",
+          "abbr": "TUN",
+          "country_code": "TUN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-8",
+          "losses": "0",
+          "goals_for": "9",
+          "goals_against": "1",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group G",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Egypt",
+          "espn_id": "2620",
+          "abbr": "EGY",
+          "country_code": "EGY",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+2",
+          "losses": "4",
+          "goals_for": "2",
+          "goals_against": "4",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Iran",
+          "espn_id": "469",
+          "abbr": "IRN",
+          "country_code": "IRN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "0",
+          "losses": "2",
+          "goals_for": "2",
+          "goals_against": "2",
+          "goal_diff": "2",
+          "points": "0",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Belgium",
+          "espn_id": "459",
+          "abbr": "BEL",
+          "country_code": "BEL",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "0",
+          "losses": "2",
+          "goals_for": "1",
+          "goals_against": "1",
+          "goal_diff": "2",
+          "points": "0",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "New Zealand",
+          "espn_id": "2666",
+          "abbr": "NZL",
+          "country_code": "NZL",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-2",
+          "losses": "1",
+          "goals_for": "5",
+          "goals_against": "3",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group H",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Spain",
+          "espn_id": "164",
+          "abbr": "ESP",
+          "country_code": "ESP",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+4",
+          "losses": "4",
+          "goals_for": "0",
+          "goals_against": "4",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Uruguay",
+          "espn_id": "212",
+          "abbr": "URU",
+          "country_code": "URU",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "0",
+          "losses": "2",
+          "goals_for": "3",
+          "goals_against": "3",
+          "goal_diff": "2",
+          "points": "0",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Cape Verde",
+          "espn_id": "2597",
+          "abbr": "CPV",
+          "country_code": "CPV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "0",
+          "losses": "2",
+          "goals_for": "2",
+          "goals_against": "2",
+          "goal_diff": "2",
+          "points": "0",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Saudi Arabia",
+          "espn_id": "655",
+          "abbr": "KSA",
+          "country_code": "KSA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-4",
+          "losses": "1",
+          "goals_for": "5",
+          "goals_against": "1",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group I",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "France",
+          "espn_id": "478",
+          "abbr": "FRA",
+          "country_code": "FRA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+5",
+          "losses": "6",
+          "goals_for": "1",
+          "goals_against": "6",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Norway",
+          "espn_id": "464",
+          "abbr": "NOR",
+          "country_code": "NOR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+4",
+          "losses": "6",
+          "goals_for": "3",
+          "goals_against": "7",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Senegal",
+          "espn_id": "654",
+          "abbr": "SEN",
+          "country_code": "SEN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-3",
+          "losses": "0",
+          "goals_for": "6",
+          "goals_against": "3",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Iraq",
+          "espn_id": "4375",
+          "abbr": "IRQ",
+          "country_code": "IRQ",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-6",
+          "losses": "0",
+          "goals_for": "7",
+          "goals_against": "1",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group J",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Argentina",
+          "espn_id": "202",
+          "abbr": "ARG",
+          "country_code": "ARG",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+5",
+          "losses": "6",
+          "goals_for": "0",
+          "goals_against": "5",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Austria",
+          "espn_id": "474",
+          "abbr": "AUT",
+          "country_code": "AUT",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "0",
+          "losses": "3",
+          "goals_for": "3",
+          "goals_against": "3",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Algeria",
+          "espn_id": "624",
+          "abbr": "ALG",
+          "country_code": "ALG",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-2",
+          "losses": "3",
+          "goals_for": "4",
+          "goals_against": "2",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Jordan",
+          "espn_id": "2917",
+          "abbr": "JOR",
+          "country_code": "JOR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-3",
+          "losses": "0",
+          "goals_for": "5",
+          "goals_against": "2",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group K",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Colombia",
+          "espn_id": "208",
+          "abbr": "COL",
+          "country_code": "COL",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+3",
+          "losses": "6",
+          "goals_for": "1",
+          "goals_against": "4",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Portugal",
+          "espn_id": "482",
+          "abbr": "POR",
+          "country_code": "POR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+5",
+          "losses": "4",
+          "goals_for": "1",
+          "goals_against": "6",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Congo DR",
+          "espn_id": "2850",
+          "abbr": "COD",
+          "country_code": "COD",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-1",
+          "losses": "1",
+          "goals_for": "2",
+          "goals_against": "1",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Uzbekistan",
+          "espn_id": "2570",
+          "abbr": "UZB",
+          "country_code": "UZB",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-7",
+          "losses": "0",
+          "goals_for": "8",
+          "goals_against": "1",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    },
+    {
+      "name": "Group L",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "England",
+          "espn_id": "448",
+          "abbr": "ENG",
+          "country_code": "ENG",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+2",
+          "losses": "4",
+          "goals_for": "2",
+          "goals_against": "4",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 2,
+          "team": "Ghana",
+          "espn_id": "4469",
+          "abbr": "GHA",
+          "country_code": "GHA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png",
+          "played": "2",
+          "wins": "0",
+          "draws": "+1",
+          "losses": "4",
+          "goals_for": "0",
+          "goals_against": "1",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Advance to Round of 32"
+        },
+        {
+          "rank": 3,
+          "team": "Croatia",
+          "espn_id": "477",
+          "abbr": "CRO",
+          "country_code": "CRO",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png",
+          "played": "2",
+          "wins": "1",
+          "draws": "-1",
+          "losses": "3",
+          "goals_for": "4",
+          "goals_against": "3",
+          "goal_diff": "0",
+          "points": "1",
+          "status": "Best 8 advance"
+        },
+        {
+          "rank": 4,
+          "team": "Panama",
+          "espn_id": "2659",
+          "abbr": "PAN",
+          "country_code": "PAN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png",
+          "played": "2",
+          "wins": "2",
+          "draws": "-2",
+          "losses": "0",
+          "goals_for": "2",
+          "goals_against": "0",
+          "goal_diff": "0",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    }
+  ],
   "group_matches": [
     {
-      "name": "Groupe à déterminer",
+      "name": "Group A",
       "matches": [
         {
           "id": "760415",
@@ -45,6 +922,87 @@
           "city": "Guadalajara"
         },
         {
+          "id": "760438",
+          "date": "2026-06-18T16:00Z",
+          "home_team": "Czechia",
+          "away_team": "South Africa",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
+          "home_espn_id": "450",
+          "away_espn_id": "467",
+          "home_country_code": "CZE",
+          "away_country_code": "RSA",
+          "home_score": "1",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Mercedes-Benz Stadium",
+          "city": "Atlanta, Georgia"
+        },
+        {
+          "id": "760441",
+          "date": "2026-06-19T01:00Z",
+          "home_team": "Mexico",
+          "away_team": "South Korea",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
+          "home_espn_id": "203",
+          "away_espn_id": "451",
+          "home_country_code": "MEX",
+          "away_country_code": "KOR",
+          "home_score": "1",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Estadio Akron",
+          "city": "Guadalajara"
+        },
+        {
+          "id": "760467",
+          "date": "2026-06-25T01:00Z",
+          "home_team": "Czechia",
+          "away_team": "Mexico",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
+          "home_espn_id": "450",
+          "away_espn_id": "203",
+          "home_country_code": "CZE",
+          "away_country_code": "MEX",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Estadio Banorte",
+          "city": "Mexico City"
+        },
+        {
+          "id": "760466",
+          "date": "2026-06-25T01:00Z",
+          "home_team": "South Africa",
+          "away_team": "South Korea",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
+          "home_espn_id": "467",
+          "away_espn_id": "451",
+          "home_country_code": "RSA",
+          "away_country_code": "KOR",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Estadio BBVA",
+          "city": "Guadalupe"
+        }
+      ]
+    },
+    {
+      "name": "Group B",
+      "matches": [
+        {
           "id": "760416",
           "date": "2026-06-12T19:00Z",
           "home_team": "Canada",
@@ -64,25 +1022,6 @@
           "city": "Toronto"
         },
         {
-          "id": "760417",
-          "date": "2026-06-13T01:00Z",
-          "home_team": "United States",
-          "away_team": "Paraguay",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
-          "home_espn_id": "660",
-          "away_espn_id": "210",
-          "home_country_code": "USA",
-          "away_country_code": "PAR",
-          "home_score": "4",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "SoFi Stadium",
-          "city": "Inglewood, California"
-        },
-        {
           "id": "760420",
           "date": "2026-06-13T19:00Z",
           "home_team": "Qatar",
@@ -100,386 +1039,6 @@
           "completed": true,
           "venue": "Levi's Stadium",
           "city": "Santa Clara, California"
-        },
-        {
-          "id": "760419",
-          "date": "2026-06-13T22:00Z",
-          "home_team": "Brazil",
-          "away_team": "Morocco",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
-          "home_espn_id": "205",
-          "away_espn_id": "2869",
-          "home_country_code": "BRA",
-          "away_country_code": "MAR",
-          "home_score": "1",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "MetLife Stadium",
-          "city": "East Rutherford, New Jersey"
-        },
-        {
-          "id": "760418",
-          "date": "2026-06-14T01:00Z",
-          "home_team": "Haiti",
-          "away_team": "Scotland",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
-          "home_espn_id": "2654",
-          "away_espn_id": "580",
-          "home_country_code": "HAI",
-          "away_country_code": "SCO",
-          "home_score": "0",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Gillette Stadium",
-          "city": "Foxborough, Massachusetts"
-        },
-        {
-          "id": "760421",
-          "date": "2026-06-14T04:00Z",
-          "home_team": "Australia",
-          "away_team": "Türkiye",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
-          "home_espn_id": "628",
-          "away_espn_id": "465",
-          "home_country_code": "AUS",
-          "away_country_code": "TUR",
-          "home_score": "2",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "BC Place",
-          "city": "Vancouver"
-        },
-        {
-          "id": "760422",
-          "date": "2026-06-14T17:00Z",
-          "home_team": "Germany",
-          "away_team": "Curaçao",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
-          "home_espn_id": "481",
-          "away_espn_id": "11678",
-          "home_country_code": "GER",
-          "away_country_code": "CUW",
-          "home_score": "7",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "NRG Stadium",
-          "city": "Houston, Texas"
-        },
-        {
-          "id": "760425",
-          "date": "2026-06-14T20:00Z",
-          "home_team": "Netherlands",
-          "away_team": "Japan",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
-          "home_espn_id": "449",
-          "away_espn_id": "627",
-          "home_country_code": "NED",
-          "away_country_code": "JPN",
-          "home_score": "2",
-          "away_score": "2",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "AT&T Stadium",
-          "city": "Arlington, Texas"
-        },
-        {
-          "id": "760423",
-          "date": "2026-06-14T23:00Z",
-          "home_team": "Ivory Coast",
-          "away_team": "Ecuador",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
-          "home_espn_id": "4789",
-          "away_espn_id": "209",
-          "home_country_code": "CIV",
-          "away_country_code": "ECU",
-          "home_score": "1",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Lincoln Financial Field",
-          "city": "Philadelphia, Pennsylvania"
-        },
-        {
-          "id": "760424",
-          "date": "2026-06-15T02:00Z",
-          "home_team": "Sweden",
-          "away_team": "Tunisia",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
-          "home_espn_id": "466",
-          "away_espn_id": "659",
-          "home_country_code": "SWE",
-          "away_country_code": "TUN",
-          "home_score": "5",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Estadio BBVA",
-          "city": "Guadalupe"
-        },
-        {
-          "id": "760428",
-          "date": "2026-06-15T16:00Z",
-          "home_team": "Spain",
-          "away_team": "Cape Verde",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
-          "home_espn_id": "164",
-          "away_espn_id": "2597",
-          "home_country_code": "ESP",
-          "away_country_code": "CPV",
-          "home_score": "0",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
-        },
-        {
-          "id": "760426",
-          "date": "2026-06-15T19:00Z",
-          "home_team": "Belgium",
-          "away_team": "Egypt",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
-          "home_espn_id": "459",
-          "away_espn_id": "2620",
-          "home_country_code": "BEL",
-          "away_country_code": "EGY",
-          "home_score": "1",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Lumen Field",
-          "city": "Seattle, Washington"
-        },
-        {
-          "id": "760429",
-          "date": "2026-06-15T22:00Z",
-          "home_team": "Saudi Arabia",
-          "away_team": "Uruguay",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
-          "home_espn_id": "655",
-          "away_espn_id": "212",
-          "home_country_code": "KSA",
-          "away_country_code": "URU",
-          "home_score": "1",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Hard Rock Stadium",
-          "city": "Miami Gardens, Florida"
-        },
-        {
-          "id": "760427",
-          "date": "2026-06-16T01:00Z",
-          "home_team": "Iran",
-          "away_team": "New Zealand",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
-          "home_espn_id": "469",
-          "away_espn_id": "2666",
-          "home_country_code": "IRN",
-          "away_country_code": "NZL",
-          "home_score": "2",
-          "away_score": "2",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "SoFi Stadium",
-          "city": "Inglewood, California"
-        },
-        {
-          "id": "760432",
-          "date": "2026-06-16T19:00Z",
-          "home_team": "France",
-          "away_team": "Senegal",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
-          "home_espn_id": "478",
-          "away_espn_id": "654",
-          "home_country_code": "FRA",
-          "away_country_code": "SEN",
-          "home_score": "3",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "MetLife Stadium",
-          "city": "East Rutherford, New Jersey"
-        },
-        {
-          "id": "760430",
-          "date": "2026-06-16T22:00Z",
-          "home_team": "Iraq",
-          "away_team": "Norway",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
-          "home_espn_id": "4375",
-          "away_espn_id": "464",
-          "home_country_code": "IRQ",
-          "away_country_code": "NOR",
-          "home_score": "1",
-          "away_score": "4",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Gillette Stadium",
-          "city": "Foxborough, Massachusetts"
-        },
-        {
-          "id": "760433",
-          "date": "2026-06-17T01:00Z",
-          "home_team": "Argentina",
-          "away_team": "Algeria",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
-          "home_espn_id": "202",
-          "away_espn_id": "624",
-          "home_country_code": "ARG",
-          "away_country_code": "ALG",
-          "home_score": "3",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "GEHA Field at Arrowhead Stadium",
-          "city": "Kansas City, Missouri"
-        },
-        {
-          "id": "760431",
-          "date": "2026-06-17T04:00Z",
-          "home_team": "Austria",
-          "away_team": "Jordan",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
-          "home_espn_id": "474",
-          "away_espn_id": "2917",
-          "home_country_code": "AUT",
-          "away_country_code": "JOR",
-          "home_score": "3",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Levi's Stadium",
-          "city": "Santa Clara, California"
-        },
-        {
-          "id": "760435",
-          "date": "2026-06-17T17:00Z",
-          "home_team": "Portugal",
-          "away_team": "Congo DR",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
-          "home_espn_id": "482",
-          "away_espn_id": "2850",
-          "home_country_code": "POR",
-          "away_country_code": "COD",
-          "home_score": "1",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "NRG Stadium",
-          "city": "Houston, Texas"
-        },
-        {
-          "id": "760437",
-          "date": "2026-06-17T20:00Z",
-          "home_team": "England",
-          "away_team": "Croatia",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png",
-          "home_espn_id": "448",
-          "away_espn_id": "477",
-          "home_country_code": "ENG",
-          "away_country_code": "CRO",
-          "home_score": "4",
-          "away_score": "2",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "AT&T Stadium",
-          "city": "Arlington, Texas"
-        },
-        {
-          "id": "760434",
-          "date": "2026-06-17T23:00Z",
-          "home_team": "Ghana",
-          "away_team": "Panama",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png",
-          "home_espn_id": "4469",
-          "away_espn_id": "2659",
-          "home_country_code": "GHA",
-          "away_country_code": "PAN",
-          "home_score": "1",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "BMO Field",
-          "city": "Toronto"
-        },
-        {
-          "id": "760436",
-          "date": "2026-06-18T02:00Z",
-          "home_team": "Uzbekistan",
-          "away_team": "Colombia",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
-          "home_espn_id": "2570",
-          "away_espn_id": "208",
-          "home_country_code": "UZB",
-          "away_country_code": "COL",
-          "home_score": "1",
-          "away_score": "3",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Estadio Banorte",
-          "city": "Mexico City"
-        },
-        {
-          "id": "760438",
-          "date": "2026-06-18T16:00Z",
-          "home_team": "Czechia",
-          "away_team": "South Africa",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
-          "home_espn_id": "450",
-          "away_espn_id": "467",
-          "home_country_code": "CZE",
-          "away_country_code": "RSA",
-          "home_score": "1",
-          "away_score": "1",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
         },
         {
           "id": "760439",
@@ -520,42 +1079,85 @@
           "city": "Vancouver"
         },
         {
-          "id": "760441",
-          "date": "2026-06-19T01:00Z",
-          "home_team": "Mexico",
-          "away_team": "South Korea",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
-          "home_espn_id": "203",
-          "away_espn_id": "451",
-          "home_country_code": "MEX",
-          "away_country_code": "KOR",
-          "home_score": "1",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Estadio Akron",
-          "city": "Guadalajara"
-        },
-        {
-          "id": "760442",
-          "date": "2026-06-19T19:00Z",
-          "home_team": "United States",
-          "away_team": "Australia",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
-          "home_espn_id": "660",
-          "away_espn_id": "628",
-          "home_country_code": "USA",
-          "away_country_code": "AUS",
-          "home_score": "2",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
+          "id": "760462",
+          "date": "2026-06-24T19:00Z",
+          "home_team": "Bosnia-Herzegovina",
+          "away_team": "Qatar",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png",
+          "home_espn_id": "452",
+          "away_espn_id": "4398",
+          "home_country_code": "BIH",
+          "away_country_code": "QAT",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
           "venue": "Lumen Field",
           "city": "Seattle, Washington"
+        },
+        {
+          "id": "760463",
+          "date": "2026-06-24T19:00Z",
+          "home_team": "Switzerland",
+          "away_team": "Canada",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
+          "home_espn_id": "475",
+          "away_espn_id": "206",
+          "home_country_code": "SUI",
+          "away_country_code": "CAN",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "BC Place",
+          "city": "Vancouver"
+        }
+      ]
+    },
+    {
+      "name": "Group C",
+      "matches": [
+        {
+          "id": "760419",
+          "date": "2026-06-13T22:00Z",
+          "home_team": "Brazil",
+          "away_team": "Morocco",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
+          "home_espn_id": "205",
+          "away_espn_id": "2869",
+          "home_country_code": "BRA",
+          "away_country_code": "MAR",
+          "home_score": "1",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "MetLife Stadium",
+          "city": "East Rutherford, New Jersey"
+        },
+        {
+          "id": "760418",
+          "date": "2026-06-14T01:00Z",
+          "home_team": "Haiti",
+          "away_team": "Scotland",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
+          "home_espn_id": "2654",
+          "away_espn_id": "580",
+          "home_country_code": "HAI",
+          "away_country_code": "SCO",
+          "home_score": "0",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Gillette Stadium",
+          "city": "Foxborough, Massachusetts"
         },
         {
           "id": "760445",
@@ -596,6 +1198,106 @@
           "city": "Philadelphia, Pennsylvania"
         },
         {
+          "id": "760464",
+          "date": "2026-06-24T22:00Z",
+          "home_team": "Morocco",
+          "away_team": "Haiti",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
+          "home_espn_id": "2869",
+          "away_espn_id": "2654",
+          "home_country_code": "MAR",
+          "away_country_code": "HAI",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Mercedes-Benz Stadium",
+          "city": "Atlanta, Georgia"
+        },
+        {
+          "id": "760465",
+          "date": "2026-06-24T22:00Z",
+          "home_team": "Scotland",
+          "away_team": "Brazil",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
+          "home_espn_id": "580",
+          "away_espn_id": "205",
+          "home_country_code": "SCO",
+          "away_country_code": "BRA",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Hard Rock Stadium",
+          "city": "Miami Gardens, Florida"
+        }
+      ]
+    },
+    {
+      "name": "Group D",
+      "matches": [
+        {
+          "id": "760417",
+          "date": "2026-06-13T01:00Z",
+          "home_team": "United States",
+          "away_team": "Paraguay",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
+          "home_espn_id": "660",
+          "away_espn_id": "210",
+          "home_country_code": "USA",
+          "away_country_code": "PAR",
+          "home_score": "4",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "SoFi Stadium",
+          "city": "Inglewood, California"
+        },
+        {
+          "id": "760421",
+          "date": "2026-06-14T04:00Z",
+          "home_team": "Australia",
+          "away_team": "Türkiye",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
+          "home_espn_id": "628",
+          "away_espn_id": "465",
+          "home_country_code": "AUS",
+          "away_country_code": "TUR",
+          "home_score": "2",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "BC Place",
+          "city": "Vancouver"
+        },
+        {
+          "id": "760442",
+          "date": "2026-06-19T19:00Z",
+          "home_team": "United States",
+          "away_team": "Australia",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+          "home_espn_id": "660",
+          "away_espn_id": "628",
+          "home_country_code": "USA",
+          "away_country_code": "AUS",
+          "home_score": "2",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Lumen Field",
+          "city": "Seattle, Washington"
+        },
+        {
           "id": "760443",
           "date": "2026-06-20T03:00Z",
           "home_team": "Türkiye",
@@ -615,23 +1317,85 @@
           "city": "Santa Clara, California"
         },
         {
-          "id": "760447",
-          "date": "2026-06-20T17:00Z",
-          "home_team": "Netherlands",
-          "away_team": "Sweden",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
-          "home_espn_id": "449",
-          "away_espn_id": "466",
-          "home_country_code": "NED",
-          "away_country_code": "SWE",
-          "home_score": "5",
+          "id": "760469",
+          "date": "2026-06-26T02:00Z",
+          "home_team": "Paraguay",
+          "away_team": "Australia",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+          "home_espn_id": "210",
+          "away_espn_id": "628",
+          "home_country_code": "PAR",
+          "away_country_code": "AUS",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Levi's Stadium",
+          "city": "Santa Clara, California"
+        },
+        {
+          "id": "760470",
+          "date": "2026-06-26T02:00Z",
+          "home_team": "Türkiye",
+          "away_team": "United States",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+          "home_espn_id": "465",
+          "away_espn_id": "660",
+          "home_country_code": "TUR",
+          "away_country_code": "USA",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "SoFi Stadium",
+          "city": "Inglewood, California"
+        }
+      ]
+    },
+    {
+      "name": "Group E",
+      "matches": [
+        {
+          "id": "760422",
+          "date": "2026-06-14T17:00Z",
+          "home_team": "Germany",
+          "away_team": "Curaçao",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
+          "home_espn_id": "481",
+          "away_espn_id": "11678",
+          "home_country_code": "GER",
+          "away_country_code": "CUW",
+          "home_score": "7",
           "away_score": "1",
           "status": "Terminé",
           "status_state": "post",
           "completed": true,
           "venue": "NRG Stadium",
           "city": "Houston, Texas"
+        },
+        {
+          "id": "760423",
+          "date": "2026-06-14T23:00Z",
+          "home_team": "Ivory Coast",
+          "away_team": "Ecuador",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
+          "home_espn_id": "4789",
+          "away_espn_id": "209",
+          "home_country_code": "CIV",
+          "away_country_code": "ECU",
+          "home_score": "1",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Lincoln Financial Field",
+          "city": "Philadelphia, Pennsylvania"
         },
         {
           "id": "760448",
@@ -672,6 +1436,106 @@
           "city": "Kansas City, Missouri"
         },
         {
+          "id": "760473",
+          "date": "2026-06-25T20:00Z",
+          "home_team": "Curaçao",
+          "away_team": "Ivory Coast",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+          "home_espn_id": "11678",
+          "away_espn_id": "4789",
+          "home_country_code": "CUW",
+          "away_country_code": "CIV",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Lincoln Financial Field",
+          "city": "Philadelphia, Pennsylvania"
+        },
+        {
+          "id": "760468",
+          "date": "2026-06-25T20:00Z",
+          "home_team": "Ecuador",
+          "away_team": "Germany",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
+          "home_espn_id": "209",
+          "away_espn_id": "481",
+          "home_country_code": "ECU",
+          "away_country_code": "GER",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "MetLife Stadium",
+          "city": "East Rutherford, New Jersey"
+        }
+      ]
+    },
+    {
+      "name": "Group F",
+      "matches": [
+        {
+          "id": "760425",
+          "date": "2026-06-14T20:00Z",
+          "home_team": "Netherlands",
+          "away_team": "Japan",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
+          "home_espn_id": "449",
+          "away_espn_id": "627",
+          "home_country_code": "NED",
+          "away_country_code": "JPN",
+          "home_score": "2",
+          "away_score": "2",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "AT&T Stadium",
+          "city": "Arlington, Texas"
+        },
+        {
+          "id": "760424",
+          "date": "2026-06-15T02:00Z",
+          "home_team": "Sweden",
+          "away_team": "Tunisia",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
+          "home_espn_id": "466",
+          "away_espn_id": "659",
+          "home_country_code": "SWE",
+          "away_country_code": "TUN",
+          "home_score": "5",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Estadio BBVA",
+          "city": "Guadalupe"
+        },
+        {
+          "id": "760447",
+          "date": "2026-06-20T17:00Z",
+          "home_team": "Netherlands",
+          "away_team": "Sweden",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
+          "home_espn_id": "449",
+          "away_espn_id": "466",
+          "home_country_code": "NED",
+          "away_country_code": "SWE",
+          "home_score": "5",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "NRG Stadium",
+          "city": "Houston, Texas"
+        },
+        {
           "id": "760449",
           "date": "2026-06-21T04:00Z",
           "home_team": "Tunisia",
@@ -691,23 +1555,85 @@
           "city": "Guadalupe"
         },
         {
-          "id": "760453",
-          "date": "2026-06-21T16:00Z",
-          "home_team": "Spain",
-          "away_team": "Saudi Arabia",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
-          "home_espn_id": "164",
-          "away_espn_id": "655",
-          "home_country_code": "ESP",
-          "away_country_code": "KSA",
-          "home_score": "4",
-          "away_score": "0",
+          "id": "760471",
+          "date": "2026-06-25T23:00Z",
+          "home_team": "Japan",
+          "away_team": "Sweden",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
+          "home_espn_id": "627",
+          "away_espn_id": "466",
+          "home_country_code": "JPN",
+          "away_country_code": "SWE",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "AT&T Stadium",
+          "city": "Arlington, Texas"
+        },
+        {
+          "id": "760472",
+          "date": "2026-06-25T23:00Z",
+          "home_team": "Tunisia",
+          "away_team": "Netherlands",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
+          "home_espn_id": "659",
+          "away_espn_id": "449",
+          "home_country_code": "TUN",
+          "away_country_code": "NED",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "GEHA Field at Arrowhead Stadium",
+          "city": "Kansas City, Missouri"
+        }
+      ]
+    },
+    {
+      "name": "Group G",
+      "matches": [
+        {
+          "id": "760426",
+          "date": "2026-06-15T19:00Z",
+          "home_team": "Belgium",
+          "away_team": "Egypt",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+          "home_espn_id": "459",
+          "away_espn_id": "2620",
+          "home_country_code": "BEL",
+          "away_country_code": "EGY",
+          "home_score": "1",
+          "away_score": "1",
           "status": "Terminé",
           "status_state": "post",
           "completed": true,
-          "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
+          "venue": "Lumen Field",
+          "city": "Seattle, Washington"
+        },
+        {
+          "id": "760427",
+          "date": "2026-06-16T01:00Z",
+          "home_team": "Iran",
+          "away_team": "New Zealand",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
+          "home_espn_id": "469",
+          "away_espn_id": "2666",
+          "home_country_code": "IRN",
+          "away_country_code": "NZL",
+          "home_score": "2",
+          "away_score": "2",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "SoFi Stadium",
+          "city": "Inglewood, California"
         },
         {
           "id": "760451",
@@ -729,25 +1655,6 @@
           "city": "Inglewood, California"
         },
         {
-          "id": "760450",
-          "date": "2026-06-21T22:00Z",
-          "home_team": "Uruguay",
-          "away_team": "Cape Verde",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
-          "home_espn_id": "212",
-          "away_espn_id": "2597",
-          "home_country_code": "URU",
-          "away_country_code": "CPV",
-          "home_score": "2",
-          "away_score": "2",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Hard Rock Stadium",
-          "city": "Miami Gardens, Florida"
-        },
-        {
           "id": "760452",
           "date": "2026-06-22T01:00Z",
           "home_team": "New Zealand",
@@ -767,23 +1674,204 @@
           "city": "Vancouver"
         },
         {
-          "id": "760456",
-          "date": "2026-06-22T17:00Z",
-          "home_team": "Argentina",
-          "away_team": "Austria",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
-          "home_espn_id": "202",
-          "away_espn_id": "474",
-          "home_country_code": "ARG",
-          "away_country_code": "AUT",
-          "home_score": "2",
+          "id": "760476",
+          "date": "2026-06-27T03:00Z",
+          "home_team": "Egypt",
+          "away_team": "Iran",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
+          "home_espn_id": "2620",
+          "away_espn_id": "469",
+          "home_country_code": "EGY",
+          "away_country_code": "IRN",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Lumen Field",
+          "city": "Seattle, Washington"
+        },
+        {
+          "id": "760477",
+          "date": "2026-06-27T03:00Z",
+          "home_team": "New Zealand",
+          "away_team": "Belgium",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
+          "home_espn_id": "2666",
+          "away_espn_id": "459",
+          "home_country_code": "NZL",
+          "away_country_code": "BEL",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "BC Place",
+          "city": "Vancouver"
+        }
+      ]
+    },
+    {
+      "name": "Group H",
+      "matches": [
+        {
+          "id": "760428",
+          "date": "2026-06-15T16:00Z",
+          "home_team": "Spain",
+          "away_team": "Cape Verde",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+          "home_espn_id": "164",
+          "away_espn_id": "2597",
+          "home_country_code": "ESP",
+          "away_country_code": "CPV",
+          "home_score": "0",
           "away_score": "0",
           "status": "Terminé",
           "status_state": "post",
           "completed": true,
-          "venue": "AT&T Stadium",
-          "city": "Arlington, Texas"
+          "venue": "Mercedes-Benz Stadium",
+          "city": "Atlanta, Georgia"
+        },
+        {
+          "id": "760429",
+          "date": "2026-06-15T22:00Z",
+          "home_team": "Saudi Arabia",
+          "away_team": "Uruguay",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
+          "home_espn_id": "655",
+          "away_espn_id": "212",
+          "home_country_code": "KSA",
+          "away_country_code": "URU",
+          "home_score": "1",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Hard Rock Stadium",
+          "city": "Miami Gardens, Florida"
+        },
+        {
+          "id": "760453",
+          "date": "2026-06-21T16:00Z",
+          "home_team": "Spain",
+          "away_team": "Saudi Arabia",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+          "home_espn_id": "164",
+          "away_espn_id": "655",
+          "home_country_code": "ESP",
+          "away_country_code": "KSA",
+          "home_score": "4",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Mercedes-Benz Stadium",
+          "city": "Atlanta, Georgia"
+        },
+        {
+          "id": "760450",
+          "date": "2026-06-21T22:00Z",
+          "home_team": "Uruguay",
+          "away_team": "Cape Verde",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+          "home_espn_id": "212",
+          "away_espn_id": "2597",
+          "home_country_code": "URU",
+          "away_country_code": "CPV",
+          "home_score": "2",
+          "away_score": "2",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Hard Rock Stadium",
+          "city": "Miami Gardens, Florida"
+        },
+        {
+          "id": "760478",
+          "date": "2026-06-27T00:00Z",
+          "home_team": "Cape Verde",
+          "away_team": "Saudi Arabia",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+          "home_espn_id": "2597",
+          "away_espn_id": "655",
+          "home_country_code": "CPV",
+          "away_country_code": "KSA",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "NRG Stadium",
+          "city": "Houston, Texas"
+        },
+        {
+          "id": "760479",
+          "date": "2026-06-27T00:00Z",
+          "home_team": "Uruguay",
+          "away_team": "Spain",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+          "home_espn_id": "212",
+          "away_espn_id": "164",
+          "home_country_code": "URU",
+          "away_country_code": "ESP",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Estadio Akron",
+          "city": "Guadalajara"
+        }
+      ]
+    },
+    {
+      "name": "Group I",
+      "matches": [
+        {
+          "id": "760432",
+          "date": "2026-06-16T19:00Z",
+          "home_team": "France",
+          "away_team": "Senegal",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+          "home_espn_id": "478",
+          "away_espn_id": "654",
+          "home_country_code": "FRA",
+          "away_country_code": "SEN",
+          "home_score": "3",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "MetLife Stadium",
+          "city": "East Rutherford, New Jersey"
+        },
+        {
+          "id": "760430",
+          "date": "2026-06-16T22:00Z",
+          "home_team": "Iraq",
+          "away_team": "Norway",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
+          "home_espn_id": "4375",
+          "away_espn_id": "464",
+          "home_country_code": "IRQ",
+          "away_country_code": "NOR",
+          "home_score": "1",
+          "away_score": "4",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Gillette Stadium",
+          "city": "Foxborough, Massachusetts"
         },
         {
           "id": "760457",
@@ -824,6 +1912,106 @@
           "city": "East Rutherford, New Jersey"
         },
         {
+          "id": "760475",
+          "date": "2026-06-26T19:00Z",
+          "home_team": "Norway",
+          "away_team": "France",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
+          "home_espn_id": "464",
+          "away_espn_id": "478",
+          "home_country_code": "NOR",
+          "away_country_code": "FRA",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Gillette Stadium",
+          "city": "Foxborough, Massachusetts"
+        },
+        {
+          "id": "760474",
+          "date": "2026-06-26T19:00Z",
+          "home_team": "Senegal",
+          "away_team": "Iraq",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+          "home_espn_id": "654",
+          "away_espn_id": "4375",
+          "home_country_code": "SEN",
+          "away_country_code": "IRQ",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "BMO Field",
+          "city": "Toronto"
+        }
+      ]
+    },
+    {
+      "name": "Group J",
+      "matches": [
+        {
+          "id": "760433",
+          "date": "2026-06-17T01:00Z",
+          "home_team": "Argentina",
+          "away_team": "Algeria",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
+          "home_espn_id": "202",
+          "away_espn_id": "624",
+          "home_country_code": "ARG",
+          "away_country_code": "ALG",
+          "home_score": "3",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "GEHA Field at Arrowhead Stadium",
+          "city": "Kansas City, Missouri"
+        },
+        {
+          "id": "760431",
+          "date": "2026-06-17T04:00Z",
+          "home_team": "Austria",
+          "away_team": "Jordan",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
+          "home_espn_id": "474",
+          "away_espn_id": "2917",
+          "home_country_code": "AUT",
+          "away_country_code": "JOR",
+          "home_score": "3",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Levi's Stadium",
+          "city": "Santa Clara, California"
+        },
+        {
+          "id": "760456",
+          "date": "2026-06-22T17:00Z",
+          "home_team": "Argentina",
+          "away_team": "Austria",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
+          "home_espn_id": "202",
+          "away_espn_id": "474",
+          "home_country_code": "ARG",
+          "away_country_code": "AUT",
+          "home_score": "2",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "AT&T Stadium",
+          "city": "Arlington, Texas"
+        },
+        {
           "id": "760455",
           "date": "2026-06-23T03:00Z",
           "home_team": "Jordan",
@@ -843,6 +2031,87 @@
           "city": "Santa Clara, California"
         },
         {
+          "id": "760484",
+          "date": "2026-06-28T02:00Z",
+          "home_team": "Algeria",
+          "away_team": "Austria",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
+          "home_espn_id": "624",
+          "away_espn_id": "474",
+          "home_country_code": "ALG",
+          "away_country_code": "AUT",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "GEHA Field at Arrowhead Stadium",
+          "city": "Kansas City, Missouri"
+        },
+        {
+          "id": "760483",
+          "date": "2026-06-28T02:00Z",
+          "home_team": "Jordan",
+          "away_team": "Argentina",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+          "home_espn_id": "2917",
+          "away_espn_id": "202",
+          "home_country_code": "JOR",
+          "away_country_code": "ARG",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "AT&T Stadium",
+          "city": "Arlington, Texas"
+        }
+      ]
+    },
+    {
+      "name": "Group K",
+      "matches": [
+        {
+          "id": "760435",
+          "date": "2026-06-17T17:00Z",
+          "home_team": "Portugal",
+          "away_team": "Congo DR",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
+          "home_espn_id": "482",
+          "away_espn_id": "2850",
+          "home_country_code": "POR",
+          "away_country_code": "COD",
+          "home_score": "1",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "NRG Stadium",
+          "city": "Houston, Texas"
+        },
+        {
+          "id": "760436",
+          "date": "2026-06-18T02:00Z",
+          "home_team": "Uzbekistan",
+          "away_team": "Colombia",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
+          "home_espn_id": "2570",
+          "away_espn_id": "208",
+          "home_country_code": "UZB",
+          "away_country_code": "COL",
+          "home_score": "1",
+          "away_score": "3",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Estadio Banorte",
+          "city": "Mexico City"
+        },
+        {
           "id": "760461",
           "date": "2026-06-23T17:00Z",
           "home_team": "Portugal",
@@ -860,6 +2129,106 @@
           "completed": true,
           "venue": "NRG Stadium",
           "city": "Houston, Texas"
+        },
+        {
+          "id": "760459",
+          "date": "2026-06-24T02:00Z",
+          "home_team": "Colombia",
+          "away_team": "Congo DR",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
+          "home_espn_id": "208",
+          "away_espn_id": "2850",
+          "home_country_code": "COL",
+          "away_country_code": "COD",
+          "home_score": "1",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "Estadio Akron",
+          "city": "Guadalajara"
+        },
+        {
+          "id": "760481",
+          "date": "2026-06-27T23:30Z",
+          "home_team": "Colombia",
+          "away_team": "Portugal",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
+          "home_espn_id": "208",
+          "away_espn_id": "482",
+          "home_country_code": "COL",
+          "away_country_code": "POR",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Hard Rock Stadium",
+          "city": "Miami Gardens, Florida"
+        },
+        {
+          "id": "760482",
+          "date": "2026-06-27T23:30Z",
+          "home_team": "Congo DR",
+          "away_team": "Uzbekistan",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
+          "home_espn_id": "2850",
+          "away_espn_id": "2570",
+          "home_country_code": "COD",
+          "away_country_code": "UZB",
+          "home_score": "",
+          "away_score": "",
+          "status": "À venir",
+          "status_state": "pre",
+          "completed": false,
+          "venue": "Mercedes-Benz Stadium",
+          "city": "Atlanta, Georgia"
+        }
+      ]
+    },
+    {
+      "name": "Group L",
+      "matches": [
+        {
+          "id": "760437",
+          "date": "2026-06-17T20:00Z",
+          "home_team": "England",
+          "away_team": "Croatia",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png",
+          "home_espn_id": "448",
+          "away_espn_id": "477",
+          "home_country_code": "ENG",
+          "away_country_code": "CRO",
+          "home_score": "4",
+          "away_score": "2",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "AT&T Stadium",
+          "city": "Arlington, Texas"
+        },
+        {
+          "id": "760434",
+          "date": "2026-06-17T23:00Z",
+          "home_team": "Ghana",
+          "away_team": "Panama",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png",
+          "home_espn_id": "4469",
+          "away_espn_id": "2659",
+          "home_country_code": "GHA",
+          "away_country_code": "PAN",
+          "home_score": "1",
+          "away_score": "0",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
+          "venue": "BMO Field",
+          "city": "Toronto"
         },
         {
           "id": "760458",
@@ -900,367 +2269,6 @@
           "city": "Toronto"
         },
         {
-          "id": "760459",
-          "date": "2026-06-24T02:00Z",
-          "home_team": "Colombia",
-          "away_team": "Congo DR",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
-          "home_espn_id": "208",
-          "away_espn_id": "2850",
-          "home_country_code": "COL",
-          "away_country_code": "COD",
-          "home_score": "1",
-          "away_score": "0",
-          "status": "Terminé",
-          "status_state": "post",
-          "completed": true,
-          "venue": "Estadio Akron",
-          "city": "Guadalajara"
-        },
-        {
-          "id": "760462",
-          "date": "2026-06-24T19:00Z",
-          "home_team": "Bosnia-Herzegovina",
-          "away_team": "Qatar",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png",
-          "home_espn_id": "452",
-          "away_espn_id": "4398",
-          "home_country_code": "BIH",
-          "away_country_code": "QAT",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Lumen Field",
-          "city": "Seattle, Washington"
-        },
-        {
-          "id": "760463",
-          "date": "2026-06-24T19:00Z",
-          "home_team": "Switzerland",
-          "away_team": "Canada",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
-          "home_espn_id": "475",
-          "away_espn_id": "206",
-          "home_country_code": "SUI",
-          "away_country_code": "CAN",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "BC Place",
-          "city": "Vancouver"
-        },
-        {
-          "id": "760464",
-          "date": "2026-06-24T22:00Z",
-          "home_team": "Morocco",
-          "away_team": "Haiti",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
-          "home_espn_id": "2869",
-          "away_espn_id": "2654",
-          "home_country_code": "MAR",
-          "away_country_code": "HAI",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
-        },
-        {
-          "id": "760465",
-          "date": "2026-06-24T22:00Z",
-          "home_team": "Scotland",
-          "away_team": "Brazil",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
-          "home_espn_id": "580",
-          "away_espn_id": "205",
-          "home_country_code": "SCO",
-          "away_country_code": "BRA",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Hard Rock Stadium",
-          "city": "Miami Gardens, Florida"
-        },
-        {
-          "id": "760467",
-          "date": "2026-06-25T01:00Z",
-          "home_team": "Czechia",
-          "away_team": "Mexico",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
-          "home_espn_id": "450",
-          "away_espn_id": "203",
-          "home_country_code": "CZE",
-          "away_country_code": "MEX",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Estadio Banorte",
-          "city": "Mexico City"
-        },
-        {
-          "id": "760466",
-          "date": "2026-06-25T01:00Z",
-          "home_team": "South Africa",
-          "away_team": "South Korea",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
-          "home_espn_id": "467",
-          "away_espn_id": "451",
-          "home_country_code": "RSA",
-          "away_country_code": "KOR",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Estadio BBVA",
-          "city": "Guadalupe"
-        },
-        {
-          "id": "760473",
-          "date": "2026-06-25T20:00Z",
-          "home_team": "Curaçao",
-          "away_team": "Ivory Coast",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
-          "home_espn_id": "11678",
-          "away_espn_id": "4789",
-          "home_country_code": "CUW",
-          "away_country_code": "CIV",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Lincoln Financial Field",
-          "city": "Philadelphia, Pennsylvania"
-        },
-        {
-          "id": "760468",
-          "date": "2026-06-25T20:00Z",
-          "home_team": "Ecuador",
-          "away_team": "Germany",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
-          "home_espn_id": "209",
-          "away_espn_id": "481",
-          "home_country_code": "ECU",
-          "away_country_code": "GER",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "MetLife Stadium",
-          "city": "East Rutherford, New Jersey"
-        },
-        {
-          "id": "760471",
-          "date": "2026-06-25T23:00Z",
-          "home_team": "Japan",
-          "away_team": "Sweden",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
-          "home_espn_id": "627",
-          "away_espn_id": "466",
-          "home_country_code": "JPN",
-          "away_country_code": "SWE",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "AT&T Stadium",
-          "city": "Arlington, Texas"
-        },
-        {
-          "id": "760472",
-          "date": "2026-06-25T23:00Z",
-          "home_team": "Tunisia",
-          "away_team": "Netherlands",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
-          "home_espn_id": "659",
-          "away_espn_id": "449",
-          "home_country_code": "TUN",
-          "away_country_code": "NED",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "GEHA Field at Arrowhead Stadium",
-          "city": "Kansas City, Missouri"
-        },
-        {
-          "id": "760469",
-          "date": "2026-06-26T02:00Z",
-          "home_team": "Paraguay",
-          "away_team": "Australia",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
-          "home_espn_id": "210",
-          "away_espn_id": "628",
-          "home_country_code": "PAR",
-          "away_country_code": "AUS",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Levi's Stadium",
-          "city": "Santa Clara, California"
-        },
-        {
-          "id": "760470",
-          "date": "2026-06-26T02:00Z",
-          "home_team": "Türkiye",
-          "away_team": "United States",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
-          "home_espn_id": "465",
-          "away_espn_id": "660",
-          "home_country_code": "TUR",
-          "away_country_code": "USA",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "SoFi Stadium",
-          "city": "Inglewood, California"
-        },
-        {
-          "id": "760475",
-          "date": "2026-06-26T19:00Z",
-          "home_team": "Norway",
-          "away_team": "France",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
-          "home_espn_id": "464",
-          "away_espn_id": "478",
-          "home_country_code": "NOR",
-          "away_country_code": "FRA",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Gillette Stadium",
-          "city": "Foxborough, Massachusetts"
-        },
-        {
-          "id": "760474",
-          "date": "2026-06-26T19:00Z",
-          "home_team": "Senegal",
-          "away_team": "Iraq",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
-          "home_espn_id": "654",
-          "away_espn_id": "4375",
-          "home_country_code": "SEN",
-          "away_country_code": "IRQ",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "BMO Field",
-          "city": "Toronto"
-        },
-        {
-          "id": "760478",
-          "date": "2026-06-27T00:00Z",
-          "home_team": "Cape Verde",
-          "away_team": "Saudi Arabia",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
-          "home_espn_id": "2597",
-          "away_espn_id": "655",
-          "home_country_code": "CPV",
-          "away_country_code": "KSA",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "NRG Stadium",
-          "city": "Houston, Texas"
-        },
-        {
-          "id": "760479",
-          "date": "2026-06-27T00:00Z",
-          "home_team": "Uruguay",
-          "away_team": "Spain",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
-          "home_espn_id": "212",
-          "away_espn_id": "164",
-          "home_country_code": "URU",
-          "away_country_code": "ESP",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Estadio Akron",
-          "city": "Guadalajara"
-        },
-        {
-          "id": "760476",
-          "date": "2026-06-27T03:00Z",
-          "home_team": "Egypt",
-          "away_team": "Iran",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
-          "home_espn_id": "2620",
-          "away_espn_id": "469",
-          "home_country_code": "EGY",
-          "away_country_code": "IRN",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Lumen Field",
-          "city": "Seattle, Washington"
-        },
-        {
-          "id": "760477",
-          "date": "2026-06-27T03:00Z",
-          "home_team": "New Zealand",
-          "away_team": "Belgium",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
-          "home_espn_id": "2666",
-          "away_espn_id": "459",
-          "home_country_code": "NZL",
-          "away_country_code": "BEL",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "BC Place",
-          "city": "Vancouver"
-        },
-        {
           "id": "760480",
           "date": "2026-06-27T21:00Z",
           "home_team": "Croatia",
@@ -1297,82 +2305,6 @@
           "completed": false,
           "venue": "MetLife Stadium",
           "city": "East Rutherford, New Jersey"
-        },
-        {
-          "id": "760481",
-          "date": "2026-06-27T23:30Z",
-          "home_team": "Colombia",
-          "away_team": "Portugal",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
-          "home_espn_id": "208",
-          "away_espn_id": "482",
-          "home_country_code": "COL",
-          "away_country_code": "POR",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Hard Rock Stadium",
-          "city": "Miami Gardens, Florida"
-        },
-        {
-          "id": "760482",
-          "date": "2026-06-27T23:30Z",
-          "home_team": "Congo DR",
-          "away_team": "Uzbekistan",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
-          "home_espn_id": "2850",
-          "away_espn_id": "2570",
-          "home_country_code": "COD",
-          "away_country_code": "UZB",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
-        },
-        {
-          "id": "760484",
-          "date": "2026-06-28T02:00Z",
-          "home_team": "Algeria",
-          "away_team": "Austria",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
-          "home_espn_id": "624",
-          "away_espn_id": "474",
-          "home_country_code": "ALG",
-          "away_country_code": "AUT",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "GEHA Field at Arrowhead Stadium",
-          "city": "Kansas City, Missouri"
-        },
-        {
-          "id": "760483",
-          "date": "2026-06-28T02:00Z",
-          "home_team": "Jordan",
-          "away_team": "Argentina",
-          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
-          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
-          "home_espn_id": "2917",
-          "away_espn_id": "202",
-          "home_country_code": "JOR",
-          "away_country_code": "ARG",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
-          "venue": "AT&T Stadium",
-          "city": "Arlington, Texas"
         }
       ]
     }
@@ -2334,7 +3266,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Czechia": {
@@ -2900,48 +3833,68 @@
   },
   "top_scorers": [
     {
+      "rank": 1,
       "name": "Lionel Messi",
       "team": "Argentina",
-      "team_id": 6706,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6706.png",
       "country_code": "",
       "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/45843.png",
       "country_flag_url": "",
       "all_time_rank": "",
-      "played": "",
-      "value": 5,
-      "rank": 1,
+      "played": "2",
+      "value": "5",
       "country": ""
     },
     {
-      "name": "Kylian Mbappé",
-      "team": "France",
-      "team_id": 6723,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6723.png",
+      "rank": 2,
+      "name": "Erling Haaland",
+      "team": "Norway",
       "country_code": "",
       "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/253989.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "2",
+      "value": "4",
+      "country": ""
+    },
+    {
+      "rank": 3,
+      "name": "Kylian Mbappé",
+      "team": "France",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/231388.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 4,
-      "rank": 2,
+      "played": "2",
+      "value": "4",
       "country": "France"
     },
     {
-      "name": "Erling Haaland",
-      "team": "Norway",
-      "team_id": 8492,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8492.png",
+      "rank": 4,
+      "name": "Jonathan David",
+      "team": "Canada",
       "country_code": "",
       "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/273499.png",
       "country_flag_url": "",
       "all_time_rank": "",
-      "played": "",
-      "value": 4,
-      "rank": 3,
+      "played": "2",
+      "value": "3",
+      "country": ""
+    },
+    {
+      "rank": 5,
+      "name": "Deniz Undav",
+      "team": "Germany",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/273300.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "2",
+      "value": "3",
       "country": ""
     }
   ],
@@ -3107,6 +4060,76 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "France-Norvège: comment s’est passé le seul match des Bleus où Guy Stéphan a remplacé Didier Deschamps sur le banc?",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:56:00+00:00",
+      "summary": "Endeuillé par le décès de sa mère, Didier Deschamps va quitter la Coupe du monde 2026 durant quelques jours pour assister à ses obsèques. En son absence, son adjoint Guy Stéphan sera sur le banc face à la…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-comment-s-est-passe-le-seul-match-des-bleus-ou-guy-stephan-a-remplace-didier-deschamps-sur-le-banc_AV-202606240356.html"
+    },
+    {
+      "title": "Coupe du monde 2026: France-Suède, Pays-Bas-Maroc... Le tableau des 16es de finale (si les classements ne bougent pas)",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:43:51+00:00",
+      "summary": "Un match contre la Suède pour la France et un très alléchant Pays-Bas-Maroc: voilà à quoi ressembleraient les 16es de finale de la Coupe du monde 2026 si les classements restaient figés. Mais il reste encore…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-france-suede-pays-bas-maroc-le-tableau-des-16es-de-finale-si-les-classements-ne-bougent-pas_AV-202606240347.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Chelsea double l'Inter Milan pour Marco Palestra, 55 millions d'euros sur la table",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:11:08+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Vous n'êtes pas seuls\", le message de soutien de Kylian Mbappé à Didier Deschamps, endeuillé par la mort de sa mère",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:01:38+00:00",
+      "summary": "Kylian Mbappé, attaquant et capitaine de l'équipe de France, a adressé un message de soutien sur Instagram à son sélectionneur Didier Deschamps, endeuillé par le décès de sa maman. Le technicien sera absent…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vous-n-etes-pas-seuls-le-message-de-soutien-de-kylian-mbappe-a-didier-deschamps-endeuille-par-la-mort-de-sa-mere_AV-202606240314.html"
+    },
+    {
+      "title": "Didier Deschamps: l'art de bien commencer une coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:51:42+00:00",
+      "summary": "En s’imposant face à l’Irak (3-0), l’équipe de France a remporté ses deux premiers matchs de la Coupe du monde 2026. Une performance qui se répète désormais depuis quatre éditions consécutives.",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-l-art-de-bien-commencer-une-coupe-du-monde_AN-202606240299.html"
+    },
+    {
+      "title": "\"Ce sont des petites étoiles\", la ministre des Sports explique ses cadeaux porte-bonheur offerts aux Bleus avant la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:41:12+00:00",
+      "summary": "Marina Ferrari est revenue sur le cadeau qu’elle a offert aux joueurs de l’équipe de France afin de leur porter chance avant leur départ en Amérique pour disputer le Mondial 2026. La ministre des Sports…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-sont-des-petites-etoiles-la-ministre-des-sports-explique-ses-cadeaux-porte-bonheur-offerts-aux-bleus-avant-la-coupe-du-monde-2026_AV-202606240287.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Lionel Messi n'est plus le meilleur joueur, Michael Olise est le plus créatif",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:26:21+00:00",
+      "summary": "Lionel Messi, pourtant auteur d'un doublé contre l'Autriche, n'est plus le meilleur joueur de la Coupe du monde 2026 au power ranking de la Fifa. L'Allemand Deniz Undav l'a détrôné, alors que Michael Olise…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-lionel-messi-n-est-plus-le-meilleur-joueur-michael-olise-est-le-plus-creatif_AV-202606240274.html"
+    },
+    {
+      "title": "Coupe du monde 2026: main sur la bouche, bras levé, tacle à la gorge... Tout ce que vous avez raté dans la nuit de mardi à mercredi",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:01:04+00:00",
+      "summary": "La nuit de mardi à mercredi marquait la fin de la deuxième journée de cette Coupe du monde 2026. RMC Sport fait le point sur tout ce que vous avez manqué en dormant à poings fermés au lieu de rester éveillé…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-main-sur-la-bouche-bras-leve-tacle-a-la-gorge-tout-ce-que-vous-avez-rate-dans-la-nuit-de-mardi-a-mercredi_AV-202606240239.html"
+    },
+    {
+      "title": "\"C'est la Coupe du monde US, pop-corn, hot-dogs\", l'édition 2026 est-elle une réussite ou un show pour \"footix\"?",
+      "source": "RMC Sport",
+      "date": "2026-06-24T05:08:55+00:00",
+      "summary": "Des stars qui cartonnent, des stades pleins mais pas encore de chocs au sommet, cette Coupe du monde 2026 divise l'After Foot, en partie enthousiasmée par le spectacle à l'américaine proposé mais encore sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/c-est-la-coupe-du-monde-us-pop-corn-hot-dogs-l-edition-2026-est-elle-une-reussite-ou-un-show-pour-footix_AV-202606240185.html"
+    },
+    {
+      "title": "Coupe du monde 2026: gros coup dur pour le Sénégal, Édouard Mendy forfait pour le match crucial contre l'Irak",
+      "source": "RMC Sport",
+      "date": "2026-06-24T04:49:33+00:00",
+      "summary": "Le Sénégal devra se passer de son gardien titulaire Édouard Mendy lors de son match couperet face à l'Irak. Les Lions de la Teranga doivent absolument l'emporter largement pour voir les 16es de finale.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/gros-coup-dur-pour-le-senegal-edouard-mendy-forfait-pour-le-match-crucial-contre-l-irak_AV-202606240161.html"
+    },
+    {
       "title": "Colombie-RD Congo: le résumé vidéo avec les images du but colombien et des parades congolaises",
       "source": "RMC Sport",
       "date": "2026-06-24T04:09:38+00:00",
@@ -3182,92 +4205,50 @@
       "date": "2026-06-23T21:55:12+00:00",
       "summary": "Munir El Kajoui, coéquipier en sélection de Achraf Hakimi, assure que la sélection marocaine soutient le joueur du PSG qui sera jugé pour viol en France.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-joueurs-du-maroc-au-soutien-d-achraf-hakimi-prochainement-juge-pour-viol-en-france_AD-202606231008.html"
-    },
-    {
-      "title": "Coupe du monde 2026: l'équipe de France au soutien de Didier Deschamps, qui a perdu sa maman",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:41:03+00:00",
-      "summary": "La triste nouvelle de la disparition de la mère de Didier Deschamps est tombée dans la matinée ce mardi à Boston, et a profondément marqué le groupe France. Qui s'est efforcé d'apporter son soutien au…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-equipe-de-france-au-soutien-de-didier-deschamps-qui-a-perdu-sa-maman_AV-202606231004.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il est de retour\", la presse portugaise retourne sa veste après le doublé de Ronaldo contre l’Ouzbékistan",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:28:49+00:00",
-      "summary": "Après avoir sorti les griffes à l’issue du match nul face à la RD Congo, la presse portugaise a salué la réaction de la Seleçao après la large victoire face à l’Ouzbékistan ce mardi (5-0). Auteur d’un doublé,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-de-retour-la-presse-portugaise-retourne-sa-veste-apres-le-double-de-ronaldo-contre-l-ouzbekistan_AV-202606230973.html"
-    },
-    {
-      "title": "Coupe du monde 2026: la réaction agacée de Cristiano Ronaldo à une question sur Messi après son doublé lors de Portugal-Ouzbékistan",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:10:59+00:00",
-      "summary": "Cristiano Ronaldo a inscrit un doublé lors du deuxième match du Portugal de cette Coupe du monde face à l'Ouzbékistan (5-0). Il a réagi après le match, souhaitant faire taire les critiques et les comparaisons…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-reaction-agacee-de-cristiano-ronaldo-a-une-question-sur-messi-apres-son-double-lors-de-portugal-ouzbekistan_AV-202606230965.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Didier Deschamps, endeuillé, ne sera pas présent pour Norvège-France",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:40:01+00:00",
-      "summary": "La FFF fait savoir ce mardi, à trois jours du match Norvège-France à la Coupe du monde 2026, que le sélectionneur Didier Deschamps sera absent pour cette rencontre. Le technicien, qui a eu la douleur de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-didier-deschamps-endeuille-ne-sera-pas-present-pour-norvege-france_AN-202606230947.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Donald Trump et Gianni Infantino remettront à deux le trophée aux vainqueurs, nouveau moment gênant en vue",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:21:43+00:00",
-      "summary": "Le président de la Fifa Gianni Infantino a annoncé qu'il remettra avec Donald Trump la Coupe du monde aux vainqueurs. Un choix qui pose des questions, notamment sur le respect du protocole de la Fifa.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-donald-trump-et-gianni-infantino-remettront-a-deux-le-trophee-aux-vainqueurs-nouveau-moment-genant-en-vue_AV-202606230942.html"
-    },
-    {
-      "title": "Portugal-Ouzbékistan: Ronaldo en mode doublé, la Seleçao est lancée",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:04:53+00:00",
-      "summary": "Très critiqué, Cristiano Ronaldo a répondu présent avec un doublé et en battant plusieurs nouveaux records. Grâce à lui, le Portugal a écrasé l'Ouzbékistan (5-0), lors de la deuxième journée de la Coupe du…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-ouzbekistan-suivez-le-match-du-groupe-k-de-la-coupe-du-monde-2026-en-live_LS-202606230569.html"
     }
   ],
   "france_news": [
+    {
+      "title": "France-Norvège: comment s’est passé le seul match des Bleus où Guy Stéphan a remplacé Didier Deschamps sur le banc?",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:56:00+00:00",
+      "summary": "Endeuillé par le décès de sa mère, Didier Deschamps va quitter la Coupe du monde 2026 durant quelques jours pour assister à ses obsèques. En son absence, son adjoint Guy Stéphan sera sur le banc face à la…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-comment-s-est-passe-le-seul-match-des-bleus-ou-guy-stephan-a-remplace-didier-deschamps-sur-le-banc_AV-202606240356.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:02:06+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Vous n'êtes pas seuls\", le message de soutien de Kylian Mbappé à Didier Deschamps, endeuillé par la mort de sa mère",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:01:38+00:00",
+      "summary": "Kylian Mbappé, attaquant et capitaine de l'équipe de France, a adressé un message de soutien sur Instagram à son sélectionneur Didier Deschamps, endeuillé par le décès de sa maman. Le technicien sera absent…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vous-n-etes-pas-seuls-le-message-de-soutien-de-kylian-mbappe-a-didier-deschamps-endeuille-par-la-mort-de-sa-mere_AV-202606240314.html"
+    },
+    {
+      "title": "Didier Deschamps: l'art de bien commencer une coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:51:42+00:00",
+      "summary": "En s’imposant face à l’Irak (3-0), l’équipe de France a remporté ses deux premiers matchs de la Coupe du monde 2026. Une performance qui se répète désormais depuis quatre éditions consécutives.",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-l-art-de-bien-commencer-une-coupe-du-monde_AN-202606240299.html"
+    },
+    {
+      "title": "\"Ce sont des petites étoiles\", la ministre des Sports explique ses cadeaux porte-bonheur offerts aux Bleus avant la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:41:12+00:00",
+      "summary": "Marina Ferrari est revenue sur le cadeau qu’elle a offert aux joueurs de l’équipe de France afin de leur porter chance avant leur départ en Amérique pour disputer le Mondial 2026. La ministre des Sports…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-sont-des-petites-etoiles-la-ministre-des-sports-explique-ses-cadeaux-porte-bonheur-offerts-aux-bleus-avant-la-coupe-du-monde-2026_AV-202606240287.html"
+    },
     {
       "title": "Coupe du monde : recueillement et match d'entraînement sous la pluie pour les Bleus au lendemain de la victoire contre l'Irak",
       "source": "France Info",
       "date": "2026-06-23T23:19:50+00:00",
       "summary": "Guy Stéphan a dirigé la séance d'entraînement, mardi, en l'absence de Didier Deschamps, reparti en France après le décès de sa mère.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-recueillement-et-match-d-entrainement-sous-la-pluie-pour-les-bleus-au-lendemain-de-la-victoire-contre-l-irak_8076527.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "DIRECT. Equipe de France: les Bleus sans Deschamps avant la Norvège, toutes les infos en live",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:43:22+00:00",
-      "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde, l'équipe de France se prépare désormais pour le dernier match de la phase de groupes face à la Norvège vendredi à Boston. Toutes les infos sur les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-les-bleus-toutes-les-infos-sur-l-equipe-de-france-avant-le-match-face-a-la-norvege_LN-202606230977.html"
-    },
-    {
-      "title": "Coupe du monde 2026: l'équipe de France au soutien de Didier Deschamps, qui a perdu sa maman",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:41:03+00:00",
-      "summary": "La triste nouvelle de la disparition de la mère de Didier Deschamps est tombée dans la matinée ce mardi à Boston, et a profondément marqué le groupe France. Qui s'est efforcé d'apporter son soutien au…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-equipe-de-france-au-soutien-de-didier-deschamps-qui-a-perdu-sa-maman_AV-202606231004.html"
-    },
-    {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:41:03+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
-      "title": "Équipe de France : Didier Deschamps endeuillé rentre en France quelques jours",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:52:19+00:00",
-      "summary": "Didier Deschamps a eu la douleur d'apprendre le décès de sa mère ce matin. Le sélectionneur de l'Équipe de France va donc quitter le groupe pour quelques jours, Guy Stephan assurera les entrainements et le…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-didier-deschamps-endeuille-rentre-en-france-quelques-jours_VN-202606230952.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Didier Deschamps, endeuillé, ne sera pas présent pour Norvège-France",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:40:01+00:00",
-      "summary": "La FFF fait savoir ce mardi, à trois jours du match Norvège-France à la Coupe du monde 2026, que le sélectionneur Didier Deschamps sera absent pour cette rencontre. Le technicien, qui a eu la douleur de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-didier-deschamps-endeuille-ne-sera-pas-present-pour-norvege-france_AN-202606230947.html"
     },
     {
       "title": "France-Irak : le match le plus long",
@@ -3398,6 +4379,76 @@
   ],
   "general_news": [
     {
+      "title": "France-Norvège: comment s’est passé le seul match des Bleus où Guy Stéphan a remplacé Didier Deschamps sur le banc?",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:56:00+00:00",
+      "summary": "Endeuillé par le décès de sa mère, Didier Deschamps va quitter la Coupe du monde 2026 durant quelques jours pour assister à ses obsèques. En son absence, son adjoint Guy Stéphan sera sur le banc face à la…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-comment-s-est-passe-le-seul-match-des-bleus-ou-guy-stephan-a-remplace-didier-deschamps-sur-le-banc_AV-202606240356.html"
+    },
+    {
+      "title": "Coupe du monde 2026: France-Suède, Pays-Bas-Maroc... Le tableau des 16es de finale (si les classements ne bougent pas)",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:43:51+00:00",
+      "summary": "Un match contre la Suède pour la France et un très alléchant Pays-Bas-Maroc: voilà à quoi ressembleraient les 16es de finale de la Coupe du monde 2026 si les classements restaient figés. Mais il reste encore…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-france-suede-pays-bas-maroc-le-tableau-des-16es-de-finale-si-les-classements-ne-bougent-pas_AV-202606240347.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Chelsea double l'Inter Milan pour Marco Palestra, 55 millions d'euros sur la table",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:11:08+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Vous n'êtes pas seuls\", le message de soutien de Kylian Mbappé à Didier Deschamps, endeuillé par la mort de sa mère",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:01:38+00:00",
+      "summary": "Kylian Mbappé, attaquant et capitaine de l'équipe de France, a adressé un message de soutien sur Instagram à son sélectionneur Didier Deschamps, endeuillé par le décès de sa maman. Le technicien sera absent…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vous-n-etes-pas-seuls-le-message-de-soutien-de-kylian-mbappe-a-didier-deschamps-endeuille-par-la-mort-de-sa-mere_AV-202606240314.html"
+    },
+    {
+      "title": "Didier Deschamps: l'art de bien commencer une coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:51:42+00:00",
+      "summary": "En s’imposant face à l’Irak (3-0), l’équipe de France a remporté ses deux premiers matchs de la Coupe du monde 2026. Une performance qui se répète désormais depuis quatre éditions consécutives.",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-l-art-de-bien-commencer-une-coupe-du-monde_AN-202606240299.html"
+    },
+    {
+      "title": "\"Ce sont des petites étoiles\", la ministre des Sports explique ses cadeaux porte-bonheur offerts aux Bleus avant la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:41:12+00:00",
+      "summary": "Marina Ferrari est revenue sur le cadeau qu’elle a offert aux joueurs de l’équipe de France afin de leur porter chance avant leur départ en Amérique pour disputer le Mondial 2026. La ministre des Sports…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-sont-des-petites-etoiles-la-ministre-des-sports-explique-ses-cadeaux-porte-bonheur-offerts-aux-bleus-avant-la-coupe-du-monde-2026_AV-202606240287.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Lionel Messi n'est plus le meilleur joueur, Michael Olise est le plus créatif",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:26:21+00:00",
+      "summary": "Lionel Messi, pourtant auteur d'un doublé contre l'Autriche, n'est plus le meilleur joueur de la Coupe du monde 2026 au power ranking de la Fifa. L'Allemand Deniz Undav l'a détrôné, alors que Michael Olise…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-lionel-messi-n-est-plus-le-meilleur-joueur-michael-olise-est-le-plus-creatif_AV-202606240274.html"
+    },
+    {
+      "title": "Coupe du monde 2026: main sur la bouche, bras levé, tacle à la gorge... Tout ce que vous avez raté dans la nuit de mardi à mercredi",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:01:04+00:00",
+      "summary": "La nuit de mardi à mercredi marquait la fin de la deuxième journée de cette Coupe du monde 2026. RMC Sport fait le point sur tout ce que vous avez manqué en dormant à poings fermés au lieu de rester éveillé…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-main-sur-la-bouche-bras-leve-tacle-a-la-gorge-tout-ce-que-vous-avez-rate-dans-la-nuit-de-mardi-a-mercredi_AV-202606240239.html"
+    },
+    {
+      "title": "\"C'est la Coupe du monde US, pop-corn, hot-dogs\", l'édition 2026 est-elle une réussite ou un show pour \"footix\"?",
+      "source": "RMC Sport",
+      "date": "2026-06-24T05:08:55+00:00",
+      "summary": "Des stars qui cartonnent, des stades pleins mais pas encore de chocs au sommet, cette Coupe du monde 2026 divise l'After Foot, en partie enthousiasmée par le spectacle à l'américaine proposé mais encore sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/c-est-la-coupe-du-monde-us-pop-corn-hot-dogs-l-edition-2026-est-elle-une-reussite-ou-un-show-pour-footix_AV-202606240185.html"
+    },
+    {
+      "title": "Coupe du monde 2026: gros coup dur pour le Sénégal, Édouard Mendy forfait pour le match crucial contre l'Irak",
+      "source": "RMC Sport",
+      "date": "2026-06-24T04:49:33+00:00",
+      "summary": "Le Sénégal devra se passer de son gardien titulaire Édouard Mendy lors de son match couperet face à l'Irak. Les Lions de la Teranga doivent absolument l'emporter largement pour voir les 16es de finale.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/gros-coup-dur-pour-le-senegal-edouard-mendy-forfait-pour-le-match-crucial-contre-l-irak_AV-202606240161.html"
+    },
+    {
       "title": "Colombie-RD Congo: le résumé vidéo avec les images du but colombien et des parades congolaises",
       "source": "RMC Sport",
       "date": "2026-06-24T04:09:38+00:00",
@@ -3473,51 +4524,212 @@
       "date": "2026-06-23T21:55:12+00:00",
       "summary": "Munir El Kajoui, coéquipier en sélection de Achraf Hakimi, assure que la sélection marocaine soutient le joueur du PSG qui sera jugé pour viol en France.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-joueurs-du-maroc-au-soutien-d-achraf-hakimi-prochainement-juge-pour-viol-en-france_AD-202606231008.html"
-    },
-    {
-      "title": "Coupe du monde 2026: l'équipe de France au soutien de Didier Deschamps, qui a perdu sa maman",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:41:03+00:00",
-      "summary": "La triste nouvelle de la disparition de la mère de Didier Deschamps est tombée dans la matinée ce mardi à Boston, et a profondément marqué le groupe France. Qui s'est efforcé d'apporter son soutien au…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-equipe-de-france-au-soutien-de-didier-deschamps-qui-a-perdu-sa-maman_AV-202606231004.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il est de retour\", la presse portugaise retourne sa veste après le doublé de Ronaldo contre l’Ouzbékistan",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:28:49+00:00",
-      "summary": "Après avoir sorti les griffes à l’issue du match nul face à la RD Congo, la presse portugaise a salué la réaction de la Seleçao après la large victoire face à l’Ouzbékistan ce mardi (5-0). Auteur d’un doublé,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-de-retour-la-presse-portugaise-retourne-sa-veste-apres-le-double-de-ronaldo-contre-l-ouzbekistan_AV-202606230973.html"
-    },
-    {
-      "title": "Coupe du monde 2026: la réaction agacée de Cristiano Ronaldo à une question sur Messi après son doublé lors de Portugal-Ouzbékistan",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:10:59+00:00",
-      "summary": "Cristiano Ronaldo a inscrit un doublé lors du deuxième match du Portugal de cette Coupe du monde face à l'Ouzbékistan (5-0). Il a réagi après le match, souhaitant faire taire les critiques et les comparaisons…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-reaction-agacee-de-cristiano-ronaldo-a-une-question-sur-messi-apres-son-double-lors-de-portugal-ouzbekistan_AV-202606230965.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Didier Deschamps, endeuillé, ne sera pas présent pour Norvège-France",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:40:01+00:00",
-      "summary": "La FFF fait savoir ce mardi, à trois jours du match Norvège-France à la Coupe du monde 2026, que le sélectionneur Didier Deschamps sera absent pour cette rencontre. Le technicien, qui a eu la douleur de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-didier-deschamps-endeuille-ne-sera-pas-present-pour-norvege-france_AN-202606230947.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Donald Trump et Gianni Infantino remettront à deux le trophée aux vainqueurs, nouveau moment gênant en vue",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:21:43+00:00",
-      "summary": "Le président de la Fifa Gianni Infantino a annoncé qu'il remettra avec Donald Trump la Coupe du monde aux vainqueurs. Un choix qui pose des questions, notamment sur le respect du protocole de la Fifa.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-donald-trump-et-gianni-infantino-remettront-a-deux-le-trophee-aux-vainqueurs-nouveau-moment-genant-en-vue_AV-202606230942.html"
-    },
-    {
-      "title": "Portugal-Ouzbékistan: Ronaldo en mode doublé, la Seleçao est lancée",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:04:53+00:00",
-      "summary": "Très critiqué, Cristiano Ronaldo a répondu présent avec un doublé et en battant plusieurs nouveaux records. Grâce à lui, le Portugal a écrasé l'Ouzbékistan (5-0), lors de la deuxième journée de la Coupe du…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-ouzbekistan-suivez-le-match-du-groupe-k-de-la-coupe-du-monde-2026-en-live_LS-202606230569.html"
     }
   ],
   "all_news": [
+    {
+      "title": "Un Croate réalise une performance jamais vue depuis Diego Maradona",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:31:46+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/un-croate-realise-une-performance-jamais-vue-depuis-diego-maradona"
+    },
+    {
+      "title": "Pronostic Écosse Brésil : analyse, cotes et prono Coupe du Monde 2026",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:31:37+00:00",
+      "summary": "Pronostic Écosse Brésil : analyse, statistiques et notre pari recommandé (victoire du Brésil) pour ce choc décisif de la Coupe du Monde 2026. Nos conseils et cotes.",
+      "url": "https://www.sofoot.com/breves/pronostic-ecosse-bresil-analyse-cotes-et-prono-coupe-du-monde-2026"
+    },
+    {
+      "title": "Pronostic Maroc Haïti : analyse, cotes et prono Coupe du Monde 2026",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:31:28+00:00",
+      "summary": "Pronostic Maroc – Haïti : analyse de la rencontre, conseils de pari et cotes. Notre prono : victoire du Maroc ou pari 'les deux équipes marquent : non'.",
+      "url": "https://www.sofoot.com/breves/pronostic-maroc-haiti-analyse-cotes-et-prono-coupe-du-monde-2026"
+    },
+    {
+      "title": "Pronostic Bosnia-Herzegovina Qatar : analyse, cotes et prono Coupe du Monde",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:31:16+00:00",
+      "summary": "Pronostic Bosnia-Herzegovina Qatar : analyse complète, forme récente et notre pari conseillé 'Bosnia-Herzegovina vainqueur' pour ce choc Coupe du Monde.",
+      "url": "https://www.sofoot.com/breves/pronostic-bosnia-herzegovina-qatar-analyse-cotes-et-prono-coupe-du-monde"
+    },
+    {
+      "title": "Pronostic Suisse Canada : analyse, cotes et prono Coupe du Monde",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:31:06+00:00",
+      "summary": "Suisse – Canada : analyse complète, cotes et pronostic. Découvrez pourquoi le pari « Suisse vainqueur » et « Les deux équipes marquent : Non » sont à considérer.",
+      "url": "https://www.sofoot.com/breves/pronostic-suisse-canada-analyse-cotes-et-prono-coupe-du-monde"
+    },
+    {
+      "title": "Coupe du monde : le milieu de l’Angleterre Declan Rice boitait après le match face au Ghana",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:17:26+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-declan-rice-boitait-apres-le-match-face-au-ghana"
+    },
+    {
+      "title": "Le PDG de l’Atlético dézingue le FC Barcelone à propos de Julián Alvarez",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:02:23+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/le-pdg-de-latletico-dezingue-le-fc-barcelone-a-propos-de-julian-alvarez"
+    },
+    {
+      "title": "REPORTAGE – La Refugees Solidarity Cup aux antipodes de la Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-06-24T08:00:10+00:00",
+      "summary": "Près de 200 réfugiés étaient réunis vendredi dernier pour jouer au ballon.",
+      "url": "https://www.sofoot.com/articles/reportage-la-refugees-solidarity-cup-aux-antipodes-de-la-coupe-du-monde"
+    },
+    {
+      "title": "France-Norvège: comment s’est passé le seul match des Bleus où Guy Stéphan a remplacé Didier Deschamps sur le banc?",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:56:00+00:00",
+      "summary": "Endeuillé par le décès de sa mère, Didier Deschamps va quitter la Coupe du monde 2026 durant quelques jours pour assister à ses obsèques. En son absence, son adjoint Guy Stéphan sera sur le banc face à la…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-comment-s-est-passe-le-seul-match-des-bleus-ou-guy-stephan-a-remplace-didier-deschamps-sur-le-banc_AV-202606240356.html"
+    },
+    {
+      "title": "Coupe du monde : La FIFA ne gagne pas un dollar grâce aux pauses fraîcheur selon Gianni Infantino",
+      "source": "SO FOOT",
+      "date": "2026-06-24T07:55:23+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-la-fifa-ne-gagne-pas-un-dollar-grace-aux-pauses-fraicheurs-selon-gianni-infantino"
+    },
+    {
+      "title": "En direct : Bosnie-Herzégovine – Qatar",
+      "source": "SO FOOT",
+      "date": "2026-06-24T07:49:43+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-bosnie-herzegovine-qatar"
+    },
+    {
+      "title": "Coupe du monde 2026: France-Suède, Pays-Bas-Maroc... Le tableau des 16es de finale (si les classements ne bougent pas)",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:43:51+00:00",
+      "summary": "Un match contre la Suède pour la France et un très alléchant Pays-Bas-Maroc: voilà à quoi ressembleraient les 16es de finale de la Coupe du monde 2026 si les classements restaient figés. Mais il reste encore…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-france-suede-pays-bas-maroc-le-tableau-des-16es-de-finale-si-les-classements-ne-bougent-pas_AV-202606240347.html"
+    },
+    {
+      "title": "La ministre des Sports Marina Ferrari explique son offrande de pierres aux joueurs de l’équipe de France",
+      "source": "SO FOOT",
+      "date": "2026-06-24T07:25:08+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/la-ministre-des-sports-marina-ferrari-explique-son-offrande-de-pierres-aux-joueurs-de-lequipe-de-france"
+    },
+    {
+      "title": "En direct : Suisse-Canada",
+      "source": "SO FOOT",
+      "date": "2026-06-24T07:11:24+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-suisse-canada"
+    },
+    {
+      "title": "DIRECT. Mercato: Chelsea double l'Inter Milan pour Marco Palestra, 55 millions d'euros sur la table",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:11:08+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:02:06+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Vous n'êtes pas seuls\", le message de soutien de Kylian Mbappé à Didier Deschamps, endeuillé par la mort de sa mère",
+      "source": "RMC Sport",
+      "date": "2026-06-24T07:01:38+00:00",
+      "summary": "Kylian Mbappé, attaquant et capitaine de l'équipe de France, a adressé un message de soutien sur Instagram à son sélectionneur Didier Deschamps, endeuillé par le décès de sa maman. Le technicien sera absent…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vous-n-etes-pas-seuls-le-message-de-soutien-de-kylian-mbappe-a-didier-deschamps-endeuille-par-la-mort-de-sa-mere_AV-202606240314.html"
+    },
+    {
+      "title": "Les Bleus ont observé une minute de silence en hommage à la mère de Didier Deschamps",
+      "source": "SO FOOT",
+      "date": "2026-06-24T06:55:55+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/les-bleus-ont-observe-une-minute-de-silence-en-hommage-a-la-mere-de-didier-deschamps"
+    },
+    {
+      "title": "Didier Deschamps: l'art de bien commencer une coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:51:42+00:00",
+      "summary": "En s’imposant face à l’Irak (3-0), l’équipe de France a remporté ses deux premiers matchs de la Coupe du monde 2026. Une performance qui se répète désormais depuis quatre éditions consécutives.",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-l-art-de-bien-commencer-une-coupe-du-monde_AN-202606240299.html"
+    },
+    {
+      "title": "\"Ce sont des petites étoiles\", la ministre des Sports explique ses cadeaux porte-bonheur offerts aux Bleus avant la Coupe du monde 2026",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:41:12+00:00",
+      "summary": "Marina Ferrari est revenue sur le cadeau qu’elle a offert aux joueurs de l’équipe de France afin de leur porter chance avant leur départ en Amérique pour disputer le Mondial 2026. La ministre des Sports…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-sont-des-petites-etoiles-la-ministre-des-sports-explique-ses-cadeaux-porte-bonheur-offerts-aux-bleus-avant-la-coupe-du-monde-2026_AV-202606240287.html"
+    },
+    {
+      "title": "5 trucs à faire pendant la pause fraîcheur (épisode 3)",
+      "source": "SO FOOT",
+      "date": "2026-06-24T06:28:43+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/5-trucs-a-faire-pendant-la-pause-fraicheur-episode-3"
+    },
+    {
+      "title": "Coupe du monde 2026: Lionel Messi n'est plus le meilleur joueur, Michael Olise est le plus créatif",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:26:21+00:00",
+      "summary": "Lionel Messi, pourtant auteur d'un doublé contre l'Autriche, n'est plus le meilleur joueur de la Coupe du monde 2026 au power ranking de la Fifa. L'Allemand Deniz Undav l'a détrôné, alors que Michael Olise…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-lionel-messi-n-est-plus-le-meilleur-joueur-michael-olise-est-le-plus-creatif_AV-202606240274.html"
+    },
+    {
+      "title": "Lionel Messi",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:26:21+00:00",
+      "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
+      "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
+    },
+    {
+      "title": "Un arbitrage à deux vitesses? Pas de rouge pour Jude Bellingham, pourtant supris la main sur la bouche devant Jordan Ayew",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:05:36+00:00",
+      "summary": "Jude Bellingham, milieu de terrain anglais, a échappé à une exclusion alors qu'il a caché sa bouche avec sa main en s'adressant à Jordan Ayew ce mardi lors d'Angleterre-Ghana (0-0), comme l'exige pourtant une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-arbitrage-a-deux-vitesses-pas-de-rouge-pour-jude-bellingham-pourtant-supris-la-main-sur-la-bouche-devant-jordan-ayew_AV-202606240242.html"
+    },
+    {
+      "title": "Coupe du monde 2026: main sur la bouche, bras levé, tacle à la gorge... Tout ce que vous avez raté dans la nuit de mardi à mercredi",
+      "source": "RMC Sport",
+      "date": "2026-06-24T06:01:04+00:00",
+      "summary": "La nuit de mardi à mercredi marquait la fin de la deuxième journée de cette Coupe du monde 2026. RMC Sport fait le point sur tout ce que vous avez manqué en dormant à poings fermés au lieu de rester éveillé…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-main-sur-la-bouche-bras-leve-tacle-a-la-gorge-tout-ce-que-vous-avez-rate-dans-la-nuit-de-mardi-a-mercredi_AV-202606240239.html"
+    },
+    {
+      "title": "Coupe du monde 2026 – France : Comment concocter un bon petit 0-0 contre la Norvège",
+      "source": "SO FOOT",
+      "date": "2026-06-24T06:00:08+00:00",
+      "summary": "Troisième match = ennui certain.",
+      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-france-comment-concocter-un-bon-petit-0-0-contre-la-norvege"
+    },
+    {
+      "title": "\"C'est la Coupe du monde US, pop-corn, hot-dogs\", l'édition 2026 est-elle une réussite ou un show pour \"footix\"?",
+      "source": "RMC Sport",
+      "date": "2026-06-24T05:08:55+00:00",
+      "summary": "Des stars qui cartonnent, des stades pleins mais pas encore de chocs au sommet, cette Coupe du monde 2026 divise l'After Foot, en partie enthousiasmée par le spectacle à l'américaine proposé mais encore sur…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/c-est-la-coupe-du-monde-us-pop-corn-hot-dogs-l-edition-2026-est-elle-une-reussite-ou-un-show-pour-footix_AV-202606240185.html"
+    },
+    {
+      "title": "Coupe du monde : Ronaldo ouvre son compteur, l'Angleterre tenue en échec, les résultats et classements",
+      "source": "RMC Sport",
+      "date": "2026-06-24T05:05:27+00:00",
+      "summary": "Cristiano Ronaldo s'offre un doublé dans la victoire des siens 5-0 face à l'Ouzbékistan. L'Angleterre tenue en échec par le Ghana, la Croatie s'impose 1-0 face au Panama et la Colombie l'emporte face à la RD…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-du-monde-ronaldo-ouvre-son-compteur-l-angleterre-tenue-en-echec-les-resultats-et-classements_VN-202606240184.html"
+    },
+    {
+      "title": "Coupe du monde 2026: gros coup dur pour le Sénégal, Édouard Mendy forfait pour le match crucial contre l'Irak",
+      "source": "RMC Sport",
+      "date": "2026-06-24T04:49:33+00:00",
+      "summary": "Le Sénégal devra se passer de son gardien titulaire Édouard Mendy lors de son match couperet face à l'Irak. Les Lions de la Teranga doivent absolument l'emporter largement pour voir les 16es de finale.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/gros-coup-dur-pour-le-senegal-edouard-mendy-forfait-pour-le-match-crucial-contre-l-irak_AV-202606240161.html"
+    },
     {
       "title": "Portugal-Ouzbékistan: \"Je croyais qu'il n'était jamais parti?\", Zlatan détruit Cristiano Ronaldo et son \"I'm back\"",
       "source": "RMC Sport",
@@ -3627,7 +4839,7 @@
       "title": "Mondial 2026 – Une Croatie hésitante élimine le Panama",
       "source": "SO FOOT",
       "date": "2026-06-24T00:56:48+00:00",
-      "summary": "Mais, au moins, Luka Modrić entre dans l'histoire.",
+      "summary": "Mais, au moins, Luka Modrić entre dans l’histoire.",
       "url": "https://www.sofoot.com/articles/mondial-2026-une-croatie-hesitante-elimine-le-panama"
     },
     {
@@ -3729,238 +4941,46 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/angleterre-ghana-un-joueur-anglais-a-refuse-de-serrer-la-main-de-thomas-partey-accuse-de-viols_AV-202606231006.html"
     },
     {
-      "title": "DIRECT. Equipe de France: les Bleus sans Deschamps avant la Norvège, toutes les infos en live",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:43:22+00:00",
-      "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde, l'équipe de France se prépare désormais pour le dernier match de la phase de groupes face à la Norvège vendredi à Boston. Toutes les infos sur les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-les-bleus-toutes-les-infos-sur-l-equipe-de-france-avant-le-match-face-a-la-norvege_LN-202606230977.html"
-    },
-    {
-      "title": "Coupe du monde 2026: l'équipe de France au soutien de Didier Deschamps, qui a perdu sa maman",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:41:03+00:00",
-      "summary": "La triste nouvelle de la disparition de la mère de Didier Deschamps est tombée dans la matinée ce mardi à Boston, et a profondément marqué le groupe France. Qui s'est efforcé d'apporter son soutien au…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-equipe-de-france-au-soutien-de-didier-deschamps-qui-a-perdu-sa-maman_AV-202606231004.html"
-    },
-    {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-06-23T21:41:03+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
       "title": "Les notes de Koh-Lanta : les Reliques du destin épisode final",
       "source": "SO FOOT",
       "date": "2026-06-23T21:40:15+00:00",
       "summary": "Le même suspense que France-Irak.",
       "url": "https://www.sofoot.com/articles/les-notes-de-koh-lanta-les-reliques-du-destin-episode-final"
-    },
-    {
-      "title": "Mondial 2026 : Les États-Unis autorisent l’Iran à se rendre sur le sol américain deux jours avant leur dernier match de poule face à l’Égypte",
-      "source": "SO FOOT",
-      "date": "2026-06-23T21:38:35+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-les-etats-unis-autorisent-liran-a-se-rendre-sur-le-sol-americain-deux-jours-avant-leur-dernier-match-de-poule-face-a-legypte"
-    },
-    {
-      "title": "Mondial 2026 : Le match entre l’Angleterre et le Ghana est le premier de la Coupe du monde à n’enregistrer aucun tir cadré à la mi-temps",
-      "source": "SO FOOT",
-      "date": "2026-06-23T21:19:19+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-match-entre-langleterre-et-le-ghana-est-le-premier-de-la-coupe-du-monde-a-nenregistre-aucun-tir-cadre-a-la-mi-temps"
-    },
-    {
-      "title": "Mondial 2026 : Jude Bellingham devient le plus jeune joueur de l’histoire à atteindre les 50 sélections avec l’Angleterre face au Ghana",
-      "source": "SO FOOT",
-      "date": "2026-06-23T21:07:39+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-jude-bellingham-devient-le-plus-jeune-joueur-de-lhistoire-a-atteindre-les-50-selections-avec-langleterre-face-au-ghana"
-    },
-    {
-      "title": "Mondial 2026 : Alf Hinge Haaland se confie sur la rivalité entre son fils Erling et Kylian Mbappé avant France-Norvège",
-      "source": "SO FOOT",
-      "date": "2026-06-23T20:55:56+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-alf-hinge-haaland-se-confie-sur-la-rivalite-entre-son-fils-erling-et-kylian-mbappe-avant-france-norvege"
-    },
-    {
-      "title": "France : Alexandre Oukidja, Florentin Pogba, Vincent Koziello… On connaît le casting de la 36e édition du stage de l’UNFP FC",
-      "source": "SO FOOT",
-      "date": "2026-06-23T20:37:50+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/france-alexandre-oukidja-florentin-pogba-vincent-koziello-on-connait-le-casting-de-la-36e-edition-du-stage-de-lunfp-fc"
-    },
-    {
-      "title": "Cristiano Ronaldo",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:28:50+00:00",
-      "summary": "Cristiano Ronaldo dos Santos Aveiro, plus souvent appelé Ronaldo ou Cristiano Ronaldo et surnommé CR7, est né le 5 février 1985 à Funchal à Madère. A l'été 2021, il est retourné jouer au club où il s'était…",
-      "url": "https://rmcsport.bfmtv.com/football/cristiano-ronaldo_DN-202108310501.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il est de retour\", la presse portugaise retourne sa veste après le doublé de Ronaldo contre l’Ouzbékistan",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:28:49+00:00",
-      "summary": "Après avoir sorti les griffes à l’issue du match nul face à la RD Congo, la presse portugaise a salué la réaction de la Seleçao après la large victoire face à l’Ouzbékistan ce mardi (5-0). Auteur d’un doublé,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-de-retour-la-presse-portugaise-retourne-sa-veste-apres-le-double-de-ronaldo-contre-l-ouzbekistan_AV-202606230973.html"
-    },
-    {
-      "title": "Mondial 2026 : Cristiano Ronaldo livre ses vérités après les débats qui ont animé sa prestation face à la République démocratique du Congo",
-      "source": "SO FOOT",
-      "date": "2026-06-23T20:16:12+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-cristiano-ronaldo-livre-ses-verites-apres-les-debats-qui-ont-anime-sa-prestation-face-a-la-republique-democratique-du-congo"
-    },
-    {
-      "title": "Coupe du monde 2026: la réaction agacée de Cristiano Ronaldo à une question sur Messi après son doublé lors de Portugal-Ouzbékistan",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:10:59+00:00",
-      "summary": "Cristiano Ronaldo a inscrit un doublé lors du deuxième match du Portugal de cette Coupe du monde face à l'Ouzbékistan (5-0). Il a réagi après le match, souhaitant faire taire les critiques et les comparaisons…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-reaction-agacee-de-cristiano-ronaldo-a-une-question-sur-messi-apres-son-double-lors-de-portugal-ouzbekistan_AV-202606230965.html"
-    },
-    {
-      "title": "OM: un \"sursis\", des questions et quelques doutes après le passage devant la DNCG",
-      "source": "RMC Sport",
-      "date": "2026-06-23T20:01:22+00:00",
-      "summary": "La DNCG n'a pas encore statué sur la situation économique de l'Olympique de Marseille. Si l'instance financière attend de nouveaux éléments, le sursis décidé ne constitue pas forcément un bon signal pour le…",
-      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/om-un-sursis-des-questions-et-quelques-doutes-apres-le-passage-devant-la-dncg_AV-202606230954.html"
-    },
-    {
-      "title": "Équipe de France : Didier Deschamps endeuillé rentre en France quelques jours",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:52:19+00:00",
-      "summary": "Didier Deschamps a eu la douleur d'apprendre le décès de sa mère ce matin. Le sélectionneur de l'Équipe de France va donc quitter le groupe pour quelques jours, Guy Stephan assurera les entrainements et le…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-didier-deschamps-endeuille-rentre-en-france-quelques-jours_VN-202606230952.html"
-    },
-    {
-      "title": "Mondial 2026 : Didier Deschamps n’assistera pas à la rencontre face à la Norvège après le décès de sa mère",
-      "source": "SO FOOT",
-      "date": "2026-06-23T19:43:00+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-didier-deschamps-nassistera-pas-a-la-rencontre-face-a-la-norvege-apres-le-deces-de-sa-mere"
-    },
-    {
-      "title": "Coupe du monde 2026: Didier Deschamps, endeuillé, ne sera pas présent pour Norvège-France",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:40:01+00:00",
-      "summary": "La FFF fait savoir ce mardi, à trois jours du match Norvège-France à la Coupe du monde 2026, que le sélectionneur Didier Deschamps sera absent pour cette rencontre. Le technicien, qui a eu la douleur de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-didier-deschamps-endeuille-ne-sera-pas-present-pour-norvege-france_AN-202606230947.html"
-    },
-    {
-      "title": "Donald Trump remettra le trophée au vainqueur de la Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-06-23T19:36:24+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/donald-trump-remettra-le-trophee-au-vainqueur-de-la-coupe-du-monde"
-    },
-    {
-      "title": "En direct : Norvège – Sénégal",
-      "source": "SO FOOT",
-      "date": "2026-06-23T19:34:00+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-norvege-senegal"
-    },
-    {
-      "title": "C'est officiel, Gary O'Neil quitte Strasbourg et file en Premier League",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:30:42+00:00",
-      "summary": "C'était dans l’air, c'est désormais officiel, Gary O'Neil quitte le RC Strasbourg. Il rejoint Ipswich et la Premier League.",
-      "url": "https://rmcsport.bfmtv.com/football/clubs/rc-strasbourg/c-est-officiel-gary-o-neil-quitte-strasbourg-et-file-en-premier-league_AN-202606230944.html"
-    },
-    {
-      "title": "Coupe du monde 2026: Donald Trump et Gianni Infantino remettront à deux le trophée aux vainqueurs, nouveau moment gênant en vue",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:21:43+00:00",
-      "summary": "Le président de la Fifa Gianni Infantino a annoncé qu'il remettra avec Donald Trump la Coupe du monde aux vainqueurs. Un choix qui pose des questions, notamment sur le respect du protocole de la Fifa.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-donald-trump-et-gianni-infantino-remettront-a-deux-le-trophee-aux-vainqueurs-nouveau-moment-genant-en-vue_AV-202606230942.html"
-    },
-    {
-      "title": "Portugal : Cristiano Ronaldo \"le meilleur de l'Histoire\" selon José Fonte",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:13:09+00:00",
-      "summary": "Un temp critiqué, Cristiano Ronaldo a tenu à répondre à ses détracteurs en inscrivant un doublé contre l'Ouzbékistan. Son ancien coéquipier José Fonte nous parle du \"meilleur joueur de l'Histoire\" selon lui.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-portugal-cristiano-ronaldo-le-meilleur-de-l-histoire-selon-jose-fonte_VN-202606230940.html"
-    },
-    {
-      "title": "Pourquoi la France est incitée à candidater pour l'organisation de la Coupe du monde 2038",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:12:46+00:00",
-      "summary": "L'association Territoires d'événements sportifs (TES) va remettre cette semaine un rapport à la ministre des Sports, Marina Ferrari. L'organisme y présente les intérêts d'une candidature de la France en vue…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pourquoi-la-france-est-incitee-a-candidater-pour-l-organisation-de-la-coupe-du-monde-2038_AN-202606230936.html"
-    },
-    {
-      "title": "En direct : Portugal-Ouzbékistan",
-      "source": "SO FOOT",
-      "date": "2026-06-23T19:08:00+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-portugal-ouzbekistan"
-    },
-    {
-      "title": "Mondial 2026 : Grâce à un doublé de Cristiano Ronaldo, le Portugal balaye l’Ouzbékistan et reprend provisoirement la tête du groupe K",
-      "source": "SO FOOT",
-      "date": "2026-06-23T19:06:48+00:00",
-      "summary": "Pas contents ? Doublé.",
-      "url": "https://www.sofoot.com/articles/mondial-2026-grace-a-un-double-de-cristiano-ronaldo-le-portugal-balaye-louzbekistan-et-reprend-provisoirement-la-tete-du-groupe-k"
-    },
-    {
-      "title": "Portugal-Ouzbékistan: Ronaldo en mode doublé, la Seleçao est lancée",
-      "source": "RMC Sport",
-      "date": "2026-06-23T19:04:53+00:00",
-      "summary": "Très critiqué, Cristiano Ronaldo a répondu présent avec un doublé et en battant plusieurs nouveaux records. Grâce à lui, le Portugal a écrasé l'Ouzbékistan (5-0), lors de la deuxième journée de la Coupe du…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-ouzbekistan-suivez-le-match-du-groupe-k-de-la-coupe-du-monde-2026-en-live_LS-202606230569.html"
-    },
-    {
-      "title": "Mondial 2026 : Cristiano Ronaldo devient le premier joueur à marquer lors de six Coupes du monde différente et devient le meilleur buteur portugais de la compétition en dépassant Eusébio",
-      "source": "SO FOOT",
-      "date": "2026-06-23T18:07:58+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-cristiano-ronaldo-devient-le-premier-joueur-a-marque-lors-de-six-coupes-du-monde-differente-et-devient-le-meilleur-buteur-portugais-de-la-competition-en-depassant-eusebio"
-    },
-    {
-      "title": "Ligue 1 : La DNCG inflige un sursis à statuer à l’Olympique de Marseille, Monaco voit sa masse salariale encadrée",
-      "source": "SO FOOT",
-      "date": "2026-06-23T17:38:12+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-1-la-dncg-inflige-un-sursis-a-statuer-a-lolympique-de-marseille-monaco-voit-sa-masse-salariale-encadree"
-    },
-    {
-      "title": "Gianni Infantino invite Clément d’Antibes, supporter emblématique de l’équipe de France",
-      "source": "SO FOOT",
-      "date": "2026-06-23T17:31:53+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/gianni-infantino-invite-clement-dantibes-supporter-emblematique-de-lequipe-de-france"
-    },
-    {
-      "title": "Mondial 2026 : Cristiano Ronaldo est bien présent dans le onze de départ du Portugal, contrairement à Bernardo Silva",
-      "source": "SO FOOT",
-      "date": "2026-06-23T17:12:15+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-cristiano-ronaldo-est-bien-present-dans-le-onze-de-depart-du-portugal-contrairement-a-bernardo-silva"
     }
   ],
   "focused_team_news": {
+    "Argentina": [
+      {
+        "title": "Lionel Messi",
+        "source": "RMC Sport",
+        "date": "2026-06-24T06:26:21+00:00",
+        "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
+        "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
+      }
+    ],
+    "Bosnia-Herzegovina": [
+      {
+        "title": "Pronostic Bosnia-Herzegovina Qatar : analyse, cotes et prono Coupe du Monde",
+        "source": "SO FOOT",
+        "date": "2026-06-24T08:31:16+00:00",
+        "summary": "Pronostic Bosnia-Herzegovina Qatar : analyse complète, forme récente et notre pari conseillé 'Bosnia-Herzegovina vainqueur' pour ce choc Coupe du Monde.",
+        "url": "https://www.sofoot.com/breves/pronostic-bosnia-herzegovina-qatar-analyse-cotes-et-prono-coupe-du-monde"
+      }
+    ],
     "Brazil": [
+      {
+        "title": "Pronostic Écosse Brésil : analyse, cotes et prono Coupe du Monde 2026",
+        "source": "SO FOOT",
+        "date": "2026-06-24T08:31:37+00:00",
+        "summary": "Pronostic Écosse Brésil : analyse, statistiques et notre pari recommandé (victoire du Brésil) pour ce choc décisif de la Coupe du Monde 2026. Nos conseils et cotes.",
+        "url": "https://www.sofoot.com/breves/pronostic-ecosse-bresil-analyse-cotes-et-prono-coupe-du-monde-2026"
+      },
       {
         "title": "Brésil-Écosse: Rayan titulaire, Neymar remplaçant? La compo probable de la Seleçao",
         "source": "RMC Sport",
         "date": "2026-06-24T02:35:17+00:00",
         "summary": "Pas encore mathématiquement qualifié, le Brésil va aborder son dernier match de poule contre l'Écosse avec l'ambition de terminer en tête de ce groupe C. Mais pour sa star Neymar, il faudra encore un peu…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/bresil-ecosse-rayan-titulaire-neymar-remplacant-la-compo-probable-de-la-selecao_AV-202606240086.html"
-      },
-      {
-        "title": "Coupe du monde 2026: \"Il est de retour\", la presse portugaise retourne sa veste après le doublé de Ronaldo contre l’Ouzbékistan",
-        "source": "RMC Sport",
-        "date": "2026-06-23T20:28:49+00:00",
-        "summary": "Après avoir sorti les griffes à l’issue du match nul face à la RD Congo, la presse portugaise a salué la réaction de la Seleçao après la large victoire face à l’Ouzbékistan ce mardi (5-0). Auteur d’un doublé,…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-de-retour-la-presse-portugaise-retourne-sa-veste-apres-le-double-de-ronaldo-contre-l-ouzbekistan_AV-202606230973.html"
-      },
-      {
-        "title": "Portugal-Ouzbékistan: Ronaldo en mode doublé, la Seleçao est lancée",
-        "source": "RMC Sport",
-        "date": "2026-06-23T19:04:53+00:00",
-        "summary": "Très critiqué, Cristiano Ronaldo a répondu présent avec un doublé et en battant plusieurs nouveaux records. Grâce à lui, le Portugal a écrasé l'Ouzbékistan (5-0), lors de la deuxième journée de la Coupe du…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-ouzbekistan-suivez-le-match-du-groupe-k-de-la-coupe-du-monde-2026-en-live_LS-202606230569.html"
       },
       {
         "title": "France-Brésil 1986 : dans la fournaise de Guadalajara, ce 21 juin où les Bleus ont écrit une page de leur légende",
@@ -3971,6 +4991,20 @@
       }
     ],
     "Canada": [
+      {
+        "title": "Pronostic Suisse Canada : analyse, cotes et prono Coupe du Monde",
+        "source": "SO FOOT",
+        "date": "2026-06-24T08:31:06+00:00",
+        "summary": "Suisse – Canada : analyse complète, cotes et pronostic. Découvrez pourquoi le pari « Suisse vainqueur » et « Les deux équipes marquent : Non » sont à considérer.",
+        "url": "https://www.sofoot.com/breves/pronostic-suisse-canada-analyse-cotes-et-prono-coupe-du-monde"
+      },
+      {
+        "title": "En direct : Suisse-Canada",
+        "source": "SO FOOT",
+        "date": "2026-06-24T07:11:24+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/en-direct-suisse-canada"
+      },
       {
         "title": "Coupe du monde 2026: calendrier, résultats et classement du groupe K avec le Portugal et la RD Congo",
         "source": "RMC Sport",
@@ -3997,6 +5031,69 @@
     ],
     "France": [
       {
+        "title": "France-Norvège: comment s’est passé le seul match des Bleus où Guy Stéphan a remplacé Didier Deschamps sur le banc?",
+        "source": "RMC Sport",
+        "date": "2026-06-24T07:56:00+00:00",
+        "summary": "Endeuillé par le décès de sa mère, Didier Deschamps va quitter la Coupe du monde 2026 durant quelques jours pour assister à ses obsèques. En son absence, son adjoint Guy Stéphan sera sur le banc face à la…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-comment-s-est-passe-le-seul-match-des-bleus-ou-guy-stephan-a-remplace-didier-deschamps-sur-le-banc_AV-202606240356.html"
+      },
+      {
+        "title": "Coupe du monde 2026: France-Suède, Pays-Bas-Maroc... Le tableau des 16es de finale (si les classements ne bougent pas)",
+        "source": "RMC Sport",
+        "date": "2026-06-24T07:43:51+00:00",
+        "summary": "Un match contre la Suède pour la France et un très alléchant Pays-Bas-Maroc: voilà à quoi ressembleraient les 16es de finale de la Coupe du monde 2026 si les classements restaient figés. Mais il reste encore…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-france-suede-pays-bas-maroc-le-tableau-des-16es-de-finale-si-les-classements-ne-bougent-pas_AV-202606240347.html"
+      },
+      {
+        "title": "La ministre des Sports Marina Ferrari explique son offrande de pierres aux joueurs de l’équipe de France",
+        "source": "SO FOOT",
+        "date": "2026-06-24T07:25:08+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/la-ministre-des-sports-marina-ferrari-explique-son-offrande-de-pierres-aux-joueurs-de-lequipe-de-france"
+      },
+      {
+        "title": "Didier Deschamps",
+        "source": "RMC Sport",
+        "date": "2026-06-24T07:02:06+00:00",
+        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+      },
+      {
+        "title": "Coupe du monde 2026: \"Vous n'êtes pas seuls\", le message de soutien de Kylian Mbappé à Didier Deschamps, endeuillé par la mort de sa mère",
+        "source": "RMC Sport",
+        "date": "2026-06-24T07:01:38+00:00",
+        "summary": "Kylian Mbappé, attaquant et capitaine de l'équipe de France, a adressé un message de soutien sur Instagram à son sélectionneur Didier Deschamps, endeuillé par le décès de sa maman. Le technicien sera absent…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vous-n-etes-pas-seuls-le-message-de-soutien-de-kylian-mbappe-a-didier-deschamps-endeuille-par-la-mort-de-sa-mere_AV-202606240314.html"
+      },
+      {
+        "title": "Les Bleus ont observé une minute de silence en hommage à la mère de Didier Deschamps",
+        "source": "SO FOOT",
+        "date": "2026-06-24T06:55:55+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/les-bleus-ont-observe-une-minute-de-silence-en-hommage-a-la-mere-de-didier-deschamps"
+      },
+      {
+        "title": "Didier Deschamps: l'art de bien commencer une coupe du monde",
+        "source": "RMC Sport",
+        "date": "2026-06-24T06:51:42+00:00",
+        "summary": "En s’imposant face à l’Irak (3-0), l’équipe de France a remporté ses deux premiers matchs de la Coupe du monde 2026. Une performance qui se répète désormais depuis quatre éditions consécutives.",
+        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-l-art-de-bien-commencer-une-coupe-du-monde_AN-202606240299.html"
+      },
+      {
+        "title": "\"Ce sont des petites étoiles\", la ministre des Sports explique ses cadeaux porte-bonheur offerts aux Bleus avant la Coupe du monde 2026",
+        "source": "RMC Sport",
+        "date": "2026-06-24T06:41:12+00:00",
+        "summary": "Marina Ferrari est revenue sur le cadeau qu’elle a offert aux joueurs de l’équipe de France afin de leur porter chance avant leur départ en Amérique pour disputer le Mondial 2026. La ministre des Sports…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ce-sont-des-petites-etoiles-la-ministre-des-sports-explique-ses-cadeaux-porte-bonheur-offerts-aux-bleus-avant-la-coupe-du-monde-2026_AV-202606240287.html"
+      },
+      {
+        "title": "Coupe du monde 2026 – France : Comment concocter un bon petit 0-0 contre la Norvège",
+        "source": "SO FOOT",
+        "date": "2026-06-24T06:00:08+00:00",
+        "summary": "Troisième match = ennui certain.",
+        "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-france-comment-concocter-un-bon-petit-0-0-contre-la-norvege"
+      },
+      {
         "title": "Coupe du monde : recueillement et match d'entraînement sous la pluie pour les Bleus au lendemain de la victoire contre l'Irak",
         "source": "France Info",
         "date": "2026-06-23T23:19:50+00:00",
@@ -4016,72 +5113,30 @@
         "date": "2026-06-23T21:55:47+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/mondial-2026-la-selection-marocaine-apporte-son-soutien-a-achraf-hakimi-qui-doit-etre-juge-en-france-pour-viol"
-      },
-      {
-        "title": "Coupe du monde 2026: les joueurs du Maroc au \"soutien\" d'Achraf Hakimi, prochainement jugé pour viol en France",
-        "source": "RMC Sport",
-        "date": "2026-06-23T21:55:12+00:00",
-        "summary": "Munir El Kajoui, coéquipier en sélection de Achraf Hakimi, assure que la sélection marocaine soutient le joueur du PSG qui sera jugé pour viol en France.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-joueurs-du-maroc-au-soutien-d-achraf-hakimi-prochainement-juge-pour-viol-en-france_AD-202606231008.html"
-      },
-      {
-        "title": "DIRECT. Equipe de France: les Bleus sans Deschamps avant la Norvège, toutes les infos en live",
-        "source": "RMC Sport",
-        "date": "2026-06-23T21:43:22+00:00",
-        "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde, l'équipe de France se prépare désormais pour le dernier match de la phase de groupes face à la Norvège vendredi à Boston. Toutes les infos sur les…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-les-bleus-toutes-les-infos-sur-l-equipe-de-france-avant-le-match-face-a-la-norvege_LN-202606230977.html"
-      },
-      {
-        "title": "Coupe du monde 2026: l'équipe de France au soutien de Didier Deschamps, qui a perdu sa maman",
-        "source": "RMC Sport",
-        "date": "2026-06-23T21:41:03+00:00",
-        "summary": "La triste nouvelle de la disparition de la mère de Didier Deschamps est tombée dans la matinée ce mardi à Boston, et a profondément marqué le groupe France. Qui s'est efforcé d'apporter son soutien au…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-equipe-de-france-au-soutien-de-didier-deschamps-qui-a-perdu-sa-maman_AV-202606231004.html"
-      },
-      {
-        "title": "Didier Deschamps",
-        "source": "RMC Sport",
-        "date": "2026-06-23T21:41:03+00:00",
-        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-      },
-      {
-        "title": "Les notes de Koh-Lanta : les Reliques du destin épisode final",
-        "source": "SO FOOT",
-        "date": "2026-06-23T21:40:15+00:00",
-        "summary": "Le même suspense que France-Irak.",
-        "url": "https://www.sofoot.com/articles/les-notes-de-koh-lanta-les-reliques-du-destin-episode-final"
-      },
-      {
-        "title": "Mondial 2026 : Alf Hinge Haaland se confie sur la rivalité entre son fils Erling et Kylian Mbappé avant France-Norvège",
-        "source": "SO FOOT",
-        "date": "2026-06-23T20:55:56+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-alf-hinge-haaland-se-confie-sur-la-rivalite-entre-son-fils-erling-et-kylian-mbappe-avant-france-norvege"
-      },
-      {
-        "title": "France : Alexandre Oukidja, Florentin Pogba, Vincent Koziello… On connaît le casting de la 36e édition du stage de l’UNFP FC",
-        "source": "SO FOOT",
-        "date": "2026-06-23T20:37:50+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/france-alexandre-oukidja-florentin-pogba-vincent-koziello-on-connait-le-casting-de-la-36e-edition-du-stage-de-lunfp-fc"
-      },
-      {
-        "title": "Équipe de France : Didier Deschamps endeuillé rentre en France quelques jours",
-        "source": "RMC Sport",
-        "date": "2026-06-23T19:52:19+00:00",
-        "summary": "Didier Deschamps a eu la douleur d'apprendre le décès de sa mère ce matin. Le sélectionneur de l'Équipe de France va donc quitter le groupe pour quelques jours, Guy Stephan assurera les entrainements et le…",
-        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-didier-deschamps-endeuille-rentre-en-france-quelques-jours_VN-202606230952.html"
-      },
-      {
-        "title": "Mondial 2026 : Didier Deschamps n’assistera pas à la rencontre face à la Norvège après le décès de sa mère",
-        "source": "SO FOOT",
-        "date": "2026-06-23T19:43:00+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-didier-deschamps-nassistera-pas-a-la-rencontre-face-a-la-norvege-apres-le-deces-de-sa-mere"
       }
     ],
     "Ghana": [
+      {
+        "title": "Coupe du monde : le milieu de l’Angleterre Declan Rice boitait après le match face au Ghana",
+        "source": "SO FOOT",
+        "date": "2026-06-24T08:17:26+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/coupe-du-monde-declan-rice-boitait-apres-le-match-face-au-ghana"
+      },
+      {
+        "title": "Un arbitrage à deux vitesses? Pas de rouge pour Jude Bellingham, pourtant supris la main sur la bouche devant Jordan Ayew",
+        "source": "RMC Sport",
+        "date": "2026-06-24T06:05:36+00:00",
+        "summary": "Jude Bellingham, milieu de terrain anglais, a échappé à une exclusion alors qu'il a caché sa bouche avec sa main en s'adressant à Jordan Ayew ce mardi lors d'Angleterre-Ghana (0-0), comme l'exige pourtant une…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-arbitrage-a-deux-vitesses-pas-de-rouge-pour-jude-bellingham-pourtant-supris-la-main-sur-la-bouche-devant-jordan-ayew_AV-202606240242.html"
+      },
+      {
+        "title": "Coupe du monde : Ronaldo ouvre son compteur, l'Angleterre tenue en échec, les résultats et classements",
+        "source": "RMC Sport",
+        "date": "2026-06-24T05:05:27+00:00",
+        "summary": "Cristiano Ronaldo s'offre un doublé dans la victoire des siens 5-0 face à l'Ouzbékistan. L'Angleterre tenue en échec par le Ghana, la Croatie s'impose 1-0 face au Panama et la Colombie l'emporte face à la RD…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-du-monde-ronaldo-ouvre-son-compteur-l-angleterre-tenue-en-echec-les-resultats-et-classements_VN-202606240184.html"
+      },
       {
         "title": "Angleterre-Ghana: les Black Stars volés? Ces deux décisions arbitrales très litigieuses qui laisseront des regrets aux Ghanéens",
         "source": "RMC Sport",
@@ -4146,6 +5201,15 @@
         "url": "https://www.sofoot.com/breves/mondial-2026-jude-bellingham-devient-le-plus-jeune-joueur-de-lhistoire-a-atteindre-les-50-selections-avec-langleterre-face-au-ghana"
       }
     ],
+    "Haiti": [
+      {
+        "title": "Pronostic Maroc Haïti : analyse, cotes et prono Coupe du Monde 2026",
+        "source": "SO FOOT",
+        "date": "2026-06-24T08:31:28+00:00",
+        "summary": "Pronostic Maroc – Haïti : analyse de la rencontre, conseils de pari et cotes. Notre prono : victoire du Maroc ou pari 'les deux équipes marquent : non'.",
+        "url": "https://www.sofoot.com/breves/pronostic-maroc-haiti-analyse-cotes-et-prono-coupe-du-monde-2026"
+      }
+    ],
     "Iran": [
       {
         "title": "Mondial 2026 : Les États-Unis autorisent l’Iran à se rendre sur le sol américain deux jours avant leur dernier match de poule face à l’Égypte",
@@ -4157,28 +5221,28 @@
     ],
     "Jordan": [
       {
+        "title": "Un arbitrage à deux vitesses? Pas de rouge pour Jude Bellingham, pourtant supris la main sur la bouche devant Jordan Ayew",
+        "source": "RMC Sport",
+        "date": "2026-06-24T06:05:36+00:00",
+        "summary": "Jude Bellingham, milieu de terrain anglais, a échappé à une exclusion alors qu'il a caché sa bouche avec sa main en s'adressant à Jordan Ayew ce mardi lors d'Angleterre-Ghana (0-0), comme l'exige pourtant une…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-arbitrage-a-deux-vitesses-pas-de-rouge-pour-jude-bellingham-pourtant-supris-la-main-sur-la-bouche-devant-jordan-ayew_AV-202606240242.html"
+      },
+      {
         "title": "Les Jordaniens quittent San Francisco sur une note sucrée",
         "source": "SO FOOT",
         "date": "2026-06-23T16:26:56+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/les-jordaniens-quittent-san-francisco-sur-une-note-sucree"
-      },
-      {
-        "title": "Mondial 2026 : Un supporter jordanien meurt pendant le diffusion de Jordanie-Algérie",
-        "source": "SO FOOT",
-        "date": "2026-06-23T14:39:54+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-un-supporter-jordanien-meurt-pendant-le-diffusion-de-jordanie-algerie"
-      },
-      {
-        "title": "Coupe du monde 2026 – Algérie : Pourquoi la victoire contre la Jordanie a réveillé l’Algérie ?",
-        "source": "SO FOOT",
-        "date": "2026-06-23T12:00:23+00:00",
-        "summary": "Les Verts ont fait preuve de caractère pour lancer leur Mondial.",
-        "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-algerie-pourquoi-la-victoire-contre-la-jordanie-a-reveille-lalgerie"
       }
     ],
     "Panama": [
+      {
+        "title": "Coupe du monde : Ronaldo ouvre son compteur, l'Angleterre tenue en échec, les résultats et classements",
+        "source": "RMC Sport",
+        "date": "2026-06-24T05:05:27+00:00",
+        "summary": "Cristiano Ronaldo s'offre un doublé dans la victoire des siens 5-0 face à l'Ouzbékistan. L'Angleterre tenue en échec par le Ghana, la Croatie s'impose 1-0 face au Panama et la Colombie l'emporte face à la RD…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-du-monde-ronaldo-ouvre-son-compteur-l-angleterre-tenue-en-echec-les-resultats-et-classements_VN-202606240184.html"
+      },
       {
         "title": "Panama-Croatie: les Croates en mode service minimum, les Panaméens éliminés",
         "source": "RMC Sport",
@@ -4197,7 +5261,7 @@
         "title": "Mondial 2026 – Une Croatie hésitante élimine le Panama",
         "source": "SO FOOT",
         "date": "2026-06-24T00:56:48+00:00",
-        "summary": "Mais, au moins, Luka Modrić entre dans l'histoire.",
+        "summary": "Mais, au moins, Luka Modrić entre dans l’histoire.",
         "url": "https://www.sofoot.com/articles/mondial-2026-une-croatie-hesitante-elimine-le-panama"
       }
     ],
@@ -4217,20 +5281,6 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-k-avec-le-portugal-et-la-rd-congo_AV-202606170958.html"
       },
       {
-        "title": "Coupe du monde 2026: la réaction agacée de Cristiano Ronaldo à une question sur Messi après son doublé lors de Portugal-Ouzbékistan",
-        "source": "RMC Sport",
-        "date": "2026-06-23T20:10:59+00:00",
-        "summary": "Cristiano Ronaldo a inscrit un doublé lors du deuxième match du Portugal de cette Coupe du monde face à l'Ouzbékistan (5-0). Il a réagi après le match, souhaitant faire taire les critiques et les comparaisons…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-reaction-agacee-de-cristiano-ronaldo-a-une-question-sur-messi-apres-son-double-lors-de-portugal-ouzbekistan_AV-202606230965.html"
-      },
-      {
-        "title": "Portugal : Cristiano Ronaldo \"le meilleur de l'Histoire\" selon José Fonte",
-        "source": "RMC Sport",
-        "date": "2026-06-23T19:13:09+00:00",
-        "summary": "Un temp critiqué, Cristiano Ronaldo a tenu à répondre à ses détracteurs en inscrivant un doublé contre l'Ouzbékistan. Son ancien coéquipier José Fonte nous parle du \"meilleur joueur de l'Histoire\" selon lui.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-portugal-cristiano-ronaldo-le-meilleur-de-l-histoire-selon-jose-fonte_VN-202606230940.html"
-      },
-      {
         "title": "En direct : Portugal-Ouzbékistan",
         "source": "SO FOOT",
         "date": "2026-06-23T19:08:00+00:00",
@@ -4245,13 +5295,6 @@
         "url": "https://www.sofoot.com/articles/mondial-2026-grace-a-un-double-de-cristiano-ronaldo-le-portugal-balaye-louzbekistan-et-reprend-provisoirement-la-tete-du-groupe-k"
       },
       {
-        "title": "Portugal-Ouzbékistan: Ronaldo en mode doublé, la Seleçao est lancée",
-        "source": "RMC Sport",
-        "date": "2026-06-23T19:04:53+00:00",
-        "summary": "Très critiqué, Cristiano Ronaldo a répondu présent avec un doublé et en battant plusieurs nouveaux records. Grâce à lui, le Portugal a écrasé l'Ouzbékistan (5-0), lors de la deuxième journée de la Coupe du…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-ouzbekistan-suivez-le-match-du-groupe-k-de-la-coupe-du-monde-2026-en-live_LS-202606230569.html"
-      },
-      {
         "title": "Mondial 2026 : Cristiano Ronaldo est bien présent dans le onze de départ du Portugal, contrairement à Bernardo Silva",
         "source": "SO FOOT",
         "date": "2026-06-23T17:12:15+00:00",
@@ -4259,7 +5302,30 @@
         "url": "https://www.sofoot.com/breves/mondial-2026-cristiano-ronaldo-est-bien-present-dans-le-onze-de-depart-du-portugal-contrairement-a-bernardo-silva"
       }
     ],
+    "Qatar": [
+      {
+        "title": "Pronostic Bosnia-Herzegovina Qatar : analyse, cotes et prono Coupe du Monde",
+        "source": "SO FOOT",
+        "date": "2026-06-24T08:31:16+00:00",
+        "summary": "Pronostic Bosnia-Herzegovina Qatar : analyse complète, forme récente et notre pari conseillé 'Bosnia-Herzegovina vainqueur' pour ce choc Coupe du Monde.",
+        "url": "https://www.sofoot.com/breves/pronostic-bosnia-herzegovina-qatar-analyse-cotes-et-prono-coupe-du-monde"
+      },
+      {
+        "title": "En direct : Bosnie-Herzégovine – Qatar",
+        "source": "SO FOOT",
+        "date": "2026-06-24T07:49:43+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/en-direct-bosnie-herzegovine-qatar"
+      }
+    ],
     "Senegal": [
+      {
+        "title": "Coupe du monde 2026: gros coup dur pour le Sénégal, Édouard Mendy forfait pour le match crucial contre l'Irak",
+        "source": "RMC Sport",
+        "date": "2026-06-24T04:49:33+00:00",
+        "summary": "Le Sénégal devra se passer de son gardien titulaire Édouard Mendy lors de son match couperet face à l'Irak. Les Lions de la Teranga doivent absolument l'emporter largement pour voir les 16es de finale.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/gros-coup-dur-pour-le-senegal-edouard-mendy-forfait-pour-le-match-crucial-contre-l-irak_AV-202606240161.html"
+      },
       {
         "title": "Mondial 2026 – Gros coup dur pour Edouard Mendy et le Sénégal",
         "source": "SO FOOT",
@@ -4291,32 +5357,18 @@
     ],
     "Uzbekistan": [
       {
+        "title": "Coupe du monde : Ronaldo ouvre son compteur, l'Angleterre tenue en échec, les résultats et classements",
+        "source": "RMC Sport",
+        "date": "2026-06-24T05:05:27+00:00",
+        "summary": "Cristiano Ronaldo s'offre un doublé dans la victoire des siens 5-0 face à l'Ouzbékistan. L'Angleterre tenue en échec par le Ghana, la Croatie s'impose 1-0 face au Panama et la Colombie l'emporte face à la RD…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-coupe-du-monde-ronaldo-ouvre-son-compteur-l-angleterre-tenue-en-echec-les-resultats-et-classements_VN-202606240184.html"
+      },
+      {
         "title": "Portugal-Ouzbékistan: \"Je croyais qu'il n'était jamais parti?\", Zlatan détruit Cristiano Ronaldo et son \"I'm back\"",
         "source": "RMC Sport",
         "date": "2026-06-24T04:33:58+00:00",
         "summary": "Jamais avare de bons mots, Zlatan Ibrahimovic a donné son avis sur la performance de Cristiano Ronaldo, auteur d'un doublé face à l'Ouzbékistan. Et l'attaquant suédois n'a pas été tendre avec le capitaine du…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/portugal-ouzbekistan-je-croyais-qu-il-n-etait-jamais-parti-zlatan-detruit-cristiano-ronaldo-et-son-i-m-back_AV-202606240153.html"
-      },
-      {
-        "title": "Coupe du monde 2026: \"Il est de retour\", la presse portugaise retourne sa veste après le doublé de Ronaldo contre l’Ouzbékistan",
-        "source": "RMC Sport",
-        "date": "2026-06-23T20:28:49+00:00",
-        "summary": "Après avoir sorti les griffes à l’issue du match nul face à la RD Congo, la presse portugaise a salué la réaction de la Seleçao après la large victoire face à l’Ouzbékistan ce mardi (5-0). Auteur d’un doublé,…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-de-retour-la-presse-portugaise-retourne-sa-veste-apres-le-double-de-ronaldo-contre-l-ouzbekistan_AV-202606230973.html"
-      },
-      {
-        "title": "Coupe du monde 2026: la réaction agacée de Cristiano Ronaldo à une question sur Messi après son doublé lors de Portugal-Ouzbékistan",
-        "source": "RMC Sport",
-        "date": "2026-06-23T20:10:59+00:00",
-        "summary": "Cristiano Ronaldo a inscrit un doublé lors du deuxième match du Portugal de cette Coupe du monde face à l'Ouzbékistan (5-0). Il a réagi après le match, souhaitant faire taire les critiques et les comparaisons…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-reaction-agacee-de-cristiano-ronaldo-a-une-question-sur-messi-apres-son-double-lors-de-portugal-ouzbekistan_AV-202606230965.html"
-      },
-      {
-        "title": "Portugal : Cristiano Ronaldo \"le meilleur de l'Histoire\" selon José Fonte",
-        "source": "RMC Sport",
-        "date": "2026-06-23T19:13:09+00:00",
-        "summary": "Un temp critiqué, Cristiano Ronaldo a tenu à répondre à ses détracteurs en inscrivant un doublé contre l'Ouzbékistan. Son ancien coéquipier José Fonte nous parle du \"meilleur joueur de l'Histoire\" selon lui.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-portugal-cristiano-ronaldo-le-meilleur-de-l-histoire-selon-jose-fonte_VN-202606230940.html"
       },
       {
         "title": "En direct : Portugal-Ouzbékistan",
@@ -4331,13 +5383,6 @@
         "date": "2026-06-23T19:06:48+00:00",
         "summary": "Pas contents ? Doublé.",
         "url": "https://www.sofoot.com/articles/mondial-2026-grace-a-un-double-de-cristiano-ronaldo-le-portugal-balaye-louzbekistan-et-reprend-provisoirement-la-tete-du-groupe-k"
-      },
-      {
-        "title": "Portugal-Ouzbékistan: Ronaldo en mode doublé, la Seleçao est lancée",
-        "source": "RMC Sport",
-        "date": "2026-06-23T19:04:53+00:00",
-        "summary": "Très critiqué, Cristiano Ronaldo a répondu présent avec un doublé et en battant plusieurs nouveaux records. Grâce à lui, le Portugal a écrasé l'Ouzbékistan (5-0), lors de la deuxième journée de la Coupe du…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-ouzbekistan-suivez-le-match-du-groupe-k-de-la-coupe-du-monde-2026-en-live_LS-202606230569.html"
       }
     ]
   },
@@ -4456,11 +5501,7 @@
       "url": "https://www.lephoceen.fr/rss"
     }
   ],
-  "errors": [
-    "classements ESPN: ValueError",
-    "buteurs ESPN: ValueError",
-    "passeurs ESPN: ValueError"
-  ],
+  "errors": [],
   "players_index": [
     {
       "name": "Alexander Isak",
@@ -4470,7 +5511,18 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
       "associated_team": "Sweden",
-      "updated_at": "2026-06-24T04:35:54+00:00",
+      "updated_at": "2026-06-24T08:33:25+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Deniz Undav",
+      "club_current": "Germany",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/273300.png",
+      "associated_team": "Germany",
+      "updated_at": "2026-06-24T08:33:25+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4479,9 +5531,20 @@
       "country": "",
       "position": "",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/253989.png",
       "associated_team": "Norway",
-      "updated_at": "2026-06-24T04:35:54+00:00",
+      "updated_at": "2026-06-24T08:33:25+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Jonathan David",
+      "club_current": "Canada",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/273499.png",
+      "associated_team": "Canada",
+      "updated_at": "2026-06-24T08:33:25+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4492,7 +5555,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/460632.png",
       "associated_team": "Germany",
-      "updated_at": "2026-06-24T04:35:54+00:00",
+      "updated_at": "2026-06-24T08:33:25+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4501,9 +5564,9 @@
       "country": "France",
       "position": "",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/231388.png",
       "associated_team": "France",
-      "updated_at": "2026-06-24T04:35:54+00:00",
+      "updated_at": "2026-06-24T08:33:25+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4512,9 +5575,9 @@
       "country": "",
       "position": "",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/45843.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-06-24T04:35:54+00:00",
+      "updated_at": "2026-06-24T08:33:25+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4525,7 +5588,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-06-24T04:35:54+00:00",
+      "updated_at": "2026-06-24T08:33:25+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
