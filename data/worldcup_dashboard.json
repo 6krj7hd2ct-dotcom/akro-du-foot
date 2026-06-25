@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-25T20:22:14+00:00",
+  "generated_at": "2026-06-25T22:45:45+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -1044,10 +1044,10 @@
           "home_country_code": "CUW",
           "away_country_code": "CIV",
           "home_score": "0",
-          "away_score": "1",
-          "status": "LIVE",
-          "status_state": "in",
-          "completed": false,
+          "away_score": "2",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "Lincoln Financial Field",
           "city": "Philadelphia, Pennsylvania"
         },
@@ -1062,11 +1062,11 @@
           "away_espn_id": "481",
           "home_country_code": "ECU",
           "away_country_code": "GER",
-          "home_score": "1",
+          "home_score": "2",
           "away_score": "1",
-          "status": "LIVE",
-          "status_state": "in",
-          "completed": false,
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "MetLife Stadium",
           "city": "East Rutherford, New Jersey"
         },
@@ -1460,13 +1460,13 @@
         {
           "id": "760490",
           "date": "2026-06-30T17:00Z",
-          "home_team": "À déterminer",
+          "home_team": "Ivory Coast",
           "away_team": "À déterminer",
-          "home_flag_url": "",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
           "away_flag_url": "",
-          "home_espn_id": "5932",
+          "home_espn_id": "4789",
           "away_espn_id": "131501",
-          "home_country_code": "2E",
+          "home_country_code": "CIV",
           "away_country_code": "2I",
           "home_score": "",
           "away_score": "",
@@ -2068,10 +2068,10 @@
       "home_country_code": "CUW",
       "away_country_code": "CIV",
       "home_score": "0",
-      "away_score": "1",
-      "status": "LIVE",
-      "status_state": "in",
-      "completed": false,
+      "away_score": "2",
+      "status": "Terminé",
+      "status_state": "post",
+      "completed": true,
       "venue": "Lincoln Financial Field",
       "city": "Philadelphia, Pennsylvania"
     },
@@ -2086,11 +2086,11 @@
       "away_espn_id": "481",
       "home_country_code": "ECU",
       "away_country_code": "GER",
-      "home_score": "1",
+      "home_score": "2",
       "away_score": "1",
-      "status": "LIVE",
-      "status_state": "in",
-      "completed": false,
+      "status": "Terminé",
+      "status_state": "post",
+      "completed": true,
       "venue": "MetLife Stadium",
       "city": "East Rutherford, New Jersey"
     },
@@ -2134,7 +2134,7 @@
     }
   ],
   "group_matches_total": 72,
-  "group_matches_remaining": 18,
+  "group_matches_remaining": 16,
   "knockout_matches_total": 32,
   "knockout_matches_remaining": 32,
   "competition_stage": "Phase de groupes",
@@ -3126,11 +3126,67 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "DIRECT. Équateur-Allemagne: la Tri revient immédiatement à hauteur, déjà 2 buts en 10 minutes",
+      "title": "Coupe du monde 2026: résultats et classement final du groupe E",
       "source": "RMC Sport",
-      "date": "2026-06-25T20:21:14+00:00",
-      "summary": "Déjà qualifiée pour la suite de la compétition, la Mannschaft défie l’Équateur ce jeudi. La nation sud-américaine n’a plus le droit à l’erreur pour espérer arracher son ticket pour la suite du Mondial. Coup…",
+      "date": "2026-06-25T22:40:41+00:00",
+      "summary": "La Coupe du monde 2026 a débuté ce jeudi 11 juin aux États-Unis, au Mexique et au Canada. Après six matchs âprement disputés, le groupe E du Mondial 2026 a rendu son verdict.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-e_AV-202606140372.html"
+    },
+    {
+      "title": "Équateur-Allemagne: la Tri fait tomber la Mannschaft et arrache son billet pour les 16es de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-25T22:34:32+00:00",
+      "summary": "Petit exploit de l'Équateur qui devait faire tomber l'Allemagne et a gagné son pari avec une victoire 2-1 ! La Tri prend donc la troisième place et sécurise sa place pour les 16es de finale de la Coupe du…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-equateur-allemagne-suivez-le-match-de-la-coupe-du-monde-2026-en-live_LS-202606250030.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Elliot Anderson à Manchester City, c'est fait !",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:25:13+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "\"Beaucoup d’entre nous n’avions jamais mis les pieds dans un stade\", le Qatar a financé le voyage de ses supporters à la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:11:58+00:00",
+      "summary": "Billets d’avion, chambres d'hôtel, places au stade, maillots… selon une enquête du Telegraph, le Qatar a financé le voyage de nombreux supporters de la sélection qatarie aux Etats-Unis pour la Coupe du monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/beaucoup-d-entre-nous-n-avions-jamais-mis-les-pieds-dans-un-stade-le-qatar-a-finance-le-voyage-de-ses-supporters-a-la-coupe-du-monde_AV-202606250952.html"
+    },
+    {
+      "title": "DIRECT. Turquie-États-Unis: suivez le match du groupe D de la Coupe du monde en live",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:02:00+00:00",
+      "summary": "Déjà éliminée de la compétition, la Turquie défie ce vendredi les États-Unis sur ses terres. Dans un match sans enjeux pour la formation turque, la team USA aura à cœur de briller devant son public. Coup…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-turquie-etats-unis-suivez-le-match-du-groupe-d-de-la-coupe-du-monde-en-live_LS-202606250659.html"
+    },
+    {
+      "title": "France-Norvège: \"Haaland est meilleur que Mbappé\", malgré la popularité des Bleus, les jeunes norvégiens croient à l'exploit",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:59:01+00:00",
+      "summary": "C’est la grosse affiche du groupe I de la Coupe du monde 2026: France-Norvège (vendredi à 21h). Les Bleus face aux vikings norvégiens. Kylian Mbappé d’un côté, Erling Haaland de l’autre. Et pour illustrer…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-haaland-est-meilleur-que-mbappe-malgre-la-popularite-des-bleus-les-jeunes-norvegiens-croient-a-l-exploit_AV-202606250950.html"
+    },
+    {
+      "title": "Équateur-Allemagne: en vidéo, le but polémique de Sané après un pied très haut de Pavlovic",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:47:02+00:00",
+      "summary": "Le but de Leroy Sané lors du match de la Coupe du monde 2026 entre l'Allemagne et l'Équateur, ce jeudi, a été validé malgré un pied (très) haut d'Aleksandar Pavlovic sur l'action.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equateur-allemagne-le-but-polemique-de-sane-apres-un-pied-tres-haut-de-pavlovic_AN-202606250947.html"
+    },
+    {
+      "title": "France-Norvège : vers une attaque Olise, Doué, Mbappé, Dembélé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:44:58+00:00",
+      "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde 2026, l'équipe de France visera la première place du groupe I face à la Norvège, vendredi (21h). Si des changements vont être apportés par le staff…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-vers-une-attaque-olise-doue-mbappe-dembele_AV-202606250946.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde, Norvège-France J-1: la compo probable des Bleus avec Dembélé et Mbappé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:40:19+00:00",
+      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
     },
     {
       "title": "France-Norvège: \"Il nous a donné une mission\", le message de soutien des Bleus à Deschamps, endeuillé",
@@ -3154,13 +3210,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-saliba-va-souffler-contre-la-norvege-lacroix-devrait-le-remplacer_AV-202606250918.html"
     },
     {
-      "title": "DIRECT. Coupe du monde, Norvège-France J-1: suivez la conférence de presse des Bleus et toute l'actualité en live",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:26:43+00:00",
-      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
-    },
-    {
       "title": "Equipe de France: \"Le mec qui ne joue pas a un rôle déterminant\", Dugarry défend le rôle des remplaçants à la Coupe du monde",
       "source": "RMC Sport",
       "date": "2026-06-25T18:30:58+00:00",
@@ -3173,51 +3222,37 @@
       "date": "2026-06-25T18:06:06+00:00",
       "summary": "L’équipe de France affronte la Norvège vendredi soir à 21 heures, heure française. Une rencontre programmée au Gillette Stadium de Boston où les familles des Bleus seront présentes en masse.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-avions-affretes-diner-apres-france-norvege-les-familles-des-bleus-en-route-pour-boston_AV-202606250868.html"
-    },
-    {
-      "title": "DIRECT. Mercato: Nico Paz de retour à Madrid",
-      "source": "RMC Sport",
-      "date": "2026-06-25T17:33:37+00:00",
-      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
-    },
-    {
-      "title": "Paraguay-Australie: pourquoi un match nul semble le résultat attendu de ce match",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:54:00+00:00",
-      "summary": "Respectivement 2e et 3e du groupe D, l’Australie et le Paraguay, qui s’affrontent dans la nuit de jeudi à vendredi à San Francisco, pourraient se contenter d’un match nul pour accéder aux 16es de finale de la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/paraguay-australie-pourquoi-un-match-nul-semble-le-resultat-attendu-de-ce-match_AN-202606250800.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il y a quelque chose qui cloche\", quel est le problème avec le ballon?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:46:01+00:00",
-      "summary": "Pour plusieurs observateurs, le ballon de la Coupe du monde 2026 rend certains arrêts trop difficiles pour les gardiens.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-a-quelque-chose-qui-cloche-quel-est-le-probleme-avec-le-ballon_AV-202606250794.html"
-    },
-    {
-      "title": "Coupe du monde 2026: finir premier de son groupe plutôt que deuxième, est-ce vraiment un avantage?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:12:40+00:00",
-      "summary": "Alors que la troisième journée de la phase de groupe de la Coupe du monde 2026 a commencé mercredi, les affiches des seizièmes de finale se précisent. Si sept équipes se sont déjà qualifiées avant leur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-finir-premier-de-son-groupe-plutot-que-deuxieme-est-ce-vraiment-un-avantage_AV-202606250761.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le Maroc peut-il \"viser le titre\", comme le souhaite son sélectionneur Mohamed Ouahbi?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T14:27:45+00:00",
-      "summary": "Après un premier tour plutôt convaincant, le Maroc s’est qualifié pour les 16es de finale de la Coupe du monde 2026, en terminant deuxième du groupe C derrière le Brésil. De quoi faire des Lions de l’Atlas de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-maroc-peut-il-viser-le-titre-comme-le-souhaite-son-selectionneur-mohamed-ouahbi_AV-202606250681.html"
-    },
-    {
-      "title": "Drame au Mexique pendant la Coupe du monde 2026: un automobiliste fonce dans une foule de supporters, une dizaine de blessés",
-      "source": "RMC Sport",
-      "date": "2026-06-25T14:22:29+00:00",
-      "summary": "Après la victoire du Mexique face à la Tchéquie (3-0), mercredi, à la Coupe du monde 2026, un automobiliste a foncé sur des supporters dans la station balnéaire de Cabo San Lucas. Plusieurs personnes ont été…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/drame-au-mexique-pendant-la-coupe-du-monde-2026-un-automobiliste-fonce-dans-une-foule-de-supporters-une-dizaine-de-blesses_AV-202606250677.html"
     }
   ],
   "france_news": [
+    {
+      "title": "France-Norvège: \"Haaland est meilleur que Mbappé\", malgré la popularité des Bleus, les jeunes norvégiens croient à l'exploit",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:59:01+00:00",
+      "summary": "C’est la grosse affiche du groupe I de la Coupe du monde 2026: France-Norvège (vendredi à 21h). Les Bleus face aux vikings norvégiens. Kylian Mbappé d’un côté, Erling Haaland de l’autre. Et pour illustrer…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-haaland-est-meilleur-que-mbappe-malgre-la-popularite-des-bleus-les-jeunes-norvegiens-croient-a-l-exploit_AV-202606250950.html"
+    },
+    {
+      "title": "France-Norvège : Guy Stéphan alignera \"la meilleure équipe possible\", mais sans William Saliba",
+      "source": "France Info",
+      "date": "2026-06-25T20:50:36+00:00",
+      "summary": "Pour conclure la phase de groupes de cette Coupe du monde, l'adjoint de Didier Deschamps a insisté sur l'importance de terminer ce premier tour à la première place.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/france-norvege-guy-stephan-alignera-la-meilleure-equipe-possible-mais-sans-william-saliba_8079626.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "France-Norvège : vers une attaque Olise, Doué, Mbappé, Dembélé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:44:58+00:00",
+      "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde 2026, l'équipe de France visera la première place du groupe I face à la Norvège, vendredi (21h). Si des changements vont être apportés par le staff…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-vers-une-attaque-olise-doue-mbappe-dembele_AV-202606250946.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde, Norvège-France J-1: la compo probable des Bleus avec Dembélé et Mbappé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:40:19+00:00",
+      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
+    },
     {
       "title": "Norvège - France : \"Gagner tous les matches\" Tchouameni clair sur l'objectif des Bleus",
       "source": "RMC Sport",
@@ -3247,13 +3282,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-saliba-va-souffler-contre-la-norvege-lacroix-devrait-le-remplacer_AV-202606250918.html"
     },
     {
-      "title": "DIRECT. Coupe du monde, Norvège-France J-1: suivez la conférence de presse des Bleus et toute l'actualité en live",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:26:43+00:00",
-      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
-    },
-    {
       "title": "Norvège - France : \"Je ne suis pas à ma place\" confie Guy Stephan lors de la conférence de presse",
       "source": "RMC Sport",
       "date": "2026-06-25T19:16:27+00:00",
@@ -3266,6 +3294,13 @@
       "date": "2026-06-25T18:30:58+00:00",
       "summary": "Alors que la question se pose de savoir si les Bleus feront tourner face à la Norvège, vendredi (21h) pour le troisième match de poule de la Coupe du monde 2026, Christophe Dugarry tient à rappeler que les…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-le-mec-qui-ne-joue-pas-a-un-role-determinant-dugarry-defend-le-role-des-remplacants-a-la-coupe-du-monde_AV-202606250887.html"
+    },
+    {
+      "title": "Norvège - France : \"Un match très serré\" selon les jeunes norvégiens",
+      "source": "RMC Sport",
+      "date": "2026-06-25T18:23:41+00:00",
+      "summary": "Rencontrés avant la rencontre, les joueurs du Lillehammer FK en Norvège nous parlent de la force offensive de l'Équipe de France face à celle de la Norvège.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-norvege-france-un-match-tres-serre-selon-les-jeunes-norvegiens_VN-202606250949.html"
     },
     {
       "title": "Coupe du monde 2026: deux avions affrétés, dîner après France-Norvège… les familles des Bleus en route pour Boston",
@@ -3357,43 +3392,71 @@
       "date": "2026-06-22T16:40:32+00:00",
       "summary": "L'équipe de France aborde son deuxième match du Mondial avec le statut d'immense favorite mais toutes les précautions ont été prises pour éviter un relâchement face à un adversaire qui peut faire des dégâts…",
       "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-ce-n-est-pas-une-petite-equipe-pourquoi-didier-deschamps-refuse-de-sous-estimer-l-irak_8072777.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Comment éviter de se faire spoiler les buts par ses voisins lors des matchs de la Coupe du monde ?",
-      "source": "France Info",
-      "date": "2026-06-22T12:59:14+00:00",
-      "summary": "Pendant la Coupe du monde, plusieurs secondes peuvent séparer deux téléspectateurs qui regardent pourtant le même match. On vous explique pourquoi vous vous faites parfois spoiler les buts (et comment…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/comment-eviter-de-se-faire-spoiler-les-buts-par-ses-voisins-lors-des-matchs-de-la-coupe-du-monde_8070830.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "\"Je vais essayer de donner la meilleure image de mon pays\", s'engage Kylian Mbappé à la veille du match de la Coupe du monde France-Irak",
-      "source": "France Info",
-      "date": "2026-06-21T22:21:55+00:00",
-      "summary": "Contrairement au premier rendez-vous du Mondial, le capitaine des Bleus a accompagné Didier Deschamps pour la conférence de presse de veille de match, dimanche.",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/coupe-du-monde-je-vais-essayer-de-donner-la-meilleure-image-de-mon-pays-s-engage-kylian-mbappe-a-la-veille-de-france-irak_8073131.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Dans les coulisses de l'équipe de France de football avant le match contre l'Irak",
-      "source": "France Info",
-      "date": "2026-06-21T21:13:51+00:00",
-      "summary": "Plus qu'un jour avant le deuxième rendez-vous des Bleus en Coupe du Monde. Ils vont quitter Boston pour la Philadelphie, où ils vont rencontrer l’Irak, lundi 22 juin. Découverte des coulisses de la…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/dans-les-coulisses-de-l-equipe-de-france-de-football-avant-le-match-contre-l-irak_8073134.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Kylian Mbappé superstar aux États-Unis",
-      "source": "France Info",
-      "date": "2026-06-21T06:00:01+00:00",
-      "summary": "Depuis le début de cette Coupe du monde, Kylian Mbappé suscite un véritable engouement pour les Américains. L'attaquant français est devenu l'une des principales attractions des entrainements de l'Équipe de…",
-      "url": "https://www.franceinfo.fr/sports/kylian-mbappe-superstar-aux-etats-unis_8069288.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
-      "title": "DIRECT. Équateur-Allemagne: la Tri revient immédiatement à hauteur, déjà 2 buts en 10 minutes",
+      "title": "Coupe du monde 2026: résultats et classement final du groupe E",
       "source": "RMC Sport",
-      "date": "2026-06-25T20:21:14+00:00",
-      "summary": "Déjà qualifiée pour la suite de la compétition, la Mannschaft défie l’Équateur ce jeudi. La nation sud-américaine n’a plus le droit à l’erreur pour espérer arracher son ticket pour la suite du Mondial. Coup…",
+      "date": "2026-06-25T22:40:41+00:00",
+      "summary": "La Coupe du monde 2026 a débuté ce jeudi 11 juin aux États-Unis, au Mexique et au Canada. Après six matchs âprement disputés, le groupe E du Mondial 2026 a rendu son verdict.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-e_AV-202606140372.html"
+    },
+    {
+      "title": "Équateur-Allemagne: la Tri fait tomber la Mannschaft et arrache son billet pour les 16es de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-25T22:34:32+00:00",
+      "summary": "Petit exploit de l'Équateur qui devait faire tomber l'Allemagne et a gagné son pari avec une victoire 2-1 ! La Tri prend donc la troisième place et sécurise sa place pour les 16es de finale de la Coupe du…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-equateur-allemagne-suivez-le-match-de-la-coupe-du-monde-2026-en-live_LS-202606250030.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Elliot Anderson à Manchester City, c'est fait !",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:25:13+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "\"Beaucoup d’entre nous n’avions jamais mis les pieds dans un stade\", le Qatar a financé le voyage de ses supporters à la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:11:58+00:00",
+      "summary": "Billets d’avion, chambres d'hôtel, places au stade, maillots… selon une enquête du Telegraph, le Qatar a financé le voyage de nombreux supporters de la sélection qatarie aux Etats-Unis pour la Coupe du monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/beaucoup-d-entre-nous-n-avions-jamais-mis-les-pieds-dans-un-stade-le-qatar-a-finance-le-voyage-de-ses-supporters-a-la-coupe-du-monde_AV-202606250952.html"
+    },
+    {
+      "title": "DIRECT. Turquie-États-Unis: suivez le match du groupe D de la Coupe du monde en live",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:02:00+00:00",
+      "summary": "Déjà éliminée de la compétition, la Turquie défie ce vendredi les États-Unis sur ses terres. Dans un match sans enjeux pour la formation turque, la team USA aura à cœur de briller devant son public. Coup…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-turquie-etats-unis-suivez-le-match-du-groupe-d-de-la-coupe-du-monde-en-live_LS-202606250659.html"
+    },
+    {
+      "title": "France-Norvège: \"Haaland est meilleur que Mbappé\", malgré la popularité des Bleus, les jeunes norvégiens croient à l'exploit",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:59:01+00:00",
+      "summary": "C’est la grosse affiche du groupe I de la Coupe du monde 2026: France-Norvège (vendredi à 21h). Les Bleus face aux vikings norvégiens. Kylian Mbappé d’un côté, Erling Haaland de l’autre. Et pour illustrer…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-haaland-est-meilleur-que-mbappe-malgre-la-popularite-des-bleus-les-jeunes-norvegiens-croient-a-l-exploit_AV-202606250950.html"
+    },
+    {
+      "title": "Équateur-Allemagne: en vidéo, le but polémique de Sané après un pied très haut de Pavlovic",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:47:02+00:00",
+      "summary": "Le but de Leroy Sané lors du match de la Coupe du monde 2026 entre l'Allemagne et l'Équateur, ce jeudi, a été validé malgré un pied (très) haut d'Aleksandar Pavlovic sur l'action.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equateur-allemagne-le-but-polemique-de-sane-apres-un-pied-tres-haut-de-pavlovic_AN-202606250947.html"
+    },
+    {
+      "title": "France-Norvège : vers une attaque Olise, Doué, Mbappé, Dembélé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:44:58+00:00",
+      "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde 2026, l'équipe de France visera la première place du groupe I face à la Norvège, vendredi (21h). Si des changements vont être apportés par le staff…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-vers-une-attaque-olise-doue-mbappe-dembele_AV-202606250946.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde, Norvège-France J-1: la compo probable des Bleus avec Dembélé et Mbappé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:40:19+00:00",
+      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
     },
     {
       "title": "France-Norvège: \"Il nous a donné une mission\", le message de soutien des Bleus à Deschamps, endeuillé",
@@ -3417,13 +3480,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-saliba-va-souffler-contre-la-norvege-lacroix-devrait-le-remplacer_AV-202606250918.html"
     },
     {
-      "title": "DIRECT. Coupe du monde, Norvège-France J-1: suivez la conférence de presse des Bleus et toute l'actualité en live",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:26:43+00:00",
-      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
-    },
-    {
       "title": "Equipe de France: \"Le mec qui ne joue pas a un rôle déterminant\", Dugarry défend le rôle des remplaçants à la Coupe du monde",
       "source": "RMC Sport",
       "date": "2026-06-25T18:30:58+00:00",
@@ -3436,64 +3492,148 @@
       "date": "2026-06-25T18:06:06+00:00",
       "summary": "L’équipe de France affronte la Norvège vendredi soir à 21 heures, heure française. Une rencontre programmée au Gillette Stadium de Boston où les familles des Bleus seront présentes en masse.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-avions-affretes-diner-apres-france-norvege-les-familles-des-bleus-en-route-pour-boston_AV-202606250868.html"
-    },
-    {
-      "title": "DIRECT. Mercato: Nico Paz de retour à Madrid",
-      "source": "RMC Sport",
-      "date": "2026-06-25T17:33:37+00:00",
-      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
-    },
-    {
-      "title": "Paraguay-Australie: pourquoi un match nul semble le résultat attendu de ce match",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:54:00+00:00",
-      "summary": "Respectivement 2e et 3e du groupe D, l’Australie et le Paraguay, qui s’affrontent dans la nuit de jeudi à vendredi à San Francisco, pourraient se contenter d’un match nul pour accéder aux 16es de finale de la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/paraguay-australie-pourquoi-un-match-nul-semble-le-resultat-attendu-de-ce-match_AN-202606250800.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il y a quelque chose qui cloche\", quel est le problème avec le ballon?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:46:01+00:00",
-      "summary": "Pour plusieurs observateurs, le ballon de la Coupe du monde 2026 rend certains arrêts trop difficiles pour les gardiens.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-a-quelque-chose-qui-cloche-quel-est-le-probleme-avec-le-ballon_AV-202606250794.html"
-    },
-    {
-      "title": "Coupe du monde 2026: finir premier de son groupe plutôt que deuxième, est-ce vraiment un avantage?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:12:40+00:00",
-      "summary": "Alors que la troisième journée de la phase de groupe de la Coupe du monde 2026 a commencé mercredi, les affiches des seizièmes de finale se précisent. Si sept équipes se sont déjà qualifiées avant leur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-finir-premier-de-son-groupe-plutot-que-deuxieme-est-ce-vraiment-un-avantage_AV-202606250761.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le Maroc peut-il \"viser le titre\", comme le souhaite son sélectionneur Mohamed Ouahbi?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T14:27:45+00:00",
-      "summary": "Après un premier tour plutôt convaincant, le Maroc s’est qualifié pour les 16es de finale de la Coupe du monde 2026, en terminant deuxième du groupe C derrière le Brésil. De quoi faire des Lions de l’Atlas de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-maroc-peut-il-viser-le-titre-comme-le-souhaite-son-selectionneur-mohamed-ouahbi_AV-202606250681.html"
-    },
-    {
-      "title": "Drame au Mexique pendant la Coupe du monde 2026: un automobiliste fonce dans une foule de supporters, une dizaine de blessés",
-      "source": "RMC Sport",
-      "date": "2026-06-25T14:22:29+00:00",
-      "summary": "Après la victoire du Mexique face à la Tchéquie (3-0), mercredi, à la Coupe du monde 2026, un automobiliste a foncé sur des supporters dans la station balnéaire de Cabo San Lucas. Plusieurs personnes ont été…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/drame-au-mexique-pendant-la-coupe-du-monde-2026-un-automobiliste-fonce-dans-une-foule-de-supporters-une-dizaine-de-blesses_AV-202606250677.html"
     }
   ],
   "all_news": [
     {
-      "title": "DIRECT. Équateur-Allemagne: la Tri revient immédiatement à hauteur, déjà 2 buts en 10 minutes",
+      "title": "Coupe du monde 2026: résultats et classement final du groupe E",
       "source": "RMC Sport",
-      "date": "2026-06-25T20:21:14+00:00",
-      "summary": "Déjà qualifiée pour la suite de la compétition, la Mannschaft défie l’Équateur ce jeudi. La nation sud-américaine n’a plus le droit à l’erreur pour espérer arracher son ticket pour la suite du Mondial. Coup…",
+      "date": "2026-06-25T22:40:41+00:00",
+      "summary": "La Coupe du monde 2026 a débuté ce jeudi 11 juin aux États-Unis, au Mexique et au Canada. Après six matchs âprement disputés, le groupe E du Mondial 2026 a rendu son verdict.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-e_AV-202606140372.html"
+    },
+    {
+      "title": "DIRECT. Japon-Suède: suivez le match du groupe F du Mondial 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-25T22:38:58+00:00",
+      "summary": "Toujours invaincu en deux matchs et prétendant à la première place du groupe F, le Japon veut s'imposer contre la Suède lors de la troisième journée et jouer un sale tour aux Pays-Bas. Les Scandinaves ont…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
+    },
+    {
+      "title": "Équateur-Allemagne: la Tri fait tomber la Mannschaft et arrache son billet pour les 16es de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-25T22:34:32+00:00",
+      "summary": "Petit exploit de l'Équateur qui devait faire tomber l'Allemagne et a gagné son pari avec une victoire 2-1 ! La Tri prend donc la troisième place et sécurise sa place pour les 16es de finale de la Coupe du…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-equateur-allemagne-suivez-le-match-de-la-coupe-du-monde-2026-en-live_LS-202606250030.html"
     },
     {
-      "title": "DIRECT. Curaçao-Côte d’Ivoire: Nicolas Pépé lance parfaitement les Ivoiriens",
+      "title": "En direct : Équateur – Allemagne",
+      "source": "SO FOOT",
+      "date": "2026-06-25T22:14:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-equateur-allemagne"
+    },
+    {
+      "title": "Curaçao-Côte d’Ivoire: qualification historique des Ivoiriens en phase finale après leur succès face aux Curaciens",
       "source": "RMC Sport",
-      "date": "2026-06-25T20:20:04+00:00",
-      "summary": "La Côte d’Ivoire va chercher à sécuriser sa qualification pour les 16es de finale ce jeudi face au plus petit pays de ce Mondial. En cas de succès et du résultat des autres matchs du groupe E, tout reste…",
+      "date": "2026-06-25T22:07:51+00:00",
+      "summary": "C'est historique, la Côte d'Ivoire se qualifie pour la première fois en phase finale d'une Coupe du monde après son succès face à Curaçao (2-0) ! Auteur d'un doublé, Nicolas Pépé a permis à son équipe de…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-curacao-cote-d-ivoire-suivez-le-match-de-la-coupe-du-monde-2026-en-live_LS-202606250029.html"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des 16es de finale du Mondial avec toutes les équipes qualifiées",
+      "source": "RMC Sport",
+      "date": "2026-06-25T22:02:03+00:00",
+      "summary": "La phase de poules de la Coupe du monde se poursuit et les sélections valident leur qualification pour les seizièmes de finale les unes après les autres. Voici le tableau complet des matchs à élimination…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-16es-de-finale-du-mondial-avec-toutes-les-equipes-qualifiees_AV-202606190519.html"
+    },
+    {
+      "title": "En direct : Curaçao – Côte d’Ivoire",
+      "source": "SO FOOT",
+      "date": "2026-06-25T22:02:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-curacao-cote-divoire"
+    },
+    {
+      "title": "Coupe du monde 2026 : La Côte d’Ivoire bat péniblement Curaçao et s’offre une qualification historique",
+      "source": "SO FOOT",
+      "date": "2026-06-25T21:59:06+00:00",
+      "summary": "Pour la première fois en 4 participations, les Éléphants verront la phase à élimination directe.",
+      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-la-cote-divoire-bat-peniblement-curacao-et-soffre-une-qualification-historique"
+    },
+    {
+      "title": "Mondial 2026 : L’Équateur tord l’Allemagne et s’agrippe aux seizièmes de finale",
+      "source": "SO FOOT",
+      "date": "2026-06-25T21:58:24+00:00",
+      "summary": "La Tri est d’assurée de faire partie des meilleurs troisièmes.",
+      "url": "https://www.sofoot.com/articles/mondial-2026-lequateur-tord-lallemagne-et-sagrippe-aux-seiziemes-de-finale"
+    },
+    {
+      "title": "DIRECT. Paraguay-Australie: suivez le match du groupe D de la Coupe du monde en live",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:29:00+00:00",
+      "summary": "Un match de haute importance. Le Paraguay et l’Australie jouent leur qualification en 16es de finale du Mondial dans cette confrontation directe. La formation victorieuse sera assurée de poursuivre…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-paraguay-australie-suivez-le-match-du-groupe-d-de-la-coupe-du-monde-en-live_LS-202606250660.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Elliot Anderson à Manchester City, c'est fait !",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:25:13+00:00",
+      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
+    },
+    {
+      "title": "Proche du lieu de séismes qui ont fait 188 morts au Venezuela, Alexia Putellas est saine et sauve",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:18:23+00:00",
+      "summary": "La joueuse espagnole Alexia Putellas a indiqué être \"saine et sauve à Caracas\" jeudi, après les deux tremblements de terre dévastateurs survenus au Venezuela, pays où elle séjourne dans le cadre d'un…",
+      "url": "https://rmcsport.bfmtv.com/football/feminin/proche-du-lieu-de-seismes-qui-ont-fait-188-morts-au-venezuela-alexia-putellas-est-saine-et-sauve_AD-202606250956.html"
+    },
+    {
+      "title": "\"Beaucoup d’entre nous n’avions jamais mis les pieds dans un stade\", le Qatar a financé le voyage de ses supporters à la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:11:58+00:00",
+      "summary": "Billets d’avion, chambres d'hôtel, places au stade, maillots… selon une enquête du Telegraph, le Qatar a financé le voyage de nombreux supporters de la sélection qatarie aux Etats-Unis pour la Coupe du monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/beaucoup-d-entre-nous-n-avions-jamais-mis-les-pieds-dans-un-stade-le-qatar-a-finance-le-voyage-de-ses-supporters-a-la-coupe-du-monde_AV-202606250952.html"
+    },
+    {
+      "title": "DIRECT. Turquie-États-Unis: suivez le match du groupe D de la Coupe du monde en live",
+      "source": "RMC Sport",
+      "date": "2026-06-25T21:02:00+00:00",
+      "summary": "Déjà éliminée de la compétition, la Turquie défie ce vendredi les États-Unis sur ses terres. Dans un match sans enjeux pour la formation turque, la team USA aura à cœur de briller devant son public. Coup…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-turquie-etats-unis-suivez-le-match-du-groupe-d-de-la-coupe-du-monde-en-live_LS-202606250659.html"
+    },
+    {
+      "title": "France-Norvège: \"Haaland est meilleur que Mbappé\", malgré la popularité des Bleus, les jeunes norvégiens croient à l'exploit",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:59:01+00:00",
+      "summary": "C’est la grosse affiche du groupe I de la Coupe du monde 2026: France-Norvège (vendredi à 21h). Les Bleus face aux vikings norvégiens. Kylian Mbappé d’un côté, Erling Haaland de l’autre. Et pour illustrer…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-haaland-est-meilleur-que-mbappe-malgre-la-popularite-des-bleus-les-jeunes-norvegiens-croient-a-l-exploit_AV-202606250950.html"
+    },
+    {
+      "title": "France-Norvège : Guy Stéphan alignera \"la meilleure équipe possible\", mais sans William Saliba",
+      "source": "France Info",
+      "date": "2026-06-25T20:50:36+00:00",
+      "summary": "Pour conclure la phase de groupes de cette Coupe du monde, l'adjoint de Didier Deschamps a insisté sur l'importance de terminer ce premier tour à la première place.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/france-norvege-guy-stephan-alignera-la-meilleure-equipe-possible-mais-sans-william-saliba_8079626.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Équateur-Allemagne: en vidéo, le but polémique de Sané après un pied très haut de Pavlovic",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:47:02+00:00",
+      "summary": "Le but de Leroy Sané lors du match de la Coupe du monde 2026 entre l'Allemagne et l'Équateur, ce jeudi, a été validé malgré un pied (très) haut d'Aleksandar Pavlovic sur l'action.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equateur-allemagne-le-but-polemique-de-sane-apres-un-pied-tres-haut-de-pavlovic_AN-202606250947.html"
+    },
+    {
+      "title": "France-Norvège : vers une attaque Olise, Doué, Mbappé, Dembélé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:44:58+00:00",
+      "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde 2026, l'équipe de France visera la première place du groupe I face à la Norvège, vendredi (21h). Si des changements vont être apportés par le staff…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-vers-une-attaque-olise-doue-mbappe-dembele_AV-202606250946.html"
+    },
+    {
+      "title": "Watch party : vivez le multiplex France-Norvège et Irak-Sénégal à l’adidas Arena de Paris",
+      "source": "SO FOOT",
+      "date": "2026-06-25T20:44:40+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/watch-party-vivez-le-multiplex-france-norvege-et-irak-senegal-a-ladidas-arena-de-paris"
+    },
+    {
+      "title": "DIRECT. Coupe du monde, Norvège-France J-1: la compo probable des Bleus avec Dembélé et Mbappé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T20:40:19+00:00",
+      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
     },
     {
       "title": "Egypte-Iran: \"Vous allez voir beaucoup de drapeaux arc-en-ciel dans le stade\", malgré les critiques, Seattle prêt à faire la fête pour son Pride match day",
@@ -3503,11 +3643,11 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/egypte-iran-vous-allez-voir-beaucoup-de-drapeaux-arc-en-ciel-dans-le-stade-malgre-les-critiques-seattle-pret-a-faire-la-fete-pour-son-pride-match-day_AV-202606250940.html"
     },
     {
-      "title": "DIRECT. Japon-Suède: suivez le match du groupe F du Mondial 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-06-25T20:12:21+00:00",
-      "summary": "Toujours invaincu en deux matchs et prétendant à la première place du groupe F, le Japon veut s'imposer contre la Suède lors de la troisième journée et jouer un sale tour aux Pays-Bas. Les Scandinaves ont…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
+      "title": "Mondial 2026 – Les compos d’Équateur-Allemagne",
+      "source": "SO FOOT",
+      "date": "2026-06-25T19:52:13+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-les-compos-de-equateur-allemagne"
     },
     {
       "title": "Vente du Parc des Princes: une première réunion officielle entre la mairie de Paris et le PSG a eu lieu",
@@ -3522,20 +3662,6 @@
       "date": "2026-06-25T19:47:40+00:00",
       "summary": "Le match contre la Norvège est la finale du groupe. Aurélien Tchouameni veut terminer en beauté le travail effectué lors des 2 premiers matches afin d'éviter des déplacements à rallonge au groupe.",
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-norvege-france-gagner-tous-les-matches-tchouameni-clair-sur-l-objectif-des-bleus_VN-202606250924.html"
-    },
-    {
-      "title": "En direct : Équateur – Allemagne",
-      "source": "SO FOOT",
-      "date": "2026-06-25T19:45:32+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-equateur-allemagne"
-    },
-    {
-      "title": "En direct : Curaçao – Côte d’Ivoire",
-      "source": "SO FOOT",
-      "date": "2026-06-25T19:45:21+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-curacao-cote-divoire"
     },
     {
       "title": "France-Norvège: \"Il nous a donné une mission\", le message de soutien des Bleus à Deschamps, endeuillé",
@@ -3566,14 +3692,7 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-saliba-va-souffler-contre-la-norvege-lacroix-devrait-le-remplacer_AV-202606250918.html"
     },
     {
-      "title": "DIRECT. Coupe du monde, Norvège-France J-1: suivez la conférence de presse des Bleus et toute l'actualité en live",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:26:43+00:00",
-      "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
-    },
-    {
-      "title": "William Saliba préservé face à la Norvège, Maxence Lacroix en pôle pour le remplacer",
+      "title": "William Saliba préservé face à la Norvège, Maxence Lacroix en pole pour le remplacer",
       "source": "SO FOOT",
       "date": "2026-06-25T19:22:44+00:00",
       "summary": "",
@@ -3615,6 +3734,13 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-le-mec-qui-ne-joue-pas-a-un-role-determinant-dugarry-defend-le-role-des-remplacants-a-la-coupe-du-monde_AV-202606250887.html"
     },
     {
+      "title": "Norvège - France : \"Un match très serré\" selon les jeunes norvégiens",
+      "source": "RMC Sport",
+      "date": "2026-06-25T18:23:41+00:00",
+      "summary": "Rencontrés avant la rencontre, les joueurs du Lillehammer FK en Norvège nous parlent de la force offensive de l'Équipe de France face à celle de la Norvège.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-norvege-france-un-match-tres-serre-selon-les-jeunes-norvegiens_VN-202606250949.html"
+    },
+    {
       "title": "Coupe du monde 2026 : L’étrange souhait de l’entraîneur du Real Madrid José Mourinho",
       "source": "SO FOOT",
       "date": "2026-06-25T18:21:33+00:00",
@@ -3634,13 +3760,6 @@
       "date": "2026-06-25T17:53:40+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/mondial-2026-lattaquant-tcheque-patrik-schick-annonce-sa-retraite-internationale"
-    },
-    {
-      "title": "DIRECT. Mercato: Nico Paz de retour à Madrid",
-      "source": "RMC Sport",
-      "date": "2026-06-25T17:33:37+00:00",
-      "summary": "Alors que tous les yeux sont braqués sur la Coupe du monde 2026, le mercato estival va également agiter l'actualité. Des mouvements sont donc déjà attendus en Europe. Toutes les informations seront relayées…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-toutes-les-infos-et-rumeurs-du-22-juin-2026-en-live_LN-202606220307.html"
     },
     {
       "title": "Mercato: Cuisance proche d'un retour en Ligue 1, l'ex-milieu de l'OM fonce vers Lens",
@@ -3678,20 +3797,6 @@
       "url": "https://www.sofoot.com/breves/le-stade-rennais-fait-un-gros-coup-en-prolongeant-esteban-lepaul"
     },
     {
-      "title": "Paraguay-Australie: pourquoi un match nul semble le résultat attendu de ce match",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:54:00+00:00",
-      "summary": "Respectivement 2e et 3e du groupe D, l’Australie et le Paraguay, qui s’affrontent dans la nuit de jeudi à vendredi à San Francisco, pourraient se contenter d’un match nul pour accéder aux 16es de finale de la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/paraguay-australie-pourquoi-un-match-nul-semble-le-resultat-attendu-de-ce-match_AN-202606250800.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il y a quelque chose qui cloche\", quel est le problème avec le ballon?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:46:01+00:00",
-      "summary": "Pour plusieurs observateurs, le ballon de la Coupe du monde 2026 rend certains arrêts trop difficiles pour les gardiens.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-a-quelque-chose-qui-cloche-quel-est-le-probleme-avec-le-ballon_AV-202606250794.html"
-    },
-    {
       "title": "L’Andalou Fabián Ruiz tacle la télévision espagnole",
       "source": "SO FOOT",
       "date": "2026-06-25T16:42:23+00:00",
@@ -3711,13 +3816,6 @@
       "date": "2026-06-25T16:17:35+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/coupe-du-monde-le-psg-ne-cesse-de-rayonner-pendant-le-mondial"
-    },
-    {
-      "title": "Coupe du monde 2026: finir premier de son groupe plutôt que deuxième, est-ce vraiment un avantage?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T16:12:40+00:00",
-      "summary": "Alors que la troisième journée de la phase de groupe de la Coupe du monde 2026 a commencé mercredi, les affiches des seizièmes de finale se précisent. Si sept équipes se sont déjà qualifiées avant leur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-finir-premier-de-son-groupe-plutot-que-deuxieme-est-ce-vraiment-un-avantage_AV-202606250761.html"
     },
     {
       "title": "Un conducteur fait une dizaine de blessés au Mexique après la victoire face à la Tchéquie",
@@ -3755,25 +3853,11 @@
       "url": "https://www.sofoot.com/articles/en-direct-japon-suede"
     },
     {
-      "title": "Nouveau naming: l’OM jouera désormais au… \"CEPAC Vélodrome\"",
-      "source": "RMC Sport",
-      "date": "2026-06-25T15:30:48+00:00",
-      "summary": "L'Olympique de Marseille et la Caisse d'Epargne CEPAC annoncent ce jeudi la signature d’un accord de naming pour le Stade Vélodrome.",
-      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/nouveau-naming-l-om-jouera-desormais-au-cepac-velodrome_AV-202606250690.html"
-    },
-    {
       "title": "Un certain Reynolds dans le viseur du Stade rennais",
       "source": "SO FOOT",
       "date": "2026-06-25T15:30:14+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/un-certain-reynolds-dans-le-viseur-du-stade-rennais"
-    },
-    {
-      "title": "Coupe du monde 2026: pourquoi la défaite de la Corée du Sud ne fait pas les affaires de l’Algérie et du Sénégal",
-      "source": "RMC Sport",
-      "date": "2026-06-25T15:28:34+00:00",
-      "summary": "En s’inclinant face à l’Afrique du Sud (1-0) mercredi à Monterrey, la Corée du Sud a laissé échappé la 2e place synonyme de qualification directe pour les 16es de finale de la Coupe du monde 2026. Mais à la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-la-defaite-de-la-coree-du-sud-ne-fait-pas-les-affaires-de-l-algerie-et-du-senegal_AV-202606250717.html"
     },
     {
       "title": "Arsenal lève l’option d’achat pour Piero Hincapié",
@@ -3804,25 +3888,11 @@
       "url": "https://www.sofoot.com/breves/alexia-putellas-rassure-apres-les-seismes-au-venezuela"
     },
     {
-      "title": "Coupe du monde 2026: le Maroc peut-il \"viser le titre\", comme le souhaite son sélectionneur Mohamed Ouahbi?",
-      "source": "RMC Sport",
-      "date": "2026-06-25T14:27:45+00:00",
-      "summary": "Après un premier tour plutôt convaincant, le Maroc s’est qualifié pour les 16es de finale de la Coupe du monde 2026, en terminant deuxième du groupe C derrière le Brésil. De quoi faire des Lions de l’Atlas de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-maroc-peut-il-viser-le-titre-comme-le-souhaite-son-selectionneur-mohamed-ouahbi_AV-202606250681.html"
-    },
-    {
       "title": "En direct : Turquie – États-Unis",
       "source": "SO FOOT",
       "date": "2026-06-25T14:26:51+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-turquie-etats-unis"
-    },
-    {
-      "title": "Drame au Mexique pendant la Coupe du monde 2026: un automobiliste fonce dans une foule de supporters, une dizaine de blessés",
-      "source": "RMC Sport",
-      "date": "2026-06-25T14:22:29+00:00",
-      "summary": "Après la victoire du Mexique face à la Tchéquie (3-0), mercredi, à la Coupe du monde 2026, un automobiliste a foncé sur des supporters dans la station balnéaire de Cabo San Lucas. Plusieurs personnes ont été…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/drame-au-mexique-pendant-la-coupe-du-monde-2026-un-automobiliste-fonce-dans-une-foule-de-supporters-une-dizaine-de-blesses_AV-202606250677.html"
     },
     {
       "title": "Neymar s’inspire de Lewis Hamilton pour son retour avec le Brésil",
@@ -3844,62 +3914,6 @@
       "date": "2026-06-25T14:11:09+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-paraguay-australie"
-    },
-    {
-      "title": "Olise, Diomandé, Leao… Les 5 infos mercato du 25 juin à la mi-journée",
-      "source": "RMC Sport",
-      "date": "2026-06-25T14:07:18+00:00",
-      "summary": "Luis Enrique et le PSG restent à l’affût pour Michael Olise, Liverpool a reçu deux refus du RB Leipzig pour Yan Diomandé, Elliot Anderson à Manchester City pourrait devenir un transfert record… Les 5 infos…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/video-olise-diomande-leao-les-5-infos-mercato-du-25-juin-a-la-mi-journee_VN-202606250673.html"
-    },
-    {
-      "title": "Une première depuis l'invasion de l'Ukraine: la Russie réintégrée dans une compétition de jeunes de la Fifa",
-      "source": "RMC Sport",
-      "date": "2026-06-25T13:56:44+00:00",
-      "summary": "Plus de quatre ans après le début de l'invasion russe à grande échelle de l'Ukraine, la Russie va être autorisée pour la première fois à faire son retour dans une compétition de jeunes organisée par la Fifa,…",
-      "url": "https://rmcsport.bfmtv.com/football/une-premiere-depuis-l-invasion-de-l-ukraine-la-russie-reintegree-dans-une-competition-de-jeunes-de-la-fifa_AN-202606250664.html"
-    },
-    {
-      "title": "Coupe du monde 2026 : Des supporters des Bleus exclus pour revente de billets",
-      "source": "SO FOOT",
-      "date": "2026-06-25T13:56:07+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-des-supporters-des-bleus-exclus-pour-revente-de-billets"
-    },
-    {
-      "title": "Mondial 2026 – Des chants homophobes entachent le parcours du Mexique",
-      "source": "SO FOOT",
-      "date": "2026-06-25T13:20:18+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-des-chants-homophobes-entachent-le-parcours-du-mexique"
-    },
-    {
-      "title": "Pronostic Norvège France : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-06-25T13:13:14+00:00",
-      "summary": "Norvège – France : analyse complète, statistiques et notre pronostic Coupe du monde. Découvrez les meilleures cotes et notre pari conseillé : victoire de la France.",
-      "url": "https://www.sofoot.com/breves/pronostic-norvege-france-analyse-cotes-et-prono-coupe-du-monde"
-    },
-    {
-      "title": "\"On n'a pas besoin de se parler\" : en l'absence de Didier Deschamps, Guy Stéphan en doublure parfaite du sélectionneur avant France-Norvège à la Coupe du monde",
-      "source": "France Info",
-      "date": "2026-06-25T12:48:15+00:00",
-      "summary": "L'entraîneur adjoint de l'équipe de France depuis 2012 sera propulsé sélectionneur le temps d'un match, vendredi soir, pour remplacer Didier Deschamps, endeuillé.",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/on-n-a-pas-besoin-de-se-parler-en-l-absence-de-didier-deschamps-guy-stephan-en-doublure-parfaite-du-selectionneur-avant-france-norvege-a-la-coupe-du-monde_8077625.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Joga bonito ? \"L'important c'est de gagner\" tranche Ancelotti",
-      "source": "RMC Sport",
-      "date": "2026-06-25T12:45:50+00:00",
-      "summary": "La Seleção a écrit l'histoire en remportant 5 Coupes du monde, et en pratiquant historiquement un football attrayant. Ce n'est pas vraiment la philosophie du sélectionneur actuel, Carlo Ancelotti, qui l'a…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-joga-bonito-l-important-c-est-de-gagner-tranche-ancelotti_VN-202606250597.html"
-    },
-    {
-      "title": "En direct : Tunisie – Pays-Bas",
-      "source": "SO FOOT",
-      "date": "2026-06-25T12:35:24+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-tunisie-pays-bas"
     }
   ],
   "focused_team_news": {
@@ -3910,13 +3924,6 @@
         "date": "2026-06-25T15:02:58+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/neymar-devient-le-quatrieme-joueur-de-lhistoire-du-bresil-a-disputer-quatre-coupes-du-monde"
-      },
-      {
-        "title": "Coupe du monde 2026: le Maroc peut-il \"viser le titre\", comme le souhaite son sélectionneur Mohamed Ouahbi?",
-        "source": "RMC Sport",
-        "date": "2026-06-25T14:27:45+00:00",
-        "summary": "Après un premier tour plutôt convaincant, le Maroc s’est qualifié pour les 16es de finale de la Coupe du monde 2026, en terminant deuxième du groupe C derrière le Brésil. De quoi faire des Lions de l’Atlas de…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-maroc-peut-il-viser-le-titre-comme-le-souhaite-son-selectionneur-mohamed-ouahbi_AV-202606250681.html"
       },
       {
         "title": "Neymar s’inspire de Lewis Hamilton pour son retour avec le Brésil",
@@ -3935,34 +3942,34 @@
     ],
     "Canada": [
       {
-        "title": "Canada-Qatar : Le joueur qatarien qui a blessé Ismaël Koné suspendu 5 matchs",
-        "source": "SO FOOT",
-        "date": "2026-06-25T09:47:02+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/canada-qatar-le-joueur-qatarien-qui-a-blesse-ismael-kone-suspendu-5-matchs"
+        "title": "Coupe du monde 2026: résultats et classement final du groupe E",
+        "source": "RMC Sport",
+        "date": "2026-06-25T22:40:41+00:00",
+        "summary": "La Coupe du monde 2026 a débuté ce jeudi 11 juin aux États-Unis, au Mexique et au Canada. Après six matchs âprement disputés, le groupe E du Mondial 2026 a rendu son verdict.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-e_AV-202606140372.html"
       }
     ],
     "Curaçao": [
       {
-        "title": "DIRECT. Curaçao-Côte d’Ivoire: Nicolas Pépé lance parfaitement les Ivoiriens",
+        "title": "Curaçao-Côte d’Ivoire: qualification historique des Ivoiriens en phase finale après leur succès face aux Curaciens",
         "source": "RMC Sport",
-        "date": "2026-06-25T20:20:04+00:00",
-        "summary": "La Côte d’Ivoire va chercher à sécuriser sa qualification pour les 16es de finale ce jeudi face au plus petit pays de ce Mondial. En cas de succès et du résultat des autres matchs du groupe E, tout reste…",
+        "date": "2026-06-25T22:07:51+00:00",
+        "summary": "C'est historique, la Côte d'Ivoire se qualifie pour la première fois en phase finale d'une Coupe du monde après son succès face à Curaçao (2-0) ! Auteur d'un doublé, Nicolas Pépé a permis à son équipe de…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-curacao-cote-d-ivoire-suivez-le-match-de-la-coupe-du-monde-2026-en-live_LS-202606250029.html"
       },
       {
         "title": "En direct : Curaçao – Côte d’Ivoire",
         "source": "SO FOOT",
-        "date": "2026-06-25T19:45:21+00:00",
+        "date": "2026-06-25T22:02:00+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/articles/en-direct-curacao-cote-divoire"
       },
       {
-        "title": "Pronostic Curaçao Côte d’Ivoire : analyse, cotes et prono Coupe du monde",
+        "title": "Coupe du monde 2026 : La Côte d’Ivoire bat péniblement Curaçao et s’offre une qualification historique",
         "source": "SO FOOT",
-        "date": "2026-06-25T08:52:06+00:00",
-        "summary": "Pronostic Curaçao – Côte d’Ivoire : découvrez notre analyse, les cotes et notre pari Côte d’Ivoire vainqueur pour ce match décisif de la Coupe du monde 2026.",
-        "url": "https://www.sofoot.com/breves/pronostic-curacao-cote-divoire-analyse-cotes-et-prono-coupe-du-monde"
+        "date": "2026-06-25T21:59:06+00:00",
+        "summary": "Pour la première fois en 4 participations, les Éléphants verront la phase à élimination directe.",
+        "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-la-cote-divoire-bat-peniblement-curacao-et-soffre-une-qualification-historique"
       }
     ],
     "Egypt": [
@@ -3975,6 +3982,41 @@
       }
     ],
     "France": [
+      {
+        "title": "France-Norvège: \"Haaland est meilleur que Mbappé\", malgré la popularité des Bleus, les jeunes norvégiens croient à l'exploit",
+        "source": "RMC Sport",
+        "date": "2026-06-25T20:59:01+00:00",
+        "summary": "C’est la grosse affiche du groupe I de la Coupe du monde 2026: France-Norvège (vendredi à 21h). Les Bleus face aux vikings norvégiens. Kylian Mbappé d’un côté, Erling Haaland de l’autre. Et pour illustrer…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-haaland-est-meilleur-que-mbappe-malgre-la-popularite-des-bleus-les-jeunes-norvegiens-croient-a-l-exploit_AV-202606250950.html"
+      },
+      {
+        "title": "France-Norvège : Guy Stéphan alignera \"la meilleure équipe possible\", mais sans William Saliba",
+        "source": "France Info",
+        "date": "2026-06-25T20:50:36+00:00",
+        "summary": "Pour conclure la phase de groupes de cette Coupe du monde, l'adjoint de Didier Deschamps a insisté sur l'importance de terminer ce premier tour à la première place.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/france-norvege-guy-stephan-alignera-la-meilleure-equipe-possible-mais-sans-william-saliba_8079626.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "France-Norvège : vers une attaque Olise, Doué, Mbappé, Dembélé",
+        "source": "RMC Sport",
+        "date": "2026-06-25T20:44:58+00:00",
+        "summary": "Déjà qualifiée pour les 16es de finale de la Coupe du monde 2026, l'équipe de France visera la première place du groupe I face à la Norvège, vendredi (21h). Si des changements vont être apportés par le staff…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-vers-une-attaque-olise-doue-mbappe-dembele_AV-202606250946.html"
+      },
+      {
+        "title": "Watch party : vivez le multiplex France-Norvège et Irak-Sénégal à l’adidas Arena de Paris",
+        "source": "SO FOOT",
+        "date": "2026-06-25T20:44:40+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/watch-party-vivez-le-multiplex-france-norvege-et-irak-senegal-a-ladidas-arena-de-paris"
+      },
+      {
+        "title": "DIRECT. Coupe du monde, Norvège-France J-1: la compo probable des Bleus avec Dembélé et Mbappé",
+        "source": "RMC Sport",
+        "date": "2026-06-25T20:40:19+00:00",
+        "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
+      },
       {
         "title": "Norvège - France : \"Gagner tous les matches\" Tchouameni clair sur l'objectif des Bleus",
         "source": "RMC Sport",
@@ -4004,13 +4046,6 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-saliba-va-souffler-contre-la-norvege-lacroix-devrait-le-remplacer_AV-202606250918.html"
       },
       {
-        "title": "DIRECT. Coupe du monde, Norvège-France J-1: suivez la conférence de presse des Bleus et toute l'actualité en live",
-        "source": "RMC Sport",
-        "date": "2026-06-25T19:26:43+00:00",
-        "summary": "Avant la troisième rencontre de l'équipe de France à la Coupe du monde 2026 face à la Norvège, ce vendredi (21h) près de Boston, suivez en direct la conférence de presse de veille de match et toutes les infos…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
-      },
-      {
         "title": "Norvège - France : \"Je ne suis pas à ma place\" confie Guy Stephan lors de la conférence de presse",
         "source": "RMC Sport",
         "date": "2026-06-25T19:16:27+00:00",
@@ -4025,39 +4060,11 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-le-mec-qui-ne-joue-pas-a-un-role-determinant-dugarry-defend-le-role-des-remplacants-a-la-coupe-du-monde_AV-202606250887.html"
       },
       {
-        "title": "Coupe du monde 2026: deux avions affrétés, dîner après France-Norvège… les familles des Bleus en route pour Boston",
+        "title": "Norvège - France : \"Un match très serré\" selon les jeunes norvégiens",
         "source": "RMC Sport",
-        "date": "2026-06-25T18:06:06+00:00",
-        "summary": "L’équipe de France affronte la Norvège vendredi soir à 21 heures, heure française. Une rencontre programmée au Gillette Stadium de Boston où les familles des Bleus seront présentes en masse.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-avions-affretes-diner-apres-france-norvege-les-familles-des-bleus-en-route-pour-boston_AV-202606250868.html"
-      },
-      {
-        "title": "Équipe de France – Coupe du monde : « Un deuil, ça peut resserrer les liens »",
-        "source": "SO FOOT",
-        "date": "2026-06-25T16:00:05+00:00",
-        "summary": "Comme à l’Euro 2000, l’équipe de France est touchée par le deuil de son sélectionneur.",
-        "url": "https://www.sofoot.com/articles/equipe-de-france-coupe-du-monde-un-deuil-ca-peut-resserrer-les-liens"
-      },
-      {
-        "title": "Le match France-Norvège pourrait lui aussi être perturbé et retardé par des orages à la Coupe du monde",
-        "source": "France Info",
-        "date": "2026-06-25T15:55:09+00:00",
-        "summary": "Le protocole foudre pourrait être à nouveau déclenché pendant la rencontre, vendredi, à Boston.",
-        "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/le-match-france-norvege-pourrait-lui-aussi-etre-perturbe-et-retarde-par-des-orages-a-la-coupe-du-monde_8079641.html#xtor=RSS-3-%5Bgeneral%5D"
-      },
-      {
-        "title": "Coupe du monde 2026 : Des supporters des Bleus exclus pour revente de billets",
-        "source": "SO FOOT",
-        "date": "2026-06-25T13:56:07+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-des-supporters-des-bleus-exclus-pour-revente-de-billets"
-      },
-      {
-        "title": "Pronostic Norvège France : analyse, cotes et prono Coupe du monde",
-        "source": "SO FOOT",
-        "date": "2026-06-25T13:13:14+00:00",
-        "summary": "Norvège – France : analyse complète, statistiques et notre pronostic Coupe du monde. Découvrez les meilleures cotes et notre pari conseillé : victoire de la France.",
-        "url": "https://www.sofoot.com/breves/pronostic-norvege-france-analyse-cotes-et-prono-coupe-du-monde"
+        "date": "2026-06-25T18:23:41+00:00",
+        "summary": "Rencontrés avant la rencontre, les joueurs du Lillehammer FK en Norvège nous parlent de la force offensive de l'Équipe de France face à celle de la Norvège.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-norvege-france-un-match-tres-serre-selon-les-jeunes-norvegiens_VN-202606250949.html"
       }
     ],
     "Iran": [
@@ -4071,11 +4078,11 @@
     ],
     "Paraguay": [
       {
-        "title": "Paraguay-Australie: pourquoi un match nul semble le résultat attendu de ce match",
+        "title": "DIRECT. Paraguay-Australie: suivez le match du groupe D de la Coupe du monde en live",
         "source": "RMC Sport",
-        "date": "2026-06-25T16:54:00+00:00",
-        "summary": "Respectivement 2e et 3e du groupe D, l’Australie et le Paraguay, qui s’affrontent dans la nuit de jeudi à vendredi à San Francisco, pourraient se contenter d’un match nul pour accéder aux 16es de finale de la…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/paraguay-australie-pourquoi-un-match-nul-semble-le-resultat-attendu-de-ce-match_AN-202606250800.html"
+        "date": "2026-06-25T21:29:00+00:00",
+        "summary": "Un match de haute importance. Le Paraguay et l’Australie jouent leur qualification en 16es de finale du Mondial dans cette confrontation directe. La formation victorieuse sera assurée de poursuivre…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-paraguay-australie-suivez-le-match-du-groupe-d-de-la-coupe-du-monde-en-live_LS-202606250660.html"
       },
       {
         "title": "En direct : Paraguay – Australie",
@@ -4094,20 +4101,20 @@
     ],
     "Qatar": [
       {
-        "title": "Canada-Qatar : Le joueur qatarien qui a blessé Ismaël Koné suspendu 5 matchs",
-        "source": "SO FOOT",
-        "date": "2026-06-25T09:47:02+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/canada-qatar-le-joueur-qatarien-qui-a-blesse-ismael-kone-suspendu-5-matchs"
+        "title": "\"Beaucoup d’entre nous n’avions jamais mis les pieds dans un stade\", le Qatar a financé le voyage de ses supporters à la Coupe du monde",
+        "source": "RMC Sport",
+        "date": "2026-06-25T21:11:58+00:00",
+        "summary": "Billets d’avion, chambres d'hôtel, places au stade, maillots… selon une enquête du Telegraph, le Qatar a financé le voyage de nombreux supporters de la sélection qatarie aux Etats-Unis pour la Coupe du monde…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/beaucoup-d-entre-nous-n-avions-jamais-mis-les-pieds-dans-un-stade-le-qatar-a-finance-le-voyage-de-ses-supporters-a-la-coupe-du-monde_AV-202606250952.html"
       }
     ],
     "Senegal": [
       {
-        "title": "Coupe du monde 2026: pourquoi la défaite de la Corée du Sud ne fait pas les affaires de l’Algérie et du Sénégal",
-        "source": "RMC Sport",
-        "date": "2026-06-25T15:28:34+00:00",
-        "summary": "En s’inclinant face à l’Afrique du Sud (1-0) mercredi à Monterrey, la Corée du Sud a laissé échappé la 2e place synonyme de qualification directe pour les 16es de finale de la Coupe du monde 2026. Mais à la…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-pourquoi-la-defaite-de-la-coree-du-sud-ne-fait-pas-les-affaires-de-l-algerie-et-du-senegal_AV-202606250717.html"
+        "title": "Watch party : vivez le multiplex France-Norvège et Irak-Sénégal à l’adidas Arena de Paris",
+        "source": "SO FOOT",
+        "date": "2026-06-25T20:44:40+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/watch-party-vivez-le-multiplex-france-norvege-et-irak-senegal-a-ladidas-arena-de-paris"
       },
       {
         "title": "Pronostic Sénégal Irak : analyse, cotes et prono Coupe du monde",
@@ -4247,7 +4254,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
       "associated_team": "Sweden",
-      "updated_at": "2026-06-25T20:22:14+00:00",
+      "updated_at": "2026-06-25T22:45:45+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4258,7 +4265,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/850354.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-06-25T20:22:14+00:00",
+      "updated_at": "2026-06-25T22:45:45+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4269,7 +4276,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "France",
-      "updated_at": "2026-06-25T20:22:14+00:00",
+      "updated_at": "2026-06-25T22:45:45+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4280,7 +4287,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-06-25T20:22:14+00:00",
+      "updated_at": "2026-06-25T22:45:45+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4291,7 +4298,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-06-25T20:22:14+00:00",
+      "updated_at": "2026-06-25T22:45:45+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4302,7 +4309,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/846033.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-06-25T20:22:14+00:00",
+      "updated_at": "2026-06-25T22:45:45+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
