@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-25T22:45:45+00:00",
+  "generated_at": "2026-06-26T01:29:43+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -1081,11 +1081,11 @@
           "away_espn_id": "466",
           "home_country_code": "JPN",
           "away_country_code": "SWE",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
+          "home_score": "1",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "AT&T Stadium",
           "city": "Arlington, Texas"
         },
@@ -1100,11 +1100,11 @@
           "away_espn_id": "449",
           "home_country_code": "TUN",
           "away_country_code": "NED",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
+          "home_score": "1",
+          "away_score": "3",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "GEHA Field at Arrowhead Stadium",
           "city": "Kansas City, Missouri"
         },
@@ -1404,13 +1404,13 @@
           "id": "760487",
           "date": "2026-06-29T17:00Z",
           "home_team": "Brazil",
-          "away_team": "À déterminer",
+          "away_team": "Japan",
           "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
-          "away_flag_url": "",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
           "home_espn_id": "205",
-          "away_espn_id": "5934",
+          "away_espn_id": "627",
           "home_country_code": "BRA",
-          "away_country_code": "2F",
+          "away_country_code": "JPN",
           "home_score": "",
           "away_score": "",
           "status": "À venir",
@@ -1441,13 +1441,13 @@
         {
           "id": "760488",
           "date": "2026-06-30T01:00Z",
-          "home_team": "À déterminer",
+          "home_team": "Netherlands",
           "away_team": "Morocco",
-          "home_flag_url": "",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
           "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
-          "home_espn_id": "5933",
+          "home_espn_id": "449",
           "away_espn_id": "2869",
-          "home_country_code": "1F",
+          "home_country_code": "NED",
           "away_country_code": "MAR",
           "home_score": "",
           "away_score": "",
@@ -1556,13 +1556,13 @@
           "id": "760494",
           "date": "2026-07-02T00:00Z",
           "home_team": "United States",
-          "away_team": "À déterminer",
+          "away_team": "Bosnia-Herzegovina",
           "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
-          "away_flag_url": "",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
           "home_espn_id": "660",
-          "away_espn_id": "131543",
+          "away_espn_id": "452",
           "home_country_code": "USA",
-          "away_country_code": "3RD",
+          "away_country_code": "BIH",
           "home_score": "",
           "away_score": "",
           "status": "À venir",
@@ -2019,122 +2019,84 @@
   ],
   "today_matches": [
     {
-      "id": "760467",
-      "date": "2026-06-25T01:00Z",
-      "home_team": "Czechia",
-      "away_team": "Mexico",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
-      "home_espn_id": "450",
-      "away_espn_id": "203",
-      "home_country_code": "CZE",
-      "away_country_code": "MEX",
-      "home_score": "0",
-      "away_score": "3",
-      "status": "Terminé",
-      "status_state": "post",
-      "completed": true,
-      "venue": "Estadio Banorte",
-      "city": "Mexico City"
-    },
-    {
-      "id": "760466",
-      "date": "2026-06-25T01:00Z",
-      "home_team": "South Africa",
-      "away_team": "South Korea",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
-      "home_espn_id": "467",
-      "away_espn_id": "451",
-      "home_country_code": "RSA",
-      "away_country_code": "KOR",
-      "home_score": "1",
-      "away_score": "0",
-      "status": "Terminé",
-      "status_state": "post",
-      "completed": true,
-      "venue": "Estadio BBVA",
-      "city": "Guadalupe"
-    },
-    {
-      "id": "760473",
-      "date": "2026-06-25T20:00Z",
-      "home_team": "Curaçao",
-      "away_team": "Ivory Coast",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
-      "home_espn_id": "11678",
-      "away_espn_id": "4789",
-      "home_country_code": "CUW",
-      "away_country_code": "CIV",
-      "home_score": "0",
-      "away_score": "2",
-      "status": "Terminé",
-      "status_state": "post",
-      "completed": true,
-      "venue": "Lincoln Financial Field",
-      "city": "Philadelphia, Pennsylvania"
-    },
-    {
-      "id": "760468",
-      "date": "2026-06-25T20:00Z",
-      "home_team": "Ecuador",
-      "away_team": "Germany",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
-      "home_espn_id": "209",
-      "away_espn_id": "481",
-      "home_country_code": "ECU",
-      "away_country_code": "GER",
-      "home_score": "2",
-      "away_score": "1",
-      "status": "Terminé",
-      "status_state": "post",
-      "completed": true,
-      "venue": "MetLife Stadium",
-      "city": "East Rutherford, New Jersey"
-    },
-    {
-      "id": "760471",
-      "date": "2026-06-25T23:00Z",
-      "home_team": "Japan",
-      "away_team": "Sweden",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
-      "home_espn_id": "627",
-      "away_espn_id": "466",
-      "home_country_code": "JPN",
-      "away_country_code": "SWE",
+      "id": "760469",
+      "date": "2026-06-26T02:00Z",
+      "home_team": "Paraguay",
+      "away_team": "Australia",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+      "home_espn_id": "210",
+      "away_espn_id": "628",
+      "home_country_code": "PAR",
+      "away_country_code": "AUS",
       "home_score": "",
       "away_score": "",
       "status": "À venir",
       "status_state": "pre",
       "completed": false,
-      "venue": "AT&T Stadium",
-      "city": "Arlington, Texas"
+      "venue": "Levi's Stadium",
+      "city": "Santa Clara, California"
     },
     {
-      "id": "760472",
-      "date": "2026-06-25T23:00Z",
-      "home_team": "Tunisia",
-      "away_team": "Netherlands",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
-      "home_espn_id": "659",
-      "away_espn_id": "449",
-      "home_country_code": "TUN",
-      "away_country_code": "NED",
+      "id": "760470",
+      "date": "2026-06-26T02:00Z",
+      "home_team": "Türkiye",
+      "away_team": "United States",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+      "home_espn_id": "465",
+      "away_espn_id": "660",
+      "home_country_code": "TUR",
+      "away_country_code": "USA",
       "home_score": "",
       "away_score": "",
       "status": "À venir",
       "status_state": "pre",
       "completed": false,
-      "venue": "GEHA Field at Arrowhead Stadium",
-      "city": "Kansas City, Missouri"
+      "venue": "SoFi Stadium",
+      "city": "Inglewood, California"
+    },
+    {
+      "id": "760475",
+      "date": "2026-06-26T19:00Z",
+      "home_team": "Norway",
+      "away_team": "France",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
+      "home_espn_id": "464",
+      "away_espn_id": "478",
+      "home_country_code": "NOR",
+      "away_country_code": "FRA",
+      "home_score": "",
+      "away_score": "",
+      "status": "À venir",
+      "status_state": "pre",
+      "completed": false,
+      "venue": "Gillette Stadium",
+      "city": "Foxborough, Massachusetts"
+    },
+    {
+      "id": "760474",
+      "date": "2026-06-26T19:00Z",
+      "home_team": "Senegal",
+      "away_team": "Iraq",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+      "home_espn_id": "654",
+      "away_espn_id": "4375",
+      "home_country_code": "SEN",
+      "away_country_code": "IRQ",
+      "home_score": "",
+      "away_score": "",
+      "status": "À venir",
+      "status_state": "pre",
+      "completed": false,
+      "venue": "BMO Field",
+      "city": "Toronto"
     }
   ],
   "group_matches_total": 72,
-  "group_matches_remaining": 16,
+  "group_matches_remaining": 14,
   "knockout_matches_total": 32,
   "knockout_matches_remaining": 32,
   "competition_stage": "Phase de groupes",
@@ -3126,6 +3088,41 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "Japon-Suède: un nul qui arrange tout le monde, les deux équipes qualifiées pour les 16es de finale de la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:12:21+00:00",
+      "summary": "Le Japon termine cette phase de groupes de la Coupe du monde en étant invaincu. Les Samouraïs Bleus a tenu en échec la Suède (1-1). Les deux équipes se qualifient pour les 16es de finale de la Coupe du monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
+    },
+    {
+      "title": "Coupe du monde 2026: résultats et classement final du groupe F",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:08:19+00:00",
+      "summary": "Le groupe F de la Coupe du monde 2026 a rendu son verdict après six matchs riches en buts. Découvrez les résultats et le classement final.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-f_AV-202606140425.html"
+    },
+    {
+      "title": "Coupe du monde 2026: la liste des équipes qualifiées pour les 16es de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:01:24+00:00",
+      "summary": "À mesure que les matchs de la Coupe du monde 2026 défilent, les classements des 12 groupes se dessinent de plus en plus précisément. RMC Sport liste les équipes qui ont d'ores et déjà sécurisé leur place dans…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-liste-des-equipes-qualifiees-pour-les-16es-de-finale_AV-202606220046.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Je veux qu'ils perdent\", l'aveu honnête de Mourinho sur les mondialistes du Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-06-26T00:45:48+00:00",
+      "summary": "Alors qu'il prépare sa prochaine reprise en main du Real Madrid, José Mourinho s'est confié sur les exploits de ses joueurs à la Coupe du monde 2026. Et il leur souhaite le pire, sans la moindre hésitation.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-je-veux-qu-ils-perdent-l-aveu-honnete-de-mourinho-sur-les-mondialistes-du-real-madrid_AV-202606260046.html"
+    },
+    {
+      "title": "Coupe du monde 2026: il y aura bien des drapeaux arc-en-ciel dans les tribunes d'Égypte-Iran",
+      "source": "RMC Sport",
+      "date": "2026-06-25T23:39:42+00:00",
+      "summary": "La Fifa a confirmé que les symboles arc-en-ciel seraient acceptés dans les tribunes du stade de Seattle où se disputera le match Égypte-Iran, désigné \"match des fiertés\" par la municipalité. Une décision que…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-aura-bien-des-drapeaux-arc-en-ciel-dans-les-tribunes-d-egypte-iran_AD-202606250980.html"
+    },
+    {
       "title": "Coupe du monde 2026: résultats et classement final du groupe E",
       "source": "RMC Sport",
       "date": "2026-06-25T22:40:41+00:00",
@@ -3196,13 +3193,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-il-nous-a-donne-une-mission-le-message-de-soutien-des-bleus-a-deschamps-endeuille_AV-202606250922.html"
     },
     {
-      "title": "DIRECT. Tunisie-Pays-Bas: suivez en live le match du groupe F de la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:38:00+00:00",
-      "summary": "Suivez en live le match entre la Tunisie et les Pays-Bas, ce vendredi (1h) à Kansas City. Face à des Tunisiens déjà éliminés, les Néerlandais visent une victoire (si possible large) pour assurer la première…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/tunisie-pays-bas-suivez-en-live-le-match-du-groupe-f-de-la-coupe-du-monde-2026_LS-202606250506.html"
-    },
-    {
       "title": "Équipe de France: Saliba va souffler contre la Norvège, Lacroix devrait le remplacer",
       "source": "RMC Sport",
       "date": "2026-06-25T19:29:16+00:00",
@@ -3215,16 +3205,16 @@
       "date": "2026-06-25T18:30:58+00:00",
       "summary": "Alors que la question se pose de savoir si les Bleus feront tourner face à la Norvège, vendredi (21h) pour le troisième match de poule de la Coupe du monde 2026, Christophe Dugarry tient à rappeler que les…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-le-mec-qui-ne-joue-pas-a-un-role-determinant-dugarry-defend-le-role-des-remplacants-a-la-coupe-du-monde_AV-202606250887.html"
-    },
-    {
-      "title": "Coupe du monde 2026: deux avions affrétés, dîner après France-Norvège… les familles des Bleus en route pour Boston",
-      "source": "RMC Sport",
-      "date": "2026-06-25T18:06:06+00:00",
-      "summary": "L’équipe de France affronte la Norvège vendredi soir à 21 heures, heure française. Une rencontre programmée au Gillette Stadium de Boston où les familles des Bleus seront présentes en masse.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-avions-affretes-diner-apres-france-norvege-les-familles-des-bleus-en-route-pour-boston_AV-202606250868.html"
     }
   ],
   "france_news": [
+    {
+      "title": "Japon-Suède: un nul qui arrange tout le monde, les deux équipes qualifiées pour les 16es de finale de la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:12:21+00:00",
+      "summary": "Le Japon termine cette phase de groupes de la Coupe du monde en étant invaincu. Les Samouraïs Bleus a tenu en échec la Suède (1-1). Les deux équipes se qualifient pour les 16es de finale de la Coupe du monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
+    },
     {
       "title": "France-Norvège: \"Haaland est meilleur que Mbappé\", malgré la popularité des Bleus, les jeunes norvégiens croient à l'exploit",
       "source": "RMC Sport",
@@ -3261,18 +3251,18 @@
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-norvege-france-gagner-tous-les-matches-tchouameni-clair-sur-l-objectif-des-bleus_VN-202606250924.html"
     },
     {
-      "title": "France-Norvège: \"Il nous a donné une mission\", le message de soutien des Bleus à Deschamps, endeuillé",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:43:52+00:00",
-      "summary": "A la veille du troisième match du groupe I de la Coupe du monde 2026 face à la Norvège, le milieu de terrain de l’équipe de France, Aurélien Tchouaméni a tenu exprimer au nom des Bleus tout son soutien à…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-il-nous-a-donne-une-mission-le-message-de-soutien-des-bleus-a-deschamps-endeuille_AV-202606250922.html"
-    },
-    {
       "title": "Didier Deschamps",
       "source": "RMC Sport",
       "date": "2026-06-25T19:43:52+00:00",
       "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
       "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "France-Norvège: \"Il nous a donné une mission\", le message de soutien des Bleus à Deschamps, endeuillé",
+      "source": "RMC Sport",
+      "date": "2026-06-25T19:43:52+00:00",
+      "summary": "A la veille du troisième match du groupe I de la Coupe du monde 2026 face à la Norvège, le milieu de terrain de l’équipe de France, Aurélien Tchouaméni a tenu exprimer au nom des Bleus tout son soutien à…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-il-nous-a-donne-une-mission-le-message-de-soutien-des-bleus-a-deschamps-endeuille_AV-202606250922.html"
     },
     {
       "title": "Équipe de France: Saliba va souffler contre la Norvège, Lacroix devrait le remplacer",
@@ -3301,13 +3291,6 @@
       "date": "2026-06-25T18:23:41+00:00",
       "summary": "Rencontrés avant la rencontre, les joueurs du Lillehammer FK en Norvège nous parlent de la force offensive de l'Équipe de France face à celle de la Norvège.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-norvege-france-un-match-tres-serre-selon-les-jeunes-norvegiens_VN-202606250949.html"
-    },
-    {
-      "title": "Coupe du monde 2026: deux avions affrétés, dîner après France-Norvège… les familles des Bleus en route pour Boston",
-      "source": "RMC Sport",
-      "date": "2026-06-25T18:06:06+00:00",
-      "summary": "L’équipe de France affronte la Norvège vendredi soir à 21 heures, heure française. Une rencontre programmée au Gillette Stadium de Boston où les familles des Bleus seront présentes en masse.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-avions-affretes-diner-apres-france-norvege-les-familles-des-bleus-en-route-pour-boston_AV-202606250868.html"
     },
     {
       "title": "Le match France-Norvège pourrait lui aussi être perturbé et retardé par des orages à la Coupe du monde",
@@ -3396,6 +3379,41 @@
   ],
   "general_news": [
     {
+      "title": "Japon-Suède: un nul qui arrange tout le monde, les deux équipes qualifiées pour les 16es de finale de la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:12:21+00:00",
+      "summary": "Le Japon termine cette phase de groupes de la Coupe du monde en étant invaincu. Les Samouraïs Bleus a tenu en échec la Suède (1-1). Les deux équipes se qualifient pour les 16es de finale de la Coupe du monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
+    },
+    {
+      "title": "Coupe du monde 2026: résultats et classement final du groupe F",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:08:19+00:00",
+      "summary": "Le groupe F de la Coupe du monde 2026 a rendu son verdict après six matchs riches en buts. Découvrez les résultats et le classement final.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-f_AV-202606140425.html"
+    },
+    {
+      "title": "Coupe du monde 2026: la liste des équipes qualifiées pour les 16es de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:01:24+00:00",
+      "summary": "À mesure que les matchs de la Coupe du monde 2026 défilent, les classements des 12 groupes se dessinent de plus en plus précisément. RMC Sport liste les équipes qui ont d'ores et déjà sécurisé leur place dans…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-liste-des-equipes-qualifiees-pour-les-16es-de-finale_AV-202606220046.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Je veux qu'ils perdent\", l'aveu honnête de Mourinho sur les mondialistes du Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-06-26T00:45:48+00:00",
+      "summary": "Alors qu'il prépare sa prochaine reprise en main du Real Madrid, José Mourinho s'est confié sur les exploits de ses joueurs à la Coupe du monde 2026. Et il leur souhaite le pire, sans la moindre hésitation.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-je-veux-qu-ils-perdent-l-aveu-honnete-de-mourinho-sur-les-mondialistes-du-real-madrid_AV-202606260046.html"
+    },
+    {
+      "title": "Coupe du monde 2026: il y aura bien des drapeaux arc-en-ciel dans les tribunes d'Égypte-Iran",
+      "source": "RMC Sport",
+      "date": "2026-06-25T23:39:42+00:00",
+      "summary": "La Fifa a confirmé que les symboles arc-en-ciel seraient acceptés dans les tribunes du stade de Seattle où se disputera le match Égypte-Iran, désigné \"match des fiertés\" par la municipalité. Une décision que…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-aura-bien-des-drapeaux-arc-en-ciel-dans-les-tribunes-d-egypte-iran_AD-202606250980.html"
+    },
+    {
       "title": "Coupe du monde 2026: résultats et classement final du groupe E",
       "source": "RMC Sport",
       "date": "2026-06-25T22:40:41+00:00",
@@ -3466,13 +3484,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-il-nous-a-donne-une-mission-le-message-de-soutien-des-bleus-a-deschamps-endeuille_AV-202606250922.html"
     },
     {
-      "title": "DIRECT. Tunisie-Pays-Bas: suivez en live le match du groupe F de la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:38:00+00:00",
-      "summary": "Suivez en live le match entre la Tunisie et les Pays-Bas, ce vendredi (1h) à Kansas City. Face à des Tunisiens déjà éliminés, les Néerlandais visent une victoire (si possible large) pour assurer la première…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/tunisie-pays-bas-suivez-en-live-le-match-du-groupe-f-de-la-coupe-du-monde-2026_LS-202606250506.html"
-    },
-    {
       "title": "Équipe de France: Saliba va souffler contre la Norvège, Lacroix devrait le remplacer",
       "source": "RMC Sport",
       "date": "2026-06-25T19:29:16+00:00",
@@ -3485,29 +3496,99 @@
       "date": "2026-06-25T18:30:58+00:00",
       "summary": "Alors que la question se pose de savoir si les Bleus feront tourner face à la Norvège, vendredi (21h) pour le troisième match de poule de la Coupe du monde 2026, Christophe Dugarry tient à rappeler que les…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-le-mec-qui-ne-joue-pas-a-un-role-determinant-dugarry-defend-le-role-des-remplacants-a-la-coupe-du-monde_AV-202606250887.html"
-    },
-    {
-      "title": "Coupe du monde 2026: deux avions affrétés, dîner après France-Norvège… les familles des Bleus en route pour Boston",
-      "source": "RMC Sport",
-      "date": "2026-06-25T18:06:06+00:00",
-      "summary": "L’équipe de France affronte la Norvège vendredi soir à 21 heures, heure française. Une rencontre programmée au Gillette Stadium de Boston où les familles des Bleus seront présentes en masse.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-avions-affretes-diner-apres-france-norvege-les-familles-des-bleus-en-route-pour-boston_AV-202606250868.html"
     }
   ],
   "all_news": [
+    {
+      "title": "Japon-Suède: un nul qui arrange tout le monde, les deux équipes qualifiées pour les 16es de finale de la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:12:21+00:00",
+      "summary": "Le Japon termine cette phase de groupes de la Coupe du monde en étant invaincu. Les Samouraïs Bleus a tenu en échec la Suède (1-1). Les deux équipes se qualifient pour les 16es de finale de la Coupe du monde…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
+    },
+    {
+      "title": "Tunisie-Pays-Bas: les Oranje valident leur qualification et affronteront le Maroc en 16es",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:12:01+00:00",
+      "summary": "En menant 2-0 après 7 minutes de jeu, les Pays-Bas n'ont quasiment laissé aucune chance à la Tunisie pour ce dernier match du groupe F de cette Coupe du monde 2026. Désormais, c'est le Maroc qui les attend en…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/tunisie-pays-bas-suivez-en-live-le-match-du-groupe-f-de-la-coupe-du-monde-2026_LS-202606250506.html"
+    },
+    {
+      "title": "Coupe du monde 2026: résultats et classement final du groupe F",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:08:19+00:00",
+      "summary": "Le groupe F de la Coupe du monde 2026 a rendu son verdict après six matchs riches en buts. Découvrez les résultats et le classement final.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-f_AV-202606140425.html"
+    },
+    {
+      "title": "Revivez Japon – Suède (1-1)",
+      "source": "SO FOOT",
+      "date": "2026-06-26T01:02:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-japon-suede"
+    },
+    {
+      "title": "Coupe du monde 2026: la liste des équipes qualifiées pour les 16es de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-26T01:01:24+00:00",
+      "summary": "À mesure que les matchs de la Coupe du monde 2026 défilent, les classements des 12 groupes se dessinent de plus en plus précisément. RMC Sport liste les équipes qui ont d'ores et déjà sécurisé leur place dans…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-la-liste-des-equipes-qualifiees-pour-les-16es-de-finale_AV-202606220046.html"
+    },
+    {
+      "title": "Mondial 2026 : Les Pays-Bas s’offrent la Tunisie et terminent en tête du groupe F",
+      "source": "SO FOOT",
+      "date": "2026-06-26T01:00:13+00:00",
+      "summary": "Les Bataves ont déplumé les Aigles de Carthage en douceur.",
+      "url": "https://www.sofoot.com/articles/mondial-2026-les-pays-bas-soffrent-la-tunisie-et-terminent-en-tete-du-groupe-f"
+    },
+    {
+      "title": "Le Japon et la Suède filent vers les seizièmes main dans la main",
+      "source": "SO FOOT",
+      "date": "2026-06-26T00:58:41+00:00",
+      "summary": "Deux éclairs auront suffi pour animer la nuit.",
+      "url": "https://www.sofoot.com/articles/un-nul-contre-le-japon-et-la-suede-attend-les-bleus"
+    },
+    {
+      "title": "En direct : Tunisie – Pays-Bas",
+      "source": "SO FOOT",
+      "date": "2026-06-26T00:56:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-tunisie-pays-bas"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Je veux qu'ils perdent\", l'aveu honnête de Mourinho sur les mondialistes du Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-06-26T00:45:48+00:00",
+      "summary": "Alors qu'il prépare sa prochaine reprise en main du Real Madrid, José Mourinho s'est confié sur les exploits de ses joueurs à la Coupe du monde 2026. Et il leur souhaite le pire, sans la moindre hésitation.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-je-veux-qu-ils-perdent-l-aveu-honnete-de-mourinho-sur-les-mondialistes-du-real-madrid_AV-202606260046.html"
+    },
+    {
+      "title": "Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-06-26T00:45:48+00:00",
+      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
+      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+    },
+    {
+      "title": "Coupe du monde 2026: il y aura bien des drapeaux arc-en-ciel dans les tribunes d'Égypte-Iran",
+      "source": "RMC Sport",
+      "date": "2026-06-25T23:39:42+00:00",
+      "summary": "La Fifa a confirmé que les symboles arc-en-ciel seraient acceptés dans les tribunes du stade de Seattle où se disputera le match Égypte-Iran, désigné \"match des fiertés\" par la municipalité. Une décision que…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-aura-bien-des-drapeaux-arc-en-ciel-dans-les-tribunes-d-egypte-iran_AD-202606250980.html"
+    },
+    {
+      "title": "Un Parc des princes entre 60 000 et 70 000 places serait à l’étude",
+      "source": "SO FOOT",
+      "date": "2026-06-25T22:52:40+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/un-parc-des-princes-entre-60-000-et-70-000-places-serait-a-letude"
+    },
     {
       "title": "Coupe du monde 2026: résultats et classement final du groupe E",
       "source": "RMC Sport",
       "date": "2026-06-25T22:40:41+00:00",
       "summary": "La Coupe du monde 2026 a débuté ce jeudi 11 juin aux États-Unis, au Mexique et au Canada. Après six matchs âprement disputés, le groupe E du Mondial 2026 a rendu son verdict.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-calendrier-resultats-et-classement-du-groupe-e_AV-202606140372.html"
-    },
-    {
-      "title": "DIRECT. Japon-Suède: suivez le match du groupe F du Mondial 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-06-25T22:38:58+00:00",
-      "summary": "Toujours invaincu en deux matchs et prétendant à la première place du groupe F, le Japon veut s'imposer contre la Suède lors de la troisième journée et jouer un sale tour aux Pays-Bas. Les Scandinaves ont…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
     },
     {
       "title": "Équateur-Allemagne: la Tri fait tomber la Mannschaft et arrache son billet pour les 16es de finale",
@@ -3636,10 +3717,10 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-france-norvege-j-1-suivez-la-conference-de-presse-des-bleus-et-toute-l-actualite-en-live_LN-202606250317.html"
     },
     {
-      "title": "Egypte-Iran: \"Vous allez voir beaucoup de drapeaux arc-en-ciel dans le stade\", malgré les critiques, Seattle prêt à faire la fête pour son Pride match day",
+      "title": "Égypte-Iran: \"Vous allez voir beaucoup de drapeaux arc-en-ciel dans le stade\", malgré les critiques, Seattle prêt à faire la fête pour son Pride match day",
       "source": "RMC Sport",
       "date": "2026-06-25T20:14:15+00:00",
-      "summary": "Baptisée \"match des fiertés\" par le comité d'organisation de la ville, la rencontre opposant l'Egypte et l'Iran qui se jouera à Seattle (samedi 5h, heure française) sera scrutée sur le terrain mais aussi en…",
+      "summary": "Baptisée \"match des fiertés\" par le comité d'organisation de la ville, la rencontre opposant l'Égypte et l'Iran qui se jouera à Seattle (samedi 5h, heure française) sera scrutée sur le terrain mais aussi en…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/egypte-iran-vous-allez-voir-beaucoup-de-drapeaux-arc-en-ciel-dans-le-stade-malgre-les-critiques-seattle-pret-a-faire-la-fete-pour-son-pride-match-day_AV-202606250940.html"
     },
     {
@@ -3676,13 +3757,6 @@
       "date": "2026-06-25T19:43:52+00:00",
       "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
       "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
-      "title": "DIRECT. Tunisie-Pays-Bas: suivez en live le match du groupe F de la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-06-25T19:38:00+00:00",
-      "summary": "Suivez en live le match entre la Tunisie et les Pays-Bas, ce vendredi (1h) à Kansas City. Face à des Tunisiens déjà éliminés, les Néerlandais visent une victoire (si possible large) pour assurer la première…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/tunisie-pays-bas-suivez-en-live-le-match-du-groupe-f-de-la-coupe-du-monde-2026_LS-202606250506.html"
     },
     {
       "title": "Équipe de France: Saliba va souffler contre la Norvège, Lacroix devrait le remplacer",
@@ -3748,46 +3822,11 @@
       "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-letrange-souhait-de-lentraineur-du-real-madrid-jose-mourinho"
     },
     {
-      "title": "Coupe du monde 2026: deux avions affrétés, dîner après France-Norvège… les familles des Bleus en route pour Boston",
-      "source": "RMC Sport",
-      "date": "2026-06-25T18:06:06+00:00",
-      "summary": "L’équipe de France affronte la Norvège vendredi soir à 21 heures, heure française. Une rencontre programmée au Gillette Stadium de Boston où les familles des Bleus seront présentes en masse.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-deux-avions-affretes-diner-apres-france-norvege-les-familles-des-bleus-en-route-pour-boston_AV-202606250868.html"
-    },
-    {
       "title": "Mondial 2026 : L’attaquant tchèque Patrik Schick annonce sa retraite internationale",
       "source": "SO FOOT",
       "date": "2026-06-25T17:53:40+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/mondial-2026-lattaquant-tcheque-patrik-schick-annonce-sa-retraite-internationale"
-    },
-    {
-      "title": "Mercato: Cuisance proche d'un retour en Ligue 1, l'ex-milieu de l'OM fonce vers Lens",
-      "source": "RMC Sport",
-      "date": "2026-06-25T17:32:46+00:00",
-      "summary": "Selon Sky Deutschland, un accord a été trouvé entre le club de D2 allemande du Hertha Berlin et le RC Lens pour le transfert de l’ancien milieu de terrain de l’OM, Michaël Cuisance.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-cuisance-proche-d-un-retour-en-ligue-1-l-ex-milieu-de-l-om-fonce-vers-lens_AV-202606250845.html"
-    },
-    {
-      "title": "Une belle promotion: Stéphanie Frappart nommée responsable de l'arbitrage de l'UEFA",
-      "source": "RMC Sport",
-      "date": "2026-06-25T17:27:48+00:00",
-      "summary": "L'arbitre internationale française Stéphanie Frappart a été nommée responsable de l'arbitrage de l'UEFA, a annoncé jeudi dans un communiqué l'instance qui dirige le football européen.",
-      "url": "https://rmcsport.bfmtv.com/football/une-belle-promotion-stephanie-frappart-nommee-responsable-de-l-arbitrage-de-l-uefa_AN-202606250837.html"
-    },
-    {
-      "title": "Mercato: le Real active sa clause de rachat pour Nico Paz, avec l’objectif de le revendre six fois plus cher",
-      "source": "RMC Sport",
-      "date": "2026-06-25T17:01:34+00:00",
-      "summary": "Le Real Madrid a informé officiellement ce jeudi qu’il allait activer la clause de rachat de Nico Paz prêté depuis l’été 2024 en Italie du côté de Come. Le club italien a jusqu'à lundi pour racheter le joueur…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-le-real-active-sa-clause-de-rachat-pour-nico-paz-avec-l-objectif-de-le-revendre-six-fois-plus-cher_AV-202606250806.html"
-    },
-    {
-      "title": "Real Madrid",
-      "source": "RMC Sport",
-      "date": "2026-06-25T17:01:34+00:00",
-      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
     },
     {
       "title": "Le Stade rennais fait un gros coup en prolongeant Estéban Lepaul",
@@ -3846,13 +3885,6 @@
       "url": "https://www.sofoot.com/breves/olympique-de-marseille-le-velodrome-a-un-nouveau-naming"
     },
     {
-      "title": "En direct : Japon – Suède",
-      "source": "SO FOOT",
-      "date": "2026-06-25T15:34:34+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-japon-suede"
-    },
-    {
       "title": "Un certain Reynolds dans le viseur du Stade rennais",
       "source": "SO FOOT",
       "date": "2026-06-25T15:30:14+00:00",
@@ -3886,34 +3918,6 @@
       "date": "2026-06-25T14:33:24+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/alexia-putellas-rassure-apres-les-seismes-au-venezuela"
-    },
-    {
-      "title": "En direct : Turquie – États-Unis",
-      "source": "SO FOOT",
-      "date": "2026-06-25T14:26:51+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-turquie-etats-unis"
-    },
-    {
-      "title": "Neymar s’inspire de Lewis Hamilton pour son retour avec le Brésil",
-      "source": "SO FOOT",
-      "date": "2026-06-25T14:19:38+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/neymar-sinspire-de-lewis-hamilton-pour-son-retour-avec-le-bresil"
-    },
-    {
-      "title": "Pronostic Sénégal Irak : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-06-25T14:13:33+00:00",
-      "summary": "Pronostic Sénégal – Irak : analyse complète et notre pari Sénégal vainqueur. Découvrez nos cotes et conseils pour ce match décisif de la Coupe du monde.",
-      "url": "https://www.sofoot.com/breves/pronostic-senegal-irak-analyse-cotes-et-prono-coupe-du-monde"
-    },
-    {
-      "title": "En direct : Paraguay – Australie",
-      "source": "SO FOOT",
-      "date": "2026-06-25T14:11:09+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-paraguay-australie"
     }
   ],
   "focused_team_news": {
@@ -3974,14 +3978,35 @@
     ],
     "Egypt": [
       {
-        "title": "Egypte-Iran: \"Vous allez voir beaucoup de drapeaux arc-en-ciel dans le stade\", malgré les critiques, Seattle prêt à faire la fête pour son Pride match day",
+        "title": "Coupe du monde 2026: il y aura bien des drapeaux arc-en-ciel dans les tribunes d'Égypte-Iran",
+        "source": "RMC Sport",
+        "date": "2026-06-25T23:39:42+00:00",
+        "summary": "La Fifa a confirmé que les symboles arc-en-ciel seraient acceptés dans les tribunes du stade de Seattle où se disputera le match Égypte-Iran, désigné \"match des fiertés\" par la municipalité. Une décision que…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-aura-bien-des-drapeaux-arc-en-ciel-dans-les-tribunes-d-egypte-iran_AD-202606250980.html"
+      },
+      {
+        "title": "Égypte-Iran: \"Vous allez voir beaucoup de drapeaux arc-en-ciel dans le stade\", malgré les critiques, Seattle prêt à faire la fête pour son Pride match day",
         "source": "RMC Sport",
         "date": "2026-06-25T20:14:15+00:00",
-        "summary": "Baptisée \"match des fiertés\" par le comité d'organisation de la ville, la rencontre opposant l'Egypte et l'Iran qui se jouera à Seattle (samedi 5h, heure française) sera scrutée sur le terrain mais aussi en…",
+        "summary": "Baptisée \"match des fiertés\" par le comité d'organisation de la ville, la rencontre opposant l'Égypte et l'Iran qui se jouera à Seattle (samedi 5h, heure française) sera scrutée sur le terrain mais aussi en…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/egypte-iran-vous-allez-voir-beaucoup-de-drapeaux-arc-en-ciel-dans-le-stade-malgre-les-critiques-seattle-pret-a-faire-la-fete-pour-son-pride-match-day_AV-202606250940.html"
       }
     ],
     "France": [
+      {
+        "title": "Japon-Suède: un nul qui arrange tout le monde, les deux équipes qualifiées pour les 16es de finale de la Coupe du monde",
+        "source": "RMC Sport",
+        "date": "2026-06-26T01:12:21+00:00",
+        "summary": "Le Japon termine cette phase de groupes de la Coupe du monde en étant invaincu. Les Samouraïs Bleus a tenu en échec la Suède (1-1). Les deux équipes se qualifient pour les 16es de finale de la Coupe du monde…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-japon-suede-suivez-le-match-du-groupe-f-du-mondial-2026-en-live_LS-202606250588.html"
+      },
+      {
+        "title": "Le Japon et la Suède filent vers les seizièmes main dans la main",
+        "source": "SO FOOT",
+        "date": "2026-06-26T00:58:41+00:00",
+        "summary": "Deux éclairs auront suffi pour animer la nuit.",
+        "url": "https://www.sofoot.com/articles/un-nul-contre-le-japon-et-la-suede-attend-les-bleus"
+      },
       {
         "title": "France-Norvège: \"Haaland est meilleur que Mbappé\", malgré la popularité des Bleus, les jeunes norvégiens croient à l'exploit",
         "source": "RMC Sport",
@@ -4025,18 +4050,18 @@
         "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-norvege-france-gagner-tous-les-matches-tchouameni-clair-sur-l-objectif-des-bleus_VN-202606250924.html"
       },
       {
-        "title": "France-Norvège: \"Il nous a donné une mission\", le message de soutien des Bleus à Deschamps, endeuillé",
-        "source": "RMC Sport",
-        "date": "2026-06-25T19:43:52+00:00",
-        "summary": "A la veille du troisième match du groupe I de la Coupe du monde 2026 face à la Norvège, le milieu de terrain de l’équipe de France, Aurélien Tchouaméni a tenu exprimer au nom des Bleus tout son soutien à…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-il-nous-a-donne-une-mission-le-message-de-soutien-des-bleus-a-deschamps-endeuille_AV-202606250922.html"
-      },
-      {
         "title": "Didier Deschamps",
         "source": "RMC Sport",
         "date": "2026-06-25T19:43:52+00:00",
         "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
         "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+      },
+      {
+        "title": "France-Norvège: \"Il nous a donné une mission\", le message de soutien des Bleus à Deschamps, endeuillé",
+        "source": "RMC Sport",
+        "date": "2026-06-25T19:43:52+00:00",
+        "summary": "A la veille du troisième match du groupe I de la Coupe du monde 2026 face à la Norvège, le milieu de terrain de l’équipe de France, Aurélien Tchouaméni a tenu exprimer au nom des Bleus tout son soutien à…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-norvege-il-nous-a-donne-une-mission-le-message-de-soutien-des-bleus-a-deschamps-endeuille_AV-202606250922.html"
       },
       {
         "title": "Équipe de France: Saliba va souffler contre la Norvège, Lacroix devrait le remplacer",
@@ -4051,28 +4076,21 @@
         "date": "2026-06-25T19:16:27+00:00",
         "summary": "Présent en conférence de presse en lieu et place de Didier Deschamps, Guy Stéphan n'a pas caché son inconfort mais l'entraîneur adjoint des Bleus s'est dit pleinement concentré sur son rôle en attendant le…",
         "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-norvege-france-je-ne-suis-pas-a-ma-place-confie-guy-stephan-lors-de-la-conference-de-presse_VN-202606250911.html"
-      },
-      {
-        "title": "Equipe de France: \"Le mec qui ne joue pas a un rôle déterminant\", Dugarry défend le rôle des remplaçants à la Coupe du monde",
-        "source": "RMC Sport",
-        "date": "2026-06-25T18:30:58+00:00",
-        "summary": "Alors que la question se pose de savoir si les Bleus feront tourner face à la Norvège, vendredi (21h) pour le troisième match de poule de la Coupe du monde 2026, Christophe Dugarry tient à rappeler que les…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-le-mec-qui-ne-joue-pas-a-un-role-determinant-dugarry-defend-le-role-des-remplacants-a-la-coupe-du-monde_AV-202606250887.html"
-      },
-      {
-        "title": "Norvège - France : \"Un match très serré\" selon les jeunes norvégiens",
-        "source": "RMC Sport",
-        "date": "2026-06-25T18:23:41+00:00",
-        "summary": "Rencontrés avant la rencontre, les joueurs du Lillehammer FK en Norvège nous parlent de la force offensive de l'Équipe de France face à celle de la Norvège.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-norvege-france-un-match-tres-serre-selon-les-jeunes-norvegiens_VN-202606250949.html"
       }
     ],
     "Iran": [
       {
-        "title": "Egypte-Iran: \"Vous allez voir beaucoup de drapeaux arc-en-ciel dans le stade\", malgré les critiques, Seattle prêt à faire la fête pour son Pride match day",
+        "title": "Coupe du monde 2026: il y aura bien des drapeaux arc-en-ciel dans les tribunes d'Égypte-Iran",
+        "source": "RMC Sport",
+        "date": "2026-06-25T23:39:42+00:00",
+        "summary": "La Fifa a confirmé que les symboles arc-en-ciel seraient acceptés dans les tribunes du stade de Seattle où se disputera le match Égypte-Iran, désigné \"match des fiertés\" par la municipalité. Une décision que…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-y-aura-bien-des-drapeaux-arc-en-ciel-dans-les-tribunes-d-egypte-iran_AD-202606250980.html"
+      },
+      {
+        "title": "Égypte-Iran: \"Vous allez voir beaucoup de drapeaux arc-en-ciel dans le stade\", malgré les critiques, Seattle prêt à faire la fête pour son Pride match day",
         "source": "RMC Sport",
         "date": "2026-06-25T20:14:15+00:00",
-        "summary": "Baptisée \"match des fiertés\" par le comité d'organisation de la ville, la rencontre opposant l'Egypte et l'Iran qui se jouera à Seattle (samedi 5h, heure française) sera scrutée sur le terrain mais aussi en…",
+        "summary": "Baptisée \"match des fiertés\" par le comité d'organisation de la ville, la rencontre opposant l'Égypte et l'Iran qui se jouera à Seattle (samedi 5h, heure française) sera scrutée sur le terrain mais aussi en…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/egypte-iran-vous-allez-voir-beaucoup-de-drapeaux-arc-en-ciel-dans-le-stade-malgre-les-critiques-seattle-pret-a-faire-la-fete-pour-son-pride-match-day_AV-202606250940.html"
       }
     ],
@@ -4085,7 +4103,7 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-paraguay-australie-suivez-le-match-du-groupe-d-de-la-coupe-du-monde-en-live_LS-202606250660.html"
       },
       {
-        "title": "En direct : Paraguay – Australie",
+        "title": "En direct : Paraguay-Australie",
         "source": "SO FOOT",
         "date": "2026-06-25T14:11:09+00:00",
         "summary": "",
@@ -4254,7 +4272,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
       "associated_team": "Sweden",
-      "updated_at": "2026-06-25T22:45:45+00:00",
+      "updated_at": "2026-06-26T01:29:43+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4265,7 +4283,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/850354.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-06-25T22:45:45+00:00",
+      "updated_at": "2026-06-26T01:29:43+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4276,7 +4294,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "France",
-      "updated_at": "2026-06-25T22:45:45+00:00",
+      "updated_at": "2026-06-26T01:29:43+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4287,7 +4305,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-06-25T22:45:45+00:00",
+      "updated_at": "2026-06-26T01:29:43+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4298,7 +4316,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-06-25T22:45:45+00:00",
+      "updated_at": "2026-06-26T01:29:43+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4309,7 +4327,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/846033.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-06-25T22:45:45+00:00",
+      "updated_at": "2026-06-26T01:29:43+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
