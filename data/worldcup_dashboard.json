@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T20:15:48+00:00",
+  "generated_at": "2026-06-29T22:20:20+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -1430,10 +1430,10 @@
           "away_espn_id": "210",
           "home_country_code": "GER",
           "away_country_code": "PAR",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
+          "home_score": "1",
+          "away_score": "1",
+          "status": "LIVE",
+          "status_state": "in",
           "completed": false,
           "venue": "Gillette Stadium",
           "city": "Foxborough, Massachusetts"
@@ -2048,10 +2048,10 @@
       "away_espn_id": "210",
       "home_country_code": "GER",
       "away_country_code": "PAR",
-      "home_score": "",
-      "away_score": "",
-      "status": "À venir",
-      "status_state": "pre",
+      "home_score": "1",
+      "away_score": "1",
+      "status": "LIVE",
+      "status_state": "in",
       "completed": false,
       "venue": "Gillette Stadium",
       "city": "Foxborough, Massachusetts"
@@ -2905,6 +2905,21 @@
       "country": ""
     },
     {
+      "name": "Florian Wirtz",
+      "team": "Germany",
+      "team_id": 8570,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8570.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1152455.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 3,
+      "rank": 2,
+      "country": ""
+    },
+    {
       "name": "Michael Olise",
       "team": "France",
       "team_id": 6723,
@@ -2916,23 +2931,8 @@
       "all_time_rank": "",
       "played": "",
       "value": 3,
-      "rank": 2,
-      "country": "France"
-    },
-    {
-      "name": "Alexander Isak",
-      "team": "Sweden",
-      "team_id": 8520,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8520.png",
-      "country_code": "",
-      "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
-      "country_flag_url": "",
-      "all_time_rank": "",
-      "played": "",
-      "value": 3,
       "rank": 3,
-      "country": ""
+      "country": "France"
     }
   ],
   "all_time_top_scorers": [
@@ -3050,18 +3050,32 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "DIRECT: Allemagne-Paraguay: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "title": "DIRECT: Allemagne-Paraguay: la Mannschaft revient au score, suivez le match en live",
       "source": "RMC Sport",
-      "date": "2026-06-29T20:12:54+00:00",
+      "date": "2026-06-29T22:20:06+00:00",
       "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
     },
     {
+      "title": "DIRECT. Pays-Bas - Maroc: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-29T22:06:07+00:00",
+      "summary": "C'est la plus belle affiche de ces seizièmes de finale. D'un côté le Maroc, demi-finaliste il y a quatre ans et valeur sure du football mondial. De l'autre, les Pays-Bas, premiers de leur poule et qui ont…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-maroc-suivez-le-choc-des-seiziemes-de-finale-de-la-coupe-du-monde-en-live_LS-202606290668.html"
+    },
+    {
       "title": "DIRECT. Coupe du monde 2026, équipe de France: Deschamps ne veut pas envisager le scénario du pire",
       "source": "RMC Sport",
-      "date": "2026-06-29T19:43:57+00:00",
+      "date": "2026-06-29T21:08:32+00:00",
       "summary": "Après trois victoires et la première place de son groupe, l'équipe de France se prépare à défier la Suède, ce mardi (23h, heure de Paris), en 16es de finale de la Coupe du monde 2026. Suivez en live toutes…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-sur-les-bleus-avant-le-16e-de-finale-contre-la-suede_LN-202606280220.html"
+    },
+    {
+      "title": "France-Suède: le mercure grimpe, les Bleus risquent d'avoir très chaud en 16e de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-29T20:21:17+00:00",
+      "summary": "Le 16e de finale de la Coupe du monde 2026 entre la France et la Suède se disputera ce mardi à New York sous de fortes chaleurs. Si les Bleus devraient éviter les orages, la météo s’annonce encore compliquée…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-le-mercure-grimpe-les-bleus-risquent-d-avoir-tres-chaud-en-16e-de-finale_AV-202606290914.html"
     },
     {
       "title": "Brésil-Japon: Martinelli enfile sa cape de héros et envoie la Seleçao en 8es de finale",
@@ -3090,64 +3104,50 @@
       "date": "2026-06-29T15:25:06+00:00",
       "summary": "Éliminé dès les phases de poule avec l'Uruguay à la Coupe du monde 2026, Marcelo Bielsa a été aperçu complètement seul à l'aéroport de Montevideo (Uruguay) ce lundi matin. Un retour au pays tout seul dans…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-retour-tres-solitaire-de-marcelo-bielsa-en-uruguray-apres-le-fiasco-de-la-celeste_AV-202606290699.html"
-    },
-    {
-      "title": "DIRECT. Pays-Bas - Maroc: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-06-29T14:45:49+00:00",
-      "summary": "C'est la plus belle affiche de ces seizièmes de finale. D'un côté le Maroc, demi-finaliste il y a quatre ans et valeur sure du football mondial. De l'autre, les Pays-Bas, premiers de leur poule et qui ont…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-maroc-suivez-le-choc-des-seiziemes-de-finale-de-la-coupe-du-monde-en-live_LS-202606290668.html"
-    },
-    {
-      "title": "Coupe du monde 2026: après un but, à l'échauffement, après une victoire... la liste des chansons des Bleus à chaque match du Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:48:00+00:00",
-      "summary": "En concertation avec les équipes nationales, la Fifa a sélectionné plusieurs chansons par pays diffusées à quatre moments différents lors de chaque match de la Coupe du monde 2026. Voici les titres qui…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-apres-un-but-a-l-echauffement-apres-une-victoire-la-liste-des-chansons-des-bleus-a-chaque-match-du-mondial_AV-202606290623.html"
-    },
-    {
-      "title": "Coupe du monde 2026: non, les joueurs uruguayens n’ont pas été \"punis\" après leur élimination dès le premier tour",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:26:11+00:00",
-      "summary": "Éliminés par la petite porte de la Coupe du monde 2026 dès le premier tour, les Uruguayens auraient été forcés de rentrer chez eux par leurs propres moyens. La Fédération a préféré mettre les choses au clair.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-non-les-joueur-uruguayens-n-ont-pas-ete-punis-apres-leur-elimination-des-le-premier-tour_AV-202606290611.html"
-    },
-    {
-      "title": "Coupe du monde 2026: vers une nouvelle finale France-Argentine... les nouvelles probabilités des statisticiens",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:08:58+00:00",
-      "summary": "Alors que les 16es de finale de la Coupe du monde 2026 ont débuté depuis ce dimanche soir, les statisticiens ont fait le point sur les favoris de la compétition. Deuxième avant le début du tournoi, la France…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vers-une-nouvelle-finale-france-argentine-les-nouvelles-probabilites-des-statisticiens_AV-202606290597.html"
-    },
-    {
-      "title": "Sa démission ne leur suffit pas: les fans veulent bannir le sélectionneur sud-coréen du football après l'élimination en Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-29T12:14:40+00:00",
-      "summary": "Un groupe de supporters sud-coréens a publié un communiqué dans lequel il demande que le sélectionneur Hong Myung-bo quitte le football sud-coréen à jamais après l'élimination dès le premier tour de la Coupe…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sa-demission-ne-leur-suffit-pas-les-fans-veulent-bannir-le-selectionneur-sud-coreen-du-football-apres-l-elimination-en-coupe-du-monde_AV-202606290556.html"
     }
   ],
   "france_news": [
     {
       "title": "Coupe du monde 2026 : la Belgique et l'Uruguay en danger, un duel de buteurs entre Kylian Mbappé face à Erling Haaland",
       "source": "France Info",
-      "date": "2026-06-29T20:15:58+00:00",
+      "date": "2026-06-29T22:20:30+00:00",
       "summary": "Si l'équipe de France aborde cette troisième journée en position de force, ce n'est pas le cas d'autres grands noms du football mondial.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-la-belgique-et-l-uruguay-en-danger-kylian-mbappe-face-a-erling-haaland-suivez-la-fin-de-la-phase-de-poules-de-la-coupe-du-monde-avec-nous_8079575.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "DIRECT: Allemagne-Paraguay: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "title": "DIRECT: Allemagne-Paraguay: la Mannschaft revient au score, suivez le match en live",
       "source": "RMC Sport",
-      "date": "2026-06-29T20:12:54+00:00",
+      "date": "2026-06-29T22:20:06+00:00",
       "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
     },
     {
+      "title": "Equipe de France: la réforme du foot français peut-elle bloquer une arrivée de Zidane à la tête des Bleus?",
+      "source": "RMC Sport",
+      "date": "2026-06-29T21:48:59+00:00",
+      "summary": "Les députés français ont adopté ce lundi en première lecture une proposition de loi sur la gouvernance du sport professionnel. Parmi les amendements votés, un plafond salarial pour les dirigeants et employés…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-la-reforme-du-foot-francais-peut-elle-bloquer-une-arrivee-de-zidane-a-la-tete-des-bleus_AV-202606290944.html"
+    },
+    {
       "title": "DIRECT. Coupe du monde 2026, équipe de France: Deschamps ne veut pas envisager le scénario du pire",
       "source": "RMC Sport",
-      "date": "2026-06-29T19:43:57+00:00",
+      "date": "2026-06-29T21:08:32+00:00",
       "summary": "Après trois victoires et la première place de son groupe, l'équipe de France se prépare à défier la Suède, ce mardi (23h, heure de Paris), en 16es de finale de la Coupe du monde 2026. Suivez en live toutes…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-sur-les-bleus-avant-le-16e-de-finale-contre-la-suede_LN-202606280220.html"
+    },
+    {
+      "title": "Coupe du monde 2026 : Didier Deschamps de retour après le décès de sa mère",
+      "source": "France Info",
+      "date": "2026-06-29T21:03:11+00:00",
+      "summary": "Didier Deschamps était de retour en conférence de presse à la veille du 16e de finale des Bleus face à la Suède mardi. Le sélectionneur de l'équipe de France était rentré en France à la suite du décès de sa…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-didier-deschamps-de-retour-apres-le-deces-de-sa-mere_8085743.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "France-Suède: le mercure grimpe, les Bleus risquent d'avoir très chaud en 16e de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-29T20:21:17+00:00",
+      "summary": "Le 16e de finale de la Coupe du monde 2026 entre la France et la Suède se disputera ce mardi à New York sous de fortes chaleurs. Si les Bleus devraient éviter les orages, la météo s’annonce encore compliquée…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-le-mercure-grimpe-les-bleus-risquent-d-avoir-tres-chaud-en-16e-de-finale_AV-202606290914.html"
     },
     {
       "title": "Équipe de France : \"C'était très dur\" Deschamps revient sur son absence",
@@ -3234,13 +3234,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/lui-donner-du-baume-au-coeur-rabiot-veut-profiter-de-france-suede-pour-remonter-le-moral-d-un-deschamps-endeuille_AN-202606290745.html"
     },
     {
-      "title": "Coupe du monde 2026: après un but, à l'échauffement, après une victoire... la liste des chansons des Bleus à chaque match du Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:48:00+00:00",
-      "summary": "En concertation avec les équipes nationales, la Fifa a sélectionné plusieurs chansons par pays diffusées à quatre moments différents lors de chaque match de la Coupe du monde 2026. Voici les titres qui…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-apres-un-but-a-l-echauffement-apres-une-victoire-la-liste-des-chansons-des-bleus-a-chaque-match-du-mondial_AV-202606290623.html"
-    },
-    {
       "title": "Coupe du monde : Didier Deschamps de retour, l'équipe de France reprend ses habitudes à Boston, sous les yeux d'Adil Rami",
       "source": "France Info",
       "date": "2026-06-28T04:15:01+00:00",
@@ -3281,36 +3274,36 @@
       "date": "2026-06-26T21:41:03+00:00",
       "summary": "4-1 ! Les Bleus ont découvert le stade de Boston et marqué les esprits, notamment grâce à un triplé d'Ousmane Dembélé contre la Norvège. Malgré l’absence de leur entraîneur Didier Deschamps, les Bleus ont été…",
       "url": "https://www.franceinfo.fr/coupe-du-monde/le-triple-de-dembele-illumine-france-norvege_8081906.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Face à la Norvège, les Bleus voudront l'emporter pour Didier Deschamps",
-      "source": "France Info",
-      "date": "2026-06-26T20:02:07+00:00",
-      "summary": "Privée de son sélectionneur, parti assister aux obsèques de sa mère, l'équipe de France dispute un match particulier face à la Norvège. Joueurs comme supporters espèrent décrocher une victoire pour rendre…",
-      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/face-a-la-norvege-les-bleus-voudront-l-emporter-pour-didier-deschamps_8081843.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "\"Viking row\" : les Norvégiens rament pour la victoire",
-      "source": "France Info",
-      "date": "2026-06-26T19:00:02+00:00",
-      "summary": "🇳🇴 « Le Viking row », la démonstration de force et d’unité des supporters norvégiens, le geste qui va impressionner les Français vendredi soir dans les tribunes du match France-Norvège. La « rame de viking »…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/viking-row-les-norvegiens-rament-pour-la-victoire_8081231.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
-      "title": "DIRECT: Allemagne-Paraguay: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "title": "DIRECT: Allemagne-Paraguay: la Mannschaft revient au score, suivez le match en live",
       "source": "RMC Sport",
-      "date": "2026-06-29T20:12:54+00:00",
+      "date": "2026-06-29T22:20:06+00:00",
       "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
     },
     {
+      "title": "DIRECT. Pays-Bas - Maroc: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-29T22:06:07+00:00",
+      "summary": "C'est la plus belle affiche de ces seizièmes de finale. D'un côté le Maroc, demi-finaliste il y a quatre ans et valeur sure du football mondial. De l'autre, les Pays-Bas, premiers de leur poule et qui ont…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-maroc-suivez-le-choc-des-seiziemes-de-finale-de-la-coupe-du-monde-en-live_LS-202606290668.html"
+    },
+    {
       "title": "DIRECT. Coupe du monde 2026, équipe de France: Deschamps ne veut pas envisager le scénario du pire",
       "source": "RMC Sport",
-      "date": "2026-06-29T19:43:57+00:00",
+      "date": "2026-06-29T21:08:32+00:00",
       "summary": "Après trois victoires et la première place de son groupe, l'équipe de France se prépare à défier la Suède, ce mardi (23h, heure de Paris), en 16es de finale de la Coupe du monde 2026. Suivez en live toutes…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-sur-les-bleus-avant-le-16e-de-finale-contre-la-suede_LN-202606280220.html"
+    },
+    {
+      "title": "France-Suède: le mercure grimpe, les Bleus risquent d'avoir très chaud en 16e de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-29T20:21:17+00:00",
+      "summary": "Le 16e de finale de la Coupe du monde 2026 entre la France et la Suède se disputera ce mardi à New York sous de fortes chaleurs. Si les Bleus devraient éviter les orages, la météo s’annonce encore compliquée…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-le-mercure-grimpe-les-bleus-risquent-d-avoir-tres-chaud-en-16e-de-finale_AV-202606290914.html"
     },
     {
       "title": "Brésil-Japon: Martinelli enfile sa cape de héros et envoie la Seleçao en 8es de finale",
@@ -3339,50 +3332,106 @@
       "date": "2026-06-29T15:25:06+00:00",
       "summary": "Éliminé dès les phases de poule avec l'Uruguay à la Coupe du monde 2026, Marcelo Bielsa a été aperçu complètement seul à l'aéroport de Montevideo (Uruguay) ce lundi matin. Un retour au pays tout seul dans…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-retour-tres-solitaire-de-marcelo-bielsa-en-uruguray-apres-le-fiasco-de-la-celeste_AV-202606290699.html"
-    },
-    {
-      "title": "DIRECT. Pays-Bas - Maroc: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-06-29T14:45:49+00:00",
-      "summary": "C'est la plus belle affiche de ces seizièmes de finale. D'un côté le Maroc, demi-finaliste il y a quatre ans et valeur sure du football mondial. De l'autre, les Pays-Bas, premiers de leur poule et qui ont…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-maroc-suivez-le-choc-des-seiziemes-de-finale-de-la-coupe-du-monde-en-live_LS-202606290668.html"
-    },
-    {
-      "title": "Coupe du monde 2026: après un but, à l'échauffement, après une victoire... la liste des chansons des Bleus à chaque match du Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:48:00+00:00",
-      "summary": "En concertation avec les équipes nationales, la Fifa a sélectionné plusieurs chansons par pays diffusées à quatre moments différents lors de chaque match de la Coupe du monde 2026. Voici les titres qui…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-apres-un-but-a-l-echauffement-apres-une-victoire-la-liste-des-chansons-des-bleus-a-chaque-match-du-mondial_AV-202606290623.html"
-    },
-    {
-      "title": "Coupe du monde 2026: non, les joueurs uruguayens n’ont pas été \"punis\" après leur élimination dès le premier tour",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:26:11+00:00",
-      "summary": "Éliminés par la petite porte de la Coupe du monde 2026 dès le premier tour, les Uruguayens auraient été forcés de rentrer chez eux par leurs propres moyens. La Fédération a préféré mettre les choses au clair.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-non-les-joueur-uruguayens-n-ont-pas-ete-punis-apres-leur-elimination-des-le-premier-tour_AV-202606290611.html"
-    },
-    {
-      "title": "Coupe du monde 2026: vers une nouvelle finale France-Argentine... les nouvelles probabilités des statisticiens",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:08:58+00:00",
-      "summary": "Alors que les 16es de finale de la Coupe du monde 2026 ont débuté depuis ce dimanche soir, les statisticiens ont fait le point sur les favoris de la compétition. Deuxième avant le début du tournoi, la France…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vers-une-nouvelle-finale-france-argentine-les-nouvelles-probabilites-des-statisticiens_AV-202606290597.html"
-    },
-    {
-      "title": "Sa démission ne leur suffit pas: les fans veulent bannir le sélectionneur sud-coréen du football après l'élimination en Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-06-29T12:14:40+00:00",
-      "summary": "Un groupe de supporters sud-coréens a publié un communiqué dans lequel il demande que le sélectionneur Hong Myung-bo quitte le football sud-coréen à jamais après l'élimination dès le premier tour de la Coupe…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sa-demission-ne-leur-suffit-pas-les-fans-veulent-bannir-le-selectionneur-sud-coreen-du-football-apres-l-elimination-en-coupe-du-monde_AV-202606290556.html"
     }
   ],
   "all_news": [
     {
       "title": "Coupe du monde 2026 : la Belgique et l'Uruguay en danger, un duel de buteurs entre Kylian Mbappé face à Erling Haaland",
       "source": "France Info",
-      "date": "2026-06-29T20:15:58+00:00",
+      "date": "2026-06-29T22:20:30+00:00",
       "summary": "Si l'équipe de France aborde cette troisième journée en position de force, ce n'est pas le cas d'autres grands noms du football mondial.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-la-belgique-et-l-uruguay-en-danger-kylian-mbappe-face-a-erling-haaland-suivez-la-fin-de-la-phase-de-poules-de-la-coupe-du-monde-avec-nous_8079575.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "DIRECT: Allemagne-Paraguay: la Mannschaft revient au score, suivez le match en live",
+      "source": "RMC Sport",
+      "date": "2026-06-29T22:20:06+00:00",
+      "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
+    },
+    {
+      "title": "DIRECT. Pays-Bas - Maroc: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-06-29T22:06:07+00:00",
+      "summary": "C'est la plus belle affiche de ces seizièmes de finale. D'un côté le Maroc, demi-finaliste il y a quatre ans et valeur sure du football mondial. De l'autre, les Pays-Bas, premiers de leur poule et qui ont…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-maroc-suivez-le-choc-des-seiziemes-de-finale-de-la-coupe-du-monde-en-live_LS-202606290668.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Monaco officialise les départs de deux recrues hivernales",
+      "source": "RMC Sport",
+      "date": "2026-06-29T22:03:36+00:00",
+      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui s'agite en parrallèle de la Coupe du monde. Les deux actualités se croisent même à l'image de l'Ivoirien Yan Diomandé, courtisé par le PSG.",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-29-juin-2026_LN-202606290222.html"
+    },
+    {
+      "title": "France-Suède : \"Jouer comme si notre vie en dépendait\", Potter prêt à défier les doubles champions du monde",
+      "source": "RMC Sport",
+      "date": "2026-06-29T21:52:21+00:00",
+      "summary": "En conférence de presse avant le choc face aux doubles champions du monde, le sélectionneur de la Suède s'est dit prêt à relever le défi d'une vie. \"Il faudra jouer comme si notre vie en dépendait et nos…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-suede-jouer-comme-si-notre-vie-en-dependait-potter-pret-a-defier-les-doubles-champions-du-monde_VN-202606290945.html"
+    },
+    {
+      "title": "Zinédine Zidane",
+      "source": "RMC Sport",
+      "date": "2026-06-29T21:49:00+00:00",
+      "summary": "Zinedine Zidane est né le 23 juin 1972 à Marseille. Cet ancien milieu offensif a remporté le Ballon d’or en 1998 (l'année où il ggne la Coupe du monde avec la France), et est une légende du Real Madrid où il…",
+      "url": "https://rmcsport.bfmtv.com/football/zinedine-zidane_DN-202108310570.html"
+    },
+    {
+      "title": "Equipe de France: la réforme du foot français peut-elle bloquer une arrivée de Zidane à la tête des Bleus?",
+      "source": "RMC Sport",
+      "date": "2026-06-29T21:48:59+00:00",
+      "summary": "Les députés français ont adopté ce lundi en première lecture une proposition de loi sur la gouvernance du sport professionnel. Parmi les amendements votés, un plafond salarial pour les dirigeants et employés…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-la-reforme-du-foot-francais-peut-elle-bloquer-une-arrivee-de-zidane-a-la-tete-des-bleus_AV-202606290944.html"
+    },
+    {
+      "title": "Mercato: c'est officiel, Robert Lewandowski quitte l'Europe et le Barça pour la MLS",
+      "source": "RMC Sport",
+      "date": "2026-06-29T21:32:34+00:00",
+      "summary": "L'attaquant polonais Robert Lewandowski, arrivé en fin de contrat avec le FC Barcelone, a signé jusqu'en 2028 avec le Chicago Fire, qui évolue dans le championnat nord-américain, a annoncé lundi le club…",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-c-est-officiel-robert-lewandowski-quitte-l-europe-et-le-barca-pour-la-mls_AD-202606290937.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde 2026, équipe de France: Deschamps ne veut pas envisager le scénario du pire",
+      "source": "RMC Sport",
+      "date": "2026-06-29T21:08:32+00:00",
+      "summary": "Après trois victoires et la première place de son groupe, l'équipe de France se prépare à défier la Suède, ce mardi (23h, heure de Paris), en 16es de finale de la Coupe du monde 2026. Suivez en live toutes…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-sur-les-bleus-avant-le-16e-de-finale-contre-la-suede_LN-202606280220.html"
+    },
+    {
+      "title": "Coupe du monde : Carlo Ancelotti explique pourquoi Neymar n’a pas joué contre le Japon",
+      "source": "SO FOOT",
+      "date": "2026-06-29T21:03:52+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-apres-la-victoire-du-bresil-matheus-cunha-chambre-les-supporters-japonais-2026"
+    },
+    {
+      "title": "Coupe du monde 2026 : Didier Deschamps de retour après le décès de sa mère",
+      "source": "France Info",
+      "date": "2026-06-29T21:03:11+00:00",
+      "summary": "Didier Deschamps était de retour en conférence de presse à la veille du 16e de finale des Bleus face à la Suède mardi. Le sélectionneur de l'équipe de France était rentré en France à la suite du décès de sa…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-didier-deschamps-de-retour-apres-le-deces-de-sa-mere_8085743.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Les députés se prononcent en faveur de la réforme de la gouvernance du football français et contre la multipropriété",
+      "source": "SO FOOT",
+      "date": "2026-06-29T20:39:59+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/les-deputes-se-prononcent-en-faveur-de-la-reforme-de-la-gouvernance-du-football-francais-et-contre-la-multipropriete"
+    },
+    {
+      "title": "Brésil-Japon: pourquoi Ancelotti n'a pas du tout fait jouer Neymar",
+      "source": "RMC Sport",
+      "date": "2026-06-29T20:28:12+00:00",
+      "summary": "Après la victoire (2-1) face au Japon, le sélectionneur brésilien Carlo Ancelotti a expliqué pourquoi Neymar n'a pas participé à la rencontre.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/bresil-japon-pourquoi-ancelotti-n-a-pas-du-tout-fait-jouer-neymar_AV-202606290920.html"
+    },
+    {
+      "title": "France-Suède: le mercure grimpe, les Bleus risquent d'avoir très chaud en 16e de finale",
+      "source": "RMC Sport",
+      "date": "2026-06-29T20:21:17+00:00",
+      "summary": "Le 16e de finale de la Coupe du monde 2026 entre la France et la Suède se disputera ce mardi à New York sous de fortes chaleurs. Si les Bleus devraient éviter les orages, la météo s’annonce encore compliquée…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-le-mercure-grimpe-les-bleus-risquent-d-avoir-tres-chaud-en-16e-de-finale_AV-202606290914.html"
     },
     {
       "title": "France-Suède: William Saliba, jusqu'ici tout va bien",
@@ -3392,20 +3441,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-william-saliba-jusqu-ici-tout-va-bien_AV-202606290912.html"
     },
     {
-      "title": "DIRECT. Mercato: après le Barça, Lewandowski file en MLS",
-      "source": "RMC Sport",
-      "date": "2026-06-29T20:13:16+00:00",
-      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui s'agite en parrallèle de la Coupe du monde. Les deux actualités se croisent même à l'image de l'Ivoirien Yan Diomandé, courtisé par le PSG.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-29-juin-2026_LN-202606290222.html"
-    },
-    {
-      "title": "DIRECT: Allemagne-Paraguay: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-06-29T20:12:54+00:00",
-      "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
-    },
-    {
       "title": "Coupe du monde : après la victoire du Brésil, Matheus Cunha chambre les supporters japonais",
       "source": "SO FOOT",
       "date": "2026-06-29T20:12:21+00:00",
@@ -3413,18 +3448,18 @@
       "url": "https://www.sofoot.com/breves/coupe-du-monde-apres-la-victoire-du-bresil-matheus-cunha-chambre-les-supporters-japonais"
     },
     {
+      "title": "Mondial 2026 : La composition de l’Allemagne face au Paraguay avec un Manuel Neuer record et Deniz Undav",
+      "source": "SO FOOT",
+      "date": "2026-06-29T20:10:18+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-la-composition-de-lallemagne-face-au-paraguay-avec-un-manuel-neuer-record-et-deniz-undav"
+    },
+    {
       "title": "En direct : Allemagne-Paraguay",
       "source": "SO FOOT",
       "date": "2026-06-29T20:00:43+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-allemagne-paraguay"
-    },
-    {
-      "title": "DIRECT. Coupe du monde 2026, équipe de France: Deschamps ne veut pas envisager le scénario du pire",
-      "source": "RMC Sport",
-      "date": "2026-06-29T19:43:57+00:00",
-      "summary": "Après trois victoires et la première place de son groupe, l'équipe de France se prépare à défier la Suède, ce mardi (23h, heure de Paris), en 16es de finale de la Coupe du monde 2026. Suivez en live toutes…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-sur-les-bleus-avant-le-16e-de-finale-contre-la-suede_LN-202606280220.html"
     },
     {
       "title": "En direct : Brésil – Japon",
@@ -3474,13 +3509,6 @@
       "date": "2026-06-29T19:03:07+00:00",
       "summary": "Le Brésil a eu chaud, mais le Brésil est en huitièmes.",
       "url": "https://www.sofoot.com/articles/coupe-du-monde-le-bresil-triomphe-du-japon-et-file-en-huitieme-de-finale"
-    },
-    {
-      "title": "DEJA FAIT – L’arbitre Benoît Bastien arrête sa carrière et rejoint la FFF en tant que directeur technique de l’arbitrage adjoint",
-      "source": "SO FOOT",
-      "date": "2026-06-29T18:47:26+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/larbitre-benoit-bastien-arrete-sa-carriere-et-rejoint-la-fff-en-tant-que-directeur-technique-de-larbitrage-adjoint"
     },
     {
       "title": "Didier Deschamps",
@@ -3679,13 +3707,6 @@
       "url": "https://www.sofoot.com/breves/france-suede-le-defenseur-suedois-carl-starfelt-sait-comment-stopper-mbappe"
     },
     {
-      "title": "DIRECT. Pays-Bas - Maroc: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-06-29T14:45:49+00:00",
-      "summary": "C'est la plus belle affiche de ces seizièmes de finale. D'un côté le Maroc, demi-finaliste il y a quatre ans et valeur sure du football mondial. De l'autre, les Pays-Bas, premiers de leur poule et qui ont…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-pays-bas-maroc-suivez-le-choc-des-seiziemes-de-finale-de-la-coupe-du-monde-en-live_LS-202606290668.html"
-    },
-    {
       "title": "Coupe du monde 2026 : La France donnée favorite du Mondial par les statistiques",
       "source": "SO FOOT",
       "date": "2026-06-29T14:41:34+00:00",
@@ -3721,13 +3742,6 @@
       "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-chelsea-regle-ses-comptes-avec-maresca-apres-son-arrivee-a-manchester-city_AP-202606290632.html"
     },
     {
-      "title": "Coupe du monde 2026: après un but, à l'échauffement, après une victoire... la liste des chansons des Bleus à chaque match du Mondial",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:48:00+00:00",
-      "summary": "En concertation avec les équipes nationales, la Fifa a sélectionné plusieurs chansons par pays diffusées à quatre moments différents lors de chaque match de la Coupe du monde 2026. Voici les titres qui…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-apres-un-but-a-l-echauffement-apres-une-victoire-la-liste-des-chansons-des-bleus-a-chaque-match-du-mondial_AV-202606290623.html"
-    },
-    {
       "title": "Coupe du monde : Quand Ronaldo compare Mbappé à… lui-même",
       "source": "SO FOOT",
       "date": "2026-06-29T13:29:49+00:00",
@@ -3740,62 +3754,6 @@
       "date": "2026-06-29T13:27:36+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/enzo-maresca-est-le-nouvel-entraineur-de-manchester-city"
-    },
-    {
-      "title": "Coupe du monde 2026: non, les joueurs uruguayens n’ont pas été \"punis\" après leur élimination dès le premier tour",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:26:11+00:00",
-      "summary": "Éliminés par la petite porte de la Coupe du monde 2026 dès le premier tour, les Uruguayens auraient été forcés de rentrer chez eux par leurs propres moyens. La Fédération a préféré mettre les choses au clair.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-non-les-joueur-uruguayens-n-ont-pas-ete-punis-apres-leur-elimination-des-le-premier-tour_AV-202606290611.html"
-    },
-    {
-      "title": "Gustavo Alfaro estime que Güler et Yildiz valent plus que toute la sélection paraguayenne",
-      "source": "SO FOOT",
-      "date": "2026-06-29T13:09:19+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/gustavo-alfaro-estime-que-guler-et-yildiz-valent-plus-que-toute-la-selection-paraguayenne"
-    },
-    {
-      "title": "Coupe du monde 2026: vers une nouvelle finale France-Argentine... les nouvelles probabilités des statisticiens",
-      "source": "RMC Sport",
-      "date": "2026-06-29T13:08:58+00:00",
-      "summary": "Alors que les 16es de finale de la Coupe du monde 2026 ont débuté depuis ce dimanche soir, les statisticiens ont fait le point sur les favoris de la compétition. Deuxième avant le début du tournoi, la France…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vers-une-nouvelle-finale-france-argentine-les-nouvelles-probabilites-des-statisticiens_AV-202606290597.html"
-    },
-    {
-      "title": "Les supporters de la Corée du Sud veulent bannir leur ex-sélectionneur",
-      "source": "SO FOOT",
-      "date": "2026-06-29T12:58:50+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/les-supporters-de-la-coree-du-sud-veulent-bannir-leur-ex-selectionneur"
-    },
-    {
-      "title": "Ligue 1 : La reprise du Paris FC repoussée, Antoine Kombouaré vers la sortie",
-      "source": "SO FOOT",
-      "date": "2026-06-29T12:38:41+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-1-la-reprise-du-paris-fc-repoussee-antoine-kombouare-vers-la-sortie"
-    },
-    {
-      "title": "Selon Ronald Koeman, Pays-Bas-Maroc est un choc prématuré",
-      "source": "SO FOOT",
-      "date": "2026-06-29T12:37:39+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/selon-ronald-koeman-pays-bas-maroc-est-un-choc-premature"
-    },
-    {
-      "title": "Coupe du monde 2026 – Équipe de France : Rayan Cherki, American déprime",
-      "source": "SO FOOT",
-      "date": "2026-06-29T12:30:56+00:00",
-      "summary": "Le môme de 22 ans n’est pas encore entré dans son Mondial.",
-      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-equipe-de-france-rayan-cherki-american-deprime"
-    },
-    {
-      "title": "\"Je vais donner au Royaume-Uni l'électrochoc dont il a besoin\", assure Andy Burnham, candidat potentiel au poste de Premier ministre britannique",
-      "source": "RMC Sport",
-      "date": "2026-06-29T12:24:38+00:00",
-      "summary": "Andy Burnham, candidat potentiel au poste de Premier ministre britannique, expose ses mesures clés lors d'un rassemblement à Manchester, ce lundi 29 juin.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-angleterre/video-je-vais-donner-au-royaume-uni-l-electrochoc-dont-il-a-besoin-assure-andy-burnham-candidat-potentiel-au-poste-de-premier-ministre-britannique_VN-202606290569.html"
     }
   ],
   "focused_team_news": {
@@ -3808,13 +3766,6 @@
         "url": "https://www.sofoot.com/breves/coupe-du-monde-le-gardien-de-largentine-emiliano-martinez-a-un-faible-pour-le-bangladesh"
       },
       {
-        "title": "Coupe du monde 2026: vers une nouvelle finale France-Argentine... les nouvelles probabilités des statisticiens",
-        "source": "RMC Sport",
-        "date": "2026-06-29T13:08:58+00:00",
-        "summary": "Alors que les 16es de finale de la Coupe du monde 2026 ont débuté depuis ce dimanche soir, les statisticiens ont fait le point sur les favoris de la compétition. Deuxième avant le début du tournoi, la France…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-vers-une-nouvelle-finale-france-argentine-les-nouvelles-probabilites-des-statisticiens_AV-202606290597.html"
-      },
-      {
         "title": "Lionel Scaloni sur le point de prolonger son contrat avec l’Argentine",
         "source": "SO FOOT",
         "date": "2026-06-29T10:45:21+00:00",
@@ -3823,6 +3774,20 @@
       }
     ],
     "Brazil": [
+      {
+        "title": "Coupe du monde : Carlo Ancelotti explique pourquoi Neymar n’a pas joué contre le Japon",
+        "source": "SO FOOT",
+        "date": "2026-06-29T21:03:52+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/coupe-du-monde-apres-la-victoire-du-bresil-matheus-cunha-chambre-les-supporters-japonais-2026"
+      },
+      {
+        "title": "Brésil-Japon: pourquoi Ancelotti n'a pas du tout fait jouer Neymar",
+        "source": "RMC Sport",
+        "date": "2026-06-29T20:28:12+00:00",
+        "summary": "Après la victoire (2-1) face au Japon, le sélectionneur brésilien Carlo Ancelotti a expliqué pourquoi Neymar n'a pas participé à la rencontre.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/bresil-japon-pourquoi-ancelotti-n-a-pas-du-tout-fait-jouer-neymar_AV-202606290920.html"
+      },
       {
         "title": "Coupe du monde : après la victoire du Brésil, Matheus Cunha chambre les supporters japonais",
         "source": "SO FOOT",
@@ -3900,9 +3865,58 @@
       {
         "title": "Coupe du monde 2026 : la Belgique et l'Uruguay en danger, un duel de buteurs entre Kylian Mbappé face à Erling Haaland",
         "source": "France Info",
-        "date": "2026-06-29T20:15:58+00:00",
+        "date": "2026-06-29T22:20:30+00:00",
         "summary": "Si l'équipe de France aborde cette troisième journée en position de force, ce n'est pas le cas d'autres grands noms du football mondial.",
         "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-la-belgique-et-l-uruguay-en-danger-kylian-mbappe-face-a-erling-haaland-suivez-la-fin-de-la-phase-de-poules-de-la-coupe-du-monde-avec-nous_8079575.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "DIRECT: Allemagne-Paraguay: la Mannschaft revient au score, suivez le match en live",
+        "source": "RMC Sport",
+        "date": "2026-06-29T22:20:06+00:00",
+        "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
+      },
+      {
+        "title": "France-Suède : \"Jouer comme si notre vie en dépendait\", Potter prêt à défier les doubles champions du monde",
+        "source": "RMC Sport",
+        "date": "2026-06-29T21:52:21+00:00",
+        "summary": "En conférence de presse avant le choc face aux doubles champions du monde, le sélectionneur de la Suède s'est dit prêt à relever le défi d'une vie. \"Il faudra jouer comme si notre vie en dépendait et nos…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-suede-jouer-comme-si-notre-vie-en-dependait-potter-pret-a-defier-les-doubles-champions-du-monde_VN-202606290945.html"
+      },
+      {
+        "title": "Zinédine Zidane",
+        "source": "RMC Sport",
+        "date": "2026-06-29T21:49:00+00:00",
+        "summary": "Zinedine Zidane est né le 23 juin 1972 à Marseille. Cet ancien milieu offensif a remporté le Ballon d’or en 1998 (l'année où il ggne la Coupe du monde avec la France), et est une légende du Real Madrid où il…",
+        "url": "https://rmcsport.bfmtv.com/football/zinedine-zidane_DN-202108310570.html"
+      },
+      {
+        "title": "Equipe de France: la réforme du foot français peut-elle bloquer une arrivée de Zidane à la tête des Bleus?",
+        "source": "RMC Sport",
+        "date": "2026-06-29T21:48:59+00:00",
+        "summary": "Les députés français ont adopté ce lundi en première lecture une proposition de loi sur la gouvernance du sport professionnel. Parmi les amendements votés, un plafond salarial pour les dirigeants et employés…",
+        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-la-reforme-du-foot-francais-peut-elle-bloquer-une-arrivee-de-zidane-a-la-tete-des-bleus_AV-202606290944.html"
+      },
+      {
+        "title": "DIRECT. Coupe du monde 2026, équipe de France: Deschamps ne veut pas envisager le scénario du pire",
+        "source": "RMC Sport",
+        "date": "2026-06-29T21:08:32+00:00",
+        "summary": "Après trois victoires et la première place de son groupe, l'équipe de France se prépare à défier la Suède, ce mardi (23h, heure de Paris), en 16es de finale de la Coupe du monde 2026. Suivez en live toutes…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-sur-les-bleus-avant-le-16e-de-finale-contre-la-suede_LN-202606280220.html"
+      },
+      {
+        "title": "Coupe du monde 2026 : Didier Deschamps de retour après le décès de sa mère",
+        "source": "France Info",
+        "date": "2026-06-29T21:03:11+00:00",
+        "summary": "Didier Deschamps était de retour en conférence de presse à la veille du 16e de finale des Bleus face à la Suède mardi. Le sélectionneur de l'équipe de France était rentré en France à la suite du décès de sa…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-2026-didier-deschamps-de-retour-apres-le-deces-de-sa-mere_8085743.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "France-Suède: le mercure grimpe, les Bleus risquent d'avoir très chaud en 16e de finale",
+        "source": "RMC Sport",
+        "date": "2026-06-29T20:21:17+00:00",
+        "summary": "Le 16e de finale de la Coupe du monde 2026 entre la France et la Suède se disputera ce mardi à New York sous de fortes chaleurs. Si les Bleus devraient éviter les orages, la météo s’annonce encore compliquée…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-le-mercure-grimpe-les-bleus-risquent-d-avoir-tres-chaud-en-16e-de-finale_AV-202606290914.html"
       },
       {
         "title": "France-Suède: William Saliba, jusqu'ici tout va bien",
@@ -3910,20 +3924,6 @@
         "date": "2026-06-29T20:14:44+00:00",
         "summary": "Touché au dos depuis plusieurs semaines maintenant, William Saliba devrait faire son retour comme titulaire contre la Suède en 16es de finale de Coupe du monde après avoir été ménagé contre la Norvège.",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-william-saliba-jusqu-ici-tout-va-bien_AV-202606290912.html"
-      },
-      {
-        "title": "DIRECT: Allemagne-Paraguay: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-        "source": "RMC Sport",
-        "date": "2026-06-29T20:12:54+00:00",
-        "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
-      },
-      {
-        "title": "DIRECT. Coupe du monde 2026, équipe de France: Deschamps ne veut pas envisager le scénario du pire",
-        "source": "RMC Sport",
-        "date": "2026-06-29T19:43:57+00:00",
-        "summary": "Après trois victoires et la première place de son groupe, l'équipe de France se prépare à défier la Suède, ce mardi (23h, heure de Paris), en 16es de finale de la Coupe du monde 2026. Suivez en live toutes…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-sur-les-bleus-avant-le-16e-de-finale-contre-la-suede_LN-202606280220.html"
       },
       {
         "title": "Équipe de France : \"C'était très dur\" Deschamps revient sur son absence",
@@ -3945,50 +3945,22 @@
         "date": "2026-06-29T18:07:40+00:00",
         "summary": "Didier Deschamps est revenu lundi sur son état d'esprit à la veille du 16e de finale de la Coupe du monde entre la France et la Suède. Endeuillé par la mort de sa mère, le sélectionneur des Bleus a effectué…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-des-jours-compliques-ou-j-etais-aneanti-comment-deschamps-a-retrouve-les-bleus-apres-la-mort-de-sa-mere_AV-202606290865.html"
-      },
-      {
-        "title": "Coupe du monde : \"On remet les compteurs à zéro, une autre compétition commence\", prévient Didier Deschamps avant France-Suède",
-        "source": "France Info",
-        "date": "2026-06-29T17:57:15+00:00",
-        "summary": "En conférence de presse, lundi, le sélectionneur des Bleus a bien insisté sur les dangers que peut induire l'excès de confiance.",
-        "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/coupe-du-monde-on-remet-les-compteurs-a-zero-une-autre-competition-commence-previent-didier-deschamps-avant-france-suede_8085488.html#xtor=RSS-3-%5Bgeneral%5D"
-      },
-      {
-        "title": "France-Suède: Deschamps salue un Mbappé \"en mission\" avec les Bleus au Mondial",
-        "source": "RMC Sport",
-        "date": "2026-06-29T16:56:47+00:00",
-        "summary": "Didier Deschamps a salué lundi l'implication et les performances de Kylian Mbappé avec la France lors de la Coupe du monde 2026. Le sélectionneur des Bleus est fier et heureux de compter un joueur d'un tel…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-suede-deschamps-salue-un-mbappe-en-mission-avec-les-bleus-au-mondial_AV-202606290792.html"
-      },
-      {
-        "title": "France - Suède : \"Je choisis à chaque match\" Deschamps veut faire jouer la concurrence à gauche",
-        "source": "RMC Sport",
-        "date": "2026-06-29T16:52:55+00:00",
-        "summary": "Digne ou Théo Hernandez ? C'est la question que beaucoup se pose, pour y répondre Didier Deschamps n'a pas voulu répondre et a soutenu qu'il souhaitait faire jouer la concurrence.",
-        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-suede-je-choisis-a-chaque-match-deschamps-veut-faire-jouer-la-concurrence-a-gauche_VN-202606290901.html"
-      },
-      {
-        "title": "France - Suède : \"L'expérience nous sert\" Rabiot ne veut pas reproduire les erreurs du passé",
-        "source": "RMC Sport",
-        "date": "2026-06-29T16:52:27+00:00",
-        "summary": "Les démons du passé refont parfois surface lorsque l'on arrive dans les phases à élimination directe. Pour Adrien Rabiot, il faut juste se servir de l'expérience passée pour ne pas reproduire les erreurs.",
-        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-suede-l-experience-nous-sert-rabiot-ne-veut-pas-reproduire-les-erreurs-du-passe_VN-202606290789.html"
-      },
-      {
-        "title": "France - Suède : Rabiot et le groupe \"contents de retrouver\" Didier Deschamps",
-        "source": "RMC Sport",
-        "date": "2026-06-29T16:48:58+00:00",
-        "summary": "Après son aller-retour en France suite au décès de sa mère, Didier Deschamps est bien de retour avec son groupe. Pour Adrien Rabiot, la situation personnelle du sélectionneur sera une motivation supplémentaire.",
-        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-suede-rabiot-et-le-groupe-contents-de-retrouver-didier-deschamps_VN-202606290817.html"
       }
     ],
     "Paraguay": [
       {
-        "title": "DIRECT: Allemagne-Paraguay: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+        "title": "DIRECT: Allemagne-Paraguay: la Mannschaft revient au score, suivez le match en live",
         "source": "RMC Sport",
-        "date": "2026-06-29T20:12:54+00:00",
+        "date": "2026-06-29T22:20:06+00:00",
         "summary": "Le vainqueur de ce match sera le potentiel futur adversaire des Bleus en 8es de finale de la Coupe du monde. L'équipe d'Allemagne est favorite face au Paraguay mais elle a montré quelques faiblesses. Coup…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-allemagne-paraguay-suivez-le-16e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202606290652.html"
+      },
+      {
+        "title": "Mondial 2026 : La composition de l’Allemagne face au Paraguay avec un Manuel Neuer record et Deniz Undav",
+        "source": "SO FOOT",
+        "date": "2026-06-29T20:10:18+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-la-composition-de-lallemagne-face-au-paraguay-avec-un-manuel-neuer-record-et-deniz-undav"
       },
       {
         "title": "En direct : Allemagne-Paraguay",
@@ -4003,20 +3975,13 @@
         "date": "2026-06-29T13:09:19+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/gustavo-alfaro-estime-que-guler-et-yildiz-valent-plus-que-toute-la-selection-paraguayenne"
-      },
-      {
-        "title": "Pronostic Allemagne Paraguay : analyse, cotes et prono Coupe du monde",
-        "source": "SO FOOT",
-        "date": "2026-06-29T08:48:15+00:00",
-        "summary": "Allemagne – Paraguay : notre pronostic pour ce 16e de finale de Coupe du monde. Découvrez l’analyse du match, les cotes, et le pari « les deux équipes marquent ».",
-        "url": "https://www.sofoot.com/breves/pronostic-allemagne-paraguay-analyse-cotes-et-prono-coupe-du-monde"
       }
     ],
     "Uruguay": [
       {
         "title": "Coupe du monde 2026 : la Belgique et l'Uruguay en danger, un duel de buteurs entre Kylian Mbappé face à Erling Haaland",
         "source": "France Info",
-        "date": "2026-06-29T20:15:58+00:00",
+        "date": "2026-06-29T22:20:30+00:00",
         "summary": "Si l'équipe de France aborde cette troisième journée en position de force, ce n'est pas le cas d'autres grands noms du football mondial.",
         "url": "https://www.franceinfo.fr/coupe-du-monde/directs/direct-la-belgique-et-l-uruguay-en-danger-kylian-mbappe-face-a-erling-haaland-suivez-la-fin-de-la-phase-de-poules-de-la-coupe-du-monde-avec-nous_8079575.html#xtor=RSS-3-%5Bgeneral%5D"
       },
@@ -4033,13 +3998,6 @@
         "date": "2026-06-29T15:25:06+00:00",
         "summary": "Éliminé dès les phases de poule avec l'Uruguay à la Coupe du monde 2026, Marcelo Bielsa a été aperçu complètement seul à l'aéroport de Montevideo (Uruguay) ce lundi matin. Un retour au pays tout seul dans…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-retour-tres-solitaire-de-marcelo-bielsa-en-uruguray-apres-le-fiasco-de-la-celeste_AV-202606290699.html"
-      },
-      {
-        "title": "Coupe du monde 2026: non, les joueurs uruguayens n’ont pas été \"punis\" après leur élimination dès le premier tour",
-        "source": "RMC Sport",
-        "date": "2026-06-29T13:26:11+00:00",
-        "summary": "Éliminés par la petite porte de la Coupe du monde 2026 dès le premier tour, les Uruguayens auraient été forcés de rentrer chez eux par leurs propres moyens. La Fédération a préféré mettre les choses au clair.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-non-les-joueur-uruguayens-n-ont-pas-ete-punis-apres-leur-elimination-des-le-premier-tour_AV-202606290611.html"
       }
     ]
   },
@@ -4165,17 +4123,6 @@
   ],
   "players_index": [
     {
-      "name": "Alexander Isak",
-      "club_current": "Sweden",
-      "country": "",
-      "position": "",
-      "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/690107.png",
-      "associated_team": "Sweden",
-      "updated_at": "2026-06-29T20:15:48+00:00",
-      "source": "FotMob/ESPN stats"
-    },
-    {
       "name": "Bruno Guimarães",
       "club_current": "Brazil",
       "country": "",
@@ -4183,7 +4130,18 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/850354.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-06-29T20:15:48+00:00",
+      "updated_at": "2026-06-29T22:20:20+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Florian Wirtz",
+      "club_current": "Germany",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1152455.png",
+      "associated_team": "Germany",
+      "updated_at": "2026-06-29T22:20:20+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4194,7 +4152,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "France",
-      "updated_at": "2026-06-29T20:15:48+00:00",
+      "updated_at": "2026-06-29T22:20:20+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4205,7 +4163,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-06-29T20:15:48+00:00",
+      "updated_at": "2026-06-29T22:20:20+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4216,7 +4174,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-06-29T20:15:48+00:00",
+      "updated_at": "2026-06-29T22:20:20+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4227,7 +4185,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/692984.png",
       "associated_team": "France",
-      "updated_at": "2026-06-29T20:15:48+00:00",
+      "updated_at": "2026-06-29T22:20:20+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
