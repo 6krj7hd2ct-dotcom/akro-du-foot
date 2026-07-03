@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T23:30:15+00:00",
+  "generated_at": "2026-07-03T04:08:32+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -1601,11 +1601,11 @@
           "away_espn_id": "477",
           "home_country_code": "POR",
           "away_country_code": "CRO",
-          "home_score": "0",
-          "away_score": "0",
-          "status": "LIVE",
-          "status_state": "in",
-          "completed": false,
+          "home_score": "2",
+          "away_score": "1",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "BMO Field",
           "city": "Toronto"
         },
@@ -1620,10 +1620,10 @@
           "away_espn_id": "624",
           "home_country_code": "SUI",
           "away_country_code": "ALG",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
+          "home_score": "2",
+          "away_score": "0",
+          "status": "LIVE",
+          "status_state": "in",
           "completed": false,
           "venue": "BC Place",
           "city": "Vancouver"
@@ -1769,13 +1769,13 @@
         {
           "id": "760506",
           "date": "2026-07-06T19:00Z",
-          "home_team": "À déterminer",
+          "home_team": "Portugal",
           "away_team": "Spain",
-          "home_flag_url": "",
+          "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
           "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
-          "home_espn_id": "131535",
+          "home_espn_id": "482",
           "away_espn_id": "164",
-          "home_country_code": "RD32",
+          "home_country_code": "POR",
           "away_country_code": "ESP",
           "home_score": "",
           "away_score": "",
@@ -2019,67 +2019,67 @@
   ],
   "today_matches": [
     {
-      "id": "760494",
-      "date": "2026-07-02T00:00Z",
-      "home_team": "United States",
-      "away_team": "Bosnia-Herzegovina",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
-      "home_espn_id": "660",
-      "away_espn_id": "452",
-      "home_country_code": "USA",
-      "away_country_code": "BIH",
+      "id": "760498",
+      "date": "2026-07-03T03:00Z",
+      "home_team": "Switzerland",
+      "away_team": "Algeria",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
+      "home_espn_id": "475",
+      "away_espn_id": "624",
+      "home_country_code": "SUI",
+      "away_country_code": "ALG",
       "home_score": "2",
-      "away_score": "0",
-      "status": "Terminé",
-      "status_state": "post",
-      "completed": true,
-      "venue": "Levi's Stadium",
-      "city": "Santa Clara, California"
-    },
-    {
-      "id": "760497",
-      "date": "2026-07-02T19:00Z",
-      "home_team": "Spain",
-      "away_team": "Austria",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
-      "home_espn_id": "164",
-      "away_espn_id": "474",
-      "home_country_code": "ESP",
-      "away_country_code": "AUT",
-      "home_score": "3",
-      "away_score": "0",
-      "status": "Terminé",
-      "status_state": "post",
-      "completed": true,
-      "venue": "SoFi Stadium",
-      "city": "Inglewood, California"
-    },
-    {
-      "id": "760496",
-      "date": "2026-07-02T23:00Z",
-      "home_team": "Portugal",
-      "away_team": "Croatia",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png",
-      "home_espn_id": "482",
-      "away_espn_id": "477",
-      "home_country_code": "POR",
-      "away_country_code": "CRO",
-      "home_score": "0",
       "away_score": "0",
       "status": "LIVE",
       "status_state": "in",
       "completed": false,
-      "venue": "BMO Field",
-      "city": "Toronto"
+      "venue": "BC Place",
+      "city": "Vancouver"
+    },
+    {
+      "id": "760499",
+      "date": "2026-07-03T18:00Z",
+      "home_team": "Australia",
+      "away_team": "Egypt",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+      "home_espn_id": "628",
+      "away_espn_id": "2620",
+      "home_country_code": "AUS",
+      "away_country_code": "EGY",
+      "home_score": "",
+      "away_score": "",
+      "status": "À venir",
+      "status_state": "pre",
+      "completed": false,
+      "venue": "AT&T Stadium",
+      "city": "Arlington, Texas"
+    },
+    {
+      "id": "760500",
+      "date": "2026-07-03T22:00Z",
+      "home_team": "Argentina",
+      "away_team": "Cape Verde",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+      "home_espn_id": "202",
+      "away_espn_id": "2597",
+      "home_country_code": "ARG",
+      "away_country_code": "CPV",
+      "home_score": "",
+      "away_score": "",
+      "status": "À venir",
+      "status_state": "pre",
+      "completed": false,
+      "venue": "Hard Rock Stadium",
+      "city": "Miami Gardens, Florida"
     }
   ],
   "group_matches_total": 72,
   "group_matches_remaining": 0,
   "knockout_matches_total": 32,
-  "knockout_matches_remaining": 21,
+  "knockout_matches_remaining": 20,
   "competition_stage": "16es de finale",
   "france_next_match": {
     "date": "2026-07-04T21:00Z",
@@ -3069,6 +3069,41 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "DIRECT. Suisse-Algérie: la Nati fait le break, et rapproche les Fennecs de l'élimination",
+      "source": "RMC Sport",
+      "date": "2026-07-03T04:08:20+00:00",
+      "summary": "La Suisse et l'Algérie s'affrontent à l'occasion des 16es de finale de la Coupe du monde 2026 dans la nuit de ce jeudi à ce vendredi à Vancouver (5h du matin, heure française). Un match à suivre sur BeIn…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-algerie-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607020725.html"
+    },
+    {
+      "title": "La moitié est des Etats-Unis sous une chaleur \"atroce\", la Coupe du monde impactée",
+      "source": "RMC Sport",
+      "date": "2026-07-03T03:25:22+00:00",
+      "summary": "La \"vague de chaleur dangereuse et record\" impacte aussi les célébrations du 250e anniversaire de la déclaration d'indépendance.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/la-moitie-est-des-etats-unis-sous-une-chaleur-atroce-la-coupe-du-monde-impactee_AD-202607030089.html"
+    },
+    {
+      "title": "Coupe du monde 2026:  Un an après sa mort, Les Portugais rendent hommage à Diogo Jota",
+      "source": "RMC Sport",
+      "date": "2026-07-03T02:57:46+00:00",
+      "summary": "L'attaquant portugais de Liverpool et de la sélection portugaise est décédé il y a un an jour pour jour dans un accident de la route en Espagne.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-an-apres-sa-mort-les-portugais-rendent-hommage-a-diogo-jota_AD-202607030077.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Les regrets de Yamal, pas assez décisif",
+      "source": "RMC Sport",
+      "date": "2026-07-03T01:26:39+00:00",
+      "summary": "Lamine Yamal a néanmoins été élu homme du match lors du 16e de finale de l'Espagne face à l'Autriche dans la Coupe du monde 2026.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-regrets-de-yamal-pas-assez-decisif_AD-202607030057.html"
+    },
+    {
+      "title": "Rangnick l'annonce, l'Espagne va gagner la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-07-03T00:29:14+00:00",
+      "summary": "Le sélectionneur allemand de l'Autriche, par ailleurs, grand théoricien du football, a eu de très beaux mots pour l'Espagne, qui a éliminé ses protégés de la Coupe du monde 2026 en seizième de finale.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/rangnick-l-annonce-l-espagne-va-gagner-la-coupe-du-monde_AV-202607030054.html"
+    },
+    {
       "title": "Cryothérapie et bouteilles d'eau... Les Bleus face aux fortes chaleurs qui frappent la Coupe du monde 2026",
       "source": "RMC Sport",
       "date": "2026-07-02T22:59:28+00:00",
@@ -3132,13 +3167,6 @@
       "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-la-reponse-evasive-de-barcola-sur-son-avenir-au-psg_AV-202607021010.html"
     },
     {
-      "title": "DIRECT. Suisse-Algérie: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-07-02T20:47:43+00:00",
-      "summary": "La Suisse et l'Algérie s'affrontent à l'occasion des 16es de finale de la Coupe du monde 2026 dans la nuit de ce jeudi à ce vendredi à Vancouver (5h du matin, heure française). Un match à suivre en direct sur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-algerie-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607020725.html"
-    },
-    {
       "title": "DIRECT. Coupe du monde 2026, les Bleus: revivez la conférence de presse de Koundé et Barcola avant le Paraguay",
       "source": "RMC Sport",
       "date": "2026-07-02T20:19:46+00:00",
@@ -3172,30 +3200,16 @@
       "date": "2026-07-02T18:00:24+00:00",
       "summary": "La Fifa a désigné l’arbitre ouzbek Ilgiz Tantashev pour officier lors du 8e de finale de la Coupe du monde 2026 entre l’équipe de France et le Paraguay samedi à Philadelphie (23h, heure française).",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/une-experience-limitee-une-blessure-et-une-pluie-de-cartons-contre-les-bleuets-aux-jo-2024-qui-est-ilgiz-tantashev-l-arbitre-ouzbek-designe-pour-france-paraguay_AV-202607020924.html"
-    },
-    {
-      "title": "Ligue des champions: l'UEFA ne suit pas la FIFA, pas de carton rouge pour les joueurs se couvrant la bouche",
-      "source": "RMC Sport",
-      "date": "2026-07-02T17:16:04+00:00",
-      "summary": "Alors que deux joueurs ont déjà été exclus pour s'être couverts la bouche comme le veut la nouvelle règle lors de la Coupe du monde 2026, l'UEFA a annoncé qu'elle n'appliquera pas cette règle dans ses…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-l-uefa-ne-suit-pas-la-fifa-pas-de-carton-rouge-pour-les-joueurs-se-couvrant-la-bouche_AV-202607020879.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il est beaucoup plus concentré sur le foot\", l'avis tranché de Rothen sur la métamorphose de Mbappé",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:51:36+00:00",
-      "summary": "Critiqué tout au long de la saison au Real Madrid, Kylian Mbappé est entré de manière tonitruante dans cette Coupe du monde 2026. Dans l'émission Rothen s'enflamme, sur RMC, Jérôme Rothen a estimé que le…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-beaucoup-plus-concentre-sur-le-foot-l-avis-tranche-de-rothen-sur-la-metamorphose-de-mbappe_AV-202607020847.html"
-    },
-    {
-      "title": "Une exception pour la Coupe du monde? Les pubs anglais pourraient rester ouverts plus tard pour Mexique-Angleterre",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:14:23+00:00",
-      "summary": "Après sa victoire in-extremis face à la RD Congo (2-1) mercredi, l'Angleterre affrontera le Mexique dans la nuit de dimanche à lundi pour une place en quarts de finale de la Coupe du monde 2026. Problème: les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/une-exception-pour-la-coupe-du-monde-les-pubs-anglais-pourraient-rester-ouverts-plus-tard-pour-mexique-angleterre_AV-202607020801.html"
     }
   ],
   "france_news": [
+    {
+      "title": "\"L’ambiance est au top\" : pourquoi, cette Coupe du monde particulièrement, le groupe France vit si bien",
+      "source": "RMC Sport",
+      "date": "2026-07-02T23:40:17+00:00",
+      "summary": "Les vingt-six joueurs de l’Equipe de France forment un groupe soudé en dehors du terrain où ils partagent différentes activités entre les matchs du Monjdial 2026. Ces joueurs s’apprécient sincèrement : une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/l-ambiance-est-au-top-pourquoi-cette-coupe-du-monde-particulierement-le-groupe-france-vit-si-bien_AV-202607021046.html"
+    },
     {
       "title": "Cryothérapie et bouteilles d'eau... Les Bleus face aux fortes chaleurs qui frappent la Coupe du monde 2026",
       "source": "RMC Sport",
@@ -3258,13 +3272,6 @@
       "date": "2026-07-02T18:00:24+00:00",
       "summary": "La Fifa a désigné l’arbitre ouzbek Ilgiz Tantashev pour officier lors du 8e de finale de la Coupe du monde 2026 entre l’équipe de France et le Paraguay samedi à Philadelphie (23h, heure française).",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/une-experience-limitee-une-blessure-et-une-pluie-de-cartons-contre-les-bleuets-aux-jo-2024-qui-est-ilgiz-tantashev-l-arbitre-ouzbek-designe-pour-france-paraguay_AV-202607020924.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il est beaucoup plus concentré sur le foot\", l'avis tranché de Rothen sur la métamorphose de Mbappé",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:51:36+00:00",
-      "summary": "Critiqué tout au long de la saison au Real Madrid, Kylian Mbappé est entré de manière tonitruante dans cette Coupe du monde 2026. Dans l'émission Rothen s'enflamme, sur RMC, Jérôme Rothen a estimé que le…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-beaucoup-plus-concentre-sur-le-foot-l-avis-tranche-de-rothen-sur-la-metamorphose-de-mbappe_AV-202607020847.html"
     },
     {
       "title": "\"Kylian, pardonne-nous\" : une pétition pour \"réhabiliter\" le joueur de l'équipe de France, critiqué depuis plusieurs mois",
@@ -3367,6 +3374,41 @@
   ],
   "general_news": [
     {
+      "title": "DIRECT. Suisse-Algérie: la Nati fait le break, et rapproche les Fennecs de l'élimination",
+      "source": "RMC Sport",
+      "date": "2026-07-03T04:08:20+00:00",
+      "summary": "La Suisse et l'Algérie s'affrontent à l'occasion des 16es de finale de la Coupe du monde 2026 dans la nuit de ce jeudi à ce vendredi à Vancouver (5h du matin, heure française). Un match à suivre sur BeIn…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-algerie-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607020725.html"
+    },
+    {
+      "title": "La moitié est des Etats-Unis sous une chaleur \"atroce\", la Coupe du monde impactée",
+      "source": "RMC Sport",
+      "date": "2026-07-03T03:25:22+00:00",
+      "summary": "La \"vague de chaleur dangereuse et record\" impacte aussi les célébrations du 250e anniversaire de la déclaration d'indépendance.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/la-moitie-est-des-etats-unis-sous-une-chaleur-atroce-la-coupe-du-monde-impactee_AD-202607030089.html"
+    },
+    {
+      "title": "Coupe du monde 2026:  Un an après sa mort, Les Portugais rendent hommage à Diogo Jota",
+      "source": "RMC Sport",
+      "date": "2026-07-03T02:57:46+00:00",
+      "summary": "L'attaquant portugais de Liverpool et de la sélection portugaise est décédé il y a un an jour pour jour dans un accident de la route en Espagne.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-an-apres-sa-mort-les-portugais-rendent-hommage-a-diogo-jota_AD-202607030077.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Les regrets de Yamal, pas assez décisif",
+      "source": "RMC Sport",
+      "date": "2026-07-03T01:26:39+00:00",
+      "summary": "Lamine Yamal a néanmoins été élu homme du match lors du 16e de finale de l'Espagne face à l'Autriche dans la Coupe du monde 2026.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-regrets-de-yamal-pas-assez-decisif_AD-202607030057.html"
+    },
+    {
+      "title": "Rangnick l'annonce, l'Espagne va gagner la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-07-03T00:29:14+00:00",
+      "summary": "Le sélectionneur allemand de l'Autriche, par ailleurs, grand théoricien du football, a eu de très beaux mots pour l'Espagne, qui a éliminé ses protégés de la Coupe du monde 2026 en seizième de finale.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/rangnick-l-annonce-l-espagne-va-gagner-la-coupe-du-monde_AV-202607030054.html"
+    },
+    {
       "title": "Cryothérapie et bouteilles d'eau... Les Bleus face aux fortes chaleurs qui frappent la Coupe du monde 2026",
       "source": "RMC Sport",
       "date": "2026-07-02T22:59:28+00:00",
@@ -3430,13 +3472,6 @@
       "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-la-reponse-evasive-de-barcola-sur-son-avenir-au-psg_AV-202607021010.html"
     },
     {
-      "title": "DIRECT. Suisse-Algérie: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-07-02T20:47:43+00:00",
-      "summary": "La Suisse et l'Algérie s'affrontent à l'occasion des 16es de finale de la Coupe du monde 2026 dans la nuit de ce jeudi à ce vendredi à Vancouver (5h du matin, heure française). Un match à suivre en direct sur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-algerie-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607020725.html"
-    },
-    {
       "title": "DIRECT. Coupe du monde 2026, les Bleus: revivez la conférence de presse de Koundé et Barcola avant le Paraguay",
       "source": "RMC Sport",
       "date": "2026-07-02T20:19:46+00:00",
@@ -3470,36 +3505,120 @@
       "date": "2026-07-02T18:00:24+00:00",
       "summary": "La Fifa a désigné l’arbitre ouzbek Ilgiz Tantashev pour officier lors du 8e de finale de la Coupe du monde 2026 entre l’équipe de France et le Paraguay samedi à Philadelphie (23h, heure française).",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/une-experience-limitee-une-blessure-et-une-pluie-de-cartons-contre-les-bleuets-aux-jo-2024-qui-est-ilgiz-tantashev-l-arbitre-ouzbek-designe-pour-france-paraguay_AV-202607020924.html"
-    },
-    {
-      "title": "Ligue des champions: l'UEFA ne suit pas la FIFA, pas de carton rouge pour les joueurs se couvrant la bouche",
-      "source": "RMC Sport",
-      "date": "2026-07-02T17:16:04+00:00",
-      "summary": "Alors que deux joueurs ont déjà été exclus pour s'être couverts la bouche comme le veut la nouvelle règle lors de la Coupe du monde 2026, l'UEFA a annoncé qu'elle n'appliquera pas cette règle dans ses…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-l-uefa-ne-suit-pas-la-fifa-pas-de-carton-rouge-pour-les-joueurs-se-couvrant-la-bouche_AV-202607020879.html"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il est beaucoup plus concentré sur le foot\", l'avis tranché de Rothen sur la métamorphose de Mbappé",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:51:36+00:00",
-      "summary": "Critiqué tout au long de la saison au Real Madrid, Kylian Mbappé est entré de manière tonitruante dans cette Coupe du monde 2026. Dans l'émission Rothen s'enflamme, sur RMC, Jérôme Rothen a estimé que le…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-beaucoup-plus-concentre-sur-le-foot-l-avis-tranche-de-rothen-sur-la-metamorphose-de-mbappe_AV-202607020847.html"
-    },
-    {
-      "title": "Une exception pour la Coupe du monde? Les pubs anglais pourraient rester ouverts plus tard pour Mexique-Angleterre",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:14:23+00:00",
-      "summary": "Après sa victoire in-extremis face à la RD Congo (2-1) mercredi, l'Angleterre affrontera le Mexique dans la nuit de dimanche à lundi pour une place en quarts de finale de la Coupe du monde 2026. Problème: les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/une-exception-pour-la-coupe-du-monde-les-pubs-anglais-pourraient-rester-ouverts-plus-tard-pour-mexique-angleterre_AV-202607020801.html"
     }
   ],
   "all_news": [
     {
-      "title": "DIRECT. Portugal-Croatie: déjà une grosse occasion pour les Portugais, qui font pression",
+      "title": "DIRECT. Suisse-Algérie: la Nati fait le break, et rapproche les Fennecs de l'élimination",
       "source": "RMC Sport",
-      "date": "2026-07-02T23:28:51+00:00",
-      "summary": "Toujours emmené par l'inamovible Cristiano Ronaldo, le Portugal défie la Croatie lors d'un choc à suspense du Mondial 2026 disputé au BMO Field de Toronto au Canada. Le seizième de finale entre la Seleçao das…",
+      "date": "2026-07-03T04:08:20+00:00",
+      "summary": "La Suisse et l'Algérie s'affrontent à l'occasion des 16es de finale de la Coupe du monde 2026 dans la nuit de ce jeudi à ce vendredi à Vancouver (5h du matin, heure française). Un match à suivre sur BeIn…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-algerie-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607020725.html"
+    },
+    {
+      "title": "La moitié est des Etats-Unis sous une chaleur \"atroce\", la Coupe du monde impactée",
+      "source": "RMC Sport",
+      "date": "2026-07-03T03:25:22+00:00",
+      "summary": "La \"vague de chaleur dangereuse et record\" impacte aussi les célébrations du 250e anniversaire de la déclaration d'indépendance.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/la-moitie-est-des-etats-unis-sous-une-chaleur-atroce-la-coupe-du-monde-impactee_AD-202607030089.html"
+    },
+    {
+      "title": "Coupe du monde 2026:  Un an après sa mort, Les Portugais rendent hommage à Diogo Jota",
+      "source": "RMC Sport",
+      "date": "2026-07-03T02:57:46+00:00",
+      "summary": "L'attaquant portugais de Liverpool et de la sélection portugaise est décédé il y a un an jour pour jour dans un accident de la route en Espagne.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-un-an-apres-sa-mort-les-portugais-rendent-hommage-a-diogo-jota_AD-202607030077.html"
+    },
+    {
+      "title": "Cristiano Ronaldo, Bernardo Silva et les joueurs du Portugal rendent hommage à Diogo Jota après leur victoire contre la Croatie un an après son décès",
+      "source": "SO FOOT",
+      "date": "2026-07-03T02:34:16+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/cristiano-ronaldo-bernardo-silva-et-les-joueurs-du-portugal-rendent-hommage-a-diogo-jota-apres-leur-victoire-contre-la-croatie-un-an-apres-son-deces"
+    },
+    {
+      "title": "En direct : Suisse-Algérie",
+      "source": "SO FOOT",
+      "date": "2026-07-03T02:30:40+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-suisse-algerie"
+    },
+    {
+      "title": "Portugal-Croatie: les buts et le résumé vidéo d'un seizième de finale de Coupe du monde très tendu et au dénouement polémique",
+      "source": "RMC Sport",
+      "date": "2026-07-03T02:23:53+00:00",
+      "summary": "Menés, les Portugais ont finalement égalisé par Cristiano Ronaldo, son premier but dans un match à élimination directe en Coupe du monde. Le match est passé dans une autre dimension lors des arrêts de jeu.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/portugal-croatie-les-buts-et-le-resume-video-d-un-seizieme-de-finale-de-coupe-du-monde-tres-tendu-et-au-denouement-polemique_AN-202607030067.html"
+    },
+    {
+      "title": "Fin de match très polémique pour Portugal-Croatie",
+      "source": "RMC Sport",
+      "date": "2026-07-03T01:56:17+00:00",
+      "summary": "Avec un but refusé à la 103e minute et des arrêts de jeu qui ont duré 19 minutes, le seizième de finale entre la Croatie et le Portugal s'est achevé dans la confusion et par la qualification des Lusitaniens.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/fin-de-match-tres-polemique-pour-portugal-croatie_AN-202607030064.html"
+    },
+    {
+      "title": "Mondial 2026 – Pourquoi le but de la Croatie au bout du temps additionnel a été refusé ?",
+      "source": "SO FOOT",
+      "date": "2026-07-03T01:53:05+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-pourquoi-le-but-de-la-croatie-au-bout-du-temps-additionnel-a-ete-refuse"
+    },
+    {
+      "title": "Portugal-Croatie: les Portugais arrachent la qualification et rejoignent l'Espagne en huitièmes",
+      "source": "RMC Sport",
+      "date": "2026-07-03T01:36:11+00:00",
+      "summary": "Au terme d'un match riche en rebondissements, le Portugal s'est offert le scalp de la Croatie (2-1) et sera donc au rendez-vous des huitièmes de finale. La Seleçao de Cristiano Ronaldo affrontera l'Espagne de…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-croatie-suivez-le-seizieme-de-finale-du-mondial-entre-les-portugais-et-les-croates-en-live_LS-202607020712.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Les regrets de Yamal, pas assez décisif",
+      "source": "RMC Sport",
+      "date": "2026-07-03T01:26:39+00:00",
+      "summary": "Lamine Yamal a néanmoins été élu homme du match lors du 16e de finale de l'Espagne face à l'Autriche dans la Coupe du monde 2026.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-regrets-de-yamal-pas-assez-decisif_AD-202607030057.html"
+    },
+    {
+      "title": "En direct : Portugal-Croatie",
+      "source": "SO FOOT",
+      "date": "2026-07-03T01:14:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-portugal-croatie-2026"
+    },
+    {
+      "title": "Mondial 2026 – Le Portugal fait plier la Croatie sur le fil et se qualifie pour les huitièmes de finale",
+      "source": "SO FOOT",
+      "date": "2026-07-03T01:10:16+00:00",
+      "summary": "Gonçalo Ramos, ce héros !",
+      "url": "https://www.sofoot.com/articles/mondial-2026-le-portugal-fait-plier-la-croatie-sur-le-fil-et-se-qualifie-pour-les-huitiemes-de-finale"
+    },
+    {
+      "title": "Mondial 2026 – Cristiano Ronaldo brise la malédiction et inscrit enfin un but en match à élimination directe en Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-07-03T00:43:59+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-cristiano-ronaldo-brise-la-malediction-et-inscrit-enfin-un-but-en-match-a-elimination-directe-en-coupe-du-monde"
+    },
+    {
+      "title": "Rangnick l'annonce, l'Espagne va gagner la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-07-03T00:29:14+00:00",
+      "summary": "Le sélectionneur allemand de l'Autriche, par ailleurs, grand théoricien du football, a eu de très beaux mots pour l'Espagne, qui a éliminé ses protégés de la Coupe du monde 2026 en seizième de finale.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/rangnick-l-annonce-l-espagne-va-gagner-la-coupe-du-monde_AV-202607030054.html"
+    },
+    {
+      "title": "\"L’ambiance est au top\" : pourquoi, cette Coupe du monde particulièrement, le groupe France vit si bien",
+      "source": "RMC Sport",
+      "date": "2026-07-02T23:40:17+00:00",
+      "summary": "Les vingt-six joueurs de l’Equipe de France forment un groupe soudé en dehors du terrain où ils partagent différentes activités entre les matchs du Monjdial 2026. Ces joueurs s’apprécient sincèrement : une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/l-ambiance-est-au-top-pourquoi-cette-coupe-du-monde-particulierement-le-groupe-france-vit-si-bien_AV-202607021046.html"
+    },
+    {
+      "title": "Mondial 2026 – Rudi Garcia tente d’éteindre la polémique suite à ses propos polémiques après Belgique-Sénégal",
+      "source": "SO FOOT",
+      "date": "2026-07-02T23:02:49+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-rudi-garcia-tente-deteindre-la-polemique-suite-a-ses-propos-polemiques-apres-belgique-senegal"
     },
     {
       "title": "Cryothérapie et bouteilles d'eau... Les Bleus face aux fortes chaleurs qui frappent la Coupe du monde 2026",
@@ -3514,13 +3633,6 @@
       "date": "2026-07-02T22:45:44+00:00",
       "summary": "Selon sa soeur, Katia Aveiro, la légende du football portugais pourrait prendre sa retraite internationale à la fin de la Coupe du monde 2026.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-cristiano-ronaldo-pret-a-prendre-sa-retraite-internationale-des-cette-nuit_AV-202607021044.html"
-    },
-    {
-      "title": "En direct : Portugal-Croatie",
-      "source": "SO FOOT",
-      "date": "2026-07-02T22:45:43+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-portugal-croatie-2026"
     },
     {
       "title": "Mondial 2026 – Les journalistes n’ont pas pu poser de questions sur le cas Ryan Mendes en conférence de presse avant Cap-Vert-Argentine",
@@ -3642,13 +3754,6 @@
       "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-la-reponse-evasive-de-barcola-sur-son-avenir-au-psg_AV-202607021010.html"
     },
     {
-      "title": "DIRECT. Suisse-Algérie: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-07-02T20:47:43+00:00",
-      "summary": "La Suisse et l'Algérie s'affrontent à l'occasion des 16es de finale de la Coupe du monde 2026 dans la nuit de ce jeudi à ce vendredi à Vancouver (5h du matin, heure française). Un match à suivre en direct sur…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-algerie-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607020725.html"
-    },
-    {
       "title": "Ligue 1 : Habib Beye pas rancunier envers l’OM après son départ",
       "source": "SO FOOT",
       "date": "2026-07-02T20:20:19+00:00",
@@ -3761,60 +3866,11 @@
       "url": "https://www.sofoot.com/breves/mercato-ligue-1-julien-duranville-quitte-dortmund-pour-lol"
     },
     {
-      "title": "Ligue des champions: l'UEFA ne suit pas la FIFA, pas de carton rouge pour les joueurs se couvrant la bouche",
-      "source": "RMC Sport",
-      "date": "2026-07-02T17:16:04+00:00",
-      "summary": "Alors que deux joueurs ont déjà été exclus pour s'être couverts la bouche comme le veut la nouvelle règle lors de la Coupe du monde 2026, l'UEFA a annoncé qu'elle n'appliquera pas cette règle dans ses…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-l-uefa-ne-suit-pas-la-fifa-pas-de-carton-rouge-pour-les-joueurs-se-couvrant-la-bouche_AV-202607020879.html"
-    },
-    {
       "title": "Transfert – Après sa révélation en Ligue 2, Mathys Detourbet est prêté à Monaco par Manchester City",
       "source": "SO FOOT",
       "date": "2026-07-02T17:05:10+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/mercato-apres-sa-revelation-en-ligue-2-mathys-detourbet-est-prete-a-monaco-par-manchester-city"
-    },
-    {
-      "title": "Coupe du monde 2026: \"Il est beaucoup plus concentré sur le foot\", l'avis tranché de Rothen sur la métamorphose de Mbappé",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:51:36+00:00",
-      "summary": "Critiqué tout au long de la saison au Real Madrid, Kylian Mbappé est entré de manière tonitruante dans cette Coupe du monde 2026. Dans l'émission Rothen s'enflamme, sur RMC, Jérôme Rothen a estimé que le…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-il-est-beaucoup-plus-concentre-sur-le-foot-l-avis-tranche-de-rothen-sur-la-metamorphose-de-mbappe_AV-202607020847.html"
-    },
-    {
-      "title": "Un Ballon d’or, une idole du foot africain, deux Brésiliens... ces 14 joueurs toujours sans club à la Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:33:56+00:00",
-      "summary": "Alors qu’il reste encore six tickets pour les 8es de finale à distribuer, 14 joueurs toujours qualifiés avec leur pays sont libres de tout contrat et n’ont pas encore trouver de club pour la saison à venir.…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-ballon-d-or-une-idole-du-foot-africain-deux-bresiliens-ces-14-joueurs-toujours-sans-club-a-la-coupe-du-monde_AV-202607020823.html"
-    },
-    {
-      "title": "Une exception pour la Coupe du monde? Les pubs anglais pourraient rester ouverts plus tard pour Mexique-Angleterre",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:14:23+00:00",
-      "summary": "Après sa victoire in-extremis face à la RD Congo (2-1) mercredi, l'Angleterre affrontera le Mexique dans la nuit de dimanche à lundi pour une place en quarts de finale de la Coupe du monde 2026. Problème: les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/une-exception-pour-la-coupe-du-monde-les-pubs-anglais-pourraient-rester-ouverts-plus-tard-pour-mexique-angleterre_AV-202607020801.html"
-    },
-    {
-      "title": "Zinédine Zidane génère des crispations à cause d'un projet de complexe sportif dans l'Aveyron",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:09:46+00:00",
-      "summary": "Le projet de complexe sportif de Zinédine Zidane à Onet-le-Château (Aveyron) se heurte à quelques réticences, rapporte Centre Presse. Plusieurs recours ont été déposés.",
-      "url": "https://rmcsport.bfmtv.com/football/zinedine-zidane-genere-des-crispations-a-cause-d-un-projet-de-complexe-sportif-dans-l-aveyron_AV-202607020795.html"
-    },
-    {
-      "title": "Zinédine Zidane",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:09:46+00:00",
-      "summary": "Zinedine Zidane est né le 23 juin 1972 à Marseille. Cet ancien milieu offensif a remporté le Ballon d’or en 1998 (l'année où il ggne la Coupe du monde avec la France), et est une légende du Real Madrid où il…",
-      "url": "https://rmcsport.bfmtv.com/football/zinedine-zidane_DN-202108310570.html"
-    },
-    {
-      "title": "OM : \"Il faut qu'on change de modèle\", assure Richard",
-      "source": "RMC Sport",
-      "date": "2026-07-02T16:01:48+00:00",
-      "summary": "Présent pour le lancement du nouveau naming CEPAC Vélodrome, Stéphane Richard en a profité pour évoquer la situation de l'OM, et le modèle à suivre.",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-om-il-faut-qu-on-change-de-modele-assure-richard_VN-202607020789.html"
     },
     {
       "title": "Équipe de France : Michel Platini voit en Michael Olise un numéro 10 à l’ancienne",
@@ -3871,48 +3927,6 @@
       "date": "2026-07-02T14:12:43+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/mercato-le-bayern-munich-va-debourser-55-millions-deuros-pour-nathaniel-brown-defenseur-de-la-mannschaft-a-la-coupe-du-monde"
-    },
-    {
-      "title": "Pronostic Portugal Croatie : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-07-02T14:10:41+00:00",
-      "summary": "Pronostic Portugal Croatie : analyse complète, cotes et notre pari Portugal vainqueur pour ce seizième de finale de Coupe du monde. Découvrez nos conseils.",
-      "url": "https://www.sofoot.com/breves/pronostic-portugal-croatie-analyse-cotes-et-prono-coupe-du-monde"
-    },
-    {
-      "title": "Coupe du monde 2026 : Le Sénégal, un sabordage au long cours après son élimination contre la Belgique",
-      "source": "SO FOOT",
-      "date": "2026-07-02T14:00:46+00:00",
-      "summary": "L'échec du Sénégal n'a finalement rien d'étonnant.",
-      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-le-senegal-un-sabordage-au-long-cours-apres-son-elimination-contre-la-belgique"
-    },
-    {
-      "title": "Mercato : Danny Namaso s’engage définitivement avec Auxerre",
-      "source": "SO FOOT",
-      "date": "2026-07-02T13:54:29+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-danny-namaso-sengage-definitivement-avec-auxerre"
-    },
-    {
-      "title": "Mercato : Edinson Cavani et Boca Juniors, c’est terminé",
-      "source": "SO FOOT",
-      "date": "2026-07-02T13:26:39+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-edinson-cavani-et-boca-juniors-cest-termine"
-    },
-    {
-      "title": "Pronostic Suisse Algérie : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-07-02T13:10:35+00:00",
-      "summary": "Pronostic Suisse Algérie : analyse complète du huitième de finale, cotes, et notre pari « Suisse vainqueur » ou « les deux équipes marquent ». Comparez les statistiques !",
-      "url": "https://www.sofoot.com/breves/pronostic-suisse-algerie-analyse-cotes-et-prono-coupe-du-monde"
-    },
-    {
-      "title": "Espagne : Santi Cazorla raccroche les crampons",
-      "source": "SO FOOT",
-      "date": "2026-07-02T13:07:30+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/espagne-santi-cazorla-raccroche-les-crampons"
     }
   ],
   "focused_team_news": {
@@ -3934,10 +3948,10 @@
     ],
     "Brazil": [
       {
-        "title": "DIRECT. Portugal-Croatie: déjà une grosse occasion pour les Portugais, qui font pression",
+        "title": "Portugal-Croatie: les Portugais arrachent la qualification et rejoignent l'Espagne en huitièmes",
         "source": "RMC Sport",
-        "date": "2026-07-02T23:28:51+00:00",
-        "summary": "Toujours emmené par l'inamovible Cristiano Ronaldo, le Portugal défie la Croatie lors d'un choc à suspense du Mondial 2026 disputé au BMO Field de Toronto au Canada. Le seizième de finale entre la Seleçao das…",
+        "date": "2026-07-03T01:36:11+00:00",
+        "summary": "Au terme d'un match riche en rebondissements, le Portugal s'est offert le scalp de la Croatie (2-1) et sera donc au rendez-vous des huitièmes de finale. La Seleçao de Cristiano Ronaldo affrontera l'Espagne de…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-croatie-suivez-le-seizieme-de-finale-du-mondial-entre-les-portugais-et-les-croates-en-live_LS-202607020712.html"
       },
       {
@@ -3946,23 +3960,9 @@
         "date": "2026-07-02T20:58:22+00:00",
         "summary": "Le Canada, le Brésil, le Paraguay, le Maroc, la Norvège, la France, le Mexique ou encore l'Angleterre se sont qualifiés pour les huitièmes de finale de la Coupe du monde 2026. Voici le tableau complet des 8es…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-8es-de-finale_AV-202606280400.html"
-      },
-      {
-        "title": "Un Ballon d’or, une idole du foot africain, deux Brésiliens... ces 14 joueurs toujours sans club à la Coupe du monde",
-        "source": "RMC Sport",
-        "date": "2026-07-02T16:33:56+00:00",
-        "summary": "Alors qu’il reste encore six tickets pour les 8es de finale à distribuer, 14 joueurs toujours qualifiés avec leur pays sont libres de tout contrat et n’ont pas encore trouver de club pour la saison à venir.…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/un-ballon-d-or-une-idole-du-foot-africain-deux-bresiliens-ces-14-joueurs-toujours-sans-club-a-la-coupe-du-monde_AV-202607020823.html"
       }
     ],
     "Canada": [
-      {
-        "title": "DIRECT. Portugal-Croatie: déjà une grosse occasion pour les Portugais, qui font pression",
-        "source": "RMC Sport",
-        "date": "2026-07-02T23:28:51+00:00",
-        "summary": "Toujours emmené par l'inamovible Cristiano Ronaldo, le Portugal défie la Croatie lors d'un choc à suspense du Mondial 2026 disputé au BMO Field de Toronto au Canada. Le seizième de finale entre la Seleçao das…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-croatie-suivez-le-seizieme-de-finale-du-mondial-entre-les-portugais-et-les-croates-en-live_LS-202607020712.html"
-      },
       {
         "title": "Coupe du monde 2026: le tableau complet des matchs des 8es de finale",
         "source": "RMC Sport",
@@ -3981,6 +3981,13 @@
       }
     ],
     "France": [
+      {
+        "title": "\"L’ambiance est au top\" : pourquoi, cette Coupe du monde particulièrement, le groupe France vit si bien",
+        "source": "RMC Sport",
+        "date": "2026-07-02T23:40:17+00:00",
+        "summary": "Les vingt-six joueurs de l’Equipe de France forment un groupe soudé en dehors du terrain où ils partagent différentes activités entre les matchs du Monjdial 2026. Ces joueurs s’apprécient sincèrement : une…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/l-ambiance-est-au-top-pourquoi-cette-coupe-du-monde-particulierement-le-groupe-france-vit-si-bien_AV-202607021046.html"
+      },
       {
         "title": "Cryothérapie et bouteilles d'eau... Les Bleus face aux fortes chaleurs qui frappent la Coupe du monde 2026",
         "source": "RMC Sport",
@@ -4057,13 +4064,6 @@
         "date": "2026-07-02T19:55:33+00:00",
         "summary": "En conférence de presse, l'ailier des Bleus Bradley Barcola, buteur à deux reprises pendant ce mondial, révèle les dessous de l'alchimie entre les attaquants. Il évoque les moments sur mais aussi hors du…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-equipe-de-france-une-tres-bonne-association-barcola-revele-pourquoi-l-attaque-des-bleus-fonctionne-si-bien_VN-202607020991.html"
-      },
-      {
-        "title": "Mondial 2026 – L’arbitre de Paraguay-France est connu",
-        "source": "SO FOOT",
-        "date": "2026-07-02T19:03:40+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-larbitre-de-paraguay-france-est-connu"
       }
     ],
     "Paraguay": [
@@ -4126,18 +4126,46 @@
     ],
     "Portugal": [
       {
-        "title": "DIRECT. Portugal-Croatie: déjà une grosse occasion pour les Portugais, qui font pression",
+        "title": "Cristiano Ronaldo, Bernardo Silva et les joueurs du Portugal rendent hommage à Diogo Jota après leur victoire contre la Croatie un an après son décès",
+        "source": "SO FOOT",
+        "date": "2026-07-03T02:34:16+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/cristiano-ronaldo-bernardo-silva-et-les-joueurs-du-portugal-rendent-hommage-a-diogo-jota-apres-leur-victoire-contre-la-croatie-un-an-apres-son-deces"
+      },
+      {
+        "title": "Portugal-Croatie: les buts et le résumé vidéo d'un seizième de finale de Coupe du monde très tendu et au dénouement polémique",
         "source": "RMC Sport",
-        "date": "2026-07-02T23:28:51+00:00",
-        "summary": "Toujours emmené par l'inamovible Cristiano Ronaldo, le Portugal défie la Croatie lors d'un choc à suspense du Mondial 2026 disputé au BMO Field de Toronto au Canada. Le seizième de finale entre la Seleçao das…",
+        "date": "2026-07-03T02:23:53+00:00",
+        "summary": "Menés, les Portugais ont finalement égalisé par Cristiano Ronaldo, son premier but dans un match à élimination directe en Coupe du monde. Le match est passé dans une autre dimension lors des arrêts de jeu.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/portugal-croatie-les-buts-et-le-resume-video-d-un-seizieme-de-finale-de-coupe-du-monde-tres-tendu-et-au-denouement-polemique_AN-202607030067.html"
+      },
+      {
+        "title": "Fin de match très polémique pour Portugal-Croatie",
+        "source": "RMC Sport",
+        "date": "2026-07-03T01:56:17+00:00",
+        "summary": "Avec un but refusé à la 103e minute et des arrêts de jeu qui ont duré 19 minutes, le seizième de finale entre la Croatie et le Portugal s'est achevé dans la confusion et par la qualification des Lusitaniens.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/fin-de-match-tres-polemique-pour-portugal-croatie_AN-202607030064.html"
+      },
+      {
+        "title": "Portugal-Croatie: les Portugais arrachent la qualification et rejoignent l'Espagne en huitièmes",
+        "source": "RMC Sport",
+        "date": "2026-07-03T01:36:11+00:00",
+        "summary": "Au terme d'un match riche en rebondissements, le Portugal s'est offert le scalp de la Croatie (2-1) et sera donc au rendez-vous des huitièmes de finale. La Seleçao de Cristiano Ronaldo affrontera l'Espagne de…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-portugal-croatie-suivez-le-seizieme-de-finale-du-mondial-entre-les-portugais-et-les-croates-en-live_LS-202607020712.html"
       },
       {
         "title": "En direct : Portugal-Croatie",
         "source": "SO FOOT",
-        "date": "2026-07-02T22:45:43+00:00",
+        "date": "2026-07-03T01:14:00+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/articles/en-direct-portugal-croatie-2026"
+      },
+      {
+        "title": "Mondial 2026 – Le Portugal fait plier la Croatie sur le fil et se qualifie pour les huitièmes de finale",
+        "source": "SO FOOT",
+        "date": "2026-07-03T01:10:16+00:00",
+        "summary": "Gonçalo Ramos, ce héros !",
+        "url": "https://www.sofoot.com/articles/mondial-2026-le-portugal-fait-plier-la-croatie-sur-le-fil-et-se-qualifie-pour-les-huitiemes-de-finale"
       },
       {
         "title": "Pronostic Portugal Croatie : analyse, cotes et prono Coupe du monde",
@@ -4155,6 +4183,13 @@
       }
     ],
     "Senegal": [
+      {
+        "title": "Mondial 2026 – Rudi Garcia tente d’éteindre la polémique suite à ses propos polémiques après Belgique-Sénégal",
+        "source": "SO FOOT",
+        "date": "2026-07-02T23:02:49+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-rudi-garcia-tente-deteindre-la-polemique-suite-a-ses-propos-polemiques-apres-belgique-senegal"
+      },
       {
         "title": "Coupe du monde 2026: \"Pour couper court à toute ambiguïté…\": la mise au point de Rudi Garcia sur ses propos polémiques après Belgique-Sénégal",
         "source": "RMC Sport",
@@ -4182,34 +4217,6 @@
         "date": "2026-07-02T11:08:06+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-apres-belgique-senegal-la-presse-senegalaise-sans-pitie-avec-pape-thiaw"
-      },
-      {
-        "title": "Coupe du monde 2026 : après la qualif’ de la Belgique face au Sénégal, Rudi Garcia a kiffé l’embrouille entre Youri Tielemans et Leandro Trossard",
-        "source": "SO FOOT",
-        "date": "2026-07-02T08:17:19+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-apres-la-qualif-de-la-belgique-face-au-senegal-rudi-garcia-a-kiffe-lembrouille-entre-youri-tielemans-leandro-trossard"
-      },
-      {
-        "title": "Belgique – Sénégal : Pour Pape Thiaw, il n’y avait pas peno",
-        "source": "SO FOOT",
-        "date": "2026-07-02T08:09:26+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/belgique-senegal-pour-pape-thiaw-il-ny-avait-pas-peno"
-      },
-      {
-        "title": "Belgique – Sénégal : Pourquoi Lukaku n’a pas voulu tirer le penalty de la qualif ?",
-        "source": "SO FOOT",
-        "date": "2026-07-02T07:50:39+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/belgique-senegal-pourquoi-lukaku-na-pas-voulu-tirer-le-penalty-de-la-qualif"
-      },
-      {
-        "title": "Coupe du monde 2026 – Belgique 3-2 Sénégal : Rudi Garcia, sélectionneur des Diables rouges, a réussi ses changements",
-        "source": "SO FOOT",
-        "date": "2026-07-02T07:45:02+00:00",
-        "summary": "Ceci n’est pas une pipe.",
-        "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-belgique-3-2-senegal-rudi-garcia-selectionneur-des-diables-rouges-a-reussi-ses-changements"
       }
     ]
   },
@@ -4342,7 +4349,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/850354.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-07-02T23:30:15+00:00",
+      "updated_at": "2026-07-03T04:08:32+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4353,7 +4360,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
       "associated_team": "Norway",
-      "updated_at": "2026-07-02T23:30:15+00:00",
+      "updated_at": "2026-07-03T04:08:32+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4364,7 +4371,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1152455.png",
       "associated_team": "Germany",
-      "updated_at": "2026-07-02T23:30:15+00:00",
+      "updated_at": "2026-07-03T04:08:32+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4375,7 +4382,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "France",
-      "updated_at": "2026-07-02T23:30:15+00:00",
+      "updated_at": "2026-07-03T04:08:32+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4386,7 +4393,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-07-02T23:30:15+00:00",
+      "updated_at": "2026-07-03T04:08:32+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4397,7 +4404,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-07-02T23:30:15+00:00",
+      "updated_at": "2026-07-03T04:08:32+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
