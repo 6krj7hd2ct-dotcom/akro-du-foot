@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T21:31:34+00:00",
+  "generated_at": "2026-07-03T23:18:01+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -1658,10 +1658,10 @@
           "away_espn_id": "2597",
           "home_country_code": "ARG",
           "away_country_code": "CPV",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
+          "home_score": "1",
+          "away_score": "0",
+          "status": "LIVE",
+          "status_state": "in",
           "completed": false,
           "venue": "Hard Rock Stadium",
           "city": "Miami Gardens, Florida"
@@ -2067,10 +2067,10 @@
       "away_espn_id": "2597",
       "home_country_code": "ARG",
       "away_country_code": "CPV",
-      "home_score": "",
-      "away_score": "",
-      "status": "À venir",
-      "status_state": "pre",
+      "home_score": "1",
+      "away_score": "0",
+      "status": "LIVE",
+      "status_state": "in",
       "completed": false,
       "venue": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida"
@@ -2862,6 +2862,21 @@
   },
   "top_scorers": [
     {
+      "name": "Lionel Messi",
+      "team": "Argentina",
+      "team_id": 6706,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6706.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 7,
+      "rank": 1,
+      "country": ""
+    },
+    {
       "name": "Kylian Mbappé",
       "team": "France",
       "team_id": 6723,
@@ -2873,23 +2888,8 @@
       "all_time_rank": "",
       "played": "",
       "value": 6,
-      "rank": 1,
-      "country": "France"
-    },
-    {
-      "name": "Lionel Messi",
-      "team": "Argentina",
-      "team_id": 6706,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6706.png",
-      "country_code": "",
-      "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
-      "country_flag_url": "",
-      "all_time_rank": "",
-      "played": "",
-      "value": 6,
       "rank": 2,
-      "country": ""
+      "country": "France"
     },
     {
       "name": "Erling Haaland",
@@ -3069,11 +3069,25 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "DIRECT. Argentine-Cap Vert: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "title": "DIRECT. Argentine-Cap-Vert : Messi fait sauter le verrou cap-verdien, suivez le match des 16es de finale de la Coupe du monde 2026 en live",
       "source": "RMC Sport",
-      "date": "2026-07-03T21:23:59+00:00",
+      "date": "2026-07-03T23:17:45+00:00",
       "summary": "Tenante du titre, l'Argentine rêve d'un doublé au Mondial et affronte le Cap-Vert dans la nuit de vendredi à samedi (0h00, heure de Paris) lors des seizièmes de finale. Un duel entre la bande de Lionel Messi…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-cap-vert-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030417.html"
+    },
+    {
+      "title": "DIRECT. Colombie-Ghana: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-07-03T22:24:00+00:00",
+      "summary": "La Colombie et le Ghana vont se disputer le dernier ticket pour les 8es de finale de la Coupe du monde 2026 dans la nuit de vendredi à samedi à Kansas City (coup d'envoi à 3h30 du matin heure de Paris). Qui…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-colombie-ghana-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030673.html"
+    },
+    {
+      "title": "DIRECT. France-Paraguay: la compo probable des Bleus pour le 8e de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-03T21:56:13+00:00",
+      "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
     },
     {
       "title": "Australie-Égypte: la délivrance aux tirs au but pour les Pharaons, qualifiés pour le premier 8e de finale de leur histoire",
@@ -3081,13 +3095,6 @@
       "date": "2026-07-03T21:16:17+00:00",
       "summary": "Ce vendredi soir à Dallas, l'Egypte de Mohamed Salah a dû passer par les tirs au but pour se sortir du piège australien (1-1, 2-4 aux t.a.b), après une rencontre tendue et peu emballante. Les Pharaons…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-australie-egypte-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030350.html"
-    },
-    {
-      "title": "DIRECT. France-Paraguay: \"ne pas avoir peur\", les confessions de Deschamps avant le 8e de finale de Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-07-03T21:14:16+00:00",
-      "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
     },
     {
       "title": "Coupe du monde 2026: le tableau complet des matchs des 8es de finale",
@@ -3165,27 +3172,27 @@
       "date": "2026-07-03T16:09:40+00:00",
       "summary": "En quête d’un ticket pour les quarts de finale de la Coupe du monde 2026 face au Paraguay, les Bleus arrivent à Philadelphie en pleine célébration des 250 ans de l’indépendance des États-Unis. Ici, où…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-paraguay-parade-du-4-juillet-annulee-chaleur-extreme-les-bleus-a-philadelphie-dans-un-contexte-tres-particulier_AV-202607030757.html"
-    },
-    {
-      "title": "Le \"Prix de la Paix\" à Trump ne passe pas: 50 députés européens interpellent à leur tour la Fifa et Infantino",
-      "source": "RMC Sport",
-      "date": "2026-07-03T13:54:34+00:00",
-      "summary": "Comme l’ONG FairSquare, cinquante députés européens réclament une enquête sur l’initiative de la Fifa et de son président Gianni Infantino d’instaurer le \"Prix de la Paix\", récompense qui a été attribuée au…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/le-prix-de-la-paix-a-trump-ne-passe-pas-50-deputes-europeens-interpellent-a-leur-tour-la-fifa-et-infantino_AD-202607030677.html"
     }
   ],
   "france_news": [
     {
-      "title": "DIRECT. Argentine-Cap Vert: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "title": "DIRECT. Argentine-Cap-Vert : Messi fait sauter le verrou cap-verdien, suivez le match des 16es de finale de la Coupe du monde 2026 en live",
       "source": "RMC Sport",
-      "date": "2026-07-03T21:23:59+00:00",
+      "date": "2026-07-03T23:17:45+00:00",
       "summary": "Tenante du titre, l'Argentine rêve d'un doublé au Mondial et affronte le Cap-Vert dans la nuit de vendredi à samedi (0h00, heure de Paris) lors des seizièmes de finale. Un duel entre la bande de Lionel Messi…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-cap-vert-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030417.html"
     },
     {
-      "title": "DIRECT. France-Paraguay: \"ne pas avoir peur\", les confessions de Deschamps avant le 8e de finale de Coupe du monde",
+      "title": "France-Paraguay : malgré une chaleur record et un nouveau risque d'orages, les Bleus assurent être \"prêts physiquement\"",
+      "source": "France Info",
+      "date": "2026-07-03T22:37:55+00:00",
+      "summary": "Jouer sous plus de 38 degrés, samedi à Philadelphie, n'inquiète pas plus que ça Didier Deschamps et ses joueurs, très sereins à la veille de leur huitième de finale de Coupe du monde.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/france-paraguay-malgre-une-chaleur-record-et-un-nouveau-risque-d-orages-les-bleus-assurent-etre-prets-physiquement-avant-leur-huitieme-de-finale-de-coupe-du-monde_8093021.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "DIRECT. France-Paraguay: la compo probable des Bleus pour le 8e de finale",
       "source": "RMC Sport",
-      "date": "2026-07-03T21:14:16+00:00",
+      "date": "2026-07-03T21:56:13+00:00",
       "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
     },
@@ -3335,22 +3342,29 @@
       "date": "2026-06-30T15:59:17+00:00",
       "summary": "Depuis le début de leur parcours vers le Mondial et jusqu'aux seizièmes, les adversaires des Bleus ont bénéficié de deux repêchages.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/masculine/france-suede-pourquoi-la-presence-des-suedois-en-phase-a-elimination-directe-de-la-coupe-du-monde-tient-presque-du-miracle_8084063.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "\"On sait déjà qu'on va rentrer à la maison\" : des supporters suédois appréhendent leur match contre la France ce mardi soir",
-      "source": "France Info",
-      "date": "2026-06-30T15:00:07+00:00",
-      "summary": "Aux États-Unis, les Bleus affrontent l'équipe de Suède ce 30 juin en 16e de finale du mondial de foot. Le coup d'envoi est à 23 heures, heure française. En attendant, les supporters sont en ébullition ; bars…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/on-sait-deja-qu-on-va-rentrer-a-la-maison-des-supporters-suedois-apprehendent-leur-match-contre-la-france-ce-mardi-soir_8086934.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
-      "title": "DIRECT. Argentine-Cap Vert: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "title": "DIRECT. Argentine-Cap-Vert : Messi fait sauter le verrou cap-verdien, suivez le match des 16es de finale de la Coupe du monde 2026 en live",
       "source": "RMC Sport",
-      "date": "2026-07-03T21:23:59+00:00",
+      "date": "2026-07-03T23:17:45+00:00",
       "summary": "Tenante du titre, l'Argentine rêve d'un doublé au Mondial et affronte le Cap-Vert dans la nuit de vendredi à samedi (0h00, heure de Paris) lors des seizièmes de finale. Un duel entre la bande de Lionel Messi…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-cap-vert-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030417.html"
+    },
+    {
+      "title": "DIRECT. Colombie-Ghana: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-07-03T22:24:00+00:00",
+      "summary": "La Colombie et le Ghana vont se disputer le dernier ticket pour les 8es de finale de la Coupe du monde 2026 dans la nuit de vendredi à samedi à Kansas City (coup d'envoi à 3h30 du matin heure de Paris). Qui…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-colombie-ghana-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030673.html"
+    },
+    {
+      "title": "DIRECT. France-Paraguay: la compo probable des Bleus pour le 8e de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-03T21:56:13+00:00",
+      "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
     },
     {
       "title": "Australie-Égypte: la délivrance aux tirs au but pour les Pharaons, qualifiés pour le premier 8e de finale de leur histoire",
@@ -3358,13 +3372,6 @@
       "date": "2026-07-03T21:16:17+00:00",
       "summary": "Ce vendredi soir à Dallas, l'Egypte de Mohamed Salah a dû passer par les tirs au but pour se sortir du piège australien (1-1, 2-4 aux t.a.b), après une rencontre tendue et peu emballante. Les Pharaons…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-australie-egypte-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030350.html"
-    },
-    {
-      "title": "DIRECT. France-Paraguay: \"ne pas avoir peur\", les confessions de Deschamps avant le 8e de finale de Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-07-03T21:14:16+00:00",
-      "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
     },
     {
       "title": "Coupe du monde 2026: le tableau complet des matchs des 8es de finale",
@@ -3442,22 +3449,64 @@
       "date": "2026-07-03T16:09:40+00:00",
       "summary": "En quête d’un ticket pour les quarts de finale de la Coupe du monde 2026 face au Paraguay, les Bleus arrivent à Philadelphie en pleine célébration des 250 ans de l’indépendance des États-Unis. Ici, où…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-paraguay-parade-du-4-juillet-annulee-chaleur-extreme-les-bleus-a-philadelphie-dans-un-contexte-tres-particulier_AV-202607030757.html"
-    },
-    {
-      "title": "Le \"Prix de la Paix\" à Trump ne passe pas: 50 députés européens interpellent à leur tour la Fifa et Infantino",
-      "source": "RMC Sport",
-      "date": "2026-07-03T13:54:34+00:00",
-      "summary": "Comme l’ONG FairSquare, cinquante députés européens réclament une enquête sur l’initiative de la Fifa et de son président Gianni Infantino d’instaurer le \"Prix de la Paix\", récompense qui a été attribuée au…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/le-prix-de-la-paix-a-trump-ne-passe-pas-50-deputes-europeens-interpellent-a-leur-tour-la-fifa-et-infantino_AD-202607030677.html"
     }
   ],
   "all_news": [
     {
-      "title": "DIRECT. Argentine-Cap Vert: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "title": "DIRECT. Argentine-Cap-Vert : Messi fait sauter le verrou cap-verdien, suivez le match des 16es de finale de la Coupe du monde 2026 en live",
       "source": "RMC Sport",
-      "date": "2026-07-03T21:23:59+00:00",
+      "date": "2026-07-03T23:17:45+00:00",
       "summary": "Tenante du titre, l'Argentine rêve d'un doublé au Mondial et affronte le Cap-Vert dans la nuit de vendredi à samedi (0h00, heure de Paris) lors des seizièmes de finale. Un duel entre la bande de Lionel Messi…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-cap-vert-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030417.html"
+    },
+    {
+      "title": "France-Paraguay : malgré une chaleur record et un nouveau risque d'orages, les Bleus assurent être \"prêts physiquement\"",
+      "source": "France Info",
+      "date": "2026-07-03T22:37:55+00:00",
+      "summary": "Jouer sous plus de 38 degrés, samedi à Philadelphie, n'inquiète pas plus que ça Didier Deschamps et ses joueurs, très sereins à la veille de leur huitième de finale de Coupe du monde.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/france-paraguay-malgre-une-chaleur-record-et-un-nouveau-risque-d-orages-les-bleus-assurent-etre-prets-physiquement-avant-leur-huitieme-de-finale-de-coupe-du-monde_8093021.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "DIRECT. Colombie-Ghana: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+      "source": "RMC Sport",
+      "date": "2026-07-03T22:24:00+00:00",
+      "summary": "La Colombie et le Ghana vont se disputer le dernier ticket pour les 8es de finale de la Coupe du monde 2026 dans la nuit de vendredi à samedi à Kansas City (coup d'envoi à 3h30 du matin heure de Paris). Qui…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-colombie-ghana-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030673.html"
+    },
+    {
+      "title": "Mondial 2026 : Désiré Doué philosophe sur la chaleur avant le huitième entre la France et le Paraguay",
+      "source": "SO FOOT",
+      "date": "2026-07-03T21:57:10+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-desire-doue-philosophe-sur-la-chaleur-avant-le-huitieme-entre-la-france-et-le-paraguay"
+    },
+    {
+      "title": "DIRECT. France-Paraguay: la compo probable des Bleus pour le 8e de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-03T21:56:13+00:00",
+      "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
+    },
+    {
+      "title": "Australie-Égypte: quand Kylian Mbappé aide les Pharaons à préparer la séance de tirs au but",
+      "source": "RMC Sport",
+      "date": "2026-07-03T21:52:13+00:00",
+      "summary": "Avant la séance de tirs au but entre l'Égypte et l'Australie ce vendredi en 8e de finale de la Coupe du monde, le staff égyptien a visionné un penalty marqué par Kylian Mbappé avec le Real Madrid face à…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/australie-egypte-quand-kylian-mbappe-aide-les-pharaons-a-preparer-la-seance-de-tirs-au-but_AV-202607030950.html"
+    },
+    {
+      "title": "En direct : Argentine – Cap-Vert",
+      "source": "SO FOOT",
+      "date": "2026-07-03T21:45:56+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-argentine-cap-vert"
+    },
+    {
+      "title": "CSC frappe encore et entre dans l’histoire de la Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-07-03T21:45:42+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/csc-frappe-encore-et-entre-dans-lhistoire-de-la-coupe-du-monde"
     },
     {
       "title": "Australie-Égypte: la délivrance aux tirs au but pour les Pharaons, qualifiés pour le premier 8e de finale de leur histoire",
@@ -3467,11 +3516,18 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-australie-egypte-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030350.html"
     },
     {
-      "title": "DIRECT. France-Paraguay: \"ne pas avoir peur\", les confessions de Deschamps avant le 8e de finale de Coupe du monde",
-      "source": "RMC Sport",
-      "date": "2026-07-03T21:14:16+00:00",
-      "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
+      "title": "Coupe du monde 2026 : quand le staff de l’Égypte prépare les tirs au but face à l’Australie avec… Kylian Mbappé",
+      "source": "SO FOOT",
+      "date": "2026-07-03T21:15:14+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-quand-le-staff-de-legypte-prepare-les-tirs-au-but-face-a-laustralie-avec-kylian-mbappe"
+    },
+    {
+      "title": "En direct : Australie-Égypte",
+      "source": "SO FOOT",
+      "date": "2026-07-03T21:14:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-australie-egypte"
     },
     {
       "title": "Maroc-Canada: Ouahbi a ressenti \"beaucoup d'amour\" et du respect pour les Lions de l'Atlas",
@@ -3516,10 +3572,10 @@
       "url": "https://www.sofoot.com/articles/evenement-soiree-de-projection-so-foot-pour-france-paraguay-le-samedi-04-juillet-2026-au-discobar-le-sacre-a-partir-de-22h-puis-soiree-club-et-dj-set"
     },
     {
-      "title": "Mondial 2026 : L’Egypte vient à bout de l’Australie aux tirs au but et s’offre un huitième de finale",
+      "title": "Mondial 2026 : L’Égypte vient à bout de l’Australie aux tirs au but et s’offre un huitième de finale",
       "source": "SO FOOT",
       "date": "2026-07-03T20:52:17+00:00",
-      "summary": "Les Pharaons écrivent leur Histoire.",
+      "summary": "Les Pharaons écrivent leur histoire.",
       "url": "https://www.sofoot.com/articles/mondial-2026-legypte-vient-a-bout-de-laustralie-aux-tirs-au-but-et-soffre-un-huitieme-de-finale"
     },
     {
@@ -3663,13 +3719,6 @@
       "url": "https://www.sofoot.com/breves/pronostic-mexique-angleterre-analyse-cotes-et-prono-coupe-du-monde"
     },
     {
-      "title": "En direct : Australie-Égypte",
-      "source": "SO FOOT",
-      "date": "2026-07-03T17:45:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-australie-egypte"
-    },
-    {
       "title": "Mercato : L’Olympique lyonnais continue de se renforcer avec l’arrivée du défenseur Mohamed Ouédraogo",
       "source": "SO FOOT",
       "date": "2026-07-03T17:32:54+00:00",
@@ -3782,20 +3831,6 @@
       "url": "https://www.sofoot.com/breves/romain-faivre-retourne-a-auxerre-en-pret"
     },
     {
-      "title": "En direct : Argentine – Cap-Vert",
-      "source": "SO FOOT",
-      "date": "2026-07-03T15:00:56+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-argentine-cap-vert"
-    },
-    {
-      "title": "Colombie - Ghana : sur quelle chaîne et à quelle heure regarder le match de la Coupe du Monde en direct ?",
-      "source": "RMC Sport",
-      "date": "2026-07-03T15:00:00+00:00",
-      "summary": "La Colombie a créé la surprise en terminant devant le Portugal lors de la phase de groupes, tandis que le Ghana s’est qualifié parmi les meilleurs troisièmes au terme d’un parcours plus compliqué. Alors, qui…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/colombie-ghana-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-la-coupe-du-monde-en-direct_AN-202607030008.html"
-    },
-    {
       "title": "50 députés européens appellent à enquêter sur l’attribution du prix de la paix de la FIFA à Donald Trump.",
       "source": "SO FOOT",
       "date": "2026-07-03T14:59:50+00:00",
@@ -3831,56 +3866,28 @@
       "url": "https://www.sofoot.com/articles/footox-le-podcast-de-la-redaction-de-so-foot-vous-spoile-paraguay-france"
     },
     {
-      "title": "Le \"Prix de la Paix\" à Trump ne passe pas: 50 députés européens interpellent à leur tour la Fifa et Infantino",
-      "source": "RMC Sport",
-      "date": "2026-07-03T13:54:34+00:00",
-      "summary": "Comme l’ONG FairSquare, cinquante députés européens réclament une enquête sur l’initiative de la Fifa et de son président Gianni Infantino d’instaurer le \"Prix de la Paix\", récompense qui a été attribuée au…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/le-prix-de-la-paix-a-trump-ne-passe-pas-50-deputes-europeens-interpellent-a-leur-tour-la-fifa-et-infantino_AD-202607030677.html"
-    },
-    {
       "title": "La chanson sur Michael Olise va-t-elle devenir le tube du Mondial ?",
       "source": "SO FOOT",
       "date": "2026-07-03T13:51:56+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/la-chanson-sur-michael-olise-va-t-elle-devenir-le-tube-du-mondial"
-    },
-    {
-      "title": "Des joueurs tunisiens contrôlés positifs à un test antidopage",
-      "source": "SO FOOT",
-      "date": "2026-07-03T13:49:20+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/des-joueurs-tunisiens-controles-positifs-a-un-test-antidopage"
-    },
-    {
-      "title": "Raphinha ne devrait pas être de la partie face à la Norvège",
-      "source": "SO FOOT",
-      "date": "2026-07-03T13:18:14+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/raphinha-ne-devrait-pas-etre-de-la-partie-face-a-la-norvege"
-    },
-    {
-      "title": "Coupe du monde 2026 : La Fédération allemande de football annonce être en discussion avec Klopp",
-      "source": "SO FOOT",
-      "date": "2026-07-03T13:10:04+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-la-federation-allemande-de-football-annonce-etre-en-discussion-avec-klopp"
-    },
-    {
-      "title": "Le Bayern officialise l’arrivée de Nathaniel Brown",
-      "source": "SO FOOT",
-      "date": "2026-07-03T12:58:20+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/le-bayern-officialise-larrivee-de-nathaniel-brown"
     }
   ],
   "focused_team_news": {
     "Argentina": [
       {
-        "title": "DIRECT. Argentine-Cap Vert: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+        "title": "DIRECT. Argentine-Cap-Vert : Messi fait sauter le verrou cap-verdien, suivez le match des 16es de finale de la Coupe du monde 2026 en live",
         "source": "RMC Sport",
-        "date": "2026-07-03T21:23:59+00:00",
+        "date": "2026-07-03T23:17:45+00:00",
         "summary": "Tenante du titre, l'Argentine rêve d'un doublé au Mondial et affronte le Cap-Vert dans la nuit de vendredi à samedi (0h00, heure de Paris) lors des seizièmes de finale. Un duel entre la bande de Lionel Messi…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-cap-vert-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030417.html"
+      },
+      {
+        "title": "En direct : Argentine – Cap-Vert",
+        "source": "SO FOOT",
+        "date": "2026-07-03T21:45:56+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/en-direct-argentine-cap-vert"
       },
       {
         "title": "Lionel Messi",
@@ -3895,13 +3902,6 @@
         "date": "2026-07-03T16:45:12+00:00",
         "summary": "Ces derniers jours, des vidéos de centaines de supporters bangladais célébrant les buts de Lionel Messi et de l’Argentine à la Coupe du monde 2026 on fait le tour des réseaux sociaux. Une passion pour le…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/messi-idolatre-pays-divise-entre-le-bresil-et-l-argentine-pourquoi-le-bangladesh-est-il-si-passionne-par-la-coupe-du-monde_AV-202607030797.html"
-      },
-      {
-        "title": "En direct : Argentine – Cap-Vert",
-        "source": "SO FOOT",
-        "date": "2026-07-03T15:00:56+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/articles/en-direct-argentine-cap-vert"
       }
     ],
     "Brazil": [
@@ -3980,6 +3980,13 @@
     ],
     "Egypt": [
       {
+        "title": "Australie-Égypte: quand Kylian Mbappé aide les Pharaons à préparer la séance de tirs au but",
+        "source": "RMC Sport",
+        "date": "2026-07-03T21:52:13+00:00",
+        "summary": "Avant la séance de tirs au but entre l'Égypte et l'Australie ce vendredi en 8e de finale de la Coupe du monde, le staff égyptien a visionné un penalty marqué par Kylian Mbappé avec le Real Madrid face à…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/australie-egypte-quand-kylian-mbappe-aide-les-pharaons-a-preparer-la-seance-de-tirs-au-but_AV-202607030950.html"
+      },
+      {
         "title": "Australie-Égypte: la délivrance aux tirs au but pour les Pharaons, qualifiés pour le premier 8e de finale de leur histoire",
         "source": "RMC Sport",
         "date": "2026-07-03T21:16:17+00:00",
@@ -3987,25 +3994,46 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-australie-egypte-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030350.html"
       },
       {
-        "title": "Mondial 2026 : L’Egypte vient à bout de l’Australie aux tirs au but et s’offre un huitième de finale",
+        "title": "Coupe du monde 2026 : quand le staff de l’Égypte prépare les tirs au but face à l’Australie avec… Kylian Mbappé",
         "source": "SO FOOT",
-        "date": "2026-07-03T20:52:17+00:00",
-        "summary": "Les Pharaons écrivent leur Histoire.",
-        "url": "https://www.sofoot.com/articles/mondial-2026-legypte-vient-a-bout-de-laustralie-aux-tirs-au-but-et-soffre-un-huitieme-de-finale"
+        "date": "2026-07-03T21:15:14+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-quand-le-staff-de-legypte-prepare-les-tirs-au-but-face-a-laustralie-avec-kylian-mbappe"
       },
       {
         "title": "En direct : Australie-Égypte",
         "source": "SO FOOT",
-        "date": "2026-07-03T17:45:42+00:00",
+        "date": "2026-07-03T21:14:00+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/articles/en-direct-australie-egypte"
+      },
+      {
+        "title": "Mondial 2026 : L’Égypte vient à bout de l’Australie aux tirs au but et s’offre un huitième de finale",
+        "source": "SO FOOT",
+        "date": "2026-07-03T20:52:17+00:00",
+        "summary": "Les Pharaons écrivent leur histoire.",
+        "url": "https://www.sofoot.com/articles/mondial-2026-legypte-vient-a-bout-de-laustralie-aux-tirs-au-but-et-soffre-un-huitieme-de-finale"
       }
     ],
     "France": [
       {
-        "title": "DIRECT. France-Paraguay: \"ne pas avoir peur\", les confessions de Deschamps avant le 8e de finale de Coupe du monde",
+        "title": "France-Paraguay : malgré une chaleur record et un nouveau risque d'orages, les Bleus assurent être \"prêts physiquement\"",
+        "source": "France Info",
+        "date": "2026-07-03T22:37:55+00:00",
+        "summary": "Jouer sous plus de 38 degrés, samedi à Philadelphie, n'inquiète pas plus que ça Didier Deschamps et ses joueurs, très sereins à la veille de leur huitième de finale de Coupe du monde.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/france-paraguay-malgre-une-chaleur-record-et-un-nouveau-risque-d-orages-les-bleus-assurent-etre-prets-physiquement-avant-leur-huitieme-de-finale-de-coupe-du-monde_8093021.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Mondial 2026 : Désiré Doué philosophe sur la chaleur avant le huitième entre la France et le Paraguay",
+        "source": "SO FOOT",
+        "date": "2026-07-03T21:57:10+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-desire-doue-philosophe-sur-la-chaleur-avant-le-huitieme-entre-la-france-et-le-paraguay"
+      },
+      {
+        "title": "DIRECT. France-Paraguay: la compo probable des Bleus pour le 8e de finale",
         "source": "RMC Sport",
-        "date": "2026-07-03T21:14:16+00:00",
+        "date": "2026-07-03T21:56:13+00:00",
         "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
       },
@@ -4071,36 +4099,22 @@
         "date": "2026-07-03T20:22:38+00:00",
         "summary": "La France affronte le Paraguay en 3e de finale de la coupe du monde américaine, samedi à 23h sur RMC. Le coach français Didier Deschamps loue l'ambiance dans son groupe.",
         "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-paraguay-ils-prennent-du-plaisir-moi-ca-fait-14-ans-sourit-deschamps_VN-202607030921.html"
-      },
-      {
-        "title": "Mondial : comment les joueurs gèrent la chaleur ?",
-        "source": "France Info",
-        "date": "2026-07-03T20:00:02+00:00",
-        "summary": "🥵⚽️ C’est aussi la canicule aux États-Unis ! Les équipes du Mondial ont chacune leurs techniques pour éviter le coup de chaud : gilets rafraichissants, bains d’eau glacée, séances de sauna…",
-        "url": "https://www.franceinfo.fr/coupe-du-monde/mondial-comment-les-joueurs-gerent-la-chaleur_8092715.html#xtor=RSS-3-%5Bgeneral%5D"
-      },
-      {
-        "title": "France-Paraguay: \"si on avait fait le changement...\": quand Chilavert pointait les raisons de la défaite de 1998",
-        "source": "RMC Sport",
-        "date": "2026-07-03T19:26:30+00:00",
-        "summary": "Ancien gardien du Paraguay en 1998 lors du huitième de finale perdu face à l’équipe de France, José Luis Chilavert indiquait dans une interview dans Team Duga sur RMC en 2020 les raisons qui avaient coûté la…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-paraguay-si-on-avait-fait-le-changement-quand-chilavert-pointait-les-raisons-de-la-defaite-de-1998_AV-202607030899.html"
       }
     ],
     "Ghana": [
+      {
+        "title": "DIRECT. Colombie-Ghana: suivez le match des 16es de finale de la Coupe du monde 2026 en live",
+        "source": "RMC Sport",
+        "date": "2026-07-03T22:24:00+00:00",
+        "summary": "La Colombie et le Ghana vont se disputer le dernier ticket pour les 8es de finale de la Coupe du monde 2026 dans la nuit de vendredi à samedi à Kansas City (coup d'envoi à 3h30 du matin heure de Paris). Qui…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-colombie-ghana-suivez-le-match-des-16es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607030673.html"
+      },
       {
         "title": "\"Au bout d’un moment, ce n’est pas le hasard\": l'avis tranché de Dugarry sur les limites du foot africain à la Coupe du monde",
         "source": "RMC Sport",
         "date": "2026-07-03T20:12:19+00:00",
         "summary": "En attendant les résultats du Cap-Vert et du Ghana dans la nuit de vendredi à samedi, ces 16e de finale de la Coupe du monde ne sourient pas aux équipes africaines. Si le Maroc continue de faire forte…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/au-bout-d-un-moment-ce-n-est-pas-le-hasard-l-avis-tranche-de-dugarry-sur-les-limites-du-foot-africain-a-la-coupe-du-monde_AV-202607030919.html"
-      },
-      {
-        "title": "Colombie - Ghana : sur quelle chaîne et à quelle heure regarder le match de la Coupe du Monde en direct ?",
-        "source": "RMC Sport",
-        "date": "2026-07-03T15:00:00+00:00",
-        "summary": "La Colombie a créé la surprise en terminant devant le Portugal lors de la phase de groupes, tandis que le Ghana s’est qualifié parmi les meilleurs troisièmes au terme d’un parcours plus compliqué. Alors, qui…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/colombie-ghana-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-la-coupe-du-monde-en-direct_AN-202607030008.html"
       },
       {
         "title": "Pronostic Colombie Ghana : analyse, cotes et prono Coupe du monde 2026",
@@ -4121,9 +4135,23 @@
     ],
     "Paraguay": [
       {
-        "title": "DIRECT. France-Paraguay: \"ne pas avoir peur\", les confessions de Deschamps avant le 8e de finale de Coupe du monde",
+        "title": "France-Paraguay : malgré une chaleur record et un nouveau risque d'orages, les Bleus assurent être \"prêts physiquement\"",
+        "source": "France Info",
+        "date": "2026-07-03T22:37:55+00:00",
+        "summary": "Jouer sous plus de 38 degrés, samedi à Philadelphie, n'inquiète pas plus que ça Didier Deschamps et ses joueurs, très sereins à la veille de leur huitième de finale de Coupe du monde.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/france-paraguay-malgre-une-chaleur-record-et-un-nouveau-risque-d-orages-les-bleus-assurent-etre-prets-physiquement-avant-leur-huitieme-de-finale-de-coupe-du-monde_8093021.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Mondial 2026 : Désiré Doué philosophe sur la chaleur avant le huitième entre la France et le Paraguay",
+        "source": "SO FOOT",
+        "date": "2026-07-03T21:57:10+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-desire-doue-philosophe-sur-la-chaleur-avant-le-huitieme-entre-la-france-et-le-paraguay"
+      },
+      {
+        "title": "DIRECT. France-Paraguay: la compo probable des Bleus pour le 8e de finale",
         "source": "RMC Sport",
-        "date": "2026-07-03T21:14:16+00:00",
+        "date": "2026-07-03T21:56:13+00:00",
         "summary": "Large vainqueure de la Suède mardi soir (3-0), l'équipe de France va défier samedi (23h, heure de Paris) le Paraguay en 8e de finale de la Coupe du monde 2026. Retrouvez toutes les infos sur les Bleus avant…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-equipe-de-france-suivez-toutes-les-infos-et-la-conf-de-presse-des-bleus-en-live-avant-le-8e-de-finale-contre-le-paraguay_LN-202607030303.html"
       },
@@ -4189,20 +4217,6 @@
         "date": "2026-07-03T19:26:30+00:00",
         "summary": "Ancien gardien du Paraguay en 1998 lors du huitième de finale perdu face à l’équipe de France, José Luis Chilavert indiquait dans une interview dans Team Duga sur RMC en 2020 les raisons qui avaient coûté la…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-paraguay-si-on-avait-fait-le-changement-quand-chilavert-pointait-les-raisons-de-la-defaite-de-1998_AV-202607030899.html"
-      },
-      {
-        "title": "France-Paraguay: la Fifa peut-elle reporter un match de Coupe du monde en cas de chaleurs extrêmes?",
-        "source": "RMC Sport",
-        "date": "2026-07-03T16:19:48+00:00",
-        "summary": "Les températures élevées de cette Coupe du monde 2026 pourraient inciter la Fifa à envisager de reporter certains matchs. Mais l'instance internationale fait tout pour que les rencontres se jouent, même sous…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-paraguay-la-fifa-peut-elle-reporter-un-match-de-coupe-du-monde-en-cas-de-chaleurs-extremes_AV-202607030775.html"
-      },
-      {
-        "title": "France-Paraguay: parade du 4 juillet annulée, chaleur extrême... Les Bleus à Philadelphie dans un contexte très particulier",
-        "source": "RMC Sport",
-        "date": "2026-07-03T16:09:40+00:00",
-        "summary": "En quête d’un ticket pour les quarts de finale de la Coupe du monde 2026 face au Paraguay, les Bleus arrivent à Philadelphie en pleine célébration des 250 ans de l’indépendance des États-Unis. Ici, où…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-paraguay-parade-du-4-juillet-annulee-chaleur-extreme-les-bleus-a-philadelphie-dans-un-contexte-tres-particulier_AV-202607030757.html"
       }
     ],
     "Portugal": [
@@ -4214,25 +4228,11 @@
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/toujours-plus-haut-meme-a-la-coupe-du-monde-2026-le-psg-bat-des-records_AV-202607030785.html"
       },
       {
-        "title": "Colombie - Ghana : sur quelle chaîne et à quelle heure regarder le match de la Coupe du Monde en direct ?",
-        "source": "RMC Sport",
-        "date": "2026-07-03T15:00:00+00:00",
-        "summary": "La Colombie a créé la surprise en terminant devant le Portugal lors de la phase de groupes, tandis que le Ghana s’est qualifié parmi les meilleurs troisièmes au terme d’un parcours plus compliqué. Alors, qui…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/colombie-ghana-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-la-coupe-du-monde-en-direct_AN-202607030008.html"
-      },
-      {
         "title": "Portugal – Croatie : Lovren dérape après l’élimination croate",
         "source": "SO FOOT",
         "date": "2026-07-03T12:10:03+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/portugal-croatie-lovren-derape-apres-lelimination-croate"
-      },
-      {
-        "title": "Coupe du monde 2026 : La presse croate ne décolère pas après l’arbitrage face au Portugal",
-        "source": "SO FOOT",
-        "date": "2026-07-03T09:30:38+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-la-presse-croate-ne-decolere-pas-apres-larbitrage-face-au-portugal"
       }
     ],
     "Senegal": [
@@ -4374,7 +4374,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/850354.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-07-03T21:31:34+00:00",
+      "updated_at": "2026-07-03T23:18:01+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4385,7 +4385,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
       "associated_team": "Norway",
-      "updated_at": "2026-07-03T21:31:34+00:00",
+      "updated_at": "2026-07-03T23:18:01+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4396,7 +4396,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1152455.png",
       "associated_team": "Germany",
-      "updated_at": "2026-07-03T21:31:34+00:00",
+      "updated_at": "2026-07-03T23:18:01+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4407,7 +4407,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "France",
-      "updated_at": "2026-07-03T21:31:34+00:00",
+      "updated_at": "2026-07-03T23:18:01+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4418,7 +4418,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-07-03T21:31:34+00:00",
+      "updated_at": "2026-07-03T23:18:01+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4429,7 +4429,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-07-03T21:31:34+00:00",
+      "updated_at": "2026-07-03T23:18:01+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
