@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T23:28:56+00:00",
+  "generated_at": "2026-07-06T04:38:47+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -1758,11 +1758,11 @@
           "away_espn_id": "448",
           "home_country_code": "MEX",
           "away_country_code": "ENG",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
-          "completed": false,
+          "home_score": "2",
+          "away_score": "3",
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "Estadio Banorte",
           "city": "Mexico City"
         },
@@ -1889,13 +1889,13 @@
           "id": "760512",
           "date": "2026-07-11T21:00Z",
           "home_team": "Norway",
-          "away_team": "À déterminer",
+          "away_team": "England",
           "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
-          "away_flag_url": "",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
           "home_espn_id": "464",
-          "away_espn_id": "19285",
+          "away_espn_id": "448",
           "home_country_code": "NOR",
-          "away_country_code": "RD16 W4",
+          "away_country_code": "ENG",
           "home_score": "",
           "away_score": "",
           "status": "À venir",
@@ -2019,29 +2019,48 @@
   ],
   "today_matches": [
     {
-      "id": "760504",
-      "date": "2026-07-05T20:00Z",
-      "home_team": "Brazil",
-      "away_team": "Norway",
-      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
-      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
-      "home_espn_id": "205",
-      "away_espn_id": "464",
-      "home_country_code": "BRA",
-      "away_country_code": "NOR",
-      "home_score": "1",
-      "away_score": "2",
+      "id": "760505",
+      "date": "2026-07-06T01:00Z",
+      "home_team": "Mexico",
+      "away_team": "England",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
+      "home_espn_id": "203",
+      "away_espn_id": "448",
+      "home_country_code": "MEX",
+      "away_country_code": "ENG",
+      "home_score": "2",
+      "away_score": "3",
       "status": "Terminé",
       "status_state": "post",
       "completed": true,
-      "venue": "MetLife Stadium",
-      "city": "East Rutherford, New Jersey"
+      "venue": "Estadio Banorte",
+      "city": "Mexico City"
+    },
+    {
+      "id": "760506",
+      "date": "2026-07-06T19:00Z",
+      "home_team": "Portugal",
+      "away_team": "Spain",
+      "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
+      "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+      "home_espn_id": "482",
+      "away_espn_id": "164",
+      "home_country_code": "POR",
+      "away_country_code": "ESP",
+      "home_score": "",
+      "away_score": "",
+      "status": "À venir",
+      "status_state": "pre",
+      "completed": false,
+      "venue": "AT&T Stadium",
+      "city": "Arlington, Texas"
     }
   ],
   "group_matches_total": 72,
   "group_matches_remaining": 0,
   "knockout_matches_total": 32,
-  "knockout_matches_remaining": 13,
+  "knockout_matches_remaining": 12,
   "competition_stage": "8es de finale",
   "france_next_match": {
     "date": "2026-07-09T20:00Z",
@@ -3031,6 +3050,41 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "Coupe du monde 2026: \"Beaucoup de gens vont dire que je n'ai pas voulu tirer\"... Face au fiasco brésilien, Vinicius explique pourquoi il n'a pas tiré le penalty",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:47:34+00:00",
+      "summary": "La star de l'équipe nationale du Brésil a donné le ballon à Bruno Guimaraes, ce dernier a manqué en première période un penalty qui aurait permis au Brésil de prendre l'avantage face à la Norvège en huitième…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-face-au-fiasco-bresilien-vinicius-explique-pourquoi-il-n-a-pas-tire-le-penalty_AD-202607060059.html"
+    },
+    {
+      "title": "Mexique-Angleterre: en infériorité numérique, les Anglais remportent un match totalement dingue",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:38:57+00:00",
+      "summary": "Au terme d'une rencontre au scénario totalement dingue, l'Angleterre s'est sortie du piège mexicain à l'Estadio Azteca (3-2) et rejoint la Norvège en quart de finale. Toujours en tête au tableau d'affichage,…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-angleterre-suivez-le-8e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607060043.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Ancelotti et Infantino ont une cible dans le dos, match incroyable à Mexico... Ce que vous avez raté dans la nuit de dimanche à lundi",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:37:54+00:00",
+      "summary": "Deux huitièmes à la dramaturgie intense qui vont faire date dans ce mondial. Et un craquage de la FIFA sur instruction de Trumpqui va lui aussi faire beaucoup parler.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-ancelotti-et-infantino-ont-une-cible-dans-le-dos-match-incroyable-a-mexico-ce-que-vous-avez-rate-dans-la-nuit-de-dimanche-a-lundi_AV-202607060058.html"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:10:46+00:00",
+      "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
+    },
+    {
+      "title": "\"C'est une très mauvaise décision qui va faire du mal à la Coupe du monde et aux Etats-Unis\", le coach de la Norvège ne mâche pas ses mots après l'annulation de la suspension de Balogun",
+      "source": "RMC Sport",
+      "date": "2026-07-06T01:31:27+00:00",
+      "summary": "Le coup de fil de Trump et la servilité de la FIFA a déclenché une levée de boucliers.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/c-est-une-tres-mauvaise-decision-qui-va-faire-du-mal-a-la-coupe-du-monde-et-aux-etats-unis-le-coach-de-la-norvege-ne-mache-pas-ses-mots-apres-l-annulation-de-la-suspension-de-balogun_AD-202607060048.html"
+    },
+    {
       "title": "Brésil 1-2 Norvège : le débrief complet de l'exploit norvégien",
       "source": "RMC Sport",
       "date": "2026-07-05T23:04:55+00:00",
@@ -3057,13 +3111,6 @@
       "date": "2026-07-05T22:12:47+00:00",
       "summary": "Coup de tonnerre dans cette Coupe du monde 2026 avec l'élimination du Brésil dès les 8es de finale, battu par une imperturbable Norvège (2-1) ! Les Vikings n'ont pas volé cette victoire, portés par un doublé…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-bresil-norvege-suivez-le-match-des-8es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607050297.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-      "source": "RMC Sport",
-      "date": "2026-07-05T22:04:54+00:00",
-      "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
     },
     {
       "title": "Un coup de fil de Trump à Infantino: les coulisses de l'annulation surprise de la suspension de Balogun pour Etats-Unis-Belgique",
@@ -3120,37 +3167,16 @@
       "date": "2026-07-05T18:09:02+00:00",
       "summary": "Le Mexique dispute dans la nuit de dimanche à lundi (2h du matin) son 8e de finale de la Coupe du monde 2026 face à l'Angleterre à l'Estadio Azteca, à Mexico. À la veille du match, des supporters mexicains…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-angleterre-feux-d-artifice-et-fanfare-l-assaut-nocturne-des-supporters-mexicains-sur-l-hotel-des-three-lions_AV-202607050377.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le carton rouge de Balogun annulé à la surprise générale avant Etats-Unis-Belgique, Donald Trump remercie la Fifa",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:35:22+00:00",
-      "summary": "Exclu lors des 16es de finale de la Coupe du monde 2026 avec les États-Unis contre la Bosnie-Herzégovine, Folarin Balogun a vu son carton rouge être suspendu par la Commission de discipline de la Fifa.…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-carton-rouge-de-balogun-annule-a-la-surprise-generale-avant-etats-unis-belgique-donald-trump-remercie-la-fifa_AV-202607050372.html"
-    },
-    {
-      "title": "Michael Olise",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:28:19+00:00",
-      "summary": "Michael Olise est un joueur français né en Angleterre le 12 décembre 2001. Capable d'évoluer sur une aile, en numéro 10 à l'ancienne ou derrière l'attaquant de pointe, il joue au Bayern Munich depuis 2024.…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/michael-olise_DN-202607010073.html"
-    },
-    {
-      "title": "France - Maroc, des retrouvailles entre deux équipes… encore plus fortes qu'en 2022",
-      "source": "RMC Sport",
-      "date": "2026-07-05T16:57:36+00:00",
-      "summary": "Comme en 2022, la France et le Maroc vont croiser le fer lors de la Coupe du monde 2026. Cette fois-ci en quart de finale, et non en demi-finale comme il y a 4 ans. Pour Younès Belhanda et Said Amdaa,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-maroc-des-retrouvailles-entre-deux-equipes-encore-plus-fortes-qu-en-2022_VN-202607050363.html"
-    },
-    {
-      "title": "Coupe du monde 2026: les joueurs du Cap-Vert accueillis en héros à leur retour au pays",
-      "source": "RMC Sport",
-      "date": "2026-07-05T16:42:54+00:00",
-      "summary": "Auteur d'une Coupe du monde 2026 historique, où elle a atteint les 16es de finale, la sélection du Cap-Vert a été accueillie par des milliers de Cap-Verdiens à l'aéroport.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-joueurs-du-cap-vert-accueillis-en-heros-a-leur-retour-au-pays_AV-202607050357.html"
     }
   ],
   "france_news": [
+    {
+      "title": "Coupe du monde : Désiré Doué, plus qu'un simple joker en sortie de banc pour l'équipe de France",
+      "source": "France Info",
+      "date": "2026-07-06T04:15:02+00:00",
+      "summary": "L'entrée du Parisien a tout changé contre le Paraguay, samedi, et son duel pour le poste d'ailier gauche titulaire avec Bradley Barcola est plus que jamais relancé.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-desire-doue-plus-qu-un-simple-joker-en-sortie-de-banc-pour-l-equipe-de-france_8095277.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
     {
       "title": "France-Maroc: déjà forfait contre le Paraguay, Aurélien Tchouaméni sera-t-il apte pour le quart de finale ?",
       "source": "RMC Sport",
@@ -3178,13 +3204,6 @@
       "date": "2026-07-05T19:51:12+00:00",
       "summary": "Si Daniel Riolo estime que la victoire des Bleus face au Paraguay (1-0) n'a pas permis d'obtenir de réels enseignements footballistiques, il concède en revanche que ce succès glané dans la douleur peut être…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-paraguay-0-1-france-une-victoire-importante-pour-le-mental-insiste-riolo_VN-202607050415.html"
-    },
-    {
-      "title": "Michael Olise",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:28:19+00:00",
-      "summary": "Michael Olise est un joueur français né en Angleterre le 12 décembre 2001. Capable d'évoluer sur une aile, en numéro 10 à l'ancienne ou derrière l'attaquant de pointe, il joue au Bayern Munich depuis 2024.…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/michael-olise_DN-202607010073.html"
     },
     {
       "title": "\"Je n'avais jamais joué un match avec autant de coups, de coups en traître\" : l'arbitrage de France-Paraguay au centre des débats à la Coupe du monde",
@@ -3322,6 +3341,41 @@
   ],
   "general_news": [
     {
+      "title": "Coupe du monde 2026: \"Beaucoup de gens vont dire que je n'ai pas voulu tirer\"... Face au fiasco brésilien, Vinicius explique pourquoi il n'a pas tiré le penalty",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:47:34+00:00",
+      "summary": "La star de l'équipe nationale du Brésil a donné le ballon à Bruno Guimaraes, ce dernier a manqué en première période un penalty qui aurait permis au Brésil de prendre l'avantage face à la Norvège en huitième…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-face-au-fiasco-bresilien-vinicius-explique-pourquoi-il-n-a-pas-tire-le-penalty_AD-202607060059.html"
+    },
+    {
+      "title": "Mexique-Angleterre: en infériorité numérique, les Anglais remportent un match totalement dingue",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:38:57+00:00",
+      "summary": "Au terme d'une rencontre au scénario totalement dingue, l'Angleterre s'est sortie du piège mexicain à l'Estadio Azteca (3-2) et rejoint la Norvège en quart de finale. Toujours en tête au tableau d'affichage,…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-angleterre-suivez-le-8e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607060043.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Ancelotti et Infantino ont une cible dans le dos, match incroyable à Mexico... Ce que vous avez raté dans la nuit de dimanche à lundi",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:37:54+00:00",
+      "summary": "Deux huitièmes à la dramaturgie intense qui vont faire date dans ce mondial. Et un craquage de la FIFA sur instruction de Trumpqui va lui aussi faire beaucoup parler.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-ancelotti-et-infantino-ont-une-cible-dans-le-dos-match-incroyable-a-mexico-ce-que-vous-avez-rate-dans-la-nuit-de-dimanche-a-lundi_AV-202607060058.html"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:10:46+00:00",
+      "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
+    },
+    {
+      "title": "\"C'est une très mauvaise décision qui va faire du mal à la Coupe du monde et aux Etats-Unis\", le coach de la Norvège ne mâche pas ses mots après l'annulation de la suspension de Balogun",
+      "source": "RMC Sport",
+      "date": "2026-07-06T01:31:27+00:00",
+      "summary": "Le coup de fil de Trump et la servilité de la FIFA a déclenché une levée de boucliers.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/c-est-une-tres-mauvaise-decision-qui-va-faire-du-mal-a-la-coupe-du-monde-et-aux-etats-unis-le-coach-de-la-norvege-ne-mache-pas-ses-mots-apres-l-annulation-de-la-suspension-de-balogun_AD-202607060048.html"
+    },
+    {
       "title": "Brésil 1-2 Norvège : le débrief complet de l'exploit norvégien",
       "source": "RMC Sport",
       "date": "2026-07-05T23:04:55+00:00",
@@ -3348,13 +3402,6 @@
       "date": "2026-07-05T22:12:47+00:00",
       "summary": "Coup de tonnerre dans cette Coupe du monde 2026 avec l'élimination du Brésil dès les 8es de finale, battu par une imperturbable Norvège (2-1) ! Les Vikings n'ont pas volé cette victoire, portés par un doublé…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-bresil-norvege-suivez-le-match-des-8es-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607050297.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-      "source": "RMC Sport",
-      "date": "2026-07-05T22:04:54+00:00",
-      "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
     },
     {
       "title": "Un coup de fil de Trump à Infantino: les coulisses de l'annulation surprise de la suspension de Balogun pour Etats-Unis-Belgique",
@@ -3411,43 +3458,134 @@
       "date": "2026-07-05T18:09:02+00:00",
       "summary": "Le Mexique dispute dans la nuit de dimanche à lundi (2h du matin) son 8e de finale de la Coupe du monde 2026 face à l'Angleterre à l'Estadio Azteca, à Mexico. À la veille du match, des supporters mexicains…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-angleterre-feux-d-artifice-et-fanfare-l-assaut-nocturne-des-supporters-mexicains-sur-l-hotel-des-three-lions_AV-202607050377.html"
-    },
-    {
-      "title": "Coupe du monde 2026: le carton rouge de Balogun annulé à la surprise générale avant Etats-Unis-Belgique, Donald Trump remercie la Fifa",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:35:22+00:00",
-      "summary": "Exclu lors des 16es de finale de la Coupe du monde 2026 avec les États-Unis contre la Bosnie-Herzégovine, Folarin Balogun a vu son carton rouge être suspendu par la Commission de discipline de la Fifa.…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-carton-rouge-de-balogun-annule-a-la-surprise-generale-avant-etats-unis-belgique-donald-trump-remercie-la-fifa_AV-202607050372.html"
-    },
-    {
-      "title": "Michael Olise",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:28:19+00:00",
-      "summary": "Michael Olise est un joueur français né en Angleterre le 12 décembre 2001. Capable d'évoluer sur une aile, en numéro 10 à l'ancienne ou derrière l'attaquant de pointe, il joue au Bayern Munich depuis 2024.…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/michael-olise_DN-202607010073.html"
-    },
-    {
-      "title": "France - Maroc, des retrouvailles entre deux équipes… encore plus fortes qu'en 2022",
-      "source": "RMC Sport",
-      "date": "2026-07-05T16:57:36+00:00",
-      "summary": "Comme en 2022, la France et le Maroc vont croiser le fer lors de la Coupe du monde 2026. Cette fois-ci en quart de finale, et non en demi-finale comme il y a 4 ans. Pour Younès Belhanda et Said Amdaa,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-maroc-des-retrouvailles-entre-deux-equipes-encore-plus-fortes-qu-en-2022_VN-202607050363.html"
-    },
-    {
-      "title": "Coupe du monde 2026: les joueurs du Cap-Vert accueillis en héros à leur retour au pays",
-      "source": "RMC Sport",
-      "date": "2026-07-05T16:42:54+00:00",
-      "summary": "Auteur d'une Coupe du monde 2026 historique, où elle a atteint les 16es de finale, la sélection du Cap-Vert a été accueillie par des milliers de Cap-Verdiens à l'aéroport.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-joueurs-du-cap-vert-accueillis-en-heros-a-leur-retour-au-pays_AV-202607050357.html"
     }
   ],
   "all_news": [
     {
-      "title": "DIRECT. Mexique-Angleterre: suivez le match des huitièmes de finale de la Coupe du monde 2026 en live",
+      "title": "\"L'un des plus grands résultats de l'Angleterre à la Coupe du monde\", la presse anglaise émerveillée par l'exploit des Three Lions",
       "source": "RMC Sport",
-      "date": "2026-07-05T23:13:12+00:00",
-      "summary": "Au lendemain de la qualification de la France et du Maroc, l'Angleterre et Mexique s'affrontent pour un 8e de finale qui s'annonce explosif au stade Azteca de Mexico. Avec un objectif: rejoindre les quarts de…",
+      "date": "2026-07-06T04:34:49+00:00",
+      "summary": "En infériorité numérique pendant près de 40 minutes et malgré l'altitude, l'Angleterre s'est imposée contre le Mexique (3-2) en 8e de finale de la Coupe du monde et suscite la fierté de ses médias,…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/l-un-des-plus-grands-resultats-de-l-angleterre-a-la-coupe-du-monde-la-presse-anglaise-emerveillee-par-l-exploit-des-three-lions_AV-202607060091.html"
+    },
+    {
+      "title": "Coupe du monde : Désiré Doué, plus qu'un simple joker en sortie de banc pour l'équipe de France",
+      "source": "France Info",
+      "date": "2026-07-06T04:15:02+00:00",
+      "summary": "L'entrée du Parisien a tout changé contre le Paraguay, samedi, et son duel pour le poste d'ailier gauche titulaire avec Bradley Barcola est plus que jamais relancé.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-desire-doue-plus-qu-un-simple-joker-en-sortie-de-banc-pour-l-equipe-de-france_8095277.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Beaucoup de gens vont dire que je n'ai pas voulu tirer\"... Face au fiasco brésilien, Vinicius explique pourquoi il n'a pas tiré le penalty",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:47:34+00:00",
+      "summary": "La star de l'équipe nationale du Brésil a donné le ballon à Bruno Guimaraes, ce dernier a manqué en première période un penalty qui aurait permis au Brésil de prendre l'avantage face à la Norvège en huitième…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-face-au-fiasco-bresilien-vinicius-explique-pourquoi-il-n-a-pas-tire-le-penalty_AD-202607060059.html"
+    },
+    {
+      "title": "Mexique-Angleterre: en infériorité numérique, les Anglais remportent un match totalement dingue",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:38:57+00:00",
+      "summary": "Au terme d'une rencontre au scénario totalement dingue, l'Angleterre s'est sortie du piège mexicain à l'Estadio Azteca (3-2) et rejoint la Norvège en quart de finale. Toujours en tête au tableau d'affichage,…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-angleterre-suivez-le-8e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607060043.html"
+    },
+    {
+      "title": "Coupe du monde 2026: Ancelotti et Infantino ont une cible dans le dos, match incroyable à Mexico... Ce que vous avez raté dans la nuit de dimanche à lundi",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:37:54+00:00",
+      "summary": "Deux huitièmes à la dramaturgie intense qui vont faire date dans ce mondial. Et un craquage de la FIFA sur instruction de Trumpqui va lui aussi faire beaucoup parler.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-ancelotti-et-infantino-ont-une-cible-dans-le-dos-match-incroyable-a-mexico-ce-que-vous-avez-rate-dans-la-nuit-de-dimanche-a-lundi_AV-202607060058.html"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-06T03:10:46+00:00",
+      "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
+    },
+    {
+      "title": "En direct : Mexique-Angleterre",
+      "source": "SO FOOT",
+      "date": "2026-07-06T03:08:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-mexique-angleterre"
+    },
+    {
+      "title": "L’Angleterre de Bellingham et Kane brise les rêves du Mexique et se qualifie pour les quarts de finale de la Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-07-06T03:04:58+00:00",
+      "summary": "Décaler le coup d'envoi d'une heure était une bonne idée.",
+      "url": "https://www.sofoot.com/articles/langleterre-de-bellingham-et-kane-brise-les-reves-du-mexique-et-se-qualifie-pour-les-quarts-de-finale-de-la-coupe-du-monde"
+    },
+    {
+      "title": "Cristiano Ronaldo se prend le chou avec un journaliste en conférence de presse",
+      "source": "SO FOOT",
+      "date": "2026-07-06T02:43:04+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/cristiano-ronaldo-se-prend-le-chou-avec-un-journaliste-en-conference-de-presse"
+    },
+    {
+      "title": "Après la défaite et l’élimination du Brésil contre la Norvège en seizièmes de finale de la Coupe du monde, Neymar annonce sa retraite internationale",
+      "source": "SO FOOT",
+      "date": "2026-07-06T02:12:29+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/apres-la-defaite-et-lelimination-du-bresil-contre-la-norvege-en-seiziemes-de-finale-de-la-coupe-du-monde-neymar-annonce-sa-retraite-internationale"
+    },
+    {
+      "title": "\"C'est une très mauvaise décision qui va faire du mal à la Coupe du monde et aux Etats-Unis\", le coach de la Norvège ne mâche pas ses mots après l'annulation de la suspension de Balogun",
+      "source": "RMC Sport",
+      "date": "2026-07-06T01:31:27+00:00",
+      "summary": "Le coup de fil de Trump et la servilité de la FIFA a déclenché une levée de boucliers.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/c-est-une-tres-mauvaise-decision-qui-va-faire-du-mal-a-la-coupe-du-monde-et-aux-etats-unis-le-coach-de-la-norvege-ne-mache-pas-ses-mots-apres-l-annulation-de-la-suspension-de-balogun_AD-202607060048.html"
+    },
+    {
+      "title": "Le sélectionneur des Etats-Unis Mauricio Pochettino a compté : «99,9 % des gens sont d’accord» pour lever la suspension de Folarin Balogun avant le huitième de finale Etats-Unis Belgique",
+      "source": "SO FOOT",
+      "date": "2026-07-06T00:50:44+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/le-selectionneur-des-etats-unis-mauricio-pochettino-a-compte-999-des-gens-sont-daccord-pour-lever-la-suspension-de-folarin-balogun-avant-le-huitieme-de-finale-etats-unis-belgique"
+    },
+    {
+      "title": "Comment Roberto De Zerbi et Sandro Tonali pourraient sauver le club italien de Brescia",
+      "source": "SO FOOT",
+      "date": "2026-07-06T00:27:53+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/comment-roberto-de-zerbi-et-sandro-tonali-pourraient-sauver-le-club-italien-de-brescia"
+    },
+    {
+      "title": "\"La Norvège peut remporter la Coupe du monde de football!\" la presse norvégienne s'emballe après la victoire face au Brésil",
+      "source": "RMC Sport",
+      "date": "2026-07-06T00:21:21+00:00",
+      "summary": "\"Le miracle!\", annonce même le quotidien VG, eu égard au pedigree des deux nations, et pourtant le match était bien loin du hold-up.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/la-norvege-peut-remporter-la-coupe-du-monde-de-football-la-presse-norvegienne-s-emballe-apres-la-victoire-face-au-bresil-a-la-coupe-du-monde_AV-202607060046.html"
+    },
+    {
+      "title": "\"Ancelotti est mort en serrant Neymar dans ses bras!\" Sous le choc, la presse brésilienne cherche des coupables après l'élimination sans gloire de la Coupe du monde",
+      "source": "RMC Sport",
+      "date": "2026-07-06T00:04:27+00:00",
+      "summary": "Eliminé en huitième de finale par la Norvège, le Brésil termine en plus avec des stats apocalyptiques. Les médias brésiliens ne font pas de cadeaux aux responsables d'un fiasco qu'ils avaient vu venir.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sous-le-choc-la-presse-bresilienne-cherche-des-coupables-apres-l-elimination-sans-gloire-de-la-coupe-du-monde_AV-202607060045.html"
+    },
+    {
+      "title": "Coupe du monde 2026 : Le foot n’a plus le temps pour les belles histoires comme celle dont rêvait Neymar",
+      "source": "SO FOOT",
+      "date": "2026-07-06T00:00:21+00:00",
+      "summary": "C'était impossible alors il ne l'a pas vraiment fait.",
+      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-le-foot-na-plus-le-temps-pour-les-belles-histoires-comme-celle-dont-revait-neymar"
+    },
+    {
+      "title": "Ligue 1 : L’attaquant espagnol Eliezer Mayenda officiellement transféré à Rennes",
+      "source": "SO FOOT",
+      "date": "2026-07-05T23:59:21+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/ligue-1-lattaquant-espagnol-eliezer-mayenda-officiellement-transfere-a-rennes"
+    },
+    {
+      "title": "Mondial 2026 : le Brésil n’a pas battu une sélection européenne en match à élimination directe de Coupe du monde depuis 2002",
+      "source": "SO FOOT",
+      "date": "2026-07-05T23:30:25+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-le-bresil-na-pas-battu-une-selection-europeenne-en-match-a-elimination-directe-de-coupe-du-monde-depuis-2002"
     },
     {
       "title": "\"J'ai commencé ici, je finis ici!\" En larmes, Neymar annonce la fin de sa carrière internationale avec la sélection brésilienne",
@@ -3546,13 +3684,6 @@
       "date": "2026-07-05T22:05:06+00:00",
       "summary": "L’ordre du foot mondial a changé !",
       "url": "https://www.sofoot.com/articles/grace-a-un-double-derling-haaland-la-norvege-elimine-le-bresil-et-file-en-quarts-de-finale"
-    },
-    {
-      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-      "source": "RMC Sport",
-      "date": "2026-07-05T22:04:54+00:00",
-      "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
     },
     {
       "title": "Donald Trump aurait bien appelé directement Gianni Infantino pour demander l’annulation du carton jaune de l’attaquant américain Folarin Balogun",
@@ -3709,13 +3840,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/mexique-angleterre-feux-d-artifice-et-fanfare-l-assaut-nocturne-des-supporters-mexicains-sur-l-hotel-des-three-lions_AV-202607050377.html"
     },
     {
-      "title": "DIRECT. Mercato: Tolisso en bonne voie pour prolonger (en faisant un gros effort financier)",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:58:41+00:00",
-      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui s'agite en parallèle de la Coupe du monde. Grosse journée mercato pour les clubs anglais, qui vont s'échanger des joueurs avec d'énormes sommes à la…",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-29-juin-2026_LN-202606290222.html"
-    },
-    {
       "title": "Donald Trump remercie la FIFA d’avoir enlevé le carton rouge de Folarin Balogun",
       "source": "SO FOOT",
       "date": "2026-07-05T17:57:07+00:00",
@@ -3730,46 +3854,11 @@
       "url": "https://www.sofoot.com/breves/deux-mois-apres-sa-retraite-niklas-sule-va-reprendre-du-service-en-neuvieme-division"
     },
     {
-      "title": "Coupe du monde 2026: le carton rouge de Balogun annulé à la surprise générale avant Etats-Unis-Belgique, Donald Trump remercie la Fifa",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:35:22+00:00",
-      "summary": "Exclu lors des 16es de finale de la Coupe du monde 2026 avec les États-Unis contre la Bosnie-Herzégovine, Folarin Balogun a vu son carton rouge être suspendu par la Commission de discipline de la Fifa.…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-carton-rouge-de-balogun-annule-a-la-surprise-generale-avant-etats-unis-belgique-donald-trump-remercie-la-fifa_AV-202607050372.html"
-    },
-    {
-      "title": "Michael Olise",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:28:19+00:00",
-      "summary": "Michael Olise est un joueur français né en Angleterre le 12 décembre 2001. Capable d'évoluer sur une aile, en numéro 10 à l'ancienne ou derrière l'attaquant de pointe, il joue au Bayern Munich depuis 2024.…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/michael-olise_DN-202607010073.html"
-    },
-    {
-      "title": "Paraguay-France: la FFF envisage de porter réclamation pour le carton jaune injuste de Michael Olise",
-      "source": "RMC Sport",
-      "date": "2026-07-05T17:28:18+00:00",
-      "summary": "C'est bel et bien la tendance du côté de la FFF ces dernières heures: l'instance française réfléchit sérieusement à porter réclamation auprès de la Fifa concernant le carton jaune reçu par Michael Olise face…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/paraguay-france-la-fff-envisage-de-porter-reclamation-pour-le-carton-jaune-injuste-de-michael-olise_AV-202607050371.html"
-    },
-    {
       "title": "Malgré son carton rouge contre la Bosnie-Herzégovine, Folarin Balogun jouera bien contre la Belgique",
       "source": "SO FOOT",
       "date": "2026-07-05T17:09:13+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/malgre-son-carton-rouge-contre-la-bosnie-herzegovine-folarin-balogun-jouera-bien-contre-la-belgique"
-    },
-    {
-      "title": "France - Maroc, des retrouvailles entre deux équipes… encore plus fortes qu'en 2022",
-      "source": "RMC Sport",
-      "date": "2026-07-05T16:57:36+00:00",
-      "summary": "Comme en 2022, la France et le Maroc vont croiser le fer lors de la Coupe du monde 2026. Cette fois-ci en quart de finale, et non en demi-finale comme il y a 4 ans. Pour Younès Belhanda et Said Amdaa,…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-maroc-des-retrouvailles-entre-deux-equipes-encore-plus-fortes-qu-en-2022_VN-202607050363.html"
-    },
-    {
-      "title": "Coupe du monde 2026: les joueurs du Cap-Vert accueillis en héros à leur retour au pays",
-      "source": "RMC Sport",
-      "date": "2026-07-05T16:42:54+00:00",
-      "summary": "Auteur d'une Coupe du monde 2026 historique, où elle a atteint les 16es de finale, la sélection du Cap-Vert a été accueillie par des milliers de Cap-Verdiens à l'aéroport.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-joueurs-du-cap-vert-accueillis-en-heros-a-leur-retour-au-pays_AV-202607050357.html"
     },
     {
       "title": "Un Zidane débarque en France avec la signature d’Elyaz au Red Star",
@@ -3791,76 +3880,6 @@
       "date": "2026-07-05T14:17:04+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/mondial-2026-en-trois-participations-kylian-mbappe-a-inscrit-plus-de-buts-en-phase-finale-dune-coupe-du-monde-que-le-bresil-langleterre-et-le-portugal"
-    },
-    {
-      "title": "Mondial 2026 : Tony Chapron qualifie Ilgiz Tantashev, arbitre de Paraguay-France, « d’arbitre de district »",
-      "source": "SO FOOT",
-      "date": "2026-07-05T13:57:28+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-tony-chapron-qualifie-ilgiz-tantashev-arbitre-de-paraguay-france-darbitre-de-district"
-    },
-    {
-      "title": "Mondial 2026 : Lionel Messi et Kylian Mbappé passent la moitié de leurs kilomètres sur le terrain à marcher",
-      "source": "SO FOOT",
-      "date": "2026-07-05T13:33:02+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-lionel-messi-et-kylian-mbappe-passent-la-moitie-de-leurs-kilometres-sur-le-terrain-a-marcher"
-    },
-    {
-      "title": "\"Je n'avais jamais joué un match avec autant de coups, de coups en traître\" : l'arbitrage de France-Paraguay au centre des débats à la Coupe du monde",
-      "source": "France Info",
-      "date": "2026-07-05T13:26:45+00:00",
-      "summary": "Qualifiés pour les quarts de finale, les Français ont vécu une rencontre très hachée face au Paraguay, samedi, avec un arbitrage qui fait polémique autour du monde.",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/je-n-avais-jamais-joue-un-match-comme-ca-avec-autant-de-coups-l-arbitrage-de-france-paraguay-au-centre-des-debats-a-la-coupe-du-monde-2026_8095031.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Coupe du monde 2026 – Les mères des disparus, au nom du fils",
-      "source": "SO FOOT",
-      "date": "2026-07-05T12:00:49+00:00",
-      "summary": "Témoignage glaçant sur le grand tabou du Mexique.",
-      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-les-meres-des-disparus-au-nom-du-fils"
-    },
-    {
-      "title": "Les Bleus qualifiés pour les quarts de finale de la Coupe du monde, la France croit en sa troisième étoile",
-      "source": "France Info",
-      "date": "2026-07-05T11:58:33+00:00",
-      "summary": "Un but de Kylian Mbappé est venu délivrer tout un peuple à la 70e minute dans la rencontre étouffante qui opposait la France au Paraguay en huitième de finale de la Coupe du monde, samedi 4 juillet. Joueurs…",
-      "url": "https://www.franceinfo.fr/replay-jt/france-2/13-heures/les-bleus-qualifies-pour-les-quarts-de-finale-la-france-croit-en-sa-troisieme-etoile_8094962.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Mercato : Denzel Dumfries débarque pour quatre ans au Real Madrid",
-      "source": "SO FOOT",
-      "date": "2026-07-05T11:23:55+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mercato-denzel-dumfries-debarque-pour-quatre-ans-au-real-madrid"
-    },
-    {
-      "title": "Pronostic Brésil Norvège : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-07-05T11:20:33+00:00",
-      "summary": "Brésil – Norvège : analyse, cotes et pronostic Coupe du monde. Notre prono mise sur la victoire du Brésil mais la Norvège peut surprendre, découvrez pourquoi.",
-      "url": "https://www.sofoot.com/breves/pronostic-bresil-norvege-analyse-cotes-et-prono-coupe-du-monde"
-    },
-    {
-      "title": "Mondial 2026 : Après la démission de Julian Nagelsmann, Jürgen Klopp aurait dit oui à la fédération allemande pour récupérer le post de sélectionneur",
-      "source": "SO FOOT",
-      "date": "2026-07-05T11:05:41+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-apres-la-demission-de-julian-nagelsmann-jurgen-klopp-aurait-dit-oui-a-la-federation-allemande-pour-recuperer-le-post-de-selectionneur"
-    },
-    {
-      "title": "Coupe du monde 2026 : Pourquoi personne aux États-Unis n’a regardé Paraguay-France un 4 juillet",
-      "source": "SO FOOT",
-      "date": "2026-07-05T11:00:02+00:00",
-      "summary": "Les Américains préfèrent regarder un type bouffer des hot-dogs que de se coltiner Paraguay-France.",
-      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-pourquoi-personne-aux-etats-unis-na-regarde-paraguay-france-un-4-juillet"
-    },
-    {
-      "title": "Mondial 2026 : Matias Galarza (Paraguay) est le joueur qui s’est fait le plus dribbler dans cette Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-07-05T10:24:13+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-matias-galarza-paraguay-est-le-joueur-qui-sest-fait-le-plus-dribbler-dans-cette-coupe-du-monde"
     }
   ],
   "focused_team_news": {
@@ -3881,6 +3900,41 @@
       }
     ],
     "Brazil": [
+      {
+        "title": "Coupe du monde 2026: \"Beaucoup de gens vont dire que je n'ai pas voulu tirer\"... Face au fiasco brésilien, Vinicius explique pourquoi il n'a pas tiré le penalty",
+        "source": "RMC Sport",
+        "date": "2026-07-06T03:47:34+00:00",
+        "summary": "La star de l'équipe nationale du Brésil a donné le ballon à Bruno Guimaraes, ce dernier a manqué en première période un penalty qui aurait permis au Brésil de prendre l'avantage face à la Norvège en huitième…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-face-au-fiasco-bresilien-vinicius-explique-pourquoi-il-n-a-pas-tire-le-penalty_AD-202607060059.html"
+      },
+      {
+        "title": "Après la défaite et l’élimination du Brésil contre la Norvège en seizièmes de finale de la Coupe du monde, Neymar annonce sa retraite internationale",
+        "source": "SO FOOT",
+        "date": "2026-07-06T02:12:29+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/apres-la-defaite-et-lelimination-du-bresil-contre-la-norvege-en-seiziemes-de-finale-de-la-coupe-du-monde-neymar-annonce-sa-retraite-internationale"
+      },
+      {
+        "title": "\"La Norvège peut remporter la Coupe du monde de football!\" la presse norvégienne s'emballe après la victoire face au Brésil",
+        "source": "RMC Sport",
+        "date": "2026-07-06T00:21:21+00:00",
+        "summary": "\"Le miracle!\", annonce même le quotidien VG, eu égard au pedigree des deux nations, et pourtant le match était bien loin du hold-up.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/la-norvege-peut-remporter-la-coupe-du-monde-de-football-la-presse-norvegienne-s-emballe-apres-la-victoire-face-au-bresil-a-la-coupe-du-monde_AV-202607060046.html"
+      },
+      {
+        "title": "\"Ancelotti est mort en serrant Neymar dans ses bras!\" Sous le choc, la presse brésilienne cherche des coupables après l'élimination sans gloire de la Coupe du monde",
+        "source": "RMC Sport",
+        "date": "2026-07-06T00:04:27+00:00",
+        "summary": "Eliminé en huitième de finale par la Norvège, le Brésil termine en plus avec des stats apocalyptiques. Les médias brésiliens ne font pas de cadeaux aux responsables d'un fiasco qu'ils avaient vu venir.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sous-le-choc-la-presse-bresilienne-cherche-des-coupables-apres-l-elimination-sans-gloire-de-la-coupe-du-monde_AV-202607060045.html"
+      },
+      {
+        "title": "Mondial 2026 : le Brésil n’a pas battu une sélection européenne en match à élimination directe de Coupe du monde depuis 2002",
+        "source": "SO FOOT",
+        "date": "2026-07-05T23:30:25+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-le-bresil-na-pas-battu-une-selection-europeenne-en-match-a-elimination-directe-de-coupe-du-monde-depuis-2002"
+      },
       {
         "title": "\"J'ai commencé ici, je finis ici!\" En larmes, Neymar annonce la fin de sa carrière internationale avec la sélection brésilienne",
         "source": "RMC Sport",
@@ -3929,41 +3983,6 @@
         "date": "2026-07-05T22:10:00+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/articles/en-direct-bresil-norvege"
-      },
-      {
-        "title": "Grâce à un doublé d’Erling Haaland, la Norvège élimine le Brésil et file en quarts de finale",
-        "source": "SO FOOT",
-        "date": "2026-07-05T22:05:06+00:00",
-        "summary": "L’ordre du foot mondial a changé !",
-        "url": "https://www.sofoot.com/articles/grace-a-un-double-derling-haaland-la-norvege-elimine-le-bresil-et-file-en-quarts-de-finale"
-      },
-      {
-        "title": "Face à Haaland et la Norvège, le Brésil aligne quatre attaquants d’entrée",
-        "source": "SO FOOT",
-        "date": "2026-07-05T19:34:33+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/face-a-haaland-et-la-norvege-le-bresil-aligne-quatre-attaquants-dentree"
-      },
-      {
-        "title": "Mondial 2026 : En trois participations, Kylian Mbappé a inscrit plus de buts en phase finale d’une Coupe du monde que le Brésil, l’Angleterre et le Portugal",
-        "source": "SO FOOT",
-        "date": "2026-07-05T14:17:04+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-en-trois-participations-kylian-mbappe-a-inscrit-plus-de-buts-en-phase-finale-dune-coupe-du-monde-que-le-bresil-langleterre-et-le-portugal"
-      },
-      {
-        "title": "Pronostic Brésil Norvège : analyse, cotes et prono Coupe du monde",
-        "source": "SO FOOT",
-        "date": "2026-07-05T11:20:33+00:00",
-        "summary": "Brésil – Norvège : analyse, cotes et pronostic Coupe du monde. Notre prono mise sur la victoire du Brésil mais la Norvège peut surprendre, découvrez pourquoi.",
-        "url": "https://www.sofoot.com/breves/pronostic-bresil-norvege-analyse-cotes-et-prono-coupe-du-monde"
-      },
-      {
-        "title": "Mondial 2026 : Avant de défier le Brésil ce dimanche soir, la Norvège reste la seule sélection invaincue face à la Seleção",
-        "source": "SO FOOT",
-        "date": "2026-07-05T08:54:33+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-avant-de-defier-le-bresil-ce-dimanche-soir-la-norvege-reste-la-seule-selection-invaincue-face-a-la-selecao"
       }
     ],
     "Egypt": [
@@ -3984,11 +4003,18 @@
     ],
     "France": [
       {
-        "title": "DIRECT. Mexique-Angleterre: suivez le match des huitièmes de finale de la Coupe du monde 2026 en live",
+        "title": "Coupe du monde : Désiré Doué, plus qu'un simple joker en sortie de banc pour l'équipe de France",
+        "source": "France Info",
+        "date": "2026-07-06T04:15:02+00:00",
+        "summary": "L'entrée du Parisien a tout changé contre le Paraguay, samedi, et son duel pour le poste d'ailier gauche titulaire avec Bradley Barcola est plus que jamais relancé.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-desire-doue-plus-qu-un-simple-joker-en-sortie-de-banc-pour-l-equipe-de-france_8095277.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
+      {
+        "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
         "source": "RMC Sport",
-        "date": "2026-07-05T23:13:12+00:00",
-        "summary": "Au lendemain de la qualification de la France et du Maroc, l'Angleterre et Mexique s'affrontent pour un 8e de finale qui s'annonce explosif au stade Azteca de Mexico. Avec un objectif: rejoindre les quarts de…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-angleterre-suivez-le-8e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607060043.html"
+        "date": "2026-07-06T03:10:46+00:00",
+        "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
       },
       {
         "title": "Aurélien Tchouaméni toujours très incertain avant France-Maroc",
@@ -3996,13 +4022,6 @@
         "date": "2026-07-05T22:57:03+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/aurelien-tchouameni-toujours-tres-incertain-avant-france-maroc"
-      },
-      {
-        "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-        "source": "RMC Sport",
-        "date": "2026-07-05T22:04:54+00:00",
-        "summary": "Le Maroc, la France et la Norvège sont les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du Mondial.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
       },
       {
         "title": "France-Maroc: déjà forfait contre le Paraguay, Aurélien Tchouaméni sera-t-il apte pour le quart de finale ?",
@@ -4047,25 +4066,25 @@
         "url": "https://www.sofoot.com/breves/paraguay-france-la-fifa-saisie-pour-retirer-le-carton-jaune-a-michael-olise"
       },
       {
-        "title": "Michael Olise",
-        "source": "RMC Sport",
-        "date": "2026-07-05T17:28:19+00:00",
-        "summary": "Michael Olise est un joueur français né en Angleterre le 12 décembre 2001. Capable d'évoluer sur une aile, en numéro 10 à l'ancienne ou derrière l'attaquant de pointe, il joue au Bayern Munich depuis 2024.…",
-        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/michael-olise_DN-202607010073.html"
+        "title": "Un Zidane débarque en France avec la signature d’Elyaz au Red Star",
+        "source": "SO FOOT",
+        "date": "2026-07-05T16:34:04+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/un-zidane-debarque-en-france-avec-la-signature-delyaz-au-red-star"
       },
       {
-        "title": "Paraguay-France: la FFF envisage de porter réclamation pour le carton jaune injuste de Michael Olise",
-        "source": "RMC Sport",
-        "date": "2026-07-05T17:28:18+00:00",
-        "summary": "C'est bel et bien la tendance du côté de la FFF ces dernières heures: l'instance française réfléchit sérieusement à porter réclamation auprès de la Fifa concernant le carton jaune reçu par Michael Olise face…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/paraguay-france-la-fff-envisage-de-porter-reclamation-pour-le-carton-jaune-injuste-de-michael-olise_AV-202607050371.html"
+        "title": "Mondial 2026 : Tony Chapron qualifie Ilgiz Tantashev, arbitre de Paraguay-France, « d’arbitre de district »",
+        "source": "SO FOOT",
+        "date": "2026-07-05T13:57:28+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mondial-2026-tony-chapron-qualifie-ilgiz-tantashev-arbitre-de-paraguay-france-darbitre-de-district"
       },
       {
-        "title": "France - Maroc, des retrouvailles entre deux équipes… encore plus fortes qu'en 2022",
-        "source": "RMC Sport",
-        "date": "2026-07-05T16:57:36+00:00",
-        "summary": "Comme en 2022, la France et le Maroc vont croiser le fer lors de la Coupe du monde 2026. Cette fois-ci en quart de finale, et non en demi-finale comme il y a 4 ans. Pour Younès Belhanda et Said Amdaa,…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-maroc-des-retrouvailles-entre-deux-equipes-encore-plus-fortes-qu-en-2022_VN-202607050363.html"
+        "title": "\"Je n'avais jamais joué un match avec autant de coups, de coups en traître\" : l'arbitrage de France-Paraguay au centre des débats à la Coupe du monde",
+        "source": "France Info",
+        "date": "2026-07-05T13:26:45+00:00",
+        "summary": "Qualifiés pour les quarts de finale, les Français ont vécu une rencontre très hachée face au Paraguay, samedi, avec un arbitrage qui fait polémique autour du monde.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/je-n-avais-jamais-joue-un-match-comme-ca-avec-autant-de-coups-l-arbitrage-de-france-paraguay-au-centre-des-debats-a-la-coupe-du-monde-2026_8095031.html#xtor=RSS-3-%5Bgeneral%5D"
       }
     ],
     "Ghana": [
@@ -4079,11 +4098,11 @@
     ],
     "Mexico": [
       {
-        "title": "DIRECT. Mexique-Angleterre: suivez le match des huitièmes de finale de la Coupe du monde 2026 en live",
+        "title": "Coupe du monde 2026: Ancelotti et Infantino ont une cible dans le dos, match incroyable à Mexico... Ce que vous avez raté dans la nuit de dimanche à lundi",
         "source": "RMC Sport",
-        "date": "2026-07-05T23:13:12+00:00",
-        "summary": "Au lendemain de la qualification de la France et du Maroc, l'Angleterre et Mexique s'affrontent pour un 8e de finale qui s'annonce explosif au stade Azteca de Mexico. Avec un objectif: rejoindre les quarts de…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-mexique-angleterre-suivez-le-8e-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607060043.html"
+        "date": "2026-07-06T03:37:54+00:00",
+        "summary": "Deux huitièmes à la dramaturgie intense qui vont faire date dans ce mondial. Et un craquage de la FIFA sur instruction de Trumpqui va lui aussi faire beaucoup parler.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-ancelotti-et-infantino-ont-une-cible-dans-le-dos-match-incroyable-a-mexico-ce-que-vous-avez-rate-dans-la-nuit-de-dimanche-a-lundi_AV-202607060058.html"
       },
       {
         "title": "Mexique-Angleterre: feux d'artifice et fanfare, l'assaut nocturne des supporters mexicains sur l'hôtel des Three Lions",
@@ -4094,6 +4113,13 @@
       }
     ],
     "Paraguay": [
+      {
+        "title": "Coupe du monde : Désiré Doué, plus qu'un simple joker en sortie de banc pour l'équipe de France",
+        "source": "France Info",
+        "date": "2026-07-06T04:15:02+00:00",
+        "summary": "L'entrée du Parisien a tout changé contre le Paraguay, samedi, et son duel pour le poste d'ailier gauche titulaire avec Bradley Barcola est plus que jamais relancé.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-desire-doue-plus-qu-un-simple-joker-en-sortie-de-banc-pour-l-equipe-de-france_8095277.html#xtor=RSS-3-%5Bgeneral%5D"
+      },
       {
         "title": "France-Maroc: déjà forfait contre le Paraguay, Aurélien Tchouaméni sera-t-il apte pour le quart de finale ?",
         "source": "RMC Sport",
@@ -4135,13 +4161,6 @@
         "date": "2026-07-05T18:54:10+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/paraguay-france-la-fifa-saisie-pour-retirer-le-carton-jaune-a-michael-olise"
-      },
-      {
-        "title": "Paraguay-France: la FFF envisage de porter réclamation pour le carton jaune injuste de Michael Olise",
-        "source": "RMC Sport",
-        "date": "2026-07-05T17:28:18+00:00",
-        "summary": "C'est bel et bien la tendance du côté de la FFF ces dernières heures: l'instance française réfléchit sérieusement à porter réclamation auprès de la Fifa concernant le carton jaune reçu par Michael Olise face…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/paraguay-france-la-fff-envisage-de-porter-reclamation-pour-le-carton-jaune-injuste-de-michael-olise_AV-202607050371.html"
       },
       {
         "title": "Mondial 2026 : Tony Chapron qualifie Ilgiz Tantashev, arbitre de Paraguay-France, « d’arbitre de district »",
@@ -4339,7 +4358,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750027.png",
       "associated_team": "Morocco",
-      "updated_at": "2026-07-05T23:28:56+00:00",
+      "updated_at": "2026-07-06T04:38:47+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4350,7 +4369,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/850354.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-07-05T23:28:56+00:00",
+      "updated_at": "2026-07-06T04:38:47+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4361,7 +4380,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
       "associated_team": "Norway",
-      "updated_at": "2026-07-05T23:28:56+00:00",
+      "updated_at": "2026-07-06T04:38:47+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4372,7 +4391,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "France",
-      "updated_at": "2026-07-05T23:28:56+00:00",
+      "updated_at": "2026-07-06T04:38:47+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4383,7 +4402,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-07-05T23:28:56+00:00",
+      "updated_at": "2026-07-06T04:38:47+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4394,7 +4413,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-07-05T23:28:56+00:00",
+      "updated_at": "2026-07-06T04:38:47+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
