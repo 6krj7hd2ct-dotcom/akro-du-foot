@@ -1,7 +1,625 @@
 {
-  "generated_at": "2026-07-07T17:27:55+00:00",
+  "generated_at": "2026-07-07T20:14:05+00:00",
   "competition": "Ligue des Champions",
-  "standings": [],
+  "standings": [
+    {
+      "name": "League Phase",
+      "teams": [
+        {
+          "rank": 1,
+          "team": "Arsenal",
+          "espn_id": "359",
+          "abbr": "ARS",
+          "country_code": "ARS",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
+          "played": "8",
+          "wins": "0",
+          "draws": "+19",
+          "losses": "24",
+          "goals_for": "4",
+          "goals_against": "23",
+          "goal_diff": "0",
+          "points": "8",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 2,
+          "team": "Bayern Munich",
+          "espn_id": "132",
+          "abbr": "MUN",
+          "country_code": "MUN",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png",
+          "played": "8",
+          "wins": "1",
+          "draws": "+14",
+          "losses": "21",
+          "goals_for": "8",
+          "goals_against": "22",
+          "goal_diff": "0",
+          "points": "7",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 3,
+          "team": "Liverpool",
+          "espn_id": "364",
+          "abbr": "LIV",
+          "country_code": "LIV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+12",
+          "losses": "18",
+          "goals_for": "8",
+          "goals_against": "20",
+          "goal_diff": "0",
+          "points": "6",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 4,
+          "team": "Tottenham Hotspur",
+          "espn_id": "367",
+          "abbr": "TOT",
+          "country_code": "TOT",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/367.png",
+          "played": "8",
+          "wins": "1",
+          "draws": "+10",
+          "losses": "17",
+          "goals_for": "7",
+          "goals_against": "17",
+          "goal_diff": "2",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 5,
+          "team": "Barcelona",
+          "espn_id": "83",
+          "abbr": "BAR",
+          "country_code": "BAR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+8",
+          "losses": "16",
+          "goals_for": "14",
+          "goals_against": "22",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 6,
+          "team": "Chelsea",
+          "espn_id": "363",
+          "abbr": "CHE",
+          "country_code": "CHE",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+7",
+          "losses": "16",
+          "goals_for": "10",
+          "goals_against": "17",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 7,
+          "team": "Sporting CP",
+          "espn_id": "2250",
+          "abbr": "SCP",
+          "country_code": "SCP",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2250.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+6",
+          "losses": "16",
+          "goals_for": "11",
+          "goals_against": "17",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 8,
+          "team": "Manchester City",
+          "espn_id": "382",
+          "abbr": "MNC",
+          "country_code": "MNC",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+6",
+          "losses": "16",
+          "goals_for": "9",
+          "goals_against": "15",
+          "goal_diff": "1",
+          "points": "5",
+          "status": "Qualifies for round of 16"
+        },
+        {
+          "rank": 9,
+          "team": "Real Madrid",
+          "espn_id": "86",
+          "abbr": "RMA",
+          "country_code": "RMA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+9",
+          "losses": "15",
+          "goals_for": "12",
+          "goals_against": "21",
+          "goal_diff": "0",
+          "points": "5",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 10,
+          "team": "Internazionale",
+          "espn_id": "110",
+          "abbr": "INT",
+          "country_code": "INT",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+8",
+          "losses": "15",
+          "goals_for": "7",
+          "goals_against": "15",
+          "goal_diff": "0",
+          "points": "5",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 11,
+          "team": "Paris Saint-Germain",
+          "espn_id": "160",
+          "abbr": "PSG",
+          "country_code": "PSG",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+10",
+          "losses": "14",
+          "goals_for": "11",
+          "goals_against": "21",
+          "goal_diff": "2",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 12,
+          "team": "Newcastle United",
+          "espn_id": "361",
+          "abbr": "NEW",
+          "country_code": "NEW",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "+10",
+          "losses": "14",
+          "goals_for": "7",
+          "goals_against": "17",
+          "goal_diff": "2",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 13,
+          "team": "Juventus",
+          "espn_id": "111",
+          "abbr": "JUV",
+          "country_code": "JUV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/111.png",
+          "played": "8",
+          "wins": "1",
+          "draws": "+4",
+          "losses": "13",
+          "goals_for": "10",
+          "goals_against": "14",
+          "goal_diff": "4",
+          "points": "3",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 14,
+          "team": "Atlético Madrid",
+          "espn_id": "1068",
+          "abbr": "ATM",
+          "country_code": "ATM",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+2",
+          "losses": "13",
+          "goals_for": "15",
+          "goals_against": "17",
+          "goal_diff": "1",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 15,
+          "team": "Atalanta",
+          "espn_id": "105",
+          "abbr": "ATA",
+          "country_code": "ATA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/105.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "0",
+          "losses": "13",
+          "goals_for": "10",
+          "goals_against": "10",
+          "goal_diff": "1",
+          "points": "4",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 16,
+          "team": "Bayer Leverkusen",
+          "espn_id": "131",
+          "abbr": "B04",
+          "country_code": "B04",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/131.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "-1",
+          "losses": "12",
+          "goals_for": "14",
+          "goals_against": "13",
+          "goal_diff": "3",
+          "points": "3",
+          "status": "Knockout phase playoffs - seeded"
+        },
+        {
+          "rank": 17,
+          "team": "Borussia Dortmund",
+          "espn_id": "124",
+          "abbr": "DOR",
+          "country_code": "DOR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "+2",
+          "losses": "11",
+          "goals_for": "17",
+          "goals_against": "19",
+          "goal_diff": "2",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 18,
+          "team": "Olympiacos",
+          "espn_id": "435",
+          "abbr": "OLY",
+          "country_code": "OLY",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/435.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "-4",
+          "losses": "11",
+          "goals_for": "14",
+          "goals_against": "10",
+          "goal_diff": "2",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 19,
+          "team": "Club Brugge",
+          "espn_id": "570",
+          "abbr": "BRU",
+          "country_code": "BRU",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/570.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-2",
+          "losses": "10",
+          "goals_for": "17",
+          "goals_against": "15",
+          "goal_diff": "1",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 20,
+          "team": "Galatasaray",
+          "espn_id": "432",
+          "abbr": "GAL",
+          "country_code": "GAL",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/432.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-2",
+          "losses": "10",
+          "goals_for": "11",
+          "goals_against": "9",
+          "goal_diff": "1",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 21,
+          "team": "AS Monaco",
+          "espn_id": "174",
+          "abbr": "MON",
+          "country_code": "MON",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png",
+          "played": "8",
+          "wins": "2",
+          "draws": "-6",
+          "losses": "10",
+          "goals_for": "14",
+          "goals_against": "8",
+          "goal_diff": "4",
+          "points": "2",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 22,
+          "team": "FK Qarabag",
+          "espn_id": "10414",
+          "abbr": "QAR",
+          "country_code": "QAR",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/10414.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-8",
+          "losses": "10",
+          "goals_for": "21",
+          "goals_against": "13",
+          "goal_diff": "1",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 23,
+          "team": "Bodo/Glimt",
+          "espn_id": "2980",
+          "abbr": "BODO",
+          "country_code": "BODO",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2980.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "-1",
+          "losses": "9",
+          "goals_for": "15",
+          "goals_against": "14",
+          "goal_diff": "3",
+          "points": "2",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 24,
+          "team": "Benfica",
+          "espn_id": "1929",
+          "abbr": "SLB",
+          "country_code": "SLB",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/1929.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-2",
+          "losses": "9",
+          "goals_for": "12",
+          "goals_against": "10",
+          "goal_diff": "0",
+          "points": "3",
+          "status": "Knockout phase playoffs - unseeded"
+        },
+        {
+          "rank": 25,
+          "team": "Marseille",
+          "espn_id": "176",
+          "abbr": "OLM",
+          "country_code": "OLM",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-3",
+          "losses": "9",
+          "goals_for": "14",
+          "goals_against": "11",
+          "goal_diff": "0",
+          "points": "3",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 26,
+          "team": "Pafos",
+          "espn_id": "22281",
+          "abbr": "PAF",
+          "country_code": "PAF",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/22281.png",
+          "played": "8",
+          "wins": "3",
+          "draws": "-3",
+          "losses": "9",
+          "goals_for": "11",
+          "goals_against": "8",
+          "goal_diff": "3",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 27,
+          "team": "Union St.-Gilloise",
+          "espn_id": "5807",
+          "abbr": "USG",
+          "country_code": "USG",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/5807.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-9",
+          "losses": "9",
+          "goals_for": "17",
+          "goals_against": "8",
+          "goal_diff": "0",
+          "points": "3",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 28,
+          "team": "PSV Eindhoven",
+          "espn_id": "148",
+          "abbr": "PSV",
+          "country_code": "PSV",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/148.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "0",
+          "losses": "8",
+          "goals_for": "16",
+          "goals_against": "16",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 29,
+          "team": "Athletic Club",
+          "espn_id": "93",
+          "abbr": "ATH",
+          "country_code": "ATH",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/93.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-5",
+          "losses": "8",
+          "goals_for": "14",
+          "goals_against": "9",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 30,
+          "team": "Napoli",
+          "espn_id": "114",
+          "abbr": "NAP",
+          "country_code": "NAP",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/114.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-6",
+          "losses": "8",
+          "goals_for": "15",
+          "goals_against": "9",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 31,
+          "team": "F.C. København",
+          "espn_id": "909",
+          "abbr": "KBH",
+          "country_code": "KBH",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/909.png",
+          "played": "8",
+          "wins": "4",
+          "draws": "-9",
+          "losses": "8",
+          "goals_for": "21",
+          "goals_against": "12",
+          "goal_diff": "2",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 32,
+          "team": "Ajax Amsterdam",
+          "espn_id": "139",
+          "abbr": "AJA",
+          "country_code": "AJA",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/139.png",
+          "played": "8",
+          "wins": "6",
+          "draws": "-13",
+          "losses": "6",
+          "goals_for": "21",
+          "goals_against": "8",
+          "goal_diff": "0",
+          "points": "2",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 33,
+          "team": "Eintracht Frankfurt",
+          "espn_id": "125",
+          "abbr": "SGE",
+          "country_code": "SGE",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/125.png",
+          "played": "8",
+          "wins": "6",
+          "draws": "-11",
+          "losses": "4",
+          "goals_for": "21",
+          "goals_against": "10",
+          "goal_diff": "1",
+          "points": "1",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 34,
+          "team": "Slavia Prague",
+          "espn_id": "494",
+          "abbr": "SLP",
+          "country_code": "SLP",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/494.png",
+          "played": "8",
+          "wins": "5",
+          "draws": "-14",
+          "losses": "3",
+          "goals_for": "19",
+          "goals_against": "5",
+          "goal_diff": "3",
+          "points": "0",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 35,
+          "team": "Villarreal",
+          "espn_id": "102",
+          "abbr": "VIL",
+          "country_code": "VIL",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/102.png",
+          "played": "8",
+          "wins": "7",
+          "draws": "-13",
+          "losses": "1",
+          "goals_for": "18",
+          "goals_against": "5",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        },
+        {
+          "rank": 36,
+          "team": "Kairat Almaty",
+          "espn_id": "2528",
+          "abbr": "KAI",
+          "country_code": "KAI",
+          "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/2528.png",
+          "played": "8",
+          "wins": "7",
+          "draws": "-15",
+          "losses": "1",
+          "goals_for": "22",
+          "goals_against": "7",
+          "goal_diff": "1",
+          "points": "0",
+          "status": "Eliminated"
+        }
+      ]
+    }
+  ],
   "group_matches": [
     {
       "name": "Phase de ligue",
@@ -3752,7 +4370,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Bayer Leverkusen": {
@@ -3768,7 +4387,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Bayern Munich": {
@@ -4244,7 +4864,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Bodo/Glimt": {
@@ -5439,6 +6060,7 @@
       ],
       "sources": [
         "ESPN",
+        "ESPN roster",
         "FotMob"
       ],
       "fotmob_id": "8633"
@@ -5472,7 +6094,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Tottenham Hotspur": {
@@ -5526,49 +6149,79 @@
   },
   "top_scorers": [
     {
+      "rank": 1,
       "name": "Kylian Mbappé",
       "team": "Real Madrid",
-      "team_id": 8633,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 15,
-      "rank": 1,
+      "played": "11",
+      "value": "15",
+      "team_id": 8633,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
       "country": "France"
     },
     {
+      "rank": 2,
       "name": "Harry Kane",
-      "team": "Bayern München",
-      "team_id": 9823,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
+      "team": "Bayern Munich",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 14,
-      "rank": 2,
+      "played": "13",
+      "value": "14",
+      "team_id": 9823,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
       "country": "England"
     },
     {
+      "rank": 3,
       "name": "Khvicha Kvaratskhelia",
       "team": "Paris Saint-Germain",
-      "team_id": 9847,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9847.png",
       "country_code": "",
       "flag_url": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/900433.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/geo.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 10,
-      "rank": 3,
+      "played": "16",
+      "value": "10",
+      "team_id": 9847,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/9847.png",
       "country": "Georgia"
+    },
+    {
+      "rank": 4,
+      "name": "Julián Álvarez",
+      "team": "Atlético Madrid",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/277206.png",
+      "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+      "all_time_rank": "",
+      "played": "15",
+      "value": "10",
+      "team_id": "",
+      "team_logo_url": "",
+      "country": "Argentina"
+    },
+    {
+      "rank": 5,
+      "name": "Anthony Gordon",
+      "team": "Newcastle United",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/268782.png",
+      "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
+      "all_time_rank": "",
+      "played": "12",
+      "value": "10",
+      "team_id": "",
+      "team_logo_url": "",
+      "country": "England"
     }
   ],
   "top_assists": [
@@ -5766,11 +6419,158 @@
   ],
   "all_news": [
     {
-      "title": "DIRECT. Argentine-Egypte: passés tout proche du naufrage, les Argentins s'en sortent très bien",
+      "title": "DIRECT. Suisse-Colombie: Suisses et Colombiens veulent poursuivre leur beau parcours",
       "source": "RMC Sport",
-      "date": "2026-07-07T17:26:08+00:00",
-      "summary": "L'Argentine de Lionel Messi affronte l'Egypte de Mohamed Salah ce mardi en huitièmes de finale de la Coupe du monde 2026 à Atlanta, pour l'avant-dernière place en quarts. Un match à suivre en direct sur le…",
+      "date": "2026-07-07T20:12:10+00:00",
+      "summary": "La Suisse défie la Colombie ce mardi en huitièmes de finale de la Coupe du monde 2026, pour rejoindre l'Argentine au tour suivant. Un match à suivre en direct sur le site et l'application de RMC Sport à 22h.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-colombie-suivez-le-match-des-huitiemes-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607070524.html"
+    },
+    {
+      "title": "\"Des choses étranges\": l'Egypte crie au scandale et accuse la Fifa d'avoir voulu sauver Messi et l'Argentine",
+      "source": "RMC Sport",
+      "date": "2026-07-07T20:00:37+00:00",
+      "summary": "Le sélectionneur égyptien et plusieurs de ses joueurs ont crié au scandale et dénoncé des erreurs arbitrales après leur défaite contre l'Argentine (2-3) ce mardi lors des huitièmes de finale de la Coupe du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/des-choses-etranges-l-egypte-crie-au-scandale-et-accuse-la-fifa-d-avoir-voulu-sauver-messi-et-l-argentine_AV-202607070869.html"
+    },
+    {
+      "title": "En direct : Suisse – Colombie",
+      "source": "SO FOOT",
+      "date": "2026-07-07T19:40:51+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-suisse-colombie"
+    },
+    {
+      "title": "Les compos de Suisse-Colombie sont sorties !",
+      "source": "SO FOOT",
+      "date": "2026-07-07T19:28:47+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/les-compos-de-suisse-colombie-sont-sorties"
+    },
+    {
+      "title": "Lionel Messi",
+      "source": "RMC Sport",
+      "date": "2026-07-07T19:23:36+00:00",
+      "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
+      "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
+    },
+    {
+      "title": "\"Sa dernière Coupe du monde\": la grosse annonce de Lautaro Martinez sur Lionel Messi après Argentine-Egypte",
+      "source": "RMC Sport",
+      "date": "2026-07-07T19:23:35+00:00",
+      "summary": "Après la qualification de l'Argentine pour les quarts de finale de la Coupe du monde, Lautaro Martinez a confirmé que Lionel Messi disputait son dernier Mondial avec l'Albiceleste alors que le principal…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/sa-derniere-coupe-du-monde-la-grosse-annonce-de-lautaro-martinez-sur-lionel-messi-apres-argentine-egypte_AV-202607070860.html"
+    },
+    {
+      "title": "Argentine-Egypte: l'Albiceleste revient des enfers et arrache sa qualification au terme d'un match dingue",
+      "source": "RMC Sport",
+      "date": "2026-07-07T19:15:51+00:00",
+      "summary": "Menés 2-0 à quinze minutes du terme, Lionel Messi et les Argentins ont renversé l'Egypte dans un 8e dingue (3-2), mardi à Atlanta. Le tenant du titre, immense de caractère et avec le 8e but de la Pulga, ira…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-argentine-egypte-suivez-le-match-des-huitiemes-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607070447.html"
+    },
+    {
+      "title": "Paraguay – France : Le Real Madrid apporte son soutien à Mbappé après les propos racistes de Celeste Amarilla",
+      "source": "SO FOOT",
+      "date": "2026-07-07T19:06:44+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/paraguay-france-le-real-madrid-apporte-son-soutien-a-mbappe-apres-les-propos-racistes-de-celeste-amarilla"
+    },
+    {
+      "title": "L’Argentine a réalisé quelque chose de très grand",
+      "source": "SO FOOT",
+      "date": "2026-07-07T19:00:39+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/largentine-a-realise-quelque-chose-de-tres-grand"
+    },
+    {
+      "title": "Argentine-Égypte: pénalty pour l'Albiceleste, but refusé aux Pharaons… Non, François Letexier n’a pas volé les Argentins",
+      "source": "RMC Sport",
+      "date": "2026-07-07T18:58:34+00:00",
+      "summary": "Les supporters et médias argentins craignaient l’arbitrage de François Letexier lors du huitième de finale de la Coupe du monde disputé ce mardi contre l’Égypte. Mais l’officiel français n'a pas lésé…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-egypte-penalty-pour-l-albiceleste-but-refuse-aux-pharaons-non-francois-letexier-n-a-pas-vole-les-argentins_AV-202607070841.html"
+    },
+    {
+      "title": "Argentine-Egypte: les larmes de Messi après la qualification in extremis des Argentins pour les quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-07T18:42:21+00:00",
+      "summary": "Auteur du but de l'égalisation face à l'Egypte ce mardi, Lionel Messi a fondu en larmes après la remontada de l'Argentine pour arracher son ticket en quart de finale de la Coupe du monde 2026.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-egypte-les-larmes-de-messi-apres-la-qualification-in-extremis-des-argentins-pour-les-quarts-de-finale_AV-202607070823.html"
+    },
+    {
+      "title": "Coupe du monde 2026 : Lionel Messi s’offre deux nouveaux records",
+      "source": "SO FOOT",
+      "date": "2026-07-07T18:33:31+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-lionel-messi-soffre-deux-nouveaux-records"
+    },
+    {
+      "title": "Michel Aebischer et Luca Jaquez déclarent forfait contre la Colombie",
+      "source": "SO FOOT",
+      "date": "2026-07-07T18:31:04+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/michel-aebischer-et-luca-jaquez-declarent-forfait-contre-la-colombie"
+    },
+    {
+      "title": "Lionel Messi, Mostafa Shobeir, François Leteixier… Les notes d’Argentine-Égypte",
+      "source": "SO FOOT",
+      "date": "2026-07-07T18:30:36+00:00",
+      "summary": "Il y avait Mostafa Shobeir, Haissem Hassan et François Leteixier, puis Lionel Messi est arrivé.",
+      "url": "https://www.sofoot.com/articles/lionel-messi-mostafa-shobeir-francois-leteixier-les-notes-dargentine-egypte"
+    },
+    {
+      "title": "Argentine 3-2 Égypte :  Les comms du succès miraculeux de l'Albiceleste",
+      "source": "RMC Sport",
+      "date": "2026-07-07T18:29:03+00:00",
+      "summary": "Menés durant 80 minutes, les coéquipiers de Lionel Messi ont su remonter 2 buts d'écart et remporter le match. Revivez la rencontre avec les comms de RMC...",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-argentine-3-2-egypte-les-comms-du-succes-miraculeux-de-l-albiceleste_VN-202607070820.html"
+    },
+    {
+      "title": "Revivez Argentine – Égypte (3-2)",
+      "source": "SO FOOT",
+      "date": "2026-07-07T18:10:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-argentine-egypte"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-07T18:06:36+00:00",
+      "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
+    },
+    {
+      "title": "Coupe du monde 2026 – Lionel Messi ressuscite l’Argentine face à l’Égypte",
+      "source": "SO FOOT",
+      "date": "2026-07-07T18:05:33+00:00",
+      "summary": "Les champions du monde s’offrent une remontada.",
+      "url": "https://www.sofoot.com/articles/coupe-du-monde-2026-lionel-messi-ressuscite-largentine-face-a-legypte"
+    },
+    {
+      "title": "\"Ronaldinho a déjà été emprisonné ici\": la sénatrice paraguayenne s’enfonce un peu plus et menace désormais Mbappé",
+      "source": "RMC Sport",
+      "date": "2026-07-07T17:41:06+00:00",
+      "summary": "Celeste Amarilla a maintenu sa position offensive et outrancière contre Kylian Mbappé lors d’un point presse organisé ce mardi au Paraguay en marge de la Coupe du monde 2026. Après de brèves excuses, la…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ronaldinho-a-deja-ete-emprisonne-ici-la-senatrice-paraguayenne-s-enfonce-un-peu-plus-et-menace-desormais-mbappe_AV-202607070782.html"
+    },
+    {
+      "title": "“Je viens d'une génération pour qui dire ‘n*gro de m*rde’ était habituel”, se justifie Celeste Amarilla",
+      "source": "RMC Sport",
+      "date": "2026-07-07T17:38:43+00:00",
+      "summary": "Le Sénatrice Paraguayenne Celeste Amarilla réclame des excuses de la part de Kylian Mbappé, l’accusant de “violence de genre” et de “violence politique à l'encontre des femmes”. La sénatrice va même plus loin…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-je-viens-d-une-generation-pour-qui-dire-n-gro-de-m-rde-etait-habituel-se-justifie-celeste-amarilla_VN-202607070781.html"
+    },
+    {
+      "title": "DIRECT. Mercato: Wilfried Nancy sur la short-list de Strasbourg",
+      "source": "RMC Sport",
+      "date": "2026-07-07T17:30:05+00:00",
+      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui s'agite en parallèle de la Coupe du monde.",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-6-juillet-2026_LN-202607060322.html"
+    },
+    {
+      "title": "Pierre Sage justifie son choix de rejoindre Crystal Palace",
+      "source": "SO FOOT",
+      "date": "2026-07-07T17:21:27+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/pierre-sage-justifie-son-choix-de-rejoindre-crystal-palace"
     },
     {
       "title": "Zinédine Zidane",
@@ -5794,13 +6594,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-que-mbappe-ne-sous-estime-pas-le-paraguay-on-a-mis-ronaldinho-en-prison-menace-celeste-amarilla_VN-202607070760.html"
     },
     {
-      "title": "Lionel Messi",
-      "source": "RMC Sport",
-      "date": "2026-07-07T16:52:56+00:00",
-      "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
-      "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
-    },
-    {
       "title": "Argentine-Egypte: le très mauvais bilan de Lionel Messi sur les pénaltys à la Coupe du monde",
       "source": "RMC Sport",
       "date": "2026-07-07T16:52:45+00:00",
@@ -5808,11 +6601,11 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-egypte-le-tres-mauvais-bilan-de-lionel-messi-sur-les-penaltys-a-la-coupe-du-monde_AV-202607070752.html"
     },
     {
-      "title": "DIRECT. Suisse-Colombie: suivez le match des huitièmes de finale de la Coupe du monde 2026 en live",
-      "source": "RMC Sport",
-      "date": "2026-07-07T16:42:30+00:00",
-      "summary": "La Suisse défie la Colombie ce mardi en huitièmes de finale de la Coupe du monde 2026, avec un coup d'envoi donné à 22h (heure de Paris) à Vancouver. Un match à suivre en direct sur le site et l'application…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-colombie-suivez-le-match-des-huitiemes-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607070524.html"
+      "title": "Un arbitre argentin pour France-Maroc",
+      "source": "SO FOOT",
+      "date": "2026-07-07T16:49:21+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/un-arbitre-argentin-pour-france-maroc"
     },
     {
       "title": "DIRECT. Coupe du monde 2026, équipe de France: les Bleus préparent le Maroc, toutes les infos en live",
@@ -5836,18 +6629,25 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-maroc-un-arbitre-argentin-designe-pour-arbitrer-le-quart-de-finale-de-la-coupe-du-monde-2026_AV-202607070718.html"
     },
     {
+      "title": "Rudi Garcia devient le neuvième sélectionneur français à se qualifier en quarts de finale d’une Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-07-07T16:10:27+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/rudi-garcia-devient-le-neuvieme-selectionneur-francais-a-se-qualifier-en-quarts-de-finale-dune-coupe-du-monde"
+    },
+    {
+      "title": "Mondial 2026 : Lionel Messi devient le premier joueur à cumuler 30 apparitions en Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-07-07T16:08:24+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mondial-2026-lionel-messi-devient-le-premier-joueur-a-cumuler-trente-apparitions-en-coupe-du-monde"
+    },
+    {
       "title": "La nouvelle sortie polémique de Celeste Amarilla",
       "source": "SO FOOT",
       "date": "2026-07-07T15:55:52+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/la-nouvelle-sortie-polemique-de-celeste-amarilla"
-    },
-    {
-      "title": "En direct : Argentine – Égypte",
-      "source": "SO FOOT",
-      "date": "2026-07-07T15:45:40+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-argentine-egypte"
     },
     {
       "title": "Coupe du monde 2026: le message de soutien de l'ONU à Mbappé après les propos \"déshumanisants\" et \"ignobles\" de la sénatrice paraguayenne",
@@ -5857,7 +6657,7 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-message-de-soutien-de-l-onu-a-mbappe-apres-les-propos-deshumanisants-et-ignobles-de-la-senatrice-paraguayenne_AV-202607070690.html"
     },
     {
-      "title": "Julián Alvarez titulaire, Omar Marmoush remplaçant : les compos d’Argentine-Égypte",
+      "title": "Julián Álvarez titulaire, Omar Marmoush remplaçant : les compos d’Argentine-Égypte",
       "source": "SO FOOT",
       "date": "2026-07-07T15:37:10+00:00",
       "summary": "",
@@ -5946,13 +6746,6 @@
       "date": "2026-07-07T13:29:33+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/bruno-cheyrou-debarque-au-mans-en-tant-que-conseiller-sportif"
-    },
-    {
-      "title": "DIRECT. Mercato: Cheyrou de retour en Ligue 1 pour renforcer l'organigramme d'un ambitieux promu",
-      "source": "RMC Sport",
-      "date": "2026-07-07T13:17:58+00:00",
-      "summary": "Suivez en live toutes les infos et rumeurs du mercato qui s'agite en parallèle de la Coupe du monde.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-6-juillet-2026_LN-202607060322.html"
     },
     {
       "title": "Après la victoire anglaise contre le Mexique, une station du métro londonien renommée en « Jude Bellingham »",
@@ -6044,146 +6837,6 @@
       "date": "2026-07-07T11:29:44+00:00",
       "summary": "Le sélectionneur norvégien, Stale Solbakken, a confié lundi que plusieurs joueurs de l'équipe se sentaient affaiblis et commencaient à tousser à quelques jours du quart de finale contre l'Angleterre, samedi…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-joueurs-norvegiens-touches-par-un-virus-avant-leur-quart-de-finale-contre-l-angleterre_AV-202607070518.html"
-    },
-    {
-      "title": "La police vietnamienne annonce le démantèlement de deux vastes réseaux de paris sportifs illicites liés à la Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-07-07T11:26:20+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/la-police-vietnamienne-annonce-le-demantelement-de-deux-vastes-reseaux-de-paris-sportifs-illicites-lies-a-la-coupe-du-monde"
-    },
-    {
-      "title": "Événement : soirée projection So Foot de France – Maroc le jeudi 9 juillet 2026 à la Bellevilloise pour le quart de finale Coupe du monde à partir de 20h30",
-      "source": "SO FOOT",
-      "date": "2026-07-07T11:03:38+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/evenement-soiree-projection-so-foot-de-france-maroc-le-jeudi-09-juillet-2026-a-la-bellevilloise-pour-le-quart-de-finale-coupe-du-monde-a-partir-de-20h30"
-    },
-    {
-      "title": "Lassine Sinayoko : « J’avais une faim que les autres n’ont pas »",
-      "source": "SO FOOT",
-      "date": "2026-07-07T11:00:12+00:00",
-      "summary": "L’attaquant de l’AJA a pris à 26 ans une nouvelle dimension. Et maintenant ?",
-      "url": "https://www.sofoot.com/articles/lassine-sinayoko-javais-une-faim-que-les-autres-nont-pas"
-    },
-    {
-      "title": "Kombouaré, Rosenior, Filipe Luis la valse des entraîneurs de Ligue 1… Les 5 infos mercato du 7 juillet à 13h",
-      "source": "RMC Sport",
-      "date": "2026-07-07T10:59:39+00:00",
-      "summary": "Le Paris FC remercie Antoine Kombouaré, Liam Rosenior est le nouvel entraîneur du PFC, Filipe Luis est le nouvel entraîneur de AS Monaco, les 5 infos mercato du 7 juillet à mi-juillet.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/video-kombouare-rosenior-filipe-luis-la-valse-des-entraineurs-de-ligue-1-les-5-infos-mercato-du-7-juillet-a-13h_VN-202607070499.html"
-    },
-    {
-      "title": "Coupe du monde 2026: l'amende salée dont a écopé Balogun pour son carton rouge",
-      "source": "RMC Sport",
-      "date": "2026-07-07T10:51:57+00:00",
-      "summary": "S'il a vu son carton rouge reçu face à la Bosnie-Herzégovine être suspendu par la Commission de discipline de la Fifa, lui permettant de prendre part au huitième de finale perdu par les Etats-Unis contre la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-l-amende-salee-dont-a-ecope-balogun-pour-son-carton-rouge_AV-202607070481.html"
-    },
-    {
-      "title": "Argentine-Égypte: à quelle heure et sur quelle chaîne TV suivre le match de 8es de finale de la Coupe du monde 2026?",
-      "source": "RMC Sport",
-      "date": "2026-07-07T10:42:16+00:00",
-      "summary": "L'Argentine affronte l'Égypte ce mardi en huitièmes de finale de la Coupe du monde 2026. Voici tout ce qu'il faut savoir sur la diffusion de ce match.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-egypte-a-quelle-heure-et-sur-quelle-chaine-tv-suivre-le-match-de-8es-de-finale-de-la-coupe-du-monde-2026_AV-202607070473.html"
-    },
-    {
-      "title": "États-Unis-Belgique : Rupture des ligaments croisés pour Onana après un contact avec Pulisic",
-      "source": "SO FOOT",
-      "date": "2026-07-07T10:28:44+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/etats-unis-belgique-rupture-des-ligaments-croises-pour-onana-apres-un-contact-avec-pulisic"
-    },
-    {
-      "title": "Lamine Yamal",
-      "source": "RMC Sport",
-      "date": "2026-07-07T10:23:52+00:00",
-      "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
-      "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
-    },
-    {
-      "title": "\"Je ne connais pas d'Espagnol qui s'appelle Jamel\", la sortie déroutante sur Lamine Yamal du président de la Fédération marocaine",
-      "source": "RMC Sport",
-      "date": "2026-07-07T10:23:51+00:00",
-      "summary": "Alors qu'il aurait également pu représenter le Maroc, pays d'origine de son père, Lamine Yamal a choisi de jouer pour l'Espagne. Une décision qui avait fait couler beaucoup d'encre et sur laquelle est revenu…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/je-ne-connais-pas-d-espagnol-qui-s-appelle-jamel-la-sortie-deroutante-sur-lamine-yamal-du-president-de-la-federation-marocaine_AV-202607070466.html"
-    },
-    {
-      "title": "La DER des DER pour CR7 ? Daily #26",
-      "source": "RMC Sport",
-      "date": "2026-07-07T10:14:34+00:00",
-      "summary": "Le Portugal est éliminé pour certainement la dernière de Cristiano Ronaldo en Coupe du Monde. Une défaite qui n'affecte pas le mental de CR7. Plus tard dans la nuit, la Belgique a écrasé les Etats-Unis avec…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-la-der-des-der-pour-cr7-daily-26_VN-202607070458.html"
-    },
-    {
-      "title": "« Il est temps que Ronaldo cède sa place » : la presse portugaise divisée après l’élimination de la Seleção",
-      "source": "SO FOOT",
-      "date": "2026-07-07T10:07:32+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/il-est-temps-que-ronaldo-cede-sa-place-la-presse-portugaise-divisee-apres-lelimination-de-la-selecao"
-    },
-    {
-      "title": "Portugal: \"Qu'est-ce qu'ils ont gagné?\", Quaresma s'attaque à la génération dorée éliminée de la Coupe du monde 2026",
-      "source": "RMC Sport",
-      "date": "2026-07-07T10:01:49+00:00",
-      "summary": "L'ancien aillier Ricardo Quaresma, maintenant consultant pour la chaîne portugaise Live Mode, a vivement critiqué les résultats de son équipe après leur défaite en huitième de finale de la Coupe du monde 2026…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/portugal-qu-est-ce-qu-ils-ont-gagne-quaresma-s-attaque-a-la-generation-doree-eliminee-de-la-coupe-du-monde-2026_AV-202607070446.html"
-    },
-    {
-      "title": "Après la déroute contre la Belgique, les médias américains ne pardonnent pas à la Team USA",
-      "source": "SO FOOT",
-      "date": "2026-07-07T09:50:18+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/apres-la-deroute-contre-la-belgique-les-medias-americains-ne-pardonnent-pas-la-team-usa"
-    },
-    {
-      "title": "Coupe du monde terminée pour Amadou Onana, gravement blessé lors de la qualification de la Belgique",
-      "source": "RMC Sport",
-      "date": "2026-07-07T09:49:15+00:00",
-      "summary": "Amadou Onana (24 ans), milieu de terrain de la Belgique, souffre d'une rupture du ligament croisé antérieur du genou droit et ne rejouera plus lors de la Coupe du monde 2026, indique The Athletic.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-terminee-pour-amadou-onana-gravement-blesse-lors-de-la-qualification-de-la-belgique_AV-202607070429.html"
-    },
-    {
-      "title": "Coupe du monde 2026: drapeau brûlé par des supporters algériens, femmes et enfants agressés verbalement… l'ambassade du Maroc porte plainte après \"des incidents graves et indignes\"",
-      "source": "RMC Sport",
-      "date": "2026-07-07T09:38:29+00:00",
-      "summary": "Comme le montrent des images largement relayées sur les réseaux sociaux, des supporters algériens ont brûlé un drapeau du Maroc dans le quartier des Quatre-Chemins, en Seine-Saint-Denis. Au même endroit, des…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-drapeau-brule-par-des-supporters-algeriens-femmes-et-enfants-agresses-verbalement-l-ambassade-du-maroc-porte-plainte-apres-des-incidents-graves-et-indignes_AV-202607070422.html"
-    },
-    {
-      "title": "États-Unis-Belgique: \"Nous avons fait payer le manque de respect\", la revanche de Courtois après l'affaire Balogun",
-      "source": "RMC Sport",
-      "date": "2026-07-07T09:27:12+00:00",
-      "summary": "Quelques minutes après la large qualification de la Belgique aux dépens des États-Unis en 8es de finale de la Coupe du monde 2026 (4-1), Thibaut Courtois s'est montré revanchard. Le gardien du Real Madrid a…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/etats-unis-belgique-nous-avons-fait-payer-le-manque-de-respect-la-revanche-de-courtois-apres-l-affaire-balogun_AV-202607070410.html"
-    },
-    {
-      "title": "En direct : Suisse – Colombie",
-      "source": "SO FOOT",
-      "date": "2026-07-07T09:18:51+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-suisse-colombie"
-    },
-    {
-      "title": "Coupe du monde 2026 : La décla lunaire du président de la Fédération marocaine sur Yamal",
-      "source": "SO FOOT",
-      "date": "2026-07-07T09:16:31+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-la-decla-lunaire-du-president-de-la-federation-marocaine-sur-yamal"
-    },
-    {
-      "title": "Mondial 2026 – Le sélectionneur de l’Argentine veut affronter l’Espagne en finale",
-      "source": "SO FOOT",
-      "date": "2026-07-07T08:51:38+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-le-selectionneur-de-largentine-veut-affronter-lespagne-en-finale"
-    },
-    {
-      "title": "Pronostic Suisse Colombie : analyse, cotes et prono Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-07-07T08:44:27+00:00",
-      "summary": "Pronostic Suisse Colombie : analyse complète, conseils et cotes pour parier sur la victoire de la Colombie ou le pari moins de 2,5 buts en Coupe du monde.",
-      "url": "https://www.sofoot.com/breves/pronostic-suisse-colombie-analyse-cotes-et-prono-coupe-du-monde"
     }
   ],
   "focused_club_news": {
@@ -6200,16 +6853,9 @@
       {
         "title": "Lionel Messi",
         "source": "RMC Sport",
-        "date": "2026-07-07T16:52:56+00:00",
+        "date": "2026-07-07T19:23:36+00:00",
         "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
         "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
-      },
-      {
-        "title": "Lamine Yamal",
-        "source": "RMC Sport",
-        "date": "2026-07-07T10:23:52+00:00",
-        "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
-        "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
       }
     ],
     "Chelsea": [
@@ -6243,25 +6889,32 @@
       {
         "title": "Lionel Messi",
         "source": "RMC Sport",
-        "date": "2026-07-07T16:52:56+00:00",
+        "date": "2026-07-07T19:23:36+00:00",
         "summary": "Lionel Andrès Messi Cuccitini, appelé Lionel Messi, évolue comme attaquant au PSG (après avoir fait toute sa carrière à Barcelone) et en équipe nationale argentine. Considéré comme l'un des plus grands…",
         "url": "https://rmcsport.bfmtv.com/football/lionel-messi_DN-201411260316.html"
       }
     ],
     "Real Madrid": [
       {
+        "title": "Paraguay – France : Le Real Madrid apporte son soutien à Mbappé après les propos racistes de Celeste Amarilla",
+        "source": "SO FOOT",
+        "date": "2026-07-07T19:06:44+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/paraguay-france-le-real-madrid-apporte-son-soutien-a-mbappe-apres-les-propos-racistes-de-celeste-amarilla"
+      },
+      {
+        "title": "L’Argentine a réalisé quelque chose de très grand",
+        "source": "SO FOOT",
+        "date": "2026-07-07T19:00:39+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/largentine-a-realise-quelque-chose-de-tres-grand"
+      },
+      {
         "title": "Zinédine Zidane",
         "source": "RMC Sport",
         "date": "2026-07-07T17:16:32+00:00",
         "summary": "Zinedine Zidane est né le 23 juin 1972 à Marseille. Cet ancien milieu offensif a remporté le Ballon d’or en 1998 (l'année où il ggne la Coupe du monde avec la France), et est une légende du Real Madrid où il…",
         "url": "https://rmcsport.bfmtv.com/football/zinedine-zidane_DN-202108310570.html"
-      },
-      {
-        "title": "États-Unis-Belgique: \"Nous avons fait payer le manque de respect\", la revanche de Courtois après l'affaire Balogun",
-        "source": "RMC Sport",
-        "date": "2026-07-07T09:27:12+00:00",
-        "summary": "Quelques minutes après la large qualification de la Belgique aux dépens des États-Unis en 8es de finale de la Coupe du monde 2026 (4-1), Thibaut Courtois s'est montré revanchard. Le gardien du Real Madrid a…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/etats-unis-belgique-nous-avons-fait-payer-le-manque-de-respect-la-revanche-de-courtois-apres-l-affaire-balogun_AV-202607070410.html"
       }
     ]
   },
@@ -6360,11 +7013,7 @@
       "url": "https://www.lephoceen.fr/rss"
     }
   ],
-  "errors": [
-    "classement Ligue des Champions ESPN: ValueError",
-    "buteurs Ligue des Champions ESPN: ValueError",
-    "passeurs Ligue des Champions ESPN: ValueError"
-  ],
+  "errors": [],
   "players_index": [
     {
       "name": "Achraf Hakimi",
@@ -6374,7 +7023,7 @@
       "number": "2",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/770881.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -6385,7 +7034,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1573563.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6396,7 +7045,7 @@
       "number": "45",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1473580.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6407,8 +7056,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/805451.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Alessandro Longoni",
@@ -6418,7 +7067,7 @@
       "number": "16",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1662399.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6429,8 +7078,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/831489.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Alphonso Davies",
@@ -6440,7 +7089,7 @@
       "number": "19",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/751202.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6451,8 +7100,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1190025.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Andriy Lunin",
@@ -6462,8 +7111,19 @@
       "number": "13",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/800882.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
+    },
+    {
+      "name": "Anthony Gordon",
+      "club_current": "Newcastle United",
+      "country": "England",
+      "position": "",
+      "number": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/268782.png",
+      "associated_team": "Newcastle United",
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "FotMob/ESPN stats"
     },
     {
       "name": "Antonio Rüdiger",
@@ -6473,8 +7133,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/276738.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Arda Güler",
@@ -6484,8 +7144,8 @@
       "number": "15",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1253890.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Arijon Ibrahimovic",
@@ -6495,7 +7155,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1327150.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6506,7 +7166,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/942375.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6517,7 +7177,7 @@
       "number": "70",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830676.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6528,8 +7188,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/914458.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Ayyoub Bouaddi",
@@ -6539,8 +7199,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1561552.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Bara Ndiaye",
@@ -6550,7 +7210,7 @@
       "number": "39",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1798782.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6561,7 +7221,7 @@
       "number": "33",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1970833.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6572,8 +7232,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/488139.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Bilal Laurendon",
@@ -6583,7 +7243,7 @@
       "number": "80",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830677.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6594,7 +7254,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1297165.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6605,8 +7265,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750027.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Bremer",
@@ -6616,7 +7276,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/857269.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6627,7 +7287,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1202525.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6638,7 +7298,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/708890.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6649,7 +7309,7 @@
       "number": "30",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1771196.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6660,7 +7320,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1095432.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6671,8 +7331,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1586552.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Crysencio Summerville",
@@ -6682,7 +7342,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/941213.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6693,8 +7353,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/531629.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Daniel Carvajal",
@@ -6704,8 +7364,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/282674.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Daniel Ceballos",
@@ -6715,8 +7375,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/531629.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Daniel Peretz",
@@ -6726,7 +7386,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/949321.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6737,8 +7397,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/121633.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "David Boly",
@@ -6748,7 +7408,7 @@
       "number": "42",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830689.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6759,8 +7419,8 @@
       "number": "35",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413780.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "David Santos",
@@ -6770,7 +7430,7 @@
       "number": "47",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1771197.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6781,7 +7441,7 @@
       "number": "47",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1771197.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6792,7 +7452,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/658554.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6803,8 +7463,8 @@
       "number": "24",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1367619.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Declan Rice",
@@ -6814,8 +7474,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/654096.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Deniz Ofli",
@@ -6825,7 +7485,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1845073.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6836,8 +7496,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/593118.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Dimitri Lucea",
@@ -6847,7 +7507,7 @@
       "number": "54",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830648.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6858,7 +7518,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1682313.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6869,8 +7529,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/737857.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Désiré Doué",
@@ -6880,7 +7540,7 @@
       "number": "14",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1339208.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6891,7 +7551,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1897206.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6902,7 +7562,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1015185.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6913,7 +7573,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1460534.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6924,8 +7584,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1406729.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Enzo Fernández",
@@ -6935,8 +7595,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1137705.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Erblin Osmani",
@@ -6946,7 +7606,7 @@
       "number": "38",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1904968.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6957,8 +7617,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/737066.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Fabián Ruiz",
@@ -6968,7 +7628,7 @@
       "number": "8",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/605654.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -6979,8 +7639,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/743533.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Felipe Chávez",
@@ -6990,7 +7650,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1690072.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7001,7 +7661,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/966019.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7012,8 +7672,8 @@
       "number": "23",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/623537.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Fran García",
@@ -7023,8 +7683,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750028.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Fran González",
@@ -7034,8 +7694,8 @@
       "number": "26",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1484851.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Franco Mastantuono",
@@ -7045,8 +7705,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1607566.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Gabriel Martinelli",
@@ -7056,7 +7716,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1021586.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7067,7 +7727,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1503655.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7078,7 +7738,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/618878.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7089,7 +7749,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1612643.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7100,8 +7760,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413847.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Gonçalo Ramos",
@@ -7111,18 +7771,18 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/940087.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
       "name": "Harry Kane",
-      "club_current": "Bayern München",
+      "club_current": "Bayern Munich",
       "country": "England",
       "position": "ST",
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/194165.png",
-      "associated_team": "Bayern München",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "associated_team": "Bayern Munich",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -7133,7 +7793,7 @@
       "number": "21",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/851626.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7144,7 +7804,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1328820.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7155,7 +7815,7 @@
       "number": "49",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1593857.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7166,8 +7826,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/820140.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Ilya Zabarnyi",
@@ -7177,7 +7837,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1140003.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7188,7 +7848,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1180288.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7199,8 +7859,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1325998.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Jacobo Ramón",
@@ -7210,8 +7870,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413963.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Jamal Musiala",
@@ -7221,7 +7881,7 @@
       "number": "10",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1156141.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7232,7 +7892,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1560749.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7243,8 +7903,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1174672.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Jonah Kusi-Asare",
@@ -7254,7 +7914,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1532672.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7265,7 +7925,7 @@
       "number": "40",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1285872.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7276,7 +7936,7 @@
       "number": "4",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/469700.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7287,8 +7947,8 @@
       "number": "28",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1807277.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Joshua Kimmich",
@@ -7298,7 +7958,7 @@
       "number": "6",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/460632.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7309,7 +7969,7 @@
       "number": "44",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/950824.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7320,7 +7980,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1070712.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7331,7 +7991,7 @@
       "number": "87",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1342757.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7342,7 +8002,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/524434.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7353,8 +8013,8 @@
       "number": "5",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1077894.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Jules Kounde",
@@ -7364,19 +8024,19 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/705450.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
       "name": "Julián Álvarez",
-      "club_current": "Real Madrid",
-      "country": "Real Madrid",
+      "club_current": "Atlético Madrid",
+      "country": "Argentina",
       "position": "ST",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/974753.png",
-      "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/277206.png",
+      "associated_team": "Atlético Madrid",
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "FotMob/ESPN stats"
     },
     {
       "name": "Kang-in Lee",
@@ -7386,7 +8046,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/940976.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7397,7 +8057,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/900433.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -7408,7 +8068,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/980793.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7419,7 +8079,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/429265.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7430,8 +8090,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1292810.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Konrad Laimer",
@@ -7441,7 +8101,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/526827.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7452,7 +8112,7 @@
       "number": "10",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -7463,7 +8123,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1737700.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7474,7 +8134,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/343748.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7485,7 +8145,7 @@
       "number": "48",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1664982.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7496,8 +8156,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1323669.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Lovro Zvonarek",
@@ -7507,7 +8167,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1259680.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7518,7 +8178,7 @@
       "number": "4",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1255209.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7529,7 +8189,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1386775.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7540,7 +8200,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1177131.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7551,7 +8211,7 @@
       "number": "21",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/504606.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7562,7 +8222,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1382350.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7573,8 +8233,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/359193.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Luis Díaz",
@@ -7584,7 +8244,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/860914.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7595,8 +8255,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/31097.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Maghnes Akliouche",
@@ -7606,7 +8266,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1305618.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7617,7 +8277,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/27299.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7628,8 +8288,8 @@
       "number": "51",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1997332.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Marc Cucurella",
@@ -7639,8 +8299,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/873289.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Marco Asensio",
@@ -7650,7 +8310,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/498033.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7661,7 +8321,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/696365.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7672,8 +8332,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1321605.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Marquinhos",
@@ -7683,7 +8343,7 @@
       "number": "5",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/267365.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7694,7 +8354,7 @@
       "number": "60",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830671.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7705,7 +8365,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1628516.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7716,7 +8376,7 @@
       "number": "39",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/800880.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7727,7 +8387,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1412933.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7738,7 +8398,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "Bayern München",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -7749,7 +8409,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/309328.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7760,7 +8420,7 @@
       "number": "3",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/828159.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7771,7 +8431,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/883080.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7782,7 +8442,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1395447.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7793,7 +8453,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1327214.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7804,8 +8464,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1347574.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Nico Schlotterbeck",
@@ -7815,8 +8475,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1002058.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Nicolas Jackson",
@@ -7826,7 +8486,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1197347.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7837,7 +8497,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1744188.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7848,7 +8508,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/602304.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7859,7 +8519,7 @@
       "number": "25",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1158945.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7870,7 +8530,7 @@
       "number": "10",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/692984.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7881,7 +8541,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1814611.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7892,7 +8552,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/562035.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7903,7 +8563,7 @@
       "number": "47",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1699549.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7914,7 +8574,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/823825.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7925,7 +8585,7 @@
       "number": "22",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/352994.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7936,8 +8596,8 @@
       "number": "17",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1580528.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Reinier",
@@ -7947,8 +8607,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1075046.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Renato Marin",
@@ -7958,7 +8618,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1602252.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7969,7 +8629,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/589344.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -7980,8 +8640,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1105912.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Rodri",
@@ -7991,8 +8651,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/675088.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Rodrygo",
@@ -8002,8 +8662,8 @@
       "number": "11",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/895362.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Ruben Dias",
@@ -8013,7 +8673,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/614006.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8024,7 +8684,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1034808.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8035,7 +8695,7 @@
       "number": "55",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830647.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8046,7 +8706,7 @@
       "number": "24",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1574189.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8057,7 +8717,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/385437.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8068,7 +8728,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/892816.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8079,7 +8739,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/94841.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8090,7 +8750,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1432341.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8101,8 +8761,8 @@
       "number": "45",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1796908.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Thibaut Courtois",
@@ -8112,8 +8772,8 @@
       "number": "1",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/170323.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Thomas Müller",
@@ -8123,7 +8783,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/116772.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8134,7 +8794,7 @@
       "number": "20",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1286183.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8145,7 +8805,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1518139.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8156,8 +8816,8 @@
       "number": "12",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/760712.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Vinícius Júnior",
@@ -8167,8 +8827,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/846033.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Vitinha",
@@ -8178,7 +8838,7 @@
       "number": "17",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1061249.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8189,8 +8849,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1553105.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Warren Zaïre-Emery",
@@ -8200,7 +8860,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1367615.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8211,7 +8871,7 @@
       "number": "51",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1137670.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8222,7 +8882,7 @@
       "number": "36",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1692886.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8233,7 +8893,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1735453.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8244,7 +8904,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/889535.png",
       "associated_team": "Bayern Munich",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8255,7 +8915,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1417079.png",
       "associated_team": "Paris Saint-Germain",
-      "updated_at": "2026-07-07T17:27:55+00:00",
+      "updated_at": "2026-07-07T20:14:05+00:00",
       "source": "ESPN, FotMob"
     },
     {
@@ -8266,8 +8926,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1403692.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Álvaro González",
@@ -8277,8 +8937,8 @@
       "number": "50",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1842376.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Álvaro Rodriguez",
@@ -8288,8 +8948,8 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1327406.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     },
     {
       "name": "Éder Militao",
@@ -8299,8 +8959,8 @@
       "number": "3",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/844415.png",
       "associated_team": "Real Madrid",
-      "updated_at": "2026-07-07T17:27:55+00:00",
-      "source": "ESPN, FotMob"
+      "updated_at": "2026-07-07T20:14:05+00:00",
+      "source": "ESPN, ESPN roster, FotMob"
     }
   ]
 }
