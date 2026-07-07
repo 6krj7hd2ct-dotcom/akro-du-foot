@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-07T21:43:15+00:00",
+  "generated_at": "2026-07-07T23:14:28+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [
     {
@@ -2768,9 +2768,9 @@
           "away_country_code": "COL",
           "home_score": "0",
           "away_score": "0",
-          "status": "LIVE",
-          "status_state": "in",
-          "completed": false,
+          "status": "Terminé",
+          "status_state": "post",
+          "completed": true,
           "venue": "BC Place",
           "city": "Vancouver"
         }
@@ -2840,13 +2840,13 @@
           "id": "760513",
           "date": "2026-07-12T01:00Z",
           "home_team": "Argentina",
-          "away_team": "À déterminer",
+          "away_team": "Switzerland",
           "home_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
-          "away_flag_url": "",
+          "away_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
           "home_espn_id": "202",
-          "away_espn_id": "19281",
+          "away_espn_id": "475",
           "home_country_code": "ARG",
-          "away_country_code": "RD16 W8",
+          "away_country_code": "SUI",
           "home_score": "",
           "away_score": "",
           "status": "À venir",
@@ -3001,9 +3001,9 @@
       "away_country_code": "COL",
       "home_score": "0",
       "away_score": "0",
-      "status": "LIVE",
-      "status_state": "in",
-      "completed": false,
+      "status": "Terminé",
+      "status_state": "post",
+      "completed": true,
       "venue": "BC Place",
       "city": "Vancouver"
     }
@@ -3011,8 +3011,8 @@
   "group_matches_total": 72,
   "group_matches_remaining": 0,
   "knockout_matches_total": 32,
-  "knockout_matches_remaining": 9,
-  "competition_stage": "8es de finale",
+  "knockout_matches_remaining": 8,
+  "competition_stage": "Quarts de finale",
   "france_next_match": {
     "date": "2026-07-09T20:00Z",
     "opponent": "Morocco",
@@ -4021,11 +4021,18 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "DIRECT. Suisse-Colombie: le dernier huitième est toujours aussi tendu, suivez le match en live",
+      "title": "Suisse-Colombie: la Nati s'impose aux tirs au but et prend le dernier billet pour les quarts",
       "source": "RMC Sport",
-      "date": "2026-07-07T21:43:05+00:00",
-      "summary": "La Suisse défie la Colombie ce mardi en huitièmes de finale de la Coupe du monde 2026, pour rejoindre l'Argentine au tour suivant. Un match à suivre en direct sur le site et l'application de RMC Sport à 22h.",
+      "date": "2026-07-07T22:54:15+00:00",
+      "summary": "La Suisse écarte la Colombie, au terme de la séance de tirs au but (0-0, 4-3 tab) et rejoint l'Argentine en quarts de finale de la Coupe du monde 2026.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-colombie-suivez-le-match-des-huitiemes-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607070524.html"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:53:13+00:00",
+      "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
     },
     {
       "title": "France-Maroc: ce que les Bleus pensent de la nomination d'un arbitre argentin pour le quart de finale de la Coupe du monde",
@@ -4056,13 +4063,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/des-choses-etranges-l-egypte-crie-au-scandale-et-accuse-la-fifa-d-avoir-voulu-sauver-messi-et-l-argentine_AV-202607070869.html"
     },
     {
-      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-      "source": "RMC Sport",
-      "date": "2026-07-07T18:06:36+00:00",
-      "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
-    },
-    {
       "title": "\"Ronaldinho a déjà été emprisonné ici\": la sénatrice paraguayenne s’enfonce un peu plus et menace désormais Mbappé",
       "source": "RMC Sport",
       "date": "2026-07-07T17:41:06+00:00",
@@ -4089,16 +4089,30 @@
       "date": "2026-07-07T15:37:48+00:00",
       "summary": "L'Organisation des nations unies (ONU) a pris la parole pour apporter son soutien à Kylian Mbappé, victime d'insultes racistes venant de la sénatrice paraguayenne Celeste Amarilla.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-message-de-soutien-de-l-onu-a-mbappe-apres-les-propos-deshumanisants-et-ignobles-de-la-senatrice-paraguayenne_AV-202607070690.html"
-    },
-    {
-      "title": "Coupe du monde 2026: dans les instances et sur le terrain, le Maroc est la nouvelle puissance du football mondial",
-      "source": "RMC Sport",
-      "date": "2026-07-07T13:59:25+00:00",
-      "summary": "En l'espace de quelques années, le Maroc s'est imposé comme l'un des acteurs majeurs du football mondial. Grâce à une stratégie ambitieuse, portée par des investissements massifs dans les infrastructures, la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-dans-les-instances-et-sur-le-terrain-le-maroc-est-la-nouvelle-puissance-du-football-mondial_AV-202607070624.html"
     }
   ],
   "france_news": [
+    {
+      "title": "\"On va s'en souvenir toute notre vie\": ce couple franco-marocain va se marier deux jours après le match France-Maroc",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:23:21+00:00",
+      "summary": "Ce jeudi 9 juillet, à 22 h, l'équipe de France de football va défier le Maroc en quart de finale de la Coupe du monde, à Boston. Ce match sera spécial pour beaucoup de familles franco-marocaines, et tout…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/on-va-s-en-souvenir-toute-notre-vie-ce-couple-franco-marocain-va-se-marier-deux-jours-apres-le-match-france-maroc_AV-202607070940.html"
+    },
+    {
+      "title": "France - Maroc : \"Ne pas tomber dans la paranoïa\" au sujet des arbitres selon Risser",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:02:22+00:00",
+      "summary": "La désignation a de quoi faire sourire, quelques jours après la nomination de François Letexier pour le match de l'Argentine en 8es. Le tollé que cette décision a causé en Argentine fait désormais sourire et…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-maroc-ne-pas-tomber-dans-la-paranoia-au-sujet-des-arbitres-selon-risser_VN-202607070936.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
+      "source": "RMC Sport",
+      "date": "2026-07-07T21:49:18+00:00",
+      "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
+    },
     {
       "title": "France-Maroc: ce que les Bleus pensent de la nomination d'un arbitre argentin pour le quart de finale de la Coupe du monde",
       "source": "RMC Sport",
@@ -4112,13 +4126,6 @@
       "date": "2026-07-07T21:01:16+00:00",
       "summary": "À deux jours de France-Maroc en quart de finale de la Coupe du monde 2026 (jeudi, 22h heure de Paris), Aurélien Tchouaméni ne s'est toujours pas entraîné avec ses camarades tricolores ce mardi. Difficile, dès…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-maroc-tchouameni-s-entraine-a-part-un-onze-probable-se-dessine-pour-les-bleus_AP-202607070901.html"
-    },
-    {
-      "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
-      "source": "RMC Sport",
-      "date": "2026-07-07T20:52:11+00:00",
-      "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
     },
     {
       "title": "\"On espère que justice sera faite\": les Bleus tous derrière Mbappé après les insultes racistes de la sénatrice paraguayenne",
@@ -4147,13 +4154,6 @@
       "date": "2026-07-07T17:41:06+00:00",
       "summary": "Celeste Amarilla a maintenu sa position offensive et outrancière contre Kylian Mbappé lors d’un point presse organisé ce mardi au Paraguay en marge de la Coupe du monde 2026. Après de brèves excuses, la…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/ronaldinho-a-deja-ete-emprisonne-ici-la-senatrice-paraguayenne-s-enfonce-un-peu-plus-et-menace-desormais-mbappe_AV-202607070782.html"
-    },
-    {
-      "title": "\"Un coup de folie\", Govou explique la mythique demande en mariage de Domenech après l'élimination à l'Euro 2008",
-      "source": "RMC Sport",
-      "date": "2026-07-07T13:54:50+00:00",
-      "summary": "C'est l'un des moments marquants de cette sombre période dans l'histoire de l'Équipe de France entre 2008 et 2012. Sidney Govou est revenu sur la fameuse demande en mariage de Raymond Domenech à Estelle…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/un-coup-de-folie-govou-explique-la-mythique-demande-en-mariage-de-domenech-apres-l-elimination-a-l-euro-2008_AV-202607070620.html"
     },
     {
       "title": "\"Nous devons vaincre le racisme ensemble\" : Gianni Infantino, le président de la Fifa, apporte son soutien à Kylian Mbappé",
@@ -4259,22 +4259,22 @@
       "date": "2026-07-04T14:37:29+00:00",
       "summary": "Le milieu de terrain s'est blessé à la cuisse lors de l'entraînement des Bleus, vendredi. Il devrait être remplacé par Manu Koné pour le huitième de finale de la Coupe du monde 2026 de football, contre le…",
       "url": "https://www.franceinfo.fr/coupe-du-monde/blesse-durant-l-entrainement-vendredi-aurelien-tchouameni-a-de-tres-grandes-chances-d-etre-forfait-contre-le-paraguay_8093732.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Paraguay - France : les supporters des Bleus donnent de la voix malgré la chaleur",
-      "source": "France Info",
-      "date": "2026-07-04T14:08:09+00:00",
-      "summary": "L’équipe de France affronte le Paraguay à Philadelphie sous une chaleur de 37°C à 23 heures (heure française), samedi 4 juillet. Entre ferveur des supporters et soutien des familles comme celle de Lucas…",
-      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/paraguay-france-les-supporters-des-bleus-donnent-de-la-voix-malgre-la-chaleur_8093894.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
-      "title": "DIRECT. Suisse-Colombie: le dernier huitième est toujours aussi tendu, suivez le match en live",
+      "title": "Suisse-Colombie: la Nati s'impose aux tirs au but et prend le dernier billet pour les quarts",
       "source": "RMC Sport",
-      "date": "2026-07-07T21:43:05+00:00",
-      "summary": "La Suisse défie la Colombie ce mardi en huitièmes de finale de la Coupe du monde 2026, pour rejoindre l'Argentine au tour suivant. Un match à suivre en direct sur le site et l'application de RMC Sport à 22h.",
+      "date": "2026-07-07T22:54:15+00:00",
+      "summary": "La Suisse écarte la Colombie, au terme de la séance de tirs au but (0-0, 4-3 tab) et rejoint l'Argentine en quarts de finale de la Coupe du monde 2026.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-colombie-suivez-le-match-des-huitiemes-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607070524.html"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:53:13+00:00",
+      "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
     },
     {
       "title": "France-Maroc: ce que les Bleus pensent de la nomination d'un arbitre argentin pour le quart de finale de la Coupe du monde",
@@ -4305,13 +4305,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/des-choses-etranges-l-egypte-crie-au-scandale-et-accuse-la-fifa-d-avoir-voulu-sauver-messi-et-l-argentine_AV-202607070869.html"
     },
     {
-      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-      "source": "RMC Sport",
-      "date": "2026-07-07T18:06:36+00:00",
-      "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
-    },
-    {
       "title": "\"Ronaldinho a déjà été emprisonné ici\": la sénatrice paraguayenne s’enfonce un peu plus et menace désormais Mbappé",
       "source": "RMC Sport",
       "date": "2026-07-07T17:41:06+00:00",
@@ -4338,22 +4331,71 @@
       "date": "2026-07-07T15:37:48+00:00",
       "summary": "L'Organisation des nations unies (ONU) a pris la parole pour apporter son soutien à Kylian Mbappé, victime d'insultes racistes venant de la sénatrice paraguayenne Celeste Amarilla.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-message-de-soutien-de-l-onu-a-mbappe-apres-les-propos-deshumanisants-et-ignobles-de-la-senatrice-paraguayenne_AV-202607070690.html"
-    },
-    {
-      "title": "Coupe du monde 2026: dans les instances et sur le terrain, le Maroc est la nouvelle puissance du football mondial",
-      "source": "RMC Sport",
-      "date": "2026-07-07T13:59:25+00:00",
-      "summary": "En l'espace de quelques années, le Maroc s'est imposé comme l'un des acteurs majeurs du football mondial. Grâce à une stratégie ambitieuse, portée par des investissements massifs dans les infrastructures, la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-dans-les-instances-et-sur-le-terrain-le-maroc-est-la-nouvelle-puissance-du-football-mondial_AV-202607070624.html"
     }
   ],
   "all_news": [
     {
-      "title": "DIRECT. Suisse-Colombie: le dernier huitième est toujours aussi tendu, suivez le match en live",
+      "title": "La Suisse bat la Colombie aux tirs au but et rejoint l’Argentine en quarts !",
+      "source": "SO FOOT",
+      "date": "2026-07-07T22:57:16+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/la-suisse-bat-la-colombie-aux-tirs-au-but-et-rejoint-largentine-en-quarts"
+    },
+    {
+      "title": "Revivez Suisse – Colombie (0-0, 4-3 TAB)",
+      "source": "SO FOOT",
+      "date": "2026-07-07T22:57:00+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-suisse-colombie"
+    },
+    {
+      "title": "Suisse-Colombie: la Nati s'impose aux tirs au but et prend le dernier billet pour les quarts",
       "source": "RMC Sport",
-      "date": "2026-07-07T21:43:05+00:00",
-      "summary": "La Suisse défie la Colombie ce mardi en huitièmes de finale de la Coupe du monde 2026, pour rejoindre l'Argentine au tour suivant. Un match à suivre en direct sur le site et l'application de RMC Sport à 22h.",
+      "date": "2026-07-07T22:54:15+00:00",
+      "summary": "La Suisse écarte la Colombie, au terme de la séance de tirs au but (0-0, 4-3 tab) et rejoint l'Argentine en quarts de finale de la Coupe du monde 2026.",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-colombie-suivez-le-match-des-huitiemes-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607070524.html"
+    },
+    {
+      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:53:13+00:00",
+      "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
+    },
+    {
+      "title": "Argentine 3-2 Égypte :  \"Ce groupe ne baisse jamais les bras\" Messi soulagé",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:48:29+00:00",
+      "summary": "Une fin de match folle, et l'Argentine est en quart de finale. Lionel Messi est apparu soulagé en zone mixte, le capitaine a tenu à saluer ses joueurs.",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-argentine-3-2-egypte-ce-groupe-ne-baisse-jamais-les-bras-messi-soulage_VN-202607070946.html"
+    },
+    {
+      "title": "\"On va s'en souvenir toute notre vie\": ce couple franco-marocain va se marier deux jours après le match France-Maroc",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:23:21+00:00",
+      "summary": "Ce jeudi 9 juillet, à 22 h, l'équipe de France de football va défier le Maroc en quart de finale de la Coupe du monde, à Boston. Ce match sera spécial pour beaucoup de familles franco-marocaines, et tout…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/on-va-s-en-souvenir-toute-notre-vie-ce-couple-franco-marocain-va-se-marier-deux-jours-apres-le-match-france-maroc_AV-202607070940.html"
+    },
+    {
+      "title": "France - Maroc : \"Ne pas tomber dans la paranoïa\" au sujet des arbitres selon Risser",
+      "source": "RMC Sport",
+      "date": "2026-07-07T22:02:22+00:00",
+      "summary": "La désignation a de quoi faire sourire, quelques jours après la nomination de François Letexier pour le match de l'Argentine en 8es. Le tollé que cette décision a causé en Argentine fait désormais sourire et…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-maroc-ne-pas-tomber-dans-la-paranoia-au-sujet-des-arbitres-selon-risser_VN-202607070936.html"
+    },
+    {
+      "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
+      "source": "RMC Sport",
+      "date": "2026-07-07T21:49:18+00:00",
+      "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
+    },
+    {
+      "title": "L’arbitrage argentin ne fait pas peur aux Bleus",
+      "source": "SO FOOT",
+      "date": "2026-07-07T21:27:45+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/larbitrage-argentin-ne-fait-pas-peur-aux-bleus"
     },
     {
       "title": "Le message de soutien du Real Madrid à Kylian Mbappé après les insultes racistes d'une sénatrice paraguayenne",
@@ -4377,11 +4419,18 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-maroc-tchouameni-s-entraine-a-part-un-onze-probable-se-dessine-pour-les-bleus_AP-202607070901.html"
     },
     {
-      "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
-      "source": "RMC Sport",
-      "date": "2026-07-07T20:52:11+00:00",
-      "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
+      "title": "Mondial 2026 : comment Lionel Messi continue-t-il d’écrire sa légende en repoussant sa retraite",
+      "source": "SO FOOT",
+      "date": "2026-07-07T21:00:44+00:00",
+      "summary": "Une Pulga de lit, on n’en vient jamais à bout.",
+      "url": "https://www.sofoot.com/articles/mondial-2026-comment-lionel-messi-continue-t-il-decrire-sa-legende-en-repoussant-sa-retraite"
+    },
+    {
+      "title": "La fédé belge monte de nouveau au créneau",
+      "source": "SO FOOT",
+      "date": "2026-07-07T20:50:09+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/la-fede-belge-monte-de-nouveau-au-creneau"
     },
     {
       "title": "Coupe du monde 2026: la stat qui montre que l'Argentine était quasiment éliminée contre l'Egypte",
@@ -4412,18 +4461,18 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/il-n-y-a-jamais-eu-de-doute-dans-sa-tete-patrick-vieira-explique-pourquoi-le-phenomene-michael-olise-a-toujours-reve-de-l-equipe-de-france_AV-202607070876.html"
     },
     {
+      "title": "Hossam Hassan évoque une injustice",
+      "source": "SO FOOT",
+      "date": "2026-07-07T20:02:20+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/hossam-hassan-evoque-une-injustice"
+    },
+    {
       "title": "\"Des choses étranges\": l'Egypte crie au scandale et accuse la Fifa d'avoir voulu sauver Messi et l'Argentine",
       "source": "RMC Sport",
       "date": "2026-07-07T20:00:37+00:00",
       "summary": "Le sélectionneur égyptien et plusieurs de ses joueurs ont crié au scandale et dénoncé des erreurs arbitrales après leur défaite contre l'Argentine (2-3) ce mardi lors des huitièmes de finale de la Coupe du…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/des-choses-etranges-l-egypte-crie-au-scandale-et-accuse-la-fifa-d-avoir-voulu-sauver-messi-et-l-argentine_AV-202607070869.html"
-    },
-    {
-      "title": "En direct : Suisse – Colombie",
-      "source": "SO FOOT",
-      "date": "2026-07-07T19:40:51+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/en-direct-suisse-colombie"
     },
     {
       "title": "Les compos de Suisse-Colombie sont sorties !",
@@ -4515,13 +4564,6 @@
       "date": "2026-07-07T18:10:00+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/en-direct-argentine-egypte"
-    },
-    {
-      "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-      "source": "RMC Sport",
-      "date": "2026-07-07T18:06:36+00:00",
-      "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
     },
     {
       "title": "Coupe du monde 2026 – Lionel Messi ressuscite l’Argentine face à l’Égypte",
@@ -4678,32 +4720,11 @@
       "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-langleterre-veut-aussi-son-affaire-balogun"
     },
     {
-      "title": "Insultes racistes de la sénatrice paraguayenne envers Mbappé: le parquet de Paris ouvre une enquête",
-      "source": "RMC Sport",
-      "date": "2026-07-07T14:07:22+00:00",
-      "summary": "Le parquet de Paris a décidé d'ouvrir une enquête après avoir reçu une plainte de la FFF dénonçant les propos racistes de la sénatrice paraguayenne Celeste Amarilla envers Kylian Mbappé.",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/insultes-racistes-de-la-senatrice-paraguayenne-envers-mbappe-le-parquet-de-paris-ouvre-une-enquete_AV-202607070633.html"
-    },
-    {
       "title": "La Norvège plombée par un virus avant son quart face à l’Angleterre",
       "source": "SO FOOT",
       "date": "2026-07-07T14:00:29+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/la-norvege-plombee-par-un-virus-avant-son-quart-face-a-langleterre"
-    },
-    {
-      "title": "Coupe du monde 2026: dans les instances et sur le terrain, le Maroc est la nouvelle puissance du football mondial",
-      "source": "RMC Sport",
-      "date": "2026-07-07T13:59:25+00:00",
-      "summary": "En l'espace de quelques années, le Maroc s'est imposé comme l'un des acteurs majeurs du football mondial. Grâce à une stratégie ambitieuse, portée par des investissements massifs dans les infrastructures, la…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-dans-les-instances-et-sur-le-terrain-le-maroc-est-la-nouvelle-puissance-du-football-mondial_AV-202607070624.html"
-    },
-    {
-      "title": "\"Un coup de folie\", Govou explique la mythique demande en mariage de Domenech après l'élimination à l'Euro 2008",
-      "source": "RMC Sport",
-      "date": "2026-07-07T13:54:50+00:00",
-      "summary": "C'est l'un des moments marquants de cette sombre période dans l'histoire de l'Équipe de France entre 2008 et 2012. Sidney Govou est revenu sur la fameuse demande en mariage de Raymond Domenech à Estelle…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/un-coup-de-folie-govou-explique-la-mythique-demande-en-mariage-de-domenech-apres-l-elimination-a-l-euro-2008_AV-202607070620.html"
     },
     {
       "title": "Footox, le podcast de la rédaction de So Foot, vous spoile Argentine-Égypte !",
@@ -4732,51 +4753,37 @@
       "date": "2026-07-07T12:52:53+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-courtois-regle-ses-comptes-avec-les-etats-unis"
-    },
-    {
-      "title": "Première Ligue : La section féminine de Dijon placée en liquidation judiciaire après la décision de la DNCG en première instance",
-      "source": "SO FOOT",
-      "date": "2026-07-07T12:30:28+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/premiere-ligue-la-section-feminine-de-dijon-placee-en-liquidation-judiciaire-apres-la-decision-de-la-dncg-en-premiere-instance"
-    },
-    {
-      "title": "Coupe du monde 2026 : La Suisse sera grandement diminuée face à la Colombie",
-      "source": "SO FOOT",
-      "date": "2026-07-07T12:21:17+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-la-suisse-sera-grandement-diminuee-face-a-la-colombie"
-    },
-    {
-      "title": "Frederic Massara prend le poste de directeur technique de la Juventus",
-      "source": "SO FOOT",
-      "date": "2026-07-07T12:03:10+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/frederic-massara-prend-le-poste-de-directeur-technique-de-la-juventus"
-    },
-    {
-      "title": "Mondial 2026 : La défense espagnole, l’atout majeur de la Roja dans cette Coupe du monde",
-      "source": "SO FOOT",
-      "date": "2026-07-07T12:00:11+00:00",
-      "summary": "L’Espagne est-elle plus efficace offensivement que défensivement ?",
-      "url": "https://www.sofoot.com/articles/mondial-2026-la-defense-espagnole-latout-majeur-de-la-roja-dans-cette-coupe-du-monde"
-    },
-    {
-      "title": "Mondial 2026 – Warren Zaïre-Emery serait frustré de sa situation avec l’équipe de France",
-      "source": "SO FOOT",
-      "date": "2026-07-07T11:52:33+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-warren-zaire-emery-serait-frustre-de-sa-situation-avec-lequipe-de-france"
     }
   ],
   "focused_team_news": {
     "Argentina": [
       {
-        "title": "DIRECT. Suisse-Colombie: le dernier huitième est toujours aussi tendu, suivez le match en live",
+        "title": "La Suisse bat la Colombie aux tirs au but et rejoint l’Argentine en quarts !",
+        "source": "SO FOOT",
+        "date": "2026-07-07T22:57:16+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/la-suisse-bat-la-colombie-aux-tirs-au-but-et-rejoint-largentine-en-quarts"
+      },
+      {
+        "title": "Suisse-Colombie: la Nati s'impose aux tirs au but et prend le dernier billet pour les quarts",
         "source": "RMC Sport",
-        "date": "2026-07-07T21:43:05+00:00",
-        "summary": "La Suisse défie la Colombie ce mardi en huitièmes de finale de la Coupe du monde 2026, pour rejoindre l'Argentine au tour suivant. Un match à suivre en direct sur le site et l'application de RMC Sport à 22h.",
+        "date": "2026-07-07T22:54:15+00:00",
+        "summary": "La Suisse écarte la Colombie, au terme de la séance de tirs au but (0-0, 4-3 tab) et rejoint l'Argentine en quarts de finale de la Coupe du monde 2026.",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-suisse-colombie-suivez-le-match-des-huitiemes-de-finale-de-la-coupe-du-monde-2026-en-live_LS-202607070524.html"
+      },
+      {
+        "title": "Argentine 3-2 Égypte :  \"Ce groupe ne baisse jamais les bras\" Messi soulagé",
+        "source": "RMC Sport",
+        "date": "2026-07-07T22:48:29+00:00",
+        "summary": "Une fin de match folle, et l'Argentine est en quart de finale. Lionel Messi est apparu soulagé en zone mixte, le capitaine a tenu à saluer ses joueurs.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-argentine-3-2-egypte-ce-groupe-ne-baisse-jamais-les-bras-messi-soulage_VN-202607070946.html"
+      },
+      {
+        "title": "France - Maroc : \"Ne pas tomber dans la paranoïa\" au sujet des arbitres selon Risser",
+        "source": "RMC Sport",
+        "date": "2026-07-07T22:02:22+00:00",
+        "summary": "La désignation a de quoi faire sourire, quelques jours après la nomination de François Letexier pour le match de l'Argentine en 8es. Le tollé que cette décision a causé en Argentine fait désormais sourire et…",
+        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-maroc-ne-pas-tomber-dans-la-paranoia-au-sujet-des-arbitres-selon-risser_VN-202607070936.html"
       },
       {
         "title": "Coupe du monde 2026: la stat qui montre que l'Argentine était quasiment éliminée contre l'Egypte",
@@ -4833,27 +4840,6 @@
         "date": "2026-07-07T18:42:21+00:00",
         "summary": "Auteur du but de l'égalisation face à l'Egypte ce mardi, Lionel Messi a fondu en larmes après la remontada de l'Argentine pour arracher son ticket en quart de finale de la Coupe du monde 2026.",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-egypte-les-larmes-de-messi-apres-la-qualification-in-extremis-des-argentins-pour-les-quarts-de-finale_AV-202607070823.html"
-      },
-      {
-        "title": "Lionel Messi, Mostafa Shobeir, François Leteixier… Les notes d’Argentine-Égypte",
-        "source": "SO FOOT",
-        "date": "2026-07-07T18:30:36+00:00",
-        "summary": "Il y avait Mostafa Shobeir, Haissem Hassan et François Leteixier, puis Lionel Messi est arrivé.",
-        "url": "https://www.sofoot.com/articles/lionel-messi-mostafa-shobeir-francois-leteixier-les-notes-dargentine-egypte"
-      },
-      {
-        "title": "Argentine 3-2 Égypte :  Les comms du succès miraculeux de l'Albiceleste",
-        "source": "RMC Sport",
-        "date": "2026-07-07T18:29:03+00:00",
-        "summary": "Menés durant 80 minutes, les coéquipiers de Lionel Messi ont su remonter 2 buts d'écart et remporter le match. Revivez la rencontre avec les comms de RMC...",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-argentine-3-2-egypte-les-comms-du-succes-miraculeux-de-l-albiceleste_VN-202607070820.html"
-      },
-      {
-        "title": "Revivez Argentine – Égypte (3-2)",
-        "source": "SO FOOT",
-        "date": "2026-07-07T18:10:00+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/articles/en-direct-argentine-egypte"
       }
     ],
     "Brazil": [
@@ -4866,6 +4852,13 @@
       }
     ],
     "Egypt": [
+      {
+        "title": "Argentine 3-2 Égypte :  \"Ce groupe ne baisse jamais les bras\" Messi soulagé",
+        "source": "RMC Sport",
+        "date": "2026-07-07T22:48:29+00:00",
+        "summary": "Une fin de match folle, et l'Argentine est en quart de finale. Lionel Messi est apparu soulagé en zone mixte, le capitaine a tenu à saluer ses joueurs.",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-argentine-3-2-egypte-ce-groupe-ne-baisse-jamais-les-bras-messi-soulage_VN-202607070946.html"
+      },
       {
         "title": "Coupe du monde 2026: la stat qui montre que l'Argentine était quasiment éliminée contre l'Egypte",
         "source": "RMC Sport",
@@ -4942,16 +4935,44 @@
         "date": "2026-07-07T16:52:45+00:00",
         "summary": "Pour la deuxième fois dans cette Coupe du monde 2026, Lionel Messi a raté un pénalty. Une occasion manquée de remettre l'Argentine à égalité dans son huitième de finale face à l'Égypte qui plombe encore un…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/argentine-egypte-le-tres-mauvais-bilan-de-lionel-messi-sur-les-penaltys-a-la-coupe-du-monde_AV-202607070752.html"
-      },
-      {
-        "title": "Julián Álvarez titulaire, Omar Marmoush remplaçant : les compos d’Argentine-Égypte",
-        "source": "SO FOOT",
-        "date": "2026-07-07T15:37:10+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/julian-alvarez-titulaire-omar-marmoush-remplacant-les-compos-dargentine-egypte"
       }
     ],
     "France": [
+      {
+        "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
+        "source": "RMC Sport",
+        "date": "2026-07-07T22:53:13+00:00",
+        "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
+      },
+      {
+        "title": "\"On va s'en souvenir toute notre vie\": ce couple franco-marocain va se marier deux jours après le match France-Maroc",
+        "source": "RMC Sport",
+        "date": "2026-07-07T22:23:21+00:00",
+        "summary": "Ce jeudi 9 juillet, à 22 h, l'équipe de France de football va défier le Maroc en quart de finale de la Coupe du monde, à Boston. Ce match sera spécial pour beaucoup de familles franco-marocaines, et tout…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/on-va-s-en-souvenir-toute-notre-vie-ce-couple-franco-marocain-va-se-marier-deux-jours-apres-le-match-france-maroc_AV-202607070940.html"
+      },
+      {
+        "title": "France - Maroc : \"Ne pas tomber dans la paranoïa\" au sujet des arbitres selon Risser",
+        "source": "RMC Sport",
+        "date": "2026-07-07T22:02:22+00:00",
+        "summary": "La désignation a de quoi faire sourire, quelques jours après la nomination de François Letexier pour le match de l'Argentine en 8es. Le tollé que cette décision a causé en Argentine fait désormais sourire et…",
+        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-france-maroc-ne-pas-tomber-dans-la-paranoia-au-sujet-des-arbitres-selon-risser_VN-202607070936.html"
+      },
+      {
+        "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
+        "source": "RMC Sport",
+        "date": "2026-07-07T21:49:18+00:00",
+        "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
+      },
+      {
+        "title": "L’arbitrage argentin ne fait pas peur aux Bleus",
+        "source": "SO FOOT",
+        "date": "2026-07-07T21:27:45+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/larbitrage-argentin-ne-fait-pas-peur-aux-bleus"
+      },
       {
         "title": "France-Maroc: ce que les Bleus pensent de la nomination d'un arbitre argentin pour le quart de finale de la Coupe du monde",
         "source": "RMC Sport",
@@ -4965,13 +4986,6 @@
         "date": "2026-07-07T21:01:16+00:00",
         "summary": "À deux jours de France-Maroc en quart de finale de la Coupe du monde 2026 (jeudi, 22h heure de Paris), Aurélien Tchouaméni ne s'est toujours pas entraîné avec ses camarades tricolores ce mardi. Difficile, dès…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-maroc-tchouameni-s-entraine-a-part-un-onze-probable-se-dessine-pour-les-bleus_AP-202607070901.html"
-      },
-      {
-        "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
-        "source": "RMC Sport",
-        "date": "2026-07-07T20:52:11+00:00",
-        "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
       },
       {
         "title": "\"On espère que justice sera faite\": les Bleus tous derrière Mbappé après les insultes racistes de la sénatrice paraguayenne",
@@ -5002,55 +5016,27 @@
         "url": "https://www.sofoot.com/breves/paraguay-france-le-real-madrid-apporte-son-soutien-a-mbappe-apres-les-propos-racistes-de-celeste-amarilla"
       },
       {
-        "title": "Coupe du monde 2026: le tableau complet des matchs des quarts de finale",
-        "source": "RMC Sport",
-        "date": "2026-07-07T18:06:36+00:00",
-        "summary": "Le Maroc, la France et la Norvège ont été les premiers qualifiés pour les quarts de finale de la Coupe du monde 2026 au stade desquels ils s'affronteront. Voici le tableau complet des quarts de finale du…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-le-tableau-complet-des-matchs-des-quarts-de-finale_AV-202607040398.html"
-      },
-      {
         "title": "Zinédine Zidane",
         "source": "RMC Sport",
         "date": "2026-07-07T17:16:32+00:00",
         "summary": "Zinedine Zidane est né le 23 juin 1972 à Marseille. Cet ancien milieu offensif a remporté le Ballon d’or en 1998 (l'année où il ggne la Coupe du monde avec la France), et est une légende du Real Madrid où il…",
         "url": "https://rmcsport.bfmtv.com/football/zinedine-zidane_DN-202108310570.html"
-      },
-      {
-        "title": "\"Pas un saint\": les nouvelles révélations de Materazzi sur le coup de boule de Zidane lors de la finale de la Coupe du monde 2006",
-        "source": "RMC Sport",
-        "date": "2026-07-07T17:16:31+00:00",
-        "summary": "Dans une interview accordée à France Football, le champion du monde 2006 Marco Materazzi est revenu sur la finale rocambolesque face à la France et le coup de boule asséné par Zinedine Zidane.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/pas-un-saint-les-nouvelles-revelations-de-materazzi-sur-le-coup-de-boule-de-zidane-lors-de-la-finale-de-la-coupe-du-monde-2006_AV-202607070765.html"
-      },
-      {
-        "title": "Un arbitre argentin pour France-Maroc",
-        "source": "SO FOOT",
-        "date": "2026-07-07T16:49:21+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/un-arbitre-argentin-pour-france-maroc"
-      },
-      {
-        "title": "France-Maroc: un arbitre argentin désigné pour arbitrer le quart de finale de la Coupe du monde 2026",
-        "source": "RMC Sport",
-        "date": "2026-07-07T16:17:14+00:00",
-        "summary": "L'Argentin Facundo Tello a été désigné pour arbitrer le quart de finale de la Coupe du monde 2026 entre la France et le Maroc. Un choix qui pourrait faire parler, après que les supporters argentins ont eux…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-maroc-un-arbitre-argentin-designe-pour-arbitrer-le-quart-de-finale-de-la-coupe-du-monde-2026_AV-202607070718.html"
       }
     ],
     "Paraguay": [
+      {
+        "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
+        "source": "RMC Sport",
+        "date": "2026-07-07T21:49:18+00:00",
+        "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
+      },
       {
         "title": "Le message de soutien du Real Madrid à Kylian Mbappé après les insultes racistes d'une sénatrice paraguayenne",
         "source": "RMC Sport",
         "date": "2026-07-07T21:21:28+00:00",
         "summary": "Victime de propos racistes de la part d'une sénatrice paraguayenne, Kylian Mbappé a reçu une énorme vague de soutiens. C'est au tour de son club, le Real Madrid, de se ranger derrière son joueur.",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/le-message-de-soutien-du-real-madrid-a-kylian-mbappe-apres-les-insultes-racistes-d-une-senatrice-paraguayenne_AV-202607070923.html"
-      },
-      {
-        "title": "DIRECT. Coupe du monde 2026, équipe de France: vers un onze sans Tchouaméni contre le Maroc",
-        "source": "RMC Sport",
-        "date": "2026-07-07T20:52:11+00:00",
-        "summary": "Deux jours après la qualification face au Paraguay, l'équipe de France prépare son quart de finale de Coupe du monde face au Maroc, jeudi à Boston (coup d'envoi à 22h, heure de Paris). Compo, conférences de…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-coupe-du-monde-2026-toutes-les-infos-sur-les-bleus-avant-le-quart-de-finale-france-maroc_LN-202607060442.html"
       },
       {
         "title": "\"On espère que justice sera faite\": les Bleus tous derrière Mbappé après les insultes racistes de la sénatrice paraguayenne",
@@ -5102,41 +5088,25 @@
         "url": "https://www.sofoot.com/breves/apres-avoir-recu-une-plainte-de-la-fff-le-parquet-de-paris-ouvre-une-enquete-contre-la-senatrice-paraguayenne"
       },
       {
-        "title": "Insultes racistes de la sénatrice paraguayenne envers Mbappé: le parquet de Paris ouvre une enquête",
-        "source": "RMC Sport",
-        "date": "2026-07-07T14:07:22+00:00",
-        "summary": "Le parquet de Paris a décidé d'ouvrir une enquête après avoir reçu une plainte de la FFF dénonçant les propos racistes de la sénatrice paraguayenne Celeste Amarilla envers Kylian Mbappé.",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/insultes-racistes-de-la-senatrice-paraguayenne-envers-mbappe-le-parquet-de-paris-ouvre-une-enquete_AV-202607070633.html"
+        "title": "\"Nous devons vaincre le racisme ensemble\" : Gianni Infantino, le président de la Fifa, apporte son soutien à Kylian Mbappé",
+        "source": "France Info",
+        "date": "2026-07-07T02:48:19+00:00",
+        "summary": "Le Suisse s'est montré \"solidaire\" du capitaine des Bleus à la suite des posts racistes de la sénatrice paraguayenne Celeste Amarilla publiés sur X, dimanche.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/nous-devons-vaincre-le-racisme-ensemble-gianni-infantino-le-president-de-la-fifa-apporte-son-soutien-a-kylian-mbappe_8097053.html#xtor=RSS-3-%5Bgeneral%5D"
       },
       {
-        "title": "Mondial 2026 : Gianni Infantino condamne les propos racistes de la sénatrice paraguayenne Celeste Amarilla à l’encontre de Kylian Mbappé",
-        "source": "SO FOOT",
-        "date": "2026-07-07T07:46:34+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-gianni-infantino-condamne-les-propos-racistes-de-la-senatrice-paraguayenne-celeste-amarilla-a-lencontre-de-kylian-mbappe"
+        "title": "Coupe du monde : Désiré Doué, plus qu'un simple joker en sortie de banc pour l'équipe de France",
+        "source": "France Info",
+        "date": "2026-07-06T04:15:02+00:00",
+        "summary": "L'entrée du Parisien a tout changé contre le Paraguay, samedi, et son duel pour le poste d'ailier gauche titulaire avec Bradley Barcola est plus que jamais relancé.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/coupe-du-monde-desire-doue-plus-qu-un-simple-joker-en-sortie-de-banc-pour-l-equipe-de-france_8095277.html#xtor=RSS-3-%5Bgeneral%5D"
       },
       {
-        "title": "Mondial 2026 : La sénatrice paraguayenne, Celeste Amarilla, demande des excuses à Kylian Mbappé pour « violences de genre »",
-        "source": "SO FOOT",
-        "date": "2026-07-07T07:27:28+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mondial-2026-la-senatrice-paraguayenne-celeste-amarilla-demande-des-excuses-a-kylian-mbappe-pour-violences-de-genre"
-      }
-    ],
-    "Portugal": [
-      {
-        "title": "Après l’élimination du Portugal face à l’Espagne, Quaresma fracasse la sélection et Roberto Martínez",
-        "source": "SO FOOT",
-        "date": "2026-07-07T07:03:07+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/apres-lelimination-du-portugal-face-a-lespagne-quaresma-fracasse-la-selection-et-roberto-martinez"
-      },
-      {
-        "title": "Portugal-Espagne : Cristiano Ronaldo, la compétition de trop avec cette Coupe du monde 2026",
-        "source": "SO FOOT",
-        "date": "2026-07-07T05:00:50+00:00",
-        "summary": "CR7 n’est pas le seul responsable de l’élimination du Portugal, mais son obstination n’a pas aidé.",
-        "url": "https://www.sofoot.com/articles/portugal-espagne-cristiano-ronaldo-la-competition-de-trop-avec-cette-coupe-du-monde-2026"
+        "title": "\"Je n'avais jamais joué un match avec autant de coups, de coups en traître\" : l'arbitrage de France-Paraguay au centre des débats à la Coupe du monde",
+        "source": "France Info",
+        "date": "2026-07-05T13:26:45+00:00",
+        "summary": "Qualifiés pour les quarts de finale, les Français ont vécu une rencontre très hachée face au Paraguay, samedi, avec un arbitrage qui fait polémique autour du monde.",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/je-n-avais-jamais-joue-un-match-comme-ca-avec-autant-de-coups-l-arbitrage-de-france-paraguay-au-centre-des-debats-a-la-coupe-du-monde-2026_8095031.html#xtor=RSS-3-%5Bgeneral%5D"
       }
     ]
   },
@@ -5265,7 +5235,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/750027.png",
       "associated_team": "Morocco",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5276,7 +5246,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/850354.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5287,7 +5257,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/253989.png",
       "associated_team": "Norway",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5298,7 +5268,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/142200.png",
       "associated_team": "England",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5309,7 +5279,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/231388.png",
       "associated_team": "France",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5320,7 +5290,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/45843.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5331,7 +5301,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -5342,7 +5312,7 @@
       "number": "",
       "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/252107.png",
       "associated_team": "Brazil",
-      "updated_at": "2026-07-07T21:43:15+00:00",
+      "updated_at": "2026-07-07T23:14:28+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
