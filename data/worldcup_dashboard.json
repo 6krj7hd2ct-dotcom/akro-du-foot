@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-19T17:18:05+00:00",
+  "generated_at": "2026-07-19T19:31:54+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [],
   "group_matches": [
@@ -2006,10 +2006,10 @@
           "away_espn_id": "202",
           "home_country_code": "ESP",
           "away_country_code": "ARG",
-          "home_score": "",
-          "away_score": "",
-          "status": "À venir",
-          "status_state": "pre",
+          "home_score": "0",
+          "away_score": "0",
+          "status": "LIVE",
+          "status_state": "in",
           "completed": false,
           "venue": "MetLife Stadium",
           "city": "East Rutherford, New Jersey"
@@ -2029,10 +2029,10 @@
       "away_espn_id": "202",
       "home_country_code": "ESP",
       "away_country_code": "ARG",
-      "home_score": "",
-      "away_score": "",
-      "status": "À venir",
-      "status_state": "pre",
+      "home_score": "0",
+      "away_score": "0",
+      "status": "LIVE",
+      "status_state": "in",
       "completed": false,
       "venue": "MetLife Stadium",
       "city": "East Rutherford, New Jersey"
@@ -3023,11 +3023,18 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "DIRECT. Espagne-Argentine: suivez en live la finale de la Coupe du monde 2026",
+      "title": "DIRECT. Espagne-Argentine: un match fermé et des tacles rugueux, suivez la finale de la Coupe du monde en live",
       "source": "RMC Sport",
-      "date": "2026-07-19T17:08:28+00:00",
+      "date": "2026-07-19T19:31:09+00:00",
       "summary": "Au lendemain de la spectaculaire victoire de l'Angleterre face à la France (6-4) lors du match pour la troisième place de la Coupe du monde 2026, place à la finale entre l'Espagne et l'Argentine. Le match…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-espagne-argentine-suivez-en-live-la-finale-de-la-coupe-du-monde-2026_LS-202607190183.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Notre devoir vis-à-vis des contribuables\", la justification lunaire de la Maison Blanche sur son interférence dans l'affaire Balogun",
+      "source": "RMC Sport",
+      "date": "2026-07-19T17:57:41+00:00",
+      "summary": "Responsable de la Maison Blanche en charge de l'organisation du Mondial 2026, Andrew Giuliani est revenu, dimanche, sur la gestion de la suspension de l'international américain Folarin Balogun. Offrant une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-notre-devoir-vis-a-vis-des-contribuables-la-justification-lunaire-de-la-maison-blanche-sur-son-interference-dans-l-affaire-balogun_AV-202607190343.html"
     },
     {
       "title": "Deschamps s'en va : \"Des critiques pas dénuées de sens\" convient Acherchour",
@@ -3168,29 +3175,36 @@
       "date": "2026-07-19T07:24:44+00:00",
       "summary": "Après 103 matches disputés entre les États-Unis, le Canada et le Mexique, la Coupe du monde 2026 s'achève ce dimanche avec la finale entre l'Argentine et l'Espagne au MetLife Stadium de New York (21h).…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-entre-gigantisme-stades-magnifiques-et-football-spectacle-ce-qu-on-a-aime-ou-pas-dans-ce-mondial_AV-202607190140.html"
-    },
-    {
-      "title": "France 4-6 Angleterre : Une sortie par la PETITE PORTE, des comportements INDIGNES (GG du Mondial)",
-      "source": "RMC Sport",
-      "date": "2026-07-19T07:18:54+00:00",
-      "summary": "L'équipe de France s'est inclinée dans la petite finale de la Coupe du monde 2026... après avoir été menée 4-0 à la pause. Une première mi-temps honteuse et une sortie gâchée pour Didier Deschamps, malgré les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-4-6-angleterre-une-sortie-par-la-petite-porte-des-comportements-indignes-gg-du-mondial_VN-202607190148.html"
     }
   ],
   "france_news": [
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-07-19T18:18:35+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "Equipe de France: Koundé, Upamecano, Thuram... Les hommages des Bleus pour Didier Deschamps et son staff",
+      "source": "RMC Sport",
+      "date": "2026-07-19T18:18:35+00:00",
+      "summary": "Après la \"petite finale\" de la Coupe du monde perdue contre l'Angleterre samedi soir (6-4), de nombreux joueurs de l'équipe de France ont rendu hommage à Didier Deschamps, qui dirigeait sa dernière rencontre…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-kounde-upamecano-thuram-les-hommages-des-bleus-pour-didier-deschamps-et-son-staff_AV-202607190353.html"
+    },
+    {
+      "title": "\"Ce n'est pas possible de soutenir l'Argentine\" : des supporters des Bleus racontent pourquoi ils préfèrent une victoire de l'Espagne en finale de Coupe du monde",
+      "source": "France Info",
+      "date": "2026-07-19T17:45:48+00:00",
+      "summary": "Avant l'épilogue du Mondial 2026, les internautes contactés par franceinfo soutiennent largement les voisins espagnols. Des encouragement motivés par une défiance vis-à-vis de l'Albiceleste, plus que par…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/ce-n-est-pas-possible-de-soutenir-l-argentine-des-supporters-des-bleus-racontent-pourquoi-ils-preferent-une-victoire-de-l-espagne-en-finale-de-coupe-du-monde_8110454.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
     {
       "title": "Deschamps s'en va : \"Des critiques pas dénuées de sens\" convient Acherchour",
       "source": "RMC Sport",
       "date": "2026-07-19T16:26:33+00:00",
       "summary": "Didier Deschamps termine son double septennat à la tête de l'équipe de France sur une 4e place à la Coupe du monde 2026. Si le coach français revient sur les raisons de son départ, Walid Acherchour lui…",
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-deschamps-s-en-va-des-critiques-pas-denuees-de-sens-convient-acherchour_VN-202607190301.html"
-    },
-    {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-07-19T15:38:29+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
     },
     {
       "title": "Retour très discret pour Deschamps en France après la fin de la Coupe du monde des Bleus",
@@ -3298,13 +3312,6 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/france-angleterre-pathetique-desolant-des-figurants-le-coup-de-gueule-de-jean-michel-larque_AV-202607190143.html"
     },
     {
-      "title": "France 4-6 Angleterre : Une sortie par la PETITE PORTE, des comportements INDIGNES (GG du Mondial)",
-      "source": "RMC Sport",
-      "date": "2026-07-19T07:18:54+00:00",
-      "summary": "L'équipe de France s'est inclinée dans la petite finale de la Coupe du monde 2026... après avoir été menée 4-0 à la pause. Une première mi-temps honteuse et une sortie gâchée pour Didier Deschamps, malgré les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-4-6-angleterre-une-sortie-par-la-petite-porte-des-comportements-indignes-gg-du-mondial_VN-202607190148.html"
-    },
-    {
       "title": "REPORTAGE. \"Heureusement pour le coach, on perd 6-4 et pas 4-0\" : les supporters français entre amertume et fierté après la défaite en petite finale",
       "source": "France Info",
       "date": "2026-07-19T07:11:52+00:00",
@@ -3312,25 +3319,11 @@
       "url": "https://www.franceinfo.fr/coupe-du-monde/reportage-heureusement-pour-le-coach-on-perd-6-4-et-pas-4-0-les-supporters-francais-partages-entre-amertume-et-fierte-apres-la-defaite-en-petite-finale_8113733.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
-      "title": "France-Angleterre: \"C'est moi qui me suis trompé, pas eux\", Deschamps protège ses joueurs",
-      "source": "RMC Sport",
-      "date": "2026-07-19T07:10:15+00:00",
-      "summary": "Après une défaite amère contre l'Angleterre en petite finale de Coupe du monde (4-6), Didier Deschamps a pris l'entière responsabilité du naufrage en première période, où les Bleus ont encaissé un 4-0.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/france-angleterre-c-est-moi-qui-me-suis-trompe-pas-eux-deschamps-protege-ses-joueurs_AV-202607190137.html"
-    },
-    {
       "title": "L'équipe de France boucle sa Coupe du monde avec une défaite (6-4) contre l'Angleterre lors d'une petite finale complètement folle",
       "source": "France Info",
       "date": "2026-07-19T06:13:30+00:00",
       "summary": "Après une première période cataclysmique, la pire de l'ère Didier Deschamps, les Bleus ont failli refaire leur retard dans un deuxième acte à sens unique.",
       "url": "https://www.franceinfo.fr/coupe-du-monde/l-equipe-de-france-boucle-sa-coupe-du-monde-avec-une-defaite-contre-l-angleterre-lors-d-une-petite-finale-completement-folle_8113397.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "\"Ce n'est pas possible de soutenir l'Argentine\" : des supporters des Bleus racontent pourquoi ils préfèrent une victoire de l'Espagne en finale de Coupe du monde",
-      "source": "France Info",
-      "date": "2026-07-19T04:43:45+00:00",
-      "summary": "Avant l'épilogue du Mondial 2026, les internautes contactés par franceinfo soutiennent largement les voisins espagnols. Des encouragement motivés par une défiance vis-à-vis de l'Albiceleste, plus que par…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/ce-n-est-pas-possible-de-soutenir-l-argentine-des-supporters-des-bleus-racontent-pourquoi-ils-preferent-une-victoire-de-l-espagne-en-finale-de-coupe-du-monde_8110454.html#xtor=RSS-3-%5Bgeneral%5D"
     },
     {
       "title": "INFOGRAPHIE. 185 matchs dirigés, 20 victoires en Coupe du monde, 89 joueurs lancés... Les stats folles de Didier Deschamps avec les Bleus",
@@ -3345,15 +3338,29 @@
       "date": "2026-07-19T04:20:02+00:00",
       "summary": "Le Basque a dirigé son dernier match sur le banc de l'équipe de France, samedi, à Miami.",
       "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/hugo-lloris-paul-pogba-benjamin-pavard-le-onze-des-joueurs-les-plus-utilises-par-didier-deschamps-en-tant-que-selectionneur-de-l-equipe-de-france_8108630.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "EN IMAGES. Du premier match de poules à la petite finale, l'aventure des Bleus à la Coupe du monde 2026",
+      "source": "France Info",
+      "date": "2026-07-19T04:15:02+00:00",
+      "summary": "Les joueurs de Didier Deschamps ont conclu leur Mondial sur une 4e place, samedi, à Miami.",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/en-images-du-premier-match-de-poules-a-la-petite-finale-l-aventure-des-bleus-a-la-coupe-du-monde-2026_8106392.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "general_news": [
     {
-      "title": "DIRECT. Espagne-Argentine: suivez en live la finale de la Coupe du monde 2026",
+      "title": "DIRECT. Espagne-Argentine: un match fermé et des tacles rugueux, suivez la finale de la Coupe du monde en live",
       "source": "RMC Sport",
-      "date": "2026-07-19T17:08:28+00:00",
+      "date": "2026-07-19T19:31:09+00:00",
       "summary": "Au lendemain de la spectaculaire victoire de l'Angleterre face à la France (6-4) lors du match pour la troisième place de la Coupe du monde 2026, place à la finale entre l'Espagne et l'Argentine. Le match…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-espagne-argentine-suivez-en-live-la-finale-de-la-coupe-du-monde-2026_LS-202607190183.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Notre devoir vis-à-vis des contribuables\", la justification lunaire de la Maison Blanche sur son interférence dans l'affaire Balogun",
+      "source": "RMC Sport",
+      "date": "2026-07-19T17:57:41+00:00",
+      "summary": "Responsable de la Maison Blanche en charge de l'organisation du Mondial 2026, Andrew Giuliani est revenu, dimanche, sur la gestion de la suspension de l'international américain Folarin Balogun. Offrant une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-notre-devoir-vis-a-vis-des-contribuables-la-justification-lunaire-de-la-maison-blanche-sur-son-interference-dans-l-affaire-balogun_AV-202607190343.html"
     },
     {
       "title": "Deschamps s'en va : \"Des critiques pas dénuées de sens\" convient Acherchour",
@@ -3494,22 +3501,85 @@
       "date": "2026-07-19T07:24:44+00:00",
       "summary": "Après 103 matches disputés entre les États-Unis, le Canada et le Mexique, la Coupe du monde 2026 s'achève ce dimanche avec la finale entre l'Argentine et l'Espagne au MetLife Stadium de New York (21h).…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-entre-gigantisme-stades-magnifiques-et-football-spectacle-ce-qu-on-a-aime-ou-pas-dans-ce-mondial_AV-202607190140.html"
-    },
-    {
-      "title": "France 4-6 Angleterre : Une sortie par la PETITE PORTE, des comportements INDIGNES (GG du Mondial)",
-      "source": "RMC Sport",
-      "date": "2026-07-19T07:18:54+00:00",
-      "summary": "L'équipe de France s'est inclinée dans la petite finale de la Coupe du monde 2026... après avoir été menée 4-0 à la pause. Une première mi-temps honteuse et une sortie gâchée pour Didier Deschamps, malgré les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-4-6-angleterre-une-sortie-par-la-petite-porte-des-comportements-indignes-gg-du-mondial_VN-202607190148.html"
     }
   ],
   "all_news": [
     {
-      "title": "DIRECT. Espagne-Argentine: suivez en live la finale de la Coupe du monde 2026",
+      "title": "DIRECT. Espagne-Argentine: un match fermé et des tacles rugueux, suivez la finale de la Coupe du monde en live",
       "source": "RMC Sport",
-      "date": "2026-07-19T17:08:28+00:00",
+      "date": "2026-07-19T19:31:09+00:00",
       "summary": "Au lendemain de la spectaculaire victoire de l'Angleterre face à la France (6-4) lors du match pour la troisième place de la Coupe du monde 2026, place à la finale entre l'Espagne et l'Argentine. Le match…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-espagne-argentine-suivez-en-live-la-finale-de-la-coupe-du-monde-2026_LS-202607190183.html"
+    },
+    {
+      "title": "Yamal et Cubarsi, Messi, les bonnes stats de la finale de Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-07-19T18:28:27+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/yamal-et-cubarsi-messi-les-bonnes-stats-de-la-finale-de-coupe-du-monde"
+    },
+    {
+      "title": "Coupe du monde 2026 : le périple des supporters argentins et espagnols pour entrer dans le MetLife Stadium",
+      "source": "SO FOOT",
+      "date": "2026-07-19T18:22:07+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-2026-le-periple-des-supporters-argentins-et-espagnols-pour-entrer-dans-le-metlife-stadium"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-07-19T18:18:35+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+    },
+    {
+      "title": "Equipe de France: Koundé, Upamecano, Thuram... Les hommages des Bleus pour Didier Deschamps et son staff",
+      "source": "RMC Sport",
+      "date": "2026-07-19T18:18:35+00:00",
+      "summary": "Après la \"petite finale\" de la Coupe du monde perdue contre l'Angleterre samedi soir (6-4), de nombreux joueurs de l'équipe de France ont rendu hommage à Didier Deschamps, qui dirigeait sa dernière rencontre…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-kounde-upamecano-thuram-les-hommages-des-bleus-pour-didier-deschamps-et-son-staff_AV-202607190353.html"
+    },
+    {
+      "title": "Coupe du monde 2026: \"Notre devoir vis-à-vis des contribuables\", la justification lunaire de la Maison Blanche sur son interférence dans l'affaire Balogun",
+      "source": "RMC Sport",
+      "date": "2026-07-19T17:57:41+00:00",
+      "summary": "Responsable de la Maison Blanche en charge de l'organisation du Mondial 2026, Andrew Giuliani est revenu, dimanche, sur la gestion de la suspension de l'international américain Folarin Balogun. Offrant une…",
+      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-notre-devoir-vis-a-vis-des-contribuables-la-justification-lunaire-de-la-maison-blanche-sur-son-interference-dans-l-affaire-balogun_AV-202607190343.html"
+    },
+    {
+      "title": "Scaloni fait trois changements dans son onze de départ pour affronter l’Espagne",
+      "source": "SO FOOT",
+      "date": "2026-07-19T17:57:28+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/scaloni-fait-trois-changements-dans-son-onze-de-depart-pour-affronter-lespagne"
+    },
+    {
+      "title": "Le conseil de l’Europe accuse la FIFA d’avoir « ouvert la porte à la corruption »",
+      "source": "SO FOOT",
+      "date": "2026-07-19T17:48:18+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/le-conseil-de-leurope-accuse-la-fifa-davoir-ouvert-la-porte-a-la-corruption"
+    },
+    {
+      "title": "\"Ce n'est pas possible de soutenir l'Argentine\" : des supporters des Bleus racontent pourquoi ils préfèrent une victoire de l'Espagne en finale de Coupe du monde",
+      "source": "France Info",
+      "date": "2026-07-19T17:45:48+00:00",
+      "summary": "Avant l'épilogue du Mondial 2026, les internautes contactés par franceinfo soutiennent largement les voisins espagnols. Des encouragement motivés par une défiance vis-à-vis de l'Albiceleste, plus que par…",
+      "url": "https://www.franceinfo.fr/coupe-du-monde/ce-n-est-pas-possible-de-soutenir-l-argentine-des-supporters-des-bleus-racontent-pourquoi-ils-preferent-une-victoire-de-l-espagne-en-finale-de-coupe-du-monde_8110454.html#xtor=RSS-3-%5Bgeneral%5D"
+    },
+    {
+      "title": "L’Espagne dégaine sa compo pour la finale de la Coupe du monde",
+      "source": "SO FOOT",
+      "date": "2026-07-19T17:22:16+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/lespagne-degaine-sa-compo-pour-la-finale-de-la-coupe-du-monde"
+    },
+    {
+      "title": "Zinédine Zidane sera présent en tribunes pour la finale du Mondial",
+      "source": "SO FOOT",
+      "date": "2026-07-19T16:57:51+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/zinedine-zidane-sera-present-en-tribunes-pour-la-finale-du-mondial"
     },
     {
       "title": "Olivier Giroud rend hommage à Didier Deschamps",
@@ -3545,13 +3615,6 @@
       "date": "2026-07-19T15:38:29+00:00",
       "summary": "Au lendemain de son dernier match comme sélectionneur des Bleus, samedi face à l’Angleterre (4-6) lors du match pour la troisième place de la Coupe du monde 2026, Didier Deschamps est rentré en France.…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/retour-tres-discret-pour-deschamps-en-france-apres-la-fin-de-la-coupe-du-monde-des-bleus_AV-202607190279.html"
-    },
-    {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-07-19T15:38:29+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
     },
     {
       "title": "Espagne-Argentine: à quelle heure et sur quelle chaîne suivre la finale de la Coupe du monde 2026?",
@@ -3610,7 +3673,7 @@
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/espagne-argentine-ne-joue-pas-les-provocateurs-aguero-recadre-laporte-puis-assure-qu-il-s-agissait-d-une-blague_AV-202607190252.html"
     },
     {
-      "title": "Vers une délocalisation de la Supercoupe d’Espagne en Egypte ?",
+      "title": "Vers une délocalisation de la Supercoupe d’Espagne en Égypte ?",
       "source": "SO FOOT",
       "date": "2026-07-19T13:45:45+00:00",
       "summary": "",
@@ -3860,79 +3923,23 @@
       "date": "2026-07-19T07:24:44+00:00",
       "summary": "Après 103 matches disputés entre les États-Unis, le Canada et le Mexique, la Coupe du monde 2026 s'achève ce dimanche avec la finale entre l'Argentine et l'Espagne au MetLife Stadium de New York (21h).…",
       "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-entre-gigantisme-stades-magnifiques-et-football-spectacle-ce-qu-on-a-aime-ou-pas-dans-ce-mondial_AV-202607190140.html"
-    },
-    {
-      "title": "France 4-6 Angleterre : Une sortie par la PETITE PORTE, des comportements INDIGNES (GG du Mondial)",
-      "source": "RMC Sport",
-      "date": "2026-07-19T07:18:54+00:00",
-      "summary": "L'équipe de France s'est inclinée dans la petite finale de la Coupe du monde 2026... après avoir été menée 4-0 à la pause. Une première mi-temps honteuse et une sortie gâchée pour Didier Deschamps, malgré les…",
-      "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-france-4-6-angleterre-une-sortie-par-la-petite-porte-des-comportements-indignes-gg-du-mondial_VN-202607190148.html"
-    },
-    {
-      "title": "REPORTAGE. \"Heureusement pour le coach, on perd 6-4 et pas 4-0\" : les supporters français entre amertume et fierté après la défaite en petite finale",
-      "source": "France Info",
-      "date": "2026-07-19T07:11:52+00:00",
-      "summary": "L'équipe de France de football termine quatrième de la Coupe du monde après sa défaite face à l’Angleterre à Miami. Un match fou qui a donné beaucoup d'émotions aux supporters des Bleus réunis dans un bar à…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/reportage-heureusement-pour-le-coach-on-perd-6-4-et-pas-4-0-les-supporters-francais-partages-entre-amertume-et-fierte-apres-la-defaite-en-petite-finale_8113733.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Mondial 2026 : Didier Deschamps réagit à son « clash » avec Rayan Cherki à la mi-temps de France-Angleterre",
-      "source": "SO FOOT",
-      "date": "2026-07-19T07:10:43+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mondial-2026-didier-deschamps-reagit-a-son-clash-avec-rayan-cherki-a-la-mi-temps-de-france-angleterre"
-    },
-    {
-      "title": "France-Angleterre: \"C'est moi qui me suis trompé, pas eux\", Deschamps protège ses joueurs",
-      "source": "RMC Sport",
-      "date": "2026-07-19T07:10:15+00:00",
-      "summary": "Après une défaite amère contre l'Angleterre en petite finale de Coupe du monde (4-6), Didier Deschamps a pris l'entière responsabilité du naufrage en première période, où les Bleus ont encaissé un 4-0.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/france-angleterre-c-est-moi-qui-me-suis-trompe-pas-eux-deschamps-protege-ses-joueurs_AV-202607190137.html"
-    },
-    {
-      "title": "Mondial 2026 : À Rocafonda avant la finale entre l’Espagne et l’Argentine, la figure de Lamine Yamal est partout et fait la fierté des habitants du quartier",
-      "source": "SO FOOT",
-      "date": "2026-07-19T07:00:11+00:00",
-      "summary": "Reportage à Rocafonda, là où Lamine Yamal a foulé le béton avec son ballon.",
-      "url": "https://www.sofoot.com/articles/mondial-2026-a-rocafonda-avant-la-finale-entre-lespagne-et-largentine-la-figure-de-lamine-yamal-est-partout-et-fait-la-fierte-des-habitants-du-quartier"
-    },
-    {
-      "title": "L'équipe de France boucle sa Coupe du monde avec une défaite (6-4) contre l'Angleterre lors d'une petite finale complètement folle",
-      "source": "France Info",
-      "date": "2026-07-19T06:13:30+00:00",
-      "summary": "Après une première période cataclysmique, la pire de l'ère Didier Deschamps, les Bleus ont failli refaire leur retard dans un deuxième acte à sens unique.",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/l-equipe-de-france-boucle-sa-coupe-du-monde-avec-une-defaite-contre-l-angleterre-lors-d-une-petite-finale-completement-folle_8113397.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Mondial 2026 : L’Albiceleste, bien plus qu’une histoire de foot",
-      "source": "SO FOOT",
-      "date": "2026-07-19T06:00:49+00:00",
-      "summary": "Parce que c’est bien plus qu’une histoire de rage de vaincre débordante ou de grinta.",
-      "url": "https://www.sofoot.com/articles/mondial-2026-lalbiceleste-bien-plus-quune-histoire-de-foot"
-    },
-    {
-      "title": "\"Ce n'est pas possible de soutenir l'Argentine\" : des supporters des Bleus racontent pourquoi ils préfèrent une victoire de l'Espagne en finale de Coupe du monde",
-      "source": "France Info",
-      "date": "2026-07-19T04:43:45+00:00",
-      "summary": "Avant l'épilogue du Mondial 2026, les internautes contactés par franceinfo soutiennent largement les voisins espagnols. Des encouragement motivés par une défiance vis-à-vis de l'Albiceleste, plus que par…",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/ce-n-est-pas-possible-de-soutenir-l-argentine-des-supporters-des-bleus-racontent-pourquoi-ils-preferent-une-victoire-de-l-espagne-en-finale-de-coupe-du-monde_8110454.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "INFOGRAPHIE. 185 matchs dirigés, 20 victoires en Coupe du monde, 89 joueurs lancés... Les stats folles de Didier Deschamps avec les Bleus",
-      "source": "France Info",
-      "date": "2026-07-19T04:30:01+00:00",
-      "summary": "L'emblématique sélectionneur a dirigé les Bleus pour la dernière fois, samedi, contre l'Angleterre lors de la petite finale du Mondial.",
-      "url": "https://www.franceinfo.fr/coupe-du-monde/infographie-185-matchs-diriges-20-victoires-en-coupe-du-monde-89-joueurs-lances-les-stats-folles-de-didier-deschamps-avec-les-bleus_8108993.html#xtor=RSS-3-%5Bgeneral%5D"
     }
   ],
   "focused_team_news": {
     "Argentina": [
       {
-        "title": "DIRECT. Espagne-Argentine: suivez en live la finale de la Coupe du monde 2026",
+        "title": "DIRECT. Espagne-Argentine: un match fermé et des tacles rugueux, suivez la finale de la Coupe du monde en live",
         "source": "RMC Sport",
-        "date": "2026-07-19T17:08:28+00:00",
+        "date": "2026-07-19T19:31:09+00:00",
         "summary": "Au lendemain de la spectaculaire victoire de l'Angleterre face à la France (6-4) lors du match pour la troisième place de la Coupe du monde 2026, place à la finale entre l'Espagne et l'Argentine. Le match…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-espagne-argentine-suivez-en-live-la-finale-de-la-coupe-du-monde-2026_LS-202607190183.html"
+      },
+      {
+        "title": "\"Ce n'est pas possible de soutenir l'Argentine\" : des supporters des Bleus racontent pourquoi ils préfèrent une victoire de l'Espagne en finale de Coupe du monde",
+        "source": "France Info",
+        "date": "2026-07-19T17:45:48+00:00",
+        "summary": "Avant l'épilogue du Mondial 2026, les internautes contactés par franceinfo soutiennent largement les voisins espagnols. Des encouragement motivés par une défiance vis-à-vis de l'Albiceleste, plus que par…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/ce-n-est-pas-possible-de-soutenir-l-argentine-des-supporters-des-bleus-racontent-pourquoi-ils-preferent-une-victoire-de-l-espagne-en-finale-de-coupe-du-monde_8110454.html#xtor=RSS-3-%5Bgeneral%5D"
       },
       {
         "title": "Espagne-Argentine: à quelle heure et sur quelle chaîne suivre la finale de la Coupe du monde 2026?",
@@ -4003,13 +4010,6 @@
         "date": "2026-07-19T09:36:34+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/mondial-2026-le-message-de-lionel-messi-avant-la-finale-espagne-argentine"
-      },
-      {
-        "title": "Finale de la Coupe du monde 2026 : même formation, même théories, respect mutuel… d’où vient l’amitié entre Lionel Scaloni et Luis de la Fuente sélectionneurs de l’Argentine et de l’Espagne",
-        "source": "SO FOOT",
-        "date": "2026-07-19T08:00:16+00:00",
-        "summary": "Une jolie ode à l’amitié.",
-        "url": "https://www.sofoot.com/articles/finale-de-la-coupe-du-monde-2026-meme-formation-meme-theories-respect-mutuel-dou-vient-lamitie-entre-lionel-scaloni-et-luis-de-la-fuente-selectionneurs-de-largentine-et-de-lespagne"
       }
     ],
     "Canada": [
@@ -4023,7 +4023,7 @@
     ],
     "Egypt": [
       {
-        "title": "Vers une délocalisation de la Supercoupe d’Espagne en Egypte ?",
+        "title": "Vers une délocalisation de la Supercoupe d’Espagne en Égypte ?",
         "source": "SO FOOT",
         "date": "2026-07-19T13:45:45+00:00",
         "summary": "",
@@ -4032,11 +4032,32 @@
     ],
     "France": [
       {
-        "title": "DIRECT. Espagne-Argentine: suivez en live la finale de la Coupe du monde 2026",
+        "title": "DIRECT. Espagne-Argentine: un match fermé et des tacles rugueux, suivez la finale de la Coupe du monde en live",
         "source": "RMC Sport",
-        "date": "2026-07-19T17:08:28+00:00",
+        "date": "2026-07-19T19:31:09+00:00",
         "summary": "Au lendemain de la spectaculaire victoire de l'Angleterre face à la France (6-4) lors du match pour la troisième place de la Coupe du monde 2026, place à la finale entre l'Espagne et l'Argentine. Le match…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/direct-espagne-argentine-suivez-en-live-la-finale-de-la-coupe-du-monde-2026_LS-202607190183.html"
+      },
+      {
+        "title": "Didier Deschamps",
+        "source": "RMC Sport",
+        "date": "2026-07-19T18:18:35+00:00",
+        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
+      },
+      {
+        "title": "Equipe de France: Koundé, Upamecano, Thuram... Les hommages des Bleus pour Didier Deschamps et son staff",
+        "source": "RMC Sport",
+        "date": "2026-07-19T18:18:35+00:00",
+        "summary": "Après la \"petite finale\" de la Coupe du monde perdue contre l'Angleterre samedi soir (6-4), de nombreux joueurs de l'équipe de France ont rendu hommage à Didier Deschamps, qui dirigeait sa dernière rencontre…",
+        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/equipe-de-france-kounde-upamecano-thuram-les-hommages-des-bleus-pour-didier-deschamps-et-son-staff_AV-202607190353.html"
+      },
+      {
+        "title": "\"Ce n'est pas possible de soutenir l'Argentine\" : des supporters des Bleus racontent pourquoi ils préfèrent une victoire de l'Espagne en finale de Coupe du monde",
+        "source": "France Info",
+        "date": "2026-07-19T17:45:48+00:00",
+        "summary": "Avant l'épilogue du Mondial 2026, les internautes contactés par franceinfo soutiennent largement les voisins espagnols. Des encouragement motivés par une défiance vis-à-vis de l'Albiceleste, plus que par…",
+        "url": "https://www.franceinfo.fr/coupe-du-monde/ce-n-est-pas-possible-de-soutenir-l-argentine-des-supporters-des-bleus-racontent-pourquoi-ils-preferent-une-victoire-de-l-espagne-en-finale-de-coupe-du-monde_8110454.html#xtor=RSS-3-%5Bgeneral%5D"
       },
       {
         "title": "Olivier Giroud rend hommage à Didier Deschamps",
@@ -4058,13 +4079,6 @@
         "date": "2026-07-19T16:02:58+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/grosse-audience-pour-la-petite-finale-des-bleus-contre-langleterre"
-      },
-      {
-        "title": "Didier Deschamps",
-        "source": "RMC Sport",
-        "date": "2026-07-19T15:38:29+00:00",
-        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
       },
       {
         "title": "Retour très discret pour Deschamps en France après la fin de la Coupe du monde des Bleus",
@@ -4100,20 +4114,6 @@
         "date": "2026-07-19T13:43:13+00:00",
         "summary": "Très probable futur sélectionneur de l’équipe de France, Zinédine Zidane sera ce dimanche au MetLife Stadium de New York pour assister à la finale de la Coupe du monde 2026 entre l’Espagne et l’Argentine. Il…",
         "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-zidane-assistera-a-la-finale-espagne-argentine-ce-dimanche_AV-202607190249.html"
-      },
-      {
-        "title": "Coupe du monde 2026: les larmes du clan Deschamps, la brouille avec Cherki… les coulisses de la défaite des Bleus lors de la petite finale",
-        "source": "RMC Sport",
-        "date": "2026-07-19T13:30:22+00:00",
-        "summary": "Didier Deschamps a achevé samedi son bail à la tête de l'équipe de France au terme d'un match pour la 3e place de la Coupe du monde 2026 rocambolesque, perdu face à l'Angleterre (4-6). Une rencontre placée…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/coupe-du-monde-2026-les-larmes-du-clan-deschamps-la-brouille-avec-cherki-les-coulisses-de-la-defaite-des-bleus-lors-de-la-petite-finale_AV-202607190248.html"
-      },
-      {
-        "title": "Claquettes, chaussettes... les Bleus déjà en vacances Daily #37",
-        "source": "RMC Sport",
-        "date": "2026-07-19T11:30:15+00:00",
-        "summary": "L’équipe de France termine sa Coupe du monde à la 4e place après une défaite historique face à l’Angleterre 6-4 hier soir. L’état d'esprit de certains joueurs comme Rayan Cherki a été pointé du doigt. Kylian…",
-        "url": "https://rmcsport.bfmtv.com/football/coupe-du-monde/video-claquettes-chaussettes-les-bleus-deja-en-vacances_VN-202607190221.html"
       }
     ],
     "Senegal": [
@@ -4255,7 +4255,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1077894.png",
       "associated_team": "England",
-      "updated_at": "2026-07-19T17:18:05+00:00",
+      "updated_at": "2026-07-19T19:31:54+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4266,7 +4266,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
       "associated_team": "France",
-      "updated_at": "2026-07-19T17:18:05+00:00",
+      "updated_at": "2026-07-19T19:31:54+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4277,7 +4277,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-07-19T17:18:05+00:00",
+      "updated_at": "2026-07-19T19:31:54+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -4288,7 +4288,7 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-07-19T17:18:05+00:00",
+      "updated_at": "2026-07-19T19:31:54+00:00",
       "source": "FotMob/ESPN stats"
     }
   ]
