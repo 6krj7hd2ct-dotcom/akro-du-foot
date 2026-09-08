@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-08T14:32:25+00:00",
+  "generated_at": "2026-09-08T18:40:42+00:00",
   "competition": "Ligue des Champions",
   "standings": [],
   "group_matches": [
@@ -3730,14 +3730,836 @@
       "espn_id": "362",
       "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/362.png",
       "country_code": "AVL",
-      "coach": "",
-      "formation": "",
+      "coach": "Unai Emery",
+      "formation": "4-2-3-1",
       "starters": [],
       "substitutes": [],
-      "squad": [],
+      "squad": [
+        {
+          "name": "Arsenal",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9825.png",
+          "position": "1",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Manchester City",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8456.png",
+          "position": "2",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Manchester United",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10260.png",
+          "position": "3",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Brentford",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9937.png",
+          "position": "4",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Chelsea",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8455.png",
+          "position": "5",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Brighton & Hove Albion",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10204.png",
+          "position": "6",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Liverpool",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8650.png",
+          "position": "7",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Nottingham Forest",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10203.png",
+          "position": "8",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Sunderland",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8472.png",
+          "position": "9",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Leeds United",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8463.png",
+          "position": "10",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "AFC Bournemouth",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8678.png",
+          "position": "11",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Ipswich Town",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9902.png",
+          "position": "12",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Everton",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8668.png",
+          "position": "13",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Fulham",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9879.png",
+          "position": "14",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Tottenham Hotspur",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8586.png",
+          "position": "15",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Aston Villa",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10252.png",
+          "position": "16",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Crystal Palace",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9826.png",
+          "position": "17",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Coventry City",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8669.png",
+          "position": "18",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Newcastle United",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10261.png",
+          "position": "19",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Hull City",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8667.png",
+          "position": "20",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "AEK Athens",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8563.png",
+          "position": "2",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "LASK",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9977.png",
+          "position": "3",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Club Brugge",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8342.png",
+          "position": "4",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Atlético Madrid",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9906.png",
+          "position": "6",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Barcelona",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8634.png",
+          "position": "7",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Bayern München",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9823.png",
+          "position": "8",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Bodø/Glimt",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8402.png",
+          "position": "9",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Borussia Dortmund",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9789.png",
+          "position": "10",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Como",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10171.png",
+          "position": "11",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "FC Porto",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9773.png",
+          "position": "12",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Fenerbahçe",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8695.png",
+          "position": "13",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Feyenoord",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10235.png",
+          "position": "14",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Galatasaray",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8637.png",
+          "position": "15",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Inter",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8636.png",
+          "position": "16",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lens",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8588.png",
+          "position": "17",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lille",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8639.png",
+          "position": "18",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Paris Saint-Germain",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9847.png",
+          "position": "22",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "PSV Eindhoven",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8640.png",
+          "position": "23",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "RB Leipzig",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/178475.png",
+          "position": "24",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Real Betis",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8603.png",
+          "position": "25",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Real Madrid",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8633.png",
+          "position": "26",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Roma",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8686.png",
+          "position": "27",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Sabah FK",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/951893.png",
+          "position": "28",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Shakhtar Donetsk",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9728.png",
+          "position": "29",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Slavia Prague",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/7787.png",
+          "position": "30",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Slovan Bratislava",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/6019.png",
+          "position": "31",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Sporting CP",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9768.png",
+          "position": "32",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Napoli",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9875.png",
+          "position": "33",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "VfB Stuttgart",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10269.png",
+          "position": "34",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Viking",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8478.png",
+          "position": "35",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Villarreal",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10205.png",
+          "position": "36",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Taylor Harwood-Bellis",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/966021.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Ibrahim Mbaye",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1593857.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Nicolas Jackson",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1197347.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Leon Goretzka",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/343748.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/760320.png",
+          "position": "RB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Zion Suzuki",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1053679.png",
+          "position": "GK",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Matteo Ruggeri",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1051097.png",
+          "position": "LB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1203665.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "João Gomes",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1174672.png",
+          "position": "CM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Johan Manzambi",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1520063.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Douglas Luiz",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/787350.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Tammy Abraham",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/749661.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Brian Madjo",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1729841.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Alysson Edward",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1656860.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Modou Cissé",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1714552.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Leon Bailey",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/671331.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Bradley Burrowes",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1639163.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Triston Rowe",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1442496.png",
+          "position": "RM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Josh Feeney",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1250240.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Ollie Watkins",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/540088.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Emiliano Martínez",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/268375.png",
+          "position": "GK",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Ezri Konsa",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/710159.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Kosta Nedeljkovic",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1513910.png",
+          "position": "RB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Samuel Iling-Junior",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1368061.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Evann Guessand",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1087966.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lucas Digne",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/210111.png",
+          "position": "LB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Joe Gauci",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/970296.png",
+          "position": "GK",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Morgan Rogers",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/883080.png",
+          "position": "AM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Kerr Smith",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1215944.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Yeimar Mosquera",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1627205.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Andrés García",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1430406.png",
+          "position": "RB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Oliwier Zych",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1117055.png",
+          "position": "GK",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lewis Dobbin",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1098752.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Youri Tielemans",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/465960.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Zépiqueno Redmond",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1553363.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Kadan Young",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1362972.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Louie Barry",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/969256.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Sil Swinkels",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1197533.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Enzo Barrenechea",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1352923.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Donyell Malen",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/660301.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Rory Wilson",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1367925.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Ben Broggio",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1407239.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Jamaldeen Jimoh-Aloba",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1557236.png",
+          "position": "AM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Yasin Özcan",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1393980.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Finley Munroe",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1331697.png",
+          "position": "LWB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "John McGinn",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/356406.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Matty Cash",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/729731.png",
+          "position": "RB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Matthieu Udol",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/660326.png",
+          "position": "LWB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lamare Bogarde",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1190033.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Christian Kofane",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1705081.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Amad Diallo",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1070052.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/706297.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Joshua Zirkzee",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/950830.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Joel Ordóñez",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1354085.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Endrick",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1406729.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Victor Nilsson Lindelöf",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/258269.png",
+          "position": "",
+          "number": "3",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/swe.png"
+        },
+        {
+          "name": "Tyrone Mings",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/419664.png",
+          "position": "",
+          "number": "5",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/eng.png"
+        },
+        {
+          "name": "Ian Maatsen",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/966026.png",
+          "position": "",
+          "number": "22",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/ned.png"
+        },
+        {
+          "name": "Boubacar Kamara",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/816325.png",
+          "position": "",
+          "number": "8",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/fra.png"
+        },
+        {
+          "name": "Ross Barkley",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/215384.png",
+          "position": "",
+          "number": "6",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/eng.png"
+        },
+        {
+          "name": "Emiliano Buendía",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/610184.png",
+          "position": "",
+          "number": "10",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/arg.png"
+        },
+        {
+          "name": "George Hemmings",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1607333.png",
+          "position": "",
+          "number": "53",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/eng.png"
+        },
+        {
+          "name": "Marco Bizot",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/195782.png",
+          "position": "",
+          "number": "40",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/ned.png"
+        },
+        {
+          "name": "Pau Torres",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/792645.png",
+          "position": "",
+          "number": "14",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/esp.png"
+        },
+        {
+          "name": "Amadou Onana",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1185748.png",
+          "position": "",
+          "number": "24",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Modou Kéba Cissé",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1714552.png",
+          "position": "",
+          "number": "48",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/sen.png"
+        }
+      ],
       "sources": [
-        "ESPN"
-      ]
+        "ESPN",
+        "FotMob"
+      ],
+      "fotmob_id": "10252"
     },
     "Atalanta": {
       "key": "Atalanta",
@@ -3906,14 +4728,689 @@
       "espn_id": "570",
       "flag_url": "https://a.espncdn.com/i/teamlogos/soccer/500/570.png",
       "country_code": "BRU",
-      "coach": "",
-      "formation": "",
+      "coach": "Ivan Leko",
+      "formation": "4-2-3-1",
       "starters": [],
       "substitutes": [],
-      "squad": [],
+      "squad": [
+        {
+          "name": "Sporting Charleroi",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9986.png",
+          "position": "1",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Club Brugge",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8342.png",
+          "position": "2",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Gent",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9991.png",
+          "position": "3",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Anderlecht",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8635.png",
+          "position": "4",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Genk",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9987.png",
+          "position": "5",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Standard Liège",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9985.png",
+          "position": "6",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Zulte Waregem",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10000.png",
+          "position": "7",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Union St.Gilloise",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/7978.png",
+          "position": "8",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "St.Truiden",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9997.png",
+          "position": "9",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Westerlo",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10001.png",
+          "position": "10",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lommel",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/6702.png",
+          "position": "11",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Royal Antwerp",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9988.png",
+          "position": "12",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Cercle Brugge",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9984.png",
+          "position": "13",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "KV Mechelen",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8203.png",
+          "position": "14",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "SK Beveren",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8475.png",
+          "position": "15",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "OH Leuven",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1773.png",
+          "position": "16",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Kortrijk",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8571.png",
+          "position": "17",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "RAAL La Louvière",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1218969.png",
+          "position": "18",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Aston Villa",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10252.png",
+          "position": "1",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "AEK Athens",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8563.png",
+          "position": "2",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "LASK",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9977.png",
+          "position": "3",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Arsenal",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9825.png",
+          "position": "5",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Atlético Madrid",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9906.png",
+          "position": "6",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Barcelona",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8634.png",
+          "position": "7",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Bayern München",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9823.png",
+          "position": "8",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Bodø/Glimt",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8402.png",
+          "position": "9",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Borussia Dortmund",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9789.png",
+          "position": "10",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Como",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10171.png",
+          "position": "11",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "FC Porto",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9773.png",
+          "position": "12",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Fenerbahçe",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8695.png",
+          "position": "13",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Feyenoord",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10235.png",
+          "position": "14",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Galatasaray",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8637.png",
+          "position": "15",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Inter",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8636.png",
+          "position": "16",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lens",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8588.png",
+          "position": "17",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Lille",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8639.png",
+          "position": "18",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Liverpool",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8650.png",
+          "position": "19",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Manchester City",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8456.png",
+          "position": "20",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Manchester United",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10260.png",
+          "position": "21",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Paris Saint-Germain",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9847.png",
+          "position": "22",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "PSV Eindhoven",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8640.png",
+          "position": "23",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "RB Leipzig",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/178475.png",
+          "position": "24",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Real Betis",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8603.png",
+          "position": "25",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Real Madrid",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8633.png",
+          "position": "26",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Roma",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8686.png",
+          "position": "27",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Sabah FK",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/951893.png",
+          "position": "28",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Shakhtar Donetsk",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9728.png",
+          "position": "29",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Slavia Prague",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/7787.png",
+          "position": "30",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Slovan Bratislava",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/6019.png",
+          "position": "31",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Sporting CP",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9768.png",
+          "position": "32",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Napoli",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/9875.png",
+          "position": "33",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "VfB Stuttgart",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10269.png",
+          "position": "34",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Viking",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/8478.png",
+          "position": "35",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Villarreal",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10205.png",
+          "position": "36",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Wisdom Mike",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1692886.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Matteo Dams",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1315821.png",
+          "position": "LB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Jan Virgili",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1690093.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Freddie Potts",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1206287.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Han-Beom Lee",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1232253.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Andrej Vasovic",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1691828.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Yann Sommer",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/41618.png",
+          "position": "GK",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Cheveyo Tsawa",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1612843.png",
+          "position": "CM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Félix Lemaréchal",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1284071.png",
+          "position": "AM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Gustaf Nilsson",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/118241.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Vince Osuji",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1658826.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Ludovit Reis",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/869326.png",
+          "position": "AM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Bjorn Meijer",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1256178.png",
+          "position": "LB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Cisse Sandra",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1178444.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Yanis Musuayi",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1836083.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Raphael Onyedika",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1126768.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Christos Tzolis",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1157237.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Shandre Campbell",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1599319.png",
+          "position": "RW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Zaid Abner Romero",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1118199.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Dani van den Heuvel",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1192954.png",
+          "position": "GK",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Aleksandar Stankovic",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1410437.png",
+          "position": "DM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Kaye Furo",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413853.png",
+          "position": "ST",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Hugo Vetlesen",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/837064.png",
+          "position": "AM",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Tian Nai Koren",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1692880.png",
+          "position": "LW",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Joaquin Seys",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1489449.png",
+          "position": "LB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Joel Ordóñez",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1354085.png",
+          "position": "CB",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Kyriani Sabbe",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1227590.png",
+          "position": "",
+          "number": "64",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Brandon Mechele",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/445873.png",
+          "position": "",
+          "number": "44",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Hans Vanaken",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/203666.png",
+          "position": "",
+          "number": "20",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Romeo Vermant",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1178453.png",
+          "position": "",
+          "number": "17",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Mamadou Diakhon",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1484998.png",
+          "position": "",
+          "number": "67",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/fra.png"
+        },
+        {
+          "name": "Nicolò Tresoldi",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1334552.png",
+          "position": "",
+          "number": "7",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/ger.png"
+        },
+        {
+          "name": "Hugo Siquet",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1202888.png",
+          "position": "",
+          "number": "41",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Nordin Jackers",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/526227.png",
+          "position": "",
+          "number": "29",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Samba Coulibaly",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830647.png",
+          "position": "",
+          "number": "54",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/fra.png"
+        },
+        {
+          "name": "Lynnt Audoor",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1178442.png",
+          "position": "",
+          "number": "62",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Simon Mignolet",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/37868.png",
+          "position": "",
+          "number": "22",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Stefan Ostoici",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1863039.png",
+          "position": "",
+          "number": "61",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/hun.png"
+        },
+        {
+          "name": "Axl De Corte",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1557061.png",
+          "position": "",
+          "number": "71",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Jorne Spileers",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1233418.png",
+          "position": "",
+          "number": "58",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/bel.png"
+        },
+        {
+          "name": "Alejandro Granados",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1485173.png",
+          "position": "",
+          "number": "70",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/esp.png"
+        },
+        {
+          "name": "Carlos Forbs",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1186529.png",
+          "position": "",
+          "number": "9",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/por.png"
+        },
+        {
+          "name": "Andrej Vasović",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/1691828.png",
+          "position": "",
+          "number": "77",
+          "country_flag_url": "https://images.fotmob.com/image_resources/logo/teamlogo/sui.png"
+        }
+      ],
       "sources": [
-        "ESPN"
-      ]
+        "ESPN",
+        "FotMob"
+      ],
+      "fotmob_id": "8342"
     },
     "Como": {
       "key": "Como",
@@ -4508,8 +6005,100 @@
       ]
     }
   },
-  "top_scorers": [],
-  "top_assists": [],
+  "top_scorers": [
+    {
+      "name": "Emiliano Buendía",
+      "team": "Aston Villa",
+      "team_id": 10252,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10252.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/610184.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 1,
+      "country": ""
+    },
+    {
+      "name": "Hugo Vetlesen",
+      "team": "Club Brugge",
+      "team_id": 8342,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8342.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/837064.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 2,
+      "country": ""
+    },
+    {
+      "name": "John McGinn",
+      "team": "Aston Villa",
+      "team_id": 10252,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10252.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/356406.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 3,
+      "country": ""
+    }
+  ],
+  "top_assists": [
+    {
+      "name": "Pau Torres",
+      "team": "Aston Villa",
+      "team_id": 10252,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10252.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/792645.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 2,
+      "rank": 1,
+      "country": ""
+    },
+    {
+      "name": "João Gomes",
+      "team": "Aston Villa",
+      "team_id": 10252,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/10252.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1174672.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 2,
+      "country": ""
+    },
+    {
+      "name": "Jan Virgili",
+      "team": "Club Brugge",
+      "team_id": 8342,
+      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8342.png",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1690093.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "",
+      "value": 1,
+      "rank": 3,
+      "country": ""
+    }
+  ],
   "all_time_top_scorers": [
     {
       "rank": 1,
@@ -4625,6 +6214,20 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1re journée de Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:39:07+00:00",
+      "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h). Un match à suivre en direct sur le site et l'application de…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
+    },
+    {
+      "title": "DIRECT. Lille-Betis Séville: suivez en live le premier match du LOSC en Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:35:37+00:00",
+      "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21h. Suivez la rencontre dans…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-lille-betis-seville-suivez-en-live-l-entree-en-lice-des-dogues-en-ligue-des-champions_LS-202609080564.html"
+    },
+    {
       "title": "Ballon d'or 2026: l'absence surprise de Doué et Barcola dans les 30 finalistes",
       "source": "RMC Sport",
       "date": "2026-09-08T14:16:04+00:00",
@@ -4632,25 +6235,11 @@
       "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/ballon-d-or-2026-l-absence-surprise-de-doue-et-barcola-dans-les-30-finalistes_AV-202609080619.html"
     },
     {
-      "title": "DIRECT. Lille-Betis Séville: suivez en live l'entrée en lice des Dogues en Ligue des champions",
-      "source": "RMC Sport",
-      "date": "2026-09-08T13:18:49+00:00",
-      "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21 heures. Suivez la rencontre…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-lille-betis-seville-suivez-en-live-l-entree-en-lice-des-dogues-en-ligue-des-champions_LS-202609080564.html"
-    },
-    {
       "title": "Real Madrid",
       "source": "RMC Sport",
       "date": "2026-09-08T13:09:10+00:00",
       "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
       "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
-    },
-    {
-      "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1ère journée de Ligue des champions",
-      "source": "RMC Sport",
-      "date": "2026-09-08T13:07:41+00:00",
-      "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h00). Un match à suivre en direct sur le site et l'application de…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
     },
     {
       "title": "\"Toutes les fois où je me suis retrouvé face à eux...\", la petite pique de Yamal à Dembélé et Mbappé dans la course au Ballon d'or",
@@ -4693,53 +6282,25 @@
       "date": "2026-09-08T11:40:21+00:00",
       "summary": "Hasard du calendrier, José Mourinho retrouve la Ligue des champions avec le Real Madrid face à l’un de ses anciens clubs, l’Inter. Surmotivé à l’idée de gagner la compétition avec les Merengues, l’entraîneur…",
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/real-sa-recette-c-est-nous-contre-le-reste-du-monde-16-ans-apres-son-dernier-titre-mourinho-reve-d-une-nouvelle-ligue-des-champions_AV-202609080515.html"
-    },
-    {
-      "title": "Manchester City",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Manchester City est un club de football anglais évoluant en Premier League, fondé en 1894 et qui se situe dans la ville de Manchester, au nord de l'Angleterre. Les joueurs de l'équipe sont surnommés les…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/manchester-city_DN-202304160353.html"
-    },
-    {
-      "title": "Liverpool",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Liverpool est un club de football anglais évoluant en Premier League, situé dans le nord de l'Angleterre et fondé en 1892. Les joueurs sont surnommés les Reds, en référence à la couleur rouge de leur maillot.…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/liverpool_DN-202304160355.html"
-    },
-    {
-      "title": "Bayern Munich",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
-      "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
-    },
-    {
-      "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:54+00:00",
-      "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
-    },
-    {
-      "title": "Ligue des champions: PSG, Lens, Lille... Combien faudra-t-il de points aux clubs français pour se qualifier pour la phase finale?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T10:18:41+00:00",
-      "summary": "Un peu plus de trois mois après le deuxième sacre historique du PSG, la Ligue des champions reprend ses droits ce mardi avec une première journée étalée sur trois jours. Et la traditionnelle question de début…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-lens-lille-combien-faudra-t-il-de-points-aux-clubs-francais-pour-se-qualifier-pour-la-phase-finale_AV-202609080466.html"
-    },
-    {
-      "title": "Combien le PSG, Lens et Lille peuvent gagner durant leur campagne de Ligue des champions?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T08:40:35+00:00",
-      "summary": "Avant même le coup d'envoi de la Ligue des champions ce mardi soir, les trois clubs français engagés cette saison (Paris, Lens et Lille) sont déjà assurés de percevoir plusieurs dizaines de millions d'euros,…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/combien-le-psg-lens-et-lille-peuvent-gagner-durant-leur-campagne-de-ligue-des-champions_AV-202609080376.html"
     }
   ],
   "france_news": [],
   "general_news": [
     {
+      "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1re journée de Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:39:07+00:00",
+      "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h). Un match à suivre en direct sur le site et l'application de…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
+    },
+    {
+      "title": "DIRECT. Lille-Betis Séville: suivez en live le premier match du LOSC en Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:35:37+00:00",
+      "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21h. Suivez la rencontre dans…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-lille-betis-seville-suivez-en-live-l-entree-en-lice-des-dogues-en-ligue-des-champions_LS-202609080564.html"
+    },
+    {
       "title": "Ballon d'or 2026: l'absence surprise de Doué et Barcola dans les 30 finalistes",
       "source": "RMC Sport",
       "date": "2026-09-08T14:16:04+00:00",
@@ -4747,25 +6308,11 @@
       "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/ballon-d-or-2026-l-absence-surprise-de-doue-et-barcola-dans-les-30-finalistes_AV-202609080619.html"
     },
     {
-      "title": "DIRECT. Lille-Betis Séville: suivez en live l'entrée en lice des Dogues en Ligue des champions",
-      "source": "RMC Sport",
-      "date": "2026-09-08T13:18:49+00:00",
-      "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21 heures. Suivez la rencontre…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-lille-betis-seville-suivez-en-live-l-entree-en-lice-des-dogues-en-ligue-des-champions_LS-202609080564.html"
-    },
-    {
       "title": "Real Madrid",
       "source": "RMC Sport",
       "date": "2026-09-08T13:09:10+00:00",
       "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
       "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
-    },
-    {
-      "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1ère journée de Ligue des champions",
-      "source": "RMC Sport",
-      "date": "2026-09-08T13:07:41+00:00",
-      "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h00). Un match à suivre en direct sur le site et l'application de…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
     },
     {
       "title": "\"Toutes les fois où je me suis retrouvé face à eux...\", la petite pique de Yamal à Dembélé et Mbappé dans la course au Ballon d'or",
@@ -4808,57 +6355,169 @@
       "date": "2026-09-08T11:40:21+00:00",
       "summary": "Hasard du calendrier, José Mourinho retrouve la Ligue des champions avec le Real Madrid face à l’un de ses anciens clubs, l’Inter. Surmotivé à l’idée de gagner la compétition avec les Merengues, l’entraîneur…",
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/real-sa-recette-c-est-nous-contre-le-reste-du-monde-16-ans-apres-son-dernier-titre-mourinho-reve-d-une-nouvelle-ligue-des-champions_AV-202609080515.html"
-    },
-    {
-      "title": "Manchester City",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Manchester City est un club de football anglais évoluant en Premier League, fondé en 1894 et qui se situe dans la ville de Manchester, au nord de l'Angleterre. Les joueurs de l'équipe sont surnommés les…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/manchester-city_DN-202304160353.html"
-    },
-    {
-      "title": "Liverpool",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Liverpool est un club de football anglais évoluant en Premier League, situé dans le nord de l'Angleterre et fondé en 1892. Les joueurs sont surnommés les Reds, en référence à la couleur rouge de leur maillot.…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/liverpool_DN-202304160355.html"
-    },
-    {
-      "title": "Bayern Munich",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
-      "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
-    },
-    {
-      "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:54+00:00",
-      "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
-    },
-    {
-      "title": "Ligue des champions: PSG, Lens, Lille... Combien faudra-t-il de points aux clubs français pour se qualifier pour la phase finale?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T10:18:41+00:00",
-      "summary": "Un peu plus de trois mois après le deuxième sacre historique du PSG, la Ligue des champions reprend ses droits ce mardi avec une première journée étalée sur trois jours. Et la traditionnelle question de début…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-lens-lille-combien-faudra-t-il-de-points-aux-clubs-francais-pour-se-qualifier-pour-la-phase-finale_AV-202609080466.html"
-    },
-    {
-      "title": "Combien le PSG, Lens et Lille peuvent gagner durant leur campagne de Ligue des champions?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T08:40:35+00:00",
-      "summary": "Avant même le coup d'envoi de la Ligue des champions ce mardi soir, les trois clubs français engagés cette saison (Paris, Lens et Lille) sont déjà assurés de percevoir plusieurs dizaines de millions d'euros,…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/combien-le-psg-lens-et-lille-peuvent-gagner-durant-leur-campagne-de-ligue-des-champions_AV-202609080376.html"
     }
   ],
   "all_news": [
     {
-      "title": "DIRECT. Ballon d'or: suivez en live l'annonce des nommés ce mardi",
+      "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1re journée de Ligue des champions",
       "source": "RMC Sport",
-      "date": "2026-09-08T14:32:30+00:00",
-      "summary": "Qui succédera à Ousmane Dembélé au palmarès du Ballon d'or? Suivez en live l'annonce des nommés à la plus prestigieuse des récompenses individuelles, ce mardi tout au long de la journée.",
+      "date": "2026-09-08T18:39:07+00:00",
+      "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h). Un match à suivre en direct sur le site et l'application de…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
+    },
+    {
+      "title": "Ballon d'or 2026: une première historique pour les gardiens dans la liste des 30 nommés",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:37:32+00:00",
+      "summary": "Alors que France Football a dévoilé ce mardi les 30 nommés pour le Ballon d'or 2026, aucun gardien de but ne figure dans la liste. Une première dans l'histoire du Ballon d'or et l'introduction d'une liste de…",
+      "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/ballon-d-or-2026-une-premiere-historique-pour-les-gardiens-dans-la-liste-des-30-nommes_AV-202609080857.html"
+    },
+    {
+      "title": "DIRECT. Lille-Betis Séville: suivez en live le premier match du LOSC en Ligue des champions",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:35:37+00:00",
+      "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21h. Suivez la rencontre dans…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-lille-betis-seville-suivez-en-live-l-entree-en-lice-des-dogues-en-ligue-des-champions_LS-202609080564.html"
+    },
+    {
+      "title": "DIRECT. Ballon d'or: découvrez la liste des 30 nommés pour le trophée, avec de grands absents",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:26:42+00:00",
+      "summary": "Qui succédera à Ousmane Dembélé au palmarès du Ballon d'or? Les 30 nommés pour le prestigieux trophée individuel ont été dévoilés ce mardi 8 septembre. Avec quelques absences notables.",
       "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/direct-ballon-d-or-suivez-en-live-l-annonce-des-nommes-ce-mardi_LN-202609080347.html"
+    },
+    {
+      "title": "\"Ils ne regardent pas les matchs?\": Rothen scandalisé par l'absence de Doué dans les 30 nommés pour le Ballon d'or",
+      "source": "RMC Sport",
+      "date": "2026-09-08T18:09:44+00:00",
+      "summary": "Contre toute attente, Désiré Doué n'est pas présent dans la liste des 30 joueurs nommés pour le Ballon d’or. Une situation qui révolte Jérôme Rothen.",
+      "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/ils-ne-regardent-pas-les-matchs-rothen-scandalise-par-l-absence-de-doue-dans-les-30-nommes-pour-le-ballon-d-or_AV-202609080829.html"
+    },
+    {
+      "title": "FIFA : Le président du PSG Nasser al-Khelaïfi balancé entre sa proximité avec Ceferin et sa loyauté avec Gianni Infantino",
+      "source": "SO FOOT",
+      "date": "2026-09-08T17:50:26+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/fifa-le-president-du-psg-nasser-al-khelaifi-balance-entre-sa-proximite-avec-ceferin-et-sa-loyaute-avec-gianni-infantino"
+    },
+    {
+      "title": "Mercato : Abdellah Zoubir ancien de Lens et Qarabag libre après un souci administratif en Arabie saoudite",
+      "source": "SO FOOT",
+      "date": "2026-09-08T17:27:03+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/mercato-abdellah-zoubir-ancien-de-lens-et-qarabag-libre-apres-un-souci-administratif-en-arabie-saoudite"
+    },
+    {
+      "title": "\"Je me rends indisponible\": Amrabat refuse de jouer pour le Maroc tant que Ouahbi sera sélectionneur",
+      "source": "RMC Sport",
+      "date": "2026-09-08T17:18:06+00:00",
+      "summary": "En conflit avec le sélectionneur marocain Mohamed Ouahbi, le milieu de terrain Sofyan Amrabat a annoncé dans une story Instagram ne plus vouloir porter le maillot de la sélection tant que le coach actuel sera…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-maroc/je-me-rends-indisponible-amrabat-refuse-de-jouer-pour-le-maroc-tant-que-ouahbi-sera-selectionneur_AV-202609080785.html"
+    },
+    {
+      "title": "Les joueurs des Girondins de Bordeaux protestent contre leur condition en attendant que l’avenir du club soit décidé",
+      "source": "SO FOOT",
+      "date": "2026-09-08T17:10:16+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/les-joueurs-des-girondins-de-bordeaux-protestent-contre-leur-condition-en-attendant-que-lavenir-du-club-soit-decide"
+    },
+    {
+      "title": "\"Le sentiment d'être laissés à l'abandon\": le communiqué poignant des joueurs de Bordeaux, toujours sans visibilité alors que la saison a débuté",
+      "source": "RMC Sport",
+      "date": "2026-09-08T16:43:49+00:00",
+      "summary": "Les joueurs des Girondins de Bordeaux, club qui pourrait prochainement être liquidé, ont publié ce mardi un long communiqué pour dénoncer une situation devenue invivable pour eux.",
+      "url": "https://rmcsport.bfmtv.com/football/le-sentiment-d-etre-laisses-a-l-abandon-le-communique-poignant-des-joueurs-de-bordeaux-toujours-sans-visibilite-alors-que-la-saison-a-debute_AV-202609080741.html"
+    },
+    {
+      "title": "\"Coller à ses préceptes\", la relation entre Luis Enrique et les U19 du PSG",
+      "source": "RMC Sport",
+      "date": "2026-09-08T16:43:04+00:00",
+      "summary": "Entretien avec Thomas Leysalles. L'Entraîneur des U19 du PSG raconte le quotidien des U19... et raconte comment Luis Enrique, avec Luis Campos et Yohan Cabaye, s'investissent pour transposer chez les jeunes…",
+      "url": "https://rmcsport.bfmtv.com/football/video-coller-a-ses-preceptes-la-relation-entre-luis-enrique-et-les-u19-du-psg_VN-202609080744.html"
+    },
+    {
+      "title": "Lille: Olivier Létang convoqué par la commission de discipline après son comportement lors de Lille-PSG",
+      "source": "SO FOOT",
+      "date": "2026-09-08T16:29:58+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/lille-olivier-letang-convoque-par-la-commission-de-discipline-apres-son-comportement-lors-de-lille-psg"
+    },
+    {
+      "title": "Lille-PSG: Olivier Létang envoyé devant la commission de discipline pour une série de messages incendiaires contre l'arbitrage",
+      "source": "RMC Sport",
+      "date": "2026-09-08T16:19:15+00:00",
+      "summary": "Après Lille-PSG, fin août, le président du LOSC Olivier Létang avait envoyé plusieurs messages et mails incendiaires aux responsables de l'arbitrage français. Le Conseil national de l'éthique (CNE) a analysé…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/losc-lille/lille-psg-olivier-letang-envoye-devant-la-commission-de-discipline-pour-une-serie-de-messages-incendiaires-contre-l-arbitrage_AV-202609080726.html"
+    },
+    {
+      "title": "Une agression sexuelle au Vélodrome? L'OM apporte \"tout son soutien\" à la supportrice concernée et promet de collaborer avec les autorités",
+      "source": "RMC Sport",
+      "date": "2026-09-08T16:08:51+00:00",
+      "summary": "Dans un communiqué, l'OM a condamné les faits d'agression sexuelle dénoncés par une supportrice du club lors de la réception du Paris FC le 6 septembre. Le club mettra à disposition tous les éléments en sa…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/une-agression-sexuelle-au-velodrome-l-om-apporte-tout-son-soutien-a-la-supportrice-concernee-et-promet-de-collaborer-avec-les-autorites_AV-202609080717.html"
+    },
+    {
+      "title": "Pour la première fois, aucun gardien n’est présent dans les 30 nommés au Ballon d’or",
+      "source": "SO FOOT",
+      "date": "2026-09-08T16:03:48+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/pour-la-premiere-fois-aucun-gardien-nest-present-dans-les-30-nomines-du-ballon-dor"
+    },
+    {
+      "title": "Serie A : Le Napoli donne des nouvelles rassurantes de son milieu de terrain Scott McTominay",
+      "source": "SO FOOT",
+      "date": "2026-09-08T15:34:35+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/serie-a-le-napoli-donne-des-nouvelles-rassurantes-de-son-milieu-de-terrain-scott-mctominay"
+    },
+    {
+      "title": "Ballon d'or 2026: avec Quinones mais pas Doué ni Barcola… Comment la liste des 30 nommés est-elle établie?",
+      "source": "RMC Sport",
+      "date": "2026-09-08T15:25:44+00:00",
+      "summary": "La liste des 30 nommés pour le Ballon d'or 2026 a été dévoilée ce mardi, sans Désiré Doué ni Bradley Barcola. Voici comment sont choisis les 30 finalistes.",
+      "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/ballon-d-or-2026-avec-quinones-mais-pas-doue-ni-barcola-comment-la-liste-des-30-nommes-est-elle-etablie_AV-202609080671.html"
+    },
+    {
+      "title": "Ballon d’or : La liste des 30 nommés sans Désiré Doué ni Bradley Barcola",
+      "source": "SO FOOT",
+      "date": "2026-09-08T15:20:12+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/ballon-dor-la-liste-des-30-nommes-sans-desire-doue-ni-bradley-barcola"
+    },
+    {
+      "title": "\"Je me suis sentie sale, comme une merde\": une supportrice de l'OM dénonce une agression sexuelle en plein match face au Paris FC",
+      "source": "RMC Sport",
+      "date": "2026-09-08T14:58:21+00:00",
+      "summary": "Dans une vidéo publiée sur les réseaux sociaux, une supportrice de l'OM a dénoncé une agression sexuelle subie lors de la réception du Paris FC dimanche 6 septembre (2-3). Cette dernière n'incrimine ni le…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/je-me-suis-sentie-sale-comme-une-merde-une-supportrice-de-l-om-denonce-une-agression-sexuelle-en-plein-match-face-au-paris-fc_AV-202609080651.html"
+    },
+    {
+      "title": "Maroc : Adel Taarabt annonce officiellement prendre sa retraite",
+      "source": "SO FOOT",
+      "date": "2026-09-08T14:55:28+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/maroc-adel-taarabt-annonce-officiellement-prendre-sa-retraite"
+    },
+    {
+      "title": "Ousmane Dembélé",
+      "source": "RMC Sport",
+      "date": "2026-09-08T14:54:42+00:00",
+      "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
+      "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
+    },
+    {
+      "title": "Ballon d'or: 10 Parisiens, Messi, Quinones... le récap de toutes les listes des nommés",
+      "source": "RMC Sport",
+      "date": "2026-09-08T14:54:41+00:00",
+      "summary": "France Football a dévoilé ce mardi les listes des nommés pour les différents trophées du Ballon d'or, décernés le 26 octobre prochain à Londres. Il y a des Français pour le trophée masculin (Dembélé, Mbappé,…",
+      "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/ballon-d-or-10-parisiens-messi-quinones-le-recap-de-toutes-les-listes-des-nommes_AV-202609080647.html"
+    },
+    {
+      "title": "En direct : Lille – Betis",
+      "source": "SO FOOT",
+      "date": "2026-09-08T14:30:08+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/articles/en-direct-lille-betis"
     },
     {
       "title": "Mercato : James Rodríguez va faire son retour en Europe et signer en Italie",
@@ -4885,7 +6544,7 @@
       "title": "Exclusif : La liste 30 joueurs qu’on aurait bien nommé pour le Ballon d’or 2026 a fuité",
       "source": "SO FOOT",
       "date": "2026-09-08T14:00:42+00:00",
-      "summary": "Flemme d'attendre la fin de journée : l'embargo est craqué.",
+      "summary": "Flemme d’attendre la fin de journée : l’embargo est craqué.",
       "url": "https://www.sofoot.com/articles/exclusif-la-liste-30-joueurs-quon-aurait-bien-nomme-pour-le-ballon-dor-2026-a-fuite"
     },
     {
@@ -4910,13 +6569,6 @@
       "url": "https://www.sofoot.com/breves/luis-enrique-veut-renouveler-le-permis-de-conduire-pour-le-retour-de-la-ligue-des-champions-avec-psg-slovan-bratislava"
     },
     {
-      "title": "DIRECT. Lille-Betis Séville: suivez en live l'entrée en lice des Dogues en Ligue des champions",
-      "source": "RMC Sport",
-      "date": "2026-09-08T13:18:49+00:00",
-      "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21 heures. Suivez la rencontre…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-lille-betis-seville-suivez-en-live-l-entree-en-lice-des-dogues-en-ligue-des-champions_LS-202609080564.html"
-    },
-    {
       "title": "UFC Paris :  Cédric Doumbé dézingue le public de l’Accor Arena après l’accueil houleux réservé à Dan Hooker",
       "source": "SO FOOT",
       "date": "2026-09-08T13:17:34+00:00",
@@ -4931,13 +6583,6 @@
       "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
     },
     {
-      "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1ère journée de Ligue des champions",
-      "source": "RMC Sport",
-      "date": "2026-09-08T13:07:41+00:00",
-      "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h00). Un match à suivre en direct sur le site et l'application de…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
-    },
-    {
       "title": "FC Barcelone",
       "source": "RMC Sport",
       "date": "2026-09-08T13:05:58+00:00",
@@ -4950,13 +6595,6 @@
       "date": "2026-09-08T13:05:58+00:00",
       "summary": "Jeune prodige du FC Barcelone et de l'équipe nationale d'Espagne, né en 2007, Lamine Yamal a explosé au plus haut niveau lors de la saison 2023/24.",
       "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
-    },
-    {
-      "title": "Ousmane Dembélé",
-      "source": "RMC Sport",
-      "date": "2026-09-08T13:05:58+00:00",
-      "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
-      "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
     },
     {
       "title": "\"Toutes les fois où je me suis retrouvé face à eux...\", la petite pique de Yamal à Dembélé et Mbappé dans la course au Ballon d'or",
@@ -5001,7 +6639,7 @@
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/psg-on-merite-plus-de-points-luis-enrique-ne-veut-pas-s-affoler-malgre-un-debut-de-saison-catastrophique-en-termes-de-resultats_AV-202609080542.html"
     },
     {
-      "title": "Ballon d’or : la liste des cinq entraineurs de football masculin nommés pour le trophée Johan Cruyff",
+      "title": "Ballon d’or : la liste des cinq entraîneurs de football masculin nommés pour le trophée Johan Cruyff",
       "source": "SO FOOT",
       "date": "2026-09-08T12:21:55+00:00",
       "summary": "",
@@ -5029,7 +6667,7 @@
       "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-bratislava-j-1-suivez-toutes-les-infos-avant-l-entree-en-lice-des-parisiens-en-ligue-des-champions_LN-202609080361.html"
     },
     {
-      "title": "Mercato : Mathys de Carvalho s’envole en Arabie-Saoudite et quitte son club formateur, l’Olympique Lyonnais",
+      "title": "Mercato : Mathys de Carvalho s’envole en Arabie saoudite et quitte son club formateur, l’Olympique lyonnais",
       "source": "SO FOOT",
       "date": "2026-09-08T11:43:18+00:00",
       "summary": "",
@@ -5071,48 +6709,6 @@
       "url": "https://rmcsport.bfmtv.com/football/saudi-pro-league/arabie-saoudite-la-danse-inattendue-de-christophe-galtier-dans-les-vestiaires-du-neom-sc-regale-les-reseaux_AV-202609080506.html"
     },
     {
-      "title": "Manchester City",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Manchester City est un club de football anglais évoluant en Premier League, fondé en 1894 et qui se situe dans la ville de Manchester, au nord de l'Angleterre. Les joueurs de l'équipe sont surnommés les…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/manchester-city_DN-202304160353.html"
-    },
-    {
-      "title": "Liverpool",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Liverpool est un club de football anglais évoluant en Premier League, situé dans le nord de l'Angleterre et fondé en 1892. Les joueurs sont surnommés les Reds, en référence à la couleur rouge de leur maillot.…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/liverpool_DN-202304160355.html"
-    },
-    {
-      "title": "Bayern Munich",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
-      "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
-    },
-    {
-      "title": "Arsenal",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Arsenal est un club de football anglais évoluant en Premier League et fondé en 1886. Les joueurs sont surnommés les Gunners et évoluent à l'Emirates Stadium, stade de Londres qui a remplacé Highbury. La…",
-      "url": "https://rmcsport.bfmtv.com/football/premier-league/arsenal_DN-202304160356.html"
-    },
-    {
-      "title": "Manchester United",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:55+00:00",
-      "summary": "Manchester United, club de football anglais, est la 2ème marque sportive mondiale en terme de revenus. Son antre, Old Trafford, a vu évolué les plus grands joueurs : David Beckham, Eric Cantona ou encore…",
-      "url": "https://rmcsport.bfmtv.com/football/manchester-united_DN-201307070186.html"
-    },
-    {
-      "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T11:08:54+00:00",
-      "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
-    },
-    {
       "title": "Accord de principe entre M’Baye Niang et Dunkerque",
       "source": "SO FOOT",
       "date": "2026-09-08T11:07:29+00:00",
@@ -5148,13 +6744,6 @@
       "url": "https://www.sofoot.com/breves/ogc-nice-robinhood-sponsor-de-logc-nice-interroge-lautorite-nationale-des-jeux"
     },
     {
-      "title": "Ligue des champions: PSG, Lens, Lille... Combien faudra-t-il de points aux clubs français pour se qualifier pour la phase finale?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T10:18:41+00:00",
-      "summary": "Un peu plus de trois mois après le deuxième sacre historique du PSG, la Ligue des champions reprend ses droits ce mardi avec une première journée étalée sur trois jours. Et la traditionnelle question de début…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-lens-lille-combien-faudra-t-il-de-points-aux-clubs-francais-pour-se-qualifier-pour-la-phase-finale_AV-202609080466.html"
-    },
-    {
       "title": "Girondins de Bordeaux : le club obtient un sursis jusqu’au 22 septembre prochain",
       "source": "SO FOOT",
       "date": "2026-09-08T10:13:16+00:00",
@@ -5167,13 +6756,6 @@
       "date": "2026-09-08T10:04:43+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/benzema-se-place-dans-le-top-3-des-meilleurs-9-de-lhistoire"
-    },
-    {
-      "title": "Still, Pantaloni, Toppmöller… quel entraîneur de L1 est le plus menacé selon l’After Foot et sa \"sack race\"",
-      "source": "RMC Sport",
-      "date": "2026-09-08T09:56:35+00:00",
-      "summary": "Les résultats des trois premières journées de Ligue 1 permettent déjà de dégager quelques tendances sur les postes d’entraîneurs menacés. Mais les regards de l’After Foot ne se dirigent pas seulement vers le…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-1/still-pantaloni-toppmoller-quel-entraineur-de-l1-est-le-plus-menace-selon-l-after-foot-et-sa-sack-race_AV-202609080443.html"
     },
     {
       "title": "Christophe Galtier et Neom tombeurs de Al-Hilal, qui perd pour la première fois de ses 47 derniers matchs de championnat",
@@ -5190,108 +6772,22 @@
       "url": "https://www.sofoot.com/breves/ligue-1-maxime-lopez-affiche-ses-ambitions-de-ligue-des-champions-avec-le-paris-fc"
     },
     {
-      "title": "Pourquoi la cérémonie du Ballon d'or 2026 aura lieu à Londres et non à Paris",
-      "source": "RMC Sport",
-      "date": "2026-09-08T09:38:06+00:00",
-      "summary": "D'ordinaire décerné à Paris, en France, le Ballon d'or dérogera à la règle cette année. La cérémonie, prévue le 26 octobre prochain, se déroulera à Londres, en Angleterre. La raison peut surprendre,…",
-      "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/pourquoi-la-ceremonie-du-ballon-d-or-2026-aura-lieu-a-londres-et-non-a-paris_AV-202609080423.html"
-    },
-    {
       "title": "Ouganda : Un gardien anglais de neuvième division proposé pour devenir roi d’un royaume ougandais",
       "source": "SO FOOT",
       "date": "2026-09-08T09:30:44+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/ouganda-un-gardien-anglais-de-neuvieme-division-propose-pour-devenir-roi-dun-royaume-ougandais"
-    },
-    {
-      "title": "Ballon d'or : Kylian Mbappé lance sa campagne",
-      "source": "France Info",
-      "date": "2026-09-08T09:25:04+00:00",
-      "summary": "Le capitaine de l'équipe de France s'est exprimé publiquement sur ses chances de remporter le Ballon d'or cette année, et estime être le meilleur joueur du monde.",
-      "url": "https://www.franceinfo.fr/sports/foot/ballon-d-or-kylian-mbappe-lance-sa-campagne_8182880.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "VAR, challenge espoir, partenaires, diffuseur :  La LFFP annonce les nouveautés pour la saison à venir en Première Ligue",
-      "source": "SO FOOT",
-      "date": "2026-09-08T09:08:54+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/var-challenge-espoir-partenaires-diffuseur-la-lffp-annonce-les-nouveautes-pour-la-saison-a-venir-en-arkema-premiere-ligue"
-    },
-    {
-      "title": "Bertrand Traoré signe un an à Wolverhampton",
-      "source": "SO FOOT",
-      "date": "2026-09-08T08:44:59+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/bertrand-traore-signe-un-an-a-wolverhampton"
-    },
-    {
-      "title": "Combien le PSG, Lens et Lille peuvent gagner durant leur campagne de Ligue des champions?",
-      "source": "RMC Sport",
-      "date": "2026-09-08T08:40:35+00:00",
-      "summary": "Avant même le coup d'envoi de la Ligue des champions ce mardi soir, les trois clubs français engagés cette saison (Paris, Lens et Lille) sont déjà assurés de percevoir plusieurs dizaines de millions d'euros,…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/combien-le-psg-lens-et-lille-peuvent-gagner-durant-leur-campagne-de-ligue-des-champions_AV-202609080376.html"
-    },
-    {
-      "title": "Ligue des champions – Real Madrid : Kylian Mbappé ne veut pas être comparé à Ousmane Dembélé (PSG) et Raphinha (Barça)",
-      "source": "SO FOOT",
-      "date": "2026-09-08T08:13:36+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-champions-real-madrid-kylian-mbappe-ne-veut-pas-etre-compare-a-ousmane-dembele-psg-et-raphinha-barca"
-    },
-    {
-      "title": "FIFA : Gianni Infantino visé par une plainte auprès de la commission d’éthique, Trump impliqué",
-      "source": "SO FOOT",
-      "date": "2026-09-08T08:08:22+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/fifa-gianni-infantino-vise-par-une-plainte-aupres-de-la-commission-dethique-trump-implique"
-    },
-    {
-      "title": "Liga – « Ils sont nuls » : Rodri déglingue les joueurs de Valence après la manita du Barça",
-      "source": "SO FOOT",
-      "date": "2026-09-08T07:53:48+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/liga-ils-sont-nuls-rodri-deglingue-les-joueurs-de-valence-apres-la-manita-du-barca"
-    },
-    {
-      "title": "Ballon d’or : Ousmane Dembélé la joue collectif et prend le contrepied de Kylian Mbappé",
-      "source": "SO FOOT",
-      "date": "2026-09-08T07:29:32+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ballon-dor-ousmane-dembele-la-joue-collectif-et-prend-le-contrepied-de-kylian-mbappe"
-    },
-    {
-      "title": "Italie : Côme prolonge Roberta Picchi, joueuse victime d’un cancer",
-      "source": "SO FOOT",
-      "date": "2026-09-08T07:28:42+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/italie-come-prolonge-roberta-picchi-joueuse-victime-dun-cancer"
-    },
-    {
-      "title": "Ligue des champions : Giovani Lo Celso a hâte d’affronter le LOSC et de retrouver Olivier Létang",
-      "source": "SO FOOT",
-      "date": "2026-09-08T06:49:01+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-champions-giovani-lo-celso-a-hate-daffronter-le-losc-et-de-retrouver-olivier-letang"
     }
   ],
   "focused_club_news": {
-    "Arsenal": [
-      {
-        "title": "Arsenal",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:55+00:00",
-        "summary": "Arsenal est un club de football anglais évoluant en Premier League et fondé en 1886. Les joueurs sont surnommés les Gunners et évoluent à l'Emirates Stadium, stade de Londres qui a remplacé Highbury. La…",
-        "url": "https://rmcsport.bfmtv.com/football/premier-league/arsenal_DN-202304160356.html"
-      },
-      {
-        "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:54+00:00",
-        "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
-      }
-    ],
     "Barcelona": [
+      {
+        "title": "Ousmane Dembélé",
+        "source": "RMC Sport",
+        "date": "2026-09-08T14:54:42+00:00",
+        "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
+        "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
+      },
       {
         "title": "Lamine Yamal évoque le Ballon d’or avant l’entrée en lice du Barça en Ligue des champions",
         "source": "SO FOOT",
@@ -5314,25 +6810,11 @@
         "url": "https://rmcsport.bfmtv.com/football/lamine-yamal_DN-202407110349.html"
       },
       {
-        "title": "Ousmane Dembélé",
-        "source": "RMC Sport",
-        "date": "2026-09-08T13:05:58+00:00",
-        "summary": "Ousmane Dembélé est un footballeur international français né à Vernon en 1997. Jeune surdoué formé en Normandie et au stade rennais, il explose à Dortmund avant de rejoindre le FC Barcelone pour pallier le…",
-        "url": "https://rmcsport.bfmtv.com/football/ousmane-dembele_DN-202210100814.html"
-      },
-      {
         "title": "\"Je ne veux pas me mettre à supplier\": Lamine Yamal refuse de faire campagne pour le Ballon d'or",
         "source": "RMC Sport",
         "date": "2026-09-08T12:51:11+00:00",
         "summary": "Alors que la liste des 30 nommés tombe ce mardi, Lamine Yamal s'est exprimé sur le Ballon d'or. L'attaquant du Barça ne souhaite pas faire campagne.",
         "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/je-ne-veux-pas-me-mettre-a-supplier-lamine-yamal-refuse-de-faire-campagne-pour-le-ballon-d-or_AV-202609080552.html"
-      },
-      {
-        "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:54+00:00",
-        "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
       },
       {
         "title": "Ligue des champions – Real Madrid : Kylian Mbappé ne veut pas être comparé à Ousmane Dembélé (PSG) et Raphinha (Barça)",
@@ -5349,31 +6831,6 @@
         "url": "https://www.sofoot.com/breves/liga-ils-sont-nuls-rodri-deglingue-les-joueurs-de-valence-apres-la-manita-du-barca"
       }
     ],
-    "Bayern Munich": [
-      {
-        "title": "Bayern Munich",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:55+00:00",
-        "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
-        "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
-      },
-      {
-        "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:54+00:00",
-        "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
-      }
-    ],
-    "Chelsea": [
-      {
-        "title": "Premier League : La jolie statistique de Chelsea sur les débuts de rencontre",
-        "source": "SO FOOT",
-        "date": "2026-09-07T14:25:42+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/premier-league-le-jolie-statistique-de-chelsea-sur-les-debuts-de-rencontre"
-      }
-    ],
     "Juventus": [
       {
         "title": "Juventus : la Vieille Dame privée de Manuel Locatelli, blessé au ménisque",
@@ -5385,34 +6842,48 @@
     ],
     "Lens": [
       {
+        "title": "Mercato : Abdellah Zoubir ancien de Lens et Qarabag libre après un souci administratif en Arabie saoudite",
+        "source": "SO FOOT",
+        "date": "2026-09-08T17:27:03+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/mercato-abdellah-zoubir-ancien-de-lens-et-qarabag-libre-apres-un-souci-administratif-en-arabie-saoudite"
+      },
+      {
         "title": "PSG : \"Un début de saison catastrophique\", analyse Luis Enrique en termes de résultats",
         "source": "RMC Sport",
         "date": "2026-09-08T12:12:43+00:00",
         "summary": "Battu lors du Trophée des Champions par Lens et tenu en échec face à Rennes, Lille et Monaco, le Paris Saint-Germain n'a pas réalisé le début de saison espéré. Le coach parisien Luis Enrique parle de début de…",
         "url": "https://rmcsport.bfmtv.com/football/video-psg-un-debut-de-saison-catastrophique-analyse-luis-enrique-en-termes-de-resultats_VN-202609080531.html"
-      },
-      {
-        "title": "Ligue des champions: PSG, Lens, Lille... Combien faudra-t-il de points aux clubs français pour se qualifier pour la phase finale?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T10:18:41+00:00",
-        "summary": "Un peu plus de trois mois après le deuxième sacre historique du PSG, la Ligue des champions reprend ses droits ce mardi avec une première journée étalée sur trois jours. Et la traditionnelle question de début…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-lens-lille-combien-faudra-t-il-de-points-aux-clubs-francais-pour-se-qualifier-pour-la-phase-finale_AV-202609080466.html"
-      },
-      {
-        "title": "Combien le PSG, Lens et Lille peuvent gagner durant leur campagne de Ligue des champions?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T08:40:35+00:00",
-        "summary": "Avant même le coup d'envoi de la Ligue des champions ce mardi soir, les trois clubs français engagés cette saison (Paris, Lens et Lille) sont déjà assurés de percevoir plusieurs dizaines de millions d'euros,…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/combien-le-psg-lens-et-lille-peuvent-gagner-durant-leur-campagne-de-ligue-des-champions_AV-202609080376.html"
       }
     ],
     "Lille": [
       {
-        "title": "DIRECT. Lille-Betis Séville: suivez en live l'entrée en lice des Dogues en Ligue des champions",
+        "title": "DIRECT. Lille-Betis Séville: suivez en live le premier match du LOSC en Ligue des champions",
         "source": "RMC Sport",
-        "date": "2026-09-08T13:18:49+00:00",
-        "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21 heures. Suivez la rencontre…",
+        "date": "2026-09-08T18:35:37+00:00",
+        "summary": "L'édition 2026-2027 de la Ligue des champions commence ce mardi et Lille est le premier des trois clubs français à faire son entrée en lice, avec la réception du Betis Séville à 21h. Suivez la rencontre dans…",
         "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-lille-betis-seville-suivez-en-live-l-entree-en-lice-des-dogues-en-ligue-des-champions_LS-202609080564.html"
+      },
+      {
+        "title": "Lille: Olivier Létang convoqué par la commission de discipline après son comportement lors de Lille-PSG",
+        "source": "SO FOOT",
+        "date": "2026-09-08T16:29:58+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/lille-olivier-letang-convoque-par-la-commission-de-discipline-apres-son-comportement-lors-de-lille-psg"
+      },
+      {
+        "title": "Lille-PSG: Olivier Létang envoyé devant la commission de discipline pour une série de messages incendiaires contre l'arbitrage",
+        "source": "RMC Sport",
+        "date": "2026-09-08T16:19:15+00:00",
+        "summary": "Après Lille-PSG, fin août, le président du LOSC Olivier Létang avait envoyé plusieurs messages et mails incendiaires aux responsables de l'arbitrage français. Le Conseil national de l'éthique (CNE) a analysé…",
+        "url": "https://rmcsport.bfmtv.com/football/clubs/losc-lille/lille-psg-olivier-letang-envoye-devant-la-commission-de-discipline-pour-une-serie-de-messages-incendiaires-contre-l-arbitrage_AV-202609080726.html"
+      },
+      {
+        "title": "En direct : Lille – Betis",
+        "source": "SO FOOT",
+        "date": "2026-09-08T14:30:08+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/articles/en-direct-lille-betis"
       },
       {
         "title": "PSG : \"Un début de saison catastrophique\", analyse Luis Enrique en termes de résultats",
@@ -5420,20 +6891,6 @@
         "date": "2026-09-08T12:12:43+00:00",
         "summary": "Battu lors du Trophée des Champions par Lens et tenu en échec face à Rennes, Lille et Monaco, le Paris Saint-Germain n'a pas réalisé le début de saison espéré. Le coach parisien Luis Enrique parle de début de…",
         "url": "https://rmcsport.bfmtv.com/football/video-psg-un-debut-de-saison-catastrophique-analyse-luis-enrique-en-termes-de-resultats_VN-202609080531.html"
-      },
-      {
-        "title": "Ligue des champions: PSG, Lens, Lille... Combien faudra-t-il de points aux clubs français pour se qualifier pour la phase finale?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T10:18:41+00:00",
-        "summary": "Un peu plus de trois mois après le deuxième sacre historique du PSG, la Ligue des champions reprend ses droits ce mardi avec une première journée étalée sur trois jours. Et la traditionnelle question de début…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-lens-lille-combien-faudra-t-il-de-points-aux-clubs-francais-pour-se-qualifier-pour-la-phase-finale_AV-202609080466.html"
-      },
-      {
-        "title": "Combien le PSG, Lens et Lille peuvent gagner durant leur campagne de Ligue des champions?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T08:40:35+00:00",
-        "summary": "Avant même le coup d'envoi de la Ligue des champions ce mardi soir, les trois clubs français engagés cette saison (Paris, Lens et Lille) sont déjà assurés de percevoir plusieurs dizaines de millions d'euros,…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/combien-le-psg-lens-et-lille-peuvent-gagner-durant-leur-campagne-de-ligue-des-champions_AV-202609080376.html"
       },
       {
         "title": "Lille-Real Betis en Ligue des champions : Ethan Mbappé, la fin d’une ombre",
@@ -5443,34 +6900,60 @@
         "url": "https://www.sofoot.com/articles/lille-real-betis-en-ligue-des-champions-ethan-mbappe-la-fin-dune-ombre"
       }
     ],
-    "Liverpool": [
+    "Marseille": [
       {
-        "title": "Liverpool",
+        "title": "Une agression sexuelle au Vélodrome? L'OM apporte \"tout son soutien\" à la supportrice concernée et promet de collaborer avec les autorités",
         "source": "RMC Sport",
-        "date": "2026-09-08T11:08:55+00:00",
-        "summary": "Liverpool est un club de football anglais évoluant en Premier League, situé dans le nord de l'Angleterre et fondé en 1892. Les joueurs sont surnommés les Reds, en référence à la couleur rouge de leur maillot.…",
-        "url": "https://rmcsport.bfmtv.com/football/premier-league/liverpool_DN-202304160355.html"
+        "date": "2026-09-08T16:08:51+00:00",
+        "summary": "Dans un communiqué, l'OM a condamné les faits d'agression sexuelle dénoncés par une supportrice du club lors de la réception du Paris FC le 6 septembre. Le club mettra à disposition tous les éléments en sa…",
+        "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/une-agression-sexuelle-au-velodrome-l-om-apporte-tout-son-soutien-a-la-supportrice-concernee-et-promet-de-collaborer-avec-les-autorites_AV-202609080717.html"
+      },
+      {
+        "title": "\"Je me suis sentie sale, comme une merde\": une supportrice de l'OM dénonce une agression sexuelle en plein match face au Paris FC",
+        "source": "RMC Sport",
+        "date": "2026-09-08T14:58:21+00:00",
+        "summary": "Dans une vidéo publiée sur les réseaux sociaux, une supportrice de l'OM a dénoncé une agression sexuelle subie lors de la réception du Paris FC dimanche 6 septembre (2-3). Cette dernière n'incrimine ni le…",
+        "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/je-me-suis-sentie-sale-comme-une-merde-une-supportrice-de-l-om-denonce-une-agression-sexuelle-en-plein-match-face-au-paris-fc_AV-202609080651.html"
       }
     ],
-    "Manchester City": [
+    "Napoli": [
       {
-        "title": "Manchester City",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:55+00:00",
-        "summary": "Manchester City est un club de football anglais évoluant en Premier League, fondé en 1894 et qui se situe dans la ville de Manchester, au nord de l'Angleterre. Les joueurs de l'équipe sont surnommés les…",
-        "url": "https://rmcsport.bfmtv.com/football/premier-league/manchester-city_DN-202304160353.html"
-      }
-    ],
-    "Manchester United": [
-      {
-        "title": "Manchester United",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:55+00:00",
-        "summary": "Manchester United, club de football anglais, est la 2ème marque sportive mondiale en terme de revenus. Son antre, Old Trafford, a vu évolué les plus grands joueurs : David Beckham, Eric Cantona ou encore…",
-        "url": "https://rmcsport.bfmtv.com/football/manchester-united_DN-201307070186.html"
+        "title": "Serie A : Le Napoli donne des nouvelles rassurantes de son milieu de terrain Scott McTominay",
+        "source": "SO FOOT",
+        "date": "2026-09-08T15:34:35+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/serie-a-le-napoli-donne-des-nouvelles-rassurantes-de-son-milieu-de-terrain-scott-mctominay"
       }
     ],
     "Paris Saint-Germain": [
+      {
+        "title": "FIFA : Le président du PSG Nasser al-Khelaïfi balancé entre sa proximité avec Ceferin et sa loyauté avec Gianni Infantino",
+        "source": "SO FOOT",
+        "date": "2026-09-08T17:50:26+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/fifa-le-president-du-psg-nasser-al-khelaifi-balance-entre-sa-proximite-avec-ceferin-et-sa-loyaute-avec-gianni-infantino"
+      },
+      {
+        "title": "\"Coller à ses préceptes\", la relation entre Luis Enrique et les U19 du PSG",
+        "source": "RMC Sport",
+        "date": "2026-09-08T16:43:04+00:00",
+        "summary": "Entretien avec Thomas Leysalles. L'Entraîneur des U19 du PSG raconte le quotidien des U19... et raconte comment Luis Enrique, avec Luis Campos et Yohan Cabaye, s'investissent pour transposer chez les jeunes…",
+        "url": "https://rmcsport.bfmtv.com/football/video-coller-a-ses-preceptes-la-relation-entre-luis-enrique-et-les-u19-du-psg_VN-202609080744.html"
+      },
+      {
+        "title": "Lille: Olivier Létang convoqué par la commission de discipline après son comportement lors de Lille-PSG",
+        "source": "SO FOOT",
+        "date": "2026-09-08T16:29:58+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/lille-olivier-letang-convoque-par-la-commission-de-discipline-apres-son-comportement-lors-de-lille-psg"
+      },
+      {
+        "title": "Lille-PSG: Olivier Létang envoyé devant la commission de discipline pour une série de messages incendiaires contre l'arbitrage",
+        "source": "RMC Sport",
+        "date": "2026-09-08T16:19:15+00:00",
+        "summary": "Après Lille-PSG, fin août, le président du LOSC Olivier Létang avait envoyé plusieurs messages et mails incendiaires aux responsables de l'arbitrage français. Le Conseil national de l'éthique (CNE) a analysé…",
+        "url": "https://rmcsport.bfmtv.com/football/clubs/losc-lille/lille-psg-olivier-letang-envoye-devant-la-commission-de-discipline-pour-une-serie-de-messages-incendiaires-contre-l-arbitrage_AV-202609080726.html"
+      },
       {
         "title": "Luis Enrique veut « renouveler le permis de conduire » pour le retour de la Ligue des champions avec PSG-Slovan Bratislava",
         "source": "SO FOOT",
@@ -5507,27 +6990,6 @@
         "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-psg-bratislava-j-1-suivez-toutes-les-infos-avant-l-entree-en-lice-des-parisiens-en-ligue-des-champions_LN-202609080361.html"
       },
       {
-        "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:54+00:00",
-        "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
-      },
-      {
-        "title": "Ligue des champions: PSG, Lens, Lille... Combien faudra-t-il de points aux clubs français pour se qualifier pour la phase finale?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T10:18:41+00:00",
-        "summary": "Un peu plus de trois mois après le deuxième sacre historique du PSG, la Ligue des champions reprend ses droits ce mardi avec une première journée étalée sur trois jours. Et la traditionnelle question de début…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-lens-lille-combien-faudra-t-il-de-points-aux-clubs-francais-pour-se-qualifier-pour-la-phase-finale_AV-202609080466.html"
-      },
-      {
-        "title": "Combien le PSG, Lens et Lille peuvent gagner durant leur campagne de Ligue des champions?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T08:40:35+00:00",
-        "summary": "Avant même le coup d'envoi de la Ligue des champions ce mardi soir, les trois clubs français engagés cette saison (Paris, Lens et Lille) sont déjà assurés de percevoir plusieurs dizaines de millions d'euros,…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/combien-le-psg-lens-et-lille-peuvent-gagner-durant-leur-campagne-de-ligue-des-champions_AV-202609080376.html"
-      },
-      {
         "title": "Ligue des champions – Real Madrid : Kylian Mbappé ne veut pas être comparé à Ousmane Dembélé (PSG) et Raphinha (Barça)",
         "source": "SO FOOT",
         "date": "2026-09-08T08:13:36+00:00",
@@ -5546,18 +7008,18 @@
     ],
     "Real Madrid": [
       {
+        "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1re journée de Ligue des champions",
+        "source": "RMC Sport",
+        "date": "2026-09-08T18:39:07+00:00",
+        "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h). Un match à suivre en direct sur le site et l'application de…",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
+      },
+      {
         "title": "Real Madrid",
         "source": "RMC Sport",
         "date": "2026-09-08T13:09:10+00:00",
         "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
         "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
-      },
-      {
-        "title": "DIRECT. Real Madrid-Inter Milan: suivez en live le match de la 1ère journée de Ligue des champions",
-        "source": "RMC Sport",
-        "date": "2026-09-08T13:07:41+00:00",
-        "summary": "Pour leur entrée en lice dans cette Ligue des champions 2025-2026, Kylian Mbappé et le Real Madrid accueillent l'Inter Milan ce mardi soir (21h00). Un match à suivre en direct sur le site et l'application de…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/direct-real-madrid-inter-milan-suivez-en-live-le-match-de-la-1ere-journee-de-ligue-des-champions_LS-202609080566.html"
       },
       {
         "title": "Ligue des champions : le Real Madrid pourra compter sur Aurélien Tchouaméni face à l’Inter",
@@ -5579,13 +7041,6 @@
         "date": "2026-09-08T11:40:21+00:00",
         "summary": "Hasard du calendrier, José Mourinho retrouve la Ligue des champions avec le Real Madrid face à l’un de ses anciens clubs, l’Inter. Surmotivé à l’idée de gagner la compétition avec les Merengues, l’entraîneur…",
         "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/real-sa-recette-c-est-nous-contre-le-reste-du-monde-16-ans-apres-son-dernier-titre-mourinho-reve-d-une-nouvelle-ligue-des-champions_AV-202609080515.html"
-      },
-      {
-        "title": "Ligue des champions: PSG, Arsenal, Bayern, Barça… qui sont les favoris de cette édition 2026-2027?",
-        "source": "RMC Sport",
-        "date": "2026-09-08T11:08:54+00:00",
-        "summary": "La Ligue des champions est de retour cette semaine pour une nouvelle saison, avec une grande question: le PSG parviendra-t-il à réaliser le triplé? Après leur back-to-back, les joueurs de Luis Enrique vont…",
-        "url": "https://rmcsport.bfmtv.com/football/ligue-des-champions/ligue-des-champions-psg-arsenal-bayern-barca-qui-sont-les-favoris-de-cette-edition-2026-2027_AV-202609080500.html"
       },
       {
         "title": "Ligue des champions – Real Madrid : le jour sans fin de Kylian Mbappé",
@@ -5733,5 +7188,1942 @@
     "buteurs Ligue des Champions ESPN: ValueError",
     "passeurs Ligue des Champions ESPN: ValueError"
   ],
-  "players_index": []
+  "players_index": [
+    {
+      "name": "Aaron Wan-Bissaka",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/760320.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "AEK Athens",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "2",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8563.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "AFC Bournemouth",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "11",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8678.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Alejandro Garnacho",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1203665.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Alejandro Granados",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "70",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1485173.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Aleksandar Stankovic",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1410437.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Alysson Edward",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1656860.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Amad Diallo",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1070052.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Amadou Onana",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "24",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1185748.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Anderlecht",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "4",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8635.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Andrej Vasovic",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1691828.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Andrej Vasović",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "77",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1691828.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Andrés García",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1430406.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Arsenal",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "1",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9825.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Aston Villa",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "16",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10252.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Atlético Madrid",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "6",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9906.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Axl De Corte",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "71",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1557061.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Barcelona",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "7",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8634.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Bayern München",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "8",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9823.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ben Broggio",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1407239.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Bjorn Meijer",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "LB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1256178.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Bodø/Glimt",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "9",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8402.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Borussia Dortmund",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "10",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9789.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Boubacar Kamara",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "8",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/816325.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Bradley Burrowes",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1639163.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Brandon Mechele",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "44",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/445873.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Brentford",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "4",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9937.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Brian Madjo",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1729841.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Brighton & Hove Albion",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "6",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10204.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Carlos Forbs",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "9",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1186529.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Cercle Brugge",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "13",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9984.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Chelsea",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "5",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8455.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Cheveyo Tsawa",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "CM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1612843.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Christian Kofane",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1705081.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Christos Tzolis",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1157237.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Cisse Sandra",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1178444.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Club Brugge",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "4",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8342.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Como",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "11",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10171.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Coventry City",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "18",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8669.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Crystal Palace",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "17",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9826.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Dani van den Heuvel",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "GK",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1192954.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Donyell Malen",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/660301.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Douglas Luiz",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/787350.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Emiliano Buendía",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "10",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/610184.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Emiliano Martínez",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "GK",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/268375.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Endrick",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1406729.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Enzo Barrenechea",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1352923.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Evann Guessand",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1087966.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Everton",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "13",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8668.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ezri Konsa",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/710159.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "FC Porto",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "12",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9773.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Fenerbahçe",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "13",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8695.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Feyenoord",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "14",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10235.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Finley Munroe",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LWB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1331697.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Freddie Potts",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1206287.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Fulham",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "14",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9879.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Félix Lemaréchal",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "AM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1284071.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Galatasaray",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "15",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8637.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Genk",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "5",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9987.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Gent",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "3",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9991.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "George Hemmings",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "53",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1607333.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Gustaf Nilsson",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/118241.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Han-Beom Lee",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1232253.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Hans Vanaken",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "20",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/203666.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Hugo Siquet",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "41",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1202888.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Hugo Vetlesen",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "AM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/837064.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Hull City",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "20",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8667.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ian Maatsen",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "22",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/966026.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ibrahim Mbaye",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1593857.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Inter",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "16",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8636.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ipswich Town",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "12",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9902.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Jamaldeen Jimoh-Aloba",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "AM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1557236.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Jan Virgili",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1690093.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Jean-Philippe Mateta",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/706297.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Joaquin Seys",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "LB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1489449.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Joe Gauci",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "GK",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/970296.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Joel Ordóñez",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1354085.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Johan Manzambi",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1520063.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "John McGinn",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/356406.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Jorne Spileers",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "58",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1233418.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Josh Feeney",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1250240.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Joshua Zirkzee",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/950830.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "João Gomes",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1174672.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Kadan Young",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1362972.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Kaye Furo",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1413853.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Kerr Smith",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1215944.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Kortrijk",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "17",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8571.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Kosta Nedeljkovic",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1513910.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "KV Mechelen",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "14",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8203.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Kyriani Sabbe",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "64",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1227590.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Lamare Bogarde",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1190033.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "LASK",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "3",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9977.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Leeds United",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "10",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8463.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Lens",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "17",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8588.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Leon Bailey",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/671331.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Leon Goretzka",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/343748.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Lewis Dobbin",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1098752.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Lille",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "18",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8639.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Liverpool",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "7",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8650.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Lommel",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "11",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/6702.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Louie Barry",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/969256.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Lucas Digne",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/210111.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ludovit Reis",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "AM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/869326.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Lynnt Audoor",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "62",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1178442.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Mamadou Diakhon",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "67",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1484998.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Manchester City",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "2",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8456.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Manchester United",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "3",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10260.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Marco Bizot",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "40",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/195782.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Matteo Dams",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "LB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1315821.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Matteo Ruggeri",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1051097.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Matthieu Udol",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LWB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/660326.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Matty Cash",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/729731.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Modou Cissé",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1714552.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Modou Kéba Cissé",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "48",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1714552.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Morgan Rogers",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "AM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/883080.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Napoli",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "33",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9875.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Newcastle United",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "19",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10261.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Nicolas Jackson",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1197347.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Nicolò Tresoldi",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "7",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1334552.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Nordin Jackers",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "29",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/526227.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Nottingham Forest",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "8",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10203.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "OH Leuven",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "16",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1773.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Oliwier Zych",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "GK",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1117055.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ollie Watkins",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/540088.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Paris Saint-Germain",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "22",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9847.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Pau Torres",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "14",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/792645.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "PSV Eindhoven",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "23",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8640.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "RAAL La Louvière",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "18",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1218969.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Raphael Onyedika",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1126768.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "RB Leipzig",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "24",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/178475.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Real Betis",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "25",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8603.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Real Madrid",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "26",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8633.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Roma",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "27",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8686.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Romeo Vermant",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "17",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1178453.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Rory Wilson",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1367925.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Ross Barkley",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "6",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/215384.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Royal Antwerp",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "12",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9988.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Sabah FK",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "28",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/951893.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Samba Coulibaly",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "54",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1830647.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Samuel Iling-Junior",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1368061.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Shakhtar Donetsk",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "29",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9728.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Shandre Campbell",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "RW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1599319.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Sil Swinkels",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1197533.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Simon Mignolet",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "22",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/37868.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "SK Beveren",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "15",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8475.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Slavia Prague",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "30",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/7787.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Slovan Bratislava",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "31",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/6019.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Sporting Charleroi",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "1",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9986.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Sporting CP",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "32",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9768.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "St.Truiden",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "9",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9997.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Standard Liège",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "6",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/9985.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Stefan Ostoici",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "",
+      "number": "61",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1863039.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Sunderland",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "9",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8472.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Tammy Abraham",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/749661.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Taylor Harwood-Bellis",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/966021.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Tian Nai Koren",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1692880.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Tottenham Hotspur",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "15",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8586.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Triston Rowe",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "RM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1442496.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Tyrone Mings",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "5",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/419664.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Union St.Gilloise",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "8",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/7978.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "VfB Stuttgart",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "34",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10269.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Victor Nilsson Lindelöf",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "",
+      "number": "3",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/258269.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Viking",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "35",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/8478.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Villarreal",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "36",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10205.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Vince Osuji",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1658826.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Westerlo",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "10",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10001.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Wisdom Mike",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1692886.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Yanis Musuayi",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "ST",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1836083.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Yann Sommer",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "GK",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/41618.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Yasin Özcan",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1393980.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Yeimar Mosquera",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1627205.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Youri Tielemans",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "DM",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/465960.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Zaid Abner Romero",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "CB",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1118199.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Zion Suzuki",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "GK",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1053679.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Zulte Waregem",
+      "club_current": "Club Brugge",
+      "country": "Club Brugge",
+      "position": "7",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/10000.png",
+      "associated_team": "Club Brugge",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    },
+    {
+      "name": "Zépiqueno Redmond",
+      "club_current": "Aston Villa",
+      "country": "Aston Villa",
+      "position": "LW",
+      "number": "",
+      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1553363.png",
+      "associated_team": "Aston Villa",
+      "updated_at": "2026-09-08T18:40:42+00:00",
+      "source": "ESPN, FotMob"
+    }
+  ]
 }
