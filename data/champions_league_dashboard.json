@@ -1727,22 +1727,22 @@
           "country_flag_url": ""
         },
         {
-          "name": "Zulte Waregem",
-          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10000.png",
-          "position": "10",
-          "number": "",
-          "country_flag_url": ""
-        },
-        {
           "name": "OH Leuven",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/1773.png",
-          "position": "11",
+          "position": "10",
           "number": "",
           "country_flag_url": ""
         },
         {
           "name": "Royal Antwerp",
           "photo_url": "https://images.fotmob.com/image_resources/playerimages/9988.png",
+          "position": "11",
+          "number": "",
+          "country_flag_url": ""
+        },
+        {
+          "name": "Zulte Waregem",
+          "photo_url": "https://images.fotmob.com/image_resources/playerimages/10000.png",
           "position": "12",
           "number": "",
           "country_flag_url": ""
@@ -5238,58 +5238,387 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
+      "title": "\"Un football offensif\" et \"une qualification en Ligue des champions\", Carlos Vicens dévoile ses ambitions sur le banc de l'OL",
+      "source": "RMC Sport",
+      "date": "2026-11-10T14:54:25+00:00",
+      "summary": "Après le départ de Paulo Fonseca au Sporting, l'Olympique lyonnais a choisi de nommer Carlos Vicens au poste d'entraîneur pour lui succéder. Le coach espagnol, passé par Braga, a été présenté ce mardi par les…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/direct-ol-suivez-la-conference-de-presentation-du-nouvel-entraineur-carlos-vicens-en-live_LN-202611100595.html"
+    },
+    {
+      "title": "Bayern Munich",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:35:43+00:00",
+      "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
+      "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
+    },
+    {
+      "title": "Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:20:13+00:00",
+      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
+      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+    },
+    {
       "title": "Mauricio Pochettino",
       "source": "RMC Sport",
       "date": "2026-11-10T09:48:22+00:00",
       "summary": "Mauricio Pochettino est né le 2 mars 1972 à Murphy en Argentine. Actuellement entraîneur du Paris Saint-Germain, l’Argentin était un ancien défenseur central et a été capitaine du club de la capitale.…",
       "url": "https://rmcsport.bfmtv.com/football/mauricio-pochettino_DN-202108310539.html"
-    },
-    {
-      "title": "Real Madrid",
-      "source": "RMC Sport",
-      "date": "2026-11-10T07:45:25+00:00",
-      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
-    },
-    {
-      "title": "Le Real est-il enfin lancé ? (After Espagne)",
-      "source": "RMC Sport",
-      "date": "2026-11-09T17:08:04+00:00",
-      "summary": "Large vainqueur à Valence, le Real Madrid a allongé sa série à 8 succès consécutifs. Les hommes de Mourinho sont 2e à trois points du Barça en Liga et co-leaders en Ligue des Champions en compagnie du PSG.…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/video-le-real-est-il-enfin-lance-after-espagne_VN-202611090748.html"
     }
   ],
   "france_news": [],
   "general_news": [
     {
+      "title": "\"Un football offensif\" et \"une qualification en Ligue des champions\", Carlos Vicens dévoile ses ambitions sur le banc de l'OL",
+      "source": "RMC Sport",
+      "date": "2026-11-10T14:54:25+00:00",
+      "summary": "Après le départ de Paulo Fonseca au Sporting, l'Olympique lyonnais a choisi de nommer Carlos Vicens au poste d'entraîneur pour lui succéder. Le coach espagnol, passé par Braga, a été présenté ce mardi par les…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/direct-ol-suivez-la-conference-de-presentation-du-nouvel-entraineur-carlos-vicens-en-live_LN-202611100595.html"
+    },
+    {
+      "title": "Bayern Munich",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:35:43+00:00",
+      "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
+      "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
+    },
+    {
+      "title": "Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:20:13+00:00",
+      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
+      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+    },
+    {
       "title": "Mauricio Pochettino",
       "source": "RMC Sport",
       "date": "2026-11-10T09:48:22+00:00",
       "summary": "Mauricio Pochettino est né le 2 mars 1972 à Murphy en Argentine. Actuellement entraîneur du Paris Saint-Germain, l’Argentin était un ancien défenseur central et a été capitaine du club de la capitale.…",
       "url": "https://rmcsport.bfmtv.com/football/mauricio-pochettino_DN-202108310539.html"
-    },
-    {
-      "title": "Real Madrid",
-      "source": "RMC Sport",
-      "date": "2026-11-10T07:45:25+00:00",
-      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
-    },
-    {
-      "title": "Le Real est-il enfin lancé ? (After Espagne)",
-      "source": "RMC Sport",
-      "date": "2026-11-09T17:08:04+00:00",
-      "summary": "Large vainqueur à Valence, le Real Madrid a allongé sa série à 8 succès consécutifs. Les hommes de Mourinho sont 2e à trois points du Barça en Liga et co-leaders en Ligue des Champions en compagnie du PSG.…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/video-le-real-est-il-enfin-lance-after-espagne_VN-202611090748.html"
     }
   ],
   "all_news": [
     {
       "title": "Ligue des nations : revivez la victoire renversante de l'équipe de France contre la Belgique",
       "source": "France Info",
-      "date": "2026-11-10T09:50:24+00:00",
+      "date": "2026-11-10T17:50:21+00:00",
       "summary": "Menés 1-0 jusqu'à la 77e minute, les Bleus ont marqué quatre buts grâce aux remplaçants de Zinédine Zidane, lundi.",
-      "url": "https://www.franceinfo.fr/sports/directs/direct-france-belgique-les-bleus-retrouvent-les-diables-rouges-et-visent-une-premiere-victoire-en-france-avec-zidane-suivez-le-match-de-ligue-des-nations_8223076.html#xtor=RSS-3-%5Bgeneral%5D"
+      "url": "https://www.franceinfo.fr/sports/directs/direct-france-belgique-les-bleus-retrouvent-les-diables-rouges-et-visent-une-premiere-victoire-en-france-avec-zidane-suivez-le-match-de-ligue-des-nations_8223076.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
+    },
+    {
+      "title": "Équipe de France : Lorient félicite Eli Junior Kroupi pour sa sélection chez les Bleus",
+      "source": "SO FOOT",
+      "date": "2026-11-10T17:05:11+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/equipe-de-france-lorient-felicite-eli-junior-kroupi-pour-sa-selection-chez-les-bleus"
+    },
+    {
+      "title": "Équipe de France: qui est Eli Junior Kroupi, nouvel appelé de la liste de Zidane chez les Bleus?",
+      "source": "RMC Sport",
+      "date": "2026-11-10T17:00:18+00:00",
+      "summary": "Zinédine Zidane a sélectionné Eli Junior Kroupi pour les matchs de l’équipe de France contre l’Italie et la Turquie en Ligue des nations. Fils d’un ancien footballeur professionnel, l’attaquant de 20 ans a…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-qui-est-eli-junior-kroupi-nouvel-appele-de-la-liste-de-zidane-chez-les-bleus_AV-202611100720.html"
+    },
+    {
+      "title": "DIRECT. Equipe de France: Eli Junior Kroupi appelé pour remplacer Marcus Thuram (info RMC Sport)",
+      "source": "RMC Sport",
+      "date": "2026-11-10T16:42:02+00:00",
+      "summary": "Les joueurs de l'équipe de France ont rendez-vous lundi à Clairefontaine pour préparer les deux matchs de Ligue des nations face à l'Italie jeudi à San Siro et à la Turquie dimanche à Bordeaux. Suivez toutes…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/direct-equipe-de-france-toutes-les-infos-sur-les-bleus-avant-le-match-de-ligue-des-nations-contre-l-italie_LN-202611090456.html"
+    },
+    {
+      "title": "L’OL s’exprime suite à l’incident survenu lors d’une rencontre de ses U17 nationaux à Grenoble",
+      "source": "SO FOOT",
+      "date": "2026-11-10T16:26:37+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/lol-sexprime-suite-a-lincident-survenu-lors-dune-rencontre-de-ses-u17-nationaux-a-grenoble"
+    },
+    {
+      "title": "« Un enjeu de santé publique » :  Varane réaffirme son combat contre les commotions cérébrales",
+      "source": "SO FOOT",
+      "date": "2026-11-10T16:15:48+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/un-enjeu-de-sante-publique-varane-reaffirme-son-combat-contre-les-commotions-cerebrales"
+    },
+    {
+      "title": "DIRECT. Mercato: Yannick Cahuzac démis de ses fonctions par Lens",
+      "source": "RMC Sport",
+      "date": "2026-11-10T15:57:15+00:00",
+      "summary": "Suivez en live toutes les infos et rumeurs du mercato actuellement agité sur certains bancs de touche européens notamment en Angleterre où le Français Pierre Sage est sur la sellette avec Crystal Palace.",
+      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-lundi-9-novembre-2026_LN-202611090138.html"
+    },
+    {
+      "title": "Olympique lyonnais : Carlos Vicens parle de la Ligue 1, de Pep Guardiola et de la défense à quatre en conférence de presse",
+      "source": "SO FOOT",
+      "date": "2026-11-10T15:57:02+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/olympique-lyonnais-carlos-vicens-parle-de-la-ligue-1-de-pep-guardiola-et-de-la-defense-a-quatre-en-conference-de-presse"
+    },
+    {
+      "title": "Eli Junior Kroupi appelé pour la première fois en équipe de France à la suite du forfait de Marcus Thuram",
+      "source": "France Info",
+      "date": "2026-11-10T15:46:32+00:00",
+      "summary": "Le jeune attaquant de Bournemouth (20 ans) est le troisième nouveau venu à Clairefontaine dans ce rassemblement du mois du novembre, aux côtés de Pablo Pagis et Saël Kumbedi.",
+      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/eli-junior-kroupi-appele-pour-la-premiere-fois-en-equipe-de-france-a-la-suite-du-forfait-de-marcus-thuram_8276507.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
+    },
+    {
+      "title": "Equipe de France: \"Je peux même regarder un match de deuxième division\", les coulisses du choix Kumbedi par Zidane",
+      "source": "RMC Sport",
+      "date": "2026-11-10T15:44:30+00:00",
+      "summary": "L’équipe de France a débuté son rassemblement de novembre lundi à Clairefontaine, avant ses rencontres face à l’Italie et à la Turquie en Ligue des nations. Parmi les nouveaux visages: la présence surprise de…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-je-peux-meme-regarder-un-match-de-deuxieme-division-les-coulisses-du-choix-kumbedi-par-zidane_AV-202611100661.html"
+    },
+    {
+      "title": "Équipe de France : \"Un poste sinistré\", Di Meco comprend la sélection de Kumbedi",
+      "source": "RMC Sport",
+      "date": "2026-11-10T15:44:06+00:00",
+      "summary": "Joueur de deuxième division allemande, Saël Kumbedi a été convoqué par Zinedine Zidane en équipe de France, après le forfait de Kalulu. D'abord convoqué en Espoirs, le joueur d'Hambourg assure \"être préparé…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-un-poste-sinistre-di-meco-comprend-la-selection-de-kumbedi_VN-202611100663.html"
+    },
+    {
+      "title": "Marcus Thuram",
+      "source": "RMC Sport",
+      "date": "2026-11-10T15:37:10+00:00",
+      "summary": "Marcus Thuram est un attaquant de l'équipe de France et du Borussia Moenchengladbach. Il est le fils de Lilan Thuram, recordman de sélection en bleu (142). Il a été appelé à la dernière minute par Didier…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/marcus-thuram_DN-202211140331.html"
+    },
+    {
+      "title": "Equipe de France: grande première pour Eli Junior Kroupi, appelé pour remplacer Marcus Thuram",
+      "source": "RMC Sport",
+      "date": "2026-11-10T15:37:09+00:00",
+      "summary": "Selon les informations de RMC Sport, Eli Junior Kroupi (20 ans) est convoqué pour la première fois de sa carrière en équipe de France. Il remplace Marcus Thuram, forfait sur blessure pour les deux prochains…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-grande-premiere-pour-eli-junior-kroupi-appele-pour-remplacer-marcus-thuram_AV-202611100656.html"
+    },
+    {
+      "title": "Équipe de France : Eli Junior Kroupi est appelé par Zinédine Zidane",
+      "source": "SO FOOT",
+      "date": "2026-11-10T15:34:04+00:00",
+      "summary": "Voilà le petit nouveau !",
+      "url": "https://www.sofoot.com/breves/equipe-de-france-eli-junior-kroupi-est-appele-par-zinedine-zidane"
+    },
+    {
+      "title": "Équipe de France : Marcus Thuram forfait pour le rassemblement de novembre",
+      "source": "SO FOOT",
+      "date": "2026-11-10T15:20:11+00:00",
+      "summary": "Retour manqué !",
+      "url": "https://www.sofoot.com/breves/equipe-de-france-marcus-thuram-forfait-pour-le-rassemblement-de-novembre"
+    },
+    {
+      "title": "FC Barcelone : Joan García évoque les contraintes du jeu du Barça",
+      "source": "SO FOOT",
+      "date": "2026-11-10T15:09:59+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/fc-barcelone-joan-garcia-evoque-les-contraintes-du-jeu-du-barca"
+    },
+    {
+      "title": "OL : \"J'observais ses routines\", Vicens inspiré par Guardiola",
+      "source": "RMC Sport",
+      "date": "2026-11-10T15:08:22+00:00",
+      "summary": "Carlos Vicens est le nouvel entraîneur de l'Olympique Lyonnais. Le successeur de Paulo Fonseca a notamment 8 saisons à Manchester City… dont quatre comme adjoint de Pep Guardiola.",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-ol-j-observais-ses-routines-vicens-inspire-par-guardiola_VN-202611100641.html"
+    },
+    {
+      "title": "OL: Louis-Jean explique pourquoi un retour de Sage n'a pas été \"une option\" pour remplacer Fonseca",
+      "source": "RMC Sport",
+      "date": "2026-11-10T14:59:06+00:00",
+      "summary": "Après le départ de Paulo Fonseca, l'OL a intronisé Carlos Vicens pour lui succéder au poste d'entraîneur, ce mardi. L'Espagnol de 43 ans était suivi de longue date par les dirigeants lyonnais, qui ont assuré…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/ol-louis-jean-explique-pourquoi-un-retour-de-sage-n-a-pas-ete-une-option-pour-remplacer-fonseca_AV-202611100631.html"
+    },
+    {
+      "title": "\"Un football offensif\" et \"une qualification en Ligue des champions\", Carlos Vicens dévoile ses ambitions sur le banc de l'OL",
+      "source": "RMC Sport",
+      "date": "2026-11-10T14:54:25+00:00",
+      "summary": "Après le départ de Paulo Fonseca au Sporting, l'Olympique lyonnais a choisi de nommer Carlos Vicens au poste d'entraîneur pour lui succéder. Le coach espagnol, passé par Braga, a été présenté ce mardi par les…",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/direct-ol-suivez-la-conference-de-presentation-du-nouvel-entraineur-carlos-vicens-en-live_LN-202611100595.html"
+    },
+    {
+      "title": "Ligue 1 : Disney et Skydance sont intéressés pour reprendre les droits de diffusion",
+      "source": "SO FOOT",
+      "date": "2026-11-10T14:45:35+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/ligue-1-disney-et-skydance-sont-interesses-pour-reprendre-les-droits-de-diffusion"
+    },
+    {
+      "title": "Coupe du monde 2022 : Grégoire Margotton garde un souvenir douloureux de la finale France-Argentine",
+      "source": "SO FOOT",
+      "date": "2026-11-10T14:27:29+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/coupe-du-monde-2022-gregoire-margotton-garde-un-souvenir-douloureux-de-la-finale-france-argentine"
+    },
+    {
+      "title": "Real Oviedo : Les premiers mots de Raúl avec son nouveau club",
+      "source": "SO FOOT",
+      "date": "2026-11-10T14:18:05+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/real-oviedo-les-premiers-mots-de-raul-avec-son-nouveau-club"
+    },
+    {
+      "title": "Neymar laisse supposer qu’il ne sera plus un footballeur professionnel en 2030",
+      "source": "SO FOOT",
+      "date": "2026-11-10T13:51:14+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/neymar-laisse-supposer-quil-ne-sera-plus-un-footballeur-professionnel-en-2030"
+    },
+    {
+      "title": "Gianni Infantino",
+      "source": "RMC Sport",
+      "date": "2026-11-10T13:36:29+00:00",
+      "summary": "Gianni Infantino est un dirigeant sportif né le 23 mars 1970. Il est actuellement président de la Fifa, et ce depuis le 26 février 2016. Très proche du président américain Donald Trump, il est la cible de…",
+      "url": "https://rmcsport.bfmtv.com/football/gianni-infantino_DN-202607290231.html"
+    },
+    {
+      "title": "Présidence de la Fifa: Arsène Wenger, l'homme parfait pour faire douter Infantino?",
+      "source": "RMC Sport",
+      "date": "2026-11-10T13:36:29+00:00",
+      "summary": "Comme évoqué par RMC Sport au milieu du mois d'octobre, l'ancien entraîneur d'Arsenal, Arsène Wenger, est l'un des deux noms qui revient régulièrement du côté de l’UEFA afin de se présenter à la présidence de…",
+      "url": "https://rmcsport.bfmtv.com/football/election-a-la-presidence-de-la-fifa-arsene-wenger-l-homme-parfait-pour-faire-douter-infantino_AV-202611100571.html"
+    },
+    {
+      "title": "Équipe de France : Laurent Bonadei dévoilera sa prochaine liste le 18 novembre",
+      "source": "SO FOOT",
+      "date": "2026-11-10T13:33:33+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/equipe-de-france-laurent-bonadei-devoilera-sa-prochaine-liste-le-18-novembre"
+    },
+    {
+      "title": "Ces personnalités du foot qui pourraient se présenter aux élections présidentielles",
+      "source": "SO FOOT",
+      "date": "2026-11-10T13:30:49+00:00",
+      "summary": "Teddy Riner n’a pas le monopole de la sueur.",
+      "url": "https://www.sofoot.com/articles/ces-personnalites-du-foot-qui-pourraient-se-presenter-aux-elections-presidentielles"
+    },
+    {
+      "title": "Bundesliga : le Bayern en quête d’un remplaçant à Manuel Neuer, active les pistes Baumann et Karius",
+      "source": "SO FOOT",
+      "date": "2026-11-10T13:20:59+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/bundesliga-le-bayern-en-quete-dun-remplacant-a-manuel-neuer-active-les-pistes-baumann-et-karius"
+    },
+    {
+      "title": "300.000 euros l'engagement: les loges les plus luxueuses du nouveau Camp Nou du Barça s'arrachent malgré des prix hallucinants",
+      "source": "RMC Sport",
+      "date": "2026-11-10T13:15:52+00:00",
+      "summary": "Le FC Barcelone compte sur son nouveau Camp Nou et ses luxueuses loges pour s'offrir de confortables revenus dans les années à venir. Fixés à des prix très élevés, les premiers abonnements s'arrachent.",
+      "url": "https://rmcsport.bfmtv.com/football/liga/300-000-euros-l-engagement-les-loges-les-plus-luxueuses-du-nouveau-camp-nou-du-barca-s-arrachent-malgre-des-prix-hallucinants_AV-202611100551.html"
+    },
+    {
+      "title": "Bayern Munich",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:35:43+00:00",
+      "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
+      "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
+    },
+    {
+      "title": "Bayern Munich: bonne nouvelle en Allemagne, Kompany de retour au centre d'entraînement après sa méningite",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:35:43+00:00",
+      "summary": "Plus de deux semaines après son malaise à l'entraînement du Bayern Munich, Vincent Kompany a fait son retour au centre d'entraînement du club bavarois, selon la presse allemande. Il devrait revenir sur le…",
+      "url": "https://rmcsport.bfmtv.com/football/bundesliga/bayern-munich-bonne-nouvelle-en-allemagne-kompany-de-retour-au-centre-d-entrainement-apres-sa-meningite_AV-202611100530.html"
+    },
+    {
+      "title": "Pourquoi Julián Álvarez est sorti du tunnel avec les joueurs du Barça",
+      "source": "SO FOOT",
+      "date": "2026-11-10T12:33:28+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/pourquoi-julian-alvarez-est-sorti-du-tunnel-avec-les-joueurs-du-barca"
+    },
+    {
+      "title": "Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:20:13+00:00",
+      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
+      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+    },
+    {
+      "title": "\"L'une des plus belles choses qui me soient arrivées dans la vie\", le message d'amour d'Endrick à l'OL",
+      "source": "RMC Sport",
+      "date": "2026-11-10T12:20:13+00:00",
+      "summary": "Endrick (20 ans), attaquant du Real Madrid, s'est longuement exprimé sur son avenir, ce mardi lors du rassemblement avec le Brésil, en ouvrant la porte à un départ cet hiver pour augmenter son temps de jeu…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-lyon/l-une-des-plues-belles-choses-qui-me-soient-arrivees-dans-la-vie-le-message-d-amour-d-endrick-a-l-ol_AV-202611100526.html"
+    },
+    {
+      "title": "Manchester United : Michael Carrick limogé mercredi ?",
+      "source": "SO FOOT",
+      "date": "2026-11-10T11:50:46+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/manchester-united-michael-carrick-limoge-mercredi"
+    },
+    {
+      "title": "La mort de Jesús de Miguel va-t-elle changer les habitudes des gardiens au moment de sortir ?",
+      "source": "SO FOOT",
+      "date": "2026-11-10T11:30:25+00:00",
+      "summary": "Une semaine après le drame, la confrérie des gardiens s’interroge sur ses pratiques.",
+      "url": "https://www.sofoot.com/articles/la-mort-de-jesus-de-miguel-va-t-elle-changer-les-habitudes-des-gardiens-au-moment-de-sortir"
+    },
+    {
+      "title": "Endrick évoque son peu de temps de jeu au Real Madrid et ses souvenirs de Lyon",
+      "source": "SO FOOT",
+      "date": "2026-11-10T11:29:57+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/endrick-evoque-son-peu-de-temps-de-jeu-au-real-madrid-et-ses-souvenirs-de-lyon"
+    },
+    {
+      "title": "FIFA : Arsène Wenger songerait à candidater face à Gianni Infantino",
+      "source": "SO FOOT",
+      "date": "2026-11-10T11:13:30+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/fifa-arsene-wenger-songerait-a-se-candidater-face-a-gianni-infantino"
+    },
+    {
+      "title": "Neymar",
+      "source": "RMC Sport",
+      "date": "2026-11-10T11:01:36+00:00",
+      "summary": "Avec son look et son talent indéniable balle au pied, Neymar Junior fait partie des icônes incontournables du foot mondial. Après un long passage au Barça, il rejoint le PSG à l'été 2017 pour un montant…",
+      "url": "https://rmcsport.bfmtv.com/football/neymar_DN-201501260352.html"
+    },
+    {
+      "title": "Neymar donne une date butoire pour la fin de sa carrière (et ça a de quoi surprendre)",
+      "source": "RMC Sport",
+      "date": "2026-11-10T11:01:35+00:00",
+      "summary": "Dans un échange en direct avec un créateur de contenus brésilien, Neymar en a dit un peu plus sur la fin de sa carrière. Malgré un genou gauche qui le malmène depuis longtemps, la star auriverde n'envisage…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-bresil/neymar-donne-une-date-butoire-pour-la-fin-de-sa-carriere-et-ca-a-de-quoi-surprendre_AV-202611100470.html"
+    },
+    {
+      "title": "Il n'a pas résisté à la semaine noire de Lens: Yannick Cahuzac limogé deux mois après sa nomination",
+      "source": "RMC Sport",
+      "date": "2026-11-10T10:55:57+00:00",
+      "summary": "Selon des informations de L'Equipe, confirmées par RMC Sport, Lens a démis de ses fonctions son entraîneur Yannick Cahuzac, ce mardi. Le technicien, promu numéro 1 il y a deux mois, n'a pas résisté à la…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/rc-lens/il-n-a-pas-resiste-a-la-semaine-noire-de-lens-yannick-cahuzac-limoge-deux-mois-apres-sa-nomination_AP-202611100467.html"
+    },
+    {
+      "title": "Equipe de France: un joueur de D2 appelé, le très restreint vivier des arrières droits français",
+      "source": "RMC Sport",
+      "date": "2026-11-10T10:54:52+00:00",
+      "summary": "Si la convocation de Saël Kumbedi (21 ans), joueur de Wolfsburg en D2 allemande, a pu surprendre, Zinédine Zidane dispose d'un vivier très restreint dans ce secteur de jeu, comme le montre un rapide coup…",
+      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-un-joueur-de-d2-appele-le-tres-restreint-vivier-des-arrieres-droits-francais_AV-202611100464.html"
+    },
+    {
+      "title": "Ligue 1 : Yannick Cahuzac et le RC Lens, c’est déjà fini",
+      "source": "SO FOOT",
+      "date": "2026-11-10T10:49:18+00:00",
+      "summary": "Le champ est libre pour un retour de Pierre Sage.",
+      "url": "https://www.sofoot.com/breves/ligue-1-yannick-cahuzac-et-le-rc-lens-cest-deja-fini"
+    },
+    {
+      "title": "Premier League : Manchester United se penche sur Mauricio Pochettino pour succéder à Michael Carrick",
+      "source": "SO FOOT",
+      "date": "2026-11-10T10:37:28+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/premier-league-manchester-united-se-penche-sur-mauricio-pochettino-pour-succeder-a-michael-carrick"
+    },
+    {
+      "title": "Bayern Munich : Vincent Kompany est de retour au centre d’entraînement après sa méningite",
+      "source": "SO FOOT",
+      "date": "2026-11-10T10:10:51+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/bayern-munich-vincent-kompany-est-de-retour-au-centre-dentrainement-apres-sa-meningite"
+    },
+    {
+      "title": "Pays-Bas : Pour Xavi, Frenkie de Jong n’est pas assez reconnu",
+      "source": "SO FOOT",
+      "date": "2026-11-10T09:54:30+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/pays-bas-pour-xavi-frenkie-de-jong-nest-pas-assez-reconnu"
     },
     {
       "title": "Mauricio Pochettino",
@@ -5320,13 +5649,6 @@
       "url": "https://www.sofoot.com/breves/fc-barcelone-steven-gerrard-pense-que-lamine-yamal-est-en-avance-sur-lionel-messi-et-sur-cristiano-ronaldo"
     },
     {
-      "title": "DIRECT. Mercato: Manchester United devrait rapidement se séparer de Carrick",
-      "source": "RMC Sport",
-      "date": "2026-11-10T09:02:03+00:00",
-      "summary": "Suivez en live toutes les infos et rumeurs du mercato actuellement agité sur certains bancs de touche européens notamment en Angleterre où le Français Pierre Sage est sur la sellette avec Crystal Palace.",
-      "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-lundi-9-novembre-2026_LN-202611090138.html"
-    },
-    {
       "title": "Premier League : Michael Carrick devrait bientôt quitter Manchester United",
       "source": "SO FOOT",
       "date": "2026-11-10T08:35:13+00:00",
@@ -5334,7 +5656,7 @@
       "url": "https://www.sofoot.com/breves/premier-league-michael-carrick-devrait-bientot-quitter-manchester-united"
     },
     {
-      "title": "Equipe de France : « Un rêve qui se réalise  », les premiers mots de Saël Kumbedi à Clairefontaine",
+      "title": "Équipe de France : « Un rêve qui se réalise  », les premiers mots de Saël Kumbedi à Clairefontaine",
       "source": "SO FOOT",
       "date": "2026-11-10T08:20:07+00:00",
       "summary": "",
@@ -5353,13 +5675,6 @@
       "date": "2026-11-10T07:46:24+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/le-xi-fifpro-de-lannee-avec-lionel-messi-et-trois-joueurs-du-psg"
-    },
-    {
-      "title": "Real Madrid",
-      "source": "RMC Sport",
-      "date": "2026-11-10T07:45:25+00:00",
-      "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
     },
     {
       "title": "En grande forme avec le Real Madrid, Mbappé élu joueur du mois en Liga devant Yamal",
@@ -5383,13 +5698,6 @@
       "url": "https://rmcsport.bfmtv.com/football/premier-league/trois-annees-et-puis-s-en-va-tom-brady-n-est-plus-actionnaire-de-birmingham-city_AV-202611100241.html"
     },
     {
-      "title": "Warren Zaïre-Emery",
-      "source": "RMC Sport",
-      "date": "2026-11-10T06:40:42+00:00",
-      "summary": "Warren Zaïre-Emery est un footballeur français né le 8 mars 2006 à Montreuil. Formé par le Paris Saint-Germain, il joue au poste de milieu de terrain. Le 6 août 2022, il devient le plus jeune joueur de…",
-      "url": "https://rmcsport.bfmtv.com/football/warren-zaire-emery_DN-202308300471.html"
-    },
-    {
       "title": "\"Je le mets devant tout le monde\", Daniel Riolo veut Warren Zaïre-Emery comme arrière droit en équipe de France",
       "source": "RMC Sport",
       "date": "2026-11-10T06:40:42+00:00",
@@ -5397,362 +5705,103 @@
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/je-me-mets-devant-tout-le-monde-daniel-riolo-veut-warren-zaire-emery-comme-arriere-droit-en-equipe-de-france_AV-202611100195.html"
     },
     {
+      "title": "Warren Zaïre-Emery",
+      "source": "RMC Sport",
+      "date": "2026-11-10T06:40:42+00:00",
+      "summary": "Warren Zaïre-Emery est un footballeur français né le 8 mars 2006 à Montreuil. Formé par le Paris Saint-Germain, il joue au poste de milieu de terrain. Le 6 août 2022, il devient le plus jeune joueur de…",
+      "url": "https://rmcsport.bfmtv.com/football/warren-zaire-emery_DN-202308300471.html"
+    },
+    {
       "title": "\"Le Real Madrid est la meilleure équipe d'Europe\": la déclaration paradoxale de Cucurella qui \"regarde peu de football\"",
       "source": "RMC Sport",
       "date": "2026-11-10T06:36:53+00:00",
       "summary": "Même s'il \"regarde peu de football\", Marc Cucurella assure que le Real Madrid est actuellement la meilleure équipe d'Europe, dans une interview accordée à la radio Cope. Des propos quelque peu déroutants…",
       "url": "https://rmcsport.bfmtv.com/football/liga/le-real-madrid-est-la-meilleure-equipe-d-europe-la-declaration-paradoxale-de-cucurella-qui-regarde-peu-de-football_AV-202611100193.html"
-    },
-    {
-      "title": "Elu Ballon d'or, Harry Kane ne figure pas dans le onze de l'année établi par les joueurs",
-      "source": "RMC Sport",
-      "date": "2026-11-10T05:58:00+00:00",
-      "summary": "Harry Kane, attaquant du Bayern Munich élu Ballon d'or il y a deux semaines, a été désavoué par ses pairs qui ne l'ont pas placé dans l'équipe-type de l'année 2026.",
-      "url": "https://rmcsport.bfmtv.com/football/ballon-d-or/elu-ballon-d-or-harry-kane-ne-figure-pas-dans-le-onze-de-l-annee-etabli-par-les-joueurs_AV-202611100148.html"
-    },
-    {
-      "title": "REPORTAGE. Bain de foule, bonnets et petits nouveaux : les Bleus ont ouvert le deuxième chapitre de l'ère Zinédine Zidane, à Clairefontaine",
-      "source": "France Info",
-      "date": "2026-11-10T05:15:02+00:00",
-      "summary": "Zinédine Zidane et ses joueurs se sont retrouvés à Clairefontaine lundi, en milieu d'après-midi, avec deux petits nouveaux : Pablo Pagis et Saël Kumbedi.",
-      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/reportage-bain-de-foule-bonnets-et-petits-nouveaux-les-bleus-ont-ouvert-le-deuxieme-chapitre-de-l-ere-zinedine-zidane-a-clairefontaine_8275187.html#xtor=RSS-3-%5Bgeneral%5D"
-    },
-    {
-      "title": "Ces joueurs de D2 qui mériteraient d’être appelés en équipe de France par Zinédine Zidane",
-      "source": "SO FOOT",
-      "date": "2026-11-10T05:00:27+00:00",
-      "summary": "Saël Kumbedi est un motif d'espoir.",
-      "url": "https://www.sofoot.com/articles/ces-joueurs-de-d2-qui-meriteraient-detre-appeles-en-equipe-de-france-par-zinedine-zidane"
-    },
-    {
-      "title": "\"C’est extraordinaire\", Acherchour et Di Meco saluent le redressement spectaculaire de l’OM sous l’impulsion de Genesio",
-      "source": "RMC Sport",
-      "date": "2026-11-09T23:37:18+00:00",
-      "summary": "Après un début de saison difficile, l’OM vient d’enchaîner cinq victoires de suite en Ligue 1 pour remonter à la quatrième place du classement. Un renversement de situation initié par Bruno Genesio, que Walid…",
-      "url": "https://rmcsport.bfmtv.com/football/ligue-1/c-est-extraordinaire-acherchour-et-di-meco-saluent-le-redressement-spectaculaire-de-l-om-sous-l-impulsion-de-genesio_AV-202611091010.html"
-    },
-    {
-      "title": "Championnat de France national U17 : la rencontre entre l’Olympique lyonnais et le GF38 dégénère après que des supporters ont sorti un pistolet",
-      "source": "SO FOOT",
-      "date": "2026-11-09T23:02:18+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/articles/championnat-de-france-national-u17-la-rencontre-entre-lolympique-lyonnais-et-le-gf38-degenere-apres-que-des-supporters-ont-sorti-un-pistolet"
-    },
-    {
-      "title": "Croatie : L’ancien joueur de l’AS Monaco Jerko Leko reprend les rênes du Dinamo Zagreb",
-      "source": "SO FOOT",
-      "date": "2026-11-09T22:47:01+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/croatie-lancien-joueur-de-las-monaco-jerko-leko-reprend-les-renes-du-dinamo-zagreb"
-    },
-    {
-      "title": "\"J’ai vu une image de Teddy Riner avec un costard\": comment Ibrahima Konaté a découvert la candidature du judoka à la présidentielle",
-      "source": "RMC Sport",
-      "date": "2026-11-09T22:46:16+00:00",
-      "summary": "Ibrahima Konaté a livré son ressenti après l'annonce de la candidature de Teddy Riner à la présidentielle 2027. Le défenseur de l'équipe de France a rappelé la légitimité des sportifs à s'engager…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/j-ai-vu-une-image-de-teddy-riner-avec-un-costard-comment-ibrahima-konate-a-decouvert-la-candidature-du-judoka-a-la-presidentielle_AV-202611090988.html"
-    },
-    {
-      "title": "DIRECT. Equipe de France: les Bleus au complet à l'entraînement",
-      "source": "RMC Sport",
-      "date": "2026-11-09T22:05:40+00:00",
-      "summary": "Les joueurs de l'équipe de France ont rendez-vous lundi à Clairefontaine pour préparer les deux matchs de Ligue des nations face à l'Italie jeudi à San Siro et à la Turquie dimanche à Bordeaux. Suivez toutes…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/direct-equipe-de-france-toutes-les-infos-sur-les-bleus-avant-le-match-de-ligue-des-nations-contre-l-italie_LN-202611090456.html"
-    },
-    {
-      "title": "MLS : Le propriétaire du CF Montréal annonce son intention de vendre la franchise québecoise",
-      "source": "SO FOOT",
-      "date": "2026-11-09T21:55:28+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/mls-le-proprietaire-du-cf-montreal-annonce-son-intention-de-vendre-la-franchise-quebecoise"
-    },
-    {
-      "title": "L’Inter Turku, champion de Finlande, soulève le trophée en pleine nuit",
-      "source": "SO FOOT",
-      "date": "2026-11-09T21:32:27+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/linter-turku-champion-de-finlande-souleve-le-trophee-en-pleine-nuit"
-    },
-    {
-      "title": "L’arrivée des joueurs, les crampons de Zizou, autographes : les images des Bleus aujourd’hui",
-      "source": "SO FOOT",
-      "date": "2026-11-09T21:17:46+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/larrivee-des-joueurs-les-crampons-de-zizou-autographes-les-images-des-bleus-aujourdhui"
-    },
-    {
-      "title": "Suède : les ultras de l’IFK Göteborg et de Malmö laissent leur rivalité de côté et s’unissent contre la répression policière",
-      "source": "SO FOOT",
-      "date": "2026-11-09T20:48:38+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/suede-les-ultras-de-lifk-goteborg-et-de-malmo-laissent-leur-rivalite-de-cote-et-sunissent-contre-la-repression-policiere"
-    },
-    {
-      "title": "Allemagne : le sélectionneur de la Nationalmannschaft Jürgen Klopp va convoquer le milieu du Borussia Dortmund Felix Nmecha pour évoquer son association religieuse accusé d’homophobie",
-      "source": "SO FOOT",
-      "date": "2026-11-09T20:26:20+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/allemagne-le-selectionneur-de-la-nationalmannschaft-jurgen-klopp-va-convoquer-le-milieu-du-borussia-dortmund-felix-nmecha-pour-evoquer-son-association-religieuse-accuse-dhomophobie"
-    },
-    {
-      "title": "\"Une étape, pas une fin en soi\": Mickaël Pagis voit encore plus grand pour son fils Pablo, appelé par Zidane en équipe de France",
-      "source": "RMC Sport",
-      "date": "2026-11-09T20:06:27+00:00",
-      "summary": "Invité de Rothen s'enflamme sur RMC, Mickaël Pagis s'est réjoui ce lundi de la première convocation de son fils Pablo Pagis en équipe de France. L'ancien footballeur a partagé sa fierté mais espère voir…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/une-etape-pas-une-fin-en-soi-mickael-pagis-en-attend-encore-plus-de-son-fils-pablo-pagis-appele-par-zidane-en-equipe-de-france_AV-202611090888.html"
-    },
-    {
-      "title": "Ligue des nations : un problème de chaussettes lors du match France-Belgique a coûté 10 000 euros à la fédération",
-      "source": "SO FOOT",
-      "date": "2026-11-09T20:02:52+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-nations-un-probleme-de-chaussettes-lors-du-match-france-belgique-a-coute-10-000-euros-a-la-federation"
-    },
-    {
-      "title": "Équipe de France : \"J'en ai bavé, mais comme tous les joueurs\", Pagis raconte sa première convocation",
-      "source": "RMC Sport",
-      "date": "2026-11-09T19:43:34+00:00",
-      "summary": "L'attaquant du Paris FC, Pablo Pagis, raconte au micro des journalistes, son impression après sa première convocation en Équipe de France. Le numéro 7 du club parisien évoque son parcours et donne son avis…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/video-equipe-de-france-j-en-ai-bave-mais-comme-tous-les-joueurs-pagis-raconte-sa-premiere-convocation_VN-202611090881.html"
-    },
-    {
-      "title": "Ligue des nations : L’international de l’équipe de France Ibrahima Konaté réagit à la candidature de Teddy Riner à l’élection présidentielle 2027",
-      "source": "SO FOOT",
-      "date": "2026-11-09T19:38:50+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-nations-linternational-de-lequipe-de-france-ibrahima-konate-reagit-a-la-candidature-de-teddy-riner-a-lelection-presidentielle-2027"
-    },
-    {
-      "title": "\"Après le 9-1, il doit démissionner\", Dugarry dénonce l'indulgence des dirigeants du RC Lens par \"amitié\" envers Cahuzac",
-      "source": "RMC Sport",
-      "date": "2026-11-09T19:30:29+00:00",
-      "summary": "Dans Rothen s'enflamme ce lundi sur RMC, Christophe Dugarry est revenu sur la situation de crise au RC Lens, qui multiplie les défaites, pointant du doigt l'amitié entre Jean-Louis Leca, directeur sportif des…",
-      "url": "https://rmcsport.bfmtv.com/football/clubs/rc-lens/apres-le-9-1-il-doit-demissionner-dugarry-denonce-l-indulgence-des-dirigeants-du-rc-lens-par-amitie-envers-cahuzac_AV-202611090865.html"
-    },
-    {
-      "title": "Ligue des nations : Personne ne se prend la tête, les premières impressions de Pablo Pagis, attaquant du Paris FC appelé en équipe de France par Zinédine Zidane",
-      "source": "SO FOOT",
-      "date": "2026-11-09T19:16:15+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-nations-personne-ne-se-prend-la-tete-les-premieres-impressions-de-pablo-pagis-attaquant-du-paris-fc-appele-en-equipe-de-france-par-zinedine-zidane"
-    },
-    {
-      "title": "Ligue 1 : Qui est Carlos Vicens, nouvel entraîneur de Lyon et énième disciple de Guardiola ?",
-      "source": "SO FOOT",
-      "date": "2026-11-09T19:00:03+00:00",
-      "summary": "Lyonnais, ne vous emballez pas : un Pep en Ligue 1, il n’y en a qu’un.",
-      "url": "https://www.sofoot.com/articles/ligue-1-qui-est-carlos-vicens-nouvel-entraineur-de-lyon-et-enieme-discipline-de-guardiola"
-    },
-    {
-      "title": "Ligue des nations : le défenseur de Liverpool Virgil van Dijk blessé et absent du prochain rassemblement avec les Pays-Bas",
-      "source": "SO FOOT",
-      "date": "2026-11-09T18:45:54+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-nations-le-defenseur-de-liverpool-virgil-van-dijk-blesse-et-absent-du-prochain-rassemblement-avec-les-pays-bas"
-    },
-    {
-      "title": "Ligue des champions (F) : « L’objectif, c’est de prendre au moins un point », les ambitions de Sandrine Soubeyrand avec la rencontre entre le Real Madrid et le Paris FC",
-      "source": "SO FOOT",
-      "date": "2026-11-09T18:15:59+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-champions-f-lobjectif-cest-de-prendre-au-moins-un-point-les-ambitions-de-sandrine-soubeyrand-avec-la-rencontre-entre-le-real-madrid-et-le-paris-fc"
-    },
-    {
-      "title": "Ligue des champions (F) : « C’est quelque chose d’exceptionnel », assure Katarzyna Kiedrzynek à la veille de la rencontre entre le Paris Saint-Germain et le Bayern Munich",
-      "source": "SO FOOT",
-      "date": "2026-11-09T18:05:48+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/ligue-des-champions-f-cest-quelque-chose-dexceptionnel-assure-katarzyna-kiedrzynek-a-la-veille-de-la-rencontre-entre-le-paris-saint-germain-et-le-bayern-munich"
-    },
-    {
-      "title": "FC Barcelone",
-      "source": "RMC Sport",
-      "date": "2026-11-09T17:30:09+00:00",
-      "summary": "Le FC Barcelone, ou Barça, est un club de football espagnol fondé en 1899, situé en Catalogne. L'équipe, surnommée Blaugrana, évolue au Camp Nou, stade de près de 100.000 places. A son palmarès, 26 titres de…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/fc-barcelone_DN-202304140698.html"
-    },
-    {
-      "title": "Golden Boy 2026: on connaît le successeur de Désiré Doué (et ce n'est pas Lamine Yamal)",
-      "source": "RMC Sport",
-      "date": "2026-11-09T17:29:48+00:00",
-      "summary": "Comme chaque année, le journal italien Tuttosport a dévoilé son meilleur joueur de moins de 21 ans évoluant en Europe. Trois Français, dont un seul Parisien, figuraient parmi la liste des 25 candidats pour…",
-      "url": "https://rmcsport.bfmtv.com/football/golden-boy-2026-on-connait-le-successeur-de-desire-doue-et-ce-n-est-pas-lamine-yamal_AV-202611090765.html"
-    },
-    {
-      "title": "Officiel : L’Espagnol Carlos Vicens devient le nouvel entraîneur de l’Olympique lyonnais",
-      "source": "SO FOOT",
-      "date": "2026-11-09T17:18:54+00:00",
-      "summary": "Un nouveau coach en Ligue 1.",
-      "url": "https://www.sofoot.com/breves/officiel-lespagnol-carlos-vicens-devient-le-nouvel-entraineur-de-lolympique-lyonnais"
-    },
-    {
-      "title": "L'OL intronise son nouvel entraîneur après le départ de Paulo Fonseca",
-      "source": "RMC Sport",
-      "date": "2026-11-09T17:18:42+00:00",
-      "summary": "Quelques jours après le départ de Paulo Fonseca et l'intérim assuré par Jorge Maciel, Carlos Vicens a été nommé ce lundi nouvel entraîneur de l'OL. Le technicien espagnol âgé de 43 ans, est engagé jusqu'en…",
-      "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-lyon/l-ol-intronise-son-nouvel-entraineur-apres-le-depart-de-paulo-fonseca_AV-202611090754.html"
-    },
-    {
-      "title": "Le Real est-il enfin lancé ? (After Espagne)",
-      "source": "RMC Sport",
-      "date": "2026-11-09T17:08:04+00:00",
-      "summary": "Large vainqueur à Valence, le Real Madrid a allongé sa série à 8 succès consécutifs. Les hommes de Mourinho sont 2e à trois points du Barça en Liga et co-leaders en Ligue des Champions en compagnie du PSG.…",
-      "url": "https://rmcsport.bfmtv.com/football/liga/video-le-real-est-il-enfin-lance-after-espagne_VN-202611090748.html"
-    },
-    {
-      "title": "Declan Rice milieu d’Arsenal et de l’Angleterre évoque la place de l’argent dans le football",
-      "source": "SO FOOT",
-      "date": "2026-11-09T17:05:20+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/declan-rice-milieu-darsenal-et-de-langleterre-evoque-la-place-de-largent-dans-le-football"
-    },
-    {
-      "title": "Serie A : Kevin De Bruyne sur le départ à Naples ?",
-      "source": "SO FOOT",
-      "date": "2026-11-09T16:54:03+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/serie-a-kevin-de-bruyne-sur-le-depart-a-naples"
-    },
-    {
-      "title": "Antoine Arnault officiellement nommé président du Paris FC",
-      "source": "SO FOOT",
-      "date": "2026-11-09T16:47:58+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/antoine-arnault-officiellement-nomme-president-du-paris-fc"
-    },
-    {
-      "title": "Golden Boy : Pau Cubarsí rafle la récompense et succède à Désiré Doué",
-      "source": "SO FOOT",
-      "date": "2026-11-09T16:02:56+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/golden-boy-pau-cubarsi-rafle-la-recompense-et-succede-a-desire-doue"
-    },
-    {
-      "title": "Ligue Europa: l'UEFA sanctionne l'OM après les incidents contre l'Olympiacos",
-      "source": "RMC Sport",
-      "date": "2026-11-09T15:46:53+00:00",
-      "summary": "L'UEFA a imposé deux amendes à l'Olympique de Marseille en marge de sa défaite contre l'Olympiacos lors de la deuxième journée de Ligue Europa (0-1). Le club phocéen est sanctionné par l'instance continentale…",
-      "url": "https://rmcsport.bfmtv.com/football/europa-league/ligue-europa-l-uefa-sanctionne-l-om-apres-les-incidents-contre-l-olympiacos_AV-202611090668.html"
-    },
-    {
-      "title": "Fenerbahçe dément l’arrivée de Francesco Totti",
-      "source": "SO FOOT",
-      "date": "2026-11-09T15:28:55+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/fenerbahce-dement-larrivee-de-francesco-totti"
-    },
-    {
-      "title": "Mercato: rescapé de l'incendie de Crans-Montana, Tahirys Dos Santos lance sa carrière en Ligue 3",
-      "source": "RMC Sport",
-      "date": "2026-11-09T15:26:39+00:00",
-      "summary": "Rescapé de l'incendie de Crans-Montana et joueur professionnel avec le FC Metz depuis avril dernier, Tahirys Dos Santos est prêté par les Grenats à Thionville, en Ligue 3, jusqu'à la fin de saison.",
-      "url": "https://rmcsport.bfmtv.com/football/mercato-rescape-de-l-incendie-de-crans-montana-tahirys-dos-santos-lance-sa-carriere-en-ligue-3_AV-202611090657.html"
-    },
-    {
-      "title": "Dele Alli brûle un maillot d’Arsenal, son ennemi juré",
-      "source": "SO FOOT",
-      "date": "2026-11-09T15:12:25+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/dele-alli-brule-un-maillot-darsenal-son-ennemi-jure"
-    },
-    {
-      "title": "Bagarre, pistolet, armes blanches et joueur frappé… un match U17 entre Grenoble et l’OL se termine dans le chaos",
-      "source": "RMC Sport",
-      "date": "2026-11-09T15:00:34+00:00",
-      "summary": "Après qu’un groupe de jeunes spectateurs a insulté un jeune Lyonnais durant toute la rencontre U17 entre le GF38 et l’OL dimanche à Grenoble, une bagarre générale a éclaté à l’issue du match. Des armes…",
-      "url": "https://rmcsport.bfmtv.com/football/bagarre-pistolet-armes-blanches-et-joueur-frappe-un-match-u17-entre-grenoble-et-l-ol-se-termine-dans-le-chaos_AN-202611090639.html"
-    },
-    {
-      "title": "Un titre mais peu de temps de jeu et une célébrité pesante, l'histoire tourne mal pour Vozinha au Chili",
-      "source": "RMC Sport",
-      "date": "2026-11-09T14:47:44+00:00",
-      "summary": "Vozinha, le gardien du Cap-Vert et l'une des belles histoires de la Coupe du monde 2026, est arrivé en star à Colo Colo, au Chili, mais trois mois après son transfert, il n'a pratiquement pas joué et subit de…",
-      "url": "https://rmcsport.bfmtv.com/football/un-titre-mais-peu-de-temps-de-jeu-et-une-celebrite-pesante-l-histoire-tourne-mal-pour-vozinha-au-chili_AV-202611090633.html"
-    },
-    {
-      "title": "FC Metz : Tahirys Dos Santos prêté à l’US Thionville Lusitanos jusqu’à la fin de la saison",
-      "source": "SO FOOT",
-      "date": "2026-11-09T14:07:23+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/fc-metz-tahirys-dos-santos-prete-a-lus-thionville-lusitanos-jusqua-la-fin-de-la-saison"
-    },
-    {
-      "title": "Équipe de France: Trezeguet, Barthez... avant Kumbedi, ces joueurs de D2 appelés chez les Bleus",
-      "source": "RMC Sport",
-      "date": "2026-11-09T14:06:05+00:00",
-      "summary": "Convoqué pour remplacer Pierre Kalulu, le jeune Saël Kumbedi a rejoint le groupe de l'équipe de France alors même qu'il évolue en deuxième division allemande. Un cas assez rare dans l'histoire des Bleus.",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/equipe-de-france-trezeguet-barthez-avant-kumbedi-ces-joueurs-appeles-alors-qu-ils-jouaient-en-2e-division_AV-202611090608.html"
-    },
-    {
-      "title": "Le Real Oviedo mise sur l’ancienne gloire du Real Madrid Raúl pour son banc de touche",
-      "source": "SO FOOT",
-      "date": "2026-11-09T13:54:52+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/le-real-oviedo-mise-sur-lancienne-gloire-du-real-madrid-raul-pour-son-banc-de-touche"
-    },
-    {
-      "title": "Kumbedi en équipe de France : Un joueur de deuxième division sélectionné avec les Bleus, une première depuis Sissoko en 2016",
-      "source": "SO FOOT",
-      "date": "2026-11-09T13:41:45+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/kumbedi-en-equipe-de-france-un-joueur-de-deuxieme-division-selectionne-en-bleus-une-premiere-depuis-sissoko-en-2016"
-    },
-    {
-      "title": "Footox saison 3 épisode 8 : Le foot se portera-t-il mieux sans Cristiano Ronaldo et Lionel Messi ?",
-      "source": "SO FOOT",
-      "date": "2026-11-09T13:31:08+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/footox-saison-3-episode-8-le-foot-se-portera-t-il-mieux-sans-cristiano-ronaldo-et-lionel-messi"
     }
   ],
   "focused_club_news": {
     "Arsenal": [
+      {
+        "title": "Présidence de la Fifa: Arsène Wenger, l'homme parfait pour faire douter Infantino?",
+        "source": "RMC Sport",
+        "date": "2026-11-10T13:36:29+00:00",
+        "summary": "Comme évoqué par RMC Sport au milieu du mois d'octobre, l'ancien entraîneur d'Arsenal, Arsène Wenger, est l'un des deux noms qui revient régulièrement du côté de l’UEFA afin de se présenter à la présidence de…",
+        "url": "https://rmcsport.bfmtv.com/football/election-a-la-presidence-de-la-fifa-arsene-wenger-l-homme-parfait-pour-faire-douter-infantino_AV-202611100571.html"
+      },
       {
         "title": "Declan Rice milieu d’Arsenal et de l’Angleterre évoque la place de l’argent dans le football",
         "source": "SO FOOT",
         "date": "2026-11-09T17:05:20+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/declan-rice-milieu-darsenal-et-de-langleterre-evoque-la-place-de-largent-dans-le-football"
-      },
-      {
-        "title": "Dele Alli brûle un maillot d’Arsenal, son ennemi juré",
-        "source": "SO FOOT",
-        "date": "2026-11-09T15:12:25+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/dele-alli-brule-un-maillot-darsenal-son-ennemi-jure"
-      },
-      {
-        "title": "La belle série de victoires en Ligue 1 de l’OM avant la trêve de novembre : cinq victoires d’affilée, comme le PSG et Arsenal",
-        "source": "SO FOOT",
-        "date": "2026-11-09T08:40:57+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/la-belle-serie-de-victoires-en-ligue-1-de-lom-avant-la-treve-de-novembre-cinq-victoires-daffilee-comme-le-psg-et-arsenal"
       }
     ],
     "Barcelona": [
+      {
+        "title": "FC Barcelone : Joan García évoque les contraintes du jeu du Barça",
+        "source": "SO FOOT",
+        "date": "2026-11-10T15:09:59+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/fc-barcelone-joan-garcia-evoque-les-contraintes-du-jeu-du-barca"
+      },
+      {
+        "title": "300.000 euros l'engagement: les loges les plus luxueuses du nouveau Camp Nou du Barça s'arrachent malgré des prix hallucinants",
+        "source": "RMC Sport",
+        "date": "2026-11-10T13:15:52+00:00",
+        "summary": "Le FC Barcelone compte sur son nouveau Camp Nou et ses luxueuses loges pour s'offrir de confortables revenus dans les années à venir. Fixés à des prix très élevés, les premiers abonnements s'arrachent.",
+        "url": "https://rmcsport.bfmtv.com/football/liga/300-000-euros-l-engagement-les-loges-les-plus-luxueuses-du-nouveau-camp-nou-du-barca-s-arrachent-malgre-des-prix-hallucinants_AV-202611100551.html"
+      },
+      {
+        "title": "Pourquoi Julián Álvarez est sorti du tunnel avec les joueurs du Barça",
+        "source": "SO FOOT",
+        "date": "2026-11-10T12:33:28+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/pourquoi-julian-alvarez-est-sorti-du-tunnel-avec-les-joueurs-du-barca"
+      },
+      {
+        "title": "Neymar",
+        "source": "RMC Sport",
+        "date": "2026-11-10T11:01:36+00:00",
+        "summary": "Avec son look et son talent indéniable balle au pied, Neymar Junior fait partie des icônes incontournables du foot mondial. Après un long passage au Barça, il rejoint le PSG à l'été 2017 pour un montant…",
+        "url": "https://rmcsport.bfmtv.com/football/neymar_DN-201501260352.html"
+      },
       {
         "title": "FC Barcelone : Steven Gerrard pense que Lamine Yamal est en avance sur Lionel Messi et sur Cristiano Ronaldo",
         "source": "SO FOOT",
         "date": "2026-11-10T09:07:30+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/fc-barcelone-steven-gerrard-pense-que-lamine-yamal-est-en-avance-sur-lionel-messi-et-sur-cristiano-ronaldo"
-      },
-      {
-        "title": "FC Barcelone",
-        "source": "RMC Sport",
-        "date": "2026-11-09T17:30:09+00:00",
-        "summary": "Le FC Barcelone, ou Barça, est un club de football espagnol fondé en 1899, situé en Catalogne. L'équipe, surnommée Blaugrana, évolue au Camp Nou, stade de près de 100.000 places. A son palmarès, 26 titres de…",
-        "url": "https://rmcsport.bfmtv.com/football/liga/fc-barcelone_DN-202304140698.html"
-      },
-      {
-        "title": "Le Real est-il enfin lancé ? (After Espagne)",
-        "source": "RMC Sport",
-        "date": "2026-11-09T17:08:04+00:00",
-        "summary": "Large vainqueur à Valence, le Real Madrid a allongé sa série à 8 succès consécutifs. Les hommes de Mourinho sont 2e à trois points du Barça en Liga et co-leaders en Ligue des Champions en compagnie du PSG.…",
-        "url": "https://rmcsport.bfmtv.com/football/liga/video-le-real-est-il-enfin-lance-after-espagne_VN-202611090748.html"
       }
     ],
     "Bayern Munich": [
+      {
+        "title": "Bundesliga : le Bayern en quête d’un remplaçant à Manuel Neuer, active les pistes Baumann et Karius",
+        "source": "SO FOOT",
+        "date": "2026-11-10T13:20:59+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/bundesliga-le-bayern-en-quete-dun-remplacant-a-manuel-neuer-active-les-pistes-baumann-et-karius"
+      },
+      {
+        "title": "Bayern Munich",
+        "source": "RMC Sport",
+        "date": "2026-11-10T12:35:43+00:00",
+        "summary": "Le FC Bayern Munich situé en Allemagne est un club de football participant à des compétitions nationales et internationales dont le palmarès est l’un des plus prestigieux d’Europe. En 2013, le club bavarois a…",
+        "url": "https://rmcsport.bfmtv.com/football/bayern-de-munich_DN-201307180413.html"
+      },
+      {
+        "title": "Bayern Munich: bonne nouvelle en Allemagne, Kompany de retour au centre d'entraînement après sa méningite",
+        "source": "RMC Sport",
+        "date": "2026-11-10T12:35:43+00:00",
+        "summary": "Plus de deux semaines après son malaise à l'entraînement du Bayern Munich, Vincent Kompany a fait son retour au centre d'entraînement du club bavarois, selon la presse allemande. Il devrait revenir sur le…",
+        "url": "https://rmcsport.bfmtv.com/football/bundesliga/bayern-munich-bonne-nouvelle-en-allemagne-kompany-de-retour-au-centre-d-entrainement-apres-sa-meningite_AV-202611100530.html"
+      },
+      {
+        "title": "Bayern Munich : Vincent Kompany est de retour au centre d’entraînement après sa méningite",
+        "source": "SO FOOT",
+        "date": "2026-11-10T10:10:51+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/bayern-munich-vincent-kompany-est-de-retour-au-centre-dentrainement-apres-sa-meningite"
+      },
       {
         "title": "Elu Ballon d'or, Harry Kane ne figure pas dans le onze de l'année établi par les joueurs",
         "source": "RMC Sport",
@@ -5777,38 +5826,27 @@
         "url": "https://www.sofoot.com/breves/allemagne-le-selectionneur-de-la-nationalmannschaft-jurgen-klopp-va-convoquer-le-milieu-du-borussia-dortmund-felix-nmecha-pour-evoquer-son-association-religieuse-accuse-dhomophobie"
       }
     ],
-    "FC Porto": [
-      {
-        "title": "Portugal : Zaidu tacle son coach Francesco Farioli pendant la victoire du FC Porto à Guimarães",
-        "source": "SO FOOT",
-        "date": "2026-11-09T09:54:39+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/portugal-zaidu-tacle-son-coach-francesco-farioli-pendant-la-victoire-du-fc-porto-a-guimaraes"
-      }
-    ],
-    "Fenerbahce": [
-      {
-        "title": "Fenerbahçe dément l’arrivée de Francesco Totti",
-        "source": "SO FOOT",
-        "date": "2026-11-09T15:28:55+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/fenerbahce-dement-larrivee-de-francesco-totti"
-      }
-    ],
     "Lens": [
       {
-        "title": "\"Après le 9-1, il doit démissionner\", Dugarry dénonce l'indulgence des dirigeants du RC Lens par \"amitié\" envers Cahuzac",
+        "title": "DIRECT. Mercato: Yannick Cahuzac démis de ses fonctions par Lens",
         "source": "RMC Sport",
-        "date": "2026-11-09T19:30:29+00:00",
-        "summary": "Dans Rothen s'enflamme ce lundi sur RMC, Christophe Dugarry est revenu sur la situation de crise au RC Lens, qui multiplie les défaites, pointant du doigt l'amitié entre Jean-Louis Leca, directeur sportif des…",
-        "url": "https://rmcsport.bfmtv.com/football/clubs/rc-lens/apres-le-9-1-il-doit-demissionner-dugarry-denonce-l-indulgence-des-dirigeants-du-rc-lens-par-amitie-envers-cahuzac_AV-202611090865.html"
+        "date": "2026-11-10T15:57:15+00:00",
+        "summary": "Suivez en live toutes les infos et rumeurs du mercato actuellement agité sur certains bancs de touche européens notamment en Angleterre où le Français Pierre Sage est sur la sellette avec Crystal Palace.",
+        "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-lundi-9-novembre-2026_LN-202611090138.html"
       },
       {
-        "title": "Banderoles en tous genre : le stade Bollaert très mécontent lors de Lens-OM en Ligue 1",
+        "title": "Il n'a pas résisté à la semaine noire de Lens: Yannick Cahuzac limogé deux mois après sa nomination",
+        "source": "RMC Sport",
+        "date": "2026-11-10T10:55:57+00:00",
+        "summary": "Selon des informations de L'Equipe, confirmées par RMC Sport, Lens a démis de ses fonctions son entraîneur Yannick Cahuzac, ce mardi. Le technicien, promu numéro 1 il y a deux mois, n'a pas résisté à la…",
+        "url": "https://rmcsport.bfmtv.com/football/clubs/rc-lens/il-n-a-pas-resiste-a-la-semaine-noire-de-lens-yannick-cahuzac-limoge-deux-mois-apres-sa-nomination_AP-202611100467.html"
+      },
+      {
+        "title": "Ligue 1 : Yannick Cahuzac et le RC Lens, c’est déjà fini",
         "source": "SO FOOT",
-        "date": "2026-11-09T09:05:26+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/banderoles-en-tous-genre-le-stade-bollaert-tres-mecontent-lors-de-lens-om-en-ligue-1"
+        "date": "2026-11-10T10:49:18+00:00",
+        "summary": "Le champ est libre pour un retour de Pierre Sage.",
+        "url": "https://www.sofoot.com/breves/ligue-1-yannick-cahuzac-et-le-rc-lens-cest-deja-fini"
       }
     ],
     "Liverpool": [
@@ -5820,20 +5858,36 @@
         "url": "https://www.sofoot.com/breves/ligue-des-nations-le-defenseur-de-liverpool-virgil-van-dijk-blesse-et-absent-du-prochain-rassemblement-avec-les-pays-bas"
       }
     ],
+    "Manchester City": [
+      {
+        "title": "OL : \"J'observais ses routines\", Vicens inspiré par Guardiola",
+        "source": "RMC Sport",
+        "date": "2026-11-10T15:08:22+00:00",
+        "summary": "Carlos Vicens est le nouvel entraîneur de l'Olympique Lyonnais. Le successeur de Paulo Fonseca a notamment 8 saisons à Manchester City… dont quatre comme adjoint de Pep Guardiola.",
+        "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-ol-j-observais-ses-routines-vicens-inspire-par-guardiola_VN-202611100641.html"
+      }
+    ],
     "Manchester United": [
+      {
+        "title": "Manchester United : Michael Carrick limogé mercredi ?",
+        "source": "SO FOOT",
+        "date": "2026-11-10T11:50:46+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/manchester-united-michael-carrick-limoge-mercredi"
+      },
+      {
+        "title": "Premier League : Manchester United se penche sur Mauricio Pochettino pour succéder à Michael Carrick",
+        "source": "SO FOOT",
+        "date": "2026-11-10T10:37:28+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/premier-league-manchester-united-se-penche-sur-mauricio-pochettino-pour-succeder-a-michael-carrick"
+      },
       {
         "title": "Mercato: Manchester United devra lâcher un petit pactole s'il veut débaucher Pochettino",
         "source": "RMC Sport",
         "date": "2026-11-10T09:48:22+00:00",
         "summary": "Manchester United pourrait rapidement remercier Michael Carrick et recherche déjà activement le nom de son remplaçant. Plusieurs noms circulent pour récupérer le banc des Red Devils, dont celui de Mauricio…",
         "url": "https://rmcsport.bfmtv.com/football/transferts/mercato-manchester-united-devra-lacher-un-petit-pactole-s-il-veut-debaucher-pochettino_AV-202611100408.html"
-      },
-      {
-        "title": "DIRECT. Mercato: Manchester United devrait rapidement se séparer de Carrick",
-        "source": "RMC Sport",
-        "date": "2026-11-10T09:02:03+00:00",
-        "summary": "Suivez en live toutes les infos et rumeurs du mercato actuellement agité sur certains bancs de touche européens notamment en Angleterre où le Français Pierre Sage est sur la sellette avec Crystal Palace.",
-        "url": "https://rmcsport.bfmtv.com/football/transferts/direct-mercato-suivez-en-live-toutes-les-infos-et-rumeurs-du-lundi-9-novembre-2026_LN-202611090138.html"
       },
       {
         "title": "Premier League : Michael Carrick devrait bientôt quitter Manchester United",
@@ -5844,6 +5898,13 @@
       }
     ],
     "Paris Saint-Germain": [
+      {
+        "title": "Neymar",
+        "source": "RMC Sport",
+        "date": "2026-11-10T11:01:36+00:00",
+        "summary": "Avec son look et son talent indéniable balle au pied, Neymar Junior fait partie des icônes incontournables du foot mondial. Après un long passage au Barça, il rejoint le PSG à l'été 2017 pour un montant…",
+        "url": "https://rmcsport.bfmtv.com/football/neymar_DN-201501260352.html"
+      },
       {
         "title": "Mauricio Pochettino",
         "source": "RMC Sport",
@@ -5878,39 +5939,39 @@
         "date": "2026-11-09T18:05:48+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/ligue-des-champions-f-cest-quelque-chose-dexceptionnel-assure-katarzyna-kiedrzynek-a-la-veille-de-la-rencontre-entre-le-paris-saint-germain-et-le-bayern-munich"
-      },
-      {
-        "title": "Le Real est-il enfin lancé ? (After Espagne)",
-        "source": "RMC Sport",
-        "date": "2026-11-09T17:08:04+00:00",
-        "summary": "Large vainqueur à Valence, le Real Madrid a allongé sa série à 8 succès consécutifs. Les hommes de Mourinho sont 2e à trois points du Barça en Liga et co-leaders en Ligue des Champions en compagnie du PSG.…",
-        "url": "https://rmcsport.bfmtv.com/football/liga/video-le-real-est-il-enfin-lance-after-espagne_VN-202611090748.html"
-      },
-      {
-        "title": "Présidentielle 2027 : le judoka Teddy Riner (PSG) déclare officiellement sa candidature",
-        "source": "SO FOOT",
-        "date": "2026-11-09T13:22:04+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/presidentielle-2027-le-judoka-teddy-riner-psg-declare-officiellement-sa-candidature"
-      },
-      {
-        "title": "Nice: un vestiaire soudé derrière Pantaloni, avant le grand rendez-vous face au PSG",
-        "source": "RMC Sport",
-        "date": "2026-11-09T12:05:11+00:00",
-        "summary": "Vainqueur à Angers (0-2), l'OGC Nice confirme sa bonne dynamique en signant un cinquième succès sur les six dernières journées. Les Aiglons ont affiché une solidarité forte autour de leur entraîneur Olivier…",
-        "url": "https://rmcsport.bfmtv.com/football/clubs/ogc-nice/nice-un-vestiaire-soude-derriere-pantaloni-avant-le-grand-rendez-vous-face-au-psg_AV-202611090530.html"
-      },
-      {
-        "title": "La belle série de victoires en Ligue 1 de l’OM avant la trêve de novembre : cinq victoires d’affilée, comme le PSG et Arsenal",
-        "source": "SO FOOT",
-        "date": "2026-11-09T08:40:57+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/la-belle-serie-de-victoires-en-ligue-1-de-lom-avant-la-treve-de-novembre-cinq-victoires-daffilee-comme-le-psg-et-arsenal"
       }
     ],
     "Real Madrid": [
       {
-        "title": "Equipe de France : « Un rêve qui se réalise  », les premiers mots de Saël Kumbedi à Clairefontaine",
+        "title": "Real Oviedo : Les premiers mots de Raúl avec son nouveau club",
+        "source": "SO FOOT",
+        "date": "2026-11-10T14:18:05+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/real-oviedo-les-premiers-mots-de-raul-avec-son-nouveau-club"
+      },
+      {
+        "title": "Real Madrid",
+        "source": "RMC Sport",
+        "date": "2026-11-10T12:20:13+00:00",
+        "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
+        "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
+      },
+      {
+        "title": "\"L'une des plus belles choses qui me soient arrivées dans la vie\", le message d'amour d'Endrick à l'OL",
+        "source": "RMC Sport",
+        "date": "2026-11-10T12:20:13+00:00",
+        "summary": "Endrick (20 ans), attaquant du Real Madrid, s'est longuement exprimé sur son avenir, ce mardi lors du rassemblement avec le Brésil, en ouvrant la porte à un départ cet hiver pour augmenter son temps de jeu…",
+        "url": "https://rmcsport.bfmtv.com/football/clubs/olympique-lyon/l-une-des-plues-belles-choses-qui-me-soient-arrivees-dans-la-vie-le-message-d-amour-d-endrick-a-l-ol_AV-202611100526.html"
+      },
+      {
+        "title": "Endrick évoque son peu de temps de jeu au Real Madrid et ses souvenirs de Lyon",
+        "source": "SO FOOT",
+        "date": "2026-11-10T11:29:57+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/endrick-evoque-son-peu-de-temps-de-jeu-au-real-madrid-et-ses-souvenirs-de-lyon"
+      },
+      {
+        "title": "Équipe de France : « Un rêve qui se réalise  », les premiers mots de Saël Kumbedi à Clairefontaine",
         "source": "SO FOOT",
         "date": "2026-11-10T08:20:07+00:00",
         "summary": "",
@@ -5922,13 +5983,6 @@
         "date": "2026-11-10T08:07:06+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/real-madrid-marc-cucurella-pense-que-le-real-madrid-est-meilleur-que-le-psg"
-      },
-      {
-        "title": "Real Madrid",
-        "source": "RMC Sport",
-        "date": "2026-11-10T07:45:25+00:00",
-        "summary": "Le Real Madrid est un club de football espagnol fondé en 1902. L'équipe de la \"Maison Blanche\", surnommée \"Merengue\" en raison de la couleur blanche du maillot, évolue dans le stade Santiago-Bernabeu. Le Real…",
-        "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
       },
       {
         "title": "En grande forme avec le Real Madrid, Mbappé élu joueur du mois en Liga devant Yamal",
@@ -5957,20 +6011,6 @@
         "date": "2026-11-09T18:15:59+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/ligue-des-champions-f-lobjectif-cest-de-prendre-au-moins-un-point-les-ambitions-de-sandrine-soubeyrand-avec-la-rencontre-entre-le-real-madrid-et-le-paris-fc"
-      },
-      {
-        "title": "Le Real est-il enfin lancé ? (After Espagne)",
-        "source": "RMC Sport",
-        "date": "2026-11-09T17:08:04+00:00",
-        "summary": "Large vainqueur à Valence, le Real Madrid a allongé sa série à 8 succès consécutifs. Les hommes de Mourinho sont 2e à trois points du Barça en Liga et co-leaders en Ligue des Champions en compagnie du PSG.…",
-        "url": "https://rmcsport.bfmtv.com/football/liga/video-le-real-est-il-enfin-lance-after-espagne_VN-202611090748.html"
-      },
-      {
-        "title": "Le Real Oviedo mise sur l’ancienne gloire du Real Madrid Raúl pour son banc de touche",
-        "source": "SO FOOT",
-        "date": "2026-11-09T13:54:52+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/le-real-oviedo-mise-sur-lancienne-gloire-du-real-madrid-raul-pour-son-banc-de-touche"
       }
     ]
   },
@@ -9040,7 +9080,7 @@
       "name": "OH Leuven",
       "club_current": "Club Brugge",
       "country": "Club Brugge",
-      "position": "11",
+      "position": "10",
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1773.png",
       "associated_team": "Club Brugge",
@@ -9469,7 +9509,7 @@
       "name": "Royal Antwerp",
       "club_current": "Club Brugge",
       "country": "Club Brugge",
-      "position": "12",
+      "position": "11",
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/9988.png",
       "associated_team": "Club Brugge",
@@ -10283,7 +10323,7 @@
       "name": "Zulte Waregem",
       "club_current": "Club Brugge",
       "country": "Club Brugge",
-      "position": "10",
+      "position": "12",
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/10000.png",
       "associated_team": "Club Brugge",
