@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-15T01:55:26+00:00",
+  "generated_at": "2026-11-19T03:27:17+00:00",
   "competition": "Coupe du Monde FIFA 2026",
   "standings": [
     {
@@ -1328,7 +1328,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Ivory Coast": {
@@ -1520,7 +1521,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Saudi Arabia": {
@@ -1536,7 +1538,8 @@
       "substitutes": [],
       "squad": [],
       "sources": [
-        "ESPN"
+        "ESPN",
+        "ESPN roster"
       ]
     },
     "Scotland": {
@@ -1734,48 +1737,68 @@
   },
   "top_scorers": [
     {
+      "rank": 1,
       "name": "Kylian Mbappé",
       "team": "France",
-      "team_id": 6723,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6723.png",
       "country_code": "",
       "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/231388.png",
       "country_flag_url": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
       "all_time_rank": "",
-      "played": "",
-      "value": 10,
-      "rank": 1,
+      "played": "8",
+      "value": "10",
       "country": "France"
     },
     {
+      "rank": 2,
       "name": "Lionel Messi",
       "team": "Argentina",
-      "team_id": 6706,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/6706.png",
       "country_code": "",
       "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/45843.png",
       "country_flag_url": "",
       "all_time_rank": "",
-      "played": "",
-      "value": 8,
-      "rank": 2,
+      "played": "8",
+      "value": "8",
       "country": ""
     },
     {
+      "rank": 3,
       "name": "Jude Bellingham",
       "team": "England",
-      "team_id": 8491,
-      "team_logo_url": "https://images.fotmob.com/image_resources/logo/teamlogo/8491.png",
       "country_code": "",
       "flag_url": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1077894.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/291281.png",
       "country_flag_url": "",
       "all_time_rank": "",
-      "played": "",
-      "value": 7,
-      "rank": 3,
+      "played": "8",
+      "value": "7",
+      "country": ""
+    },
+    {
+      "rank": 4,
+      "name": "Erling Haaland",
+      "team": "Norway",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/253989.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "5",
+      "value": "7",
+      "country": ""
+    },
+    {
+      "rank": 5,
+      "name": "Ousmane Dembélé",
+      "team": "France",
+      "country_code": "",
+      "flag_url": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/229744.png",
+      "country_flag_url": "",
+      "all_time_rank": "",
+      "played": "8",
+      "value": "6",
       "country": ""
     }
   ],
@@ -1941,25 +1964,25 @@
   "all_time_top_assisters": [],
   "world_cup_news": [
     {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-11-18T16:21:29+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
       "title": "Didier Deschamps va faire son retour... dans une publicité pour Burger King",
       "source": "RMC Sport",
       "date": "2026-11-18T16:21:29+00:00",
       "summary": "Depuis son départ de l'équipe de France à l'issue de la Coupe du monde 2026, Didier Deschamps se faisait discret. Mais d'après les informations de RMC Sport, l'ancien sélectionneur des Bleus va refaire son…",
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-va-faire-son-retour-dans-une-publicite-pour-burger-king_AV-202611180745.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-11-18T16:21:29+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
     }
   ],
   "france_news": [
     {
       "title": "Italie-France : revivez la première défaite de Zinédine Zidane à la tête des Bleus qui devront encore attendre pour la qualification en quarts de Ligue des nations",
       "source": "France Info",
-      "date": "2026-11-18T21:56:43+00:00",
+      "date": "2026-11-19T03:27:44+00:00",
       "summary": "Les Bleus, battus par la Squadra Azzurra (3-1) à San Siro jeudi soir, devront attendre dimanche et la dernière journée face à la Turquie pour valider leur billet pour les quarts de finale de la Ligue des…",
       "url": "https://www.franceinfo.fr/sports/directs/direct-italie-france-qualification-en-vue-pour-les-quarts-de-ligue-des-nations-suivez-et-commentez-le-match-avec-nous_8276066.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
     },
@@ -1971,13 +1994,6 @@
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/une-solution-de-secours-pourquoi-clauss-croit-encore-a-l-equipe-de-france_AV-202611180927.html"
     },
     {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-11-18T16:21:29+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
       "title": "Didier Deschamps va faire son retour... dans une publicité pour Burger King",
       "source": "RMC Sport",
       "date": "2026-11-18T16:21:29+00:00",
@@ -1985,25 +2001,11 @@
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-va-faire-son-retour-dans-une-publicite-pour-burger-king_AV-202611180745.html"
     },
     {
-      "title": "Thierry Henry",
+      "title": "Didier Deschamps",
       "source": "RMC Sport",
-      "date": "2026-11-18T14:27:19+00:00",
-      "summary": "A 37 ans, Thierry Henry a annoncé qu’il mettait un terme à sa carrière après la fin de son contrat avec les New York Red Bulls. Au terme « de 20 ans dans le jeu », le meilleur buteur de l’histoire des Bleus…",
-      "url": "https://rmcsport.bfmtv.com/football/thierry-henry_DN-201412030335.html"
-    },
-    {
-      "title": "Fanions, chaussettes, avion, protocole... Après les couacs logistiques, des changements à venir dans l’entourage des Bleus?",
-      "source": "RMC Sport",
-      "date": "2026-11-18T14:09:39+00:00",
-      "summary": "Les premiers pas du sélectionneur Zinédine Zidane en équipe de France ont été marqués par une série de couacs logistiques en tout genre qui a surpris et agacé. Consciente de ces dysfonctionnements, la FFF…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/fanions-chaussettes-avion-protocole-apres-les-couacs-logistiques-des-changements-a-venir-dans-l-entourage-des-bleus_AV-202611180658.html"
-    },
-    {
-      "title": "\"Je dormirai mieux cette nuit\": la petite blague de Mbappé après la grande annonce du Real Madrid sur Güler",
-      "source": "RMC Sport",
-      "date": "2026-11-18T13:49:53+00:00",
-      "summary": "Kylian Mbappé a réagi mercredi à l’annonce de la prolongation d’Arda Güler au Real Madrid. La star du club Merengue et de l’équipe de France a semblé plaisanter auprès de son jeune coéquipier turc.",
-      "url": "https://rmcsport.bfmtv.com/football/kylian-mbappe/je-dormirai-mieux-cette-nuit-la-petite-blague-de-mbappe-apres-la-grande-annonce-du-real-madrid-sur-guler_AV-202611180637.html"
+      "date": "2026-11-18T16:21:29+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
     },
     {
       "title": "Style de jeu, inefficacité, jeunesse... Que faut-il retenir du début de mandat de Zinédine Zidane à la tête de l'équipe de France ?",
@@ -2123,31 +2125,108 @@
       "date": "2026-11-11T19:30:07+00:00",
       "summary": "Le capitaine des Bleus avait déjà loupé trois des quatre premiers matchs de l'ère Zidane, début octobre, après une blessure.",
       "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/forfait-kylian-mbappe-ne-jouera-pas-contre-l-italie-en-ligue-des-nations-mais-reste-avec-l-equipe-de-france_8277824.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
+    },
+    {
+      "title": "Senny Mayulu renforce aussi l'équipe de France à la veille d'Italie-France",
+      "source": "France Info",
+      "date": "2026-11-11T13:03:49+00:00",
+      "summary": "Le joueur du PSG a été appelé par le sélectionneur Zinédine Zidane, mercredi, pour renforcer le groupe qui venait de passer de 23 à 22 joueurs avec le forfait d'Aurélien Tchouameni.",
+      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/senny-mayulu-renforce-aussi-l-equipe-de-france-a-la-veille-d-italie-france_8277791.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
+    },
+    {
+      "title": "Blessé aux adducteurs, le milieu Aurélien Tchouameni est forfait pour les deux prochains matchs de l'équipe de France en Ligue des nations",
+      "source": "France Info",
+      "date": "2026-11-11T09:04:17+00:00",
+      "summary": "Le staff des Bleus a annoncé, mardi soir, le forfait d'Aurélien Tchouaméni pour ce deuxième rassemblement de l'équipe de France sous Zinédine Zidane. Il ne sera pas remplacé.",
+      "url": "https://www.franceinfo.fr/sports/foot/equipe-de-france/blesse-aux-adducteurs-le-milieu-aurelien-tchouameni-est-forfait-pour-les-deux-prochains-matchs-de-l-equipe-de-france-en-ligue-des-nations_8277497.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
     }
   ],
   "general_news": [
-    {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-11-18T16:21:29+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
     {
       "title": "Didier Deschamps va faire son retour... dans une publicité pour Burger King",
       "source": "RMC Sport",
       "date": "2026-11-18T16:21:29+00:00",
       "summary": "Depuis son départ de l'équipe de France à l'issue de la Coupe du monde 2026, Didier Deschamps se faisait discret. Mais d'après les informations de RMC Sport, l'ancien sélectionneur des Bleus va refaire son…",
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-va-faire-son-retour-dans-une-publicite-pour-burger-king_AV-202611180745.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-11-18T16:21:29+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
     }
   ],
   "all_news": [
     {
       "title": "Italie-France : revivez la première défaite de Zinédine Zidane à la tête des Bleus qui devront encore attendre pour la qualification en quarts de Ligue des nations",
       "source": "France Info",
-      "date": "2026-11-18T21:56:43+00:00",
+      "date": "2026-11-19T03:27:44+00:00",
       "summary": "Les Bleus, battus par la Squadra Azzurra (3-1) à San Siro jeudi soir, devront attendre dimanche et la dernière journée face à la Turquie pour valider leur billet pour les quarts de finale de la Ligue des…",
       "url": "https://www.franceinfo.fr/sports/directs/direct-italie-france-qualification-en-vue-pour-les-quarts-de-ligue-des-nations-suivez-et-commentez-le-match-avec-nous_8276066.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
+    },
+    {
+      "title": "Équipe de France  : Didier Deschamps dans une pub pour Burger King",
+      "source": "SO FOOT",
+      "date": "2026-11-18T23:05:16+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/equipe-de-france-didier-deschamps-dans-une-pub-pour-burger-king"
+    },
+    {
+      "title": "DIRECT. Philippe Diallo candidat à la présidence de la Fifa face à Infantino: un sélectionneur tricolore affiche son soutien au président de la FFF",
+      "source": "RMC Sport",
+      "date": "2026-11-18T23:03:11+00:00",
+      "summary": "Président de la Fédération française de football, Philippe Diallo a été désigné par l'UEFA ce lundi comme candidat à la présidence de la Fifa. Le patron de la FFF fera face au sortant Gianni Infantino lors de…",
+      "url": "https://rmcsport.bfmtv.com/football/direct-philippe-diallo-candidat-a-la-presidence-de-la-fifa-face-a-infantino-toutes-les-infos-et-reactions-en-live_LN-202611160689.html"
+    },
+    {
+      "title": "\"Fais grève pendant 15 jours\": l'appel de Rothen à Mbappé pour renverser Infantino",
+      "source": "RMC Sport",
+      "date": "2026-11-18T22:54:14+00:00",
+      "summary": "Jérôme Rothen appelle à une mobilisation massive des joueurs et notamment des stars internationales pour mettre fin au règne de Gianni Infantino à la tête de la Fifa.",
+      "url": "https://rmcsport.bfmtv.com/football/kylian-mbappe/fais-greve-pendant-15-jours-l-appel-de-rothen-a-mbappe-pour-renverser-infantino_AV-202611181032.html"
+    },
+    {
+      "title": "Ligue 1 – Monaco : Mamadou Coulibaly suspendu un match après sa célébration polémique",
+      "source": "SO FOOT",
+      "date": "2026-11-18T22:52:19+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/ligue-1-monaco-mamadou-coulibaly-suspendu-un-match-apres-sa-celebration-polemique"
+    },
+    {
+      "title": "Ligue des champions féminine: le PSG a fini par craquer à Chelsea",
+      "source": "RMC Sport",
+      "date": "2026-11-18T22:35:59+00:00",
+      "summary": "Les féminines du Paris Saint-Germain ont résisté aux vagues bleues de Chelsea pendant longtemps mercredi à Londres, avant de craquer sur le tard sur un but évitable qui les place aux portes de l'élimination…",
+      "url": "https://rmcsport.bfmtv.com/football/feminin/ligue-des-champions/ligue-des-champions-feminine-le-psg-a-fini-par-craquer-a-chelsea_AD-202611181029.html"
+    },
+    {
+      "title": "Ligue 1 – Le directeur sportif de Nice, Roger Ricort, critique le couple Lens-Pierre Sage",
+      "source": "SO FOOT",
+      "date": "2026-11-18T22:25:23+00:00",
+      "summary": "",
+      "url": "https://www.sofoot.com/breves/ligue-1-le-directeur-sportif-de-nice-roger-ricort-critique-le-couple-lens-pierre-sage"
+    },
+    {
+      "title": "Manchester United",
+      "source": "RMC Sport",
+      "date": "2026-11-18T22:16:32+00:00",
+      "summary": "Manchester United, club de football anglais, est la 2ème marque sportive mondiale en terme de revenus. Son antre, Old Trafford, a vu évolué les plus grands joueurs : David Beckham, Eric Cantona ou encore…",
+      "url": "https://rmcsport.bfmtv.com/football/manchester-united_DN-201307070186.html"
+    },
+    {
+      "title": "Manchester United prêt à aller en justice après le départ de sa pépite JJ Gabriel, vers le Real Madrid",
+      "source": "RMC Sport",
+      "date": "2026-11-18T22:16:32+00:00",
+      "summary": "Passablement agacé par le départ de JJ Gabriel, ce grand espoir anglais de 19 ans en passe de signer au Real Madrid, Manchester United pourrait se lancer dans une bataille juridique.",
+      "url": "https://rmcsport.bfmtv.com/football/premier-league/manchester-united-pret-a-aller-en-justice-apres-le-depart-de-sa-pepite-jj-gabriel-vers-le-real-madrid_AV-202611181025.html"
+    },
+    {
+      "title": "Le violent tacle du directeur sportif de Nice sur le départ de Sage de Lens",
+      "source": "RMC Sport",
+      "date": "2026-11-18T22:01:51+00:00",
+      "summary": "Invité à réagir au départ de Pierre Sage l'été dernier après une saison plus que réussie à Lens, le directeur sportif de Nice, Roger Ricort, a déploré une situation \"insupportable\", qui met à mal la notion…",
+      "url": "https://rmcsport.bfmtv.com/football/clubs/ogc-nice/le-violent-tacle-du-directeur-sportif-de-nice-sur-le-depart-de-sage-de-lens_AV-202611181013.html"
     },
     {
       "title": "Ligue des champions féminine – Chelsea fait craquer le PSG",
@@ -2304,13 +2383,6 @@
       "url": "https://rmcsport.bfmtv.com/football/liga/real-madrid_DN-202304140701.html"
     },
     {
-      "title": "Manchester United",
-      "source": "RMC Sport",
-      "date": "2026-11-18T17:16:50+00:00",
-      "summary": "Manchester United, club de football anglais, est la 2ème marque sportive mondiale en terme de revenus. Son antre, Old Trafford, a vu évolué les plus grands joueurs : David Beckham, Eric Cantona ou encore…",
-      "url": "https://rmcsport.bfmtv.com/football/manchester-united_DN-201307070186.html"
-    },
-    {
       "title": "La folle vidéo de présentation de JJ Gabriel, le \"Neymar du futur\" annoncé au Real Madrid, chez son nouvel agent",
       "source": "RMC Sport",
       "date": "2026-11-18T17:16:49+00:00",
@@ -2330,13 +2402,6 @@
       "date": "2026-11-18T17:00:21+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/articles/sondage-quel-jeu-video-choisissez-vous-entre-gta-vi-et-football-manager-27"
-    },
-    {
-      "title": "Équipe de France  : Didier Deschamps dans une pub pour Burger King",
-      "source": "SO FOOT",
-      "date": "2026-11-18T16:57:16+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/equipe-de-france-didier-deschamps-dans-une-pub-pour-burger-king"
     },
     {
       "title": "De nouvelles révélations sur le projet de privatisation de la Coupe du monde de Gianni Infantino",
@@ -2360,18 +2425,18 @@
       "url": "https://rmcsport.bfmtv.com/football/clubs/paris-saint-germain/psg-marquinhos-un-retour-imminent-et-une-prolongation-d-un-an-a-l-etude_AV-202611180747.html"
     },
     {
-      "title": "Didier Deschamps",
-      "source": "RMC Sport",
-      "date": "2026-11-18T16:21:29+00:00",
-      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-    },
-    {
       "title": "Didier Deschamps va faire son retour... dans une publicité pour Burger King",
       "source": "RMC Sport",
       "date": "2026-11-18T16:21:29+00:00",
       "summary": "Depuis son départ de l'équipe de France à l'issue de la Coupe du monde 2026, Didier Deschamps se faisait discret. Mais d'après les informations de RMC Sport, l'ancien sélectionneur des Bleus va refaire son…",
       "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-va-faire-son-retour-dans-une-publicite-pour-burger-king_AV-202611180745.html"
+    },
+    {
+      "title": "Didier Deschamps",
+      "source": "RMC Sport",
+      "date": "2026-11-18T16:21:29+00:00",
+      "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+      "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
     },
     {
       "title": "« Il reste 72 points » : les premiers mots de Valérien Ismaël au Havre",
@@ -2465,20 +2530,6 @@
       "url": "https://www.sofoot.com/breves/vers-un-retour-des-pauses-fraicheurs-a-la-prochaine-coupe-du-monde"
     },
     {
-      "title": "Thierry Henry",
-      "source": "RMC Sport",
-      "date": "2026-11-18T14:27:19+00:00",
-      "summary": "A 37 ans, Thierry Henry a annoncé qu’il mettait un terme à sa carrière après la fin de son contrat avec les New York Red Bulls. Au terme « de 20 ans dans le jeu », le meilleur buteur de l’histoire des Bleus…",
-      "url": "https://rmcsport.bfmtv.com/football/thierry-henry_DN-201412030335.html"
-    },
-    {
-      "title": "Romelu Lukaku",
-      "source": "RMC Sport",
-      "date": "2026-11-18T14:27:19+00:00",
-      "summary": "Romelu Lukaku est né le 13 mai 1993 à Anvers. Il est international belge et évolue au poste d’attaquant de pointe à Chelsea. Vainqueur du championnat italien avec l’Inter Milan en 2021, Lukaku a été élu au…",
-      "url": "https://rmcsport.bfmtv.com/football/romelu-lukaku_DN-202108310565.html"
-    },
-    {
       "title": "\"Tu es un ‘workaholic'\": l'hommage poignant de Thierry Henry à Lukaku après l'annonce de sa retraite internationale",
       "source": "RMC Sport",
       "date": "2026-11-18T14:27:19+00:00",
@@ -2493,13 +2544,6 @@
       "url": "https://www.sofoot.com/breves/un-maroc-historique-entre-dans-le-top-5-du-classement-fifa"
     },
     {
-      "title": "Fanions, chaussettes, avion, protocole... Après les couacs logistiques, des changements à venir dans l’entourage des Bleus?",
-      "source": "RMC Sport",
-      "date": "2026-11-18T14:09:39+00:00",
-      "summary": "Les premiers pas du sélectionneur Zinédine Zidane en équipe de France ont été marqués par une série de couacs logistiques en tout genre qui a surpris et agacé. Consciente de ces dysfonctionnements, la FFF…",
-      "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/fanions-chaussettes-avion-protocole-apres-les-couacs-logistiques-des-changements-a-venir-dans-l-entourage-des-bleus_AV-202611180658.html"
-    },
-    {
       "title": "Argentine : 5 idées pour faire revenir Lionel Messi à la maison",
       "source": "SO FOOT",
       "date": "2026-11-18T14:00:23+00:00",
@@ -2507,25 +2551,11 @@
       "url": "https://www.sofoot.com/articles/argentine-5-idees-pour-faire-revenir-lionel-messi-a-la-maison"
     },
     {
-      "title": "\"Je dormirai mieux cette nuit\": la petite blague de Mbappé après la grande annonce du Real Madrid sur Güler",
-      "source": "RMC Sport",
-      "date": "2026-11-18T13:49:53+00:00",
-      "summary": "Kylian Mbappé a réagi mercredi à l’annonce de la prolongation d’Arda Güler au Real Madrid. La star du club Merengue et de l’équipe de France a semblé plaisanter auprès de son jeune coéquipier turc.",
-      "url": "https://rmcsport.bfmtv.com/football/kylian-mbappe/je-dormirai-mieux-cette-nuit-la-petite-blague-de-mbappe-apres-la-grande-annonce-du-real-madrid-sur-guler_AV-202611180637.html"
-    },
-    {
       "title": "Éliminatoires CAN 2027 : Claude Le Roy démissionne de son poste de sélectionneur du Congo",
       "source": "SO FOOT",
       "date": "2026-11-18T13:48:47+00:00",
       "summary": "",
       "url": "https://www.sofoot.com/breves/eliminatoires-can-2027-claude-le-roy-demissionne-de-son-poste-de-selectionneur-du-congo"
-    },
-    {
-      "title": "DIRECT. Philippe Diallo candidat à la présidence de la Fifa face à Infantino: un sélectionneur tricolore affiche son soutien au président de la FFF",
-      "source": "RMC Sport",
-      "date": "2026-11-18T13:44:31+00:00",
-      "summary": "Président de la Fédération française de football, Philippe Diallo a été désigné par l'UEFA ce lundi comme candidat à la présidence de la Fifa. Le patron de la FFF fera face au sortant Gianni Infantino lors de…",
-      "url": "https://rmcsport.bfmtv.com/football/direct-philippe-diallo-candidat-a-la-presidence-de-la-fifa-face-a-infantino-toutes-les-infos-et-reactions-en-live_LN-202611160689.html"
     },
     {
       "title": "Ligue des nations : l’Espagne, les Pays-Bas et la Norvège potentiels adversaires des Bleus pour les quarts de finale",
@@ -2547,20 +2577,6 @@
       "date": "2026-11-18T12:00:13+00:00",
       "summary": "Le PSG aurait-il une clause d’exclusivité ?",
       "url": "https://www.sofoot.com/articles/portugal-vitinha-joao-neves-un-duo-de-paris-pas-si-magique-au-pays"
-    },
-    {
-      "title": "Rassurez-vous, la FFF ne sera pas à l’abandon pendant la campagne de Diallo",
-      "source": "SO FOOT",
-      "date": "2026-11-18T11:34:32+00:00",
-      "summary": "C’est qu’il y a une baraque à tenir...",
-      "url": "https://www.sofoot.com/breves/rassurez-vous-la-fff-ne-sera-pas-a-labandon-pas-pendant-la-campagne-de-diallo"
-    },
-    {
-      "title": "Real Madrid : Arda Güler prolonge jusqu’en 2032",
-      "source": "SO FOOT",
-      "date": "2026-11-18T11:27:12+00:00",
-      "summary": "",
-      "url": "https://www.sofoot.com/breves/real-madrid-arda-guler-prolonge-jusquen-2032-2026"
     }
   ],
   "focused_team_news": {
@@ -2593,9 +2609,16 @@
       {
         "title": "Italie-France : revivez la première défaite de Zinédine Zidane à la tête des Bleus qui devront encore attendre pour la qualification en quarts de Ligue des nations",
         "source": "France Info",
-        "date": "2026-11-18T21:56:43+00:00",
+        "date": "2026-11-19T03:27:44+00:00",
         "summary": "Les Bleus, battus par la Squadra Azzurra (3-1) à San Siro jeudi soir, devront attendre dimanche et la dernière journée face à la Turquie pour valider leur billet pour les quarts de finale de la Ligue des…",
         "url": "https://www.franceinfo.fr/sports/directs/direct-italie-france-qualification-en-vue-pour-les-quarts-de-ligue-des-nations-suivez-et-commentez-le-match-avec-nous_8276066.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
+      },
+      {
+        "title": "Équipe de France  : Didier Deschamps dans une pub pour Burger King",
+        "source": "SO FOOT",
+        "date": "2026-11-18T23:05:16+00:00",
+        "summary": "",
+        "url": "https://www.sofoot.com/breves/equipe-de-france-didier-deschamps-dans-une-pub-pour-burger-king"
       },
       {
         "title": "\"Une solution de secours\": pourquoi Clauss croit encore à l'équipe de France",
@@ -2619,20 +2642,6 @@
         "url": "https://www.sofoot.com/breves/euro-2028-la-france-tete-de-serie-pour-le-tirage-au-sort-des-qualifications-a-leuro-2028"
       },
       {
-        "title": "Équipe de France  : Didier Deschamps dans une pub pour Burger King",
-        "source": "SO FOOT",
-        "date": "2026-11-18T16:57:16+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/equipe-de-france-didier-deschamps-dans-une-pub-pour-burger-king"
-      },
-      {
-        "title": "Didier Deschamps",
-        "source": "RMC Sport",
-        "date": "2026-11-18T16:21:29+00:00",
-        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
-        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
-      },
-      {
         "title": "Didier Deschamps va faire son retour... dans une publicité pour Burger King",
         "source": "RMC Sport",
         "date": "2026-11-18T16:21:29+00:00",
@@ -2640,25 +2649,11 @@
         "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/didier-deschamps-va-faire-son-retour-dans-une-publicite-pour-burger-king_AV-202611180745.html"
       },
       {
-        "title": "Thierry Henry",
+        "title": "Didier Deschamps",
         "source": "RMC Sport",
-        "date": "2026-11-18T14:27:19+00:00",
-        "summary": "A 37 ans, Thierry Henry a annoncé qu’il mettait un terme à sa carrière après la fin de son contrat avec les New York Red Bulls. Au terme « de 20 ans dans le jeu », le meilleur buteur de l’histoire des Bleus…",
-        "url": "https://rmcsport.bfmtv.com/football/thierry-henry_DN-201412030335.html"
-      },
-      {
-        "title": "Fanions, chaussettes, avion, protocole... Après les couacs logistiques, des changements à venir dans l’entourage des Bleus?",
-        "source": "RMC Sport",
-        "date": "2026-11-18T14:09:39+00:00",
-        "summary": "Les premiers pas du sélectionneur Zinédine Zidane en équipe de France ont été marqués par une série de couacs logistiques en tout genre qui a surpris et agacé. Consciente de ces dysfonctionnements, la FFF…",
-        "url": "https://rmcsport.bfmtv.com/football/equipe-de-france/fanions-chaussettes-avion-protocole-apres-les-couacs-logistiques-des-changements-a-venir-dans-l-entourage-des-bleus_AV-202611180658.html"
-      },
-      {
-        "title": "\"Je dormirai mieux cette nuit\": la petite blague de Mbappé après la grande annonce du Real Madrid sur Güler",
-        "source": "RMC Sport",
-        "date": "2026-11-18T13:49:53+00:00",
-        "summary": "Kylian Mbappé a réagi mercredi à l’annonce de la prolongation d’Arda Güler au Real Madrid. La star du club Merengue et de l’équipe de France a semblé plaisanter auprès de son jeune coéquipier turc.",
-        "url": "https://rmcsport.bfmtv.com/football/kylian-mbappe/je-dormirai-mieux-cette-nuit-la-petite-blague-de-mbappe-apres-la-grande-annonce-du-real-madrid-sur-guler_AV-202611180637.html"
+        "date": "2026-11-18T16:21:29+00:00",
+        "summary": "Didier Deschamps, né le 15 octobre 1968 à Bayonne, est un des rares footballeur à avoir gagné la Coupe du monde comme joueur et comme sélectionneur. Originaire du Pays basque puis formé au FC Nantes, il…",
+        "url": "https://rmcsport.bfmtv.com/football/didier-deschamps_DN-202108310503.html"
       },
       {
         "title": "Ligue des nations : l’Espagne, les Pays-Bas et la Norvège potentiels adversaires des Bleus pour les quarts de finale",
@@ -2673,6 +2668,27 @@
         "date": "2026-11-18T11:09:52+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/coupe-de-france-un-elu-de-tourcoing-veut-faire-payer-le-stade-de-reims"
+      },
+      {
+        "title": "Ligue des nations : dans un match fou, la Norvège arrache sa qualification… au goal-average particulier face au Danemark",
+        "source": "SO FOOT",
+        "date": "2026-11-17T21:48:19+00:00",
+        "summary": "Un possible adversaire des Bleus.",
+        "url": "https://www.sofoot.com/breves/ligue-des-nations-dans-un-match-fou-la-norvege-arrache-sa-qualification-au-goal-average-particulier-face-au-danemark"
+      },
+      {
+        "title": "Style de jeu, inefficacité, jeunesse... Que faut-il retenir du début de mandat de Zinédine Zidane à la tête de l'équipe de France ?",
+        "source": "France Info",
+        "date": "2026-11-16T10:37:30+00:00",
+        "summary": "Nommé le 28 juillet, Zinédine Zidane a dirigé six matchs à la tête des Bleus cet automne, et déjà posé sa patte sur l'équipe de France.",
+        "url": "https://www.franceinfo.fr/sports/foot/ligue-des-nations/style-de-jeu-inefficacite-jeunesse-que-faut-il-retenir-du-debut-de-mandat-de-zinedine-zidane-a-la-tete-de-l-equipe-de-france_8283686.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
+      },
+      {
+        "title": "\"Sur le contenu de ce soir, forcément, on n'est pas contents\", réagit Zinédine Zidane malgré la victoire des Bleus",
+        "source": "France Info",
+        "date": "2026-11-16T10:01:08+00:00",
+        "summary": "Le sélectionneur de l'équipe de France, trois jours après avoir connu sa première défaite sur le banc en Italie, a retrouvé le goût de la victoire, dimanche à Bordeaux contre la Turquie en Ligue des nations…",
+        "url": "https://www.franceinfo.fr/sports/foot/ligue-des-nations/sur-le-contenu-de-ce-soir-forcement-on-n-est-pas-contents-reagit-zinedine-zidane-malgre-la-victoire-des-bleus_8284580.html#xtor=RSS-3-%5Bsports%2Ffoot%2Fequipe-de-france%5D"
       }
     ],
     "Portugal": [
@@ -2689,13 +2705,6 @@
         "date": "2026-11-17T21:42:19+00:00",
         "summary": "",
         "url": "https://www.sofoot.com/breves/ligue-des-nations-le-portugal-se-reprend-contre-le-pays-de-galles-et-finit-premier-de-son-groupe"
-      },
-      {
-        "title": "Mezian Mesloub (RC Lens) bat déjà un record avec le Portugal en devenant le plus jeune buteur des U21",
-        "source": "SO FOOT",
-        "date": "2026-11-17T21:19:43+00:00",
-        "summary": "",
-        "url": "https://www.sofoot.com/breves/mezian-mesloub-rc-lens-bat-deja-un-record-avec-le-portugal-en-devenant-le-plus-jeune-buteur-des-u21"
       }
     ]
   },
@@ -2815,22 +2824,29 @@
     }
   ],
   "errors": [
-    "Mise à jour impossible pour le moment : conservation du dernier cache valide.",
-    "classements ESPN: ValueError",
-    "calendrier ESPN: UnicodeDecodeError",
-    "buteurs ESPN: ValueError",
-    "passeurs ESPN: ValueError"
+    "calendrier ESPN: UnicodeDecodeError"
   ],
   "players_index": [
+    {
+      "name": "Erling Haaland",
+      "club_current": "Norway",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/253989.png",
+      "associated_team": "Norway",
+      "updated_at": "2026-11-19T03:27:17+00:00",
+      "source": "FotMob/ESPN stats"
+    },
     {
       "name": "Jude Bellingham",
       "club_current": "England",
       "country": "",
       "position": "",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/1077894.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/291281.png",
       "associated_team": "England",
-      "updated_at": "2026-11-15T01:55:26+00:00",
+      "updated_at": "2026-11-19T03:27:17+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -2839,9 +2855,9 @@
       "country": "France",
       "position": "",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/701154.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/231388.png",
       "associated_team": "France",
-      "updated_at": "2026-11-15T01:55:26+00:00",
+      "updated_at": "2026-11-19T03:27:17+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -2850,9 +2866,9 @@
       "country": "",
       "position": "",
       "number": "",
-      "photo_url": "https://images.fotmob.com/image_resources/playerimages/30981.png",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/45843.png",
       "associated_team": "Argentina",
-      "updated_at": "2026-11-15T01:55:26+00:00",
+      "updated_at": "2026-11-19T03:27:17+00:00",
       "source": "FotMob/ESPN stats"
     },
     {
@@ -2863,9 +2879,19 @@
       "number": "",
       "photo_url": "https://images.fotmob.com/image_resources/playerimages/1029063.png",
       "associated_team": "France",
-      "updated_at": "2026-11-15T01:55:26+00:00",
+      "updated_at": "2026-11-19T03:27:17+00:00",
+      "source": "FotMob/ESPN stats"
+    },
+    {
+      "name": "Ousmane Dembélé",
+      "club_current": "France",
+      "country": "",
+      "position": "",
+      "number": "",
+      "photo_url": "https://a.espncdn.com/i/headshots/soccer/players/full/229744.png",
+      "associated_team": "France",
+      "updated_at": "2026-11-19T03:27:17+00:00",
       "source": "FotMob/ESPN stats"
     }
-  ],
-  "focused_club_news": {}
+  ]
 }
